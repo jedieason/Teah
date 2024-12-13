@@ -1,0 +1,926 @@
+[
+   {
+      "question":"Which of the following statements about glycosylation is incorrect?",
+      "options":{
+         "A":"Glycosylation involves adding sugar groups to proteins.",
+         "B":"It aids in proper protein folding and enhances protein stability.",
+         "C":"Glycosylation solely serves as an energy storage mechanism and does not influence protein structure or immune recognition.",
+         "D":"Glycosylation plays a role in cell-cell communication and immune responses."
+      },
+      "answer":"C",
+      "explanation":"Option C is incorrect because glycosylation affects folding, stability, communication, and immune responses, not just energy storage."
+   },
+   {
+      "question":"Which of the following best describes a role of glycosylation in the cell?",
+      "options":{
+         "A":"It prevents the addition of phosphate groups to proteins.",
+         "B":"It facilitates proper protein folding and protects proteins from degradation.",
+         "C":"It causes random unfolding of proteins, making them less stable.",
+         "D":"It blocks membrane proteins from participating in signaling."
+      },
+      "answer":"B",
+      "explanation":"Glycosylation ensures proper protein folding, stability, and can protect against degradation."
+   },
+   {
+      "question":"Which statement about glycosylation and the immune response is incorrect?",
+      "options":{
+         "A":"Glycosylation helps cells present 'self' markers for immune tolerance.",
+         "B":"Proper glycosylation patterns can influence antibody recognition.",
+         "C":"Glycosylation never affects the identification of pathogens or foreign cells.",
+         "D":"By altering glycosylation patterns, cells can modulate immune responses."
+      },
+      "answer":"C",
+      "explanation":"Option C is incorrect; glycosylation patterns do affect the recognition of foreign cells and pathogens."
+   },
+   {
+      "question":"Which aspect of membrane-associated proteins is influenced by glycosylation?",
+      "options":{
+         "A":"The presence of M6P receptor recognition sites.",
+         "B":"Their ability to anchor to lipid bilayers.",
+         "C":"Their hydration, signaling capacity, and intermolecular interactions.",
+         "D":"Irreversible denaturation of membrane proteins."
+      },
+      "answer":"C",
+      "explanation":"Glycosylation improves hydration, affects signaling and interactions of membrane proteins, not causing denaturation."
+   },
+   {
+      "question":"Which of the following statements about the wobble position is incorrect?",
+      "options":{
+         "A":"The wobble position is at the third base of the codon.",
+         "B":"It allows flexible pairing rules, enabling one tRNA to read multiple codons.",
+         "C":"It strictly follows Watson-Crick base pairing, allowing no deviations.",
+         "D":"Inosine (I) can pair with A, U, or C at the wobble position."
+      },
+      "answer":"C",
+      "explanation":"Option C is incorrect because the wobble position allows non-standard base pairing."
+   },
+   {
+      "question":"What is the main advantage of wobble pairing in the genetic code?",
+      "options":{
+         "A":"It increases the number of tRNAs required by each organism.",
+         "B":"It reduces the total number of distinct tRNAs needed to read all sense codons.",
+         "C":"It removes the need for codons to specify amino acids.",
+         "D":"It eliminates stop codons from the genetic code."
+      },
+      "answer":"B",
+      "explanation":"Wobble pairing reduces the variety of tRNAs needed to recognize all sense codons."
+   },
+   {
+      "question":"Which pairing is an example of wobble?",
+      "options":{
+         "A":"A-U pairing at the first two codon positions.",
+         "B":"G-C pairing in the first position of the codon.",
+         "C":"G-U pairing at the third codon position.",
+         "D":"A-U pairing at all three positions of the codon."
+      },
+      "answer":"C",
+      "explanation":"G-U pairing at the third position is a classic wobble pairing example."
+   },
+   {
+      "question":"Which of the following is true regarding the first two bases of the codon and anticodon pairing?",
+      "options":{
+         "A":"They follow strict Watson-Crick base pairing rules.",
+         "B":"They are as flexible as the third base in terms of pairing.",
+         "C":"They can pair with Inosine in multiple ways.",
+         "D":"They do not interact with the anticodon at all."
+      },
+      "answer":"A",
+      "explanation":"The first two positions follow strict Watson-Crick rules; the third position allows wobble."
+   },
+   {
+      "question":"Which of the following statements about M6P tagging is incorrect?",
+      "options":{
+         "A":"N-acetylglucosamine phosphotransferase helps identify hydrolases and attach M6P groups.",
+         "B":"Mannose residues on glycoproteins are phosphorylated to form Mannose 6-Phosphate.",
+         "C":"M6P acts as a signal directing the protein to mitochondria for ATP synthesis.",
+         "D":"M6P receptors recognize M6P-tagged proteins in the Golgi and direct them to lysosomes."
+      },
+      "answer":"C",
+      "explanation":"Option C is incorrect; M6P directs proteins to lysosomes, not mitochondria."
+   },
+   {
+      "question":"Which of the following steps correctly describes the formation of Mannose 6-Phosphate?",
+      "options":{
+         "A":"Mannose residues are acetylated to form M6P.",
+         "B":"Mannose residues are phosphorylated, creating M6P recognition signals.",
+         "C":"Proteins are ubiquitinated, then converted into M6P.",
+         "D":"Inosine is attached to the protein to form M6P signals."
+      },
+      "answer":"B",
+      "explanation":"Mannose residues are phosphorylated to generate M6P, which directs proteins to lysosomes."
+   },
+   {
+      "question":"Which component is primarily responsible for recognizing M6P-tagged proteins?",
+      "options":{
+         "A":"M6P receptor",
+         "B":"Ubiquitin ligase",
+         "C":"Ribosome",
+         "D":"Ran-GTP"
+      },
+      "answer":"A",
+      "explanation":"M6P receptors in the Golgi recognize and bind M6P-tagged proteins."
+   },
+   {
+      "question":"What happens to the M6P receptor after it delivers the hydrolase to the lysosome?",
+      "options":{
+         "A":"It remains permanently bound to the hydrolase.",
+         "B":"It is degraded by proteases in the lysosome.",
+         "C":"It dissociates due to the lower pH in the lysosome and is recycled back to the Golgi.",
+         "D":"It becomes part of the lysosomal membrane."
+      },
+      "answer":"C",
+      "explanation":"At lower pH, M6P dissociates, and the receptor returns to the Golgi for reuse."
+   },
+   {
+      "question":"Which of the following best describes the role of clathrin in M6P-mediated transport?",
+      "options":{
+         "A":"Clathrin directly phosphorylates mannose residues.",
+         "B":"Clathrin assists in forming vesicles that transport M6P-tagged hydrolases from the Golgi to the lysosome.",
+         "C":"Clathrin removes phosphate groups from M6P before vesicle formation.",
+         "D":"Clathrin is not involved in M6P-mediated transport."
+      },
+      "answer":"B",
+      "explanation":"Clathrin helps form coated vesicles that bud from the Golgi and target hydrolases to lysosomes."
+   },
+   {
+      "question":"Which of the following statements about mutations is incorrect?",
+      "options":{
+         "A":"Frameshift Mutation alters the reading frame, resulting in a completely different translation.",
+         "B":"Silent Mutation results in no change in the amino acid sequence.",
+         "C":"Missense Mutation introduces a premature stop codon, leading to early termination.",
+         "D":"Nonsense Mutation causes a wrong amino acid to be incorporated."
+      },
+      "answer":"C",
+      "explanation":"Missense Mutation changes one amino acid, while Nonsense Mutation introduces a premature stop codon. Thus, C is incorrect as it describes a nonsense mutation as a missense mutation."
+   },
+   {
+      "question":"Which statement regarding mutations is incorrect?",
+      "options":{
+         "A":"Frameshift mutations are caused by insertions or deletions of nucleotides not divisible by three.",
+         "B":"Silent mutations result in a different amino acid being incorporated into the protein.",
+         "C":"Nonsense mutations lead to early termination of protein synthesis.",
+         "D":"Missense mutations result in the substitution of one amino acid for another."
+      },
+      "answer":"B",
+      "explanation":"Silent mutations do not change the amino acid sequence, so B is incorrect."
+   },
+   {
+      "question":"Identify the incorrect statement about types of mutations.",
+      "options":{
+         "A":"Frameshift mutations change the reading frame of the genetic code.",
+         "B":"Silent mutations can alter the amino acid sequence of a protein.",
+         "C":"Missense mutations involve the substitution of a single nucleotide.",
+         "D":"Nonsense mutations create a premature stop codon."
+      },
+      "answer":"B",
+      "explanation":"Silent mutations do not alter the amino acid sequence, making B incorrect."
+   },
+   {
+      "question":"Which of the following statements about mutations is not true?",
+      "options":{
+         "A":"Frameshift mutations can result from the insertion or deletion of nucleotides.",
+         "B":"Silent mutations have no effect on the protein's amino acid sequence.",
+         "C":"Missense mutations always lead to nonfunctional proteins.",
+         "D":"Nonsense mutations introduce stop codons prematurely."
+      },
+      "answer":"C",
+      "explanation":"Missense mutations do not always result in nonfunctional proteins, so C is incorrect."
+   },
+   {
+      "question":"Which of the following statements about post-translational modifications is incorrect?",
+      "options":{
+         "A":"Phosphorylation occurs on the hydroxyl group of Ser, Thr, and Tyr residues, adding negative charges.",
+         "B":"Methylation of histone tails always inhibits gene expression.",
+         "C":"Glycosylation involves the addition of sugar groups to proteins, aiding in folding and stability.",
+         "D":"Ubiquitination tags proteins for degradation or signaling and occurs on Lys residues."
+      },
+      "answer":"B",
+      "explanation":"Methylation can either promote or inhibit gene expression, so B is incorrect."
+   },
+   {
+      "question":"Which statement regarding post-translational modifications is incorrect?",
+      "options":{
+         "A":"Myristoylation attaches a myristic acid to the N-terminal of the second Glycine residue.",
+         "B":"Palmitoylation links palmitic acid to Cysteine residues via thioester bonds.",
+         "C":"Isoprenylation adds sugar groups to proteins for hydration and lubrication.",
+         "D":"Disulfide bond formation occurs between Cysteine residues to maintain protein structure."
+      },
+      "answer":"C",
+      "explanation":"Isoprenylation adds isoprene units, not sugar groups, making C incorrect."
+   },
+   {
+      "question":"Which of the following is NOT a function of glycosylation in proteins?",
+      "options":{
+         "A":"Protein folding",
+         "B":"Increasing protein stability",
+         "C":"Tagging proteins for degradation",
+         "D":"Aiding in intercellular recognition"
+      },
+      "answer":"C",
+      "explanation":"Glycosylation does not serve as a degradation tag, so C is incorrect."
+   },
+   {
+      "question":"Which statement about post-translational modifications is incorrect?",
+      "options":{
+         "A":"Carboxylation often occurs on Glutamic acid residues.",
+         "B":"Methylation of lysine residues can affect gene expression by modifying histone affinity for DNA.",
+         "C":"Phosphorylation removes negative charges from proteins, altering their function.",
+         "D":"Ubiquitination can signal proteins for degradation."
+      },
+      "answer":"C",
+      "explanation":"Phosphorylation adds negative charges, not removes them, making C incorrect."
+   },
+   {
+      "question":"Which of the following statements about the ubiquitination mechanism is incorrect?",
+      "options":{
+         "A":"E1 enzymes consume ATP to form a thioester bond with ubiquitin.",
+         "B":"E2 enzymes are responsible for recognizing the target protein.",
+         "C":"E3 enzymes facilitate the transfer of ubiquitin to the target protein's Lys residue.",
+         "D":"E3 enzymes can function as monomers or as part of complexes with specific adaptors."
+      },
+      "answer":"B",
+      "explanation":"E2 does not recognize the target; E3 confers substrate specificity, so B is incorrect."
+   },
+   {
+      "question":"Which statement regarding the ubiquitination process is incorrect?",
+      "options":{
+         "A":"E1 activates ubiquitin in an ATP-dependent manner.",
+         "B":"E2 enzymes transfer ubiquitin directly to the target protein without E3.",
+         "C":"E3 enzymes determine substrate specificity in ubiquitination.",
+         "D":"Ubiquitination typically tags proteins for degradation by the proteasome."
+      },
+      "answer":"B",
+      "explanation":"E2 enzymes work with E3 to transfer ubiquitin; B is incorrect."
+   },
+   {
+      "question":"Which of the following is NOT true about the ubiquitination mechanism?",
+      "options":{
+         "A":"E1 enzymes initiate the ubiquitination process by activating ubiquitin.",
+         "B":"E2 enzymes recognize and bind to specific target proteins.",
+         "C":"E3 enzymes provide substrate specificity during ubiquitination.",
+         "D":"The process is regulated primarily by E3 enzymes."
+      },
+      "answer":"B",
+      "explanation":"E2 enzymes do not recognize targets; E3 enzymes do, so B is incorrect."
+   },
+   {
+      "question":"Which statement about the ubiquitination mechanism is incorrect?",
+      "options":{
+         "A":"E1 enzymes form a thioester bond with ubiquitin using ATP.",
+         "B":"E2 enzymes facilitate the transfer of ubiquitin from E1 to E3.",
+         "C":"E3 enzymes can act alone or with adaptor proteins to recognize targets.",
+         "D":"E3 enzymes are responsible for hydrolyzing ubiquitin from the target protein."
+      },
+      "answer":"D",
+      "explanation":"E3 does not hydrolyze ubiquitin from the target, making D incorrect."
+   },
+   {
+      "question":"Which of the following statements about the Shine-Dalgarno sequence is incorrect?",
+      "options":{
+         "A":"It is a ribosome binding site in prokaryotic mRNA.",
+         "B":"Located eight base pairs upstream of the start codon AUG.",
+         "C":"Binds to the 16S rRNA in the ribosome's large subunit.",
+         "D":"Initiates translation by aligning the ribosome with the start codon."
+      },
+      "answer":"C",
+      "explanation":"It binds to 16S rRNA in the small subunit, not the large subunit, so C is incorrect."
+   },
+   {
+      "question":"Which statement about the Shine-Dalgarno sequence is incorrect?",
+      "options":{
+         "A":"It is essential for the initiation of translation in prokaryotes.",
+         "B":"Located downstream of the start codon in mRNA.",
+         "C":"Interacts with the ribosomal RNA to position the ribosome correctly.",
+         "D":"Facilitates the binding of the ribosome to mRNA."
+      },
+      "answer":"B",
+      "explanation":"The Shine-Dalgarno sequence is upstream of the start codon, not downstream."
+   },
+   {
+      "question":"Identify the incorrect statement about the Shine-Dalgarno sequence.",
+      "options":{
+         "A":"It is found in prokaryotic mRNA.",
+         "B":"Located eight base pairs upstream of the start codon.",
+         "C":"Binds to the 16S rRNA in the ribosome's large subunit.",
+         "D":"Helps in the accurate initiation of translation."
+      },
+      "answer":"C",
+      "explanation":"The Shine-Dalgarno sequence binds to 16S rRNA in the small subunit, not the large subunit."
+   },
+   {
+      "question":"Which of the following is NOT a characteristic of the Shine-Dalgarno sequence?",
+      "options":{
+         "A":"Located in prokaryotic mRNA.",
+         "B":"Approximately eight base pairs upstream of the start codon.",
+         "C":"Interacts with the 16S rRNA in the small ribosomal subunit.",
+         "D":"Present in eukaryotic mRNA to initiate translation."
+      },
+      "answer":"D",
+      "explanation":"It is not present in eukaryotic mRNA, so D is incorrect."
+   },
+   {
+      "question":"Which of the following statements about translation initiation is incorrect?",
+      "options":{
+         "A":"In prokaryotes, initiation is determined by the Shine-Dalgarno sequence.",
+         "B":"In eukaryotes, the Kozak sequence plays a key role in initiation.",
+         "C":"The Shine-Dalgarno sequence is used in eukaryotic translation initiation.",
+         "D":"The Kozak sequence is located around the start codon in eukaryotic mRNA."
+      },
+      "answer":"C",
+      "explanation":"The Shine-Dalgarno sequence is not used in eukaryotes, making C incorrect."
+   },
+   {
+      "question":"Which statement regarding translation initiation is incorrect?",
+      "options":{
+         "A":"Prokaryotic translation initiation involves the Shine-Dalgarno sequence.",
+         "B":"Eukaryotic translation initiation is guided by the Kozak sequence.",
+         "C":"The Kozak sequence is found in prokaryotic mRNA.",
+         "D":"Translation initiation mechanisms differ between prokaryotes and eukaryotes."
+      },
+      "answer":"C",
+      "explanation":"The Kozak sequence is eukaryotic, not prokaryotic, making C incorrect."
+   },
+   {
+      "question":"Identify the incorrect statement about translation initiation.",
+      "options":{
+         "A":"The Shine-Dalgarno sequence is involved in prokaryotic initiation.",
+         "B":"The Kozak sequence enhances translation initiation in eukaryotes.",
+         "C":"Both prokaryotes and eukaryotes use the Shine-Dalgarno sequence for initiation.",
+         "D":"Translation initiation factors differ between prokaryotes and eukaryotes."
+      },
+      "answer":"C",
+      "explanation":"Only prokaryotes use the Shine-Dalgarno sequence; C is incorrect."
+   },
+   {
+      "question":"Which of the following is NOT true about translation initiation?",
+      "options":{
+         "A":"In prokaryotes, the Shine-Dalgarno sequence helps align the ribosome with the start codon.",
+         "B":"The Kozak sequence in eukaryotes surrounds the start codon to facilitate initiation.",
+         "C":"Eukaryotic initiation involves scanning from the 5' cap to find the start codon.",
+         "D":"Both prokaryotes and eukaryotes use the Shine-Dalgarno sequence for translation initiation."
+      },
+      "answer":"D",
+      "explanation":"Only prokaryotes use the Shine-Dalgarno sequence, making D incorrect."
+   },
+   {
+      "question":"Which of the following statements about protein nuclear import is incorrect?",
+      "options":{
+         "A":"Proteins with a Nuclear Localization Sequence (NLS) are recognized by importin.",
+         "B":"Importin α/β complex binds to NLS-containing proteins for transport.",
+         "C":"Ran-GTP is responsible for dissociating importin from the cargo inside the nucleus.",
+         "D":"Importin α dissociates from importin β with the help of Ran-GDP in the cytoplasm."
+      },
+      "answer":"D",
+      "explanation":"Importin α dissociates with the help of Ran-GTP, not Ran-GDP, so D is incorrect."
+   },
+   {
+      "question":"Which statement regarding protein nuclear import is incorrect?",
+      "options":{
+         "A":"NLS proteins bind to the importin α/β complex before nuclear transport.",
+         "B":"Transport into the nucleus occurs through nuclear pores.",
+         "C":"Ran-GTP hydrolyzes to Ran-GDP in the nucleus to facilitate importin recycling.",
+         "D":"CAS assists in the dissociation of importin α from the complex."
+      },
+      "answer":"C",
+      "explanation":"Ran-GTP hydrolyzes to Ran-GDP in the cytoplasm, not in the nucleus, making C incorrect."
+   },
+   {
+      "question":"Identify the incorrect statement about protein nuclear import.",
+      "options":{
+         "A":"Importin α/β complex is responsible for transporting NLS-containing proteins into the nucleus.",
+         "B":"Ran-GTP binds to importin β to cause dissociation of the importin complex in the nucleus.",
+         "C":"NTF2 is involved in recycling Ran-GDP back into the nucleus.",
+         "D":"Importin α dissociates from importin β in the cytoplasm with the help of Ran-GDP."
+      },
+      "answer":"D",
+      "explanation":"Importin α dissociates from importin β inside the nucleus with Ran-GTP, not in the cytoplasm with Ran-GDP."
+   },
+   {
+      "question":"Which of the following is NOT true about protein nuclear import?",
+      "options":{
+         "A":"Proteins with NLS are recognized by importin proteins.",
+         "B":"Importin α/β complex is transported into the nucleus via nuclear pores.",
+         "C":"Ran-GDP is regenerated into Ran-GTP in the cytoplasm.",
+         "D":"Ran-GTP is responsible for the dissociation of importin β from the complex inside the nucleus."
+      },
+      "answer":"C",
+      "explanation":"Ran-GDP is converted to Ran-GTP in the nucleus, not in the cytoplasm, making C incorrect."
+   },
+   {
+      "question":"Which of the following is NOT an essential component of a plasmid?",
+      "options":{
+         "A":"Origin of replication",
+         "B":"Positive control sequence",
+         "C":"Selectable marker (e.g., AmpR)",
+         "D":"Promoter (e.g., Tac-promoter)"
+      },
+      "answer":"B",
+      "explanation":"Positive control sequences are not essential for plasmids."
+   },
+   {
+      "question":"Which statement about essential plasmid components is incorrect?",
+      "options":{
+         "A":"The origin of replication allows the plasmid to be copied within the host.",
+         "B":"Restriction sites enable the insertion of foreign DNA.",
+         "C":"A selectable marker provides resistance to antibiotics for identifying transformed cells.",
+         "D":"Negative control sequences are required for plasmid replication."
+      },
+      "answer":"D",
+      "explanation":"Negative control sequences are not essential for plasmid replication, so D is incorrect."
+   },
+   {
+      "question":"Identify the incorrect statement regarding essential plasmid components.",
+      "options":{
+         "A":"The origin of replication is necessary for plasmid propagation in the host cell.",
+         "B":"A selectable marker allows for the identification of cells that have taken up the plasmid.",
+         "C":"Start and stop codons are essential for plasmid replication.",
+         "D":"A promoter is required to drive the expression of the gene of interest."
+      },
+      "answer":"C",
+      "explanation":"Start and stop codons are essential for gene expression, not plasmid replication itself."
+   },
+   {
+      "question":"Which of the following is NOT a typical component of a plasmid?",
+      "options":{
+         "A":"Origin of replication",
+         "B":"Negative control sequence",
+         "C":"Selectable marker",
+         "D":"Gene of interest (Insert)"
+      },
+      "answer":"B",
+      "explanation":"Negative control sequences are not typically essential components of plasmids."
+   },
+   {
+      "question":"Which statement about essential plasmid components is incorrect?",
+      "options":{
+         "A":"The origin of replication is essential for plasmid maintenance in the host.",
+         "B":"A multiple cloning site allows for the insertion of foreign DNA.",
+         "C":"A selectable marker is used to identify successfully transformed cells.",
+         "D":"Terminator sequences are not necessary for plasmid function."
+      },
+      "answer":"D",
+      "explanation":"Terminator sequences help ensure proper transcription termination, so D is incorrect."
+   },
+   {
+      "question":"Which of the following is NOT a function of glycosylation in proteins?",
+      "options":{
+         "A":"Facilitates proper protein folding.",
+         "B":"Enhances protein stability by preventing degradation.",
+         "C":"Acts as a molecular identifier for cell-cell communication.",
+         "D":"Breaks down proteins in the lysosome."
+      },
+      "answer":"D",
+      "explanation":"Glycosylation aids in folding, stability, and communication, but not in lysosomal degradation."
+   },
+   {
+      "question":"Which statement about the role of glycosylation in the immune response is incorrect?",
+      "options":{
+         "A":"Glycosylation is critical for antibody recognition.",
+         "B":"Glycosylation helps distinguish between self and non-self.",
+         "C":"Glycosylation directly activates immune cells.",
+         "D":"Glycosylation affects the specificity of immune responses."
+      },
+      "answer":"C",
+      "explanation":"Glycosylation influences antibody recognition and self/non-self distinction but does not directly activate immune cells."
+   },
+   {
+      "question":"Identify the incorrect function of glycosylation in membrane proteins.",
+      "options":{
+         "A":"Aiding in protein folding and stability.",
+         "B":"Facilitating intercellular communication and recognition.",
+         "C":"Enhancing the catalytic activity of membrane enzymes.",
+         "D":"Playing a role in membrane protein signaling."
+      },
+      "answer":"C",
+      "explanation":"Glycosylation assists in folding, stability, communication, and signaling but does not directly enhance catalytic activity."
+   },
+   {
+      "question":"Which of the following best describes the role of glycosylation in protein folding?",
+      "options":{
+         "A":"It adds hydrophobic groups to proteins, facilitating their insertion into membranes.",
+         "B":"It provides structural support by forming disulfide bonds.",
+         "C":"It aids in the correct folding of proteins by stabilizing their three-dimensional structure.",
+         "D":"It tags misfolded proteins for degradation."
+      },
+      "answer":"C",
+      "explanation":"Glycosylation helps stabilize proteins, assisting in their proper folding."
+   },
+   {
+      "question":"Which of the following statements about wobble pairing is incorrect?",
+      "options":{
+         "A":"The first two bases of the codon and anticodon pair strictly according to Watson-Crick rules.",
+         "B":"The third base of the codon allows for flexibility in base pairing.",
+         "C":"Wobble pairing increases the number of tRNAs required to recognize all codons.",
+         "D":"Examples of wobble pairing include G-U and Inosine pairing with A, U, or C."
+      },
+      "answer":"C",
+      "explanation":"Wobble pairing reduces the number of tRNAs needed, not increases it."
+   },
+   {
+      "question":"Which of the following is a consequence of wobble pairing in the genetic code?",
+      "options":{
+         "A":"It increases the redundancy of the genetic code.",
+         "B":"It eliminates the need for tRNA molecules.",
+         "C":"It restricts the number of amino acids that can be incorporated into proteins.",
+         "D":"It requires each tRNA to recognize only one codon."
+      },
+      "answer":"A",
+      "explanation":"Wobble pairing allows fewer tRNAs to recognize more codons, increasing redundancy."
+   },
+   {
+      "question":"Which statement about the purpose of wobble pairing is incorrect?",
+      "options":{
+         "A":"It reduces the number of tRNAs needed to recognize all sense codons.",
+         "B":"It enhances the efficiency of protein synthesis.",
+         "C":"It allows for non-standard base-pairing at the third codon position.",
+         "D":"It ensures that each codon is recognized by a unique tRNA."
+      },
+      "answer":"D",
+      "explanation":"Wobble pairing allows one tRNA to recognize multiple codons, not one unique tRNA per codon."
+   },
+   {
+      "question":"Which of the following base pairings exemplifies wobble pairing?",
+      "options":{
+         "A":"A-U and G-C",
+         "B":"C-G and U-A",
+         "C":"G-U and Inosine-A",
+         "D":"A-G and C-U"
+      },
+      "answer":"C",
+      "explanation":"G-U pairing and Inosine pairing with A (and others) are examples of wobble."
+   },
+   {
+      "question":"Which of the following steps is NOT involved in the transport of hydrolase to the lysosome?",
+      "options":{
+         "A":"Phosphorylation of mannose to form Mannose 6-phosphate (M6P).",
+         "B":"Recognition of M6P by the M6P receptor on the Golgi membrane.",
+         "C":"Direct binding of hydrolase to clathrin without a receptor.",
+         "D":"Recycling of the M6P receptor to the Golgi after dissociation."
+      },
+      "answer":"C",
+      "explanation":"Hydrolases bind to the M6P receptor, which then interacts with clathrin; they do not bind clathrin directly."
+   },
+   {
+      "question":"During lysosome maturation, what causes the release of M6P from the M6P receptor?",
+      "options":{
+         "A":"Increase in pH within the lysosome.",
+         "B":"Decrease in pH within the lysosome.",
+         "C":"Phosphorylation of the receptor.",
+         "D":"Hydrolysis of M6P by lysosomal enzymes."
+      },
+      "answer":"B",
+      "explanation":"A decrease in pH in the lysosome causes the M6P to dissociate from its receptor."
+   },
+   {
+      "question":"What role does clathrin play in the transport of hydrolase to the lysosome?",
+      "options":{
+         "A":"Clathrin phosphorylates mannose residues.",
+         "B":"Clathrin recognizes and binds directly to hydrolase.",
+         "C":"Clathrin forms coated vesicles by binding to the M6P receptor and adapter proteins.",
+         "D":"Clathrin degrades misfolded hydrolase enzymes."
+      },
+      "answer":"C",
+      "explanation":"Clathrin helps form coated vesicles that transport hydrolase to the lysosome."
+   },
+   {
+      "question":"Which enzyme is responsible for phosphorylating mannose residues to form M6P?",
+      "options":{
+         "A":"N-acetylglucosamine Phosphotransferase",
+         "B":"Ras Farnesyl Transferase",
+         "C":"Lysine Demethylase",
+         "D":"Ran GEF"
+      },
+      "answer":"A",
+      "explanation":"N-acetylglucosamine Phosphotransferase phosphorylates mannose to form M6P."
+   },
+   {
+      "question":"What happens to the M6P receptor after M6P dissociates in the lysosome?",
+      "options":{
+         "A":"It is degraded in the lysosome.",
+         "B":"It is recycled back to the Golgi apparatus.",
+         "C":"It binds to another hydrolase enzyme.",
+         "D":"It remains bound to clathrin indefinitely."
+      },
+      "answer":"B",
+      "explanation":"The M6P receptor is recycled back to the Golgi after releasing M6P."
+   },
+   {
+      "question":"Which of the following statements about the wobble effect is incorrect?",
+      "options":{
+         "A":"The first two bases of the codon pair strictly according to Watson-Crick base-pairing rules.",
+         "B":"The third base of the codon allows for flexibility in base pairing, enabling one tRNA to recognize multiple codons.",
+         "C":"Wobble pairing increases the number of tRNAs required to recognize all codons.",
+         "D":"Examples of wobble pairing include G-U and Inosine pairing with A, U, or C."
+      },
+      "answer":"C",
+      "explanation":"Wobble pairing actually reduces the number of tRNAs required by allowing one tRNA to recognize multiple codons."
+   },
+   {
+      "question":"Which statement best describes the purpose of the wobble effect in translation?",
+      "options":{
+         "A":"It ensures that each codon is recognized by a unique tRNA.",
+         "B":"It allows for flexibility in the third codon position, reducing the number of tRNAs needed.",
+         "C":"It increases the accuracy of codon-anticodon pairing by restricting base pairing at all three positions.",
+         "D":"It facilitates the formation of disulfide bonds during protein folding."
+      },
+      "answer":"A",
+      "explanation":"The wobble effect allows one tRNA to recognize multiple codons, thereby reducing the number of tRNAs needed."
+   },
+   {
+      "question":"Which of the following is a direct consequence of wobble pairing in the genetic code?",
+      "options":{
+         "A":"Reduction in the redundancy of the genetic code.",
+         "B":"Increase in the number of amino acids used in proteins.",
+         "C":"Reduction in the number of tRNA molecules required to recognize all sense codons.",
+         "D":"Elimination of stop codons from the genetic code."
+      },
+      "answer":"A",
+      "explanation":"Wobble pairing increases the redundancy of the genetic code by allowing multiple codons to be recognized by a single tRNA."
+   },
+   {
+      "question":"Which of the following best describes the second genetic code?",
+      "options":{
+         "A":"The base-pairing rules between codons and anticodons.",
+         "B":"The process by which amino acids are attached to their corresponding tRNAs by aminoacyl-tRNA synthetase.",
+         "C":"The sequence of amino acids in a protein.",
+         "D":"The regulation of gene expression at the transcriptional level."
+      },
+      "answer":"C",
+      "explanation":"The second genetic code refers to the specific correspondence between amino acids and their respective tRNAs, determined by aminoacyl-tRNA synthetase."
+   },
+   {
+      "question":"Which statement about the second genetic code is incorrect?",
+      "options":{
+         "A":"Aminoacyl-tRNA synthetase attaches the correct amino acid to its corresponding tRNA.",
+         "B":"The second genetic code ensures the accurate translation of mRNA into proteins.",
+         "C":"The second genetic code refers to the sequence of nucleotides in the mRNA.",
+         "D":"Specific identification by aminoacyl-tRNA synthetase is crucial for the second genetic code."
+      },
+      "answer":"C",
+      "explanation":"The second genetic code refers to the relationship between amino acids and tRNAs, not the nucleotide sequence of mRNA."
+   },
+   {
+      "question":"What is the primary role of aminoacyl-tRNA synthetase in the second genetic code?",
+      "options":{
+         "A":"To synthesize mRNA from DNA.",
+         "B":"To attach the correct amino acid to its corresponding tRNA.",
+         "C":"To facilitate the formation of peptide bonds during translation.",
+         "D":"To unwind the DNA double helix during replication."
+      },
+      "answer":"A",
+      "explanation":"Aminoacyl-tRNA synthetase attaches the correct amino acid to its corresponding tRNA, ensuring accurate translation."
+   },
+   {
+      "question":"Which of the following statements about phosphorylation is incorrect?",
+      "options":{
+         "A":"Phosphorylation adds negative charges to proteins, altering their configuration.",
+         "B":"Phosphorylation directly removes amino acids from proteins.",
+         "C":"Phosphorylation can modulate protein function.",
+         "D":"Phosphorylation involves the addition of a phosphate group to specific amino acid residues."
+      },
+      "answer":"B",
+      "explanation":"Phosphorylation involves adding phosphate groups, not removing amino acids from proteins."
+   },
+   {
+      "question":"What is one of the primary effects of protein phosphorylation?",
+      "options":{
+         "A":"It increases the hydrophobicity of the protein.",
+         "B":"It facilitates the formation of disulfide bonds.",
+         "C":"It adds negative charges, which can alter the protein's configuration and function.",
+         "D":"It removes sugar groups from glycoproteins."
+      },
+      "answer":"C",
+      "explanation":"Phosphorylation adds phosphate groups, introducing negative charges that can change the protein's structure and activity."
+   },
+   {
+      "question":"Which amino acid residues are commonly phosphorylated in proteins?",
+      "options":{
+         "A":"Serine, Threonine, and Tyrosine",
+         "B":"Lysine, Arginine, and Histidine",
+         "C":"Glycine, Alanine, and Valine",
+         "D":"Cysteine, Methionine, and Proline"
+      },
+      "answer":"A",
+      "explanation":"Serine, Threonine, and Tyrosine residues are the primary targets for phosphorylation in proteins."
+   },
+   {
+      "question":"Which of the following statements about methylation is incorrect?",
+      "options":{
+         "A":"Methylation often occurs on lysine residues of histones.",
+         "B":"Methylation of histone tails can either promote or inhibit gene expression.",
+         "C":"Methylation increases the positive charge on histones, enhancing their affinity for DNA.",
+         "D":"Methylation is regulated by enzymes such as lysine demethylase."
+      },
+      "answer":"C",
+      "explanation":"Methylation reduces the positive charge on histones, decreasing their affinity for negatively charged DNA."
+   },
+   {
+      "question":"How does methylation of histone tails generally affect gene expression?",
+      "options":{
+         "A":"It always activates gene expression by loosening chromatin structure.",
+         "B":"It always represses gene expression by tightening chromatin structure.",
+         "C":"It can either promote or inhibit gene expression depending on the context.",
+         "D":"It has no effect on gene expression."
+      },
+      "answer":"C",
+      "explanation":"Methylation of histone tails can either promote or inhibit gene expression based on the specific methylation sites and context."
+   },
+   {
+      "question":"Which enzyme is responsible for removing methyl groups from lysine residues on histones?",
+      "options":{
+         "A":"Lysine demethylase",
+         "B":"Aminoacyl-tRNA synthetase",
+         "C":"Phosphotransferase",
+         "D":"Glycosyltransferase"
+      },
+      "answer":"A",
+      "explanation":"Lysine demethylase removes methyl groups from lysine residues on histones, regulating gene expression."
+   },
+   {
+      "question":"Which of the following statements about lipid modification is incorrect?",
+      "options":{
+         "A":"Lipid modification increases the hydrophobicity of proteins.",
+         "B":"Lipid modification allows proteins to bind to cell membranes.",
+         "C":"Isoprenylation is a type of lipid modification that aids in membrane localization.",
+         "D":"Lipid modification removes hydrophobic groups from proteins to make them more soluble."
+      },
+      "answer":"D",
+      "explanation":"Lipid modification adds hydrophobic groups to proteins, increasing their membrane association rather than making them more soluble."
+   },
+   {
+      "question":"What is the primary purpose of lipid modification (lipidation) in proteins?",
+      "options":{
+         "A":"To tag proteins for degradation.",
+         "B":"To increase protein solubility in the cytoplasm.",
+         "C":"To attach proteins to the cell membrane by increasing their hydrophobicity.",
+         "D":"To facilitate the formation of disulfide bonds."
+      },
+      "answer":"C",
+      "explanation":"Lipid modification adds hydrophobic lipid groups to proteins, allowing them to anchor to cell membranes."
+   },
+   {
+      "question":"Which lipid modification involves the addition of isoprene units to cysteine residues?",
+      "options":{
+         "A":"Phosphorylation",
+         "B":"Methylation",
+         "C":"Isoprenylation",
+         "D":"Glycosylation"
+      },
+      "answer":"C",
+      "explanation":"Isoprenylation involves adding isoprene units to cysteine residues, aiding in membrane localization of proteins."
+   },
+   {
+      "question":"Which of the following statements about glycosylation is incorrect?",
+      "options":{
+         "A":"Glycosylation involves the addition of sugar groups to proteins.",
+         "B":"N-linked and O-linked glycosylation direct proteins to become membrane proteins or part of the extracellular matrix.",
+         "C":"Glycosylation reduces the diversity of sugar modifications on proteins.",
+         "D":"Glycosylation plays a role in protein folding and stability."
+      },
+      "answer":"C",
+      "explanation":"Glycosylation actually increases the diversity of sugar modifications on proteins, enhancing their functionality."
+   },
+   {
+      "question":"What are the two main types of glycosylation?",
+      "options":{
+         "A":"Phosphorylation and methylation",
+         "B":"N-linked and O-linked",
+         "C":"Isoprenylation and palmitoylation",
+         "D":"Acetylation and ubiquitination"
+      },
+      "answer":"B",
+      "explanation":"The two main types of glycosylation are N-linked and O-linked."
+   },
+   {
+      "question":"Which of the following is a function of glycosylation in proteins?",
+      "options":{
+         "A":"Tagging proteins for immediate degradation.",
+         "B":"Facilitating proper protein folding and enhancing stability.",
+         "C":"Removing hydrophobic regions to increase solubility.",
+         "D":"Directing proteins to the nucleus."
+      },
+      "answer":"B",
+      "explanation":"Glycosylation facilitates proper protein folding and enhances protein stability."
+   },
+   {
+      "question":"Which of the following statements about EF-TU is incorrect?",
+      "options":{
+         "A":"EF-TU binds to tRNA with amino acids and helps guide it into the A site of the ribosome.",
+         "B":"After GTP hydrolysis, EF-TU induces conformational changes for accurate tRNA placement.",
+         "C":"EF-TU acts as a GEF for EF-Ts.",
+         "D":"EF-TU ensures proper interaction between tRNA and the ribosome during elongation."
+      },
+      "answer":"C",
+      "explanation":"EF-Ts is the GEF for EF-TU, not the other way around."
+   },
+   {
+      "question":"What is the primary role of EF-G during translation elongation?",
+      "options":{
+         "A":"Binding amino acids to tRNA.",
+         "B":"Facilitating the translocation of tRNA from the A and P sites to the P and E sites.",
+         "C":"Recognizing the start codon on mRNA.",
+         "D":"Initiating the formation of the peptide bond."
+      },
+      "answer":"B",
+      "explanation":"EF-G facilitates the translocation of tRNA within the ribosome."
+   },
+   {
+      "question":"Which elongation factor acts as a guanine nucleotide exchange factor (GEF) for EF-TU?",
+      "options":{
+         "A":"EF-TU",
+         "B":"EF-Ts",
+         "C":"EF-G",
+         "D":"EF-1A"
+      },
+      "answer":"B",
+      "explanation":"EF-Ts acts as the GEF for EF-TU."
+   },
+   {
+      "question":"Which of the following elongation factors resembles tRNA structure and facilitates translocation?",
+      "options":{
+         "A":"EF-TU",
+         "B":"EF-Ts",
+         "C":"EF-G",
+         "D":"EF-1A"
+      },
+      "answer":"C",
+      "explanation":"EF-G resembles tRNA and aids in translocation."
+   },
+   {
+      "question":"Which of the following N-terminal signal features directs proteins to the endoplasmic reticulum?",
+      "options":{
+         "A":"KDEL sequence",
+         "B":"Mannose-6-phosphate modification",
+         "C":"Signal peptide",
+         "D":"Nuclear localization signal"
+      },
+      "answer":"C",
+      "explanation":"Signal peptides direct proteins to the ER."
+   },
+   {
+      "question":"What is the function of the KDEL sequence in proteins?",
+      "options":{
+         "A":"Directs proteins to the lysosome.",
+         "B":"Retains proteins in the endoplasmic reticulum.",
+         "C":"Targets proteins for mitochondrial import.",
+         "D":"Signals proteins for degradation via the proteasome."
+      },
+      "answer":"B",
+      "explanation":"KDEL retains proteins in the ER by retrieving them from the Golgi."
+   },
+   {
+      "question":"Which signal sequence is responsible for directing proteins to the lysosome?",
+      "options":{
+         "A":"KDEL sequence",
+         "B":"Mannose-6-phosphate modification",
+         "C":"Signal peptide",
+         "D":"Nuclear export signal"
+      },
+      "answer":"B",
+      "explanation":"Mannose-6-phosphate directs proteins to lysosomes."
+   },
+   {
+      "question":"Which of the following is NOT a function of N-terminal signal sequences?",
+      "options":{
+         "A":"Determining the cellular destination of the protein post-synthesis.",
+         "B":"Facilitating the binding of proteins to DNA in the nucleus.",
+         "C":"Directing proteins to specific organelles like the ER or lysosome.",
+         "D":"Ensuring proteins are properly localized within the cell."
+      },
+      "answer":"B",
+      "explanation":"N-terminal signals do not directly facilitate DNA binding."
+   },
+   {
+      "question":"Which of the following best describes the 'wobble effect' in genetic translation?",
+      "options":{
+         "A":"The first two bases of the codon pair with the anticodon strictly, while the third base allows for flexible pairing.",
+         "B":"All three bases of the codon must strictly pair with the anticodon for accurate translation.",
+         "C":"Wobble effect refers to the movement of ribosomes during translation.",
+         "D":"It is the process by which tRNA molecules are synthesized."
+      },
+      "answer":"B",
+      "explanation":"The wobble effect refers to flexibility at the third base of the codon."
+   },
+   {
+      "question":"What is the primary role of aminoacyl-tRNA synthetase in the second genetic code?",
+      "options":{
+         "A":"To synthesize amino acids from nucleotides.",
+         "B":"To attach the correct amino acid to its corresponding tRNA.",
+         "C":"To form peptide bonds between amino acids.",
+         "D":"To unwind the DNA double helix during replication."
+      },
+      "answer":"B",
+      "explanation":"Aminoacyl-tRNA synthetase ensures each tRNA is linked to the correct amino acid."
+   },
+   {
+      "question":"Which of the following is NOT a function of the second genetic code?",
+      "options":{
+         "A":"Ensuring the correct amino acid is incorporated into the growing polypeptide chain.",
+         "B":"Reducing the number of tRNA molecules needed for translation.",
+         "C":"Determining the amino acid sequence of proteins based on mRNA codons.",
+         "D":"Facilitating the recognition and attachment of amino acids to their corresponding tRNAs."
+      },
+      "answer":"B",
+      "explanation":"Reducing the number of tRNAs is due to the wobble effect, not the second genetic code."
+   }
+]

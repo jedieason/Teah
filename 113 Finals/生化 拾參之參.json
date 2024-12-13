@@ -1,0 +1,434 @@
+[
+{
+"question": "關於RNA編輯，下列敘述何者**錯誤**？",
+"options": {
+"A": "Guide RNA 可作為RNA編輯的模板。",
+"B": "Guide RNA與被編輯的mRNA序列完全互補。",
+"C": "mRNA上經由Guide RNA編輯後可轉譯出不同的蛋白質。",
+"D": "Guide RNA可以藉由插入額外的鹼基來編輯mRNA。",
+"E": "同一條mRNA經過不同的修飾後，可轉譯出不同的蛋白質。"
+},
+"answer": "B",
+"explanation": "Guide RNA和被編輯的mRNA序列只有在修飾片段的前後互補，在修飾區域則否，例如Guide RNA可能多出A，導致mRNA被插入U以維持互補。"
+},
+{
+"question": "RNA脫胺作用(Deamination)的結果，下列何者正確？",
+"options": {
+"A": "A脫胺變成G。",
+"B": "C脫胺變成T。",
+"C": "U脫胺變成C。",
+"D": "C脫胺變成U。",
+"E": "G脫胺變成A。"
+},
+"answer": "D",
+"explanation": "C經過脫胺作用會變成U，這也是DNA使用T而非U的原因，以避免修復系統無法區分原本的U和由C脫胺而來的U。"
+},
+{
+"question": "ApoB-100在小腸中產生ApoB-48的機制為何？",
+"options": {
+"A": "Frameshift mutation",
+"B": "Missense mutation",
+"C": "Silent mutation",
+"D": "Nonsense mutation",
+"E": "Splicing"
+},
+"answer": "D",
+"explanation": "ApoB-100的mRNA序列CAA被修飾成UAA，形成終止密碼子，導致轉譯提前終止，產生較短的ApoB-48，此為Nonsense mutation。"
+},
+{
+"question": "關於核糖體的敘述，下列何者正確？",
+"options": {
+"A": "E. coli的核糖體由40S和60S次單元組成。",
+"B": "核糖體的主要成分是蛋白質，少量RNA。",
+"C": "核糖體的沉降係數具有加成性。",
+"D": "核糖體的重要催化部位由rRNA構成。",
+"E": "真核生物的核糖體比原核生物的核糖體小。"
+},
+"answer": "D",
+"explanation": "核糖體雖然由蛋白質和rRNA組成，但主要的催化功能都由rRNA執行，例如間隙(Cleft)、結合位點和肽鍵形成位點。"
+},
+{
+"question": "原核生物與真核生物核糖體沉降係數的差異，主要源自於:",
+"options": {
+"A": "rRNA種類的差異",
+"B": "蛋白質組成的差異",
+"C": "次單元大小和形狀的差異",
+"D": "沉降係數與重量成正比",
+"E": "次單元組成數量差異"
+},
+"answer": "C",
+"explanation": "沉降係數(S)與重量的對數成正比，而非重量本身，它反映的是離心沉降速度，因此不具加成性。不同生物核糖體的次單元大小和形狀不同，導致沉降係數不同。"
+},
+{
+"question": "RNA世界假說(RNA World Hypothesis)的主要依據為何？",
+"options": {
+"A": "RNA可以催化蛋白質合成。",
+"B": "RNA可以儲存遺傳資訊並自我複製。",
+"C": "RNA是細胞膜的主要成分。",
+"D": "RNA可以轉譯成DNA。",
+"E": "RNA可以調控基因表現。"
+},
+"answer": "B",
+"explanation": "RNA具有催化、儲存遺傳資訊和自我複製的能力，因此推測在生命的早期，RNA可能同時扮演了現在DNA和蛋白質的角色。"
+},
+{
+"question": "下列何者**不是**核糖體的主要功能？",
+"options": {
+"A": "提供mRNA的軌道(Cleft)。",
+"B": "提供tRNA的結合位點。",
+"C": "催化肽鍵的形成。",
+"D": "進行RNA的編輯。",
+"E": "結合mRNA進行轉譯。"
+},
+"answer": "D",
+"explanation": "RNA編輯是由Guide RNA等機制進行，而非核糖體的功能。"
+},
+{
+"question": "下列關於核糖體的敘述，何者**錯誤**？",
+"options": {
+"A": "原核與真核生物的核糖體結構非常相似。",
+"B": "核糖體的轉譯功能在演化過程中高度保守。",
+"C": "核糖體是某些藥物作用的目標。",
+"D": "核糖體的變異程度高，容易產生抗藥性。",
+"E": "核糖體由一大一小兩個次單元組成。"
+},
+"answer": "D",
+"explanation": "核糖體的變異程度低，因此成為某些藥物抑制攻擊的目標，以減少抗藥性的產生。"
+},
+{
+"question": "蛋白質合成的五個步驟，依序為何？",
+"options": {
+"A": "起始、活化、延長、終止、折疊",
+"B": "活化、起始、延長、終止、折疊",
+"C": "活化、延長、起始、終止、折疊",
+"D": "起始、延長、活化、終止、折疊",
+"E": "延長、起始、活化、終止、折疊"
+},
+"answer": "B",
+"explanation": "蛋白質合成的步驟依序為：胺基酸活化、起始、延長、終止、蛋白質折疊。"
+},
+{
+"question": "胺基酸活化的過程中，下列何者正確？",
+"options": {
+"A": "tRNA藉由GTP活化。",
+"B": "每個胺基酸都只有一種對應的tRNA。",
+"C": "此步驟不需要酵素參與。",
+"D": "此步驟會消耗ATP。",
+"E": "此步驟產生ADP。"
+},
+"answer": "D",
+"explanation": "tRNA藉由ATP與Mg2+活化，利用Aminoacyl-tRNA synthetase讓胺基酸接上tRNA，此步驟會消耗ATP產生AMP和PPi。"
+},
+{
+"question": "蛋白質合成起始步驟中，下列何者敘述正確？",
+"options": {
+"A": "大多數的調控發生在延長步驟。",
+"B": "身體營養不足時，會在蛋白質合成的下游步驟進行調控。",
+"C": "此步驟會消耗GTP。",
+"D": "此步驟不需要鎂離子(Mg2+)參與。",
+"E": "mRNA先和大次單元結合。"
+},
+"answer": "C",
+"explanation": "蛋白質合成的起始步驟會消耗GTP，且大多數的調控發生在此步驟。營養不足時，會在此步驟進行調控，避免後續能量浪費。mRNA會先與小次單元結合。"
+},
+{
+"question": "蛋白質合成的延長步驟中，下列何者敘述正確？",
+"options": {
+"A": "此步驟不需要消耗能量。",
+"B": "此步驟會持續進行直到遇到起始密碼子。",
+"C": "此步驟會消耗GTP。",
+"D": "釋放因子(RF)參與此步驟。",
+"E": "此步驟會產生ATP。"
+},
+"answer": "C",
+"explanation": "蛋白質合成的延長步驟會消耗GTP，以延長多肽鏈，直到遇到終止密碼子。釋放因子(RF)參與終止步驟，而非延長步驟。"
+},
+{
+"question": "蛋白質合成的終止步驟中，下列何者敘述正確？",
+"options": {
+"A": "此步驟會消耗ATP。",
+"B": "此步驟需要起始因子(IF)的參與。",
+"C": "mRNA和多肽鏈會與核糖體結合。",
+"D": "此步驟需要釋放因子(RF)的參與。",
+"E": "核糖體次單元會被分解。"
+},
+"answer": "D",
+"explanation": "蛋白質合成的終止步驟需要釋放因子(RF)的參與，mRNA和多肽鏈會游離開來，核糖體次單元會被回收再利用。"
+},
+{
+"question": "蛋白質折疊步驟中，下列何者參與了此過程？",
+"options": {
+"A": "起始因子(IF)",
+"B": "釋放因子(RF)",
+"C": "伴護蛋白(Chaperone)",
+"D": "Aminoacyl-tRNA synthetase",
+"E": "Guide RNA"
+},
+"answer": "C",
+"explanation": "伴護蛋白(Chaperone)會協助多肽鏈的折疊和修飾，使其形成具有功能的蛋白質。"
+},
+{
+"question": "tRNA的構造中，下列何者**不**是主要的臂(Arm)?",
+"options": {
+"A": "Amino acid arm",
+"B": "Anticodon arm",
+"C": "D arm",
+"D": "TψC arm",
+"E": "Promoter arm"
+},
+"answer": "E",
+"explanation": "tRNA有四個主要的臂，分別是Amino acid arm, Anticodon arm, D arm, 和TψC arm。沒有Promoter arm。"
+},
+{
+"question": "tRNA上的哪個序列負責接上胺基酸？",
+"options": {
+"A": "AAA-3’",
+"B": "CCA-3’",
+"C": "GGG-5’",
+"D": "UUU-5’",
+"E": "AUG-3’"
+},
+"answer": "B",
+"explanation": "tRNA上的CCA-3’序列負責接上胺基酸。"
+},
+{
+"question": "tRNA的Anticodon辨認mRNA上的Codon時，下列敘述何者正確？",
+"options": {
+"A": "tRNA的3’端辨認Codon的第1個鹼基。",
+"B": "tRNA的5’端辨認Codon的第3個鹼基。",
+"C": "tRNA的3’端辨認Codon的第3個鹼基。",
+"D": "tRNA的5’端辨認Codon的第1個鹼基。",
+"E": "tRNA的中間辨認Codon的第2個鹼基。"
+},
+"answer": "B",
+"explanation": "tRNA的5’端辨認mRNA Codon的第3個鹼基，也就是Wobble position。"
+},
+{
+"question": "下列關於D arm和TψC arm的敘述，何者**錯誤**？",
+"options": {
+"A": "D arm包含Dihydrouridine(D)。",
+"B": "TψC arm包含ribothymidine(T)和pseudouridine(ψ)。",
+"C": "D arm和TψC arm對tRNA的折疊很重要。",
+"D": "TψC arm會與Small-subunit rRNA產生交互作用。",
+"E": "D arm和TψC arm在空間上彼此靠近。"
+},
+"answer": "D",
+"explanation": "TψC arm會與Large-subunit rRNA產生交互作用，而不是Small-subunit rRNA。"
+},
+{
+"question": "哪種酵素負責將胺基酸加到tRNA上？",
+"options": {
+"A": "RNA polymerase",
+"B": "DNA polymerase",
+"C": "Aminoacyl-tRNA synthetase",
+"D": "Reverse transcriptase",
+"E": "Helicase"
+},
+"answer": "C",
+"explanation": "Aminoacyl-tRNA synthetase負責將胺基酸加到tRNA上。"
+},
+{
+"question": "Aminoacyl-tRNA synthetase主要分成哪兩類？",
+"options": {
+"A": "Class A 和 Class B",
+"B": "Class 1 和 Class 2",
+"C": "Type I 和 Type II",
+"D": "Group 1 和 Group 2",
+"E": "Category A 和 Category B"
+},
+"answer": "B",
+"explanation": "Aminoacyl-tRNA synthetase主要分成Class I 和 Class II，以其反應機制區分。"
+},
+{
+"question": "Class I Aminoacyl-tRNA synthetase的反應機制為何？",
+"options": {
+"A": "直接把胺基酸接到核糖的3’端。",
+"B": "先把胺基酸接到核糖的2’端，再轉移到3’端。",
+"C": "先把胺基酸接到核糖的3’端，再轉移到2’端。",
+"D": "直接把胺基酸接到核糖的5’端。",
+"E": "先把胺基酸接到核糖的5’端，再轉移到3’端。"
+},
+"answer": "B",
+"explanation": "Class I Aminoacyl-tRNA synthetase先把胺基酸接到核糖的2’端，再藉由轉酯反應(Transesterification)轉移到3’端。"
+},
+{
+"question": "下列何者是胺基酸活化反應高耗能的原因？",
+"options": {
+"A": "為了產生足夠的ATP。",
+"B": "為了讓tRNA更容易被降解。",
+"C": "為了儲存能量以加速胺基酸聚合反應。",
+"D": "為了讓Aminoacyl-tRNA synthetase更容易與tRNA結合。",
+"E": "為了促進蛋白質的折疊。"
+},
+"answer": "C",
+"explanation": "胺基酸活化反應高耗能是為了將高能量儲存在Aminoacyl-tRNA上，以便在胺基酸聚合反應時提供能量，加速反應進行。"
+},
+{
+"question": "遺傳學的第二密碼系統(Second Genetic Code)指的是什麼？",
+"options": {
+"A": "Codon決定Amino acid的關係。",
+"B": "Aminoacyl-tRNA synthetase和tRNA間的交互作用。",
+"C": "核糖體和mRNA間的交互作用。",
+"D": "tRNA和rRNA間的交互作用。",
+"E": "mRNA和DNA間的交互作用。"
+},
+"answer": "B",
+"explanation": "遺傳學的第二密碼系統指的是Aminoacyl-tRNA synthetase和tRNA間的交互作用，決定了tRNA攜帶哪種胺基酸。"
+},
+{
+"question": "核糖體本身能否區分tRNA所攜帶的胺基酸是否正確？",
+"options": {
+"A": "可以，核糖體可以辨認所有胺基酸。",
+"B": "不可以，核糖體依賴Aminoacyl-tRNA synthetase的專一性。",
+"C": "可以，核糖體可以辨認部分胺基酸。",
+"D": "不可以，核糖體依賴mRNA的序列。",
+"E": "可以，核糖體依賴rRNA的序列。"
+},
+"answer": "B",
+"explanation": "核糖體本身沒有能力區分tRNA所攜帶的胺基酸是否正確，它依賴Aminoacyl-tRNA synthetase的專一性來確保正確的胺基酸接上tRNA。"
+},
+{
+"question": "若要改變tRNA接上的胺基酸種類，應該如何操作？",
+"options": {
+"A": "改變核糖體的結構。",
+"B": "改變mRNA的序列。",
+"C": "改變Aminoacyl-tRNA synthetase辨認的胺基酸。",
+"D": "改變tRNA的Anticodon。",
+"E": "改變rRNA的序列。"
+},
+"answer": "C",
+"explanation": "若要改變tRNA接上的胺基酸種類，可以改變Aminoacyl-tRNA synthetase辨認的胺基酸。"
+},
+{
+"question": "Ala tRNA synthetase的辨識機制為何？",
+"options": {
+"A": "辨識tRNA上的A=U位置。",
+"B": "辨識tRNA上的G=C位置。",
+"C": "辨識tRNA上的G=U位置。",
+"D": "辨識tRNA上的C=A位置。",
+"E": "辨識tRNA上的U=A位置。"
+},
+"answer": "C",
+"explanation": "Ala tRNA synthetase的辨識機制是辨識tRNA上的G=U位置。"
+},
+{
+"question": "原核生物中，Initiator tRNA需要進行何種修飾？",
+"options": {
+"A": "Acetylation",
+"B": "Methylation",
+"C": "Phosphorylation",
+"D": "Formylation",
+"E": "Glycosylation"
+},
+"answer": "D",
+"explanation": "原核生物中，Initiator tRNA需要進行Formylation的修飾，形成N-formyl-Met-tRNAfMet。"
+},
+{
+"question": "原核生物利用何種序列來標定正確的起始密碼子(AUG)？",
+"options": {
+"A": "Kozak consensus sequence",
+"B": "Pribnow box",
+"C": "TATA box",
+"D": "Shine-Dalgarno sequence",
+"E": "Hogness box"
+},
+"answer": "D",
+"explanation": "原核生物利用Shine-Dalgarno sequence和16S rRNA配對，以標定正確的起始密碼子(AUG)。"
+},
+{
+"question": "Initiation Factor-2 (IF2)的功能為何？",
+"options": {
+"A": "與小次單元結合。",
+"B": "辨認mRNA。",
+"C": "攜帶GTP並將fMet-tRNAfMet擺到P site上。",
+"D": "水解GTP並釋放所有Initiation factor。",
+"E": "幫助大次單元蓋到小次單元上。"
+},
+"answer": "C",
+"explanation": "IF2攜帶GTP並將fMet-tRNAfMet擺到P site上。"
+},
+{
+"question": "下列關於G-protein的敘述，何者**錯誤**？",
+"options": {
+"A": "G-protein是一種GTPase。",
+"B": "GTP-form是活化態。",
+"C": "GDP-form是去活化態。",
+"D": "G-protein在生化反應中扮演開關的角色。",
+"E": "GEF使G-protein去活化。"
+},
+"answer": "E",
+"explanation": "GEF促進G-protein活化，GAP使G-protein去活化。"
+},
+{
+"question": "真核生物mRNA的5' cap的功能為何？",
+"options": {
+"A": "確保mRNA的品質。",
+"B": "保護mRNA不被降解。",
+"C": "幫助mRNA與核糖體結合。",
+"D": "調控mRNA的轉譯。",
+"E": "以上皆是。"
+},
+"answer": "E",
+"explanation": "5' cap具有多種功能，包括保護mRNA不被降解，幫助mRNA與核糖體結合，以及調控mRNA的轉譯等。"
+},
+{
+"question": "真核生物mRNA的3' poly(A) tail的功能為何？",
+"options": {
+"A": "保護mRNA不被降解。",
+"B": "確保mRNA的品質。",
+"C": "幫助mRNA與核糖體結合。",
+"D": "調控mRNA的轉譯。",
+"E": "以上皆是。"
+},
+"answer": "E",
+"explanation": "3' poly(A) tail也具有多種功能，包括保護mRNA不被降解，確保mRNA的品質，幫助mRNA與核糖體結合，以及調控mRNA的轉譯等。"
+},
+{
+"question": "真核生物利用何種序列來幫助40S次單元結合到mRNA上？",
+"options": {
+"A": "Shine-Dalgarno sequence",
+"B": "Kozak consensus sequence",
+"C": "Pribnow box",
+"D": "TATA box",
+"E": "Hogness box"
+},
+"answer": "B",
+"explanation": "真核生物利用Kozak consensus sequence來幫助40S次單元結合到mRNA上，雖然最重要的還是靠小次單元掃描找到AUG。"
+},
+{
+"question": "eIF4F是由哪些蛋白質組成的複合體？",
+"options": {
+"A": "eIF4A, eIF4B, eIF4C",
+"B": "eIF4E, eIF4G, eIF4H",
+"C": "eIF4E, eIF4A, eIF4G",
+"D": "eIF4G, eIF4H, eIF4I",
+"E": "eIF4A, eIF4C, eIF4E"
+},
+"answer": "C",
+"explanation": "eIF4F是由eIF4E, eIF4A, eIF4G組成的複合體。"
+},
+{
+"question": "eIF4E的功能為何？",
+"options": {
+"A": "辨認並結合poly(A) tail。",
+"B": "辨認並結合5' cap。",
+"C": "將eIF4E和eIF4G連接起來。",
+"D": "將mRNA帶到40S次單元上。",
+"E": "水解GTP。"
+},
+"answer": "B",
+"explanation": "eIF4E的功能是辨認並結合5' cap。"
+},
+{
+"question": "下列何者是真核生物與原核生物Initiation complex的主要差異之一？",
+"options": {
+"A": "真核生物使用Met-tRNAiMet作為Initiator tRNA。",
+"B": "真核生物有Shine-Dalgarno sequence。",
+"C": "真核生物有eIF4F複合體。",
+"D": "真核生物不需要GTP水解。",
+"E": "真核生物的起始密碼子不是AUG。"
+},
+"answer": "C",
+"explanation": "真核生物與原核生物Initiation complex的主要差異之一是真核生物有eIF4F複合體，而原核生物沒有。"
+}
+]

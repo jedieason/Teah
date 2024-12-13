@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <!-- 原有的 meta 和標籤 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="Images/icon.png" type="image/png">
+    <title>Trivia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="debug.css">
+</head>
+<body>
+    <!-- 開始畫面 -->
+    <div class="start-screen">
+        <div class="start-title">題矣</div>
+        <div class="header-right-homepage">
+            <button id="modeToggle-header" class="toggle-button">
+                <img src="Images/moon.svg" alt="Switch to dark mode" width="15" height="15">
+            </button>
+            <button class="login-button">登出</button>
+            <div class="user-info button-container" style="display: none;">
+                <img class="user-button-homepage user-profile" src="" alt="User Profile" style="display: none;">
+                <img class="user-button-homepage user-profile" src="" alt="User Profile" style="display: none;" id="userProfileHomeBtn">
+                <div class="expandable-frame">
+                    <button class="signOutButton logout-button">登出</button>
+                </div>
+            </div>
+        </div>
+        <!-- 新增一個空的按鈕容器 -->
+        <div id="button-row" class="button-row"></div>
+        
+        <button id="startGame" class="start-button">開始</button>
+        <!-- Restore -->
+        <button class="restoreBtn_C3D4" id="restore">
+            <span class="btnText_E5F6">我到哪了</span>
+        </button>
+    </div>
+    
+    <!-- 測驗內容 -->
+    <div class="quiz-container">
+        <div class="header">
+            <div class="quiz-title">題矣</div>
+            <div class="header-right">
+                <img id="reverseButton" src="Images/reverse.svg" alt="Reverse" width="23" height="23" style="cursor: pointer;">
+                <button id="modeToggle" class="toggle-button">
+                    <img src="Images/moon.svg" alt="Switch to dark mode" width="15" height="15">
+                </button>
+<!--                 <button class="login-button">Login</button> -->
+                <div class="user-info button-container" style="display: none;">
+                    <img class="user-button user-profile" src="" alt="User Profile" style="display: none;" id="userProfileBtn">
+                    <div class="expandable-frame">
+                        <button class="signOutButton logout-button">登出</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress-item orange-bg" id="wrongArea">
+                <span class="progress-number-orange" id="wrong">0</span>
+                <span class="progress-text">錯誤</span>
+            </div>
+            <div class="progress-item green-bg" id="correctArea">
+                <span class="progress-text">正確</span>
+                <span class="progress-number-green" id="correct">0</span>
+            </div>
+        </div>
+        <div class="question-content" id="question"></div>
+        <div class="options" id="options"></div>
+        <button id="confirm-btn" class="confirm-button">確認</button>
+
+        <div class="explanation" id="explanation">
+            <div class="explanation-text" id="explanation-text"></div>
+            <div id="WeeGPTInputSection" style="display: none;">
+                <textarea id="userQuestion" placeholder="詢問 Gemini 2.0..."></textarea>
+                <button id="sendQuestionBtn">傳送</button>
+            </div>
+            <div class="explanation-buttons">
+                <div class="header-right">
+                    <img id="copy-btn" src="Images/copy.svg" alt="Copy" width="30" height="30" style="cursor: pointer;">
+                    <img id="deBug" src="Images/debug.svg" alt="Debug" width="30" height="30" style="cursor: pointer;">
+                    <img id="WeeGPT" src="Images/WeeGPT.svg" alt="WeeGPT" width="24" height="24" style="cursor: pointer;">
+                </div>
+                <button id="next-btn" class="next-button">下一題</button>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2024 <a href="https://instagram.com/jedieason">李亦宸</a> 版權所有
+        </div>
+    </div>
+
+    <!-- 自訂模態窗口 -->
+    <div id="customAlert" class="modal">
+        <div class="modal-content">
+            <p id="modal-message">選點啥吧</p>
+            <button id="modalConfirmBtn" class="modal-confirm-button">知道了</button>
+        </div>
+    </div>
+
+    <!-- deBug回報窗口 -->
+    <div id="popupWindow">
+        <div id="closeButton">&times;</div>
+        <div class="content">
+            <div class="non-editable">Question:</div>
+            <div class="editable" contenteditable="true"></div>
+            <div class="editable" contenteditable="true"></div>
+            <div class="non-editable">Answer:</div>
+            <div class="editable" contenteditable="true"></div>
+            <div class="non-editable">Explanation:</div>
+            <div class="editable" contenteditable="true"></div>
+        </div>
+        <button id="sendButton">抓到蟲子了</button>
+    </div>
+      <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+      <!-- 引入 Gemini 模組 -->
+      <script type="module" src="gemini-setup.js"></script>
+    <script src="debug.js"></script>
+    <script type="module" src="login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

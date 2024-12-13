@@ -1,0 +1,974 @@
+[
+  {
+    "question": "在真核生物基因表達的調控中，下列哪一個層次最直接影響蛋白質的合成量？",
+    "options": {
+      "A": "基因組層級的重組（Genome level rearrangement）",
+      "B": "轉錄效率（Efficacy of transcription）",
+      "C": "選擇性剪接（Alternative splicing）",
+      "D": "RNA干擾（RNA interference）",
+      "E": "泛素依賴的蛋白質降解（Ubiquitin-dependent protein degradation）"
+    },
+    "answer": "D",
+    "explanation": "RNA干擾通過直接抑制mRNA的翻譯或降解，最直接地影響蛋白質的合成量。"
+  },
+  {
+    "question": "下列哪個選項**不是**染色質結構修飾的方式？",
+    "options": {
+      "A": "DNA甲基化",
+      "B": "組蛋白乙醯化",
+      "C": "基因易位",
+       "D": "異染色質形成",
+       "E": "真染色質形成"
+    },
+    "answer": "C",
+     "explanation": "基因易位是基因組層級的變化，不是染色質的結構修飾。"
+  },
+  {
+    "question": "若將真核細胞染色體中的某一段DNA進行DNase I 處理，發現其DNA容易被分解，這段DNA最有可能屬於下列何種狀態？",
+    "options": {
+      "A": "異染色質（Heterochromatin）",
+      "B": "基因擴增區域（Gene Amplification region）",
+      "C": "真染色質（Euchromatin）",
+      "D": "轉座子區域（Transposon region）",
+      "E":"高度甲基化的 CpG island 區域"
+    },
+    "answer": "C",
+    "explanation": "真染色質結構較為鬆散，更容易被DNase I分解。"
+  },
+  {
+     "question": "下列關於*Cis*-element和*Trans*-element的敘述，何者正確？",
+      "options": {
+        "A": "*Cis*-element通常為蛋白質，*Trans*-element為DNA序列",
+        "B": "*Cis*-element調控遠端基因的轉錄，*Trans*-element調控鄰近基因的轉錄",
+        "C": "*Cis*-element在基因體上，*Trans*-element透過擴散影響基因表現",
+        "D": "*Cis*-element 通常具有兩個結構域，*Trans*-element只有一個結構域",
+        "E": "*Cis*-element僅存在於真核生物，*Trans*-element僅存在於原核生物"
+      },
+      "answer": "C",
+      "explanation": "*Cis*-element為DNA序列，在染色體上直接影響鄰近基因的轉錄，*Trans*-element通常為蛋白質，通過擴散與*Cis*-element結合發揮調控作用。"
+  },
+  {
+    "question": "下列何者*不是*真核生物轉錄調控中 Distal control element 的特性？",
+    "options": {
+      "A": "為特定的DNA序列",
+      "B": "可以位於轉錄起始位點的上游或下游",
+     "C": "一定會與轉錄起始位點的距離很近",
+      "D":"能賦予組織專一性",
+      "E": "可以調控多個基因的表達"
+    },
+    "answer": "C",
+    "explanation": "Distal control elements，如強化子（Enhancers）和沉默子（Silencers），可以在距離啟動子很遠的地方發揮作用。"
+  },
+    {
+    "question": "若一研究人員使用Chromatin Immunoprecipitation-sequencing (ChIP-seq) 實驗分析某轉錄因子在基因體上的結合位置，下列哪一實驗步驟對於結果的準確性最為關鍵？",
+     "options": {
+      "A": "使用DNase I處理染色體",
+      "B": "使用限制酶（Restriction enzyme）處理染色體",
+      "C": "進行Cross-linking反應",
+      "D":"使用RNA聚合酶進行轉錄",
+      "E":"使用核酶進行切割"
+    },
+      "answer": "C",
+      "explanation": "Cross-linking可以將轉錄因子與其結合的DNA序列固定住，在後續的免疫沉澱和純化步驟中避免目標DNA序列的遺失。"
+  },
+    {
+    "question": "下列何者*不是*影響轉錄因子活性調控的機制？",
+    "options": {
+      "A": "轉錄因子的專一性合成",
+      "B": "轉錄因子的磷酸化",
+      "C": "轉錄因子的甲基化",
+      "D": "配基與轉錄因子結合",
+      "E":"轉錄因子二聚體的形成"
+    },
+    "answer": "C",
+     "explanation": "轉錄因子的甲基化較少直接影響轉錄因子的活性，通常是影響DNA。"
+  },
+    {
+    "question": "關於轉錄因子中Leucine zipper結構的描述，下列何者正確？",
+      "options": {
+       "A": "形成鋅指結構的輔因子",
+      "B": "直接與DNA序列結合",
+       "C": "促進單個轉錄因子的轉錄激活",
+      "D":"負責將兩個轉錄因子連接在一起形成二聚體",
+       "E":"僅在原核生物中發現"
+    },
+    "answer": "D",
+    "explanation": "Leucine zipper 主要功能是形成二聚體，將兩個轉錄因子連接在一起，並非直接與DNA結合。"
+  },
+  {
+    "question": "下列哪種motif主要利用金屬離子（如鋅）來維持其結構，並與DNA結合？",
+    "options": {
+      "A": "Helix-turn-helix",
+      "B": "Helix-loop-helix",
+       "C": "Leucine zipper",
+       "D": "Zinc finger",
+       "E": "Beta barrel"
+    },
+    "answer": "D",
+    "explanation": "Zinc finger結構使用鋅離子來穩定helix和β-sheet的結構，並通過helix與DNA的major groove結合。"
+  },
+  {
+    "question": "類固醇激素受體通常位於細胞的哪個位置？",
+    "options": {
+      "A": "細胞膜",
+      "B": "細胞質",
+      "C": "細胞核",
+       "D": "內質網",
+       "E": "高基氏體"
+    },
+    "answer": "B",
+    "explanation": "類固醇激素為脂溶性，可自由穿過細胞膜進入細胞質，並在那裡與其受體結合。"
+  },
+  {
+   "question": "若一研究人員發現某突變果蠅的腿長在觸鬚應長出的位置，這最可能與下列哪種基因的突變有關？",
+    "options": {
+      "A": "Tumor suppressor gene",
+      "B": "Proto-oncogene",
+      "C": "Homeotic gene",
+      "D":"Housekeeping gene",
+      "E": "Ribosomal gene"
+    },
+    "answer": "C",
+    "explanation": "Homeotic genes控制身體不同部分的發育，其突變會導致身體結構異常。"
+  },
+    {
+    "question": "關於免疫球蛋白IgM的選擇性剪接，下列敘述何者正確？",
+    "options": {
+      "A": "選擇性剪接決定了IgM的重鏈與輕鏈的比例",
+      "B": "選擇性剪接發生在蛋白質轉譯階段",
+       "C":"選擇性剪接決定IgM是否會分泌到細胞外",
+       "D":"選擇性剪接主要調控IgM的DNA序列",
+       "E":"選擇性剪接影響IgM的半衰期"
+    },
+      "answer": "C",
+     "explanation": "選擇性剪接決定了IgM是否包含跨膜錨定序列，從而決定了其是在細胞膜上還是分泌出去。"
+  },
+    {
+    "question":"下列關於miRNA的敘述，何者正確？",
+     "options": {
+       "A": "miRNA屬於編碼DNA",
+      "B": "miRNA的長度通常大於100個核苷酸",
+        "C": "miRNA是由RNA polymerase I轉錄產生",
+       "D": "miRNA主要功能是促進基因表達",
+        "E": "miRNA可以通過不完全配對抑制mRNA轉譯"
+    },
+    "answer": "E",
+     "explanation": "miRNA是一種非編碼RNA，長度約22個核苷酸，由RNA聚合酶II轉錄產生，並通過不完全配對抑制mRNA轉譯。"
+  },
+    {
+    "question":"在RNA干擾（RNAi）機制中，Dicer的作用是什麼？",
+    "options": {
+      "A": "將Pri-miRNA轉變成Pre-miRNA",
+      "B": "催化mRNA的降解",
+     "C": "將雙股RNA切割為siRNA duplex",
+      "D":"將miRNA帶到細胞核",
+      "E":"催化RNA的甲基化"
+    },
+    "answer": "C",
+    "explanation": "Dicer是一種核酸酶，負責將長雙股RNA切割成短的siRNA duplex，這是RNAi機制中的一個關鍵步驟。"
+  },
+  {
+    "question": "下列何者描述RNA沉默機制中，miRNA 與mRNA作用的方式？",
+    "options": {
+        "A": "miRNA 與mRNA 完全配對，導致mRNA的降解",
+        "B": "miRNA 與mRNA 完全配對，導致mRNA的轉譯增強",
+        "C":"miRNA 與mRNA 不完全配對，導致mRNA的降解",
+        "D": "miRNA 與mRNA 不完全配對，導致mRNA的轉譯被抑制",
+        "E":"miRNA 直接與核糖體結合，阻止轉譯"
+    },
+    "answer": "D",
+    "explanation":"miRNA通常與mRNA的3’UTR區域不完全配對，導致核糖體的轉譯受抑制。"
+},
+   {
+    "question": "在泛素-蛋白酶體系統中，泛素如何與目標蛋白質結合？",
+    "options": {
+      "A": "通過氫鍵與蛋白質的氨基結合",
+      "B": "通過二硫鍵與蛋白質的半胱胺酸結合",
+      "C": "通過異肽鍵與蛋白質的離胺酸結合",
+     "D": "通過疏水性作用力與蛋白質的疏水區域結合",
+      "E": "通過離子鍵與蛋白質的帶電殘基結合"
+    },
+    "answer": "C",
+     "explanation": "泛素通過其C末端的甘胺酸與目標蛋白質上的離胺酸形成異肽鍵進行結合。"
+  },
+    {
+      "question": "下列哪一種真核生物基因表現的調控機制，在癌細胞中經常出現，並導致抗藥性？",
+      "options": {
+         "A": "選擇性剪接 (Alternative splicing)",
+        "B": "染色質結構的鬆散 (Loosening of chromatin structure)",
+        "C": "基因擴增 (Gene amplification)",
+        "D": "RNA干擾 (RNA interference)",
+        "E": "轉錄因子的突變 (Mutation of transcription factors)"
+      },
+      "answer": "C",
+      "explanation":"基因擴增導致特定蛋白質的大量產生，包含酵素，這能使癌細胞對藥物產生抗性。"
+   },
+   {
+        "question": "費城染色體（Philadelphia chromosome）的形成，主要是由於哪個基因的易位？",
+        "options": {
+           "A": "ABL基因從22號染色體易位到9號染色體",
+          "B": "BCR基因從9號染色體易位到22號染色體",
+          "C": "ABL基因從9號染色體易位到22號染色體",
+          "D":"BCR基因從22號染色體易位到9號染色體",
+         "E":"兩個基因沒有發生易位，而是染色體斷裂"
+        },
+        "answer": "C",
+        "explanation": "費城染色體是由於9號染色體上的ABL基因易位到22號染色體上的BCR基因附近。"
+     },
+   {
+        "question": "下列哪一種方法可用於檢測染色體的活性區域？",
+        "options": {
+          "A": "限制酶處理",
+         "B": "甲基化檢測",
+         "C": "DNase I 處理",
+        "D":"PCR擴增",
+        "E":"RNA聚合酶抑制"
+        },
+        "answer": "C",
+        "explanation": "DNase I 可分解鬆散的染色質結構，活性基因區域通常為真染色質，容易被DNase I切割。"
+    },
+   {
+       "question": "下列哪一種分子*不是*RNA processing的修飾之一？",
+        "options": {
+         "A": "5'加帽",
+         "B": "剪接",
+        "C": "3'多腺苷酸化",
+         "D": "mRNA 的甲基化",
+        "E": "RNAi"
+        },
+        "answer": "E",
+        "explanation":"RNAi 是基因靜默機制，不屬於RNA的修飾。"
+    },
+   {
+       "question": "下列關於原核生物和真核生物基因表現的敘述，何者正確？",
+        "options": {
+         "A": "原核生物的基因是Monocistronic，真核生物是Polycistronic",
+         "B": "原核生物的core promoter包含TATA box序列，真核生物不包含",
+         "C":"原核生物沒有遠程調控元件，真核生物有",
+         "D":"原核生物轉錄的RNA需要經過複雜的加工",
+          "E":"原核生物和真核生物轉錄因子結合的DNA motif完全相同"
+        },
+        "answer": "C",
+        "explanation": "原核生物的基因多為 Polycistronic，真核生物為 Monocistronic。原核生物轉錄的RNA不需複雜加工。且原核生物的轉錄因子結合的DNA motif較真核生物少。"
+    },
+ {
+    "question": "下列何者為促進啟動子轉錄的*Cis*-element？",
+      "options": {
+        "A": "沉默子（Silencer）",
+        "B": "轉錄因子（Transcription factor）",
+       "C":"啟動子（Promoter）",
+        "D":"強化子（Enhancer）",
+       "E":"轉錄抑制子（Repressor）"
+      },
+      "answer": "D",
+      "explanation": "強化子（Enhancer）能夠增強啟動子的轉錄活性。"
+  },
+    {
+        "question": "下列關於TATA box的敘述，何者正確？",
+         "options": {
+         "A": "為一種轉錄因子",
+         "B": "為RNA聚合酶結合區域",
+          "C": "屬於Distal control element",
+        "D": "是一種鋅指結構",
+           "E":"在所有真核生物基因的promoter中都存在"
+          },
+        "answer": "B",
+        "explanation": "TATA box是真核生物的核心啟動子區域，為RNA聚合酶和通用轉錄因子結合的部位。"
+     },
+  {
+   "question": "以下哪個是**不是**調控轉錄因子活性的機制？",
+   "options": {
+    "A": "轉錄因子的專一性合成",
+     "B": "轉錄因子的構型變化",
+     "C":"轉錄因子的複製",
+     "D": "轉錄因子的磷酸化",
+      "E": "轉錄因子的配體結合"
+    },
+   "answer": "C",
+    "explanation":"轉錄因子的複製是DNA層面的調控，並非轉錄因子活性的調控機制。"
+  },
+ {
+    "question": "若一細胞中 Jun 蛋白的表現量維持恆定，而 Fos 蛋白的表現量受調節，以下哪種轉錄複合體活性會受到影響？",
+     "options": {
+      "A": "Zinc finger complex",
+        "B": "AP1 complex",
+        "C": "TATA-binding protein complex",
+      "D": "Helix-turn-helix complex",
+      "E":"RNA Polymerase complex"
+    },
+    "answer": "B",
+    "explanation":"AP1 複合體由 Jun 和 Fos 形成，若 Fos 的表現量受到調節，AP1複合體的活性將會受到影響。"
+  },
+  {
+    "question": "下列哪種結構域**不直接**與DNA序列結合？",
+      "options": {
+       "A": "Helix-turn-helix",
+       "B":"Leucine zipper",
+       "C": "Zinc finger",
+        "D":"Helix-loop-helix",
+       "E":"Homeodomain"
+    },
+    "answer": "B",
+     "explanation":"Leucine zipper 主要是使兩個轉錄因子二聚化，其本身並不直接與DNA結合。"
+  },
+  {
+    "question": "當Estrogen進入細胞後，會發生什麼事？",
+      "options": {
+       "A": "Estrogen 直接結合細胞核內的DNA",
+       "B": "Estrogen 與細胞膜上的受體結合",
+        "C":"Estrogen 與細胞質內的受體結合",
+       "D": "Estrogen 在細胞內被降解",
+        "E": "Estrogen 被細胞排出"
+    },
+    "answer": "C",
+    "explanation": "Estrogen 為脂溶性激素，可自由進入細胞質與其受體結合。"
+  },
+  {
+    "question": "以下哪種情況不會引發基因重組？",
+    "options": {
+      "A": "形成免疫球蛋白的多樣性",
+       "B": "轉座子的插入",
+      "C":"費城染色體的產生",
+       "D":"細胞週期調控",
+        "E": "癌症的發生"
+    },
+    "answer": "D",
+     "explanation": "細胞週期調控主要透過細胞信號傳遞來調控，與基因重組無直接關係。"
+  },
+  {
+    "question": "在DNA甲基化修飾中，甲基化主要發生在DNA的哪個鹼基上？",
+    "options": {
+      "A": "腺嘌呤 (A)",
+      "B": "鳥嘌呤 (G)",
+      "C": "胞嘧啶 (C)",
+      "D":"胸腺嘧啶 (T)",
+      "E":"尿嘧啶 (U)"
+    },
+    "answer": "C",
+    "explanation": "在DNA甲基化中，胞嘧啶(C)的第5個碳原子會被甲基化，尤其是在CpG島區域。"
+  },
+    {
+      "question": "下列關於免疫球蛋白(Ig)基因重組的敘述，何者正確？",
+       "options": {
+           "A": "重組發生在Ig的恆定區",
+            "B": "重組發生在Ig的Exon區域",
+            "C": "重組會導致基因擴增",
+            "D": "重組導致基因資訊喪失",
+           "E": "重組導致DNA甲基化"
+        },
+       "answer": "D",
+        "explanation": "Ig基因重組涉及V,D,J區域的缺失，導致基因資訊的喪失，產生多樣性的抗體。"
+    },
+  {
+    "question": "下列哪種蛋白質參與了miRNA的生成過程，負責將Pre-miRNA剪切成miRNA duplex？",
+    "options": {
+        "A": "Drosha",
+        "B": "RISC",
+       "C": "Dicer",
+       "D":"Exportin",
+        "E":"Ubiquitin"
+    },
+    "answer": "C",
+      "explanation": "Dicer 是一種核酸酶，主要負責將 pre-miRNA 切割成較小的 miRNA duplex。"
+  },
+  {
+   "question": "下列哪一個過程與細胞內蛋白質的降解*無關*？",
+   "options": {
+      "A":"泛素化",
+      "B": "蛋白酶體的作用",
+        "C": "RISC複合體的作用",
+        "D":"多泛素化",
+      "E":"異肽鍵的形成"
+    },
+    "answer": "C",
+     "explanation": "RISC複合體參與RNA沉默，而非蛋白質降解。"
+  },
+  {
+   "question": "在真核細胞中，下列哪個RNA聚合酶負責轉錄pri-miRNA？",
+  "options": {
+    "A":"RNA polymerase I",
+      "B":"RNA polymerase II",
+    "C":"RNA polymerase III",
+     "D":"Mitochondrial RNA polymerase",
+     "E": "Reverse transcriptase"
+    },
+    "answer": "B",
+    "explanation": "RNA polymerase II 主要轉錄 mRNA 和 miRNA 的前體 (pri-miRNA)。"
+  },
+ {
+      "question": "下列關於泛素化 (Ubiquitination) 的敘述，何者正確？",
+        "options": {
+           "A": "泛素化只能標記細胞內不需要的mRNA",
+           "B": "泛素化是一種可逆反應",
+           "C": "泛素化在細胞核中進行",
+         "D": "泛素化一定導致蛋白質的降解",
+        "E":"泛素化需要酶的協助"
+        },
+        "answer": "E",
+        "explanation": "泛素化是一個需要酶協助的過程，將泛素與目標蛋白質連接，標記其進行降解或其他調控。並非所有泛素化的蛋白質都會被降解。"
+   },
+    {
+     "question": "下列哪個步驟 *不是* 免疫球蛋白 V(D)J 重組過程的一部分？",
+        "options": {
+          "A": "V,D,J基因片段的選擇",
+          "B": "DNA的雙股斷裂",
+        "C": "DNA修復過程",
+       "D": "產生多重泛素化",
+         "E": "DNA序列的缺失"
+        },
+       "answer": "D",
+        "explanation":"多泛素化是蛋白質降解的標記，與基因重組無關。"
+    },
+   {
+       "question": "下列哪一種修飾會導致DNA結構更緊密，進而抑制基因轉錄？",
+         "options": {
+           "A": "DNA乙醯化",
+            "B": "組蛋白乙醯化",
+            "C":"DNA去甲基化",
+           "D": "DNA甲基化",
+            "E": "組蛋白磷酸化"
+        },
+       "answer": "D",
+        "explanation": "DNA甲基化，特別是CpG島的甲基化，會導致染色質結構緊密，抑制基因轉錄。"
+   },
+   {
+    "question": "下列何種分子可以直接調控mRNA的穩定性？",
+    "options": {
+      "A": "rRNA",
+      "B": "tRNA",
+      "C": "miRNA",
+      "D":"snRNA",
+      "E": "hnRNA"
+    },
+    "answer": "C",
+    "explanation": "miRNA 可以通過與 mRNA 的 3'UTR 結合，影響 mRNA 的穩定性，促進 mRNA 的降解或抑制翻譯。"
+  },
+    {
+        "question": "若研究人員發現某蛋白在細胞內的半衰期顯著縮短，以下哪種機制最有可能參與其中？",
+          "options": {
+             "A": "轉錄啟動增強",
+              "B": "選擇性剪接的改變",
+           "C": "泛素化蛋白酶體途徑的激活",
+           "D":"RNA甲基化程度的改變",
+           "E": "miRNA 表現量的降低"
+        },
+      "answer":"C",
+        "explanation":"泛素化蛋白酶體途徑負責降解細胞內不需要的蛋白質，當此途徑激活時，會縮短蛋白質的半衰期。"
+    },
+  {
+    "question": "下列何者是DNase I footprinting 的主要應用？",
+     "options": {
+      "A":"測量DNA甲基化程度",
+      "B": "辨識RNA聚合酶的轉錄結合位點",
+     "C": "測量RNA的半衰期",
+      "D":"尋找DNA序列的突變",
+       "E": "分析蛋白質的結構"
+     },
+    "answer": "B",
+    "explanation": "DNase I footprinting 用於辨識蛋白質結合DNA的區域，特別是 RNA 聚合酶的轉錄結合位點。"
+  },
+ {
+    "question": "下列哪一種蛋白質參與了Pre-miRNA從細胞核到細胞質的運輸過程？",
+     "options": {
+       "A":"Drosha",
+         "B":"Dicer",
+       "C": "Exportin",
+       "D":"RISC",
+      "E":"Ubiquitin"
+     },
+    "answer": "C",
+   "explanation": "Exportin 是一種核運輸蛋白，負責將Pre-miRNA從細胞核運輸到細胞質。"
+  },
+    {
+    "question": "下列哪種情況可能導致mRNA的穩定性降低？",
+     "options": {
+        "A": "3'Poly(A) tail的長度變短",
+        "B": "5' cap的存在",
+        "C":"存在大量的結合蛋白",
+      "D": "3’UTR區域富含AU序列",
+         "E":"不完全配對的miRNA結合"
+    },
+   "answer": "D",
+     "explanation": "mRNA 3'UTR 區域富含 AU 序列會導致 mRNA 的穩定性下降，容易被降解。"
+  },
+ {
+    "question": "以下哪一種結構在鋅指結構 (Zinc finger) 中起到穩定 DNA binding domain 的作用？",
+    "options": {
+      "A": "Helix-turn-helix",
+     "B": "α-helix和兩個β-sheet",
+      "C":"β-barrel",
+      "D": "Leucine zipper",
+      "E":"Homeodomain"
+    },
+    "answer": "B",
+    "explanation": "鋅離子通過與 α-螺旋和兩個 β-摺疊相互作用，穩定鋅指結構的DNA結合域。"
+  },
+   {
+    "question": "在細胞核內，下列何種酶會將pri-miRNA剪切成pre-miRNA？",
+       "options": {
+      "A": "Dicer",
+       "B": "Drosha",
+        "C": "RNA聚合酶II",
+      "D": "RISC",
+      "E":"蛋白酶體"
+       },
+       "answer": "B",
+       "explanation": "Drosha 是一種核酸酶，負責在細胞核內將pri-miRNA剪切成pre-miRNA。"
+  },
+{
+     "question": "在泛素-蛋白酶體系統中，泛素如何形成多泛素鏈？",
+      "options": {
+        "A": "通過其N-末端的氨基酸與目標蛋白質連接",
+        "B":"通過其C-末端的甘胺酸與目標蛋白質的離胺酸連接",
+        "C": "通過其C-末端的甘胺酸與另一個泛素的甘胺酸連接",
+       "D":"通過其C-末端的甘胺酸與另一個泛素的離胺酸連接",
+      "E":"通過氫鍵連接"
+        },
+       "answer": "D",
+        "explanation": "泛素通過其C-末端的甘胺酸與另一個泛素的離胺酸形成異肽鍵，形成多泛素鏈。"
+   },
+{
+   "question": "下列哪種實驗技術常用於分析蛋白質與DNA的相互作用，並精確測定轉錄因子的DNA結合位置？",
+    "options": {
+     "A": "Southern blotting",
+     "B":"Chromatin Immunoprecipitation-sequencing (ChIP-seq)",
+      "C": "Northern blotting",
+     "D":"Western blotting",
+    "E":"DNA footprinting"
+      },
+   "answer": "B",
+   "explanation": "ChIP-seq 能夠檢測轉錄因子等蛋白質在染色體上的結合位點，並通過後續的序列分析精確確定結合的 DNA 序列。"
+  },
+  {
+   "question": "下列哪種情況通常會導致基因表達量上升？",
+   "options": {
+     "A": "DNA甲基化",
+      "B": "異染色質形成",
+      "C": "組蛋白去乙醯化",
+    "D": "真染色質形成",
+       "E": "miRNA表現增加"
+      },
+   "answer": "D",
+   "explanation": "真染色質是染色質的活化狀態，結構鬆散，容易被轉錄，導致基因表達量上升。"
+  },
+    {
+    "question": "下列哪一個過程主要發生在細胞質中？",
+     "options": {
+       "A": "pri-miRNA 轉變成 pre-miRNA",
+       "B": "mRNA 的選擇性剪接",
+      "C":"蛋白質的泛素化和降解",
+     "D": "DNA甲基化",
+      "E":"DNA的複製"
+      },
+    "answer":"C",
+    "explanation": "泛素化和蛋白酶體的蛋白質降解主要在細胞質中進行。"
+    },
+    {
+     "question": "以下哪種結構在helix-loop-helix結構域中起到連接兩個helix的作用？",
+      "options": {
+        "A":"鋅離子",
+        "B":"一個較大的loop",
+         "C":"兩個leucine zipper",
+          "D": "兩個beta sheet",
+          "E":"一個helix-turn-helix結構"
+       },
+        "answer": "B",
+        "explanation":"helix-loop-helix 結構域中的loop負責連接兩個helix，使得它們可以正確地插入到DNA的major groove。"
+    },
+   {
+    "question":"關於染色體組裝的敘述，下列何者正確？",
+     "options":{
+        "A": "染色體組裝從染色體開始，到DNA結束",
+      "B":"功能相關的基因通常位於不同的Loop上",
+     "C":"活性基因區域對DNase I處理不敏感",
+      "D":"DNase I可以區分染色質鬆散或緊密的程度",
+       "E":"活性基因會形成異染色質"
+       },
+    "answer": "D",
+    "explanation":"DNase I 對染色質結構的鬆散程度敏感，因此可以用於區分活性基因所在的真染色質區域和非活性的異染色質區域。"
+   },
+ {
+   "question": "下列關於homeotic基因的敘述，何者錯誤？",
+   "options":{
+      "A":"homeotic基因決定身體各部分的組成",
+       "B":"homeotic基因在胚胎發育中起重要作用",
+      "C":"homeotic基因的突變可能導致身體結構異常",
+      "D":"homeotic基因透過zinc finger與DNA結合",
+     "E":"homeotic基因在人體中也有類似基因存在"
+       },
+     "answer":"D",
+     "explanation":"homeotic基因通常透過helix-turn-helix結構與DNA結合，並非zinc finger。"
+    },
+{
+   "question": "下列哪一種元素可導致基因沉默？",
+   "options":{
+        "A":"強化子(Enhancer)",
+       "B": "沉默子(Silencer)",
+      "C":"啟動子(Promoter)",
+       "D":"轉錄因子(Transcription factor)",
+       "E": "起始密碼子(Start codon)"
+       },
+    "answer":"B",
+    "explanation":"沉默子(Silencer)可以抑制基因的轉錄，導致基因沉默。"
+    },
+  {
+    "question": "下列哪種蛋白質的調控與細胞的感染有關，並且其位置會影響基因表達？",
+     "options": {
+       "A":"p53",
+        "B":"NF-κB",
+       "C":"Jun",
+       "D":"Fos",
+       "E":"RNA聚合酶II"
+      },
+     "answer":"B",
+    "explanation": "NF-κB 在正常情況下位於細胞質中，在細胞感染時會進入細胞核，影響轉錄。"
+    },
+  {
+    "question": "下列哪一個過程主要是處理RNA，而非DNA？",
+      "options": {
+        "A": "DNA甲基化",
+        "B": "基因易位",
+        "C": "RNA干擾",
+        "D": "基因重組",
+        "E":"染色體擴增"
+      },
+     "answer": "C",
+     "explanation":"RNA干擾(RNAi)直接作用於RNA，通過降解mRNA或抑制翻譯來調控基因表達。"
+  },
+  {
+     "question": "在沒有配體的結合下，類固醇激素受體通常會與下列何者結合？",
+      "options": {
+       "A":"核糖體",
+       "B":"DNA",
+       "C":"熱休克蛋白",
+        "D":"RNA聚合酶II",
+       "E":"內質網"
+    },
+    "answer": "C",
+     "explanation": "在沒有配體的結合下，類固醇激素受體通常會與熱休克蛋白結合，保持靜止狀態。"
+  },
+  {
+    "question": "在真核生物中，*核心啟動子*（core promoter）的主要功能是什麼？",
+    "options": {
+        "A": "調節基因轉錄的速率",
+        "B":"決定基因是否進行轉錄",
+        "C": "結合轉錄因子",
+         "D":"作為RNA聚合酶結合位點",
+       "E": "促進染色質的鬆散"
+        },
+       "answer": "D",
+      "explanation":"核心啟動子主要作為RNA聚合酶和通用轉錄因子的結合位點，是轉錄起始所必需的。"
+   },
+   {
+     "question": "下列何者*不是*泛素的功能？",
+      "options": {
+       "A":"標記蛋白質進行降解",
+        "B": "促進蛋白質的穩定性",
+         "C": "調控蛋白質在細胞內的含量",
+        "D": "與蛋白酶體結合",
+        "E": "影響細胞訊息傳遞"
+        },
+       "answer": "B",
+        "explanation": "泛素的主要功能是標記蛋白質進行降解，進而調控細胞內蛋白質的含量，泛素化通常導致蛋白質降解，而非穩定。"
+   },
+   {
+    "question": "下列哪一個選項最能描述Trans-acting factor的作用？",
+     "options":{
+        "A":"直接與DNA結合，改變DNA結構",
+        "B":"透過擴散作用，與DNA的特定序列結合，進而調控基因表現",
+       "C":"作為細胞內的結構蛋白",
+       "D":"直接調控核糖體的功能",
+         "E":"作為細胞膜的通道蛋白"
+        },
+       "answer": "B",
+       "explanation": "Trans-acting factor通常為蛋白質，它們通過擴散與Cis-element結合，調控基因表現。"
+   },
+   {
+        "question": "下列哪個分子是 RNAi 機制中用於指導 RISC 識別目標 mRNA 的主要元件？",
+        "options": {
+           "A": "pri-miRNA",
+            "B": "pre-miRNA",
+            "C": "siRNA",
+           "D": "mRNA",
+          "E":"rRNA"
+            },
+          "answer": "C",
+        "explanation": "在 RNAi 機制中，siRNA（small interfering RNA）與 RISC 結合，並指導 RISC 識別並降解與 siRNA 互補的目標 mRNA。"
+   },
+   {
+       "question": "在真核生物中，下列哪種修飾*不會*影響轉錄效率？",
+       "options": {
+        "A": "DNA甲基化",
+         "B":"組蛋白乙醯化",
+         "C": "組蛋白磷酸化",
+          "D":"轉錄因子的磷酸化",
+          "E":"RNA剪接"
+          },
+         "answer": "E",
+        "explanation": "RNA剪接是RNA加工的步驟，在轉錄完成後才發生，主要影響mRNA的成熟與翻譯，而非轉錄效率。"
+   },
+   {
+       "question": "下列哪種結構主要利用金屬離子來維持其結構，並與DNA結合？",
+        "options":{
+          "A":"Helix-turn-helix",
+           "B":"Leucine zipper",
+           "C":"Zinc finger",
+          "D": "Helix-loop-helix",
+           "E":"Homeodomain"
+          },
+         "answer":"C",
+        "explanation":"Zinc finger結構利用鋅離子來穩定helix和β-sheet結構，並通過helix與DNA的major groove結合。"
+   },
+   {
+      "question": "下列關於染色質的敘述，何者正確？",
+        "options":{
+           "A":"異染色質是基因表達活躍的區域",
+          "B":"真染色質是DNA高度壓縮的狀態",
+          "C":"甲基化通常與真染色質相關",
+           "D":"乙醯化通常與異染色質相關",
+           "E":"染色質鬆散有助於轉錄"
+          },
+        "answer":"E",
+         "explanation":"染色質鬆散的狀態有利於轉錄因子的結合，進而促進基因表達。"
+    },
+ {
+    "question": "下列哪一種轉錄因子調控方式，不需要配體（ligand）的結合？",
+      "options": {
+        "A":"類固醇激素受體",
+      "B": "NF-κB 的核定位",
+      "C":"磷酸化",
+        "D":"Jun/Fos 的二聚化",
+      "E":"TATA-binding protein的結合"
+    },
+    "answer": "E",
+    "explanation": "TATA-binding protein是基本轉錄因子，其結合不需要配體，而是通過結構域結合到啟動子序列。"
+ },
+{
+  "question": "下列哪個實驗步驟**不是**ChIP-seq實驗的核心部分？",
+  "options": {
+    "A": "細胞的裂解（Lysis）",
+    "B": "染色體的片段化",
+    "C": "蛋白質水解酶處理（Protease treatment）",
+    "D":"抗體的免疫沉澱（Immunoprecipitation）",
+   "E":"DNA的定序（Sequencing）"
+  },
+ "answer": "C",
+ "explanation": "ChIP-seq實驗不使用蛋白質水解酶，其目的是要留下蛋白質，而非降解它們。"
+},
+{
+    "question": "下列何種結構域通常以插入到DNA的major groove方式與DNA結合？",
+    "options": {
+      "A":"Leucine zipper",
+      "B": "Helix-loop-helix",
+      "C": "Zinc finger",
+      "D":"Helix-turn-helix",
+      "E":"以上皆是"
+    },
+    "answer": "E",
+    "explanation": "Helix-turn-helix、Helix-loop-helix和Zinc finger結構域都以將 α-helix插入DNA的major groove的方式進行結合。"
+},
+{
+    "question": "以下哪種突變最有可能導致額外的一對翅膀？",
+    "options": {
+      "A": "Antennapedia突變",
+      "B": "Bithorax突變",
+      "C":"Trp repressor突變",
+      "D":"Lac repressor突變",
+       "E":"p53突變"
+    },
+    "answer": "B",
+   "explanation":"Bithorax突變會導致同源基因的功能異常，導致多生長一個體節，進而產生額外的一對翅膀。"
+},
+{
+  "question":"以下哪一個步驟主要決定了mRNA 是否能被轉譯，或是被降解？",
+   "options":{
+    "A":"RNA的甲基化",
+    "B":"5'加帽",
+      "C":"3'多腺苷酸化",
+     "D":"RNA剪接",
+     "E":"mRNA與miRNA的結合"
+    },
+  "answer":"E",
+   "explanation":"mRNA與miRNA的結合，會導致mRNA翻譯被抑制，或是mRNA被降解。"
+},
+ {
+  "question": "下列哪一種基因表現調控機制最不可能直接影響mRNA的半衰期？",
+   "options":{
+    "A":"miRNA介導的RNA沉默",
+    "B":"泛素依賴的蛋白質降解",
+      "C":"mRNA的3' UTR序列",
+     "D":"mRNA的poly(A)尾巴長度",
+    "E":"mRNA的甲基化"
+    },
+  "answer": "B",
+  "explanation":"泛素依賴的蛋白質降解主要影響蛋白質的穩定性，而不是mRNA的穩定性。"
+ },
+{
+    "question": "下列哪一種修飾主要發生在真核生物mRNA的3'末端？",
+     "options":{
+      "A":"5'加帽",
+       "B":"甲基化",
+      "C":"剪接",
+       "D":"多腺苷酸化",
+       "E":"泛素化"
+      },
+    "answer":"D",
+    "explanation":"多腺苷酸化是在真核生物mRNA的3'末端添加poly(A)尾巴的修飾。"
+   },
+   {
+   "question": "下列何者*不是*轉錄因子形成二聚體的原因？",
+    "options":{
+       "A":"增加與DNA結合的穩定性",
+       "B":"擴大結合DNA的選擇範圍",
+      "C":"促進蛋白質的降解",
+       "D":"形成活性轉錄複合體",
+       "E":"提供轉錄調控的多樣性"
+      },
+    "answer":"C",
+   "explanation": "轉錄因子形成二聚體是為了增加DNA結合的穩定性，提供多樣性及形成活性轉錄複合體，與蛋白質降解無關。"
+   },
+   {
+   "question": "下列哪一種酶負責辨認並切割雙股 RNA 分子，使其轉變成 siRNA？",
+    "options":{
+       "A":"Drosha",
+       "B":"Dicer",
+      "C":"RISC",
+       "D":"RNA聚合酶II",
+       "E":"蛋白酶體"
+      },
+   "answer":"B",
+    "explanation":"Dicer 是一種核酸酶，負責將雙股 RNA 分子切割成 siRNA。"
+   },
+  {
+   "question": "下列哪種修飾與染色質結構的鬆散程度相關？",
+     "options":{
+     "A": "DNA甲基化",
+     "B": "組蛋白去乙醯化",
+       "C":"DNA去甲基化",
+     "D": "異染色質的形成",
+      "E":"CpG島的甲基化"
+      },
+    "answer": "C",
+    "explanation":"DNA去甲基化通常會導致染色質結構鬆散，利於轉錄。"
+  },
+ {
+  "question": "下列哪一個步驟主要發生在細胞核內，且與miRNA的生成有關？",
+   "options":{
+       "A":"RISC複合物的形成",
+       "B":"Dicer切割Pre-miRNA",
+       "C":"Pri-miRNA被Drosha處理",
+       "D":"miRNA與mRNA結合",
+      "E":"泛素依賴的蛋白質降解"
+     },
+  "answer":"C",
+   "explanation":"Pri-miRNA 轉變成 pre-miRNA 的過程，藉由 Drosha 酶的作用，主要發生在細胞核中。"
+   },
+  {
+  "question":"下列何種結構與Homeotic 基因的DNA結合有關？",
+  "options":{
+       "A":"Zinc finger",
+      "B": "Leucine zipper",
+     "C":"Helix-loop-helix",
+      "D":"Helix-turn-helix",
+      "E":"Beta barrel"
+   },
+   "answer":"D",
+   "explanation":"Homeotic 基因通常透過Helix-turn-helix結構與DNA結合。"
+  },
+ {
+  "question": "若研究人員將細胞核中的 Pre-miRNA 完全移除，下列何者將*不會*發生？",
+   "options":{
+    "A":"細胞質中miRNA的生成減少",
+    "B":"RISC複合物的形成減少",
+      "C":"mRNA的穩定性增加",
+       "D":"基因表現的抑制減少",
+       "E":"細胞核中 pri-miRNA 生成減少"
+   },
+   "answer": "E",
+   "explanation": "細胞核中 pre-miRNA 的缺失，會影響下游的 miRNA 生成和作用，但不會影響 pri-miRNA 的生成。"
+ },
+{
+    "question": "下列哪種情況*不屬於*基因重組？",
+    "options": {
+        "A": "缺失（Deletion）",
+        "B": "易位（Translocation）",
+        "C": "擴增（Amplification）",
+         "D":"甲基化 (Methylation)",
+        "E":"倒位 (Inversion)"
+    },
+    "answer": "D",
+    "explanation": "甲基化是一種DNA修飾，屬於表觀遺傳學的變化，不屬於基因重組。"
+},
+ {
+  "question": "以下哪個元素通常會與染色質的活化區域相關？",
+   "options":{
+    "A":"DNA甲基化",
+     "B":"組蛋白去乙醯化",
+      "C":"組蛋白乙醯化",
+      "D":"異染色質",
+       "E":"CpG島的甲基化"
+      },
+   "answer":"C",
+   "explanation":"組蛋白乙醯化通常會使染色質結構鬆散，利於轉錄，與染色質的活化區域相關。"
+   },
+{
+  "question": "下列哪種結構可以連接兩個蛋白質並形成二聚體？",
+  "options":{
+    "A":"Zinc finger",
+     "B":"Helix-turn-helix",
+      "C":"Leucine zipper",
+    "D":"Helix-loop-helix",
+    "E":"Homeodomain"
+      },
+ "answer":"C",
+ "explanation":"Leucine zipper結構中的疏水性胺基酸，可以使兩個蛋白質形成二聚體。"
+  },
+{
+ "question": "以下何者為Distal control element的主要功能？",
+  "options":{
+       "A":"直接與RNA聚合酶結合",
+        "B":"控制核糖體與mRNA的結合",
+        "C":"調控轉錄的起始位點",
+      "D":"通過DNA彎曲調控遠端基因的轉錄",
+     "E":"決定mRNA的剪接模式"
+      },
+   "answer":"D",
+    "explanation": "Distal control elements，如強化子和沉默子，可以通過DNA彎曲與啟動子區域互動，調控遠端基因的轉錄。"
+    },
+{
+    "question": "下列哪一個轉錄因子通常位於細胞質中，受到細胞訊號刺激後才會進入細胞核發揮作用？",
+      "options":{
+       "A":"TATA-binding protein",
+         "B":"RNA聚合酶II",
+       "C":"NF-κB",
+        "D":"Homeodomain protein",
+      "E":"類固醇激素受體"
+        },
+     "answer":"C",
+      "explanation":"NF-κB在細胞質中為靜止狀態，受到細胞訊號的刺激（如感染）才會進入細胞核，影響轉錄。"
+ },
+  {
+    "question":"下列何者是真核細胞進行轉錄時所需的核心啟動子元件？",
+      "options":{
+       "A": "啟動子區域 (Promoter region)",
+       "B": "強化子 (Enhancer)",
+      "C": "沉默子 (Silencer)",
+       "D": "TATA盒序列 (TATA box)",
+        "E": "轉錄因子 (Transcription factor)"
+        },
+    "answer":"D",
+    "explanation": "TATA盒序列是許多真核生物基因啟動子中重要的核心啟動子元件，能與TBP結合並定位轉錄起始點。"
+    },
+{
+    "question":"在細胞中，哪一種RNA分子會直接參與蛋白質合成？",
+     "options":{
+      "A":"miRNA",
+        "B":"tRNA",
+       "C":"siRNA",
+      "D":"hnRNA",
+      "E":"snRNA"
+        },
+     "answer":"B",
+    "explanation":"tRNA負責將胺基酸運送到核糖體，參與蛋白質的翻譯過程。"
+    }
+]

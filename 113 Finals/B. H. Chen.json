@@ -1,0 +1,651 @@
+[
+   {
+      "question":"Which of the following statements about DNA fragment cloning is incorrect?",
+      "options":{
+         "A":"Traditional cloning requires DNA fragments to be inserted into vectors and cloned in bacterial systems.",
+         "B":"Emulsion PCR (ePCR) and Bridge Amplification allow for DNA fragments to be amplified directly on solid surfaces.",
+         "C":"DNA fragment cloning is a high-throughput process that can efficiently handle large amounts of DNA data.",
+         "D":"The process of DNA fragment cloning can be time-consuming and labor-intensive."
+      },
+      "answer":"C",
+      "explanation":"DNA fragment cloning is not a high-throughput process; it is time-consuming and labor-intensive."
+   },
+   {
+      "question":"Which of the following statements about sequencing throughput is incorrect?",
+      "options":{
+         "A":"Traditional sequencing methods can only process a small number of DNA fragments at a time.",
+         "B":"Next-Generation Sequencing (NGS) processes millions of DNA fragments simultaneously, increasing data output.",
+         "C":"Low throughput sequencing methods allow for efficient large-scale sequencing with little data loss.",
+         "D":"Next-Generation Sequencing technologies like Illumina's Sequencing-by-Synthesis increase sequencing efficiency."
+      },
+      "answer":"C",
+      "explanation":"Low throughput sequencing methods are not efficient for large-scale sequencing as they only process small numbers of fragments."
+   },
+   {
+      "question":"Which of the following statements about phosphatase is incorrect?",
+      "options":{
+         "A":"Phosphatase ensures the 5' end of DNA lacks a phosphate group for subsequent ligation.",
+         "B":"Phosphatase is responsible for adding phosphate groups to DNA to facilitate ligation.",
+         "C":"Phosphatase reduces background signal interference in sequencing reactions.",
+         "D":"Phosphatase functions to enhance signal clarity by removing unreacted phosphate groups."
+      },
+      "answer":"B",
+      "explanation":"Phosphatase removes, not adds, phosphate groups to DNA for efficient ligation."
+   },
+   {
+      "question":"Which of the following statements about apyrase in sequencing cycles is incorrect?",
+      "options":{
+         "A":"Apyrase removes excess dNTPs and ATP to prevent interference in subsequent sequencing rounds.",
+         "B":"Apyrase converts dNTPs into smaller molecules, making them more efficient for use in sequencing.",
+         "C":"Apyrase hydrolyzes ATP and dNTPs to ADP, AMP, and inorganic phosphate.",
+         "D":"Apyrase ensures that no unreacted nucleotides interfere with the sequencing process."
+      },
+      "answer":"B",
+      "explanation":"Apyrase does not convert dNTPs into smaller molecules but rather removes excess nucleotides and ATP."
+   },
+   {
+      "question":"Which of the following statements about the limitations of sequencing reactions is incorrect?",
+      "options":{
+         "A":"Traditional sequencing methods can only handle a few hundred base pairs per reaction.",
+         "B":"Low throughput sequencing methods can sequence large numbers of fragments at once.",
+         "C":"Traditional sequencing methods are time-consuming and labor-intensive.",
+         "D":"Traditional sequencing methods limit efficiency due to their inability to process large amounts of data."
+      },
+      "answer":"B",
+      "explanation":"Low throughput methods process only a small number of fragments at a time, unlike high throughput methods such as NGS."
+   },
+   {
+      "question":"Which of the following is NOT a solution for improving DNA fragment cloning?",
+      "options":{
+         "A":"Emulsion PCR (ePCR) allows amplification of DNA fragments directly in droplets.",
+         "B":"Bridge Amplification enables DNA fragments to be amplified directly on solid surfaces.",
+         "C":"Traditional bacterial cloning bypasses the need for amplification.",
+         "D":"Techniques like Emulsion PCR and Bridge Amplification bypass bacterial cloning altogether."
+      },
+      "answer":"C",
+      "explanation":"Traditional bacterial cloning does not bypass amplification; it requires amplification in bacterial systems."
+   },
+   {
+      "question":"Which of the following statements about phosphatase function is incorrect?",
+      "options":{
+         "A":"Phosphatase reduces background signal interference by removing unreacted phosphate groups.",
+         "B":"Phosphatase prepares the DNA for ligation by ensuring the 5' end lacks a phosphate group.",
+         "C":"Phosphatase removes fluorescent signals to prepare for the next sequencing cycle.",
+         "D":"Phosphatase works to prevent DNA degradation during sequencing cycles."
+      },
+      "answer":"D",
+      "explanation":"Phosphatase does not prevent DNA degradation; it removes unreacted phosphate groups for ligation."
+   },
+   {
+      "question":"Which of the following statements about apyrase is incorrect?",
+      "options":{
+         "A":"Apyrase hydrolyzes ATP and dNTPs into ADP, AMP, and inorganic phosphate.",
+         "B":"Apyrase prevents interference in sequencing by removing unused nucleotides.",
+         "C":"Apyrase is involved in preventing excess nucleotides from disrupting sequencing reactions.",
+         "D":"Apyrase adds ATP and dNTPs to sequencing reactions to enhance data output."
+      },
+      "answer":"D",
+      "explanation":"Apyrase removes excess ATP and dNTPs rather than adding them to sequencing reactions."
+   },
+   {
+      "question":"Which of the following statements about sequencing is incorrect?",
+      "options":{
+         "A":"Next-Generation Sequencing (NGS) can process millions of DNA fragments in parallel.",
+         "B":"Traditional sequencing methods can sequence only a small number of fragments at a time.",
+         "C":"Illumina's Sequencing-by-Synthesis technology significantly increases sequencing data output.",
+         "D":"Low throughput sequencing technologies allow for efficient parallel processing of large DNA datasets."
+      },
+      "answer":"D",
+      "explanation":"Low throughput sequencing does not allow efficient parallel processing of large DNA datasets. This is a feature of high throughput methods."
+   },
+   {
+      "question":"Which of the following statements about Time-of-Flight (TOF) Mass Spectrometry is incorrect?",
+      "options":{
+         "A":"In Matrix-Assisted Laser Desorption/Ionization (MALDI), a laser excites the sample, imparting a positive charge.",
+         "B":"The electric field propels the charged sample, causing it to travel toward the detector.",
+         "C":"Molecules with the same mass-to-charge ratio travel at the same speed.",
+         "D":"Molecular weight is measured by the time it takes for ions to reach the detector."
+      },
+      "answer":"C",
+      "explanation":"Molecules with different mass-to-charge ratios travel at varying speeds, leading to distinct time measurements for each molecule."
+   },
+   {
+      "question":"Which of the following statements about Ionization in TOF Mass Spectrometry is incorrect?",
+      "options":{
+         "A":"Matrix-Assisted Laser Desorption/Ionization (MALDI) involves embedding the sample in a matrix.",
+         "B":"The laser imparts a positive charge to the sample, causing the molecules to become charged.",
+         "C":"Only one molecule can be ionized by the laser at a time.",
+         "D":"The ionized molecules are propelled through an electric field toward the detector."
+      },
+      "answer":"C",
+      "explanation":"Multiple molecules are ionized simultaneously in the MALDI process, not just one at a time."
+   },
+   {
+      "question":"Which of the following statements about Time-of-Flight Mass Spectrometry's spectrum generation is incorrect?",
+      "options":{
+         "A":"The time taken for molecules to reach the detector is used to generate the mass spectrum.",
+         "B":"Molecules with varying mass-to-charge ratios will travel at different speeds.",
+         "C":"The mass-to-charge ratio has no effect on the speed at which the molecules travel.",
+         "D":"The spectrum generated corresponds to the molecular weight of the molecules."
+      },
+      "answer":"C",
+      "explanation":"Molecules with varying mass-to-charge ratios travel at different speeds, which is fundamental to the generation of the mass spectrum."
+   },
+   {
+      "question":"Which of the following statements about phosphatidylinositol (PI) is incorrect?",
+      "options":{
+         "A":"Phosphatidylinositol is primarily located on the inner leaflet of the plasma membrane bilayer.",
+         "B":"Phosphatidylinositol faces the cytosol in the plasma membrane.",
+         "C":"Phosphatidylinositol is primarily found on the outer leaflet of the plasma membrane.",
+         "D":"Phosphatidylinositol plays a key role in signaling within the cell."
+      },
+      "answer":"C",
+      "explanation":"Phosphatidylinositol is primarily located on the inner leaflet of the plasma membrane, facing the cytosol."
+   },
+   {
+      "question":"Which of the following statements about the detection of lipid rafts using van der Waals forces is incorrect?",
+      "options":{
+         "A":"Changes in membrane height due to lipid rafts are detected by shifting the cantilever height.",
+         "B":"The cantilever mechanism is used to measure the distance between the probe tip and membrane surface.",
+         "C":"Changes in membrane height do not affect the cantilever height in the presence of lipid rafts.",
+         "D":"Laser reflection is used to detect changes in membrane height."
+      },
+      "answer":"C",
+      "explanation":"Changes in membrane height due to lipid rafts cause the cantilever to deflect, which is detected through laser reflection."
+   },
+   {
+      "question":"Which of the following statements about van der Waals forces is incorrect?",
+      "options":{
+         "A":"Van der Waals forces are responsible for the deflection of the cantilever when membrane height changes.",
+         "B":"Cantilever deflection due to van der Waals forces is used to measure membrane surface characteristics.",
+         "C":"Van der Waals forces act only when lipid rafts are not present on the membrane surface.",
+         "D":"The cantilever mechanism uses van der Waals forces to detect small changes in membrane height."
+      },
+      "answer":"C",
+      "explanation":"Van der Waals forces play a role in detecting membrane height changes regardless of the presence of lipid rafts."
+   },
+   {
+      "question":"Which of the following statements about single-stranded DNA detection is incorrect?",
+      "options":{
+         "A":"Single-stranded DNA detection uses electrical signals to detect the passage of DNA through a nanopore.",
+         "B":"The nanopore detects the passage of double-stranded DNA molecules.",
+         "C":"Changes in the electrical signal are used to identify single-stranded DNA molecules.",
+         "D":"The electrical signal changes as the DNA passes through the nanopore."
+      },
+      "answer":"B",
+      "explanation":"Single-stranded DNA is detected, not double-stranded DNA, through electrical signal changes as it passes through the nanopore."
+   },
+   {
+      "question":"Which of the following statements about tyrosine’s amphipathic properties is incorrect?",
+      "options":{
+         "A":"Tyrosine’s hydroxyl group makes it polar and enables hydrogen bonding with water.",
+         "B":"The aromatic ring of tyrosine interacts with the hydrophobic regions of the membrane.",
+         "C":"Tyrosine is entirely hydrophobic and does not interact with water.",
+         "D":"Tyrosine stabilizes membrane proteins at the lipid-water interface."
+      },
+      "answer":"C",
+      "explanation":"Tyrosine is amphipathic, meaning it has both hydrophilic (polar) and hydrophobic regions."
+   },
+   {
+      "question":"Which of the following statements about tyrosine’s role in membrane stabilization is incorrect?",
+      "options":{
+         "A":"Tyrosine stabilizes membrane proteins at the lipid-water interface due to its amphipathic properties.",
+         "B":"The hydrophobic aromatic ring of tyrosine interacts with the hydrophobic core of the membrane.",
+         "C":"Tyrosine prefers the hydrophobic core of the membrane, unlike phenylalanine.",
+         "D":"Phenylalanine, unlike tyrosine, prefers the hydrophobic membrane core."
+      },
+      "answer":"C",
+      "explanation":"Tyrosine has both hydrophilic and hydrophobic properties, allowing it to interact with both the lipid-water interface and the membrane core."
+   },
+   {
+      "question":"Which of the following statements about tyrosine's polarity is incorrect?",
+      "options":{
+         "A":"Tyrosine’s hydroxyl group makes it polar.",
+         "B":"Tyrosine is amphipathic, with a polar -OH group and a hydrophobic aromatic ring.",
+         "C":"The hydrophilic -OH group makes tyrosine incompatible with water.",
+         "D":"The hydroxyl group enables tyrosine to form hydrogen bonds with water."
+      },
+      "answer":"C",
+      "explanation":"The -OH group makes tyrosine polar and allows it to interact with water, forming hydrogen bonds."
+   },
+   {
+      "question":"Which of the following statements about urine osmotic pressure and ion gradients is incorrect?",
+      "options":{
+         "A":"The osmotic pressure of urine leaving the Loop of Henle is lower than that of plasma.",
+         "B":"The ascending limb of the Loop of Henle actively transports sodium and chloride ions out but is impermeable to water.",
+         "C":"The osmotic pressure of urine leaving the Loop of Henle is higher than that of plasma.",
+         "D":"The interstitial NaCl gradient in the ascending limb is crucial for concentrating urine."
+      },
+      "answer":"C",
+      "explanation":"Urine osmotic pressure leaving the Loop of Henle is generally lower than plasma osmotic pressure."
+   },
+   {
+      "question":"Which of the following statements about ion gradients in the kidney is incorrect?",
+      "options":{
+         "A":"Ion gradients help in establishing chemical gradients for intracellular and extracellular ion balance.",
+         "B":"Ion gradients maintain membrane potential and regulate osmotic pressure.",
+         "C":"Ion gradients only help in transporting sodium and chloride ions.",
+         "D":"Ion gradients power secondary active transport and control cellular metabolic rates."
+      },
+      "answer":"C",
+      "explanation":"Ion gradients play broader roles, not just in transporting sodium and chloride, but also in cellular processes like secondary active transport."
+   },
+   {
+      "question":"Which of the following statements about the Loop of Henle is incorrect?",
+      "options":{
+         "A":"The descending limb is permeable to water, while the ascending limb is impermeable to water.",
+         "B":"The ascending limb transports sodium and chloride ions out to create an osmotic gradient.",
+         "C":"The osmotic pressure of urine leaving the ascending limb is higher than plasma.",
+         "D":"The interstitial NaCl gradient formed in the ascending limb is crucial for urine concentration."
+      },
+      "answer":"C",
+      "explanation":"The osmotic pressure of urine leaving the Loop of Henle is generally lower than that of plasma, not higher."
+   },
+   {
+      "question":"Which of the following statements about electrical principles in biological systems is incorrect?",
+      "options":{
+         "A":"The potential difference in biological systems can be calculated using a formula involving voltage and resistance.",
+         "B":"Electrical conductance is inversely proportional to resistance.",
+         "C":"Higher conductance indicates higher resistance in electrical systems.",
+         "D":"Steeper slopes in electrical conductance indicate lower resistance."
+      },
+      "answer":"C",
+      "explanation":"Higher conductance means lower resistance, not the other way around."
+   },
+   {
+      "question":"Which of the following statements about electrical conductance is incorrect?",
+      "options":{
+         "A":"Electrical conductance (G) is inversely proportional to resistance (R).",
+         "B":"A higher resistance results in higher conductance.",
+         "C":"Steeper slopes in an I-V graph represent higher conductance.",
+         "D":"Electrical conductance is a measure of how easily electrical current can flow through a material."
+      },
+      "answer":"B",
+      "explanation":"Higher resistance results in lower conductance, not higher conductance."
+   },
+   {
+      "question":"Which of the following statements about potential difference calculation is incorrect?",
+      "options":{
+         "A":"Potential difference can be calculated using voltage, current, and resistance.",
+         "B":"The calculation of potential difference allows for measuring voltage between two points.",
+         "C":"An example potential difference calculation might result in 0 mV.",
+         "D":"A potential difference of 0 mV indicates the complete absence of any electrical charge."
+      },
+      "answer":"D",
+      "explanation":"A potential difference of 0 mV does not indicate the absence of electrical charge, but rather equal potential between the two points."
+   },
+   {
+      "question":"Which of the following statements about hemizygous deletions using SNP chips is incorrect?",
+      "options":{
+         "A":"SNP chips detect hemizygous deletions in genomic sequences.",
+         "B":"SNP chips measure signal intensity to determine whether an SNP site is homozygous or heterozygous.",
+         "C":"SNP chips only detect the presence of homozygous SNPs and ignore heterozygous SNPs.",
+         "D":"SNP chips are high-resolution tools used to detect variations in single nucleotide polymorphism (SNP) patterns."
+      },
+      "answer":"C",
+      "explanation":"SNP chips detect both homozygous and heterozygous SNPs by measuring signal intensity at each site."
+   },
+   {
+      "question":"Which of the following statements about SNP chips in detecting deletions is incorrect?",
+      "options":{
+         "A":"SNP chips measure the signal intensity at each SNP site to detect deletions.",
+         "B":"SNP chips use high-resolution methods to identify homozygous and heterozygous SNPs.",
+         "C":"SNP chips can detect only single nucleotide polymorphisms, not deletions.",
+         "D":"SNP chips detect variations in genomic sequences by analyzing the signal intensity for each SNP site."
+      },
+      "answer":"C",
+      "explanation":"SNP chips can detect variations, including deletions, by analyzing the signal intensity at each SNP site."
+   },
+   {
+      "question":"Which of the following statements about SNP chips is incorrect?",
+      "options":{
+         "A":"SNP chips are used to determine whether an SNP site is homozygous or heterozygous.",
+         "B":"SNP chips are designed to analyze large numbers of SNPs simultaneously with high resolution.",
+         "C":"SNP chips can only measure SNPs in coding regions of the genome.",
+         "D":"SNP chips can detect both homozygous and heterozygous variations."
+      },
+      "answer":"C",
+      "explanation":"SNP chips can measure SNPs across the entire genome, not just in coding regions."
+   },
+   {
+      "question":"Which of the following statements about membrane proteins are correct?\n\nI. For Type I membrane proteins, the -COOH terminal faces the cytoplasmic side\nII. Symporters transport specific substances down the electrochemical gradient\nIII. Antiporters transport specific substances against the electrochemical gradient directly using energy from ATP hydrolysis\nIV. GPI Anchor is synthesized in the ER and faces the cytoplasmic side\nV. Na⁺-K⁺ pump ATPase is phosphorylated during solute transport",
+      "options":{
+         "A":"I, II, V",
+         "B":"I, III, V",
+         "C":"II, IV, V",
+         "D":"I, II, III, V"
+      },
+      "answer":"A",
+      "explanation":"A (I, II, V) is correct because:\nI: For Type I membrane proteins, the -COOH terminal does face the cytoplasmic side.\nII: Symporters do transport specific substances down the electrochemical gradient.\nV: The Na⁺-K⁺ pump ATPase is phosphorylated during solute transport.\nIII: Incorrect. Antiporters use ion electrochemical gradients for transport but do not directly use energy from ATP hydrolysis.\nIV: Incorrect. GPI-anchored proteins synthesized in the ER lumen are presented on the extracellular side, not the cytoplasmic side."
+   },
+   {
+      "question":"Which of the following statements on membrane potentials of a non-excitable cell are correct?\n\nI. The magnitude of membrane potentials follows the Goldman equation\nII. The inner surface is more negative as the inner [K⁺] is higher than the outer [K⁺]\nIII. The inner surface is more negative as the inner [Na⁺] is lower than the outer [Na⁺]\nIV. Of potassium and sodium ions, potassium ions are more permeable across the membrane\nV. Of potassium and sodium ions, sodium ions are more permeable across the membrane\nVI. Chloride ion distribution follows the membrane potential already developed by potassium and sodium ions",
+      "options":{
+         "A":"I, II, IV, VI",
+         "B":"I, II, V",
+         "C":"II, III, IV",
+         "D":"I, III, IV, V"
+      },
+      "answer":"A",
+      "explanation":"A (I, II, IV, VI) is correct because:\nI: The magnitude of membrane potentials indeed follows the Goldman equation.\nII: The inner surface is more negative due to higher intracellular [K⁺] compared to extracellular [K⁺].\nIV: Potassium ions are more permeable across the membrane than sodium ions.\nVI: Chloride ion distribution aligns with the established membrane potential from potassium and sodium ions.\nIII: Incorrect. A lower intracellular [Na⁺] compared to extracellular [Na⁺] contributes to the negative membrane potential, but this statement alone is incomplete without considering [K⁺].\nV: Incorrect. Sodium ions are less permeable than potassium ions across the membrane in non-excitable cells."
+   },
+   {
+      "question":"Which of the following statements about MALDI-TOF and LC-MS/MS are correct?\n\nI. MALDI-TOF measures the time of flight to the detector to calculate the m/z of target species\nII. MALDI-TOF ionizes protein molecules with one proton\nIII. LC-MS/MS ionizes proteins to carry multiple positive charges\nIV. In LC-MS/MS, the second MS can identify protein sequences",
+      "options":{
+         "A":"I, II, III, IV",
+         "B":"I, III, IV",
+         "C":"II, IV",
+         "D":"I, II, IV"
+      },
+      "answer":"A",
+      "explanation":"A is correct because:\nI: Correct. MALDI-TOF measures the time it takes for ions to travel to the detector, which is used to calculate the mass-to-charge ratio (m/z) of the target species.\nII: Correct. MALDI-TOF typically ionizes protein molecules by adding a single proton.\nIII: Correct. LC-MS/MS ionizes proteins in a way that they carry multiple positive charges, which aids in their separation and detection.\nIV: Correct. In LC-MS/MS, the second mass spectrometer (MS/MS) can be used to fragment ions and identify protein sequences based on the fragmentation pattern."
+   },
+   {
+      "question":"關於 Lipid Bilayer，下列何者正確？\n\nI. 偵測 Membrane raft 是使用 electrostatic force\nII. Phosphocholine 扮演 eat me signal\nIII. Cholesterol 會減少膜的流動性\nIV. Flippase 是內側翻至外側\nV. Phosphotidylinositol 在內部膜比較多\nVI. Outer and inner membranes 構造不一樣",
+      "options":{
+         "A":"IV, V",
+         "B":"I, III, V",
+         "C":"II, IV, VI",
+         "D":"III, IV, V"
+      },
+      "answer":"A",
+      "explanation":"A (IV, V) is correct because:\nPhospholipid distribution is asymmetric in the membrane's inner and outer layers. Outer: Phosphatidylcholine, sphingomyelin, glycolipid. Inner: Phosphatidylserine, phosphatidylinositol, phosphatidylethanolamine. Flippase, floppase, and scramblase enzymes maintain this distribution. Therefore, options IV and V are correct."
+   },
+   {
+      "question":"Which of the following statements about Pyrosequencing is incorrect?",
+      "options":{
+         "A":"DNA polymerase extends the complementary strand by adding complementary dNTPs to the DNA template.",
+         "B":"Pyrophosphate (PPi) is released when a complementary dNTP is incorporated into the growing DNA strand.",
+         "C":"The sulfurylase enzyme uses ATP to convert PPi into a usable form of energy.",
+         "D":"Apyrase is used to degrade unreacted dNTPs and ATP before adding new nucleotides."
+      },
+      "answer":"C",
+      "explanation":"Sulfurylase converts PPi into ATP, not the other way around. The ATP is then used by luciferase for light emission."
+   },
+   {
+      "question":"Which of the following statements about Pyrosequencing is incorrect?",
+      "options":{
+         "A":"Light emission during Pyrosequencing is generated when luciferase converts luciferin into an excited state.",
+         "B":"The generated light is detected by instruments to determine the sequence of the complementary DNA strand.",
+         "C":"The emitted light corresponds directly to the incorporation of specific dNTPs in the growing DNA strand.",
+         "D":"Only one nucleotide is added at a time, with all dNTPs being introduced simultaneously for each sequencing step."
+      },
+      "answer":"D",
+      "explanation":"In pyrosequencing, nucleotides are added one by one, and each nucleotide's incorporation is detected individually."
+   },
+   {
+      "question":"Which of the following statements about Sequencing by Ligation is incorrect?",
+      "options":{
+         "A":"Sequencing by ligation involves the use of four different types of probes that bind to the DNA template.",
+         "B":"Each probe used in sequencing by ligation has a specific color tag on the 5' end and a dinucleotide on the 3' end.",
+         "C":"Phosphatase plays a role by ensuring that the probes are correctly ligated to the target DNA.",
+         "D":"The first base in the DNA sequence is always T."
+      },
+      "answer":"D",
+      "explanation":"The first base in the DNA sequence can vary, and it is not always thymine (T). The sequence is determined by the ligation of probes, not by a fixed first base."
+   },
+   {
+      "question":"Which of the following statements about genetic mutations is incorrect?",
+      "options":{
+         "A":"Point mutation refers to a single nucleotide change in the DNA sequence.",
+         "B":"Indel mutations involve the insertion or deletion of nucleotides in the DNA sequence, potentially causing frameshift mutations.",
+         "C":"A homozygous deletion refers to the deletion of one allele of a gene.",
+         "D":"Indels can cause frameshift mutations when the number of nucleotides inserted or deleted is not a multiple of three."
+      },
+      "answer":"C",
+      "explanation":"A homozygous deletion refers to the deletion of both alleles of a gene, not just one."
+   },
+   {
+      "question":"Which of the following statements about genetic mutations is incorrect?",
+      "options":{
+         "A":"Hemizygous deletions typically occur on sex chromosomes, as seen in males with XY chromosomes.",
+         "B":"A gain mutation involves the addition of genetic material, such as gene duplication or amplification.",
+         "C":"A translocation breakpoint refers to a location where a chromosome breaks and rearranges to another chromosome.",
+         "D":"Pathogens are genetic mutations that cause diseases in organisms."
+      },
+      "answer":"D",
+      "explanation":"Pathogens are not genetic mutations; they are organisms or agents that cause disease, but not mutations in DNA."
+   },
+   {
+      "question":"Which of the following statements about genetic mutations is incorrect?",
+      "options":{
+         "A":"Point mutations can result in silent, missense, or nonsense mutations depending on their effect on protein synthesis.",
+         "B":"A hemizygous deletion involves the loss of one allele in a diploid organism, often occurring on sex chromosomes.",
+         "C":"A translocation breakpoint results from a chromosome rearranging to another chromosome, potentially disrupting gene function.",
+         "D":"A gain mutation refers to the loss of genetic material in the DNA sequence, such as gene deletion."
+      },
+      "answer":"D",
+      "explanation":"A gain mutation refers to the addition of genetic material, not the loss, such as gene duplication or amplification."
+   },
+   {
+      "question":"Which of the following statements about Sequencing by Ligation is incorrect?",
+      "options":{
+         "A":"Sequencing by Ligation uses color-marked primers that bind to the DNA template.",
+         "B":"DNA ligase adds complementary nucleotides to the primer, with each nucleotide represented by a unique color.",
+         "C":"Phosphatase is used to add 5' phosphate groups to the primers before ligation.",
+         "D":"The sequence is determined by identifying the colors corresponding to the incorporated nucleotides."
+      },
+      "answer":"C",
+      "explanation":"Phosphatase is used to REMOVE 5' phosphate groups from primers, not to add them."
+   },
+   {
+      "question":"Which of the following statements about Sequencing by Ligation is incorrect?",
+      "options":{
+         "A":"Each primer used in sequencing by ligation is tagged with a specific fluorescent dye.",
+         "B":"The ABI SOLid Sequencer can process multiple cycles of primer binding and ligation to determine the DNA sequence.",
+         "C":"Phosphatase prevents the ligation of primers to unintended sites, reducing background noise.",
+         "D":"The first base of the DNA sequence determines the corresponding primer sequence and color."
+      },
+      "answer":"D",
+      "explanation":"The sequence of the primer is determined by the ligation of complementary nucleotides, not directly by the first base of the DNA sequence."
+   },
+   {
+      "question":"Which of the following sequences corresponds to the correct primer and nucleotide incorporation when the first base is T?",
+      "options":{
+         "A":"ATGGA",
+         "B":"TACCT",
+         "C":"CGTTC",
+         "D":"GCAAG"
+      },
+      "answer":"B",
+      "explanation":"When the first base is T, the corresponding sequence is TACCT."
+   },
+   {
+      "question":"Which of the following statements about CRISPR/Cas9 gene editing is incorrect?",
+      "options":{
+         "A":"CRISPR/Cas9 uses guide RNA to identify the specific DNA sequence to be edited.",
+         "B":"Cas9 protein induces a single-strand break at the targeted DNA location.",
+         "C":"Gene therapy using CRISPR/Cas9 involves the insertion of donor DNA to repair mutations.",
+         "D":"The CCR5 gene encodes a receptor on the surface of white blood cells, and editing it can confer resistance to HIV/AIDS."
+      },
+      "answer":"B",
+      "explanation":"Cas9 induces a **double-strand** break, not a single-strand break, at the targeted DNA location."
+   },
+   {
+      "question":"Which of the following statements about CRISPR/Cas9 is incorrect?",
+      "options":{
+         "A":"The introduction of donor DNA after a double-strand break allows the repair of mutations.",
+         "B":"Gene Drive Technology ensures that a desired gene is passed on to all offspring.",
+         "C":"The CCR5 gene is edited to make individuals immune to malaria.",
+         "D":"Gene drive technology has been used to alter mosquito populations for research purposes."
+      },
+      "answer":"C",
+      "explanation":"The **CCR5 gene** is edited to confer resistance to **HIV/AIDS**, not malaria."
+   },
+   {
+      "question":"Which of the following statements about Gene Drive Technology is incorrect?",
+      "options":{
+         "A":"Gene drive technology ensures that a particular gene spreads rapidly through a population.",
+         "B":"Gene drive technology is used to modify populations of species, such as mosquitoes.",
+         "C":"Gene drive works by introducing Cas9 and guide RNA into a population to edit genes in offspring.",
+         "D":"Gene drive technology is used exclusively in human populations to eliminate genetic diseases."
+      },
+      "answer":"D",
+      "explanation":"Gene drive technology is used primarily in **non-human populations**, like mosquitoes, to spread genetic modifications. It is not used exclusively in human populations."
+   },
+   {
+      "question":"Which of the following statements about isotope labeling in mass spectrometry is incorrect?",
+      "options":{
+         "A":"Each carbon-13 atom increases the molecular mass by 1 Dalton.",
+         "B":"Six carbon-13 atoms contribute 6 Daltons to the molecular mass.",
+         "C":"Each nitrogen-15 atom adds an extra proton, increasing the molecular mass.",
+         "D":"The total mass increase from 6 carbon-13 atoms and 4 nitrogen-15 atoms is 10 Daltons."
+      },
+      "answer":"C",
+      "explanation":"Each nitrogen-15 atom adds an **extra neutron**, not proton, increasing the molecular mass by 1 Dalton per N-15 atom."
+   },
+   {
+      "question":"Which of the following statements about isotope labeling in mass spectrometry is incorrect?",
+      "options":{
+         "A":"Lysine and arginine residues are often labeled in mass spectrometry experiments.",
+         "B":"If a peptide contains no lysine or arginine, there is no change in the molecular mass.",
+         "C":"One arginine residue labeled with isotopes contributes 10 Daltons to the molecular mass.",
+         "D":"If 6 carbon-13 atoms and 4 nitrogen-15 atoms are incorporated into a peptide, the molecular mass increases by 14 Daltons."
+      },
+      "answer":"D",
+      "explanation":"The total molecular mass increase from 6 carbon-13 atoms and 4 nitrogen-15 atoms is **16 Daltons**, not 14 Daltons."
+   },
+   {
+      "question":"Which of the following statements about isotope labeling in mass spectrometry is incorrect?",
+      "options":{
+         "A":"The presence of lysine or arginine does not affect the isotopic labeling process.",
+         "B":"Carbon-13 labeling increases the mass of a molecule by 1 Dalton for each carbon-13 atom.",
+         "C":"If a peptide has no lysine or arginine, it will not show any mass increase during mass spectrometry.",
+         "D":"Each nitrogen-15 atom contributes 1 Dalton to the molecular mass."
+      },
+      "answer":"A",
+      "explanation":"The presence of **lysine or arginine** can significantly affect the isotopic labeling process because these amino acids are often labeled with isotopes."
+   },
+   {
+      "question":"Which of the following statements about phospholipids in cellular membranes is incorrect?",
+      "options":{
+         "A":"Phosphatidylethanolamine (PE) is commonly found in the inner leaflet of the plasma membrane.",
+         "B":"Phosphatidylcholine (PC) is predominantly located in the inner leaflet of the plasma membrane.",
+         "C":"Sphingomyelin (SM) is found in the outer leaflet of the plasma membrane.",
+         "D":"Phosphatidylserine (PS) is primarily involved in signaling during apoptosis when it flips to the outer leaflet."
+      },
+      "answer":"B",
+      "explanation":"Phosphatidylcholine (PC) is predominantly located in the **outer** leaflet of the plasma membrane, not the inner."
+   },
+   {
+      "question":"Which of the following statements about phospholipids in cellular membranes is incorrect?",
+      "options":{
+         "A":"Phosphatidylethanolamine (PE) plays a role in membrane curvature and fusion.",
+         "B":"Phosphatidylserine (PS) is typically found on the outer leaflet of the plasma membrane.",
+         "C":"Sphingomyelin (SM) plays a role in membrane microdomain formation.",
+         "D":"Phosphatidylcholine (PC) is involved in membrane fluidity and signaling."
+      },
+      "answer":"B",
+      "explanation":"Phosphatidylserine (PS) is typically found in the **inner** leaflet of the plasma membrane, not the outer."
+   },
+   {
+      "question":"Which of the following statements about phospholipids in cellular membranes is incorrect?",
+      "options":{
+         "A":"Phosphatidylcholine (PC) contains a choline head group.",
+         "B":"Phosphatidylethanolamine (PE) contains an ethanolamine head group.",
+         "C":"Phosphatidylserine (PS) contains a serine head group.",
+         "D":"Sphingomyelin (SM) contains a glucose head group."
+      },
+      "answer":"D",
+      "explanation":"Sphingomyelin (SM) contains a **phosphocholine** head group, not a glucose head group."
+   },
+   {
+      "question":"Which of the following statements about Atomic Force Microscopy (AFM) and van der Waals forces is incorrect?",
+      "options":{
+         "A":"The AFM uses a cantilever with a sharp tip that interacts with the sample surface.",
+         "B":"Van der Waals forces are strong, covalent interactions between the AFM tip and the sample.",
+         "C":"AFM can detect variations in surface topology by measuring the distance between the cantilever tip and the sample surface.",
+         "D":"AFM can measure membrane thickness by detecting the reflection of laser light from the surface."
+      },
+      "answer":"B",
+      "explanation":"Van der Waals forces are weak, non-covalent interactions, not strong covalent bonds."
+   },
+   {
+      "question":"Which of the following statements about Atomic Force Microscopy (AFM) and van der Waals forces is incorrect?",
+      "options":{
+         "A":"AFM can be used to determine the thickness of biological membranes.",
+         "B":"AFM operates by using a cantilever to measure forces between the tip and the sample surface.",
+         "C":"Van der Waals forces are the only forces involved in AFM measurements.",
+         "D":"AFM can detect variations in surface topology by measuring changes in the distance between the cantilever tip and the sample."
+      },
+      "answer":"C",
+      "explanation":"While van der Waals forces play a key role, AFM can also involve other forces, such as electrostatic or mechanical interactions."
+   },
+   {
+      "question":"Which of the following statements about Atomic Force Microscopy (AFM) and van der Waals forces is incorrect?",
+      "options":{
+         "A":"AFM can provide high-resolution imaging of cell membranes at the nanoscale.",
+         "B":"The cantilever tip of AFM is typically kept at a fixed distance from the sample to maintain optimal van der Waals interactions.",
+         "C":"AFM measures only the elastic properties of materials, not their surface topology.",
+         "D":"AFM can sense variations in membrane thickness based on changes in the angle and intensity of reflected laser light."
+      },
+      "answer":"C",
+      "explanation":"AFM measures both the surface topology and the mechanical properties of the sample, not just the elastic properties."
+   },
+   {
+      "question":"Which of the following statements about protein glycosylation and lipid modification is incorrect?",
+      "options":{
+         "A":"The Endoplasmic Reticulum (ER) is responsible for glycosylation of proteins destined for secretion or membrane localization.",
+         "B":"The Golgi apparatus is involved in modifying, sorting, and packaging proteins after they are synthesized in the ER.",
+         "C":"The ER is the main site for fatty acid remodeling of proteins.",
+         "D":"Glycosylation in the ER involves the addition of carbohydrate groups to proteins."
+      },
+      "answer":"C",
+      "explanation":"Fatty acid remodeling occurs in the Golgi apparatus, not the ER."
+   },
+   {
+      "question":"Which of the following statements about protein glycosylation and lipid modification is incorrect?",
+      "options":{
+         "A":"Proteins undergo glycosylation in the Endoplasmic Reticulum before being transported to the Golgi apparatus.",
+         "B":"The Golgi apparatus adds carbohydrate groups to proteins for their final modification and sorting.",
+         "C":"Lipid modifications on proteins are added in the Golgi apparatus to target proteins to specific membranes.",
+         "D":"Glycosylation helps proteins fold properly and is important for their function."
+      },
+      "answer":"B",
+      "explanation":"While the Golgi is involved in protein modification, glycosylation of proteins typically begins in the ER, not the Golgi."
+   },
+   {
+      "question":"Which of the following statements about protein glycosylation and lipid modification is incorrect?",
+      "options":{
+         "A":"The Endoplasmic Reticulum (ER) is involved in adding carbohydrate groups to proteins.",
+         "B":"The Golgi apparatus is responsible for further modifying proteins and sorting them for their final destinations.",
+         "C":"The ER integrates membrane proteins into its lipid bilayer and adds necessary modifications.",
+         "D":"Glycosylation and lipid modification happen only in the mitochondria."
+      },
+      "answer":"D",
+      "explanation":"Glycosylation and lipid modification primarily occur in the ER and Golgi apparatus, not in the mitochondria."
+   },
+   {
+      "question":"Which of the following statements about membrane transport mechanisms is incorrect?",
+      "options":{
+         "A":"Simple diffusion is a passive process that does not require energy.",
+         "B":"Primary active transport uses energy directly from ATP hydrolysis to move molecules against their concentration gradient.",
+         "C":"Secondary active transport relies on the direct use of ATP to move molecules against their gradient.",
+         "D":"In simple diffusion, molecules move from an area of higher concentration to lower concentration until equilibrium is reached."
+      },
+      "answer":"C",
+      "explanation":"Secondary active transport does not directly use ATP but relies on the energy from ion gradients created by primary active transport."
+   },
+   {
+      "question":"Which of the following statements about membrane transport mechanisms is incorrect?",
+      "options":{
+         "A":"Primary active transport requires ATP to move molecules against their concentration gradient.",
+         "B":"Secondary active transport uses ATP directly to move molecules against their concentration gradient.",
+         "C":"Simple diffusion occurs when molecules move passively down their concentration gradient.",
+         "D":"Examples of primary active transport include the sodium-potassium pump (Na⁺/K⁺-ATPase)."
+      },
+      "answer":"B",
+      "explanation":"Secondary active transport does not use ATP directly; it relies on ion gradients created by primary active transport."
+   },
+   {
+      "question":"Which of the following statements about membrane transport mechanisms is incorrect?",
+      "options":{
+         "A":"In simple diffusion, lipid-soluble molecules can pass through the membrane without energy input.",
+         "B":"Secondary active transport utilizes energy stored in ion gradients to move molecules against their concentration gradient.",
+         "C":"Primary active transport involves co-transport of ions to move molecules across the membrane.",
+         "D":"The sodium-glucose transporter (SGLT) is an example of secondary active transport."
+      },
+      "answer":"C",
+      "explanation":"Primary active transport does not involve co-transport; it directly moves molecules using ATP, such as in the sodium-potassium pump."
+   }
+]

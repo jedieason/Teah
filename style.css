@@ -1,0 +1,974 @@
+/* Import Google Fonts for a premium look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #2D3436;
+    margin: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: white;
+}
+
+/* Start Screen Styling */
+.start-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    gap: 28px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.start-title {
+    font-family: 'Playfair Display', serif;
+    color: #1A1A1A;
+    font-size: 4rem;
+    letter-spacing: 3px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #2D3436 0%, #1A1A1A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Button Styles */
+        .select-button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: #FFFFFF;
+            color: #4A5568;  /* Deep slate blue */
+            border: 2px solid #62597a;  /* Vibrant blue-purple */
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .select-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(107, 92, 212, 0.05), transparent);
+            transition: all 0.6s;
+        }
+
+        .select-button:hover::before {
+            left: 100%;
+        }
+
+        .select-button:hover, .select-button.selected {
+            background-color: #62597a;  /* Vibrant blue-purple */
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 92, 212, 0.2);
+        }
+
+        .start-button {
+            padding: 14px 36px;
+            font-size: 1.2rem;
+            background-color: #62597a;  /* Deep blue-purple */
+            color: #FFFFFF;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(74, 58, 222, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: all 0.6s;
+        }
+
+        .start-button:hover::before {
+            left: 100%;
+        }
+
+        .start-button:hover {
+            background-color: #564e6a;  /* Slightly darker blue-purple */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(58, 42, 206, 0.25);
+        }
+
+        /* Subtle active/focus states */
+        .select-button:active, .start-button:active {
+            transform: scale(0.98);
+        }
+
+
+.quiz-title {
+    font-family: 'Playfair Display', serif;
+    color: #1A1A1A;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+/* Progress Bar Styling */
+.progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    border-radius: 16px;
+    background-color: #F8F9FA;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.progress-number-orange {
+    font-weight: bold;
+    margin-right: 5px;
+    color: #FF9F43;
+}
+
+.progress-number-green {
+    font-weight: bold;
+    color: #28C76F;
+    margin-left: 5px;
+}
+
+/* Question Content Styling */
+.question-content {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #2D3436;
+    margin-bottom: 32px;
+    font-weight: 400;
+}
+
+/* Option Button Styling */
+.option-button {
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    color: #2D3436;
+    background-color: #F8F9FA;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.option-button:hover {
+    background-color: #f0f7ff;
+    transform: translateX(4px);
+}
+
+.option-button.selected {
+    border-color: #007BFF;
+    background-color: #e0f0ff;
+}
+
+.option-button.correct {
+    background-color: #E3FCF4;
+    border-color: #28C76F;
+}
+
+.option-button.incorrect {
+    background-color: #FFE5E5;
+    border-color: #EA5455;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #E4E6EF;
+}
+
+body.dark-mode .start-screen {
+    background: linear-gradient(135deg, #000 0%, #2B2B3B 100%);
+}
+
+body.dark-mode .start-title {
+    background: linear-gradient(135deg, #E4E6EF 0%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.dark-mode .select-button {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 2px solid #a35555;
+}
+
+body.dark-mode .select-button:hover,
+body.dark-mode .select-button.selected {
+    background-color: #a35555;
+    color: #ffffff;
+}
+
+body.dark-mode .start-button {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 2px solid #a35555;
+}
+
+body.dark-mode .start-button:hover {
+    background-color: #a35555;
+    color: #ffffff;
+}
+
+body.dark-mode .quiz-container {
+    background-color: #121212;
+}
+
+body.dark-mode .quiz-title {
+    color: #ffffff;
+}
+
+body.dark-mode .progress-item {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .progress-number-orange {
+    color: #FFA500;
+}
+
+body.dark-mode .progress-number-green {
+    color: #4CAF50;
+}
+
+body.dark-mode .orange-bg {
+    background-color: #3a3a3a;
+}
+
+body.dark-mode .green-bg {
+    background-color: #3a3a3a;
+}
+
+body.dark-mode .question-content {
+    color: #ffffff;
+}
+
+body.dark-mode .option-button {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 2px solid transparent;
+}
+
+body.dark-mode .option-button:hover {
+    background-color: #1b1b1b;
+    border-color: #004896;
+}
+
+body.dark-mode .option-button.selected {
+    background-color: #2e2e2e;
+    border-color: #007BFF;
+}
+
+body.dark-mode .option-button.correct {
+    background-color: rgba(72, 187, 120, 0.2);
+    border-color: #48BB78;
+    color: #ffffff;
+}
+
+body.dark-mode .option-button.incorrect {
+    background-color: rgba(245, 101, 101, 0.2);
+    border-color: #F56565;
+    color: #ffffff;
+}
+
+body.dark-mode .confirm-button {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 2px solid #6d687e;
+}
+
+body.dark-mode .confirm-button:hover {
+    background-color: #6d687e;
+    color: #ffffff;
+}
+
+body.dark-mode .explanation {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode .next-button {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 2px solid #fc9d38;
+}
+
+body.dark-mode .next-button:hover {
+    background-color: #fc9d38;
+    color: #ffffff;
+}
+
+body.dark-mode .copyright {
+    color: #888888;
+}
+
+body.dark-mode .copyright a {
+    color: #888888;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .start-title {
+        font-size: 3rem;
+    }
+    
+    .select-button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+}
+
+/* Original CSS Elements Not Renewed */
+
+/* 新增按鈕容器 */
+.button-row {
+    display: flex;                /* 啟用 Flexbox 佈局 */
+    flex-wrap: wrap;              /* 允許按鈕換行 */
+    gap: 15px;                    /* 設定按鈕之間的間距 */
+    justify-content: center;      /* 將按鈕集中對齊 */
+    max-width: 80%;               /* 容器最大寬度為90% */
+    margin: 0 auto;               /* 使容器在水平居中 */
+}
+
+/* 其他樣式保持不變 */
+.quiz-container {
+    display: none;
+    flex-direction: column;
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    min-height: 100vh;
+    background-color: white; /* 預設淺色模式 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; /* Distributes space between items */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Optional: adds space between the button and the image */
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+        .confirm-button {
+            margin-top: 20px;
+            padding: 8px 18px;
+            font-size: 18px;
+            background-color: #6d687e;
+            color: white;
+            border: solid 2px #6d687e;
+            border-radius: 15px;
+            cursor: pointer;
+            align-self: flex-end;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            outline: none;
+        }
+
+        .confirm-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent
+            );
+            transition: all 0.5s ease;
+        }
+
+        .confirm-button:hover::before {
+            left: 100%;
+        }
+
+        .confirm-button:hover {
+            background-color: white;
+            color: #6d687e;
+            border: solid 2px #6d687e;
+            transform: translateY(-2px);
+        }
+
+        .confirm-button:active {
+            transform: translateY(1px);
+            transition: transform 0.1s;
+        }
+
+.explanation {
+    display: none;
+    margin-top: 25px;
+    padding: 5px 20px 20px 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    position: relative;
+    color: #000; /* 淺色模式 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.explanation-text {
+    font-size: 18px;
+}
+
+        .next-button {
+            display: block;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #f9f9f9;
+            color: #fc9d38;
+            border: solid 2px #fc9d38;
+            border-radius: 15px;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .next-button:hover {
+            background-color: #fc9d38;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .next-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent
+            );
+            transition: all 0.6s;
+        }
+        .next-button:hover::before {
+            left: 100%;
+        }
+        .next-button:active {
+            transform: scale(0.95);
+        }
+
+.copyright {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #a9a9a9; /* 淺灰色 */
+    transition: color 0.3s ease;
+}
+
+.copyright a {
+    color: #a9a9a9;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.copyright a:hover {
+    text-decoration: underline;
+}
+
+/* 模態窗口樣式 */
+/* 自訂模態窗口樣式 */
+.modal {
+    display: none; /* 預設隱藏 */
+    position: fixed; 
+    z-index: 1000; /* 確保在最上層 */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.4); /* 半透明背景 */
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal-confirm-button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 1rem;
+    background-color: #A35555;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-confirm-button:hover {
+    background-color: #93344B;
+    transform: scale(1.05);
+}
+
+/* 深色模式下的模態窗口 */
+body.dark-mode .modal-content {
+    background-color: #2C2C2C;
+    color: #e0e0e0;
+}
+
+body.dark-mode .modal-confirm-button {
+    background-color: #4B2C2C;
+}
+
+body.dark-mode .modal-confirm-button:hover {
+    background-color: #a35555;
+    color: #ffffff;
+}
+
+body.dark-mode .modal-content {
+    background-color: rgba(30,30,30,0.8);
+    color: #ffffff;
+}
+
+body.dark-mode .modal-confirm-button {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 2px solid #a35555;
+}
+
+body.dark-mode .modal-confirm-button:hover {
+    background-color: #a35555;
+    color: #ffffff;
+}
+
+/* Container for Next and Copy buttons */
+.explanation-buttons {
+    display: flex;
+    justify-content: space-between; /* Distributes space between items */
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Style for the Copy text */
+.copy-text {
+    /*padding: 0px 15px;*/
+    color: lightgray;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.copy-text:hover {
+    text-decoration: underline;
+}
+
+/* Adjustments for dark mode */
+body.dark-mode .copy-text {
+    color: #888888;
+}
+
+.language-button {
+    color: #cecece;
+    border: none;
+    /* padding: 10px 20px;
+    margin: 5px; */
+    background-color: transparent;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.language-button:hover {
+    color: #adadad;
+}
+
+.separator {
+    color: #cecece;
+}
+
+/* Toggle Button */
+.toggle-button {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.login-button {
+    font-size: 16px;
+    background-color: transparent;
+    color: lightgray;
+    border: 2px solid lightgray;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 4px 6px;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    color: white;
+    transform: scale(1.05);
+    border: 2px solid #cecece;
+    background-color: #cecece;
+}
+
+body.dark-mode .login-button:hover{
+    color: black;
+    transform: scale(1.05);
+    border: 2px solid #cecece;
+    background-color: #cecece;
+}
+
+.user-profile {
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    border: none;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    position: relative;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Optional: adds space between the button and the image */
+}
+
+.header-right-homepage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: 27px;
+    right: 30px;
+}
+
+.button-container {
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+
+.expandable-frame {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    width: 0;
+    height: 0;
+    background-color: #cecece;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    overflow: hidden;
+    z-index: 1;
+}
+
+.expanded {
+    width: 30px;
+    height: 45px;
+    top: 2px;
+    right: 0;
+    border: none;
+    background-color: #cecece;
+    border-radius: 20px;
+}
+
+.open-expansion {
+    width: 30px;
+    height: 40px;
+    top: 30px;
+    right: 0;
+    border: none;
+    background-color: #cecece;
+    border-radius: 20px;
+}
+
+.till-button-expanded {
+    width: 62px;
+    height: 27px;
+    border-radius: 10px;
+    top: 40px;
+    background-color: transparent;
+    border: 2px solid #cecece;
+    transform: translateX(50%); /* 使用 transform 來居中 */
+    right: 50%; /* 配合 transform 使用 */
+}
+
+.logout-button {
+    background-color: hsla(0, 0%, 100%, 0.9);
+    width: 100%; /* 使用 100% 寬度 */
+    height: 100%; /* 使用 100% 高度 */
+    border: none;
+    cursor: pointer;
+    color: #cecece;
+    opacity: 0;
+    font-size: 16px;
+    transition: opacity 0.3s ease;
+    text-align: center; /* 確保文字居中 */
+    padding: 0; /* 移除內邊距 */
+}
+
+.logout-button:hover {
+    color: #fff;
+    background-color: #cecece;
+}
+
+.show-logout {
+    opacity: 1;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .expandable-frame {
+    background-color: #1e1e1e;
+    border-color: #cecece;
+}
+
+body.dark-mode .logout-button {
+    color: #cecece;
+}
+
+body.dark-mode .logout-button:hover {
+    color: #1e1e1e;
+    background-color: #cecece;
+}
+
+@media (min-width: 1024px) {
+    .language {
+        position: absolute;
+        bottom: 25px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .start-title {
+        font-size: 2.5rem;
+    }
+    
+    .quiz-title {
+        font-size: 1.6rem;
+    }
+    
+    .select-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .question-content {
+        margin-bottom: 0px;
+    }
+
+    .progress{
+        margin-bottom: 0px;
+    }
+}
+
+#copy-btn {
+    cursor: pointer;
+}
+
+
+#WeeGPTInputSection {
+    display: flex;
+    align-items: center;
+    margin: 30px auto;
+    background-color: #f9f9fc;
+    border-radius: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e6e6eb;
+    transition: all 0.3s ease;
+}
+
+#WeeGPTInputSection:focus-within {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+#WeeGPTInputSection textarea {
+    flex-grow: 1;
+    padding: 15px 20px;
+    border: none;
+    resize: none;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    max-height: 25px;
+    color: #2c2c3a;
+    outline: none;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+#WeeGPTInputSection textarea::placeholder {
+    color: #a0a0b3;
+    transition: color 0.3s ease;
+}
+
+#WeeGPTInputSection textarea:focus::placeholder {
+    color: #c0c0d0;
+}
+
+#WeeGPTInputSection button {
+            width: 75px;
+            height: 40px;
+            background: linear-gradient(156deg, #006dff, #ff0909);;
+            color: white;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            margin-right: 8px;
+            border-radius: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 130, 200, 0.3);
+        }
+
+        #WeeGPTInputSection button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.5s ease;
+        }
+
+        #WeeGPTInputSection button:hover::before {
+            left: 100%;
+        }
+
+        #WeeGPTInputSection button:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 6px 20px rgba(0, 130, 200, 0.4);
+        }
+
+        #WeeGPTInputSection button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(0, 130, 200, 0.2);
+        }
+
+@media (max-width: 600px) {
+    #WeeGPTInputSection {
+        margin: 0px 0px 20px 0px;
+    }
+}
+
+
+
+
+/* Restore */
+
+  /* Restore Button Styling */
+  .restoreBtn_C3D4 {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 20px;
+    font-size: 14px;
+    color: #3b3c56;
+    background-color: #ffffff;
+    border: 2px solid #3b3c56;
+    border-radius: 50px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color 0.6s ease, color 0.6s ease;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Text Styling */
+  .restoreBtn_C3D4 .btnText_E5F6 {
+    position: relative;
+    z-index: 2;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+
+  /* Long Thin Arrow Styling */
+  .restoreBtn_C3D4::after {
+    content: '⟵';
+    position: absolute;
+    top: -5px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateX(-20px);
+  }
+
+  /* Hover Effects */
+  .restoreBtn_C3D4:hover {
+    background-color: #3b3c56;
+    color: #ffffff;
+  }
+
+  .restoreBtn_C3D4:hover .btnText_E5F6 {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+
+  .restoreBtn_C3D4:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
