@@ -1,0 +1,518 @@
+[
+  {
+    "question": "下列哪一種蛋白質修飾方式涉及將14碳的飽和脂肪酸連接到蛋白質N末端的甘氨酸殘基上？",
+    "options": {
+      "A": "棕櫚醯化 (Palmitoylation)",
+      "B": "豆蔻醯化 (Myristoylation)",
+      "C": "異戊二烯化 (Isoprenylation)",
+      "D": "醣基磷脂醯肌醇錨定 (Glycosylphosphatidylinositol anchoring, GPI anchoring)",
+     "E": "泛素化(Ubiquitination)"
+    },
+    "answer": "B",
+    "explanation": "豆蔻醯化 (Myristoylation) 特別是指將豆蔻酸（一種14碳飽和脂肪酸）連接到蛋白質N末端的甘氨酸殘基上。"
+  },
+  {
+    "question": "棕櫚酸酯化作用 (Palmitoylation) 的特色是將16碳飽和脂肪酸藉由下列哪種鍵結方式連接到蛋白質的哪個胺基酸殘基？",
+    "options": {
+      "A": "酯鍵 (Ester bond) 連接到絲胺酸 (Ser)",
+      "B": "肽鍵 (Peptide bond) 連接到離胺酸 (Lys)",
+       "C": "硫酯鍵 (Thioester bond) 連接到半胱氨酸 (Cys)",
+      "D": "醣鍵 (Glycosidic bond) 連接到天冬醯胺 (Asn)",
+       "E":"磷酸二酯鍵(Phosphodiester bond)連接到酪胺酸(Tyr)"
+    },
+    "answer": "C",
+    "explanation": "棕櫚酸酯化作用 (Palmitoylation) 將棕櫚酸（一種16碳飽和脂肪酸）透過硫酯鍵 (Thioester bond) 連接到半胱氨酸 (Cys) 殘基上。"
+  },
+ {
+    "question": "異戊二烯化 (Isoprenylation) 修飾通常會將異戊二烯單體連接到下列哪種蛋白質和胺基酸殘基？",
+    "options": {
+      "A": "位於蛋白質N端的精胺酸(Arg)",
+      "B": "位於蛋白質C端的半胱氨酸(Cys)",
+      "C": "位於蛋白質中間的絲胺酸(Ser)",
+      "D": "位於蛋白質N端的離胺酸(Lys)",
+      "E":"位於蛋白質C端的天冬醯胺(Asn)"
+    },
+    "answer": "B",
+    "explanation": "異戊二烯化 (Isoprenylation) 修飾通常將異戊二烯單體透過硫酯鍵連接到蛋白質C末端的半胱氨酸 (Cys) 殘基上。"
+  },
+  {
+    "question": "下列哪種蛋白質修飾方式會使蛋白質能夠固定在細胞膜的外側，並透過醣鏈與細胞膜上的脂質雙層相連？",
+    "options": {
+      "A": "豆蔻醯化 (Myristoylation)",
+      "B": "棕櫚醯化 (Palmitoylation)",
+      "C": "異戊二烯化 (Isoprenylation)",
+     "D": "醣基磷脂醯肌醇錨定 (Glycosylphosphatidylinositol anchoring, GPI anchoring)",
+       "E":"泛素化(Ubiquitination)"
+    },
+    "answer": "D",
+    "explanation": "醣基磷脂醯肌醇錨定 (GPI anchoring) 會將蛋白質固定在細胞膜的外側，並透過醣鏈與細胞膜上的脂質雙層相連。"
+  },
+  {
+    "question":"在醣基磷脂醯肌醇錨定(GPI anchoring)的過程中，通常會將原本膜蛋白上的哪個結構切除？",
+     "options": {
+       "A":"細胞外區域(Extracellular domain)",
+       "B":"跨膜區域(Transmembrane domain)",
+       "C":"內質網訊號序列(ER signal sequence)",
+      "D":"細胞質尾端(Cytoplasmic tail)",
+       "E":"醣基化結構(Glycosylation structure)"
+    },
+    "answer": "B",
+    "explanation":"在GPI anchoring的過程中，通常會將原本膜蛋白上的跨膜區域(Transmembrane domain)切除，並接上GPI anchor。"
+  },
+ {
+    "question": "泛素化 (Ubiquitination) 最常發生在蛋白質的哪個胺基酸殘基上？",
+    "options": {
+      "A": "絲胺酸 (Ser)",
+      "B": "半胱氨酸 (Cys)",
+      "C": "離胺酸 (Lys)",
+       "D": "酪胺酸 (Tyr)",
+       "E":"麩胺酸 (Glu)"
+    },
+    "answer": "C",
+    "explanation": "泛素化 (Ubiquitination) 最常發生在蛋白質的離胺酸 (Lys) 殘基上。"
+  },
+  {
+    "question": "在泛素化 (Ubiquitination) 過程中，E1 酵素的功能為何？",
+    "options": {
+      "A": "辨識目標蛋白",
+      "B": "將泛素轉移至E2酵素",
+      "C": "與泛素形成硫酯鍵，並將泛素活化",
+      "D": "促進泛素鏈的形成",
+      "E":"將泛素連接到目標蛋白上"
+    },
+    "answer": "C",
+    "explanation": "E1 酵素 (Activating enzyme) 的功能是將泛素活化，並與泛素形成硫酯鍵。"
+  },
+  {
+     "question": "在泛素化(Ubiquitination)過程中，E3連接酶(ligase)主要的功能是什麼?",
+     "options":{
+       "A":"活化泛素分子(Ubiquitin molecule)",
+       "B":"將泛素分子轉移到E2酵素上(E2 enzyme)",
+       "C":"辨識目標蛋白質並將泛素連接上去(Target protein)",
+       "D":"幫助泛素分子形成多泛素鏈(polyubiquitin chain)",
+       "E":"水解ATP以提供泛素化所需的能量(Ubiquitination)"
+     },
+      "answer":"C",
+      "explanation":"E3連接酶(ligase)的主要功能是辨識目標蛋白質，並將泛素連接上去。"
+  },
+  {
+    "question": "雙硫鍵組態改變在下列哪個例子中特別重要？",
+    "options": {
+      "A": "DNA複製",
+      "B": "蛋白質合成",
+      "C": "燙髮",
+      "D": "細胞分裂",
+      "E":"細胞訊號傳遞"
+    },
+    "answer": "C",
+    "explanation": "雙硫鍵組態改變在燙髮中特別重要，燙髮藥劑中的還原劑會打開雙硫鍵，以重新塑造頭髮的形狀。"
+  },
+ {
+    "question": "關於蛋白質的派送（Protein targeting），共轉譯輸入（Co-translational import）主要運送哪一類蛋白質？",
+    "options": {
+      "A":"細胞核內的蛋白質",
+      "B":"粒線體內的蛋白質",
+      "C":"溶體、胞外、細胞膜上的蛋白質",
+      "D":"過氧化體內的蛋白質",
+      "E":"細胞質內的蛋白質"
+    },
+    "answer": "C",
+     "explanation": "共轉譯輸入 (Co-translational import) 主要運送溶體、胞外、細胞膜上的蛋白質。"
+  },
+{
+    "question":"下列哪項敘述最準確地描述了轉譯後輸入(Post-translational import)的目的地？",
+    "options":{
+        "A":"僅將蛋白質運送至內質網",
+        "B":"僅將蛋白質運送至高基氏體",
+        "C":"僅將蛋白質運送至溶體",
+        "D":"將蛋白質運送至細胞核、粒線體、葉綠體、過氧化體",
+        "E":"僅將蛋白質運送至細胞膜"
+    },
+     "answer":"D",
+     "explanation":"轉譯後輸入(Post-translational import)主要負責將蛋白質運送至細胞核、粒線體、葉綠體、過氧化體等細胞器。"
+ },
+  {
+    "question": "下列哪項是訊號序列（Signal sequence）的主要功能？",
+    "options": {
+      "A": "催化蛋白質摺疊",
+      "B": "決定蛋白質的酵素活性",
+      "C": "決定蛋白質的運輸目的地",
+      "D": "調節蛋白質降解速率",
+      "E":"作為蛋白質的結構穩定劑"
+    },
+    "answer": "C",
+    "explanation": "訊號序列 (Signal sequence) 的主要功能是決定蛋白質的運輸目的地。"
+  },
+  {
+    "question": "訊號序列 (Signal sequence) 通常位於新合成蛋白質的哪個末端？",
+    "options": {
+       "A": "C端",
+       "B": "N端",
+       "C":"中間部位",
+      "D": "隨機位置",
+       "E":"在蛋白質摺疊後出現"
+    },
+    "answer": "B",
+    "explanation": "訊號序列 (Signal sequence) 通常位於新合成蛋白質的 N 端。"
+  },
+{
+   "question": "下列哪一個氨基酸序列特性在內質網訊號序列中不常見?",
+   "options":{
+      "A":"約10-15個疏水性氨基酸",
+      "B":"位於疏水序列之前的1個或多個帶正電荷的氨基酸",
+     "C":"C端帶有短支鏈的極性胺基酸",
+     "D":"位於N端帶有鹼性氨基酸",
+     "E":"帶有較長的側鏈非極性氨基酸"
+    },
+    "answer": "E",
+    "explanation": "內質網訊號序列通常包含約10-15個疏水性氨基酸，位於疏水序列之前的1個或多個帶正電荷的氨基酸，以及C端帶有短支鏈的極性胺基酸。帶有較長的側鏈非極性氨基酸不常見於訊號序列。"
+ },
+  {
+    "question": "當蛋白質進入內質網 (ER) 後，訊號序列 (Signal sequence) 通常會如何處理？",
+    "options": {
+      "A": "與蛋白質永久結合，成為結構的一部分",
+      "B": "被訊號肽酶 (Signal peptidase) 切除",
+      "C": "轉移到蛋白質的其他區域",
+      "D": "被摺疊到蛋白質內部",
+      "E":"維持不變，作為蛋白質功能的一部分"
+    },
+    "answer": "B",
+    "explanation": "當蛋白質進入內質網 (ER) 後，訊號序列 (Signal sequence) 通常會被訊號肽酶 (Signal peptidase) 切除。"
+  },
+{
+    "question": "訊號辨識顆粒（Signal recognition particle, SRP）的功能是什麼？",
+    "options": {
+      "A":"負責蛋白質的摺疊",
+      "B":"負責訊號序列的切割",
+      "C":"負責將核糖體帶到內質網",
+      "D":"負責蛋白質的醣基化修飾",
+      "E":"負責蛋白質的泛素化降解"
+    },
+    "answer": "C",
+    "explanation":"訊號辨識顆粒(SRP)的功能是與訊號序列結合，並將核糖體帶到內質網。"
+ },
+ {
+    "question": "下列哪個步驟不是蛋白質進入內質網的正常流程？",
+    "options": {
+       "A": "訊號辨識顆粒 (SRP) 與訊號序列結合",
+        "B": "SRP引導核糖體附著到內質網",
+        "C":"多肽鏈通過胜肽易位複合體(Peptide translocation complex)進入內質網",
+       "D": "訊號肽酶 (Signal peptidase) 將訊號序列接回蛋白質",
+       "E":"核糖體與mRNA分離，釋放到細胞質中"
+    },
+    "answer": "D",
+    "explanation": "訊號肽酶 (Signal peptidase) 的作用是將訊號序列切除，而不是接回蛋白質。"
+  },
+  {
+    "question": "在高基氏體中，運往溶酶體的蛋白質如何被標記？",
+    "options": {
+      "A": "泛素化 (Ubiquitination)",
+      "B": "磷酸化 (Phosphorylation) 的甘露糖 (Mannose)殘基",
+       "C":"醣基化(Glycosylation)的半乳糖(Galactose)殘基",
+       "D":"添加一個脂質錨(Lipid anchor)",
+        "E": "乙酰化 (Acetylation) 的離胺酸 (Lys) 殘基"
+    },
+    "answer": "B",
+    "explanation": "在高基氏體中，運往溶酶體的蛋白質會被加上磷酸化 (Phosphorylation) 的甘露糖 (Mannose) 殘基（即 M6P）作為標記。"
+  },
+ {
+  "question":"下列哪個敘述最準確地描述了M6P(Mannose 6-phosphate)受體的功能?",
+    "options":{
+       "A":"水解M6P",
+       "B":"將M6P結合的蛋白質送回內質網",
+       "C":"辨識結合M6P的蛋白質並將其運往溶酶體",
+       "D":"將M6P修飾後的蛋白質轉移到細胞質中",
+       "E":"作為信號肽酶(signal peptidase) 切割訊號序列"
+    },
+     "answer":"C",
+     "explanation":"M6P受體的功能是辨識結合M6P的蛋白質，並將其運往溶酶體。"
+  },
+   {
+    "question": "下列哪種胺基酸是O-linked glycosylation會連接上的胺基酸？",
+    "options": {
+      "A": "離胺酸 (Lys)",
+      "B": "精胺酸 (Arg)",
+      "C": "半胱氨酸 (Cys)",
+      "D": "絲胺酸 (Ser) 或蘇胺酸 (Thr)",
+       "E":"天冬醯胺(Asn)"
+    },
+    "answer": "D",
+    "explanation": "O-linked glycosylation會將醣類連接到絲胺酸 (Ser) 或蘇胺酸 (Thr) 的羥基上。"
+  },
+ {
+    "question": "下列哪一項是細胞核輸入序列（Nuclear localization sequence, NLS）的特點？",
+    "options": {
+      "A": "通常位於蛋白質的 C 端",
+      "B": "抵達目的地後會被切除",
+      "C": "主要由疏水性胺基酸組成",
+       "D":"通常由 4 到 8 個鹼性胺基酸組成",
+      "E":"為蛋白質摺疊所必需"
+    },
+    "answer": "D",
+    "explanation": "細胞核輸入序列 (NLS) 通常由 4 到 8 個鹼性胺基酸（如精胺酸和離胺酸）組成。"
+  },
+ {
+    "question": "細胞核輸入序列（NLS）在蛋白質進入細胞核後會有什麼變化？",
+    "options": {
+      "A": "被訊號肽酶 (Signal peptidase) 切除",
+      "B": "與細胞核膜結合",
+      "C": "維持不變，以便蛋白質在細胞分裂後重新進入細胞核",
+       "D":"與 importin 結合後被釋放",
+       "E":"被泛素化並降解"
+    },
+    "answer": "C",
+    "explanation": "細胞核輸入序列 (NLS) 在蛋白質進入細胞核後不會被移除，以便蛋白質在細胞分裂後能重新進入細胞核。"
+  },
+{
+    "question": "下列哪種蛋白質負責辨識蛋白質上的核定位訊號（NLS）並協助其運輸到細胞核？",
+    "options": {
+       "A": "Ran-GTP",
+       "B": "Importin",
+       "C": "SecB",
+       "D": "SRP",
+       "E":"Dynamin"
+    },
+    "answer": "B",
+    "explanation":"Importin 負責辨識蛋白質上的核定位訊號(NLS)並協助其運輸到細胞核。"
+ },
+ {
+    "question": "下列哪項是Ran蛋白在細胞核運輸中的主要功能？",
+    "options": {
+      "A": "作為輸入蛋白的受體",
+      "B": "在細胞核內將GDP轉為GTP，促進Importin的釋放",
+      "C": "水解GTP，提供蛋白質運輸能量",
+      "D":"作為輸出蛋白的受體",
+      "E":"協助蛋白質摺疊"
+    },
+    "answer": "B",
+    "explanation": "在細胞核中，Ran蛋白(Ran-GEF)的主要功能是將Ran-GDP轉為Ran-GTP，促進Importin的釋放並完成蛋白質的核運輸。"
+  },
+ {
+    "question": "下列哪一種蛋白質在原核生物的蛋白質派送過程中作為伴護蛋白（Chaperone）？",
+    "options": {
+      "A":"Importin",
+      "B":"Ran",
+      "C":"SecB",
+      "D":"SRP",
+      "E":"Dynamin"
+    },
+    "answer": "C",
+    "explanation": "SecB 在原核生物的蛋白質派送過程中作為伴護蛋白 (Chaperone)，協助蛋白質運輸。"
+  },
+  {
+    "question": "在細菌中，蛋白質穿過細胞膜進入周質空間需要哪個結構的協助？",
+    "options": {
+      "A": "核孔複合體 (Nuclear pore complex)",
+      "B": "胜肽易位複合體 (SecYEG)",
+     "C":"高基氏體 (Golgi apparatus)",
+     "D":"溶酶體 (Lysosome)",
+       "E":"內質網(ER)"
+    },
+    "answer": "B",
+    "explanation": "在細菌中，蛋白質穿過細胞膜進入周質空間需要胜肽易位複合體 (SecYEG) 的協助。"
+  },
+  {
+    "question": "下列哪一種分子負責在真核細胞中進行受體媒介的胞吞作用（Receptor-mediated endocytosis）？",
+     "options":{
+        "A":"Tubulin",
+        "B":"Actin",
+       "C":"Clathrin",
+       "D":"Myosin",
+        "E":"Keratin"
+     },
+     "answer":"C",
+    "explanation":"網格蛋白(Clathrin)在真核細胞中負責形成囊泡，進行受體媒介的胞吞作用。"
+  },
+  {
+    "question": "網格蛋白(Clathrin)在胞吞作用中如何與細胞膜受體結合？",
+     "options":{
+       "A":"直接與細胞膜受體結合",
+        "B":"通過連結蛋白(Adaptin)與細胞膜受體結合",
+        "C":"透過磷脂分子(Phospholipids)與細胞膜受體結合",
+        "D":"通過細胞膜上的蛋白質通道結合",
+        "E":"藉由醣基化修飾與細胞膜受體結合"
+     },
+     "answer":"B",
+      "explanation":"網格蛋白(Clathrin)通過連結蛋白(Adaptin)與細胞膜受體結合，形成網狀結構進行胞吞作用。"
+  },
+ {
+  "question": "在細胞內吞作用中，哪個蛋白質負責收縮囊泡開口，以完成內吞作用?",
+  "options":{
+    "A":"Clathrin",
+    "B":"Dynamin",
+    "C":"Adaptin",
+    "D":"Importin",
+    "E":"Ran"
+  },
+  "answer":"B",
+  "explanation":"在細胞內吞作用中，Dynamin負責收縮囊泡開口，幫助細胞內吞作用完成。"
+ },
+  {
+   "question": "Cullin-RING ubiquitin E3 ligase（CRL）family 的主要功能為何？",
+    "options": {
+      "A": "參與蛋白質摺疊",
+       "B": "參與蛋白質降解",
+      "C": "參與蛋白質的醣基化",
+      "D": "參與細胞內運輸",
+       "E": "參與RNA剪接"
+    },
+    "answer": "B",
+    "explanation": "Cullin-RING ubiquitin E3 ligase (CRL) family 的主要功能是參與蛋白質的泛素化降解。"
+  },
+ {
+    "question": "在Cullin-RING E3 ligase (CRL) 複合體中，哪個組件負責與待降解的蛋白質結合？",
+    "options": {
+        "A":"Cullin1 (CUL1)",
+        "B":"RBX1",
+      "C":"SKP1",
+      "D":"F Box",
+      "E":"Ring domain"
+    },
+    "answer":"D",
+    "explanation":"在Cullin-RING E3 ligase (CRL)複合體中，F Box蛋白負責與待降解的蛋白質結合。"
+  },
+{
+    "question": "NEDD8 在 Cullin family 中的作用是什麼？",
+    "options": {
+      "A": "作為泛素的替代物，標記蛋白質進行降解",
+      "B": "作為伴護蛋白，協助蛋白質摺疊",
+      "C": "開啟 Cullin family 的作用",
+      "D": "抑制 Cullin family 的活性",
+      "E":"作為連結蛋白(Adaptin) 與受體的結合"
+    },
+    "answer": "C",
+    "explanation": "NEDD8 是一種類泛素的小標籤，可以標在 Cullin family 上，開啟其作用。此過程稱為 Neddylation。"
+  },
+ {
+    "question":"下列哪一項最能描述 26S 蛋白酶體(26S proteasome)的功能？",
+    "options":{
+      "A":"合成蛋白質",
+      "B":"降解泛素化的蛋白質",
+      "C":"協助蛋白質摺疊",
+     "D":"修飾蛋白質",
+      "E":"將蛋白質運輸到細胞核"
+    },
+    "answer":"B",
+    "explanation":"26S蛋白酶體(26S proteasome)的主要功能是降解被泛素化的目標蛋白質。"
+  },
+  {
+     "question": "下列哪一個結構是26S 蛋白酶體(26S proteasome)中負責辨識並將泛素化的蛋白質送入蛋白酶體核心的結構？",
+    "options":{
+      "A": "20S 的核心顆粒 (core particle)",
+      "B": "19S 的調節顆粒 (regulatory particle)",
+      "C":"轉運蛋白(Transporters)",
+      "D": "細胞質液 (Cytosol)",
+       "E":"細胞膜(Cell membrane)"
+    },
+    "answer": "B",
+     "explanation": "26S 蛋白酶體(26S proteasome)中，19S 的調節顆粒 (regulatory particle) 負責辨識並將泛素化的蛋白質送入蛋白酶體核心。"
+  },
+ {
+    "question": "N-end rule 定義了什麼？",
+    "options": {
+      "A": "蛋白質 N 端的胺基酸決定了其細胞定位",
+      "B": "蛋白質 N 端的序列決定了其半衰期",
+      "C": "蛋白質 N 端的序列決定了其酵素活性",
+       "D":"蛋白質 N 端的序列決定了其與其他蛋白質的交互作用",
+       "E":"蛋白質N端的序列決定了其是否進行醣基化修飾"
+    },
+    "answer": "B",
+    "explanation": "N-end rule 定義了蛋白質 N 端的序列如何影響其半衰期 (half-life)。"
+  },
+{
+    "question": "下列哪一個分子主要在細胞質中將 Ran-GTP 水解為 Ran-GDP？",
+    "options": {
+       "A": "Ran GEF",
+       "B": "Ran GAP",
+       "C":"Importin",
+        "D": "NTF2",
+       "E":"CAS"
+    },
+    "answer":"B",
+    "explanation":"Ran GAP (GTPase-activating protein)主要在細胞質中促進Ran-GTP水解為Ran-GDP。"
+  },
+{
+    "question": "哪個分子負責將 Ran-GDP 運回細胞核？",
+    "options": {
+      "A": "Ran GEF",
+        "B": "Ran GAP",
+       "C": "Importin",
+       "D":"NTF2",
+        "E": "CAS"
+    },
+    "answer": "D",
+    "explanation": "NTF2 負責將 Ran-GDP 運回細胞核。"
+  },
+  {
+      "question": "下列關於蛋白質派送的敘述何者為非？",
+      "options": {
+        "A": "訊號序列通常位於新合成蛋白質的N端",
+        "B": "訊號辨識顆粒(SRP)會將核糖體帶到內質網",
+        "C": "溶酶體的蛋白質在高基氏體中藉由 M6P 標記",
+         "D":"粒線體和葉綠體的蛋白質利用 C 端的訊號序列",
+         "E":"核輸入序列(NLS)不會被切除"
+      },
+      "answer": "D",
+    "explanation": "粒線體和葉綠體的蛋白質利用 N 端的訊號序列，而非C端。"
+  },
+{
+  "question":"下列哪項敘述最準確地描述了KDEL序列的功能?",
+    "options":{
+      "A":"將蛋白質送往溶酶體",
+       "B":"將蛋白質送往細胞核",
+      "C":"將蛋白質送往高基氏體",
+     "D":"將蛋白質送回內質網",
+      "E":"將蛋白質送往細胞膜"
+    },
+     "answer":"D",
+     "explanation":"KDEL序列是將蛋白質送回內質網的retrieval訊號。"
+  },
+{
+  "question":"下列哪一項敘述最準確地描述了細胞核輸出序列(Nuclear export sequence, NES)的功能?",
+  "options":{
+    "A":"幫助蛋白質進入細胞核",
+    "B":"幫助蛋白質離開細胞核",
+    "C":"協助蛋白質在高基氏體中運輸",
+    "D":"協助蛋白質在細胞質中摺疊",
+    "E":"幫助蛋白質與細胞膜結合"
+    },
+    "answer":"B",
+    "explanation":"細胞核輸出序列(NES)的功能是幫助蛋白質離開細胞核。"
+ },
+ {
+  "question":"下列哪個敘述準確描述了SecA在原核生物蛋白質運輸中的功能?",
+  "options":{
+     "A":"辨識蛋白質上的NLS",
+     "B":"作為RNA分子輔助蛋白質的運輸",
+     "C":"推動蛋白質穿過細菌細胞膜上的易位複合體",
+    "D":"作為內質網上的訊號接收蛋白",
+    "E":"切割蛋白質的訊號序列"
+  },
+  "answer":"C",
+  "explanation":"SecA在原核生物蛋白質運輸中，通過水解ATP推動蛋白質穿過細菌細胞膜上的易位複合體。"
+},
+  {
+    "question": "下列哪一項最能描述 細胞凋亡易感性蛋白(Cellular apoptosis susceptibility protein, CAS)在細胞核運輸中的功能？",
+    "options": {
+      "A": "作為核輸入蛋白的受體",
+      "B":"結合 Ran-GTP 並釋放 importin α",
+      "C":"促進蛋白質的醣基化",
+      "D":"作為轉運蛋白質(transporter)",
+       "E":"負責切割訊號肽"
+    },
+    "answer": "B",
+    "explanation":"CAS 與Ran-GTP 結合並釋放 importin α，協助細胞核蛋白質輸出。"
+  },
+  {
+    "question":"下列關於蛋白質半衰期的敘述，何者為非？",
+      "options": {
+        "A": "N 端序列是決定蛋白質半衰期的其中一個因素",
+        "B":"C 端序列也會影響蛋白質的半衰期",
+        "C": "蛋白質的半衰期完全由 N 端序列決定",
+        "D": "蛋白質的穩定性會影響其半衰期",
+        "E":"泛素化會影響蛋白質的半衰期"
+      },
+     "answer": "C",
+      "explanation": "蛋白質的半衰期並非完全由 N 端序列決定，還有其他因素，如C端序列及蛋白質的穩定性等也會影響半衰期。"
+   }
+]
