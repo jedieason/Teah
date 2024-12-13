@@ -29,7 +29,7 @@ async function initQuiz() {
     
     // Update the quiz title with the current file name
     const fileName = selectedJson.split('/').pop().replace('.json', '');
-    document.querySelector('.quiz-title').innerText = `${fileName} Trivia`;
+    document.querySelector('.quiz-title').innerText = `${fileName} 題矣`;
 
     loadNewQuestion();
 }
