@@ -629,7 +629,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     const options = currentQuestion.options;
 
     // Show loading state with spinner
-    currentQuestion.explanation = 'Generating answers...';
+    currentQuestion.explanation = '生成回答中⋯⋯';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
     document.getElementById('explanation').style.display = 'block';
     document.getElementById('confirm-btn').style.display = 'none';
