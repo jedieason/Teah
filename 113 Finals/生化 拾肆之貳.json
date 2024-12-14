@@ -1,0 +1,662 @@
+[
+  {
+    "question": "關於分子系統生物學的目標，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "提供宏觀的生物運作全貌。",
+      "B": "僅關注個別分子的詳細反應機制。",
+      "C": "透過測量推知生物體運作的狀態或原則。",
+      "D": "整合多個分子的資訊來理解生物系統。",
+      "E": "嘗試理解生物體內分子間的交互作用。"
+    },
+    "answer": "B",
+    "explanation": "分子系統生物學並非僅關注個別分子的反應機制，而是整合多個分子的資訊來理解生物系統的運作。"
+  },
+  {
+    "question": "下列關於傳統分子生物學研究方法的敘述，何者正確？",
+    "options": {
+      "A": "仰賴大量的數據模擬來預測實驗結果。",
+      "B": "通常採用高通量技術來研究大量分子。",
+      "C": "經由嘗試與錯誤來驗證假設。",
+      "D": "一次實驗即可獲得細胞中所有 mRNA 與蛋白質成分的資訊。",
+      "E": "不需要依賴文獻資料即可提出假設。"
+    },
+    "answer": "C",
+    "explanation": "傳統分子生物學研究方法主要依賴嘗試與錯誤的實驗來驗證科學家的假設。"
+  },
+  {
+    "question": "系統生物學的主要目的為何？",
+    "options": {
+      "A": "取代傳統的分子生物學研究方法。",
+      "B": "完全排除實驗過程中猜測的成分。",
+      "C": "提高科學家提出假設的準確性，並使過程更具邏輯性。",
+      "D": "只關注單一細胞的研究，不考慮細胞間的差異性。",
+      "E": "僅研究 mRNA 和蛋白質，不考慮其他分子。",
+
+    },
+    "answer": "C",
+    "explanation": "系統生物學旨在減少猜測並提高假設的準確性，使研究過程更具邏輯性，而非完全取代傳統方法。"
+  },
+  {
+    "question": "下列關於細胞間差異性的敘述，何者**錯誤**？",
+    "options": {
+      "A": "不同組織器官的細胞，其主要表現的基因片段不同。",
+      "B": "即使基因體相同，細胞仍可發展出不同功能。",
+      "C": "研究特定器官的基因問題，應選擇該器官的細胞進行實驗。",
+      "D": "染色體上基因的位置不影響其表現，可以任意搬移。",
+      "E": "不同細胞的 mRNA 和蛋白質組成會有所差異。"
+    },
+    "answer": "D",
+    "explanation": "染色體上基因的位置會影響其表現，因此不能任意搬移基因。"
+  },
+  {
+    "question": "要完成一個細胞的「拼圖」，需要哪些基本工作？",
+    "options": {
+      "A": "僅需找到細胞中所有 mRNA 成分。",
+      "B": "僅需找到細胞中所有蛋白質成分。",
+      "C": "找到細胞中所有 mRNA 和蛋白質成分，以及分子間的交互作用方式。",
+      "D": "只需研究細胞的形態即可。",
+      "E": "只需觀察細胞的生理反應即可。"
+    },
+    "answer": "C",
+    "explanation": "完成細胞拼圖需要了解 mRNA、蛋白質成分以及它們之間的交互作用方式。"
+  },
+  {
+    "question": "下列何者**不是**高通量技術的應用？",
+    "options": {
+      "A": "深度定序 (Deep sequencing)",
+      "B": "蛋白質質譜 (Protein mass spectrometry)",
+      "C": "Sanger 定序法",
+      "D": "尋找 mRNA",
+      "E": "尋找蛋白質"
+    },
+    "answer": "C",
+    "explanation": "Sanger 定序法不是高通量技術。"
+  },
+  {
+    "question": "新一代定序技術如何提高定序速率？",
+    "options": {
+      "A": "僅使用 Sanger 定序法。",
+      "B": "增加轉殖 (Cloning) 步驟。",
+      "C": "避免轉殖步驟，並採用大量平行定序 (Massive parallel sequencing)。",
+      "D": "降低定序的準確度。",
+      "E": "縮短 DNA 片段的長度。"
+    },
+    "answer": "C",
+    "explanation": "新一代定序技術透過避免轉殖步驟和採用大量平行定序來提高定序速率。"
+  },
+  {
+    "question": "Roche 454 Genome Sequencer FLX 使用哪種 DNA 擴增技術？",
+    "options": {
+      "A": "Bridge PCR",
+      "B": "Emulsion PCR",
+      "C": "傳統 PCR",
+      "D": "等溫擴增",
+      "E": "滾環式擴增"
+    },
+    "answer": "B",
+    "explanation": "Roche 454 使用 Emulsion PCR 進行 DNA 擴增。"
+  },
+  {
+    "question": "在 Emulsion PCR 中，Streptavidin 的主要作用為何？",
+    "options": {
+      "A": "作為 PCR 的引子。",
+      "B": "與 Biotin 結合，將引子固定在微磁珠上。",
+      "C": "催化 DNA 的複製。",
+      "D": "破壞乳化狀態。",
+      "E": "提供螢光訊號。"
+    },
+    "answer": "B",
+    "explanation": "Streptavidin 與 Biotin 的高親和力使其能將引子固定在微磁珠上。"
+  },
+  {
+    "question": "Emulsion PCR 中乳化的目的是什麼？",
+    "options": {
+      "A": "增加 PCR 的反應速率。",
+      "B": "創造獨立的 PCR 反應器 (Microreactors)，避免不同 DNA 片段互相干擾。",
+      "C": "提高 DNA 擴增的產量。",
+      "D": "簡化 PCR 的操作步驟。",
+      "E": "方便後續的定序反應。"
+    },
+    "answer": "B",
+    "explanation": "乳化形成微反應器，使每個微磁珠上的 DNA 片段得以獨立擴增，避免互相干擾。"
+  },
+  {
+    "question": "Roche 454 使用哪種定序技術？",
+    "options": {
+      "A": "Sequencing by ligation",
+      "B": "Sequencing by synthesis",
+      "C": "Pyrosequencing",
+      "D": "Sanger sequencing",
+      "E": "Semiconductor sequencing"
+    },
+    "answer": "C",
+    "explanation": "Roche 454 使用 Pyrosequencing 進行定序。"
+  },
+  {
+    "question": "在 Pyrosequencing 中，冷光訊號的來源是什麼？",
+    "options": {
+      "A": "dNTP 的直接發光。",
+      "B": "DNA polymerase 的催化作用。",
+      "C": "Pyrophosphate 與 APS 反應產生 ATP，ATP 驅動冷光酵素發光。",
+      "D": "螢光標記的 dNTP。",
+      "E": "Apyrase 的水解作用。"
+    },
+    "answer": "C",
+    "explanation": "Pyrosequencing 中的冷光來自 Pyrophosphate 觸發的 ATP 生成和冷光酵素反應。"
+  },
+  {
+    "question": "Apyrase 在 Pyrosequencing 中的作用是什麼？",
+    "options": {
+      "A": "催化 DNA 的複製。",
+      "B": "移除多餘的 dNTP 和 ATP，避免干擾下一輪定序。",
+      "C": "產生冷光訊號。",
+      "D": "固定 DNA 片段在微磁珠上。",
+      "E": "切除螢光標記。"
+    },
+    "answer": "B",
+    "explanation": "Apyrase 去除未反應的 dNTP 和 ATP，確保 Pyrosequencing 的準確性。"
+  },
+    {
+    "question": "Pyrosequencing 中的孔洞 (Well) 設計，需要考慮哪些因素？",
+    "options": {
+      "A": "僅需考慮孔洞的深度即可。",
+      "B": "深度要夠深以防止微磁珠被沖走，也要夠淺以利試劑擴散和清洗。",
+      "C": "孔洞的形狀和大小不重要。",
+      "D": "孔洞的數量愈多愈好，不需考慮其他因素。",
+      "E": "孔洞的材質必須能與 DNA 產生反應。"
+    },
+    "answer": "B",
+    "explanation": "孔洞的深度設計需權衡防止微磁珠流失和試劑擴散效率，以達最佳定序效果。"
+  },
+  {
+    "question": "ABI SOLiD Sequencer 使用哪種 DNA 擴增技術？",
+    "options": {
+      "A": "Bridge PCR",
+      "B": "Emulsion PCR",
+      "C": "Rolling circle amplification",
+      "D": "Isothermal amplification",
+      "E": "Ligation chain reaction"
+    },
+    "answer": "B",
+    "explanation": "ABI SOLiD Sequencer 使用 Emulsion PCR 擴增 DNA。"
+  },
+  {
+    "question": "ABI SOLiD Sequencer 使用哪種定序技術？",
+    "options": {
+      "A": "Pyrosequencing",
+      "B": "Sequencing by synthesis",
+      "C": "Sequencing by ligation",
+      "D": "Sanger sequencing",
+      "E": "Next-generation sequencing"
+    },
+    "answer": "C",
+    "explanation": "ABI SOLiD Sequencer 使用 Sequencing by ligation 進行定序。"
+  },
+  {
+    "question": "在 Sequencing by ligation 中，雙鹼基探針 (Di-base probe) 的作用是什麼？",
+    "options": {
+      "A": "作為 PCR 的引子。",
+      "B": "與目標序列互補並連接到引子上，提供螢光訊號。",
+      "C": "切除螢光標記。",
+      "D": "重置引子 (Primer reset)。",
+      "E": "催化 DNA 連接反應。"
+    },
+    "answer": "B",
+    "explanation": "雙鹼基探針與目標序列互補並連接到引子上，提供螢光訊號以供定序。"
+  },
+{
+    "question": "在 Sequencing by ligation 中，重置引子 (Primer reset) 的目的是什麼？",
+    "options": {
+      "A": "增加定序的長度。",
+      "B": "提高定序的準確度，並讓每一個鹼基被讀取兩次。",
+      "C": "簡化定序的步驟。",
+      "D": "降低定序的成本。",
+      "E": "避免螢光訊號的干擾。"
+    },
+    "answer": "B",
+    "explanation": "重置引子可以提高定序的準確度，並確保每個鹼基都被讀取兩次。"
+  },
+  {
+    "question": "Sequencing by ligation 的讀取方式為何？",
+    "options": {
+      "A": "水平讀取序列。",
+      "B": "垂直讀取序列。",
+      "C": "左下往右上讀取序列。",
+      "D": "右下往左上讀取序列。",
+      "E": "螺旋狀讀取序列。"
+    },
+    "answer": "C",
+    "explanation": "Sequencing by ligation 的讀取方式是左下往右上讀取序列。"
+  },
+  {
+    "question": "Illumina Solexa Sequencing System 使用哪種 DNA 擴增技術？",
+    "options": {
+      "A": "Emulsion PCR",
+      "B": "Bridge PCR",
+      "C": "Rolling circle amplification",
+      "D": "Isothermal amplification",
+      "E": "Nick translation"
+    },
+    "answer": "B",
+    "explanation": "Illumina Solexa 使用 Bridge PCR 進行 DNA 擴增。"
+  },
+  {
+    "question": "在 Bridge PCR 中，Flow cell 的作用是什麼？",
+    "options": {
+      "A": "提供 PCR 的反應空間，並含有與 Adapter 互補的 Primer 序列。",
+      "B": "作為 PCR 的引子。",
+      "C": "催化 DNA 的複製。",
+      "D": "提供螢光訊號。",
+      "E": "分離不同 DNA 片段。"
+    },
+    "answer": "A",
+    "explanation": "Flow cell 提供 PCR 的反應空間，並含有與 Adapter 互補的 Primer 序列。"
+  },
+    {
+    "question": "Bridge PCR 如何形成橋狀結構？",
+    "options": {
+      "A": "透過 DNA polymerase 的作用。",
+      "B": "游離端的 Adapter 與 Flow cell 上固定的 Primer 序列配對。",
+      "C": "利用 Streptavidin 與 Biotin 的結合。",
+      "D": "透過 DNA ligase 的作用。",
+      "E": "藉由加熱和冷卻的循環。"
+    },
+    "answer": "B",
+    "explanation": "游離端的 Adapter 與 Flow cell 上的 Primer 序列配對形成橋狀結構。"
+  },
+  {
+    "question": "Bridge PCR 的主要目的是什麼？",
+    "options": {
+      "A": "產生大量的 DNA 複製產物，形成叢集 (Cluster)。",
+      "B": "定序 DNA 片段。",
+      "C": "分離不同 DNA 片段。",
+      "D": "純化 DNA 片段。",
+      "E": "標記 DNA 片段。"
+    },
+    "answer": "A",
+    "explanation": "Bridge PCR 的主要目的是在 Flow cell 上產生大量的 DNA 複製產物，形成叢集 (Cluster)。"
+  },
+  {
+    "question": "哪種定序技術利用了"Sequencing by synthesis"的原理?",
+    "options": {
+      "A": "Roche 454",
+      "B": "ABI SOLiD",
+      "C": "Illumina Solexa",
+      "D": "Sanger sequencing",
+      "E": "PacBio SMRT"
+    },
+    "answer": "C",
+    "explanation": "Illumina Solexa 使用 Sequencing by synthesis 的原理進行定序。"
+  },
+      {
+    "question": "下列哪種定序技術*不*屬於新一代定序技術 (Next-Generation Sequencing, NGS)?",
+    "options": {
+      "A": "Roche 454",
+      "B": "ABI SOLiD",
+      "C": "Illumina Solexa",
+      "D": "Sanger sequencing",
+      "E": "Ion Torrent"
+    },
+    "answer": "D",
+    "explanation": "Sanger sequencing 是傳統定序技術，而非 NGS。"
+  },
+      {
+    "question": "在 NGS 中，Adapter 的主要功能是什麼？",
+    "options": {
+      "A": "作為 PCR 的引子。",
+      "B": "與目標序列連接，方便後續的擴增和定序。",
+      "C": "提供螢光訊號。",
+      "D": "切除螢光標記。",
+      "E": "催化 DNA 連接反應。"
+    },
+    "answer": "B",
+    "explanation": "Adapter 連接到目標序列上，提供 PCR 引子結合位點和固定於 Flow cell 的功能。"
+  },
+    {
+    "question": "下列何者*不*是 Emulsion PCR 的步驟？",
+    "options": {
+      "A": "將 DNA 片段連接 Adapter。",
+      "B": "將带有 Biotin 的引子固定在微磁珠上。",
+      "C": "將 DNA 模板固定在 Flow cell 上。",
+      "D": "進行乳化，創造獨立的 PCR 反應器。",
+      "E": "利用 PCR 擴增 DNA 片段。"
+    },
+    "answer": "C",
+    "explanation": "將 DNA 模板固定在 Flow cell 上是 Bridge PCR 的步驟，而非 Emulsion PCR。"
+  },
+
+{
+    "question": "下列哪個步驟是 Sequencing by ligation 和 Pyrosequencing 的共同點？",
+    "options": {
+      "A": "使用螢光標記的核苷酸。",
+      "B": "偵測冷光訊號。",
+      "C": "利用 DNA ligase 連接 DNA 片段。",
+      "D": "使用 Apyrase 去除多餘的核苷酸。",
+      "E": "循環添加 dNTP。"
+
+    },
+    "answer": "A",
+    "explanation": "兩種技術都使用螢光標記的核苷酸來偵測 DNA 序列。"
+  },
+
+
+{
+    "question": "在 SOLiD 定序中，如果第一輪讀取到的顏色是紅色，則第二輪引子 (n-1 primer) 會與目標序列的哪個位置結合？",
+    "options": {
+      "A": "第一個鹼基",
+      "B": "第二個鹼基",
+      "C": "第三個鹼基",
+      "D": "第四個鹼基",
+      "E": "第五個鹼基"
+
+    },
+    "answer": "B",
+    "explanation": "n-1 primer 會往 Bead 方向移動一個位置，也就是與第二個鹼基結合。"
+  },
+
+
+{
+    "question": "下列關於 Bridge PCR 和 Emulsion PCR 的比較，何者**錯誤**？",
+    "options": {
+      "A": "Bridge PCR 在 Flow cell 上進行，Emulsion PCR 在水珠中進行。",
+      "B": "兩種技術都使用 Adapter 連接 DNA 片段。",
+      "C": "Bridge PCR 形成橋狀結構，Emulsion PCR 不形成橋狀結構。",
+      "D": "兩種技術的目的都是擴增 DNA 片段。",
+      "E": "Bridge PCR 需要 Streptavidin 和 Biotin 的結合，Emulsion PCR 不需要。"
+
+    },
+    "answer": "E",
+    "explanation": "Emulsion PCR *需要* Streptavidin 和 Biotin 的結合來固定 DNA 片段在微磁珠上。"
+  },
+  {
+    "question": "如果 Pyrosequencing 的結果顯示連續兩個峰值相同高度，代表什麼？",
+    "options": {
+      "A": "發生了定序錯誤。",
+      "B": "連續兩個相同的核苷酸被添加到 DNA 序列中。",
+      "C": "Apyrase 的活性不足。",
+      "D": "冷光酵素的活性過高。",
+      "E": "dNTP 的濃度過低。"
+    },
+    "answer": "B",
+    "explanation": "相同高度的峰值表示相同數量的核苷酸被添加，因此代表連續兩個相同的核苷酸。"
+  },
+      {
+    "question": "在 Sanger 定序法中，ddNTP 的作用是什麼？",
+    "options": {
+      "A": "作為 PCR 的引子。",
+      "B": "終止 DNA 鏈的延伸。",
+      "C": "提供螢光訊號。",
+      "D": "去除多餘的 dNTP。",
+      "E": "催化 DNA 連接反應。"
+    },
+    "answer": "B",
+    "explanation": "ddNTP 缺少 3'-OH 基團，因此會終止 DNA 鏈的延伸。"
+  },
+  {
+    "question": "下列哪種技術*不*用於 NGS 的 DNA 擴增步驟？",
+    "options": {
+      "A": "Emulsion PCR",
+      "B": "Bridge PCR",
+      "C": "Sanger sequencing",
+      "D": "Rolling circle amplification",
+      "E": " isothermal amplification"
+    },
+    "answer": "C",
+    "explanation": "Sanger sequencing 是用於傳統定序，*不*是 NGS 的 DNA 擴增方法。"
+  },
+
+{
+    "question": "在 SOLiD 定序中，如果一個雙鹼基探針標記為綠色，那麼它可能代表哪些雙鹼基組合？",
+    "options": {
+      "A": "AA, CC, GG, TT",
+      "B": "AC, CA, GT, TG",
+      "C": "AG, CT, GA, TC",
+      "D": "AT, CG, GC, TA",
+      "E": "AA, GG, CC, TT"
+    },
+    "answer": "B",
+    "explanation": "根據 SOLiD 的顏色編碼，綠色對應 AC, CA, GT, TG 這四種雙鹼基組合。"
+  },
+
+{
+    "question": "在 Illumina Solexa 定序中，Cluster 的形成代表什麼？",
+    "options": {
+      "A": "定序錯誤",
+      "B": "DNA 擴增的產物，包含許多相同的 DNA 片段副本",
+      "C": "不同 DNA 片段的混合物",
+      "D": "Adapter 的結合",
+      "E": "螢光訊號的產生"
+    },
+    "answer": "B",
+    "explanation": "Cluster 是 Bridge PCR 擴增的結果，包含許多相同的 DNA 片段副本，以便產生足夠強的螢光訊號進行定序。"
+  },
+
+{
+    "question": "高通量技術 (High-throughput technologies) 的主要優勢是什麼？",
+    "options": {
+      "A": "可以一次分析單個基因",
+      "B": "可以一次分析大量的生物分子 (例如 DNA、RNA、蛋白質)",
+      "C": "只能用於研究人類基因體",
+      "D": "比傳統方法更耗時且更昂貴",
+      "E": "準確度低"
+    },
+    "answer": "B",
+    "explanation": "高通量技術的主要優勢在於能平行處理大量樣本，大幅提升分析效率。"
+  },
+
+{
+    "question": "下列哪項*不是*系統生物學 (Systems biology) 的主要目標？",
+    "options": {
+      "A": "了解生物系統中各組成成分之間的交互作用",
+      "B": "預測生物系統對不同擾動的反應",
+      "C": "只關注單一基因或蛋白質的功能",
+      "D": "建構生物系統的數學模型",
+      "E": "將生物系統視為一個整體來研究"
+    },
+    "answer": "C",
+    "explanation": "系統生物學強調的是整體觀，而非單一基因或蛋白質的功能。"
+  },
+
+{
+    "question": "哪種 PCR 技術使用微反應器 (Microreactors) 來防止不同 DNA 模板之間的交叉污染？",
+    "options": {
+      "A": "傳統 PCR",
+      "B": "Bridge PCR",
+      "C": "Emulsion PCR",
+      "D": "Real-time PCR",
+      "E": "Inverse PCR"
+    },
+    "answer": "C",
+    "explanation": "Emulsion PCR 利用油包水乳化技術，將單個 DNA 模板和 PCR 試劑包裹在微小的水滴中，形成獨立的微反應器。"
+  },
+
+
+{
+    "question": "在 Roche 454 Pyrosequencing 中，哪種酵素負責將 Pyrophosphate 轉化為 ATP？",
+    "options": {
+      "A": "DNA polymerase",
+      "B": "Luciferase",
+      "C": "Apyrase",
+      "D": "ATP sulfurylase",
+      "E": "Ligase"
+
+    },
+    "answer": "D",
+    "explanation": "ATP sulfurylase 催化 APS 和 Pyrophosphate 生成 ATP 的反應，ATP 隨後被 Luciferase 用於發光。"
+  },
+
+
+{
+    "question": "哪種定序技術使用"Sequencing by ligation"的方法？",
+    "options": {
+      "A": "Roche 454",
+      "B": "Illumina Solexa",
+      "C": "ABI SOLiD",
+      "D": "Sanger sequencing",
+      "E": "PacBio SMRT"
+
+    },
+    "answer": "C",
+    "explanation": "ABI SOLiD 使用 Sequencing by ligation 技術，透過螢光標記的探針與目標 DNA 序列進行連接反應來定序。"
+  },
+
+{
+    "question": "Bridge PCR 中使用的 Flow cell 表面通常修飾了什麼？",
+    "options": {
+      "A": "與 Adapter 序列互補的引子",
+      "B": "Streptavidin",
+      "C": "dNTP",
+      "D": "螢光染料",
+      "E": "DNA polymerase"
+
+    },
+    "answer": "A",
+    "explanation": "Flow cell 表面修飾了與 Adapter 序列互補的引子，以便捕獲和擴增 DNA 片段。"
+  },
+  {
+    "question": "在 SOLiD 定序中，每次循環後切除螢光基團的目的是什麼？",
+    "options": {
+      "A": "終止 DNA 合成",
+      "B": "允許下一個循環的探針連接",
+      "C": "產生冷光訊號",
+      "D": "去除多餘的 dNTP",
+      "E": "增加定序讀長"
+    },
+    "answer": "B",
+    "explanation": "切除螢光基團後，會暴露出 5' 磷酸基團，允許下一個循環的探針連接。"
+  },
+        {
+    "question": "哪種定序技術*不*依賴螢光訊號偵測？",
+    "options": {
+      "A": "Roche 454 Pyrosequencing",
+      "B": "Illumina Sequencing by Synthesis",
+      "C": "ABI SOLiD Sequencing by Ligation",
+      "D": "Ion Torrent Semiconductor Sequencing",
+      "E": "Sanger Sequencing"
+    },
+    "answer": "D",
+    "explanation": "Ion Torrent  Semiconductor Sequencing 偵測的是pH值的變化，而不是螢光訊號。"
+  },
+      {
+    "question": "Emulsion PCR 中，微磁珠 (Beads) 的主要功能是什麼？",
+    "options": {
+      "A": "提供 PCR 的反應空間",
+      "B": "作為 PCR 的引子",
+      "C": "攜帶並固定單個 DNA 模板",
+      "D": "提供螢光訊號",
+      "E": "催化 DNA 連接反應"
+    },
+    "answer": "C",
+    "explanation": "微磁珠上連接有與 Adapter 互補的引子，可以捕獲單個 DNA 模板，並作為 PCR 擴增的起始點。"
+  },
+          {
+    "question": "下列哪個敘述最能描述分子系統生物學？",
+    "options": {
+      "A": "研究單個基因或蛋白質的功能",
+      "B": "研究生物系統中所有組成成分之間的交互作用以及系統層級的行為",
+      "C": "只關注細胞的形態和結構",
+      "D": "研究生物體的演化歷史",
+      "E": "研究生物體對環境的適應性"
+    },
+    "answer": "B",
+    "explanation": "分子系統生物學旨在了解生物系統中所有組成成分之間的交互作用，以及這些交互作用如何產生系統層級的行為。"
+  },
+            {
+    "question": "哪種定序技術使用可逆終止子 (reversible terminators)？",
+    "options": {
+      "A": "Roche 454 Pyrosequencing",
+      "B": "Illumina Sequencing by Synthesis",
+      "C": "ABI SOLiD Sequencing by Ligation",
+      "D": "Sanger Sequencing",
+      "E": "PacBio SMRT Sequencing"
+    },
+    "answer": "B",
+    "explanation": "Illumina Sequencing by Synthesis 使用可逆終止子，允許每個循環只添加一個核苷酸。"
+  },
+{
+"question": "SOLiD 定序中，兩種顏色讀數相同，但代表的雙鹼基不同，這可能暗示什麼？",
+"options": {
+"A": "定序錯誤",
+"B": "兩種雙鹼基的螢光強度相同",
+"C": "使用的引子不同",
+"D": "兩種雙鹼基的化學結構相似",
+"E": "定序儀器故障"
+},
+"answer": "A",
+"explanation": "SOLiD 定序中，不同的雙鹼基應該對應不同的顏色讀數。如果兩種顏色讀數相同，但代表的雙鹼基不同，這很可能是定序錯誤。"
+},
+
+{
+"question": "哪種 PCR 技術最適合用於擴增來自少量起始材料的 DNA？",
+"options": {
+"A": "傳統 PCR",
+"B": "Emulsion PCR",
+"C": "Bridge PCR",
+"D": "Real-time PCR",
+"E": "Nested PCR"
+},
+"answer": "B",
+"explanation": "Emulsion PCR 將單個 DNA 模板分隔在微小的水滴中，可以有效地擴增來自少量起始材料的 DNA，並減少交叉污染。"
+},
+{
+"question": "以下哪個因素*不*會影響 Emulsion PCR 的效率？",
+"options": {
+"A": "油水比例",
+"B": "DNA 模板濃度",
+"C": "微磁珠濃度",
+"D": "Flow cell 的表面積",
+"E": "PCR 循環數"
+},
+"answer": "D",
+"explanation": "Flow cell 是 Bridge PCR 的關鍵組成部分，與 Emulsion PCR 無關。"
+},
+{
+"question": "Pyrosequencing 中，如果沒有偵測到冷光訊號，最可能的原因是什麼？",
+"options": {
+"A": "對應的 dNTP 沒有加入",
+"B": "Apyrase 的活性過高",
+"C": "Luciferase 的活性過低",
+"D": "DNA polymerase 發生突變",
+"E": "APS 濃度過低"
+},
+"answer": "A",
+"explanation": "如果沒有對應的 dNTP 加入，則 DNA 聚合酶無法延伸 DNA 鏈，也就無法釋放 Pyrophosphate，因此不會產生冷光訊號。"
+},
+
+{
+"question": "下列哪項敘述最能描述 Bridge PCR 中"橋"的形成？",
+"options": {
+"A": "DNA 模板與微磁珠的連接",
+"B": "DNA 模板的兩端與 Flow cell 上的引子連接",
+"C": "DNA 模板與 Adapter 的連接",
+"D": "引子與 dNTP 的連接",
+"E": "DNA 聚合酶與 DNA 模板的連接"
+},
+"answer": "B",
+"explanation": "Bridge PCR 中的"橋"是指 DNA 模板的兩端彎曲並與 Flow cell 上的引子連接，形成一個環狀結構。"
+},
+{
+"question": "SOLiD 定序中，每次循環添加的探針是？",
+"options": {
+"A": "單鹼基探針",
+"B": "雙鹼基探針",
+"C": "三鹼基探針",
+"D": "四鹼基探針",
+"E": "五鹼基探針"
+},
+"answer": "B",
+"explanation": "SOLiD 定序使用雙鹼基探針，每個探針帶有兩個鹼基和一個螢光標記。"
+},
+{
+"question": "下列哪種定序技術的讀長最短？",
+"options": {
+"A": "Roche 454 Pyrosequencing",
+"B": "Illumina Sequencing by Synthesis",
+"C": "ABI SOLiD Sequencing by Ligation",
+"D": "Sanger Sequencing",
+"E": "PacBio SMRT Sequencing"
+},
+"answer": "C",
+"explanation": "SOLiD 定序的讀長通常最短，而 PacBio SMRT Sequencing 的讀長最長。"
+}
+]
