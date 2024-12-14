@@ -950,7 +950,7 @@ body.dark-mode .logout-button:hover {
   .restoreBtn_C3D4::after {
     content: '⟵';
     position: absolute;
-    top: -5px;
+    top: -7px;
     font-size: 24px;
     font-weight: bold;
     color: #ffffff;
