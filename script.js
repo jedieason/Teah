@@ -694,7 +694,7 @@ function restoreProgress() {
         // 更新 UI
         document.querySelector('.start-screen').style.display = 'none';
         document.querySelector('.quiz-container').style.display = 'flex';
-        document.querySelector('.quiz-title').innerText = `${selectedJson.split('/').pop().replace('.json', '')} Trivia`;
+        document.querySelector('.quiz-title').innerText = `${selectedJson.split('/').pop().replace('.json', '')} 題矣`;
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
 
