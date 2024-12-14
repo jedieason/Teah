@@ -848,7 +848,8 @@ body.dark-mode .logout-button:hover {
 
 #WeeGPTInputSection textarea {
     flex-grow: 1;
-    padding: 15px 20px;
+    padding: 15px 10px 15px 20px;
+    z-index: 2;
     border: none;
     resize: none;
     font-size: 16px;
