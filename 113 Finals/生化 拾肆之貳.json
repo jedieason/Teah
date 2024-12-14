@@ -472,7 +472,7 @@
     "explanation": "ATP sulfurylase 催化 APS 和 Pyrophosphate 生成 ATP 的反應，ATP 隨後被 Luciferase 用於發光。"
   },
 {
-    "question": "哪種定序技術使用"Sequencing by ligation"的方法？",
+    "question": "哪種定序技術使用**Sequencing by ligation**的方法？",
     "options": {
       "A": "Roche 454",
       "B": "Illumina Solexa",
@@ -608,7 +608,7 @@
 },
 
 {
-"question": "下列哪項敘述最能描述 Bridge PCR 中"橋"的形成？",
+"question": "下列哪項敘述最能描述 Bridge PCR 中**橋**的形成？",
 "options": {
 "A": "DNA 模板與微磁珠的連接",
 "B": "DNA 模板的兩端與 Flow cell 上的引子連接",
@@ -617,7 +617,7 @@
 "E": "DNA 聚合酶與 DNA 模板的連接"
 },
 "answer": "B",
-"explanation": "Bridge PCR 中的"橋"是指 DNA 模板的兩端彎曲並與 Flow cell 上的引子連接，形成一個環狀結構。"
+"explanation": "Bridge PCR 中的**橋**是指 DNA 模板的兩端彎曲並與 Flow cell 上的引子連接，形成一個環狀結構。"
 },
 {
 "question": "SOLiD 定序中，每次循環添加的探針是？",
