@@ -276,7 +276,7 @@
     "explanation": "Bridge PCR 的主要目的是在 Flow cell 上產生大量的 DNA 複製產物，形成叢集 (Cluster)。"
   },
   {
-    "question": "哪種定序技術利用了"Sequencing by synthesis"的原理?",
+    "question": "哪種定序技術利用了**Sequencing by synthesis**的原理?",
     "options": {
       "A": "Roche 454",
       "B": "ABI SOLiD",
