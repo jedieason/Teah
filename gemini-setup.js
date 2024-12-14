@@ -12,12 +12,12 @@ const model = genAI.getGenerativeModel({
         topP: 0.8,
         topK: 20,
     },
-    systemInstruction: "使用正體中文（臺灣）回答。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.",
+    systemInstruction: "使用正體中文（臺灣）回答。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks. Always use the subsequent question as additional context.",
 });
 
 // Define the generateExplanation function and expose it globally
 window.generateExplanation = async function(question, options, userQuestion) {
-const prompt = `Provide relevant answers to my prompt, which is related to the following context: ${userQuestion}. 
+const prompt = `Provide relevant answers to my prompt: ${userQuestion}. 
 
 Consider this related question for additional context (note that there is only one correct answer to this question): 
 Question: ${question} 
