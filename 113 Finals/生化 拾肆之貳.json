@@ -31,7 +31,6 @@
       "C": "提高科學家提出假設的準確性，並使過程更具邏輯性。",
       "D": "只關注單一細胞的研究，不考慮細胞間的差異性。",
       "E": "僅研究 mRNA 和蛋白質，不考慮其他分子。",
-
     },
     "answer": "C",
     "explanation": "系統生物學旨在減少猜測並提高假設的準確性，使研究過程更具邏輯性，而非完全取代傳統方法。"
@@ -324,7 +323,6 @@
     "answer": "C",
     "explanation": "將 DNA 模板固定在 Flow cell 上是 Bridge PCR 的步驟，而非 Emulsion PCR。"
   },
-
 {
     "question": "下列哪個步驟是 Sequencing by ligation 和 Pyrosequencing 的共同點？",
     "options": {
@@ -338,8 +336,6 @@
     "answer": "A",
     "explanation": "兩種技術都使用螢光標記的核苷酸來偵測 DNA 序列。"
   },
-
-
 {
     "question": "在 SOLiD 定序中，如果第一輪讀取到的顏色是紅色，則第二輪引子 (n-1 primer) 會與目標序列的哪個位置結合？",
     "options": {
@@ -353,8 +349,6 @@
     "answer": "B",
     "explanation": "n-1 primer 會往 Bead 方向移動一個位置，也就是與第二個鹼基結合。"
   },
-
-
 {
     "question": "下列關於 Bridge PCR 和 Emulsion PCR 的比較，何者**錯誤**？",
     "options": {
@@ -404,7 +398,6 @@
     "answer": "C",
     "explanation": "Sanger sequencing 是用於傳統定序，*不*是 NGS 的 DNA 擴增方法。"
   },
-
 {
     "question": "在 SOLiD 定序中，如果一個雙鹼基探針標記為綠色，那麼它可能代表哪些雙鹼基組合？",
     "options": {
@@ -417,7 +410,6 @@
     "answer": "B",
     "explanation": "根據 SOLiD 的顏色編碼，綠色對應 AC, CA, GT, TG 這四種雙鹼基組合。"
   },
-
 {
     "question": "在 Illumina Solexa 定序中，Cluster 的形成代表什麼？",
     "options": {
@@ -430,7 +422,6 @@
     "answer": "B",
     "explanation": "Cluster 是 Bridge PCR 擴增的結果，包含許多相同的 DNA 片段副本，以便產生足夠強的螢光訊號進行定序。"
   },
-
 {
     "question": "高通量技術 (High-throughput technologies) 的主要優勢是什麼？",
     "options": {
@@ -443,7 +434,6 @@
     "answer": "B",
     "explanation": "高通量技術的主要優勢在於能平行處理大量樣本，大幅提升分析效率。"
   },
-
 {
     "question": "下列哪項*不是*系統生物學 (Systems biology) 的主要目標？",
     "options": {
@@ -456,7 +446,6 @@
     "answer": "C",
     "explanation": "系統生物學強調的是整體觀，而非單一基因或蛋白質的功能。"
   },
-
 {
     "question": "哪種 PCR 技術使用微反應器 (Microreactors) 來防止不同 DNA 模板之間的交叉污染？",
     "options": {
@@ -469,8 +458,6 @@
     "answer": "C",
     "explanation": "Emulsion PCR 利用油包水乳化技術，將單個 DNA 模板和 PCR 試劑包裹在微小的水滴中，形成獨立的微反應器。"
   },
-
-
 {
     "question": "在 Roche 454 Pyrosequencing 中，哪種酵素負責將 Pyrophosphate 轉化為 ATP？",
     "options": {
@@ -484,8 +471,6 @@
     "answer": "D",
     "explanation": "ATP sulfurylase 催化 APS 和 Pyrophosphate 生成 ATP 的反應，ATP 隨後被 Luciferase 用於發光。"
   },
-
-
 {
     "question": "哪種定序技術使用"Sequencing by ligation"的方法？",
     "options": {
@@ -499,7 +484,6 @@
     "answer": "C",
     "explanation": "ABI SOLiD 使用 Sequencing by ligation 技術，透過螢光標記的探針與目標 DNA 序列進行連接反應來定序。"
   },
-
 {
     "question": "Bridge PCR 中使用的 Flow cell 表面通常修飾了什麼？",
     "options": {
