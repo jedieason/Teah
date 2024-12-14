@@ -37,6 +37,6 @@ const deBugButton = document.getElementById('deBug');
         });
 
         sendButton.addEventListener('click', () => {
-            showCustomAlert('Thanks for chipping in!');
+            showCustomAlert('感謝協助抓蟲子！');
             closeWindow(); // 發送後自動關閉視窗
         });
