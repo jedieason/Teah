@@ -423,18 +423,7 @@ document.getElementById('button-row').addEventListener('click', function(event) 
 });
 
 // 切換模式
-const modeToggle = document.getElementById('modeToggle');
 const modeToggleHeader = document.getElementById('modeToggle-header');
-modeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-
-    const img = modeToggle.querySelector('img');
-    if (document.body.classList.contains('dark-mode')) {
-        img.src = 'Images/sun.svg'; // Change to sun icon
-    } else {
-        img.src = 'Images/moon.svg'; // Change to moon icon
-    }
-});
 
 modeToggleHeader.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
