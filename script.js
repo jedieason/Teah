@@ -281,7 +281,7 @@ function copyQuestion() {
 
     navigator.clipboard.writeText(textToCopy).then(function() {
         // Optional: Provide feedback to the user
-        showCustomAlert('Question copied to clipboard!');
+        showCustomAlert('題目已複製！');
     }, function(err) {
         // Fallback in case of an error
         alert('Could not copy text: ' + err);
@@ -291,7 +291,7 @@ function copyQuestion() {
 // 事件監聽器
 document.getElementById('startGame').addEventListener('click', () => {
     if (!selectedJson) {
-        showCustomAlert('Please select a question bank first!');
+        showCustomAlert('請選擇題庫！');
         return;
     }
     initQuiz().then(() => {
