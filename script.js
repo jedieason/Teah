@@ -252,7 +252,7 @@ function updateWrong() {
 // 顯示結束畫面
 function showEndScreen() {
     isTestCompleted = true; // Indicate that the test has been completed
-    showCustomAlert(`Test completed!\nCorrect: ${correct}, Incorrect: ${wrong}.`);
+    showCustomAlert(`測驗完成！\n答對 ${correct} 題；答錯 ${wrong} 題。`);
 }
 
 function copyQuestion() {
