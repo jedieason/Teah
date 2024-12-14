@@ -10,6 +10,11 @@ body {
     background-color: white;
 }
 
+button, select, option, textarea {
+    all: unset;
+    font-family: inherit; /* 或者明確指定字體 */
+}
+
 /* Start Screen Styling */
 .start-screen {
     display: flex;
