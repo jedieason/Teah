@@ -210,7 +210,7 @@ modalConfirmBtn.addEventListener('click', () => {
 // 修改 confirmAnswer 函數以使用自訂模態窗口
 function confirmAnswer() {
     if (!selectedOption) {
-        showCustomAlert('Choose something!');
+        showCustomAlert('選點啥吧，用猜的也好！');
         return;
     }
 
