@@ -63,7 +63,7 @@
 "D":"病患年齡"
 },
 "answer":"D",
-"explanation":"應該是要探討四核心價值、八分配原則。\n(一).公平待人\n1.抽籤\n2.先到先得－不建議\n(二).境遇最差者優先\n1.病重者優先\n2.年輕者優先\n(三).好處極大化\n1.拯救最多生命數\n2.預後：事後能獲得最佳效益之個案優先，以最大化醫療資源之利用\n(四).推廣社會價值\n1.工具價值－只有在非常緊急時使用\n2.回饋－只有給非常重要的人使用，通常針對對社會有極大貢獻者\n可參考B11vol.5p.8"
+"explanation":"應該是要探討四核心價值、八分配原則。\n(一).公平待人\n1. 抽籤\n2. 先到先得－不建議\n(二).境遇最差者優先\n1. 病重者優先\n2. 年輕者優先\n(三).好處極大化\n1. 拯救最多生命數\n2. 預後：事後能獲得最佳效益之個案優先，以最大化醫療資源之利用\n(四).推廣社會價值\n1. 工具價值－只有在非常緊急時使用\n2. 回饋－只有給非常重要的人使用，通常針對對社會有極大貢獻者\n可參考B11vol.5p.8"
 },
 {
 "question":"關於COVID-19資源分配的道德建議，何者錯誤？",
@@ -74,7 +74,7 @@
 "D":"醫療提供者等不可取代性之專業工作者優先"
 },
 "answer":"C",
-"explanation":"跟上面那題一樣類似。\n(A)對證據負責那項，就是科學證據。\n(B)利益要最大化，就要看預後（是最大利益概念）\n(D)醫療工作優先（風險高，優先性高）\nEmanueletal.（2020）六項建議\n(一).最大利益（maximizebenefits）：\n1.拯救最多生命\n2.極大化預後（prognosis）\n(二).醫療工作者優先（prioritizehealthworkers）：\n1.前線醫事人員、病患照護人員、維持重要基本設施人員優先\n2.避免曠職\n3.高風險環境工作反饋\n(三).反對「先到先得」（donotallocateonfirst-come，first-served\nbasis）：\n1.預後相似的情形應改為「抽籤」，而非排隊\n2.「先到先得」缺點：\n(1)造成群聚\n(2)距離醫療資源遠、遵守防疫措施者無法獲得資源\n(3)距離醫療資源近者獲得資源\n(四).對證據負責（beresponsivetoevidence）：\n1.依科學證據調整資源分配\n2.急重症資源數為治療性物資，需評估病患預後表現（年輕者較好）\n(五).臨床試驗受試者優先（recognizeresearchparticipation）\n1.當出現平分決勝點（tie-breaker）時適用，不是絕對的優先權\n2.COVID疫苗及藥物試驗受試者優先\n(六).對COVID患者與非患者皆適用（applythesameprincipletoall\nCovid-19andnon-Covidpatients）：資源匱乏影響所有醫療需求者，分\n配要一體適用\n可參考B11vol.5p.9"
+"explanation":"跟上面那題一樣類似。\n(A)對證據負責那項，就是科學證據。\n(B)利益要最大化，就要看預後（是最大利益概念）\n(D)醫療工作優先（風險高，優先性高）\nEmanueletal.（2020）六項建議\n(一).最大利益（maximizebenefits）：\n1. 拯救最多生命\n2. 極大化預後（prognosis）\n(二).醫療工作者優先（prioritizehealthworkers）：\n1. 前線醫事人員、病患照護人員、維持重要基本設施人員優先\n2. 避免曠職\n3. 高風險環境工作反饋\n(三).反對「先到先得」（donotallocateonfirst-come，first-served\nbasis）：\n1. 預後相似的情形應改為「抽籤」，而非排隊\n2. 「先到先得」缺點：\n(1)造成群聚\n(2)距離醫療資源遠、遵守防疫措施者無法獲得資源\n(3)距離醫療資源近者獲得資源\n(四).對證據負責（beresponsivetoevidence）：\n1. 依科學證據調整資源分配\n2. 急重症資源數為治療性物資，需評估病患預後表現（年輕者較好）\n(五).臨床試驗受試者優先（recognizeresearchparticipation）\n1. 當出現平分決勝點（tie-breaker）時適用，不是絕對的優先權\n2. COVID疫苗及藥物試驗受試者優先\n(六).對COVID患者與非患者皆適用（applythesameprincipletoall\nCovid-19andnon-Covidpatients）：資源匱乏影響所有醫療需求者，分\n配要一體適用\n可參考B11vol.5p.9"
 },
 {
 "question":"下列何者並非醫療工作者應享有優先救治權的原因？",
@@ -438,7 +438,7 @@
 "F":"False"
 },
 "answer":"F",
-"explanation":"Emanueletal.六項建議:\n1.最大利益（maximizebenefits）\n2.醫療工作者優先（prioritizehealthworkers）\n3.反對「先到先得」（donotallocateonfirst-come，first-servedbasis）\n4.對證據負責（beresponsivetoevidence）\n5.臨床試驗受試者優先（recognizeresearchparticipation）\n6.對COVID患者與非患者皆適用（applythesameprincipletoall\nCovid19andnonCovidpatients）\n[B12共筆vol.2-p.17][蔡甫昌老師]"
+"explanation":"Emanueletal.六項建議:\n1. 最大利益（maximizebenefits）\n2. 醫療工作者優先（prioritizehealthworkers）\n3. 反對「先到先得」（donotallocateonfirst-come，first-servedbasis）\n4. 對證據負責（beresponsivetoevidence）\n5. 臨床試驗受試者優先（recognizeresearchparticipation）\n6. 對COVID患者與非患者皆適用（applythesameprincipletoall\nCovid19andnonCovidpatients）\n[B12共筆vol.2-p.17][蔡甫昌老師]"
 },
 {
 "question":"根據台灣生產傷害補償條例，無法排除和生產相關的案例也可以得到補\n償。",
@@ -492,7 +492,7 @@
 "F":"False"
 },
 "answer":"T",
-"explanation":"高達94.8%表示不會\n[法律與政策二：醫療品質與責任(上)-p.114][吳建昌老師]"
+"explanation":"高達94. 8%表示不會\n[法律與政策二：醫療品質與責任(上)-p.114][吳建昌老師]"
 },
 {
 "question":"世界醫師會（WMA）主張，死刑犯受到監管，可能受壓迫，無法進行真正\n自由知情同意，因此反對做為器官捐贈者，除非捐贈給近親（immediate\nfamily）。",
@@ -510,7 +510,7 @@
 "F":"False"
 },
 "answer":"F",
-"explanation":"器官捐贈須符合死亡捐贈者法則（dead-donorrule）\n1.僅能從死者身上摘取重要器官\n2.不得因為或為了摘取器官而造成捐贈者死亡，違反上述原則將構成\n安樂死，違反國家法令，帶來嚴重法律後果\n[B12共筆vol.2-p.19][蔡甫昌老師]"
+"explanation":"器官捐贈須符合死亡捐贈者法則（dead-donorrule）\n1. 僅能從死者身上摘取重要器官\n2. 不得因為或為了摘取器官而造成捐贈者死亡，違反上述原則將構成\n安樂死，違反國家法令，帶來嚴重法律後果\n[B12共筆vol.2-p.19][蔡甫昌老師]"
 },
 {
 "question":"死刑犯若欲進行器官捐贈，在槍決後是由檢察官與法醫依照腦死判定準則\n宣判死亡。",
@@ -519,6 +519,6 @@
 "F":"False"
 },
 "answer":"F",
-"explanation":"1.腦死檢測項目無法在槍決後逐一確認，行刑後無法由合格神經科醫\n師採用國際標準判定腦死\n2.槍擊大腦也不會造成死刑犯的心肺死亡，不符合心肺死亡之標準\n3.檢察官與法醫宣判死刑犯是法律上死亡，在醫學上不一定\n4.死刑後會交給移植外科醫師完成，但某種程度上違反死亡捐贈者規\n則，在醫學、倫理、法律上爭議性很高\n[B12共筆vol.2-p.19][蔡甫昌老師]"
+"explanation":"1. 腦死檢測項目無法在槍決後逐一確認，行刑後無法由合格神經科醫\n師採用國際標準判定腦死\n2. 槍擊大腦也不會造成死刑犯的心肺死亡，不符合心肺死亡之標準\n3. 檢察官與法醫宣判死刑犯是法律上死亡，在醫學上不一定\n4. 死刑後會交給移植外科醫師完成，但某種程度上違反死亡捐贈者規\n則，在醫學、倫理、法律上爭議性很高\n[B12共筆vol.2-p.19][蔡甫昌老師]"
 }
 ]
