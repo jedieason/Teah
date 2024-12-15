@@ -1,0 +1,449 @@
+[
+   {
+      "question":"Which of the following statements about the structural basis of hormone biosynthesis is incorrect?",
+      "options":{
+         "A":"Many hormones share the structural core of p-hydroxyphenylethylamine.",
+         "B":"Hormones derived from tyrosine undergo oxidation and decarboxylation.",
+         "C":"Catecholamines such as dopamine, norepinephrine, and epinephrine are formed through modifications of tyrosine.",
+         "D":"Thyroid hormones (T3 and T4) do not originate from tyrosine residues."
+      },
+      "answer":"D",
+      "explanation":"Thyroid hormones T3 and T4 originate from the iodination and coupling of tyrosine residues within thyroglobulin."
+   },
+   {
+      "question":"Which of the following steps is involved in the synthesis of thyroid hormones (T3 and T4)?",
+      "options":{
+         "A":"Direct attachment of iodide to free tyrosine in the cytosol.",
+         "B":"Iodination of tyrosyl residues within thyroglobulin in the follicular cavity of the thyroid.",
+         "C":"Conversion of T3 to T4 by adding an iodine atom at the cell surface.",
+         "D":"Methylation of diiodotyrosine residues to form T3 and T4."
+      },
+      "answer":"B",
+      "explanation":"Thyroid hormones are synthesized by iodinating tyrosine residues within thyroglobulin and then coupling the iodinated residues to form T3 and T4."
+   },
+   {
+      "question":"Which of the following best describes the process of β-adrenergic receptor desensitization?",
+      "options":{
+         "A":"β-adrenergic receptors continuously activate without any regulatory mechanisms.",
+         "B":"Epinephrine binding leads to receptor phosphorylation by βARK, followed by β-arrestin binding, reducing receptor signaling and promoting endocytosis.",
+         "C":"β-arrestin binds first, causing receptor phosphorylation by βARK and increased signal generation.",
+         "D":"The receptor is permanently inactivated by β-arrestin and cannot be returned to the cell surface."
+      },
+      "answer":"B",
+      "explanation":"Desensitization involves receptor phosphorylation by βARK and subsequent binding of β-arrestin, which reduces signaling and promotes receptor internalization. Later, β-arrestin dissociates, allowing receptor recycling."
+   },
+   {
+      "question":"How is T4 converted into the more active T3 form within target tissues?",
+      "options":{
+         "A":"By adding an additional iodine atom to T4.",
+         "B":"Through deiodinase enzymes that remove one iodine atom from T4.",
+         "C":"By phosphorylating T4 at specific residues.",
+         "D":"Via hydroxylation of T4 in the cytosol."
+      },
+      "answer":"B",
+      "explanation":"T4 is converted to T3 by deiodinase enzymes that remove one iodine, increasing the hormone's affinity for thyroid hormone receptors."
+   },
+   {
+      "question":"Which of the following hormones are considered catecholamines?",
+      "options":{
+         "A":"Dopamine, norepinephrine, and epinephrine",
+         "B":"T3 and T4",
+         "C":"Insulin and glucagon",
+         "D":"Cortisol and aldosterone"
+      },
+      "answer":"A",
+      "explanation":"Catecholamines are derived from tyrosine and include dopamine, norepinephrine, and epinephrine."
+   },
+   {
+      "question":"Which mechanism contributes to the termination of a G protein-coupled receptor (GPCR) signal?",
+      "options":{
+         "A":"Permanent receptor activation once the ligand binds.",
+         "B":"Conversion of cAMP into ATP by cyclic nucleotide phosphodiesterase.",
+         "C":"Hydrolysis of GTP to GDP on the Gα subunit, facilitated by GAP proteins, leading to re-association with Gβγ.",
+         "D":"Endocytosis of the receptor without any involvement of β-arrestin or receptor phosphorylation."
+      },
+      "answer":"C",
+      "explanation":"Signal termination involves hydrolyzing GTP to GDP on the Gα subunit (via GAP action) and breakdown of cAMP by phosphodiesterases. Additionally, receptor phosphorylation and β-arrestin binding facilitate internalization."
+   },
+   {
+      "question":"What role does β-arrestin play in β-adrenergic receptor regulation?",
+      "options":{
+         "A":"It increases the duration of receptor signaling.",
+         "B":"It binds to the phosphorylated receptor, preventing further G protein coupling and promoting receptor internalization.",
+         "C":"It directly activates adenylate cyclase, increasing cAMP levels.",
+         "D":"It removes phosphate groups from the receptor, restoring signal generation."
+      },
+      "answer":"B",
+      "explanation":"β-arrestin binds to the phosphorylated receptor, preventing further signaling and promoting endocytosis."
+   },
+   {
+      "question":"How does T3 influence transcription within target cells?",
+      "options":{
+         "A":"By binding to membrane receptors and opening ion channels.",
+         "B":"By dissociating corepressors from thyroid hormone receptors and recruiting coactivators, enhancing gene transcription.",
+         "C":"By forming irreversible covalent bonds with DNA.",
+         "D":"By directly degrading mRNA transcripts."
+      },
+      "answer":"B",
+      "explanation":"T3 binds to nuclear receptors, causing the receptor-corepressor complex to dissociate and allowing coactivators to bind, thereby enhancing transcription."
+   },
+   {
+      "question":"What does the phosphorylated G-protein coupled receptor become bound to, resulting in the internalization of the receptor by endocytosis?",
+      "options":{
+         "A":"This does not occur",
+         "B":"Endocytosis happens by itself",
+         "C":"β-arrestin",
+         "D":"βARK"
+      },
+      "answer":"C",
+      "explanation":"Upon phosphorylation of the GPCR, β-arrestin binds to the receptor, facilitating its internalization via endocytosis."
+   },
+   {
+      "question":"Which of the following protein post-translational modifications is utilized to modify G-α leading to overproduction of cAMP?",
+      "options":{
+         "A":"ADP-ribosylation",
+         "B":"Phosphorylation",
+         "C":"Ubiquitination",
+         "D":"Palmitoylation"
+      },
+      "answer":"A",
+      "explanation":"ADP-ribosylation of the G-α subunit (as caused by cholera toxin) locks it in an active state, leading to continuous stimulation of adenylate cyclase and overproduction of cAMP."
+   },
+   {
+      "question":"Which amino acid residues will be phosphorylated by PKA?",
+      "options":{
+         "A":"Serine and threonine",
+         "B":"Glycine and alanine",
+         "C":"Lost option (no data)",
+         "D":"None of the above"
+      },
+      "answer":"A",
+      "explanation":"PKA is a serine-threonine kinase, meaning it specifically phosphorylates serine and threonine residues on target proteins."
+   },
+   {
+      "question":"Which class of receptor does the PGE2 receptor belong to?",
+      "options":{
+         "A":"G Protein-Coupled Receptor (GPCR)",
+         "B":"Ligand-Gated Ion Channel",
+         "C":"Nuclear Receptor",
+         "D":"Enzyme-Linked Receptor",
+         "E":"Integrin Receptor"
+      },
+      "answer":"A",
+      "explanation":"The PGE2 receptor has seven transmembrane α-helices and interacts with a heterotrimeric G protein (α, β, γ subunits), hallmark features of GPCRs."
+   },
+   {
+      "question":"Which strategy would be most logical for using a PGE2 agonist to inhibit fibrosis?",
+      "options":{
+         "A":"Targeting only the EP1 receptor subtype",
+         "B":"Activating all EP receptor subtypes (EP1–EP4)",
+         "C":"Inhibiting all EP receptors except EP2",
+         "D":"Inhibiting all EP receptors except EP4",
+         "E":"Activating only the EP2 and EP4 receptors"
+      },
+      "answer":"E",
+      "explanation":"EP2 and EP4 receptor activation is known to have inhibitory effects on fibrosis. Targeting these two receptors selectively is more logical than affecting all EP receptors."
+   },
+   {
+      "question":"Which peptide sequence would integrin likely bind to on extracellular collagen?",
+      "options":{
+         "A":"KKFDE",
+         "B":"GHYSP",
+         "C":"MHTRA",
+         "D":"RGDWL"
+      },
+      "answer":"D",
+      "explanation":"Integrins specifically recognize and bind to the RGD (Arg-Gly-Asp) sequence found in extracellular matrix proteins."
+   },
+   {
+      "question":"From which amino acid are both the fat-soluble thyroid hormones (T3 and T4) and the water-soluble catecholamines (epinephrine, norepinephrine, and dopamine) derived?",
+      "options":{
+         "A":"Tyrosine",
+         "B":"Tryptophan",
+         "C":"Phenylalanine",
+         "D":"Histidine"
+      },
+      "answer":"A",
+      "explanation":"Tyrosine is the precursor amino acid from which the thyroid hormones (T3, T4) and the catecholamines (dopamine, norepinephrine, epinephrine) are synthesized."
+   },
+   {
+      "question":"Which enzyme in the RAAS pathway converts angiotensin I into angiotensin II, making it a key target for anti-hypertensive drugs?",
+      "options":{
+         "A":"Renin",
+         "B":"ACE (Angiotensin-Converting Enzyme)",
+         "C":"Aldosterone synthase",
+         "D":"Angiotensinase"
+      },
+      "answer":"B",
+      "explanation":"ACE converts angiotensin I into angiotensin II, a potent vasoconstrictor. Inhibiting ACE lowers angiotensin II levels, reducing blood pressure."
+   },
+   {
+      "question":"Dopamine, epinephrine, and norepinephrine fall under which category of hormones?",
+      "options":{
+         "A":"Steroid hormones",
+         "B":"Thyroid hormones",
+         "C":"Peptide hormones",
+         "D":"Catecholamine hormones"
+      },
+      "answer":"D",
+      "explanation":"Dopamine, epinephrine, and norepinephrine are catecholamines, synthesized from tyrosine and involved in the body's stress and metabolic responses."
+   },
+   {
+      "question":"What enzyme catalyzes the breakdown of cAMP into AMP, thus helping terminate GPCR signaling?",
+      "options":{
+         "A":"Adenylyl cyclase",
+         "B":"Phospholipase C",
+         "C":"Cyclic nucleotide phosphodiesterase",
+         "D":"Protein kinase A"
+      },
+      "answer":"C",
+      "explanation":"Cyclic nucleotide phosphodiesterase converts cAMP to AMP, reducing the second messenger levels and helping to terminate the GPCR signal."
+   },
+   {
+      "question":"Which set of statements correctly describes antagonists in receptor binding?",
+      "options":{
+         "A":"They bind to receptors without activating them.",
+         "B":"They compete with the agonist for the same binding site.",
+         "C":"They increase receptor activation.",
+         "D":"They prevent agonist-induced receptor activation."
+      },
+      "answer":[
+         "A",
+         "B",
+         "D"
+      ],
+      "explanation":"Antagonists bind to receptors without producing a response (A), compete with agonists at the same site (B), and prevent receptor activation by blocking agonist binding (D). They do not increase activation (C)."
+   },
+   {
+      "question":"Which second messengers are produced upon the activation of phospholipase C (PLC)?",
+      "options":{
+         "A":"cAMP and ATP",
+         "B":"IP3 and DAG",
+         "C":"cGMP and AMP",
+         "D":"Ca²⁺ and GTP"
+      },
+      "answer":"B",
+      "explanation":"PLC hydrolyzes PIP2 into IP3 and DAG. IP3 increases intracellular Ca²⁺ release, while DAG activates Protein Kinase C, both acting as second messengers."
+   },
+   {
+      "question":"How does elevated glucose lead to insulin secretion from pancreatic β cells?",
+      "answer":"Elevated glucose enters β cells via GLUT2 transporters, increasing ATP production. The rise in ATP closes ATP-sensitive K⁺ channels, causing membrane depolarization. This opens voltage-gated Ca²⁺ channels, allowing Ca²⁺ influx. The increased intracellular Ca²⁺ triggers vesicle fusion and insulin release."
+   },
+   {
+      "question":"How does the atrial natriuretic factor (ANF) receptor generate its second messenger?",
+      "options":{
+         "A":"By activating adenylate cyclase to produce cAMP",
+         "B":"By activating phospholipase C to produce IP3 and DAG",
+         "C":"By opening ion channels to allow Ca²⁺ influx",
+         "D":"By activating its intrinsic guanylyl cyclase to produce cGMP"
+      },
+      "answer":"D",
+      "explanation":"ANF receptors have intrinsic guanylyl cyclase activity, which, upon ligand binding, converts GTP to cGMP, acting as a second messenger."
+   },
+   {
+      "question":"Which strategy is used clinically to inhibit the epidermal growth factor receptor (EGFR) in certain cancers?",
+      "options":{
+         "A":"Increasing EGF production",
+         "B":"Blocking G protein activation",
+         "C":"Using monoclonal antibodies or tyrosine kinase inhibitors",
+         "D":"Replacing EGFR with nuclear receptors"
+      },
+      "answer":"C",
+      "explanation":"Inhibiting EGFR is achieved either by monoclonal antibodies against its extracellular domain or by tyrosine kinase inhibitors that block its intracellular signaling function, helping control cancer cell proliferation."
+   },
+   {
+      "question":"Which amino acid serves as the precursor for both fat-soluble thyroid hormones (T3 and T4) and water-soluble catecholamines (epinephrine, norepinephrine, dopamine)?",
+      "options":{
+         "A":"Tyrosine",
+         "B":"Tryptophan",
+         "C":"Phenylalanine",
+         "D":"Histidine"
+      },
+      "answer":"A",
+      "explanation":"Tyrosine is the precursor for fat-soluble thyroid hormones T3 and T4, as well as water-soluble catecholamines including epinephrine, norepinephrine, and dopamine."
+   },
+   {
+      "question":"Angiotensin-Converting Enzyme (ACE) plays a critical role in the RAAS pathway by converting angiotensin I into which potent vasoconstrictor?",
+      "options":{
+         "A":"Angiotensinogen",
+         "B":"Angiotensin II",
+         "C":"Aldosterone",
+         "D":"Renin"
+      },
+      "answer":"B",
+      "explanation":"ACE converts angiotensin I into angiotensin II, a potent vasoconstrictor that increases blood pressure. ACE inhibitors are used clinically to lower blood pressure."
+   },
+   {
+      "question":"Dopamine, epinephrine, and norepinephrine belong to which class of hormones?",
+      "options":{
+         "A":"Steroid hormones",
+         "B":"Thyroid hormones",
+         "C":"Peptide hormones",
+         "D":"Catecholamine hormones"
+      },
+      "answer":"D",
+      "explanation":"Dopamine, epinephrine, and norepinephrine are catecholamines, all synthesized from tyrosine and playing key roles in stress and metabolic responses."
+   },
+   {
+      "question":"Which enzyme breaks down cAMP into AMP, thereby helping terminate G protein-coupled receptor signaling?",
+      "options":{
+         "A":"Adenylyl cyclase",
+         "B":"Phospholipase C",
+         "C":"Cyclic nucleotide phosphodiesterase",
+         "D":"Protein kinase A"
+      },
+      "answer":"C",
+      "explanation":"Cyclic nucleotide phosphodiesterase hydrolyzes cAMP to AMP, reducing the second messenger levels and attenuating the signal."
+   },
+   {
+      "question":"Which combination of statements correctly describes antagonists in receptor binding?",
+      "options":{
+         "A":"They bind to receptors without activating them.",
+         "B":"They compete with agonists at the same binding site.",
+         "C":"They always increase receptor activation.",
+         "D":"They prevent receptor activation by occupying the receptor."
+      },
+      "answer":[
+         "A",
+         "B",
+         "D"
+      ],
+      "explanation":"Antagonists bind receptors without activating them (A), compete with agonists for binding (B), and prevent activation (D). They do not increase receptor activation."
+   },
+   {
+      "question":"Which two second messengers are produced by the action of phospholipase C (PLC) on PIP2?",
+      "options":{
+         "A":"cAMP and ATP",
+         "B":"IP3 and DAG",
+         "C":"cGMP and AMP",
+         "D":"Ca²⁺ and cGMP"
+      },
+      "answer":"B",
+      "explanation":"PLC hydrolyzes PIP2 into IP3 and DAG. IP3 triggers Ca²⁺ release from the ER, and DAG activates Protein Kinase C."
+   },
+   {
+      "question":"In pancreatic β cells, what triggers the release of insulin following an increase in blood glucose levels?",
+      "answer":"Elevated glucose leads to increased ATP production, which closes ATP-sensitive K⁺ channels. This causes membrane depolarization, opening voltage-gated Ca²⁺ channels. The influx of Ca²⁺ triggers vesicle fusion and insulin secretion."
+   },
+   {
+      "question":"Which type of receptor, when bound by atrial natriuretic factor (ANF), generates cGMP as a second messenger?",
+      "options":{
+         "A":"G protein-coupled receptor",
+         "B":"Receptor tyrosine kinase",
+         "C":"Ligand-gated ion channel",
+         "D":"Guanylyl cyclase receptor"
+      },
+      "answer":"D",
+      "explanation":"ANF receptors have intrinsic guanylyl cyclase activity. Upon ligand binding, they convert GTP to cGMP, acting as a second messenger."
+   },
+   {
+      "question":"Which clinical strategy is used to inhibit the activity of the Epidermal Growth Factor Receptor (EGFR) in certain cancers?",
+      "options":{
+         "A":"Increasing EGF ligand concentration",
+         "B":"Blocking G protein activation",
+         "C":"Using monoclonal antibodies or tyrosine kinase inhibitors",
+         "D":"Replacing EGFR with a nuclear receptor"
+      },
+      "answer":"C",
+      "explanation":"Inhibiting EGFR can be achieved by monoclonal antibodies that block ligand binding or by tyrosine kinase inhibitors that block the kinase domain, helping control aberrant cell growth."
+   },
+   {
+      "question":"Which of the following statements about hormones derived from tyrosine is INCORRECT?",
+      "options":{
+         "A":"Tyrosine serves as a precursor for both T3 and T4, which are lipid-soluble thyroid hormones.",
+         "B":"Catecholamines such as dopamine, norepinephrine, and epinephrine are synthesized from tyrosine.",
+         "C":"T3 and T4 do not require transporters to cross cell membranes since they are lipid-soluble.",
+         "D":"All tyrosine-derived hormones are water-soluble and bind exclusively to cell surface receptors."
+      },
+      "answer":"D",
+      "explanation":"T3 and T4 are lipid-soluble and can diffuse through the membrane to bind nuclear receptors, unlike catecholamines which are water-soluble and bind cell surface receptors."
+   },
+   {
+      "question":"Which of the following statements regarding ACE (Angiotensin-Converting Enzyme) and thyroid hormones (T3 and T4) is INCORRECT?",
+      "options":{
+         "A":"ACE converts angiotensin I into angiotensin II, a potent vasoconstrictor.",
+         "B":"T3 and T4, being fat-soluble, can cross the cell membrane and bind to intracellular receptors.",
+         "C":"ACE directly influences the synthesis of T3 and T4 by iodinating tyrosine residues in thyroglobulin.",
+         "D":"ACE plays a key role in the RAAS pathway, helping regulate blood pressure."
+      },
+      "answer":"C",
+      "explanation":"ACE does not influence T3 and T4 synthesis. T3 and T4 are produced by the iodination of tyrosine residues in thyroglobulin and do not involve ACE."
+   },
+   {
+      "question":"Which of the following statements about dopamine, epinephrine, and norepinephrine is INCORRECT?",
+      "options":{
+         "A":"They are all catecholamines derived from tyrosine.",
+         "B":"Epinephrine is formed by the methylation of norepinephrine.",
+         "C":"Dopamine acts as a neurotransmitter influencing mood and reward pathways.",
+         "D":"These hormones cannot be synthesized from tyrosine and must be obtained from the diet."
+      },
+      "answer":"D",
+      "explanation":"Dopamine, norepinephrine, and epinephrine are all synthesized from tyrosine in the body; they are not strictly obtained from the diet."
+   },
+   {
+      "question":"Which of the following statements regarding GPCR signaling termination is INCORRECT?",
+      "options":{
+         "A":"Cyclic nucleotide phosphodiesterase degrades cAMP into AMP, lowering second messenger levels.",
+         "B":"GTPase activating protein (GAP) hydrolyzes GTP on the Gα subunit to GDP, inactivating it.",
+         "C":"Phosphorylation of the GPCR allows β-arrestin to bind, leading to receptor internalization.",
+         "D":"Once endocytosed, the receptor remains permanently inactive and cannot be recycled to the cell surface."
+      },
+      "answer":"D",
+      "explanation":"After endocytosis, GPCRs can be dephosphorylated and recycled back to the cell surface. They are not necessarily permanently inactive."
+   },
+   {
+      "question":"Which of the following statements about receptor antagonists is INCORRECT?",
+      "options":{
+         "A":"Antagonists bind to receptors without activating them.",
+         "B":"Antagonists can compete with agonists for the same binding site.",
+         "C":"Antagonists enhance the receptor’s intrinsic activity, increasing downstream signaling.",
+         "D":"By occupying the receptor, antagonists prevent agonists from eliciting a response."
+      },
+      "answer":"C",
+      "explanation":"Antagonists do not enhance receptor activity; instead, they prevent activation by agonists."
+   },
+   {
+      "question":"Which of the following statements about second messengers generated by phospholipase C (PLC) is INCORRECT?",
+      "options":{
+         "A":"PLC cleaves PIP2 into IP3 and DAG.",
+         "B":"IP3 causes the release of Ca²⁺ from intracellular stores.",
+         "C":"DAG activates Protein Kinase C (PKC).",
+         "D":"IP3 and DAG directly phosphorylate target proteins without the need for any kinases."
+      },
+      "answer":"D",
+      "explanation":"IP3 primarily increases Ca²⁺ levels, and DAG activates PKC, which then phosphorylates target proteins. IP3 and DAG themselves do not directly phosphorylate proteins."
+   },
+   {
+      "question":"How do AChR antibodies cause myasthenia gravis?",
+      "options":{
+         "A":"They increase the number of acetylcholine receptors at the neuromuscular junction.",
+         "B":"They block and degrade acetylcholine receptors, reducing their number and function.",
+         "C":"They inhibit the release of acetylcholine from the presynaptic nerve terminal.",
+         "D":"They stimulate excessive acetylcholine release, leading to muscle fatigue."
+      },
+      "answer":"B",
+      "explanation":"Option B is correct because AChR antibodies target and degrade acetylcholine receptors at the neuromuscular junction. This reduces the number of functional ACh receptors available to bind acetylcholine, resulting in impaired neuromuscular transmission and muscle weakness. The other options describe mechanisms that are not associated with AChR antibodies in myasthenia gravis."
+   },
+   {
+      "question":"What is the difference between the mechanism of muscle weakness caused by AChR antibodies in myasthenia gravis and that caused by botulinum toxin?",
+      "options":{
+         "A":"AChR antibodies inhibit acetylcholine synthesis, whereas botulinum toxin blocks acetylcholine receptors.",
+         "B":"AChR antibodies increase acetylcholine receptor numbers, whereas botulinum toxin reduces them.",
+         "C":"AChR antibodies reduce functional acetylcholine receptors, whereas botulinum toxin inhibits acetylcholine release.",
+         "D":"Both AChR antibodies and botulinum toxin inhibit acetylcholine release from the presynaptic nerve terminal."
+      },
+      "answer":"C",
+      "explanation":"Option C is correct because AChR antibodies reduce the number of functional acetylcholine receptors at the postsynaptic membrane, impairing neuromuscular transmission. In contrast, botulinum toxin inhibits the release of acetylcholine from the presynaptic nerve terminal, preventing neurotransmitter availability for muscle contraction. Options A and B incorrectly describe the mechanisms, and option D incorrectly states that both affect acetylcholine release at the presynaptic level."
+   },
+   {
+      "question":"Which of the following statements about the structural basis of hormone biosynthesis is incorrect?",
+      "options":{
+         "A":"Many hormones share the structural core of p-hydroxyphenylethylamine.",
+         "B":"Hormones derived from tyrosine undergo oxidation and decarboxylation.",
+         "C":"Catecholamines such as dopamine, norepinephrine, and epinephrine are formed through modifications of tyrosine.",
+         "D":"Thyroid hormones (T3 and T4) do not originate from tyrosine residues."
+      },
+      "answer":"D",
+      "explanation":"Option D is correct because thyroid hormones (T3 and T4) are indeed derived from tyrosine residues, contrary to what the statement suggests."
+   }
+]
