@@ -11,7 +11,7 @@ const model = genAI.getGenerativeModel({
         topP: 0.8,
         topK: 20,
     },
-    systemInstruction: "使用正體中文（臺灣）回答。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks. Always use the subsequent question as additional context.",
+    systemInstruction: "使用正體中文（臺灣）回答。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks. Answer my prompt, incorporating the subsequent question as additional context.",
 });
 
 // Define the generateExplanation function and expose it globally
