@@ -16,7 +16,7 @@ const model = genAI.getGenerativeModel({
 
 // Define the generateExplanation function and expose it globally
 window.generateExplanation = async function(question, options, userQuestion) {
-const prompt = `${userQuestion}
+const prompt = `針對以下問題，${userQuestion}
 
 ${question} 
 ${Object.entries(options).map(([key, value]) => `${key}: ${value}`).join('\n')}`;
