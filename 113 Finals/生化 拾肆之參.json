@@ -1,0 +1,566 @@
+[
+  {
+    "question": "在Illumina Solexa定序系統中，「可逆的螢光標籤終止劑」的設計中，哪個化學基團的添加對於確保核酸鏈的延長可以停止並隨後恢復至關重要？",
+    "options": {
+      "A": "在dNTP的5'-三磷酸基團上的硫原子修飾",
+      "B": "在dNTP的去氧核糖3'-OH末端的烯丙基（Allyl group）修飾",
+      "C": "在含氮鹼基上直接連接的磷酸鹽",
+      "D": "在含氮鹼基上的醣化修飾",
+       "E": "接在核醣的2'-OH的甲氧基修飾"
+    },
+    "answer": "B",
+    "explanation": "烯丙基（Allyl group）加在dNTP的3'-OH末端，形成可切除的3'端帽，使核酸延伸停止，而移除後可恢復延伸。這個設計確保了定序過程的可控性。"
+  },
+  {
+    "question": "在Illumina Solexa定序中，為何要使用9°N突變的DNA聚合酶？",
+     "options": {
+      "A": "提高反應的溫度，加速DNA合成",
+      "B": "降低聚合酶的錯配率，提高定序準確性",
+      "C": "使聚合酶能夠辨識並穩定結合帶有螢光團和3'端帽的dNTP",
+      "D": "增加聚合酶對特定DNA序列的親和力",
+      "E": "改變聚合酶對不同pH值的敏感度"
+    },
+    "answer": "C",
+    "explanation": "9°N突變的DNA聚合酶的口袋結構能容納因螢光團和3'端帽而體積較大的dNTP，確保其能穩定結合並進行核酸聚合反應。"
+  },
+ {
+    "question": "在Illumina Solexa定序中，使用「鈀催化的脫烯丙基反應」的目的是什麼？",
+    "options": {
+      "A": "為DNA片段加上螢光標記",
+      "B": "為DNA片段加上3'端的磷酸基團",
+      "C": "同時移除dNTP上3'-OH端的烯丙基和鹼基上的螢光團",
+       "D": "將雙股DNA解旋為單股DNA",
+       "E": "保護核酸鏈免受核酸酶的降解"
+    },
+    "answer": "C",
+    "explanation": "鈀催化的脫烯丙基反應能夠同時移除3'-OH端的烯丙基和螢光團，使DNA鏈能繼續延伸，同時移除上一鹼基的螢光，避免干擾下一個鹼基的訊號。"
+  },
+  {
+    "question":"在Pacific Biosciences SMRT定序中，「零模式波導（ZMW）」的主要功能是什麼？",
+    "options": {
+      "A": "作為DNA片段的擴增位點",
+      "B": "用來儲存反應所需的緩衝液",
+      "C": "提供一個極小的反應空間，以便單分子DNA定序",
+      "D": "作為螢光訊號偵測的感應器",
+      "E": "用來加速DNA聚合酶的反應速率"
+   },
+    "answer": "C",
+    "explanation": "ZMW提供了一個極小的反應空間（zeptoliter級），使得在其中進行的反應可以達到單分子水平，這樣就能夠直接觀察單個DNA分子的合成過程。"
+  },
+   {
+    "question": "在Pacific Biosciences SMRT定序中，為何只有在ZMW特定範圍內發生的螢光脈衝訊號才能被偵測到？",
+    "options": {
+      "A":"為了降低背景雜訊",
+      "B": "為了增加訊號的強度",
+      "C": "為了偵測不同波長的螢光",
+      "D": "為了減少訊號的干擾",
+       "E": "為了減少螢光團的耗損"
+    },
+   "answer": "A",
+    "explanation":"因為在ZMW中的特定距離範圍外產生的螢光訊號會迅速衰減，而偵測器只會偵測到在ZMW內部特定區域的訊號，確保了訊號的純淨度，同時能區分來自不同dNTP的螢光訊號。"
+  },
+  {
+      "question": "在Pacific Biosciences SMRT定序中，為何能重複讀取環狀DNA片段多次？",
+       "options": {
+        "A":"使用了多個引子來增加定序深度",
+        "B":"因為聚合酶可以繞環狀DNA多次",
+        "C":"因ZMW可多次捕捉同一個環狀DNA分子",
+        "D":"因為使用了特殊的探針來重複掃描環狀DNA",
+         "E":"因使用多次的聚合酶反應來重複讀取DNA"
+      },
+      "answer": "B",
+      "explanation": "在SMRT定序中，聚合酶會持續繞著環狀DNA模板進行合成，因此可以多次讀取同一段序列，從而提高定序的準確性。"
+  },
+ {
+   "question": "在Thermo-Fisher Ion Torrent半導體定序中，哪個分子釋放會引起pH值改變，進而產生電訊號？",
+    "options": {
+      "A":"水分子",
+      "B":"焦磷酸（PPi）",
+      "C":"磷酸根（PO43-）",
+      "D":"氫離子（H+）",
+      "E":"氧離子（O2-）"
+    },
+    "answer": "D",
+    "explanation": "當dNTP加入DNA鏈時，會釋放出H+，導致反應槽（Well）內的pH值降低，進而改變離子感應膜的電位。"
+  },
+ {
+    "question": "在Thermo-Fisher Ion Torrent半導體定序中，如何偵測到DNA聚合反應？",
+    "options": {
+      "A": "通過偵測螢光訊號的變化",
+      "B": "通過測量釋出的熱量",
+      "C": "通過偵測離子感應膜上的電位變化",
+      "D": "通過測量反應槽內的體積變化",
+      "E": "通過偵測紫外光的吸收量"
+    },
+    "answer": "C",
+    "explanation": "半導體定序利用H+釋放導致的pH值變化來改變離子感應膜上的電位，進而產生電訊號，此訊號被記錄下來以確定加入的dNTP種類。"
+  },
+  {
+    "question": "奈米孔定序中，奈米孔洞蛋白（如α-hemolysin）的主要功能是什麼？",
+    "options": {
+      "A":"作為DNA片段的引子",
+      "B":"作為DNA聚合酶的結合位點",
+      "C":"作為DNA穿過的通道",
+      "D":"作為螢光訊號的發射器",
+       "E": "作為離子流的緩衝器"
+    },
+    "answer": "C",
+    "explanation": "奈米孔洞蛋白在膜上形成一個小孔，單股DNA會穿過此孔，當DNA通過時會阻礙離子流，產生可被偵測的電流變化。"
+  },
+ {
+    "question":"在奈米孔定序中，如何藉由電流變化來推測鹼基種類？",
+    "options": {
+       "A":"不同鹼基在孔道中產生不同的螢光訊號",
+        "B":"不同鹼基的物理尺寸會產生不同的電流阻礙",
+        "C":"不同鹼基上的螢光團會產生不同的電流變化",
+        "D":"不同鹼基在孔道中會產生不同pH值變化",
+        "E":"不同鹼基的配對效應會產生不同的電流變化"
+      },
+      "answer": "B",
+    "explanation":"當單股DNA通過奈米孔時，不同的鹼基會造成不同程度的電流阻礙，導致不同的電流變化，這些變化被用來識別鹼基種類。"
+  },
+{
+    "question": "在奈米孔定序中，為何要將α-hemolysin的111號上的Aspartate（E）突變成Asparagine（N）？",
+    "options": {
+      "A":"為了增加孔洞的直徑，方便DNA通過",
+      "B":"為了減少非特異性結合",
+      "C":"為了減少電流訊號的干擾",
+      "D":"為了增加不同鹼基間的電流訊號差異",
+        "E":"為了降低解旋酶的反應速率"
+    },
+    "answer": "D",
+    "explanation": "通過將α-hemolysin的111號上的Aspartate（E）突變成Asparagine（N），可以增大Poly(dC)和Poly(dA)在通過奈米孔時的電流差異，使其更容易區分。"
+  },
+  {
+  "question": "在DNA深度定序中，「Read」指的是什麼？",
+    "options": {
+      "A": "DNA聚合酶",
+      "B": "一段已知序列的Adapter",
+      "C": "待定序的DNA片段",
+      "D": "一個單一的鹼基",
+      "E": "一個染色體"
+    },
+    "answer": "C",
+    "explanation": "Read是指在深度定序中，位於兩個Adapter之間的DNA片段，這些片段被定序以確定原始DNA序列。"
+  },
+   {
+    "question": "在DNA深度定序中，為何要使用超聲波震盪（Sonication）的方式打斷基因組DNA？",
+    "options": {
+      "A":"為了提高DNA的純度",
+      "B":"為了增加DNA的複製速率",
+      "C":"為了讓DNA可以均勻擴增",
+      "D":"為了隨機將DNA切成不同長度的片段，以利後續定序",
+      "E":"為了讓DNA更容易與Adapter結合"
+    },
+    "answer": "D",
+    "explanation": "超聲波震盪可以將基因組DNA隨機打斷成不同大小的片段，確保在定序過程中覆蓋整個基因組，以克服定序長度的限制。"
+  },
+  {
+   "question": "在DNA深度定序中，「Read number」代表什麼意義？",
+    "options": {
+      "A": "DNA片段中鹼基的種類",
+      "B": "一個片段重複出現的次數",
+      "C":"DNA片段的長度",
+      "D":"DNA片段的序列",
+      "E": "DNA片段的總數"
+    },
+    "answer": "B",
+    "explanation": "Read number反映了一個DNA片段在定序過程中被重複定序的次數，這可以用來推斷該片段在原始樣本中的含量，並提供複製數變異的資訊。"
+  },
+{
+    "question": "在全基因組定序中，什麼是「拷貝數變異（Copy number alteration）」？",
+     "options": {
+       "A":"DNA序列中單個鹼基的變化",
+       "B":"DNA序列中短片段的插入或缺失",
+       "C":"DNA序列中特定區域重複次數的變化",
+       "D":"染色體之間片段的交換",
+       "E":"DNA序列中鹼基的錯配"
+     },
+     "answer": "C",
+     "explanation":"拷貝數變異是指基因組中特定DNA片段的重複次數與正常情況相比發生了變化，可能導致基因的表達量異常。"
+  },
+  {
+     "question": "在全基因組定序中，「易位斷裂點（Translocation breakpoint）」指的是什麼？",
+      "options": {
+       "A":"DNA序列中單個鹼基發生突變的位置",
+        "B":"DNA序列中重複片段的起始位置",
+        "C":"染色體之間發生互換的位置",
+        "D":"DNA片段中發生插入或缺失的位置",
+         "E":"DNA序列中錯誤配對的位置"
+      },
+    "answer": "C",
+     "explanation": "易位斷裂點是指在染色體之間發生片段交換的區域，這可能導致染色體結構異常和疾病的發生。"
+  },
+  {
+    "question": "藥物基因組學的主要目標是什麼？",
+    "options": {
+      "A":"開發新的抗生素",
+      "B":"分析新藥的結構",
+      "C":"根據個人的基因變異來優化藥物治療",
+      "D":"開發新的診斷方法",
+       "E":"研究疾病的發病機制"
+    },
+    "answer": "C",
+    "explanation": "藥物基因組學旨在了解個體的基因變異如何影響其對藥物的反應，從而使藥物治療更加個性化和有效。"
+  },
+  {
+   "question": "在藥物開發過程中，「Phase 1」臨床試驗的主要目的是什麼？",
+    "options": {
+      "A":"評估藥物的長期安全性",
+      "B":"確定藥物的最大耐受劑量",
+      "C":"比較藥物與現有療法的效果",
+      "D":"評估藥物對不同族群的影響",
+        "E":"評估藥物是否能有效治療疾病"
+    },
+   "answer": "B",
+    "explanation": "Phase 1臨床試驗主要在少數健康志願者身上進行，目的是確定藥物的安全性和最大耐受劑量，而不是評估療效。"
+  },
+   {
+     "question": "在藥物基因組學的研究中，為何要考慮不同族群（如台灣人）對藥物的反應？",
+      "options": {
+        "A":"因為不同族群的藥物代謝機制完全不同",
+        "B":"因為不同族群的基因背景可能導致對藥物反應的差異",
+        "C":"因為不同族群的生活習慣會直接影響藥效",
+        "D":"因為不同族群的飲食習慣會直接影響藥物吸收",
+          "E":"因為不同族群的社會階層影響藥物的價格"
+     },
+     "answer": "B",
+     "explanation":"不同族群的基因變異可能導致藥物代謝酶和藥物作用靶點的差異，從而影響藥物的療效和不良反應。"
+  },
+  {
+    "question": "轉錄組分析（Transcriptome profiling）的主要目的是什麼？",
+    "options": {
+      "A":"分析細胞中的DNA序列",
+      "B":"分析細胞中的蛋白質含量",
+      "C":"分析細胞中所有mRNA的表達量",
+      "D":"分析細胞中所有tRNA的種類",
+       "E":"分析細胞中所有miRNA的種類"
+    },
+    "answer": "C",
+    "explanation": "轉錄組分析旨在研究細胞中所有mRNA的表達模式，以了解基因表達的情況和細胞的狀態。"
+  },
+   {
+    "question": "在RNA深度定序中，為何要使用Biotin-oligo-dT引子？",
+    "options": {
+      "A":"為了識別特定的DNA序列",
+      "B":"為了結合細胞內的核糖體",
+      "C":"為了結合mRNA的Poly(A)尾巴，以便富集mRNA",
+      "D":"為了結合特定的蛋白質",
+        "E":"為了增加聚合酶的活性"
+    },
+    "answer": "C",
+    "explanation":"Biotin-oligo-dT引子可以特異性地結合mRNA的Poly(A)尾巴，通過鏈黴親和素（Streptavidin）的結合，可以富集mRNA進行後續的分析。"
+  },
+   {
+    "question": "在轉錄組定序中，反轉錄酶（Reverse transcriptase）的作用是什麼？",
+      "options": {
+        "A":"將DNA轉換成RNA",
+        "B":"將RNA轉換成DNA",
+        "C":"將蛋白質轉換成RNA",
+        "D":"將蛋白質轉換成DNA",
+         "E":"將DNA降解成單核苷酸"
+      },
+      "answer": "B",
+     "explanation":"反轉錄酶是一種RNA依賴的DNA聚合酶，它可以利用RNA作為模板合成互補的DNA (cDNA)，這是進行轉錄組分析的必要步驟。"
+  },
+    {
+    "question":"在RNA深度定序中，為何要使用限制酶NlaIII？",
+      "options": {
+        "A":"為了切割DNA片段形成平滑末端",
+        "B":"為了切割DNA片段形成黏性末端，以便連接Adapter",
+        "C":"為了選擇性降解不需要的RNA片段",
+        "D":"為了標記DNA片段以便於偵測",
+         "E":"為了增加聚合酶的反應速率"
+      },
+      "answer": "B",
+      "explanation": "NlaIII是一種限制酶，可以產生具有CATG overhang的黏性末端，以便連接第一段adapter，為後續的定序步驟做準備。"
+  },
+  {
+    "question": "在RNA深度定序中，MmeI限制酶的作用是什麼？",
+    "options": {
+       "A":"隨機切割DNA片段",
+       "B":"切割Adapter序列，方便連接下一段Adapter",
+       "C":"切割DNA片段形成平滑末端",
+       "D":"切割RNA片段，以便接上反轉錄酶",
+       "E":"選擇性切割雙股DNA"
+    },
+    "answer": "B",
+    "explanation": "MmeI是一種Type IIS限制酶，它能在識別序列的特定距離外切割DNA，因此可被用於切割第一段Adapter，並留下兩個核苷酸的overhang，方便連接第二段Adapter。"
+  },
+    {
+    "question": "在RNA深度定序中，最終產生約20~21個核苷酸的標籤（Tag）有什麼重要意義？",
+      "options": {
+       "A":"這些標籤對人類基因組來說是唯一的，可以識別特定的mRNA",
+       "B":"這些標籤是隨機產生的，可以增加實驗的多樣性",
+        "C":"這些標籤可以提高PCR反應的效率",
+        "D":"這些標籤可以作為擴增DNA的引子",
+         "E":"這些標籤可以提高反應的訊號強度"
+     },
+      "answer": "A",
+      "explanation":"由於可能的21個核苷酸序列數量遠大於人類基因組的基因數量，因此這些標籤在人類基因組中通常是唯一的，可以作為識別特定mRNA的身份標籤。"
+  },
+  {
+   "question":"在轉錄組分析中，為何要分析「Read number」？",
+    "options": {
+      "A":"為了確定mRNA序列的長度",
+      "B":"為了確定mRNA序列中鹼基的種類",
+      "C":"為了確定mRNA在細胞中的相對表現量",
+      "D":"為了確定mRNA的結構",
+      "E":"為了確定mRNA的結合蛋白"
+    },
+    "answer": "C",
+     "explanation": "Read number反映了特定mRNA片段在定序過程中被重複讀取的次數，這可以用來推斷該mRNA在細胞中的相對表現量，是轉錄組分析的關鍵資訊。"
+  },
+    {
+    "question": "在RNA深度定序中，為何要使用不對稱的Adapter？",
+    "options": {
+      "A":"為了增加PCR反應的效率",
+       "B":"為了識別不同的DNA片段",
+        "C":"為了方便接上反轉錄酶",
+        "D":"為了區分讀取的方向性",
+        "E":"為了讓DNA更容易與磁珠結合"
+    },
+    "answer": "D",
+    "explanation":"使用不對稱的Adapter可以確保定序方向性，使得實驗結果可以區分mRNA的5'端和3'端。"
+  },
+    {
+   "question":"以下哪一個定序方法不需要使用DNA聚合酶進行反應？",
+      "options":{
+        "A":"Illumina Solexa 定序",
+        "B":"Pacific Biosciences SMRT 定序",
+        "C":"Thermo-Fisher Ion Torrent 定序",
+        "D":"奈米孔定序",
+         "E":"深度定序"
+      },
+      "answer": "D",
+      "explanation":"奈米孔定序直接利用電場驅動DNA通過奈米孔，並根據電流變化來識別鹼基，不需要使用DNA聚合酶進行合成反應。"
+    },
+    {
+    "question": "哪種定序方法以高通量平行定序為特點，可在一個流程中同時偵測許多定序結果？",
+     "options":{
+       "A":"Sanger 定序",
+        "B":"Pacific Biosciences SMRT 定序",
+         "C":"Thermo-Fisher Ion Torrent 定序",
+         "D":"Illumina Solexa 定序",
+         "E":"奈米孔定序"
+      },
+     "answer": "D",
+     "explanation": "Illumina Solexa 定序利用獨特的 Flow cell 設計，可以同時處理大量的DNA片段，實現高通量平行定序。"
+  },
+    {
+   "question": "下列哪種定序技術最適合讀取超長片段的DNA序列（例如超過30,000 bp）？",
+      "options":{
+        "A":"Illumina Solexa 定序",
+        "B":"Sanger 定序",
+        "C":"Pacific Biosciences SMRT 定序",
+        "D":"Thermo-Fisher Ion Torrent 定序",
+        "E":"RNA-seq"
+      },
+      "answer": "C",
+      "explanation": "Pacific Biosciences SMRT 定序以其能讀取長片段DNA序列而聞名，平均長度可達數千至數萬鹼基對，遠長於其他定序技術。"
+  },
+    {
+      "question":"下列哪種定序方法是基於偵測核苷酸加入時釋出的氫離子來進行定序？",
+    "options": {
+      "A":"Illumina Solexa 定序",
+       "B":"Pacific Biosciences SMRT 定序",
+        "C":"Thermo-Fisher Ion Torrent 定序",
+         "D":"奈米孔定序",
+        "E":"Sanger 定序"
+    },
+      "answer": "C",
+      "explanation":"Thermo-Fisher Ion Torrent 定序通過監測聚合反應中釋放的氫離子引起的pH值變化來檢測核苷酸的加入，並轉化為電訊號。"
+  },
+     {
+    "question": "下列哪種定序技術可以在DNA合成的同時，即時偵測鹼基序列？",
+     "options": {
+      "A": "Sanger 定序",
+        "B":"Illumina Solexa 定序",
+        "C":"Thermo-Fisher Ion Torrent 定序",
+        "D":"奈米孔定序",
+          "E": "Pacific Biosciences SMRT 定序"
+     },
+     "answer": "E",
+     "explanation": "Pacific Biosciences SMRT（Single-Molecule Real-Time）定序利用零模式波導（ZMW）技術，在DNA聚合酶合成的同時，即時偵測螢光脈衝訊號，以確定鹼基序列。"
+  },
+  {
+    "question": "哪一種技術在定序時可以重複讀取環狀DNA，以提高定序的準確性？",
+     "options":{
+        "A":"Illumina Solexa 定序",
+        "B":"Thermo-Fisher Ion Torrent 定序",
+        "C":"奈米孔定序",
+        "D":"Pacific Biosciences SMRT 定序",
+          "E": "Sanger 定序"
+      },
+     "answer":"D",
+      "explanation":"Pacific Biosciences SMRT 定序可以利用環狀DNA模板讓聚合酶重複進行合成反應，因此可以多次讀取同一段序列，提高定序準確度。"
+    },
+  {
+     "question": "下列哪個分子不屬於奈米孔定序過程中的必要反應物？",
+      "options":{
+        "A":"α-hemolysin",
+        "B":"解旋酶",
+        "C":"DNA聚合酶",
+        "D":"DNA",
+        "E":"電壓"
+      },
+      "answer":"C",
+      "explanation": "奈米孔定序是一種無須PCR擴增的定序技術，並不需要使用 DNA聚合酶，而是通過電流變化來識別鹼基。"
+  },
+  {
+    "question":"在深度定序中，「Adapter」的主要作用是什麼？",
+      "options":{
+         "A":"作為DNA聚合酶的結合位點",
+         "B":"作為螢光訊號的發射器",
+         "C":"作為DNA片段的引子結合位點",
+         "D":"作為DNA片段的保護層",
+           "E": "作為電流訊號的感應器"
+      },
+      "answer": "C",
+      "explanation":"在深度定序中，Adapter是已知序列的DNA片段，可以附著在未知DNA片段的兩端，作為PCR引子的結合位點和定序的起始位置。"
+   },
+  {
+   "question": "在轉錄組分析中，若想得知細胞中某個特定的mRNA序列，你會參考哪個數據？",
+     "options": {
+      "A":"Read number",
+      "B":"Read sequence",
+      "C":"Adapter sequence",
+       "D":"Primer sequence",
+       "E":"dNTP sequence"
+    },
+    "answer": "B",
+     "explanation":"Read sequence是指通過定序得到的核苷酸序列，通過比對數據庫，可以得知mRNA的種類。"
+  },
+  {
+      "question":"在藥物開發過程中，哪一個階段會評估藥物對不同族群的影響？",
+       "options": {
+        "A":"Phase 1",
+        "B":"Phase 2",
+        "C":"Phase 3",
+        "D":"前臨床測試",
+         "E":"品質監控"
+      },
+      "answer": "C",
+      "explanation":"在Phase 3的臨床試驗中，會擴大樣本的數量，並考慮不同族群的基因背景，以評估藥物在更廣泛人群中的安全性和有效性。"
+  },
+  {
+       "question":"以下哪種情況屬於「Homozygous deletion」的變異？",
+       "options": {
+        "A":"某段DNA序列出現的次數為正常序列的一半",
+          "B":"某段DNA序列出現的次數比正常序列還多",
+        "C":"某段DNA序列在癌細胞的DNA中完全沒有出現",
+         "D":"某段DNA序列中單個鹼基發生突變",
+          "E": "某段DNA序列中出現插入或缺失"
+      },
+       "answer":"C",
+       "explanation": "Homozygous deletion表示某段DNA序列在癌細胞的兩個染色體拷貝上都缺失了，因此在定序結果中完全不會出現。"
+  },
+   {
+      "question":"下列哪個技術最適合用來檢測單核苷酸變異（single point-mutation）？",
+      "options": {
+        "A":"Whole genome sequencing (全基因組定序)",
+        "B":"RNA-seq (轉錄組定序)",
+        "C":"Nanopore sequencing (奈米孔定序)",
+         "D":"ChIP-seq (染色質免疫沉澱定序)",
+          "E":"Bisulfite sequencing (亞硫酸氫鹽定序)"
+       },
+     "answer":"A",
+      "explanation":"全基因組定序（Whole genome sequencing）可以涵蓋整個基因組的DNA序列，並精確地檢測出單個鹼基的變異。"
+    },
+  {
+    "question": "在RNA深度定序中，若想得知細胞中某個特定的mRNA在不同處理條件下的表現量差異，你會參考哪個數據？",
+      "options":{
+        "A":"Read sequence",
+        "B":"Read length",
+        "C":"Adapter sequence",
+         "D":"Read number",
+         "E":"Primer sequence"
+      },
+     "answer":"D",
+      "explanation":"Read number代表特定mRNA在定序過程中被讀取的次數，反映了該mRNA的相對表現量。因此，比較不同條件下Read number的差異，即可得知mRNA表現量的變化。"
+   },
+   {
+      "question":"在藥物開發中，品質保證（Quality Assurance, QA）部門的主要職責是什麼？",
+       "options":{
+          "A":"設計臨床試驗",
+         "B":"監控藥物生產過程中的品質",
+         "C":"提交藥物註冊文件",
+        "D":"進行動物實驗",
+         "E":"執行數據分析"
+      },
+       "answer": "B",
+       "explanation":"品質保證部門負責監管所有受管制的活動，包括品質控制實驗，以確保藥物生產過程符合品質標準和法規要求。"
+     },
+     {
+    "question":"下列哪種技術需要通過比較不同位置的電位變化來進行定序？",
+       "options":{
+         "A":"Illumina Solexa 定序",
+         "B":"Pacific Biosciences SMRT 定序",
+           "C":"Thermo-Fisher Ion Torrent 定序",
+           "D":"Sanger 定序",
+           "E": "奈米孔定序"
+      },
+       "answer":"C",
+       "explanation":"Thermo-Fisher Ion Torrent 定序是通過監測核苷酸加入後氫離子釋放導致的pH變化，並將其轉化為電訊號來進行定序的。"
+    },
+    {
+       "question":"為何使用深度定序技術時，必須將DNA片段切成小片段？",
+       "options":{
+        "A":"提高PCR反應的效率",
+          "B":"降低DNA的複製速率",
+          "C":"配合現有定序技術的讀取長度限制",
+         "D":"確保DNA片段能與Adaptor順利結合",
+         "E":"簡化數據分析流程"
+        },
+        "answer": "C",
+         "explanation":"現有的DNA定序技術都存在讀取長度的限制，因此需要將DNA片段切成較小的片段，以便於定序讀取。"
+      },
+   {
+    "question": "哪個技術特別適用於偵測小於0.1%的突變頻率？",
+        "options": {
+          "A":"Sanger 定序",
+          "B":"Illumina Solexa 定序",
+           "C":"Thermo-Fisher Ion Torrent 定序",
+          "D": "Pacific Biosciences SMRT 定序",
+         "E": "RNA-seq"
+        },
+       "answer": "D",
+        "explanation": "Pacific Biosciences SMRT定序是一種單分子定序技術，具有極高的靈敏度，能夠檢測低頻率的突變。"
+    },
+  {
+   "question":"在轉錄組定序中，如果發現某個mRNA的「Read number」在某種處理下顯著增加，這可能代表什麼？",
+      "options":{
+        "A":"該mRNA的結構發生改變",
+         "B":"該mRNA的序列發生突變",
+          "C":"該mRNA的降解速率增加",
+         "D":"該mRNA的表達量增加",
+          "E":"該mRNA的轉譯效率降低"
+        },
+      "answer":"D",
+       "explanation":"在轉錄組分析中，「Read number」與mRNA的表達量成正比，所以「Read number」的增加表示該mRNA的表達量顯著上升。"
+  },
+  {
+  "question": "為什麼在RNA深度定序的實驗中，要將單股RNA轉成雙股cDNA？",
+      "options":{
+       "A":"為了保護RNA免受RNA酶的降解",
+       "B":"為了使cDNA片段更容易擴增",
+       "C":"為了方便與定序儀的Adapter連接",
+        "D":"為了能夠使用DNA聚合酶進行複製",
+        "E":"為了提高雜交反應的效率"
+      },
+      "answer": "D",
+      "explanation":"由於定序實驗多基於雙股DNA，因此需要將由反轉錄酶合成的單股cDNA轉變為雙股cDNA，使其能夠進行後續的擴增和定序。"
+   },
+   {
+     "question":"在全基因組定序中，如果發現一段序列來自病毒基因，這可能是什麼情況的表現？",
+      "options":{
+        "A":"該區域的DNA發生了複雜的重排",
+        "B":"染色體之間發生了互換",
+         "C":"該區域DNA重複次數出現異常",
+          "D":"病毒基因插入到了宿主細胞的基因組中",
+          "E": "該區域DNA發生了甲基化"
+       },
+        "answer":"D",
+         "explanation":"發現來自病毒基因的序列表明，病毒可能感染了細胞，並將其基因組插入到了宿主細胞的DNA中。"
+      }
+]
