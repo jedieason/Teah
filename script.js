@@ -19,6 +19,15 @@ const userQuestionInput = document.getElementById('userQuestion');
 
 let expandTimeout;
 
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    svg: {
+        fontCache: 'global'
+    }
+};
+
 // 初始化測驗
 async function initQuiz() {
     localStorage.removeItem('quizProgress');
