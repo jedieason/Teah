@@ -200,18 +200,14 @@
       "explanation":"Cyclic nucleotide phosphodiesterase converts cAMP to AMP, reducing the second messenger levels and helping to terminate the GPCR signal."
    },
    {
-      "question":"Which set of statements correctly describes antagonists in receptor binding?",
+      "question":"Which set of statements falsely describes antagonists in receptor binding?",
       "options":{
          "A":"They bind to receptors without activating them.",
          "B":"They compete with the agonist for the same binding site.",
          "C":"They increase receptor activation.",
          "D":"They prevent agonist-induced receptor activation."
       },
-      "answer":[
-         "A",
-         "B",
-         "D"
-      ],
+      "answer":"C",
       "explanation":"Antagonists bind to receptors without producing a response (A), compete with agonists at the same site (B), and prevent receptor activation by blocking agonist binding (D). They do not increase activation (C)."
    },
    {
@@ -294,21 +290,6 @@
       },
       "answer":"C",
       "explanation":"Cyclic nucleotide phosphodiesterase hydrolyzes cAMP to AMP, reducing the second messenger levels and attenuating the signal."
-   },
-   {
-      "question":"Which combination of statements correctly describes antagonists in receptor binding?",
-      "options":{
-         "A":"They bind to receptors without activating them.",
-         "B":"They compete with agonists at the same binding site.",
-         "C":"They always increase receptor activation.",
-         "D":"They prevent receptor activation by occupying the receptor."
-      },
-      "answer":[
-         "A",
-         "B",
-         "D"
-      ],
-      "explanation":"Antagonists bind receptors without activating them (A), compete with agonists for binding (B), and prevent activation (D). They do not increase receptor activation."
    },
    {
       "question":"Which two second messengers are produced by the action of phospholipase C (PLC) on PIP2?",
