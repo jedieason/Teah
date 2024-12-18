@@ -95,7 +95,7 @@ function loadNewQuestion() {
 
     // 更新題目文本
     document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
-    MathJax.typeset();
+    
 
     // 檢查題型
     const optionKeys = Object.keys(currentQuestion.options);
@@ -242,7 +242,7 @@ function confirmAnswer() {
 
     // 顯示解釋
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-    MathJax.typeset();
+    
     document.getElementById('explanation').style.display = 'block';
     document.getElementById('confirm-btn').style.display = 'none';
     saveProgress();
@@ -341,7 +341,7 @@ function reverseQuestion() {
 
     // 更新題目和選項
     document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
-    MathJax.typeset();
+    
 
     const optionsContainer = document.getElementById('options');
     optionsContainer.innerHTML = '';
@@ -632,7 +632,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     // Show loading state with spinner
     currentQuestion.explanation = '生成回答中⋯⋯';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-    MathJax.typeset();
+    
     document.getElementById('explanation').style.display = 'block';
     document.getElementById('confirm-btn').style.display = 'none';
     console.log('Generating explanation, please wait...');
@@ -652,7 +652,7 @@ sendQuestionBtn.addEventListener('click', async () => {
 
         // Update the explanation section as specified
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        MathJax.typeset();
+        
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
         userQuestionInput.value = '';
@@ -663,7 +663,7 @@ sendQuestionBtn.addEventListener('click', async () => {
         // Show error message to user
         currentQuestion.explanation = 'An error occurred while generating the explanation. Please try again later.';
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        MathJax.typeset();
+        
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
         console.log('Error generating explanation. Please try again later.');
@@ -731,7 +731,7 @@ function loadQuestionFromState() {
 
     // 更新題目文本
     document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
-    MathJax.typeset();
+    
 
     // 檢查題型
     const optionKeys = Object.keys(currentQuestion.options);
