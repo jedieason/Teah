@@ -671,10 +671,19 @@ sendQuestionBtn.addEventListener('click', async () => {
 });
 
 // Add this event listener after initializing userQuestionInput
+// Add this event listener after initializing userQuestionInput
 userQuestionInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent the default action (e.g., form submission)
-        sendQuestionBtn.click(); // Simulate a click on the send button
+        const isComposing = event.isComposing || event.target.getAttribute('aria-composing') === 'true';
+
+        if (isComposing) {
+            // 若正在選字，則不阻止預設行為
+            return;
+        }
+
+        // 阻止預設行為並模擬送出按鈕點擊
+        event.preventDefault();
+        sendQuestionBtn.click();
     }
 });
 
