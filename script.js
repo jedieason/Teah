@@ -6,7 +6,7 @@ let correct = 0;
 let wrong = 0;
 let selectedJson = null; // 初始為 null
 let isTestCompleted = false; // Flag to track test completion
-   
+
 // 新增：歷史紀錄陣列
 let questionHistory = [];
 
@@ -95,6 +95,14 @@ function loadNewQuestion() {
 
     // 更新題目文本
     document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
+   renderMathInElement(document.getElementById('question'), {
+    delimiters: [
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true }
+    ]
+});
     
 
     // 檢查題型
@@ -242,6 +250,14 @@ function confirmAnswer() {
 
     // 顯示解釋
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+   renderMathInElement(document.getElementById('explanation-text'), {
+    delimiters: [
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true }
+    ]
+});
     
     document.getElementById('explanation').style.display = 'block';
     document.getElementById('confirm-btn').style.display = 'none';
@@ -341,6 +357,14 @@ function reverseQuestion() {
 
     // 更新題目和選項
     document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
+      renderMathInElement(document.getElementById('question'), {
+    delimiters: [
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true }
+    ]
+});
     
 
     const optionsContainer = document.getElementById('options');
@@ -632,6 +656,14 @@ sendQuestionBtn.addEventListener('click', async () => {
     // Show loading state with spinner
     currentQuestion.explanation = '生成回答中⋯⋯';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+         renderMathInElement(document.getElementById('explanation-text'), {
+    delimiters: [
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true }
+    ]
+});
     
     document.getElementById('explanation').style.display = 'block';
     document.getElementById('confirm-btn').style.display = 'none';
@@ -652,6 +684,14 @@ sendQuestionBtn.addEventListener('click', async () => {
 
         // Update the explanation section as specified
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+                renderMathInElement(document.getElementById('explanation-text'), {
+                      delimiters: [
+                          { left: "$", right: "$", display: false },
+                          { left: "\\(", right: "\\)", display: false },
+                          { left: "$$", right: "$$", display: true },
+                          { left: "\\[", right: "\\]", display: true }
+                      ]
+                  });
         
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
@@ -663,6 +703,14 @@ sendQuestionBtn.addEventListener('click', async () => {
         // Show error message to user
         currentQuestion.explanation = 'An error occurred while generating the explanation. Please try again later.';
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+                renderMathInElement(document.getElementById('explanation-text'), {
+                   delimiters: [
+                       { left: "$", right: "$", display: false },
+                       { left: "\\(", right: "\\)", display: false },
+                       { left: "$$", right: "$$", display: true },
+                       { left: "\\[", right: "\\]", display: true }
+                   ]
+               });
         
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
@@ -740,6 +788,14 @@ function loadQuestionFromState() {
 
     // 更新題目文本
     document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
+            renderMathInElement(document.getElementById('question'), {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\[", right: "\\]", display: true }
+                ]
+            });
     
 
     // 檢查題型
