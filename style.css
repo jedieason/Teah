@@ -3,7 +3,7 @@
 
 /* Base Styles */
 body {
-    font-family: "source-han-serif-tc", "PMingLiU", "SimSun", serif;
+    font-family: "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
     color: #2D3436;
     margin: 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -28,7 +28,7 @@ button, select, option, textarea {
 }
 
 .start-title {
-    font-family: "source-han-serif-tc", "PMingLiU", "SimSun", serif;
+    font-family: "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
     color: #1A1A1A;
     font-size: 4rem;
     letter-spacing: 3px;
@@ -122,7 +122,7 @@ button, select, option, textarea {
 
 
 .quiz-title {
-    font-family: "source-han-serif-tc", "PMingLiU", "SimSun", serif;
+    font-family: "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
     color: #1A1A1A;
     font-size: 2.5rem;
     font-weight: 600;
