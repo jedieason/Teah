@@ -6,7 +6,7 @@ let correct = 0;
 let wrong = 0;
 let selectedJson = null; // 初始為 null
 let isTestCompleted = false; // Flag to track test completion
-
+   
 // 新增：歷史紀錄陣列
 let questionHistory = [];
 
