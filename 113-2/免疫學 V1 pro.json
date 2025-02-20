@@ -1,0 +1,518 @@
+[
+  {
+    "question": "在免疫學歷史中，下列哪一項*不是*最早被提出的天花預防方法？",
+    "options": {
+      "A": "人痘接種 (Variolation)",
+      "B": "牛痘接種 (Vaccination)",
+      "C": "鼻腔吹入法 (Nasal insufflation) 使用天花患者痘痂",
+      "D": "使用減毒天花病毒直接接種",
+      "E": "以上皆為早期天花預防方法"
+    },
+    "answer": "D",
+    "explanation": "選項 A、B、C 均為早期天花預防方法。「人痘接種」和「鼻腔吹入法」利用天然未減毒病毒，「牛痘接種」則利用牛痘病毒。「使用減毒天花病毒直接接種」是現代疫苗的概念，並非最早被提出的方法。"
+  },
+  {
+    "question": "免疫反應的特性中，「辨識 (recognition)」功能最主要涉及下列哪個層次？",
+    "options": {
+      "A": "組織層次",
+      "B": "器官層次",
+      "C": "細胞與分子層次",
+      "D": "個體生理層次",
+      "E": "物種演化層次"
+    },
+    "answer": "C",
+    "explanation": "免疫學研究生物體如何在「細胞與分子層次」防禦感染與免疫失調。「辨識」作為免疫反應的第一步，必然也發生在細胞與分子層次。"
+  },
+  {
+    "question": "下列哪一項描述*最不符合*先天免疫 (Innate immunity) 的特性？",
+    "options": {
+      "A": "反應快速",
+      "B": "具有記憶性 (memory)",
+      "C": "辨識多種微生物共有特徵",
+      "D": "受器在生殖系 (germline) 時即形成",
+      "E": "無法進行專一性辨識"
+    },
+    "answer": "B",
+    "explanation": "先天免疫的特性包括反應快速、辨識多種微生物共有特徵及缺乏抗原專一性。「具有記憶性」是後天免疫 (Adaptive immunity) 的主要特性，先天免疫*基本上不具備*免疫記憶功能 (雖然近期研究顯示可能有 trained memory)。"
+  },
+  {
+    "question": "關於免疫系統的階層性，下列排序由外而內何者正確？",
+    "options": {
+      "A": "表皮、補體系統、先天免疫、後天免疫",
+      "B": "表皮、先天免疫、補體系統、後天免疫",
+      "C": "補體系統、表皮、先天免疫、後天免疫",
+      "D": "先天免疫、表皮、補體系統、後天免疫",
+      "E": "表皮、黏液、後天免疫、先天免疫"
+    },
+    "answer": "A",
+    "explanation": "免疫系統的階層性防禦依序為：第一線屏障「表皮、黏液」，第二線「補體系統」，第三線「先天免疫」，第四線「後天免疫」。選項 A 符合此由外而內的階層性。"
+  },
+  {
+    "question": "多型核白血球 (PMN) 在免疫反應中主要扮演下列哪種角色？",
+    "options": {
+      "A": "產生抗體",
+      "B": "細胞毒殺作用",
+      "C": "先天性免疫",
+      "D": "後天性免疫",
+      "E": "抗原呈現"
+    },
+    "answer": "C",
+    "explanation": "多型核白血球 (PMN)，如嗜中性球，主要屬於「先天性免疫」系統，負責快速反應以抵抗病原體的入侵。選項 A 和 D 描述後天免疫的功能，選項 B 和 E 描述先天免疫和後天免疫皆可執行的功能，但 PMN 的主要角色更偏向先天免疫。"
+  },
+  {
+    "question": "攻膜複合體 (MAC) 的主要功能為何？",
+    "options": {
+      "A": "吞噬病原體",
+      "B": "活化補體系統",
+      "C": "標記病原體以利辨識",
+      "D": "在病原菌細胞膜上穿孔",
+      "E": "促進發炎反應"
+    },
+    "answer": "D",
+    "explanation": "攻膜複合體 (MAC, membrane attack complex) 的作用機制是在病原菌的細胞膜上形成通道或孔洞，破壞其膜的完整性，導致細胞溶解或死亡。「在病原菌細胞膜上穿孔」最精確描述了 MAC 的主要功能。"
+  },
+  {
+    "question": "若個體先天缺乏先天性免疫，在病毒感染初期，下列哪一項描述*最可能*發生？",
+    "options": {
+      "A": "病毒數量快速被後天免疫清除",
+      "B": "病毒數量能被控制在一定程度",
+      "C": "病毒數量不受控制大量孳生",
+      "D": "僅能產生慢性感染",
+      "E": "完全不受病毒感染"
+    },
+    "answer": "C",
+    "explanation": "先天性免疫是抵抗病毒感染的第一道防線。若缺乏先天性免疫，病毒在初期將*不受控制地大量孳生*，因為缺乏立即性的防禦機制來抑制病毒擴散。"
+  },
+  {
+    "question": "淋巴系統中的自然殺手細胞 (NK cell) 主要屬於下列哪個 lineage？",
+    "options": {
+      "A": "骨髓系 (myeloid lineage)",
+      "B": "淋巴系 (lymphoid lineage)",
+      "C": "樹突細胞系 (dendritic cell lineage)",
+      "D": "紅血球系 (erythroid lineage)",
+      "E": "巨核細胞系 (megakaryocytic lineage)"
+    },
+    "answer": "B",
+    "explanation": "自然殺手細胞 (NK cell) 屬於「淋巴系 (lymphoid lineage)」。骨髓系主要包含負責先天性免疫的細胞，但 NK 細胞是淋巴系中負責先天免疫的重要細胞類型。"
+  },
+  {
+    "question": "下列哪種免疫細胞*不具有*抗原專一性 (antigen specificity)？",
+    "options": {
+      "A": "T 細胞",
+      "B": "B 細胞",
+      "C": "自然殺手細胞 (NK cell)",
+      "D": "漿細胞 (plasma cell)",
+      "E": "細胞毒性 T 細胞 (cytotoxic T cell)"
+    },
+    "answer": "C",
+    "explanation": "自然殺手細胞 (NK cell) 屬於先天免疫系統，其辨識病原體的方式*不具抗原專一性*，而是透過辨識細胞表面的特定分子。T 細胞和 B 細胞 (及其分化型態如漿細胞、細胞毒性 T 細胞) 則屬於後天免疫，具有抗原專一性。"
+  },
+  {
+    "question": "初級淋巴器官 (primary lymphoid organ) 的主要功能為何？",
+    "options": {
+      "A": "過濾淋巴液",
+      "B": "清除血液中病原體",
+      "C": "淋巴球分化、發育與成熟",
+      "D": "活化抗原專一性淋巴球",
+      "E": "產生抗體"
+    },
+    "answer": "C",
+    "explanation": "初級淋巴器官，如骨髓和胸腺，是「淋巴球發生分化、發育以及成熟的地方」。次級淋巴器官才負責後續的免疫反應，如活化淋巴球和清除病原體等。"
+  },
+  {
+    "question": "下列哪個器官*不是*初級淋巴器官？",
+    "options": {
+      "A": "骨髓 (bone marrow)",
+      "B": "胸腺 (thymus)",
+      "C": "脾臟 (spleen)",
+      "D": "法氏囊 (bursa of Fabricius)",
+      "E": "以上皆為初級淋巴器官"
+    },
+    "answer": "C",
+    "explanation": "骨髓和胸腺是主要的初級淋巴器官。脾臟是次級淋巴器官，負責偵測血液中的病原體並啟動免疫反應。法氏囊 (bursa of Fabricius) 是鳥類特有的初級淋巴器官，功能類似哺乳動物的骨髓。"
+  },
+  {
+    "question": "次級淋巴器官 (secondary lymphoid organ) 的主要作用為何？",
+    "options": {
+      "A": "淋巴球生成",
+      "B": "淋巴球成熟",
+      "C": "游離抗原與淋巴球相遇",
+      "D": "清除衰老紅血球",
+      "E": "產生補體"
+    },
+    "answer": "C",
+    "explanation": "次級淋巴器官，如淋巴結和脾臟，主要功能為「游離抗原與淋巴球的相遇地」，讓淋巴球在此被抗原活化並啟動後續的免疫反應。"
+  },
+  {
+    "question": "淋巴結中，B 細胞主要分布於哪個區域？",
+    "options": {
+      "A": "副皮質區 (paracortical area)",
+      "B": "濾泡 (follicle)",
+      "C": "髓索 (medullary cords)",
+      "D": "皮質竇 (cortical sinus)",
+      "E": "淋巴竇 (lymphatic sinus)"
+    },
+    "answer": "B",
+    "explanation": "在淋巴結中，「B 細胞主要分布於濾泡 (follicle)」，構成淋巴結的外層皮質。T 細胞主要分布於副皮質區。"
+  },
+  {
+    "question": "脾臟 (spleen) 在免疫系統中扮演的角色*不包括*下列哪一項？",
+    "options": {
+      "A": "偵測血液中病原體",
+      "B": "清除衰老紅血球",
+      "C": "淋巴球活化場所",
+      "D": "產生淋巴球",
+      "E": "次級淋巴器官"
+    },
+    "answer": "D",
+    "explanation": "脾臟是次級淋巴器官，負責偵測血液中病原體、清除衰老紅血球，以及作為淋巴球活化的場所。「產生淋巴球」是初級淋巴器官 (如骨髓和胸腺) 的功能，而非脾臟。"
+  },
+  {
+    "question": "黏膜相關淋巴組織 (MALT) 最主要的特色為何？",
+    "options": {
+      "A": "不含淋巴球",
+      "B": "淋巴球數量極少",
+      "C": "淋巴球數量與其他淋巴組織匹敵",
+      "D": "僅有先天性免疫細胞",
+      "E": "僅有後天性免疫細胞"
+    },
+    "answer": "C",
+    "explanation": "黏膜相關淋巴組織 (MALT) 是黏膜免疫系統的重要組成部分，其特色為「淋巴球數量與其他地方匹敵」，顯示其在黏膜免疫中的重要性。"
+  },
+  {
+    "question": "下列哪一項描述*最能*區分先天免疫與後天免疫？",
+    "options": {
+      "A": "是否需要細胞參與",
+      "B": "反應速度快慢",
+      "C": "是否具專一性",
+      "D": "是否能清除病原體",
+      "E": "是否能引起發炎反應"
+    },
+    "answer": "C",
+    "explanation": "先天免疫與後天免疫最大的差異在於「是否具專一性」。先天免疫缺乏抗原專一性，後天免疫則具備高度的抗原專一性。「反應速度快慢」和「是否能清除病原體」雖然也是區分點，但「是否具專一性」更能精確劃分兩者。"
+  },
+  {
+    "question": "下列哪一項物質*不是*先天免疫受器 (innate receptor) 主要辨識的目標？",
+    "options": {
+      "A": "醣蛋白",
+      "B": "脂多醣 (LPS)",
+      "C": "蛋白質",
+      "D": "破碎細胞碎片",
+      "E": "細菌細胞壁成分"
+    },
+    "answer": "C",
+    "explanation": "先天免疫受器 (PRRs) 主要辨識病原體上的病原相關分子模式 (PAMPs)，這些 PAMPs 多為多種微生物共有的特徵，例如醣蛋白、脂多醣、細菌細胞壁成分等。「蛋白質」雖然也是生物分子，但並非 PAMPs 的典型代表，且蛋白質的種類多樣，缺乏作為多種微生物共有特徵的普遍性。"
+  },
+  {
+    "question": "株系選擇假說 (clonal selection hypothesis) 主要解釋下列哪個免疫學現象？",
+    "options": {
+      "A": "先天免疫的廣泛性",
+      "B": "後天免疫的記憶性",
+      "C": "抗體的多樣性",
+      "D": "免疫耐受性的產生",
+      "E": "免疫反應的啟動機制"
+    },
+    "answer": "C",
+    "explanation": "株系選擇假說 (clonal selection hypothesis) 主要是為了「解釋在免疫反應啟動過程中抗體的多樣性的形成」。它描述了淋巴球如何透過專一性受體辨識抗原，並藉由株落擴增產生大量相同的淋巴球，進而產生多樣性的抗體。"
+  },
+  {
+    "question": "在株系選擇假說中，「負選擇 (negative selection)」的主要目的為何？",
+    "options": {
+      "A": "促進免疫細胞增生",
+      "B": "清除辨識外來抗原的免疫細胞",
+      "C": "清除辨識自體抗原的免疫細胞",
+      "D": "活化免疫細胞",
+      "E": "產生免疫記憶"
+    },
+    "answer": "C",
+    "explanation": "株系選擇假說中的「負選擇 (negative selection)」主要目的是「清除辨識自體抗原的免疫細胞」，以避免自體免疫疾病的發生，達成免疫耐受性 (self tolerance)。"
+  },
+  {
+    "question": "免疫記憶 (immune memory) 的主要特點*不包含*下列哪一項？",
+    "options": {
+      "A": "再次感染時反應更快速",
+      "B": "再次感染時反應更強",
+      "C": "具有專一性",
+"D": "初次感染即產生",
+"E": "持續時間較長"
+},
+"answer": "D",
+"explanation": "免疫記憶的主要特點包括再次感染時反應更快速、更強、具有專一性及持續時間較長。「初次感染即產生」不符合免疫記憶的特性，免疫記憶是在初次感染後建立，並在再次感染時發揮作用。"
+},
+{
+"question": "疫苗接種的主要目的是誘導下列哪一種免疫反應？",
+"options": {
+"A": "先天免疫",
+"B": "後天免疫",
+"C": "被動免疫",
+"D": "黏膜免疫",
+"E": "群體免疫"
+},
+"answer": "B",
+"explanation": "疫苗接種的主要目的是誘導個體產生「後天免疫」，透過模擬初次感染，在不引起疾病的前提下，建立免疫記憶，以便在未來真正感染時能快速有效地清除病原體。"
+},
+{
+"question": "下列哪一項不是溶菌酶 (lysozyme) 的主要作用機制？",
+"options": {
+"A": "分解細菌細胞壁的肽聚醣",
+"B": "使細胞膜暴露",
+"C": "直接穿孔細胞膜",
+"D": "為一種醣苷酶 (glycosidase)",
+"E": "存在於淚液中"
+},
+"answer": "C",
+"explanation": "溶菌酶 (lysozyme) 的主要作用機制是「分解細菌肽聚醣細胞壁」，使細胞膜暴露，但本身不直接穿孔細胞膜。穿孔細胞膜是抗微生物肽 (AMPs) 的作用機制。選項 A、B、D、E 皆為溶菌酶的特性。"
+},
+{
+"question": "抗微生物肽 (AMPs) 的活化機制主要為何？",
+"options": {
+"A": "基因轉錄增加表現量",
+"B": "蛋白質磷酸化",
+"C": "蛋白質分解活化 (proteolytic activation)",
+"D": "與細胞膜受器結合",
+"E": "與補體系統協同作用"
+},
+"answer": "C",
+"explanation": "抗微生物肽 (AMPs) 通常以不活化的前體 (Pro-AMP) 形式存在，當細菌出現時，才會被「蛋白質分解活化 (proteolytic activation)」成具有活性的 AMPs。選項 C 精確描述了 AMPs 的活化機制。"
+},
+{
+"question": "補體系統 (complement system) 的發現者為下列哪位科學家？",
+"options": {
+"A": "Edward Jenner",
+"B": "Louis Pasteur",
+"C": "Robert Koch",
+"D": "Jules Bordet",
+"E": "Elie Metchnikoff"
+},
+"answer": "D",
+"explanation": "補體系統 (complement system) 是在 1890 年代由 「Jules Bordet」所發現，並因此獲得 1919 年諾貝爾獎。其他選項的科學家在免疫學領域亦有重要貢獻，但非補體系統的發現者。"
+},
+{
+"question": "補體活化途徑中，「古典途徑 (classical pathway)」的啟動條件為何？",
+"options": {
+"A": "病原體表面的甘露糖",
+"B": "病原體細胞壁成分",
+"C": "抗體與抗原結合",
+"D": "補體蛋白 C3b",
+"E": "細胞受損訊號"
+},
+"answer": "C",
+"explanation": "「古典途徑 (classical pathway)」的啟動條件為「抗體與抗原結合」。IgM 或 IgG 抗體必須先與抗原結合，才能啟動古典途徑的補體活化。"
+},
+{
+"question": "下列哪一種補體蛋白在補體系統中含量最多且最重要？",
+"options": {
+"A": "C1q",
+"B": "C3",
+"C": "C5",
+"D": "C9",
+"E": "Factor B"
+},
+"answer": "B",
+"explanation": "「補體中的 C3 最多且最重要」，若人體的 C3 補體存有缺陷，將使其易受到復發性且致命的細菌感染。C3 在補體活化的所有途徑中都扮演核心角色。"
+},
+{
+"question": "下列哪一項不是補體活化的主要功能？",
+"options": {
+"A": "細胞溶解 (lysis)",
+"B": "調理作用 (opsonization)",
+"C": "發炎反應 (inflammation)",
+"D": "抗體產生 (antibody production)",
+"E": "吞噬作用 (phagocytosis)"
+},
+"answer": "D",
+"explanation": "補體活化的主要功能包括細胞溶解、調理作用、發炎反應和促進吞噬作用。「抗體產生」是 B 細胞的功能，而非補體系統的直接功能。補體系統可以輔助抗體作用，但本身不產生抗體。"
+},
+{
+"question": "凝集素途徑 (lectin pathway) 的啟動分子 MBL 主要辨識病原體表面的哪種分子？",
+"options": {
+"A": "脂多醣 (LPS)",
+"B": "肽聚醣",
+"C": "甘露糖 (mannose)",
+"D": "磷脂",
+"E": "核酸"
+},
+"answer": "C",
+"explanation": "凝集素途徑 (lectin pathway) 的啟動分子 MBL (mannose-binding lectin) 主要辨識病原體表面的「甘露糖 (mannose)」。甘露糖是許多微生物表面常見的醣類分子。"
+},
+{
+"question": "替代途徑 (alternative pathway) 與其他補體活化途徑最大的不同之處在於？",
+"options": {
+"A": "啟動分子不同",
+"B": "作用蛋白不同",
+"C": "產生 C3 convertase 的方式不同",
+"D": "下游反應不同",
+"E": "最終結果不同"
+},
+"answer": "C",
+"explanation": "替代途徑 (alternative pathway) 與其他補體活化途徑最大的不同之處在於「產生 C3 convertase 的方式不同」。古典途徑和凝集素途徑透過 C4b2a 形成 C3 convertase，而替代途徑則透過 C3bBb 形成。"
+},
+{
+"question": "下列哪一種補體蛋白不屬於 peptide mediators of inflammation (發炎介質)？",
+"options": {
+"A": "C3a",
+"B": "C4a",
+"C": "C5a",
+"D": "C3b",
+"E": "以上皆是發炎介質"
+},
+"answer": "D",
+"explanation": "C3a、C4a 和 C5a 皆屬於 peptide mediators of inflammation (發炎介質)，它們可以引起血管通透性增加、趨化作用等發炎反應。「C3b」主要功能是調理作用 (opsonization) 和參與形成 C5 convertase，不屬於發炎介質。"
+},
+{
+"question": "攻膜複合體 (MAC) 的組裝過程中，下列哪一個補體蛋白負責插入細胞膜？",
+"options": {
+"A": "C5b",
+"B": "C6",
+"C": "C7",
+"D": "C8",
+"E": "C9"
+},
+"answer": "D",
+"explanation": "在攻膜複合體 (MAC) 的組裝過程中，「C8」負責插入細胞膜，形成一個小的孔洞，作為後續 C9 聚合形成完整穿膜通道的基礎。"
+},
+{
+"question": "下列哪一種調節蛋白不屬於補體系統的逆向調節蛋白 (negative regulatory protein)？",
+"options": {
+"A": "Properdin (Factor P)",
+"B": "C1INH (C1 inhibitor)",
+"C": "DAF (decay-accelerating factor)",
+"D": "CR1 (complement receptor 1)",
+"E": "Factor H"
+},
+"answer": "A",
+"explanation": "Properdin (Factor P) 是補體系統中唯一的「正向調節蛋白 (positive regulatory protein)」，它能夠穩定 C3bBb (替代途徑中的 C3 convertase)。其他選項 (B, C, D, E) 皆為逆向調節蛋白，負責抑制補體活化。"
+},
+{
+"question": "病原體逃避補體攻擊的機制不包括下列哪一項？",
+"options": {
+"A": "吸引宿主的補體調控蛋白",
+"B": "分泌抑制補體作用的蛋白",
+"C": "改變表面抗原",
+"D": "模仿宿主細胞表面",
+"E": "以上皆為逃避機制"
+},
+"answer": "C",
+"explanation": "病原體逃避補體攻擊的機制主要透過「吸引宿主的補體調控蛋白」和「分泌抑制補體作用的蛋白」來達成，以模仿宿主細胞表面或直接抑制補體活性。 「改變表面抗原」是病原體逃避抗體免疫反應的機制，不屬於逃避補體攻擊的機制。"
+},
+{
+"question": "下列哪一種細胞介素不具有趨化性 (chemotaxis)？",
+"options": {
+"A": "C3a",
+"B": "C5a",
+"C": "CXCL8",
+"D": "IL-1β",
+"E": "TNF-α"
+},
+"answer": "D",
+"explanation": "C3a、C5a 和 CXCL8 都具有趨化性 (chemotaxis)，可以吸引免疫細胞移動到發炎部位。「IL-1β」和「TNF-α」主要作用為引起發炎反應和系統性效應，趨化性並非其主要功能。雖然 IL-1β 和 TNF-α 間接促進免疫細胞浸潤，但本身不直接作為趨化因子。"
+},
+{
+"question": "細胞介素風暴 (cytokine storm) 最主要的危害為何？",
+"options": {
+"A": "病毒大量複製",
+"B": "免疫系統辨識能力下降",
+"C": "自體免疫疾病",
+"D": "組織器官損傷",
+"E": "發燒不退"
+},
+"answer": "D",
+"explanation": "細胞介素風暴 (cytokine storm) 最主要的危害是「組織器官損傷」。免疫系統過度活化產生大量細胞介素，失控的免疫反應會攻擊自身組織，導致嚴重的器官損傷甚至衰竭。"
+},
+{
+"question": "類鐸受體 (TLR) 主要辨識病原體上的哪一類分子？",
+"options": {
+"A": "抗體",
+"B": "補體",
+"C": "病原相關分子模式 (PAMPs)",
+"D": "主要組織相容性複合體 (MHC)",
+"E": "細胞介素 (cytokines)"
+},
+"answer": "C",
+"explanation": "類鐸受體 (TLR, toll-like receptor) 主要辨識病原體上的「病原相關分子模式 (PAMPs, pathogen-associated molecular patterns)」。PAMPs 是多種微生物共有的保守性分子結構。"
+},
+{
+"question": "下列哪一種 TLR 不是位於細胞膜上？",
+"options": {
+"A": "TLR-2",
+"B": "TLR-4",
+"C": "TLR-5",
+"D": "TLR-7",
+"E": "TLR-1"
+},
+"answer": "D",
+"explanation": "TLR-2, TLR-4, TLR-5, TLR-1 皆位於細胞膜上，主要辨識胞外病原體的 PAMPs。「TLR-7」位於胞內體 (endosome) 上，主要辨識入侵細胞內的病毒核酸。"
+},
+{
+"question": "TLR-4 辨識脂多醣 (LPS) 時，不需下列哪一個分子的參與？",
+"options": {
+"A": "MD-2",
+"B": "CD14",
+"C": "MyD88",
+"D": "TRIF",
+"E": "Igα/Igβ"
+},
+"answer": "E",
+"explanation": "TLR-4 辨識脂多醣 (LPS) 需要 MD-2、CD14、MyD88 和 TRIF 等分子的參與，以啟動下游訊號傳遞。「Igα/Igβ」是 B 細胞受體 (BCR) 的輔助受體，與 TLR-4 訊號傳遞無關。"
+},
+{
+"question": "RLR (RIG-I-like receptors) 主要辨識哪一類型的病原體核酸？",
+"options": {
+"A": "雙股 DNA",
+"B": "單股 DNA",
+"C": "雙股 RNA",
+"D": "單股 RNA",
+"E": "CpG DNA"
+},
+"answer": "D",
+"explanation": "RLR (RIG-I-like receptors) 主要辨識細胞質中病毒的「單股 RNA (ssRNA)」。RLR 能夠區分病毒 RNA 和宿主細胞 RNA 的結構差異，進而啟動抗病毒免疫反應。"
+},
+{
+"question": "cGAS (cyclic GMP-AMP synthase) 作用後最終會活化下列哪一種轉錄因子？",
+"options": {
+"A": "NF-κB",
+"B": "AP-1",
+"C": "IRF3",
+"D": "STAT",
+"E": "CREB"
+},
+"answer": "C",
+"explanation": "cGAS (cyclic GMP-AMP synthase) 活化 STING 後，會進而活化 TBK1 和 IRF3。「IRF3」作為轉錄因子，最終會促進第一型干擾素 (IFN) 的表現，啟動抗病毒免疫反應。"
+},
+{
+"question": "急性時相反應 (APR) 中，肝臟產生急性反應蛋白 (APP) 的主要調控者為何？",
+"options": {
+"A": "補體系統",
+"B": "抗體",
+"C": "細胞毒性 T 細胞",
+"D": "細胞介素 (cytokines)",
+"E": "發燒"
+},
+"answer": "D",
+"explanation": "急性時相反應 (APR) 中，「細胞介素 (cytokines)」是肝臟產生急性反應蛋白 (APP) 的主要調控者。細胞介素作用於肝臟細胞，誘導 APP 的合成和分泌。"
+},
+{
+"question": "下列哪一種急性反應蛋白 (APP) 可以活化補體系統？",
+"options": {
+"A": "C-reactive protein (CRP)",
+"B": "Serum amyloid protein (SAP)",
+"C": "Mannose-binding lectin (MBL)",
+"D": "Fibrinogen",
+"E": "以上皆可"
+},
+"answer": "C",
+"explanation": "「Mannose-binding lectin (MBL)」屬於急性反應蛋白 (APP)，其結構類似 C1q，可以活化補體系統的凝集素途徑 (lectin pathway)。C-reactive protein 和 Serum amyloid protein 雖然也屬於 APP，但主要功能為調理作用 (opsonization)，不直接活化補體系統。"
+},
+{
+"question": "細胞訊號傳遞中，下列哪一種胺基酸不會被磷酸化？",
+"options": {
+"A": "Tyrosine (Tyr)",
+"B": "Serine (Ser)",
+"C": "Threonine (Thr)",
+"D": "Lysine (Lys)",
+"E": "以上皆可被磷酸化"
+},
+"answer": "D",
+"explanation": "在細胞訊號傳遞中，有羥基的胺基酸 (Tyrosine, Serine, Threonine) 可以被磷酸化，進而調控蛋白質的活性。「Lysine (Lys)」胺基酸不具有羥基，無法被磷酸化。"
+}
+]
