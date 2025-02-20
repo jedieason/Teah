@@ -1,0 +1,566 @@
+[
+{
+"question": "下列何者為**先天免疫**的特徵？",
+"options": {
+"A": "具有抗原專一性，能針對特定抗原產生記憶性反應",
+"B": "反應快速，但缺乏抗原專一性 [1]",
+"C": "主要由T細胞和B細胞執行",
+"D": "需要抗原呈現細胞（APCs）的活化才能啟動",
+"E": "透過基因重組產生多樣性的受體"
+},
+"answer": "B",
+"explanation": "先天免疫的反應快速，能在短時間內清除外來物，但其辨識的目標是微生物共有的特徵，因此缺乏抗原專一性 [1, 2]。"
+},
+{
+"question": "下列哪一種細胞*不*屬於**淋巴系細胞**（lymphoid lineage）？",
+"options": {
+"A": "B 細胞 (B cell) [3]",
+"B": "T 細胞 (T cell) [3]",
+"C": "自然殺手細胞 (NK cell) [3]",
+"D": "嗜中性球 (neutrophil) [4]",
+"E": "先天性淋巴細胞 (ILCs) [3]"
+},
+"answer": "D",
+"explanation": "嗜中性球屬於骨髓系細胞（myeloid lineage），負責先天性免疫 [4]。淋巴系細胞包含B細胞、T細胞、自然殺手細胞和先天性淋巴細胞 [3]。"
+},
+{
+"question": "關於**株系選擇假說**（clonal selection hypothesis），下列敘述何者*錯誤*？",
+"options": {
+"A": "每個淋巴球僅具有一種具專一性的受體 [5]",
+"B": "辨認自體抗原的淋巴球在發育早期就會被消滅 [5]",
+"C": "外來分子與淋巴球受體結合後，會使該淋巴球活化 [5]",
+"D": "活化的淋巴球分化產生的作用細胞，具有與親代淋巴球不同的受體 [5]",
+"E": "負選擇（negative selection）是為了避免發生自體免疫疾病 [5]"
+},
+"answer": "D",
+"explanation": "株系選擇假說指出，活化的淋巴球分化產生的作用細胞，會具有與親代淋巴球*相同*的受體 [5]。"
+},
+{
+"question": "下列何者是**次級淋巴器官**（secondary lymphoid organ）的功能？",
+"options": {
+"A": "淋巴球在此產生 [4]",
+"B": "淋巴球在此成熟 [4]",
+"C": "游離抗原與淋巴球在此相遇 [6]",
+"D": "造血幹細胞（HSC）在此分化 [3]",
+"E": "T細胞在此發展出區別自體和外來蛋白的能力 [4]"
+},
+"answer": "C",
+"explanation": "次級淋巴器官是游離抗原與淋巴球相遇的場所，有利於免疫反應的啟動 [6]。初級淋巴器官（如骨髓和胸腺）則是淋巴球發生、分化和成熟的地方 [4]."
+},
+{
+"question": "下列何者*不屬於**先天免疫**的第一道防線？",
+"options": {
+"A": "皮膚 [2]",
+"B": "黏膜 [2]",
+"C": "補體系統 [7]",
+"D": "鼻咽 [7]",
+"E": "腸道 [7]"
+},
+"answer": "C",
+"explanation": "補體系統屬於先天免疫的第二道防線，而皮膚和黏膜等屏障則構成第一道防線 [2, 7, 8]。"
+},
+{
+"question": "關於**補體系統**（complement system），下列敘述何者正確？",
+"options": {
+"A": "補體具有抗原專一性 [9]",
+"B": "補體活化後，唯一的功能是引發攻膜複合體（MAC）的作用 [9]",
+"C": "C3 是補體中含量最少，也最不重要的成分 [9]",
+"D": "補體活化需要經過蛋白質切割（proteolysis） [10]",
+"E": "補體活化後，只能與微生物的細胞表面結合 [10]"
+},
+"answer": "D",
+"explanation": "補體活化需要經過蛋白質切割，是一個連續性的步驟 [10]。補體不具專一性 [9]，且活化後除了引發MAC作用外，還能增強吞噬作用和促進發炎反應 [9]。C3 是補體中含量最多且最重要的成分 [9]。補體活化後，可用共價鍵與微生物的細胞表面或抗體結合 [10]。"
+},
+{
+"question": "下列何者*不是***攻膜複合體**（MAC）的功能？",
+"options": {
+"A": "對細胞膜進行穿孔 [11]",
+"B": "使細菌破裂死亡 [11]",
+"C": "造成細胞凋亡 [11]",
+"D": "由C5b結合C6、C7形成 [11]",
+"E": "多個C9分子與複合體結合"
+},
+"answer": "C",
+"explanation": "攻膜複合體（MAC）的主要功能是直接對細胞膜進行穿孔，使細菌破裂死亡，而不是誘導細胞凋亡 [11]。"
+},
+{
+"question": "下列何者為**凝集素途徑**（lectin pathway）啟動的關鍵？",
+"options": {
+"A": "IgM或IgG與抗原結合 [12]",
+"B": "MBL辨識微生物表面的甘露糖（mannose）[13]",
+"C": "C3b與Factor B結合 [14]",
+"D": "Properdin與細菌細胞壁結合 [14]",
+"E": "C1q與抗體上的Fc區結合"
+},
+"answer": "B",
+"explanation": "凝集素途徑是由MBL辨別微生物表面的甘露糖而啟動，古典途徑則是由C1識別結合抗原的抗體 [13]。"
+},
+{
+"question": "下列關於**替代途徑**（alternative pathway）的敘述，何者正確？",
+"options": {
+"A": "替代途徑的第一步是由MBL辨別微生物表面的甘露糖 [14]",
+"B": "替代途徑需要IgM或IgG與抗原結合才能啟動 [12]",
+"C": "替代途徑產生的C5 convertase為C4b2a3b [15]",
+"D": "替代途徑僅能發生在正常細胞上 [16]",
+"E": "只要有C3b的存在，無論是何種途徑形成的，皆可以透過替代途徑再繼續製造C3b [16]"
+},
+"answer": "E",
+"explanation": "替代途徑的意義在於，只要有C3b的存在，不論是何種途徑產生的，都可以透過替代途徑繼續製造C3b [16]。"
+},
+{
+"question": "下列何者是**潘氏細胞**（Paneth cell）的功能？",
+"options": {
+"A": "分泌黏液，黏附並排除病原體 [17]",
+"B": "產生AMPs（α-defensin、RegⅢ），主動去攻擊病原體 [18]",
+"C": "形成防水的脂質層，防止外來物質入侵 [17]",
+"D": "分泌溶菌酶，分解細菌細胞壁 [17]",
+"E": "吞噬並分解病原體"
+},
+"answer": "B",
+"explanation": "潘氏細胞位於腸道上皮組織的隱窩深處，可以產生AMPs（α-defensin、RegⅢ），主動攻擊病原體 [18]。"
+},
+{
+"question": "下列何者*不*是**吞噬細胞**（phagocyte）內的降解機制？",
+"options": {
+"A": "酸化（acidification） [19]",
+"B": "活性氧化物質（ROS） [19]",
+"C": "抗菌胜肽（AMPs） [19]",
+"D": "乳鐵蛋白（lactoferrin） [19]",
+"E": "抗體（antibody）"
+},
+"answer": "E",
+"explanation": "抗體主要在細胞外執行功能，吞噬細胞內的降解機制包括酸化、活性氧化物質、抗菌胜肽和乳鐵蛋白 [19]。"
+},
+{
+"question": "下列何者是**嗜中性球胞外網狀結構**（NETs）的組成成分？",
+"options": {
+"A": "完整的細胞核 [20]",
+"B": "染色質、酵素與AMPs [20]",
+"C": "核糖體與mRNA [20]",
+"D": "粒線體與DNA [20]",
+"E": "內質網與蛋白質"
+},
+"answer": "B",
+"explanation": "嗜中性球胞外網狀結構（NETs）由染色質、酵素（如Lastase、乳鐵蛋白）和AMPs組成，用於降解或阻隔細胞外的病原體 [20]。"
+},
+{
+"question": "下列何者是**模式辨識受體**（PRRs）的功能？",
+"options": {
+"A": "辨識單一種抗原 [21]",
+"B": "活化反式作用因子，促進促炎性細胞介素與干擾素表現 [21]",
+"C": "在基因重組後形成多樣性 [21]",
+"D": "只存在於後天免疫細胞上 [21]",
+"E": "需要長時間才能作用"
+},
+"answer": "B",
+"explanation": "模式辨識受體（PRRs）可以辨別某類病原體上的特殊分子結構（PAMPs），並活化反式作用因子，促進促炎性細胞介素與干擾素表現 [21]。"
+},
+{
+"question": "下列哪一種**類鐸受體**（TLR）位於細胞膜上？",
+"options": {
+"A": "TLR-3 [22]",
+"B": "TLR-7 [22]",
+"C": "TLR-8 [22]",
+"D": "TLR-9 [22]",
+"E": "TLR-5 [22]"
+},
+"answer": "E",
+"explanation": "TLR-5 位於細胞膜上，辨識鞭毛（flagellin）[22]。TLR-3、TLR-7、TLR-8和TLR-9則位於胞內體上，辨識入侵細胞的病毒或胞內細菌 [22]。"
+},
+{
+"question": "關於**TLR-4**，下列敘述何者正確？",
+"options": {
+"A": "TLR-4 可以直接辨識LPS [22]",
+"B": "TLR-4 是一個同源二聚體 [22]",
+"C": "TLR-4 只存在後天免疫細胞 [22]",
+"D": "TLR-4 識別LPS的脂多醣部分 [22]",
+"E": "胃幽門螺旋桿菌的 Lipid A 具有六條acyl chain，因此較易被TLR-4 辨識 [23]"
+},
+"answer": "D",
+"explanation": "TLR-4 識別LPS的Lipid A部分 [23]。TLR-4/MD-2 形成異源二聚體 [23]。TLR-4 表現先天免疫的細胞（如吞噬細胞、顆粒球），但也有後天免疫的例外 [22]。胃幽門螺旋桿菌的 Lipid A 只有五條，因此較難被TLR-4 辨識 [23]。"
+},
+{
+"question": "下列何者*不是* **細胞介素**（cytokine）的特性？",
+"options": {
+"A": "多效性（pleiotropic）[24]",
+"B": "重複性（redundant）[25]",
+"C": "專一性（specificity）[24]",
+"D": "調控免疫反應 [24]",
+"E": "分子量不大"
+},
+"answer": "C",
+"explanation": "細胞介素不具有專一性，而是具有多效性和重複性的特點 [24, 25]。"
+},
+{
+"question": "下列何種細胞介素主要由**巨噬細胞**產生，並作用在**自然殺手細胞**（NK）上？",
+"options": {
+"A": "IL-1 [26]",
+"B": "IL-6 [26]",
+"C": "IL-12 [26]",
+"D": "TNF-α [26]",
+"E": "IFN-γ [26]"
+},
+"answer": "C",
+"explanation": "IL-12 主要由巨噬細胞產生，並作用在自然殺手細胞（NK）上，調控NK產生IFN-γ 作用在樹突細胞（DC） [26]。"
+},
+{
+"question": "下列何者為**細胞介素**訊息傳導路徑中，JAK的功能？",
+"options": {
+"A": "直接與細胞介素結合 [26]",
+"B": "磷酸化細胞介素受體和STAT [27]",
+"C": "作為轉錄因子進入細胞核 [27]",
+"D": "與DNA結合，調控基因表現 [27]",
+"E": "與病毒結合"
+},
+"answer": "B",
+"explanation": "在細胞介素訊息傳導路徑中，JAK（Janus kinase）的功能是磷酸化細胞介素受體和STAT（signal transducer and activator of transcription）[27]。"
+},
+{
+"question": "下列何者是**ITAM**（immunoreceptor tyrosine-based activation motif）的功能？",
+"options": {
+"A": "負向調控免疫系統受器 [28]",
+"B": "吸引PTP（protein tyrosine phosphatase）[28]",
+"C": "調節TCR、BCR 的活性 [28]",
+"D": "可以和SHP-1結合 [28]",
+"E": "正向調控免疫系統受器"
+},
+"answer": "E",
+"explanation": "ITAM 的功能為正向調控免疫系統受器，可調節TCR、BCR、NK受體的活性 [28]。ITIM 才是負向調控 [28]。"
+},
+{
+"question": "下列關於**T細胞受體**（TCR）複合體的敘述，何者正確？",
+"options": {
+"A": "TCR的胞內區域很長，具有適合的活化位置 [29]",
+"B": "TCR 可以和輔助受體 CD3 共價鍵結合 [29]",
+"C": "CD3 包含 α、β、γ 三條鏈 [29]",
+"D": "CD3 穿膜區域均帶正電 [29]",
+"E": "TCR 複合體的 ITAM 是來自於 CD3 與 ζ 鏈"
+},
+"answer": "E",
+"explanation": "TCR的胞內區域很短，其在細胞內並沒有適合的活化位置。因此，TCR 會藉由電性和輔助受體 CD3 及 ζ 鏈結合，如此一來TCR複合體就具有了ITAM 以進行傳訊 [29]。CD3 包含 ε、γ、δ 三條鏈，穿膜區域均帶負電 [29]。"
+},
+{
+"question": "下列何者是**Lck**活化的必要步驟？",
+"options": {
+"A": "Lck尾端的Tyr被磷酸化為pTyr [30]",
+"B": "CD45 將Lck尾端的pTyr 磷酸化 [30]",
+"C": "Lck尾端的Tyr 被CD45去磷酸化 [30]",
+"D": "Csk將Src尾端的Tyr去磷酸化為pTyr [30]",
+"E": "CD4/CD8 抑制Lck"
+},
+"answer": "C",
+"explanation": "CD45 （一種PTP）會將Lck尾端的pTyr 去磷酸化而活化Lck [30]。"
+},
+{
+"question": "下列何者*不是* **B細胞發育**過程中的檢查點？",
+"options": {
+"A": "Pre-BCR 的形成 [31]",
+"B": "BCR 的形成 [31]",
+"C": "正選擇 [31]",
+"D": "負選擇 [31]",
+"E": "漿細胞的形成"
+},
+"answer": "E",
+"explanation": "B細胞發育過程中的三個檢查點包括Pre-BCR的形成、BCR的形成，以及正選擇與負選擇 [31]。漿細胞的形成是B細胞活化後的分化結果，不屬於發育過程中的檢查點 [31]。"
+},
+{
+"question": "下列何者在**大Pre-B細胞**階段會表現？",
+"options": {
+"A": "IgM [32]",
+"B": "IgD [32]",
+"C": "Pre-BCR [32]",
+"D": "TCR [32]",
+"E": "Igα 和 Igβ"
+},
+"answer": "C",
+"explanation": "大Pre-B細胞階段會表現Pre-BCR [32]。"
+},
+{
+"question": "下列何者是**對偶基因排除**（allelic exclusion）的目的？",
+"options": {
+"A": "使B細胞表現多種不同的受器 [33]",
+"B": "確保抗體與抗原的專一性 [33]",
+"C": "促進基因重組的多樣性 [33]",
+"D": "加速B細胞的成熟 [33]",
+"E": "避免自體免疫反應"
+},
+"answer": "B",
+"explanation": "對偶基因排除的目的是確保抗體與抗原的專一性，避免一個B細胞表現兩種不同的受器 [33]。"
+},
+{
+"question": "下列何者為**受體編輯**（receptor editing）的過程？",
+"options": {
+"A": "B細胞直接進行細胞凋亡 [34]",
+"B": "B細胞減少表面IgM的表現，並關閉RAG基因 [34]",
+"C": "B細胞重新進行輕鏈基因重組，嘗試產生非自體反應的受體 [34]",
+"D": "B細胞轉變為失能B細胞（anergic B cell）[34]",
+"E": "B細胞進行class switch"
+},
+"answer": "C",
+"explanation": "受體編輯是指，B細胞重新進行輕鏈基因重組，繼續嘗試剩餘的V-J基因組合，直到產生非自體反應的受體 [34]。"
+},
+{
+"question": "下列何者為**失能B細胞**（anergic B cell）的特點？",
+"options": {
+"A": "IgM 數量正常，但 IgD 很少 [35]",
+"B": "IgD 數量正常，但 IgM 很少 [35]",
+"C": "IgM 和 IgD 數量都正常 [35]",
+"D": "會快速增生並分化為漿細胞 [35]",
+"E": "在骨髓中發育"
+},
+"answer": "B",
+"explanation": "失能B細胞（anergic B cell）的特點是IgD數量正常，但IgM很少 [35]。"
+},
+{
+"question": "下列何者與**濾泡樹突細胞**（FDC）的存活有關？",
+"options": {
+"A": "IL-7 [36]",
+"B": "BAFF [36]",
+"C": "RAG [36]",
+"D": "TdT [36]",
+"E": "APR"
+},
+"answer": "B",
+"explanation": "濾泡樹突細胞（FDC）會分泌BAFF（B-cell activating factor belonging to the TNF family），使B細胞（具有BAFF受體）可繼續存活 [36]。"
+},
+{
+"question": "下列關於**B-1細胞**的敘述，何者正確？",
+"options": {
+"A": "屬於後天免疫系統 [37]",
+"B": "需要T細胞的協助才能製造IgM [37]",
+"C": "具有記憶性 [37]",
+"D": "主要位於脾臟的邊緣區 [37]",
+"E": "在受到感染之前，B-1 細胞就會持續分泌抗體，以對抗病原體的感染"
+},
+"answer": "E",
+"explanation": "B-1 細胞是「自然」抗體的來源，也就是在受到感染之前，B-1 細胞就會持續分泌抗體，以對抗病原體的感染，屬於先天免疫系統 [37]。"
+},
+{
+"question": "下列何者*不*是**B細胞受體**的調控方式？",
+"options": {
+"A": "TCR數量的調降（downregulation） [38]",
+"B": "Cbl 家族（屬於 Ubiquitin ligase）的募集 [38]",
+"C": "抑制型受體數量的調升（upregulation） [38]",
+"D": "磷酸酶的活化、募集（recruitment） [38]",
+"E": "TCR數量的調升（upregulation）"
+},
+"answer": "E",
+"explanation": "T細胞訊號傳遞的負向調節包括TCR數量的調降（downregulation），磷酸酶的活化、募集（recruitment），Cb1 家族（屬於 Ubiquitin ligase）的募集，抑制型受體數量的調升（upregulation）。而正確應為「TCR數量的調降（downregulation）」，因此調升（upregulation）不屬於。"
+},
+{
+"question": "下列哪一種轉錄因子與B細胞發育*沒有*直接關聯？",
+"options": {
+"A": "Ikaros [39]",
+"B": "PU.1 [39]",
+"C": "E2A [39]",
+"D": "EBF [39]",
+"E": "IRF-3"
+},
+"answer": "E",
+"explanation": "Ikaros、PU.1、E2A、EBF、Pax5/BSAP是B細胞發育中最重要的 5 個轉錄因子，IRF-3是病毒感染時會活化的轉錄因子。"
+},
+{
+"question": "下列何者是**趨化因子**（chemokines）的功能？",
+"options": {
+"A": "促使細胞凋亡",
+"B": "啟動補體系統",
+"C": "吸引免疫細胞移動到發炎區域",
+"D": "抑制病毒複製",
+"E": "抗體的製造"
+},
+"answer": "C",
+"explanation": "趨化因子（chemokines）的主要功能是吸引免疫細胞移動到受感染或發炎的區域 [40]。"
+},
+{
+"question": "下列何者與**類鐸受體**（TLRs）的訊號傳遞無關？",
+"options": {
+"A": "MyD88 [23]",
+"B": "TRIF [23]",
+"C": "NF-κB [23]",
+"D": "IRFs [23]",
+"E": "BAFF"
+},
+"answer": "E",
+"explanation": "TLRs的訊號傳遞途徑中，MyD88、TRIF、NF-κB和IRFs都是重要的分子 [23]。BAFF則是與B細胞的存活和成熟有關 [36]。"
+},
+{
+"question": "下列何者*不*屬於**急性反應蛋白**（APP）？",
+"options": {
+"A": "C-reactive protein [41]",
+"B": "MBL (mannose-binding lectin) [41]",
+"C": "SP-A [41]",
+"D": "SP-D [41]",
+"E": "Interferon"
+},
+"answer": "E",
+"explanation": "Interferon（干擾素）屬於細胞激素（cytokine），主要用來抵抗病毒，與急性反應蛋白無關 [41]。"
+},
+{
+"question": "下列哪個分子能夠穩定**替代途徑**中的C3 convertase（C3bBb）？",
+"options": {
+"A": "Factor B [16]",
+"B": "Factor D [16]",
+"C": "Properdin [16]",
+"D": "Factor H [16]",
+"E": "CR1"
+},
+"answer": "C",
+"explanation": "Properdin（factor P）能夠穩定替代途徑中的C3 convertase（C3bBb）[16]。"
+},
+{
+"question": "下列何者在**Pro-B細胞**中會先進行重排？",
+"options": {
+"A": "V-J重排 (輕鏈)",
+"B": "V-DJ重排 (重鏈)",
+"C": "D-J重排 (重鏈)",
+"D": "V-J重排 (重鏈)",
+"E": "V-D重排 (重鏈)"
+},
+"answer": "C",
+"explanation": "Pro-B 細胞中可以分為兩個階段：早期：重鏈先進行D-J重排。晚期：V-DJ重排，輕鏈在小 Pre-B 細胞階段進行V-J重排。"
+},
+{
+"question": "下列哪一個描述*不*符合**中央耐受性**（central tolerance）？",
+"options": {
+"A": "未成熟 B 細胞在骨髓產生自體耐受性。",
+"B": "又稱中樞自體耐受性，因其源自於中樞免疫器官",
+"C": "在骨髓發育過程中檢查與抗原的結合能力",
+"D": "在中央免疫器官可以檢查所有的高度組織特異性抗原",
+"E": "與自身細胞表面抗原產生多鍵結的 B 細胞會進行細胞凋亡。"
+},
+"answer": "D",
+"explanation": "許多抗原具有高度組織特異性，因此在骨髓培養的中樞耐受性不足以構成完整的自體耐受性，所以周圍耐受性(peripheral tolerance)也很重要 [42]。"
+},
+{
+"question": "下列哪一個蛋白質可以模仿C1r、C1s 的受質，阻止 C1r、C1s 附著到 C1q 上？",
+"options": {
+"A": "DAF",
+"B": "CR1",
+"C": "CD59",
+"D": "C1INH",
+"E": "MCP"
+},
+"answer": "D",
+"explanation": "C1INH（C1 inhibitor）：一般細胞上存在的一種蛋白酶抑制劑，它藉由模仿C1r、C1s 的受質，阻止 C1r、C1s 附著到 C1q 上[43]。"
+},
+{
+"question": "下列哪一個轉錄因子可以促使 B cell co-receptor CD19 和Igα 的表現？",
+"options": {
+"A": "BP-1",
+"B": "TdT",
+"C": "Pax5",
+"D": "RAG-1",
+"E": "RAG-2"
+},
+"answer": "C",
+"explanation": "Pax5 的主要功能：A.促使 B cell co-receptor CD19 和Igα 的表現 [39]。B.Commitment of pro-B cell to the B-cell lineage [39]。"
+},
+{
+"question": "下列何者為 B 細胞成熟的過程中，T1 到 T2 階段會表現的蛋白質？",
+"options": {
+"A": "IgM",
+"B": "IgD",
+"C": "CD21",
+"D": "BAFF",
+"E": "RAG"
+},
+"answer": "C",
+"explanation": "未成熟 B 細胞會經過兩個過渡階段。第一階段（T1）：此時表面 IgM 的表現量高，IgD 的表現量低，第二階段（T2）：此時表面表現出CD21，IgD的表現量也提高，逐漸成為成熟 B 細胞。[36]"
+},
+{
+"question": "下列何者*不*是 B 細胞的重組過程所需的蛋白質？",
+"options": {
+"A": "RAG-1",
+"B": "RAG-2",
+"C": "TdT",
+"D": "APRs",
+"E": "λ5"
+},
+"answer": "D",
+"explanation": "RAG-1 和 RAG-2 主要負責基因重組[44]。TdT 負責加上N-nucleotide （non-templated nucleotides）[44]。λ5 及 VpreB 組成的替代輕鏈可在輕鏈尚未形成前，代替輕鏈穩定重鏈存在於膜上[44]。APRs主要是急性反應蛋白，與B細胞的重組無關。[45]"
+},
+{
+"question": "關於**類鐸受體**（TLRs），下列敘述何者*不*正確？",
+"options": {
+"A": "每一種受體並不只辨認單一種抗原",
+"B": "表現TLRs 的細胞大多是先天免疫的細胞",
+"C": "哺乳動物有 13 種辨識不同 PAMPs 的受體",
+"D": "TLR-4 可辨識革蘭氏陰性菌的脂多醣（LPS）構造",
+"E": "TLRs為單次穿膜蛋白，由10 個 LRR組成"
+},
+"answer": "E",
+"explanation": "TLR-4為單次穿膜蛋白，構造像一個問號，在抗原結合位有 18 ~ 25 個 LRR（leucine-rich repeat）來決定結合的結構。[22]"
+},
+{
+"question": "在**T細胞受體**（TCR）複合體中，哪一個分子和抗原呈現有最大的關係？",
+"options": {
+"A": "CD3",
+"B": "ζ 鏈",
+"C": "CD4",
+"D": "CD8",
+"E": "MHC"
+},
+"answer": "E",
+"explanation": "T 細胞受體（TCR）複合體功能為識別由主要組織相容性複合體（MHC）所呈現的抗原。[29]"
+},
+{
+"question": "當B細胞要產生IgM 及 IgD這兩種蛋白質，會使用哪一種方式產生？",
+"options": {
+"A": "Class Switch",
+"B": "mRNA splicing",
+"C": "DNA 重組",
+"D": "受體編輯（receptor editing）",
+"E": "D-J重排"
+},
+"answer": "B",
+"explanation": "IgM 及 IgD 由同一基因決定，轉錄成 primary RNA 後經過 RNA splicing 產生兩種蛋白質，保留 Cμ 固定區（藍色）的為 IgM，保留 Cδ 固定區（紫色）的為IgD。[46]"
+},
+{
+"question": "下列哪一項敘述 *不* 符合**細胞介素風暴**（cytokine storm）？",
+"options": {
+"A": "免疫系統反應過度",
+"B": "產生大量的細胞介素",
+"C": "攻擊到一般細胞造成身體損傷",
+"D": "細胞介素之間可以互相調控，形成級聯反應",
+"E": "冠狀病毒是透過病毒本身的毒素，引發細胞介素風暴"
+},
+"answer": "E",
+"explanation": "冠狀病毒（coronavirus）在肺部會引發強烈的免疫反應並產生大量的細胞介素，形成細胞介素風暴。許多病人並非死於病毒本身的毒素，而是細胞介素風暴。[25]"
+},
+{
+"question": "下列何者在 B 細胞發育的早期階段最為重要，可以幫助細胞繼續向下分化形成 IL-7 receptor？",
+"options": {
+"A": "幹細胞因子（SCF)",
+"B": "FLT3 ligand",
+"C": "CXCL12",
+"D": "IL-7",
+"E": "轉錄因子Ikaros"
+},
+"answer": "B",
+"explanation": "基質細胞亦會形成 FLT3 ligand 與 MPP 上的 FLT3 結合，此信號可幫助細胞繼續向下分化形成 IL-7 receptor。[39]"
+},
+{
+"question": "下列何者與**B 細胞的移動與活化**無關？",
+"options": {
+"A": "骨髓基質細胞（stromal cell）",
+"B": "趨化因子（chemokines）",
+"C": "細胞黏附分子（CAM）",
+"D": "周圍淋巴系統",
+"E": "脾臟紅髓（red pulp）"
+},
+"answer": "E",
+"explanation": "B 細胞的移動與活化和骨髓基質細胞（stromal cell）、趨化因子（chemokines）、細胞黏附分子（CAM）與周圍淋巴系統有關。[47]而脾臟紅髓主要是處理老化的紅血球。[6]"
+},
+{
+"question": "在T細胞的訊號傳遞中，CD45扮演什麼角色？",
+"options": {
+"A": "專職磷酸化",
+"B": "協助TCR與抗原結合",
+"C": "主要在活化T細胞",
+"D": "可以幫助未活化的Lck活化",
+"E": "訊號終止"
+},
+"answer": "D",
+"explanation": "當 TCR 結合 MHC 抗原時，CD45（一種 PTP）會將 Lck 尾端的 pTyr 去磷酸化而活化 Lck。[30]"
+}
+]
