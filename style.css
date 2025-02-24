@@ -163,6 +163,7 @@ button, select, option, textarea {
     color: #2D3436;
     margin-bottom: 32px;
     font-weight: 400;
+    display: flex;
 }
 
 /* Option Button Styling */
@@ -981,12 +982,13 @@ body.dark-mode .logout-button:hover {
     background-color: #FFF3CD;
     }
 
-  .multi-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #ffffff;
-    background-color: #F5A623;
-    border-radius: 8px;
-    padding: 4px 8px;
-    margin-bottom: 8px;
-}
+    .multi-label {
+        font-size: 0.6rem;
+        font-weight: 600;
+        color: #ffa500;
+        background-color: #ffa50047;
+        border-radius: 8px;
+        padding: 0px 4px;
+        width: 9px;
+        height: 16px;
+    }
