@@ -823,6 +823,10 @@ body.dark-mode .logout-button:hover {
     .progress{
         margin-bottom: 0px;
     }
+    
+    .multi-label {
+        margin-top: 5px;
+    }
 }
 
 #copy-btn {
