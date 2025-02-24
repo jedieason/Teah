@@ -111,7 +111,7 @@ function loadNewQuestion() {
     // 更新題目文本，若為多選題則加上標籤
     const questionDiv = document.getElementById('question');
     if (currentQuestion.isMultiSelect) {
-        questionDiv.innerHTML = '<div class="multi-label">多選題：請選取所有正確答案</div>' + marked.parse(currentQuestion.question);
+        questionDiv.innerHTML = '<div class="multi-label">多</div>' + marked.parse(currentQuestion.question);
     } else {
         questionDiv.innerHTML = marked.parse(currentQuestion.question);
     }
