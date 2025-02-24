@@ -984,9 +984,9 @@ body.dark-mode .logout-button:hover {
   .multi-label {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #ffffff;           /* 白色文字 */
-    background-color: #F5A623;/* 淺橘色背景 */
-    border-radius: 8px;       /* 圓角效果 */
-    padding: 4px 8px;         /* 內距 */
-    margin-bottom: 8px;       /* 與題目間距 */
+    color: #ffffff;
+    background-color: #F5A623;
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin-bottom: 8px;
 }
