@@ -444,7 +444,7 @@ document.addEventListener('keydown', function(event) {
     if (document.querySelector('.start-screen').style.display !== 'none') {
         if (event.key === 'Enter') {
             if (!selectedJson) {
-                showCustomAlert('Please select a question bank first!');
+                showCustomAlert('你不選題目你是要玩什麼！');
                 return;
             }
             document.getElementById('startGame').click();
@@ -615,7 +615,7 @@ async function fetchJsonFiles() {
         });
     } catch (error) {
         console.error('Error fetching JSON files from GitHub:', error);
-        showCustomAlert('Failed to load question banks. Please try again later.');
+        showCustomAlert('載不出來欸，咋辦？');
     }
 }
 
