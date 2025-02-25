@@ -45,7 +45,7 @@ button, select, option, textarea {
             font-size: 1rem;
             background-color: #FFFFFF;
             color: #4A5568;  /* Deep slate blue */
-            border: 2px solid #62597a;  /* Vibrant blue-purple */
+            border: 2px solid #62597A;  /* Vibrant blue-purple */
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -73,7 +73,7 @@ button, select, option, textarea {
         }
 
         .select-button:hover, .select-button.selected {
-            background-color: #62597a;  /* Vibrant blue-purple */
+            background-color: #62597A;  /* Vibrant blue-purple */
             color: #FFFFFF;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(107, 92, 212, 0.2);
@@ -82,7 +82,7 @@ button, select, option, textarea {
         .start-button {
             padding: 14px 36px;
             font-size: 1.2rem;
-            background-color: #62597a;  /* Deep blue-purple */
+            background-color: #62597A;  /* Deep blue-purple */
             color: #FFFFFF;
             border: none;
             border-radius: 30px;
@@ -220,23 +220,23 @@ body.dark-mode .start-title {
 body.dark-mode .select-button {
     background-color: #1e1e1e;
     color: #ffffff;
-    border: 2px solid #a35555;
+    border: 2px solid #62597A;
 }
 
 body.dark-mode .select-button:hover,
 body.dark-mode .select-button.selected {
-    background-color: #a35555;
+    background-color: #62597A;
     color: #ffffff;
 }
 
 body.dark-mode .start-button {
     background-color: #1e1e1e;
     color: #ffffff;
-    border: 2px solid #a35555;
+    border: 2px solid #62597A;
 }
 
 body.dark-mode .start-button:hover {
-    background-color: #a35555;
+    background-color: #62597A;
     color: #ffffff;
 }
 
@@ -552,7 +552,7 @@ body.dark-mode .copyright a {
     margin-top: 20px;
     padding: 10px 25px;
     font-size: 1rem;
-    background-color: #A35555;
+    background-color: #62597A;
     color: #ffffff;
     border: none;
     border-radius: 15px;
@@ -562,7 +562,7 @@ body.dark-mode .copyright a {
 }
 
 .modal-confirm-button:hover {
-    background-color: #93344B;
+    background-color: #564E6A;
     transform: scale(1.05);
 }
 
@@ -577,7 +577,7 @@ body.dark-mode .modal-confirm-button {
 }
 
 body.dark-mode .modal-confirm-button:hover {
-    background-color: #a35555;
+    background-color: #62597A;
     color: #ffffff;
 }
 
@@ -589,11 +589,11 @@ body.dark-mode .modal-content {
 body.dark-mode .modal-confirm-button {
     background-color: #1e1e1e;
     color: #ffffff;
-    border: 2px solid #a35555;
+    border: 2px solid #62597A;
 }
 
 body.dark-mode .modal-confirm-button:hover {
-    background-color: #a35555;
+    background-color: #62597A;
     color: #ffffff;
 }
 
