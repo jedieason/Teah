@@ -167,7 +167,7 @@ function loadNewQuestion() {
         const button = document.createElement('button');
         button.classList.add('option-button');
         button.dataset.option = newLabel;
-        button.innerText = `${newLabel}: ${text}`;
+        button.innerHTML = `${newLabel}: ${marked.parse(text)}`;
         button.addEventListener('click', selectOption);
         optionsContainer.appendChild(button);
 
@@ -787,7 +787,7 @@ function loadQuestionFromState() {
         const button = document.createElement('button');
         button.classList.add('option-button');
         button.dataset.option = newLabel;
-        button.innerText = `${newLabel}: ${text}`;
+        button.innerHTML = `${newLabel}: ${marked.parse(text)}`;
         button.addEventListener('click', selectOption);
         optionsContainer.appendChild(button);
         if (currentQuestion.isMultiSelect) {
