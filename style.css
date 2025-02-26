@@ -856,9 +856,7 @@ body.dark-mode .logout-button:hover {
     padding: 15px 10px 15px 20px;
     z-index: 2;
     border: none;
-    resize: none;
     font-size: 16px;
-    line-height: 1.5;
     color: #2c2c3a;
     outline: none;
     background-color: transparent;
