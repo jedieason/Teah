@@ -14,6 +14,10 @@ button, select, option, textarea {
     font-family: inherit; /* 或者明確指定字體 */
 }
 
+p {
+    margin: 0;
+}
+
 /* Start Screen Styling */
 .start-screen {
     display: flex;
