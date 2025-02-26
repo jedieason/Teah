@@ -3,7 +3,7 @@
 
 /* Base Styles */
 body {
-    font-family: "source-han-serif-tc", "Noto Serif TC", "Songti TC", "PMingLiU", "SimSun", serif;
+    font-family: "source-han-serif-tc", "Noto Serif TC", "Songti TC", "Poppins", "PMingLiU", "SimSun", serif;
     color: #2D3436;
     margin: 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
