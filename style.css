@@ -861,6 +861,7 @@ body.dark-mode .logout-button:hover {
     outline: none;
     background-color: transparent;
     transition: background-color 0.3s ease;
+    width: 0;
 }
 
 #WeeGPTInputSection textarea::placeholder {
