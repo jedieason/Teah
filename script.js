@@ -416,7 +416,7 @@ function reverseQuestion() {
         const button = document.createElement('button');
         button.classList.add('option-button');
         button.dataset.option = key;
-        button.innerText = `${key}: ${value}`;
+        button.innerHTML = `${key}: ${marked.parse(value)}`;
         button.addEventListener('click', selectOption);
         optionsContainer.appendChild(button);
     }
