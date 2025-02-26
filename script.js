@@ -167,7 +167,7 @@ function loadNewQuestion() {
         const button = document.createElement('button');
         button.classList.add('option-button');
         button.dataset.option = newLabel;
-        button.innerHTML = `marked.parse(${newLabel}: ${text})`;
+        button.innerHTML = marked.parse(`${newLabel}: ${text}`);
         button.addEventListener('click', selectOption);
         optionsContainer.appendChild(button);
 
@@ -416,7 +416,7 @@ function reverseQuestion() {
         const button = document.createElement('button');
         button.classList.add('option-button');
         button.dataset.option = key;
-        button.innerHTML = `marked.parse(${key}: ${value})`;
+        button.innerHTML = marked.parse(`${key}: ${value}`);
         button.addEventListener('click', selectOption);
         optionsContainer.appendChild(button);
     }
@@ -787,7 +787,7 @@ function loadQuestionFromState() {
         const button = document.createElement('button');
         button.classList.add('option-button');
         button.dataset.option = newLabel;
-        button.innerHTML = `marked.parse(${newLabel}: ${text})`;
+        button.innerHTML = marked.parse(`${newLabel}: ${text}`);
         button.addEventListener('click', selectOption);
         optionsContainer.appendChild(button);
         if (currentQuestion.isMultiSelect) {
