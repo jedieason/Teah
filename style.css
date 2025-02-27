@@ -32,7 +32,7 @@ p {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: linear-gradient(135deg, #f5f1e1 0%, #eae6d4 100%);
     gap: 28px;
     position: relative;
     transition: all 0.4s ease;
@@ -54,7 +54,7 @@ p {
         .select-button {
             padding: 12px 24px;
             font-size: 1rem;
-            background-color: #FFFFFF;
+            background-color: #ffffff50;
             color: #4A5568;  /* Deep slate blue */
             border: 2px solid #62597A;  /* Vibrant blue-purple */
             border-radius: 12px;
@@ -945,7 +945,7 @@ body.dark-mode .logout-button:hover {
     padding: 5px 20px;
     font-size: 14px;
     color: #3b3c56;
-    background-color: #ffffff;
+    background-color: #ffffff50;
     border: 2px solid #3b3c56;
     border-radius: 50px;
     cursor: pointer;
