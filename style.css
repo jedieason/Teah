@@ -1,6 +1,13 @@
 /* Import Google Fonts for a premium look */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap');
 
+@font-face {
+    font-family: 'YuWeiShuFaYunMoFanTi';
+    src: url('fonts/YuWeiShuFaYunMoFanTi.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Base Styles */
 body {
     font-family: "source-han-serif-tc", "Noto Serif TC", "Songti TC", "Poppins", "PMingLiU", "SimSun", serif;
@@ -32,7 +39,7 @@ p {
 }
 
 .start-title {
-    font-family: "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
+    font-family: "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
     color: #1A1A1A;
     font-size: 4rem;
     letter-spacing: 3px;
@@ -127,7 +134,7 @@ p {
 
 
 .quiz-title {
-    font-family: "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
+    font-family: "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
     color: #1A1A1A;
     font-size: 2.5rem;
     font-weight: 600;
