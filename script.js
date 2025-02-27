@@ -659,7 +659,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     };
 
     try {
-        const response = await fetch("https://你的後端網址/api/gemini", {  // 請將此網址換成你後端的實際 API 網址
+        const response = await fetch("https://us-central1-geminiapiformedbot.cloudfunctions.net/Trivia-backend", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
