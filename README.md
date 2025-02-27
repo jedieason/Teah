@@ -1,39 +1,41 @@
-## Overview
-是⋯是的⋯❤️喜歡生化！
-我真的喜歡生化！⋯⋯❤️嗚嗚、不行了
-我已經變成不看生化不行的笨蛋了⋯
-啊啊❤️好喜歡❤️生化⋯
-想要生化用知識塞滿我的腦子❤️⋯
-嗚嗚⋯❤️腦子都快變生化的形狀了
-什麼等電點🤍UV spectra 570 nm🤍𝜙角𝜓角🤍δ-aminolevulinate🤍N-Cᵅ-Cᴼ🤍phenylisothiocyanate🤍穀胱甘肽🤍固相合成🤍Cryo EM🤍MALTI-TOF🤍LCMS/MS🤍α-keratin of L-colied D-coil🤍β-sheet (parallel / antiparallel)🤍triple helix of collagen (Gly-Pro-4HyPro)🤍Aᵦ🤍domain🤍chaperonin🤍cooperatively🤍light / heavy chain🤍θ = [L] / [L] + Kd🤍proximal His⁹³/F8🤍distal His⁶⁴/E7 🤍T→R transition🤍429 → 414 nm shift🤍salt-bridge🤍2,3-BPG的都來一點吧！
-真的喜歡到快要瘋掉了😍😍
+# 題矣
 
-## Features
-1. **Start Screen**: The landing page contains a title and buttons for users to select different quiz sets based on their study week or topics.
-   
-2. **Quiz Questions**: After selecting a quiz, users are presented with questions, answer options, and an interactive progress bar tracking the number of correct and incorrect answers.
+「題矣」者，一問答之戲也。其旨在隨機取題，供學子、程式人等試智驗能，並納 Guru Grogu 助答疑解惑，實用兼雅致，結構明晰。
 
-3. **Progress Tracking**: The progress section updates in real-time, showing how many questions the user has answered correctly or incorrectly.
+## 功能概述
 
-4. **Mode Toggle**: Users can switch between light and dark mode for comfortable viewing.
+- **啟始介面**  
+  起始屏幕氣象簡約，容供選擇題庫（存於 GitHub 之 JSON 檔），並呈現開始、還原進度等操作。
 
-5. **Language Selection**: The quiz can be taken in either English or Traditional Chinese.
+- **答題系統**  
+  支援單選、複選題，隨機洗牌，答後顯示詳解；正誤統計，計分精確，歷史紀錄亦存。
 
-6. **Explanations**: After answering, users receive feedback with explanations and the ability to copy text for further reference.
+- **用戶認證**  
+  以 Google Firebase 為基，供用戶登入、登出，顯示個人資料，並便於操作互動。
 
-## Usage Instructions
-1. **Selecting a Quiz**: On the start screen, click one of the buttons (e.g., "B11", "Week I", etc.) to load a quiz.
-2. **Starting the Quiz**: Press the "Start" button to begin answering questions.
-3. **Answering Questions**: Select an answer and press "Confirm". After answering, an explanation will be shown.
-4. **Progress Monitoring**: Check your correct and incorrect answers in the progress section.
-5. **Mode Toggle**: Use the "Switch to dark mode" button to toggle between light and dark themes.
-6. **Language Selection**: Switch between English and Traditional Chinese by clicking the appropriate language button.
+- **彙錯回報**  
+  設有 Debug 回報窗，令用者得以提交錯誤，速速修正，持續精進。
 
-## Customization
-- To add new quizzes, create a new JSON file with the quiz questions and add a new button on the start screen linking to that file.
+- **進度儲存與恢復**  
+  自動存檔，任意中斷復歸無礙，使學習歷程不致流失。
 
-## License
-All rights reserved. 2024. Created by [Jedieason](https://instagram.com/jedieason).
+- **附加功能**  
+  另整合 WeeGPT，允生成即時答疑，兼具實用與趣味。
 
-## Contact
-For inquiries or issues, reach out to [Jedieason](https://instagram.com/jedieason).
+## 安裝與運行
+
+1. 將源碼置於靜態網頁伺服器上，或自行部署於任一前端架設環境。  
+2. 確保網絡連通 Firebase 與 GitHub，則題庫可自動調取更新。  
+3. 按畫面指示操作，即可開始答題。
+
+## 開發與貢獻
+
+原創者 Jedieason 所著，設計謀略得當，代碼結構嚴謹。凡有志於改良或參與者，皆可檢閱程式，進行修改，或提出議建。
+
+## 授權條款
+
+本項目乃自由軟體，得隨意運用，惟必保原著說明，勿改署名。
+
+## 結語
+
+「題矣」一體問答遊戲，兼娛人心、啟學問，實用而不失雅趣。項目構思巧妙，務實中見創新。讀者可試之，亦可推陳出新，共襄盛舉。
