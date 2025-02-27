@@ -659,7 +659,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     };
 
     try {
-        const response = await fetch("https://us-central1-geminiapiformedbot.cloudfunctions.net/Trivia-backend", {
+        const response = await fetch("https://us-central1-geminiapiformedbot.cloudfunctions.net/triviaFunction", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
