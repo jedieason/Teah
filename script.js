@@ -647,7 +647,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     const defaultAnswer = currentQuestion.answer;
     const question = currentQuestion.question;
     const options = currentQuestion.options;
-    currentQuestion.explanation = '生成回答中⋯⋯';
+    currentQuestion.explanation = 'Guru Grogu 打字中...';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
 
     // 組成要傳送的資料物件
