@@ -644,6 +644,7 @@ sendQuestionBtn.addEventListener('click', async () => {
         return;
     }
     inputSection.style.display = 'none';
+    const defaultAnswer = currentQuestion.answer;
     const question = currentQuestion.question;
     const options = currentQuestion.options;
     currentQuestion.explanation = '生成回答中⋯⋯';
@@ -660,7 +661,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     document.getElementById('confirm-btn').style.display = 'none';
     console.log('Generating explanation, please wait...');
     try {
-        const explanation = await window.generateExplanation(question, options, userQuestion);
+        const explanation = await window.generateExplanation(question, options, userQuestion, defaultAnswer);
         currentQuestion.explanation = explanation;
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
         renderMathInElement(document.getElementById('explanation-text'), {
