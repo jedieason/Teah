@@ -9,8 +9,8 @@
 }
 
 @font-face {
-    font-family: 'GenRyuMin-L';
-    src: url('fonts/GenRyuMin-L.ttc') format('ttc');
+    font-family: 'NotoSerifTC.ttf';
+    src: url('fonts/NotoSerifTC.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
