@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: 'NotoSerifTC';
-    src: url('fonts/NotoSerifTC.ttf') format('ttf');
+    src: url('fonts/NotoSerifTC.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
