@@ -222,7 +222,7 @@ body.dark-mode .start-title {
 }
 
 body.dark-mode .select-button {
-    background-color: #1e1e1e;
+    background-color: transparent;
     color: #ffffff;
     border: 2px solid #62597A;
 }
@@ -239,8 +239,13 @@ body.dark-mode .start-button {
     border: 2px solid #62597A;
 }
 
+body.dark-mode .restoreBtn_C3D4 {
+    color: lightgray;
+    background-color: transparent;
+}
+
 body.dark-mode .start-button:hover {
-    background-color: #62597A;
+    background-color: transparent;
     color: #ffffff;
 }
 
