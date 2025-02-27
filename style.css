@@ -32,7 +32,7 @@ p {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #f5f1e1 0%, #eae6d4 100%);
+    background: white;
     gap: 28px;
     position: relative;
     transition: all 0.4s ease;
