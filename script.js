@@ -667,8 +667,7 @@ sendQuestionBtn.addEventListener('click', async () => {
             body: JSON.stringify(data)
         });
         const result = await response.json();
-        // result 會包含 question, options, userQuestion, defaultAnswer 與 explanation
-        currentQuestion.explanation = result.explanation;
+        currentQuestion.explanation = result.response;
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
         userQuestionInput.value = '';
         console.log('Explanation updated successfully!');
