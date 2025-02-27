@@ -640,7 +640,7 @@ weeGPTButton.addEventListener('click', () => {
 sendQuestionBtn.addEventListener('click', async () => {
     const userQuestion = userQuestionInput.value.trim();
     if (!userQuestion) {
-        alert('Please enter your question.');
+        alert('請輸入你的問題。');
         return;
     }
     inputSection.style.display = 'none';
@@ -649,47 +649,33 @@ sendQuestionBtn.addEventListener('click', async () => {
     const options = currentQuestion.options;
     currentQuestion.explanation = '生成回答中⋯⋯';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-    renderMathInElement(document.getElementById('explanation-text'), {
-        delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "$$", right: "$$", display: true },
-            { left: "\\[", right: "\\]", display: true }
-        ]
-    });
-    document.getElementById('explanation').style.display = 'block';
-    document.getElementById('confirm-btn').style.display = 'none';
-    console.log('Generating explanation, please wait...');
+
+    // 組成要傳送的資料物件
+    const data = {
+        question,
+        options,
+        userQuestion,
+        defaultAnswer
+    };
+
     try {
-        const explanation = await window.generateExplanation(question, options, userQuestion, defaultAnswer);
-        currentQuestion.explanation = explanation;
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderMathInElement(document.getElementById('explanation-text'), {
-            delimiters: [
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "$$", right: "$$", display: true },
-                { left: "\\[", right: "\\]", display: true }
-            ]
+        const response = await fetch("https://你的後端網址/api/gemini", {  // 請將此網址換成你後端的實際 API 網址
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         });
-        document.getElementById('explanation').style.display = 'block';
-        document.getElementById('confirm-btn').style.display = 'none';
+        const result = await response.json();
+        // result 會包含 question, options, userQuestion, defaultAnswer 與 explanation
+        currentQuestion.explanation = result.explanation;
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
         userQuestionInput.value = '';
         console.log('Explanation updated successfully!');
     } catch (error) {
         console.error(error);
-        currentQuestion.explanation = 'An error occurred while generating the explanation. Please try again later.';
+        currentQuestion.explanation = '產生回應時發生錯誤，請稍後再試。';
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderMathInElement(document.getElementById('explanation-text'), {
-            delimiters: [
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "$$", right: "$$", display: true },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });
-        document.getElementById('explanation').style.display = 'block';
-        document.getElementById('confirm-btn').style.display = 'none';
         console.log('Error generating explanation. Please try again later.');
     }
 });
