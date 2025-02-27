@@ -31,7 +31,7 @@ body {
     background-color: white;
 }
 
-button, select, option, textarea {
+button, select, option, input {
     font-family: inherit; /* 或者明確指定字體 */
 }
 
