@@ -359,18 +359,6 @@ body.dark-mode .copyright a {
     color: #888888;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .start-title {
-        font-size: 3rem;
-    }
-    
-    .select-button {
-        font-size: 0.9rem;
-        padding: 10px 20px;
-    }
-}
-
 /* Original CSS Elements Not Renewed */
 
 /* 新增按鈕容器 */
@@ -829,7 +817,7 @@ body.dark-mode .logout-button:hover {
 /* Responsive Design */
 @media (max-width: 768px) {
     .start-title {
-        font-size: 2.5rem;
+        font-size: 3rem;
     }
     
     .quiz-title {
@@ -843,6 +831,10 @@ body.dark-mode .logout-button:hover {
     
     .multi-label {
         margin-top: 10px;
+    }
+
+    #WeeGPTInputSection {
+        margin: 0px 0px 20px 0px;
     }
 }
 
@@ -931,13 +923,6 @@ body.dark-mode .logout-button:hover {
             transform: scale(0.95);
             box-shadow: 0 2px 10px rgba(0, 130, 200, 0.2);
         }
-
-@media (max-width: 600px) {
-    #WeeGPTInputSection {
-        margin: 0px 0px 20px 0px;
-    }
-}
-
 
 
 
