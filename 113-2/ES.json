@@ -1,0 +1,170 @@
+[
+  {
+    "question": "Based on the provided information about the 921 Earthquake and its effects on Yu Shan, which of the following statements best describes the long-term geological consequences?",
+    "options": {
+      "A": "The earthquake primarily resulted in a decrease in the overall elevation of Yu Shan due to ground subsidence.",
+      "B": "While the earthquake caused immediate damage, it had negligible long-term effects on the geological structure of Yu Shan.",
+      "C": "The earthquake triggered landslides and uplift, leading to both immediate and gradual changes in Yu Shan's elevation and surrounding landscape.",
+      "D": "The primary long-term consequence was the stabilization of the fault lines around Yu Shan, reducing future seismic risk.",
+      "E": "The earthquake mainly caused horizontal displacement of landmasses around Yu Shan without significant vertical changes."
+    },
+    "answer": "C",
+    "explanation": "The text indicates the earthquake caused landslides and uplift, leading to both immediate damage (collapsed tunnel) and long-term changes in elevation as Yu Shan continues to grow in height and experience sideways movement."
+  },
+  {
+    "question": "Considering the concept of isostasy and its relation to mountain formation, which statement most accurately describes how the crust behaves under the weight of a mountain range like Yu Shan?",
+    "options": {
+      "A": "The crust beneath Yu Shan is compressed and thinned, causing the mountain range to sink into the mantle.",
+      "B": "The crust beneath Yu Shan is depressed or sinks into the mantle, achieving a state of gravitational equilibrium, while the mountain range is buoyantly supported.",
+      "C": "The crust beneath Yu Shan remains unaffected, with the mountain range being supported solely by the rigidity of the lithosphere.",
+      "D": "The crust beneath Yu Shan is uplifted due to increased density, causing the mountain range to rise further above sea level.",
+      "E": "The crust beneath Yu Shan experiences uniform deformation without isostatic adjustment, maintaining a constant thickness."
+    },
+    "answer": "B",
+    "explanation": "Isostasy describes the equilibrium where the Earth's crust floats on the denser mantle.  The weight of a mountain range causes the crust to depress or sink into the mantle, similar to how an iceberg floats in water. This depression allows the mountain to be buoyantly supported, maintaining gravitational equilibrium."
+  },
+  {
+    "question": "Based on the 'Section 6: How could plate movement cause folded mountains to form?' and the provided diagrams, select the statements that accurately describe the process of folded mountain formation at convergent plate boundaries.",
+    "options": {
+      "A": "Folded mountains primarily form at divergent plate boundaries where plates move apart, creating tensional forces.",
+      "B": "The folding process involves the horizontal compression of sedimentary rock layers due to the pushing together of tectonic plates at convergent boundaries.",
+      "C": "The oceanic crust, being denser, subducts under the continental crust at convergent boundaries, leading to the uplift and folding of the continental crust.",
+      "D": "The angle of subduction and the rate of plate convergence are insignificant factors in determining the intensity of folding and mountain height.",
+      "E": "The primary rock type involved in the formation of folded mountains is igneous rock, which is more susceptible to folding under pressure than sedimentary rock."
+    },
+    "answer": ["B", "C"],
+    "explanation": "Folded mountains are formed at convergent plate boundaries where compressional forces cause sedimentary layers to fold.  Oceanic crust subducting under continental crust is a common convergent setting leading to mountain formation. Options A, D, and E are incorrect because divergent boundaries create rifts, subduction angle and rate are significant, and sedimentary rocks are the primarily folded material."
+  },
+  {
+    "question": "Referencing 'Section 8: How are ridges formed?' and 'Figure 8. B. Age of Rock at Folded Mountains and Ridges', analyze the relationship between distance from a ridge and the age of the rock. Which of the following interpretations is most accurate?",
+    "options": {
+      "A": "The age of the rock at ocean ridges is consistently older than rocks further away, indicating a process of crustal compression at ridges.",
+      "B": "There is no discernible relationship between the distance from an ocean ridge and the age of the oceanic crust; age distribution is random.",
+      "C": "The age of the rock increases as the distance from the ocean ridge increases, suggesting that new crust is formed at the ridge and moves outward.",
+      "D": "The youngest rocks are found furthest from the ocean ridges, implying that ridges are areas of crustal subduction and destruction.",
+      "E": "The age of rocks near ocean ridges fluctuates significantly, with alternating bands of old and young rock due to episodic volcanic activity."
+    },
+    "answer": "C",
+    "explanation": "The text and graphs in 'Section 8' clearly indicate that ocean ridges are sites of seafloor spreading where new oceanic crust is generated. As new crust forms at the ridge, older crust is pushed away. Therefore, the age of the rock increases with distance from the ridge."
+  },
+  {
+    "question": "Considering 'Section 7: What caused all folded mountains on Earth to form?' and 'Section 8: How are ridges formed?', what is the fundamental difference in plate tectonic processes that leads to the formation of folded mountains versus ocean ridges?",
+    "options": {
+      "A": "Folded mountains are formed by tensional forces at divergent plate boundaries, while ocean ridges are formed by compressional forces at convergent plate boundaries.",
+      "B": "Folded mountains are primarily a result of vertical uplift due to mantle plumes, whereas ocean ridges are caused by horizontal shearing forces along transform faults.",
+      "C": "Folded mountains are created by the collision and compression of plates at convergent boundaries, while ocean ridges are formed by the separation and divergence of plates at divergent boundaries.",
+      "D": "Folded mountains involve the subduction of oceanic crust, while ocean ridges are characterized by the upwelling of magma at hotspots.",
+      "E": "Folded mountains are formed over millions of years through slow, continuous processes, while ocean ridges are formed rapidly during catastrophic volcanic eruptions."
+    },
+    "answer": "C",
+    "explanation": "Folded mountains are a result of compressional forces at convergent boundaries where plates collide. Ocean ridges, conversely, are formed at divergent boundaries where plates move apart, allowing magma to upwell and create new oceanic crust."
+  },
+  {
+    "question": "Based on 'Section 4.A. Alfred Wegener's Puzzle' and 'Section 5: Claim, Evidence & Reasoning for Continental Drift', which of the following statements best summarizes Wegener's initial hypothesis regarding continental drift *before* GPS technology confirmed plate tectonics?",
+    "options": {
+      "A": "Wegener proposed that continents were stationary and their positions had remained unchanged throughout Earth's history.",
+      "B": "Wegener hypothesized that continents were once joined together in a supercontinent and have since drifted apart over vast periods of time.",
+      "C": "Wegener initially believed that continental drift was driven by the Earth's rotation and tidal forces, causing continents to slide across the ocean floor.",
+      "D": "Wegener's primary focus was on explaining the formation of mountain ranges and earthquakes, with continental drift being a secondary consideration.",
+      "E": "Wegener suggested that continents moved vertically, rising and sinking over time due to changes in sea level, rather than horizontal drift."
+    },
+    "answer": "B",
+    "explanation": "Alfred Wegener's continental drift hypothesis, as described in the text, centered on the idea that continents were once united in a supercontinent (Pangaea) and have subsequently moved apart to their current positions.  While he had ideas about the *mechanism*, his core hypothesis was about the continents' past positions and movement."
+  },
+  {
+    "question": "In 'Section 6: How could plate movement cause folded mountains to form?', the text mentions 'continental' and 'oceanic' crust. Which statement accurately compares the densities and relative elevations of these two types of crust?",
+    "options": {
+      "A": "Oceanic crust is less dense and thicker than continental crust, resulting in higher elevations.",
+      "B": "Continental crust is denser and thinner than oceanic crust, leading to lower average elevations.",
+      "C": "Oceanic crust is denser and thinner than continental crust, resulting in lower average elevations.",
+      "D": "Continental and oceanic crust have similar densities, but continental crust is thinner, causing higher elevations.",
+      "E": "Continental and oceanic crust have different compositions but similar densities, leading to comparable average elevations."
+    },
+    "answer": "C",
+    "explanation": "Oceanic crust is made of basalt and is denser than continental crust, which is primarily composed of granite. Oceanic crust is also thinner than continental crust.  Due to its higher density and thinner nature, oceanic crust generally sits lower in elevation compared to continental crust."
+  },
+  {
+    "question": "Based on 'Section 3: What causes Earthquakes and Lithospheric Plates?', what is the most accurate description of the relationship between earthquakes and faults?",
+    "options": {
+      "A": "Earthquakes cause faults to form in the Earth's crust due to the sudden release of seismic energy.",
+      "B": "Faults are fractures in the Earth's crust where movement has occurred, and earthquakes are caused by the sudden release of energy when rocks along a fault rupture and move.",
+      "C": "Earthquakes and faults are unrelated geological phenomena; earthquakes are primarily caused by volcanic eruptions, while faults are formed by erosion.",
+      "D": "Faults are only found in continental crust, whereas earthquakes primarily occur in oceanic crust along mid-ocean ridges.",
+      "E": "Earthquakes are predictable events that occur regularly along faults due to the constant movement of tectonic plates."
+    },
+    "answer": "B",
+    "explanation": "Faults are pre-existing fractures in the Earth's crust where movement has taken place. Earthquakes are generated when stress builds up along these faults due to tectonic plate movement, and this stress is suddenly released as rocks rupture and slide past each other."
+  },
+  {
+    "question": "Refer to 'Section 4.B. Wegener's Puzzle' and the provided 'Logical Reasoning' section. What is the significance of the fossil evidence, particularly *Mesosaurus* and *Lystrosaurus*, in supporting Wegener's continental drift theory?",
+    "options": {
+      "A": "The fossils of *Mesosaurus* and *Lystrosaurus* were found globally across all continents, indicating that these species were capable of long-distance migration across oceans.",
+      "B": "The fossils of *Mesosaurus* and *Lystrosaurus* were found on continents now separated by vast oceans, suggesting that these land-dwelling animals could not have crossed these oceans, implying the continents were once connected.",
+      "C": "*Mesosaurus* and *Lystrosaurus* fossils were used to demonstrate that continents had remained stationary, as their distribution patterns matched current continental positions.",
+      "D": "The fossil evidence was considered irrelevant to Wegener's theory as the distribution of plant fossils provided stronger support for continental drift.",
+      "E": "The fossils of *Mesosaurus* and *Lystrosaurus* were actually found in deep ocean sediments, indicating that continents had submerged and resurfaced over time."
+    },
+    "answer": "B",
+    "explanation": "The fossils of land-dwelling reptiles like *Mesosaurus* and *Lystrosaurus* were found on continents now separated by oceans. These animals are unlikely to have swum across vast oceans. Their presence on multiple, now distant, continents provided crucial evidence that these landmasses were once joined together, allowing these animals to inhabit a continuous land area."
+  },
+  {
+    "question": "Based on 'Section 8.C. Type of Rock at Folded Mountains and Ridges' and the information about basalt, which statement best explains why basalt is commonly found at ocean ridges?",
+    "options": {
+      "A": "Basalt is a metamorphic rock formed from the intense pressure and heat associated with continental collisions at folded mountains.",
+      "B": "Basalt is an intrusive igneous rock that solidifies slowly beneath the Earth's surface, commonly found in continental crust.",
+      "C": "Basalt is an extrusive igneous rock formed from magma that cools and solidifies rapidly at the Earth's surface, particularly at divergent plate boundaries like ocean ridges.",
+      "D": "Basalt is a sedimentary rock composed of weathered and eroded fragments of continental rocks, accumulating in ocean basins near ridges.",
+      "E": "Basalt is a unique type of rock formed only in deep ocean trenches, unrelated to volcanic activity at ocean ridges."
+    },
+    "answer": "C",
+    "explanation": "Basalt is an extrusive igneous rock. This means it forms from lava that erupts onto the Earth's surface and cools quickly. Ocean ridges are divergent plate boundaries where magma from the mantle rises to the surface, erupts as lava, and solidifies rapidly to form basalt. This process is characteristic of seafloor spreading at ocean ridges."
+  },
+  {
+    "question": "Considering 'Section 2.B. What are Mountains?' and 'Section 7.D. Where are Ridges? What is the elevation of ridges?', analyze the elevation ranges provided for 'sea level', 'below sea level', and 'above sea level'. What is the *most accurate* interpretation of the elevation values given for ocean ridges in 'Section 7.D.c)'?",
+    "options": {
+      "A": "Ocean ridges are consistently located at elevations significantly below sea level, ranging from -500m to -3000m, indicating they are deep trenches.",
+      "B": "Ocean ridges are primarily found at elevations above sea level, ranging from +500m to +3000m, forming prominent mountain ranges on land.",
+      "C": "Ocean ridges are located at elevations both above and below sea level, with some sections emerging as islands and others remaining submerged.",
+      "D": "Ocean ridges are characterized by elevations that are generally below sea level, but still relatively higher than the deep ocean floor, typically in the range of -500m to -3000m.",
+      "E": "Ocean ridges have highly variable elevations, ranging from deep trenches to high mountain peaks, making it impossible to generalize their elevation range."
+    },
+    "answer": "D",
+    "explanation": "Section 7.D.c) states 'What elevation is ridge? *Below sea level -500m ~ -3000m*'. This directly indicates that ocean ridges are located below sea level within the specified range. While they are submerged, they are elevated relative to the very deep ocean floor, which can be much deeper than -3000m. Option D accurately captures this nuance."
+  },
+  {
+    "question": "Based on 'Section 5B: Practice' and the activity regarding continental shapes and 'Big Brain' prompt, what is the most crucial piece of evidence, *beyond* just coastline shape, that strengthens the argument for continents A, B, and C originally being joined?",
+    "options": {
+      "A": "The perfect geometric fit of the coastlines of continents A, B, and C, leaving no gaps or overlaps when assembled.",
+      "B": "The presence of glacial grooves and cool climate deposits in regions that are currently located in warmer latitudes, suggesting past polar ice cap locations.",
+      "C": "The identical rock types and mountain ranges found on continents A, B, and C that align when the continents are positioned together, indicating shared geological history.",
+      "D": "The distribution of modern plant and animal species across continents A, B, and C, showing evolutionary relationships.",
+      "E": "The paleomagnetic data showing the alignment of magnetic minerals in rocks from continents A, B, and C, indicating similar magnetic polar positions in the past."
+    },
+    "answer": "C",
+    "explanation": "While coastline fit is a suggestive initial observation, the 'Big Brain' prompt emphasizes looking for evidence *beyond* just shape. Matching rock types and mountain ranges across continents, as mentioned in option C and discussed in 'Rock and Mountain correlation' in Section 5.B, provides stronger geological evidence of a shared past and continental connections. Glacial grooves (B) are also strong evidence, but rock and mountain correlations are highlighted as a key piece of evidence in the text."
+  },
+  {
+    "question": "Refer to 'Section 3.B. What are Mountains?' and 'Section 7.A. Warm-up Questions'. Which of the following best describes the relationship between 'volcanic mountains' and 'folded mountains' in terms of their formation processes?",
+    "options": {
+      "A": "Volcanic mountains and folded mountains are essentially the same type of mountain, both formed by the folding of rock layers at convergent plate boundaries.",
+      "B": "Volcanic mountains are formed by the accumulation of volcanic material erupted from the Earth's interior, while folded mountains are formed by the compression and folding of rock layers due to plate collisions.",
+      "C": "Volcanic mountains are exclusively formed underwater at ocean ridges, whereas folded mountains are only found on continents.",
+      "D": "Volcanic mountains are formed rapidly during single volcanic eruptions, while folded mountains take millions of years to form through slow, continuous folding processes.",
+      "E": "Volcanic mountains and folded mountains always occur together in the same geographic locations, as they are both products of the same tectonic forces."
+    },
+    "answer": "B",
+    "explanation": "Volcanic mountains are built up from the extrusion and accumulation of lava, ash, and other volcanic materials. Folded mountains, on the other hand, are formed by the compressional forces at convergent plate boundaries that cause rock layers to buckle and fold.  These are distinct formation processes leading to different types of mountains. Options A, C, D, and E present inaccurate or misleading comparisons."
+  },
+  {
+    "question": "Based on 'Section 3.A. What are earthquakes?', and the diagram illustrating earthquake focus and epicenter, which statement accurately describes the location of the *focus* relative to the *epicenter* of an earthquake?",
+    "options": {
+      "A": "The focus and epicenter of an earthquake are always at the same point on the Earth's surface.",
+      "B": "The focus is the point on the Earth's surface directly above the epicenter, which is located underground.",
+      "C": "The epicenter is the point on the Earth's surface directly above the focus, which is the point of rupture underground where the earthquake originates.",
+      "D": "The focus is located on the fault line at the surface, while the epicenter is located deep within the Earth's mantle.",
+      "E": "The epicenter is the primary source of seismic waves within the Earth, while the focus is the point on the surface where these waves are first felt."
+    },
+    "answer": "C",
+    "explanation": "Empty"
+  }
+]
