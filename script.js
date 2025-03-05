@@ -460,7 +460,7 @@ document.addEventListener('keydown', function(event) {
     if (event.target === userQuestionInput) {
         return;
     }
-    if (event.key.toLowerCase() === 'g') {
+    if (event.key.toLowerCase() === 'q') {
         event.preventDefault();
         weeGPTButton.click();
         return;
