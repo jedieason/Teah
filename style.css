@@ -309,7 +309,6 @@ body.dark-mode .question-content {
 body.dark-mode .option-button {
     background-color: #1e1e1e;
     color: #ffffff;
-    border: 2px solid transparent;
 }
 
 body.dark-mode .option-button:hover {
