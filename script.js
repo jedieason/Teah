@@ -460,6 +460,10 @@ document.addEventListener('keydown', function(event) {
     if (event.target === userQuestionInput) {
         return;
     }
+    if (event.key.toLowerCase() === 'g') {
+        weeGPTButton.click();
+        return;
+    }
     const validOptions = currentQuestion && currentQuestion.options ? Object.keys(currentQuestion.options) : [];
     if (acceptingAnswers && validOptions.includes(event.key.toUpperCase())) {
         const optionButton = document.querySelector(`.option-button[data-option='${event.key.toUpperCase()}']`);
