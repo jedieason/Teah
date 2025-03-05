@@ -639,6 +639,9 @@ weeGPTButton.addEventListener('click', () => {
         return;
     }
     inputSection.style.display = inputSection.style.display === 'flex' ? 'none' : 'flex';
+    if (inputSection.style.display === 'flex') {
+        userQuestionInput.focus();
+    }
 });
 
 sendQuestionBtn.addEventListener('click', async () => {
