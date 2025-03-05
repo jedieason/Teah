@@ -461,6 +461,7 @@ document.addEventListener('keydown', function(event) {
         return;
     }
     if (event.key.toLowerCase() === 'g') {
+        event.preventDefault();
         weeGPTButton.click();
         return;
     }
