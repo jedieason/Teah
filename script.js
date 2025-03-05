@@ -135,7 +135,7 @@ function loadNewQuestion() {
         shouldShuffle = false;
     } else {
         // 單選題（或多選題）都用這組標籤
-        optionLabels = ['A', 'B', 'C', 'D', 'E'];
+        optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
         shouldShuffle = true;
     }
 
@@ -204,7 +204,7 @@ function updateExplanationOptions(explanation, labelMapping) {
     if (!explanation) {
         return '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
     }
-    return explanation.replace(/\((A|B|C|D|E)\)/g, function(match, label) {
+    return explanation.replace(/\((A|B|C|D|E|F|G|H|I|J|K|L)\)/g, function(match, label) {
         let newLabel = labelMapping[label] || label;
         return `(${newLabel})`;
     });
@@ -757,7 +757,7 @@ function loadQuestionFromState() {
         optionLabels = ['T', 'F'];
         shouldShuffle = false;
     } else {
-        optionLabels = ['A', 'B', 'C', 'D', 'E'];
+        optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
         shouldShuffle = true;
     }
     let optionEntries = Object.entries(currentQuestion.options);
