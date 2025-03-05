@@ -648,7 +648,6 @@ weeGPTButton.addEventListener('click', () => {
 sendQuestionBtn.addEventListener('click', async () => {
     const userQuestion = userQuestionInput.value.trim();
     if (!userQuestion) {
-        alert('請輸入你的問題。');
         return;
     }
     inputSection.style.display = 'none';
