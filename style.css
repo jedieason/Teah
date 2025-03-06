@@ -1023,7 +1023,7 @@ body.dark-mode .logout-button:hover {
     top: 0;
     left: -50%;
     height: 100%;
-    width: 50%;
-    background: linear-gradient(to right, transparent, rgba(249, 249, 249 ,0.6), transparent);
+    width: 60%;
+    background: linear-gradient(to right, transparent, rgba(249, 249, 249 ,0.7), transparent);
     animation: moveLight 2s linear infinite;
 }
