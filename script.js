@@ -654,7 +654,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     const defaultAnswer = currentQuestion.answer;
     const question = currentQuestion.question;
     const options = currentQuestion.options;
-    currentQuestion.explanation = 'Guru Grogu 打字中...';
+    currentQuestion.explanation = '<span class="typing-effect">Guru Grogu 打字中...</span>';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
 
     // 組成要傳送的資料物件
