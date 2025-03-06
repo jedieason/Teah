@@ -1005,3 +1005,25 @@ body.dark-mode .logout-button:hover {
         width: 9px;
         height: 16px;
     }
+
+
+@keyframes moveLight {
+    from { left: -50%; }
+    to { left: 100%; }
+}
+
+.typing-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.typing-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(to right, transparent, rgba(249, 249, 249 ,0.6), transparent);
+    animation: moveLight 2s linear infinite;
+}
