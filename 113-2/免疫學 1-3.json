@@ -176,7 +176,7 @@
       "D": "RLR 活化後，最終會活化 IRF-3 和 NF-κB，促進第一型 IFN 和細胞毒性 T 細胞的生成。",
       "E": "RLR 訊號傳遞途徑主要在後天免疫反應中發揮作用。"
     },
-    "answer": ["B"],
+    "answer": "B",
     "explanation": "(B) RIG-I 的解旋酶區域 (helicase domain) 的確負責與病毒 RNA 結合。(A) RLR 主要辨識**不具有 5' 端帽的 triphosphate RNA 病毒**。(C) MAVS (mitochondrial antiviral-signaling protein) 位於**粒線體外膜**上。(D) RLR 活化後，最終會活化 IRF-3 和 NF-κB，促進第一型 IFN 和**細胞介素**的生成，而非細胞毒性 T 細胞。(E) RLR 訊號傳遞途徑主要在**先天**免疫反應中發揮作用。"
   },
   {
