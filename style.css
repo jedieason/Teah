@@ -837,10 +837,6 @@ body.dark-mode .logout-button:hover {
         font-size: 0.9rem;
         padding: 8px 16px;
     }
-    
-    .multi-label {
-        margin-top: 10px;
-    }
 
     #WeeGPTInputSection {
         margin: 0px 0px 20px 0px;
