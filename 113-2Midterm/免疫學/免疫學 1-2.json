@@ -1,0 +1,554 @@
+[
+  {
+    "question": "關於**先天免疫系統**的第一線屏障，下列敘述何者*錯誤*？",
+    "options": {
+      "A": "上皮組織通過緊密連接（tight junction）來阻止微生物入侵。",
+      "B": "黏膜上皮分泌的黏液（mucus）不具備任何防禦功能。",
+      "C": "皮膚、腸道、肺部和眼/鼻/口等部位都屬於第一線屏障的組成部分。",
+      "D": "抗微生物肽（AMPs）是第一線屏障的化學成分。",
+      "E": "呼吸道纖毛（cilia）的擺動可協助排除微生物。"
+    },
+    "answer": "B",
+    "explanation": "黏膜上皮分泌的黏液（mucus）具有防禦功能，選項B敘述與事實相反。"
+  },
+  {
+    "question": "下列哪一項*不是*上皮組織（epithelial barrier）防止微生物進入體內的主要機制？",
+    "options": {
+      "A": "物理性阻擋",
+      "B": "分泌抗微生物肽",
+      "C": "細胞吞噬作用",
+      "D": "化學性屏障作用，如低pH值",
+      "E": "微生物競爭排除"
+    },
+    "answer": "C",
+    "explanation": "細胞吞噬作用主要屬於先天免疫系統的第二線防禦，而非上皮組織的第一線屏障的主要機制。"
+  },
+  {
+    "question": "關於抗微生物肽（AMPs），下列哪些敘述是*正確*的？",
+    "options": {
+      "A": "AMPs 具有高度專一性，針對特定病原體。",
+      "B": "Pro-AMPs 具有活性，可直接殺死細菌。",
+      "C": "Defensin 和 Cathelicidin 屬於 AMPs 的種類。",
+      "D": "AMPs 主要通過破壞細胞膜來殺死微生物。",
+      "E": "AMPs 只由上皮細胞分泌。"
+    },
+    "answer": ["C", "D"],
+    "explanation": "Defensin 和 Cathelicidin 確實是 AMPs 的例子，且AMPs的作用機制之一是破壞細胞膜。AMPs不具專一性，Pro-AMPs 需要活化，且AMPs不只由上皮細胞分泌。"
+  },
+  {
+    "question": "溶菌酶（lysozyme）主要作用於哪一類細菌的細胞壁？",
+    "options": {
+      "A": "革蘭氏陰性菌 (Gram-negative bacteria)",
+      "B": "革蘭氏陽性菌 (Gram-positive bacteria)",
+      "C": "病毒 (Virus)",
+      "D": "真菌 (Fungi)",
+      "E": "披衣菌 (Chlamydia)"
+    },
+    "answer": "B",
+    "explanation": "溶菌酶主要分解革蘭氏陽性菌細胞壁中的肽聚醣，對革蘭氏陰性菌效果較差。"
+  },
+  {
+    "question": "補體系統活化後的*主要功能*包括下列哪些？",
+    "options": {
+      "A": "產生抗體 (Antibody production)",
+      "B": "細胞激素分泌 (Cytokine secretion)",
+      "C": "調理作用 (Opsonization)",
+      "D": "直接殺死微生物 (Direct killing of microbes)",
+      "E": "活化發炎反應 (Activation of inflammation)"
+    },
+    "answer": ["C", "D", "E"],
+    "explanation": "補體系統活化後具有調理作用、直接殺死微生物（通過 MAC）和活化發炎反應的功能。抗體產生和細胞激素分泌不是補體系統的主要*直接*功能。"
+  },
+  {
+    "question": "關於補體系統的C3 component，下列敘述何者*正確*？",
+    "options": {
+      "A": "C3 是補體系統中含量最少的成分。",
+      "B": "C3 缺陷通常不會對人體健康造成顯著影響。",
+      "C": "C3b 主要參與發炎反應。",
+      "D": "C3 convertase 的作用是切割 C3 成分。",
+      "E": "C3a 是 MAC (membrane attack complex) 的主要組成部分。"
+    },
+    "answer": "D",
+    "explanation": "C3 convertase 的確切作用是切割 C3 成分，產生 C3a 和 C3b。C3 是補體系統中含量最多的成分，C3缺陷會導致嚴重的免疫缺陷，C3b 主要參與調理作用和 C5 convertase 的形成，C3a 主要參與發炎反應，MAC 的主要組成成分是 C5b、C6、C7、C8、C9。"
+  },
+  {
+    "question": "在補體系統的古典途徑中，啟動活化的*最初步驟*是什麼？",
+    "options": {
+      "A": "C3b 與微生物表面結合",
+      "B": "C1q 與抗原抗體複合物結合",
+      "C": "MBL (Mannose-binding lectin) 與微生物表面的甘露糖結合",
+      "D": "Factor B 與 C3b 結合",
+      "E": "C5 convertase 的形成"
+    },
+    "answer": "B",
+    "explanation": "古典途徑的啟動是從 C1q 辨識並結合抗原抗體複合物開始。"
+  },
+  {
+    "question": "下列哪一個補體成分*不是* C1 複合體的組成部分？",
+    "options": {
+      "A": "C1q",
+      "B": "C1r",
+      "C": "C1s",
+      "D": "C2",
+      "E": "以上皆非"
+    },
+    "answer": "D",
+    "explanation": "C1 複合體由 C1q、C1r 和 C1s 三個成分組成，C2 是後續步驟的成分。"
+  },
+  {
+    "question": "關於補體系統的凝集素途徑（lectin pathway），下列敘述何者*正確*？",
+    "options": {
+      "A": "凝集素途徑的啟動需要抗體參與。",
+      "B": "MBL (Mannose-binding lectin) 在凝集素途徑中的功能類似於古典途徑中的 C1q。",
+      "C": "凝集素途徑產生的 C3 convertase 與古典途徑的 C3 convertase 成分不同。",
+      "D": "凝集素途徑的反應速度比古典途徑慢。",
+      "E": "凝集素途徑只針對革蘭氏陽性菌有效。"
+    },
+    "answer": "B",
+    "explanation": "MBL 在凝集素途徑中負責辨識微生物，功能類似於古典途徑中辨識抗原抗體複合物的 C1q。凝集素途徑不需要抗體參與，產生的 C3 convertase 成分與古典途徑相同 (C4b2a)，凝集素途徑反應迅速，且對多種微生物有效。"
+  },
+  {
+    "question": "在補體系統的替代途徑中，C3 convertase 是如何形成的？",
+    "options": {
+      "A": "C4b 和 C2a 結合",
+      "B": "C3b 和 Bb 結合",
+      "C": "C1q、C1r 和 C1s 結合",
+      "D": "MBL 和 MASP 結合",
+      "E": "C5b 和 C6 結合"
+    },
+    "answer": "B",
+    "explanation": "替代途徑的 C3 convertase 是由 C3b 和 Bb 結合形成的 (C3bBb)。"
+  },
+  {
+    "question": "下列哪一種補體成分主要作為*調理素* (opsonin)，促進吞噬作用？",
+    "options": {
+      "A": "C3a",
+      "B": "C3b",
+      "C": "C5a",
+      "D": "C5b",
+      "E": "MAC"
+    },
+    "answer": "B",
+    "explanation": "C3b 是主要的調理素，可以標記病原體，促進吞噬細胞的辨識和吞噬。"
+  },
+  {
+    "question": "下列哪一個補體成分主要作為*趨化因子* (chemotactic factor)，吸引免疫細胞到發炎部位？",
+    "options": {
+      "A": "C3a",
+      "B": "C3b",
+      "C": "C5a",
+      "D": "C5b",
+      "E": "MAC"
+    },
+    "answer": "C",
+    "explanation": "C5a 是強效的趨化因子，可以吸引嗜中性球和巨噬細胞等免疫細胞到發炎部位。"
+  },
+  {
+    "question": "膜攻擊複合體 (MAC) 的最終功能是什麼？",
+    "options": {
+      "A": "調理作用 (Opsonization)",
+      "B": "中和毒素 (Neutralization of toxins)",
+      "C": "細胞溶解 (Cell lysis)",
+      "D": "活化發炎反應 (Activation of inflammation)",
+      "E": "抗體生成 (Antibody production)"
+    },
+    "answer": "C",
+    "explanation": "MAC 的功能是在目標細胞膜上形成孔洞，導致細胞內容物外洩，最終造成細胞溶解。"
+  },
+  {
+    "question": "關於膜攻擊複合體 (MAC) 的形成過程，下列步驟的順序何者*正確*？",
+    "options": {
+      "A": "C5b → C6 → C7 → C8 → C9",
+      "B": "C5b → C7 → C6 → C8 → C9",
+      "C": "C5b → C8 → C7 → C6 → C9",
+      "D": "C5b → C9 → C8 → C7 → C6",
+      "E": "C6 → C5b → C7 → C8 → C9"
+    },
+    "answer": "A",
+    "explanation": "MAC 的形成順序是 C5b 先結合，接著依序結合 C6、C7、C8，最後聚合多個 C9 分子。"
+  },
+  {
+    "question": "下列哪一種蛋白質是補體系統中*唯一*的正向調節蛋白 (positive regulatory protein)？",
+    "options": {
+      "A": "C1INH",
+      "B": "DAF (decay-accelerating factor)",
+      "C": "Properdin (factor P)",
+      "D": "CR1 (complement receptor 1)",
+      "E": "Factor H"
+    },
+    "answer": "C",
+    "explanation": "Properdin 是補體系統中唯一的正向調節蛋白，可以穩定替代途徑的 C3 convertase (C3bBb)，增強補體活化。"
+  },
+  {
+    "question": "C1INH (C1 inhibitor) 如何抑制補體系統的古典途徑？",
+    "options": {
+      "A": "阻斷 C1q 與抗原抗體複合物的結合",
+      "B": "抑制 C1r 和 C1s 的活性",
+      "C": "加速 C4b2a 複合體的分解",
+      "D": "阻止 C5b 與細胞膜結合",
+      "E": "競爭 C3b 的受體"
+    },
+    "answer": "B",
+    "explanation": "C1INH 模仿 C1r 和 C1s 的受質，競爭性地與 C1r 和 C1s 結合，抑制其蛋白酶活性，從而抑制古典途徑的早期活化。"
+  },
+  {
+    "question": "DAF (decay-accelerating factor) 和 CR1 (complement receptor 1) 如何調控補體系統？",
+    "options": {
+      "A": "增強 C3 convertase 的活性",
+      "B": "促進 C3b 的聚合",
+      "C": "加速 C4b2a 和 C3bBb 的分解",
+      "D": "抑制 MAC 的形成",
+      "E": "促進 C5a 的降解"
+    },
+    "answer": "C",
+    "explanation": "DAF 和 CR1 都可以加速 C4b2a (古典途徑 C3 convertase) 和 C3bBb (替代途徑 C3 convertase) 的分解，限制 C3 convertase 的作用時間和範圍。"
+  },
+  {
+    "question": "下列哪一種補體調控蛋白可以阻止 C9 聚合形成 MAC？",
+    "options": {
+      "A": "C1INH",
+      "B": "DAF",
+      "C": "CR1",
+      "D": "Factor H",
+      "E": "CD59"
+    },
+    "answer": "E",
+    "explanation": "CD59 (protectin) 可以阻止 C9 的聚合，干擾 MAC 的最終組裝步驟，保護宿主細胞免受 MAC 攻擊。"
+  },
+  {
+    "question": "關於補體系統的活化途徑，下列哪一項配對是*錯誤*的？",
+    "options": {
+      "A": "古典途徑 - C1q, C1r, C1s",
+      "B": "凝集素途徑 - MBL, MASP",
+      "C": "替代途徑 - Factor B, Factor D, Properdin",
+      "D": "古典途徑 C3 convertase - C3bBb",
+      "E": "凝集素途徑 C3 convertase - C4b2a"
+    },
+    "answer": "D",
+    "explanation": "古典途徑的 C3 convertase 是 C4b2a，而 C3bBb 是替代途徑的 C3 convertase。選項D配對錯誤。"
+  },
+  {
+    "question": "在補體系統中，C3a 和 C5a 都屬於發炎介質 (inflammatory mediators)，它們的主要功能是什麼？",
+    "options": {
+      "A": "調理作用 (Opsonization)",
+      "B": "細胞溶解 (Cell lysis)",
+      "C": "血管通透性增加和免疫細胞趨化性",
+      "D": "抑制補體活化",
+      "E": "中和病原體毒素"
+    },
+    "answer": "C",
+    "explanation": "C3a 和 C5a 都是過敏毒素 (anaphylatoxins)，它們主要引起血管通透性增加，促進血管滲漏，並作為趨化因子吸引免疫細胞到發炎部位。"
+  },
+  {
+    "question": "下列哪一種病原體逃避補體攻擊的機制是通過分泌補體抑制蛋白，干擾 C3 convertase 的活性？",
+    "options": {
+      "A": "*Neisseria meningitidis*",
+      "B": "*Borrelia burgdorferi*",
+      "C": "*Streptococcus pneumoniae*",
+      "D": "*Staphylococcus aureus*",
+      "E": "*Escherichia coli*"
+    },
+    "answer": "D",
+    "explanation": "*Staphylococcus aureus* 分泌的 Complement inhibitor (SCIN, CINB, SCINC) 可以抑制 C3 convertase (C4b2a, C3bBb) 的活性，從而逃避補體攻擊。"
+  },
+  {
+    "question": "關於先天免疫系統和補體系統，下列哪一項敘述是*最準確*的總結？",
+    "options": {
+      "A": "先天免疫系統主要依靠抗體來清除病原體，補體系統是輔助機制。",
+      "B": "補體系統是適應性免疫系統的一部分，負責增強抗體的功能。",
+      "C": "先天免疫系統的第一線屏障完全依賴物理性阻擋，化學成分不重要。",
+      "D": "補體系統可以通過多種途徑活化，並執行多種免疫功能，包括調理作用、發炎反應和直接殺死病原體。",
+      "E": "補體系統的活化途徑之間彼此獨立，互不影響。"
+    },
+    "answer": "D",
+    "explanation": "選項D 準確概括了補體系統的特性和功能。先天免疫系統不主要依賴抗體，補體系統是先天免疫的一部分，第一線屏障也包含化學成分，補體系統的活化途徑之間存在相互作用。"
+  },
+  {
+    "question": "根據提供的圖片 「Defensins, cathelicidins, and histatins are activated by proteolysis to release an amphipathic antimicrobial peptide」，下列敘述何者*錯誤*？",
+    "options": {
+      "A": "α-defensins, β-defensins, Cathelicidins 和 RegIII 'lecticidins' 都屬於 antimicrobial peptide。",
+      "B": "Pro-region 被切割是 antimicrobial peptide 活化的必要步驟。",
+      "C": "活化後的 antimicrobial peptide 具有親水性和疏水性區域。",
+      "D": "α-defensins, β-defensins, Cathelicidins 和 RegIII 'lecticidins' 的 pro-region 被*不同*的酶切割。",
+      "E": "AMPH 代表的是 antimicrobial peptide 的活性形式。"
+    },
+    "answer": "D",
+    "explanation": "圖片中顯示 α-defensins, β-defensins, Cathelicidins 和 RegIII 'lecticidins' 的 pro-region 都被標示為 'cut'，暗示它們可能被*相同或相似*的 proteolysis 過程切割，而非 *不同* 的酶。其他選項均符合圖片資訊。"
+  },
+  {
+    "question": "根據提供的圖片 「Gram-positive bacteria」 和 「Gram-negative bacteria」，下列敘述何者*正確*？",
+    "options": {
+      "A": "革蘭氏陽性菌的細胞壁比革蘭氏陰性菌的細胞壁更複雜。",
+      "B": "脂多醣 (lipopolysaccharide, LPS) 是革蘭氏陽性菌細胞壁的特徵成分。",
+      "C": "肽聚醣 (peptidoglycan) 層在革蘭氏陽性菌中比革蘭氏陰性菌中更薄。",
+      "D": "溶菌酶 (lysozyme) 對革蘭氏陽性菌的作用效果通常比革蘭氏陰性菌好。",
+      "E": "革蘭氏陰性菌的細胞膜只有一層。"
+    },
+    "answer": "D",
+    "explanation": "圖片顯示革蘭氏陽性菌的細胞壁只有一層較厚的肽聚醣層，而革蘭氏陰性菌的細胞壁外層有脂多醣，內層有較薄的肽聚醣層。溶菌酶更容易作用於革蘭氏陽性菌較厚的肽聚醣層。其他選項均與圖片資訊或已知事實不符。"
+  },
+  {
+    "question": "根據提供的圖片 「Electrostatic attraction and the transmembrane electric field bring the defensin into the lipid bilayer」和 「Defensin peptides form a pore」，下列關於 defensin 作用機制的敘述何者*正確*？",
+    "options": {
+      "A": "Defensin 完全依賴疏水性作用嵌入細胞膜。",
+      "B": "細胞膜的電場效應 (electric field) 對 defensin 的作用*沒有*影響。",
+      "C": "Defensin 在細胞膜上形成孔洞 (pore) 是通過共價鍵結合。",
+      "D": "Defensin 的親水端與細胞膜內側的疏水區域相互作用。",
+      "E": "靜電吸引 (Electrostatic attraction) 和細胞膜電場 (transmembrane electric field) 都有助於 defensin 接近並插入細胞膜。"
+    },
+    "answer": "E",
+    "explanation": "圖片標題明確指出靜電吸引和細胞膜電場共同作用，將 defensin 帶入脂雙層。Defensin 的作用機制涉及靜電吸引和疏水性相互作用，形成孔洞是通過疏水性聚集而非共價鍵，親水端與細胞膜外側接觸，疏水端嵌入膜內。"
+  },
+  {
+    "question": "根據提供的圖片 「Functional protein classes in the complement system」，下列哪一項補體成分屬於 「Membrane-attack proteins」 類別？",
+    "options": {
+"A": "C1q",
+"B": "C2a",
+"C": "C3b",
+"D": "C7",
+"E": "CR1"
+},
+"answer": "D",
+"explanation": "根據圖片，C7 被歸類為 「Membrane-attack proteins」，與 C5b, C6, C8, C9 一起組成膜攻擊複合體 (MAC)。其他選項分別屬於不同的功能類別。"
+},
+{
+"question": "根據提供的圖片 「Functional protein classes in the complement system」，下列哪一項補體成分屬於 「Activating enzymes*」 類別？",
+"options": {
+"A": "C1q",
+"B": "C2a",
+"C": "C4b",
+"D": "C7",
+"E": "C9"
+},
+"answer": "B",
+"explanation": "根據圖片，C2a 被歸類為 「Activating enzymes*」，與 Bb, Factor D, MASP-1, MASP-2, MASP-3 等一起參與補體系統的活化過程。其他選項屬於不同的功能類別。"
+},
+{
+"question": "根據提供的圖片 「Functional protein classes in the complement system」，下列哪些補體成分屬於 「Complement receptors」 類別？",
+"options": {
+"A": "CR1",
+"B": "CR2",
+"C": "CR3",
+"D": "CR4",
+"E": "CRIg"
+},
+"answer": ["A", "B", "C", "D", "E"],
+"explanation": "根據圖片，CR1, CR2, CR3, CR4, 和 CRIg 都被歸類為 「Complement receptors」，它們在免疫細胞上表達，負責辨識和結合補體片段，介導多種免疫功能。"
+},
+{
+"question": "根據提供的圖片 「Functional protein classes in the complement system」，下列哪一項補體成分屬於 「Peptide mediators of inflammation」 類別？",
+"options": {
+"A": "C5b",
+"B": "C3b",
+"C": "C2a",
+"D": "C5a",
+"E": "C1q"
+},
+"answer": "D",
+"explanation": "根據圖片，C5a 被歸類為 「Peptide mediators of inflammation」，與 C3a, C4a 一起作為發炎介質，參與炎症反應的調控。其他選項屬於不同的功能類別。"
+},
+{
+"question": "根據提供的圖片 「Functional protein classes in the complement system」，下列哪一項補體成分屬於 「Surface-binding proteins and opsonins」 類別？",
+"options": {
+"A": "C1q",
+"B": "C2a",
+"C": "C3b",
+"D": "C5a",
+"E": "C7"
+},
+"answer": "C",
+"explanation": "根據圖片，C3b 被歸類為 「Surface-binding proteins and opsonins」，它能夠結合到病原體表面，作為調理素 (opsonin) 促進吞噬作用。其他選項屬於不同的功能類別。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在古典途徑 (Classical Pathway) 中，最早 活化的補體成分是哪一個？",
+"options": {
+"A": "C3",
+"B": "C4",
+"C": "C2",
+"D": "C1",
+"E": "C5"
+},
+"answer": "D",
+"explanation": "根據圖片，古典途徑的啟動始於 C1 的活化，C1 複合體 (C1q, C1r, C1s) 是古典途徑中最早活化的成分。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在凝集素途徑 (Lectin Pathway) 中，功能類似於古典途徑中 C1 的成分是什麼？",
+"options": {
+"A": "C3",
+"B": "C4",
+"C": "Mannose-binding lectin (MBL)",
+"D": "Factor B",
+"E": "Properdin"
+},
+"answer": "C",
+"explanation": "根據圖片，凝集素途徑由 Mannose-binding lectin (MBL) 啟動，MBL 的功能類似於古典途徑中的 C1，負責辨識病原體表面。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在替代途徑 (Alternative Pathway) 中，最早 參與的補體成分是哪一個？",
+"options": {
+"A": "C3",
+"B": "Factor B",
+"C": "Factor D",
+"D": "Properdin",
+"E": "C5"
+},
+"answer": "A",
+"explanation": "根據圖片，替代途徑的啟動始於 C3 的自發性水解 (C3 hydrolysis)，C3 是替代途徑中最早參與的成分。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在所有補體活化途徑中，都共同產生的 C3 convertase 是哪一種？",
+"options": {
+"A": "C4b2a",
+"B": "C3bBb",
+"C": "C5 convertase",
+"D": "MAC",
+"E": "以上皆非"
+},
+"answer": "A",
+"explanation": "根據圖片，古典途徑和凝集素途徑都產生 C3 convertase (C4b2a)，替代途徑產生 C3 convertase (C3bBb)。選項A 的 C4b2a 是古典和凝集素途徑的共同 C3 convertase。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在所有補體活化途徑中，C3 convertase 的共同功能是什麼？",
+"options": {
+"A": "切割 C4",
+"B": "切割 C2",
+"C": "切割 C3",
+"D": "切割 C5",
+"E": "形成 MAC"
+},
+"answer": "C",
+"explanation": "根據圖片，無論是古典途徑、凝集素途徑還是替代途徑，C3 convertase 的共同功能都是切割 C3 成分，產生 C3a 和 C3b。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在所有補體活化途徑中，C5 convertase 的共同功能是什麼？",
+"options": {
+"A": "切割 C3",
+"B": "切割 C5",
+"C": "形成 C3 convertase",
+"D": "形成 MAC",
+"E": "調理作用"
+},
+"answer": "B",
+"explanation": "根據圖片，無論是古典途徑、凝集素途徑還是替代途徑，C5 convertase 的共同功能都是切割 C5 成分，產生 C5a 和 C5b，啟動 MAC 的形成。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在替代途徑中，C5 convertase 的組成成分是什麼？",
+"options": {
+"A": "C4b2a3b",
+"B": "C3bBbC3b",
+"C": "C4b2a",
+"D": "C3bBb",
+"E": "C5b6789"
+},
+"answer": "B",
+"explanation": "根據圖片，替代途徑的 C5 convertase 組成成分是 C3bBbC3b。"
+},
+{
+"question": "根據提供的圖片 「Initiation of complement activation」，在古典途徑和凝集素途徑中，C5 convertase 的組成成分是什麼？",
+"options": {
+"A": "C4b2a3b",
+"B": "C3bBbC3b",
+"C": "C4b2a",
+"D": "C3bBb",
+"E": "C5b6789"
+},
+"answer": "A",
+"explanation": "根據圖片，古典途徑和凝集素途徑的 C5 convertase 組成成分是 C4b2a3b。"
+},
+{
+"question": "根據提供的圖片 「Ciliated respiratory epithelium is covered by a layer of mucus」和 「Lung of a person with cystic fibrosis」，下列關於囊狀纖維化 (Cystic Fibrosis) 病患肺部狀況的敘述何者正確？",
+"options": {
+"A": "囊狀纖維化病患的肺部纖毛 (cilia) 功能增強。",
+"B": "囊狀纖維化病患的肺部黏液 (mucus) 層變薄。",
+"C": "囊狀纖維化病患的肺部上皮組織 (epithelium) 結構正常。",
+"D": "囊狀纖維化病患的肺部容易發生細菌聚集和感染。",
+"E": "囊狀纖維化病患的肺部抗菌肽 (antimicrobial peptide) 分泌增加。"
+},
+"answer": "D",
+"explanation": "圖片和文字說明指出，囊狀纖維化導致黏液變得厚且乾燥，容易造成環境微生物聚集生長，進而導致肺部感染。其他選項均與囊狀纖維化的病理特徵相反。"
+},
+{
+"question": "根據提供的圖片 「Gut epithelium」，潘氏細胞 (Paneth cells) 在腸道上皮組織中的主要位置在哪裡？",
+"options": {
+"A": "絨毛 (villi) 表面",
+"B": "隱窩 (crypt) 表面",
+"C": "隱窩 (crypt) 深處",
+"D": "黏膜下層 (submucosa)",
+"E": "肌肉層 (muscularis)"
+},
+"answer": "C",
+"explanation": "圖片和文字說明指出，潘氏細胞 (Paneth cells) 位於腸道上皮組織隱窩 (crypt) 的深處。"
+},
+{
+"question": "根據提供的圖片 「Gut epithelium」，潘氏細胞 (Paneth cells) 的主要功能是什麼？",
+"options": {
+"A": "吸收營養物質",
+"B": "分泌黏液 (mucus)",
+"C": "產生抗微生物肽 (AMPs)",
+"D": "作為抗原呈現細胞 (antigen-presenting cell)",
+"E": "促進腸道蠕動"
+},
+"answer": "C",
+"explanation": "圖片和文字說明指出，潘氏細胞 (Paneth cells) 可以產生抗微生物肽 (AMPs)，如 α-defensin 和 RegIII，主動攻擊病原體。"
+},
+{
+"question": "根據提供的圖片 「Epidermis of skin」，下列哪一層皮膚表皮層 (epidermis layer) 含有板層體 (lamellar bodies)？",
+"options": {
+"A": "角質層 (stratum corneum)",
+"B": "透明層 (stratum lucidum)",
+"C": "顆粒層 (stratum granulosum)",
+"D": "棘狀層 (stratum spinosum)",
+"E": "基底層 (stratum basale)"
+},
+"answer": "C",
+"explanation": "圖片標示板層體 (lamellar bodies) 位於顆粒層 (stratum granulosum)。"
+},
+{
+"question": "根據提供的圖片 「Epidermis of skin」，板層體 (lamellar bodies) 的主要功能是什麼？",
+"options": {
+"A": "產生黑色素 (melanin)",
+"B": "形成防水的脂質層",
+"C": "分泌抗微生物肽 (AMPs)",
+"D": "提供皮膚結構支撐",
+"E": "作為感覺受器"
+},
+"answer": "B",
+"explanation": "文字說明指出，板層體 (lamellar bodies) 形成防水的脂質層，防止外來物質入侵。"
+},
+{
+"question": "根據提供的圖片 「Epidermis of skin」，棘狀層 (stratum spinosum) 中的角質細胞 (keratinocyte) 可以分泌下列哪一種抗微生物肽 (AMPs)？",
+"options": {
+"A": "溶菌酶 (lysozyme)",
+"B": "α-defensin",
+"C": "β-defensin",
+"D": "Cathelicidin",
+"E": "RegIII"
+},
+"answer": "C",
+"explanation": "文字說明指出，棘狀層 (stratum spinosum) 中的角質細胞 (keratinocyte) 可以分泌 β-Defensin 和 Cathelicidin。"
+},
+{
+"question": "根據提供的圖片 「Bronchial ciliated epithelium」，支氣管管壁的纖毛上皮細胞 (ciliated epithelium) 的主要功能是什麼？",
+"options": {
+"A": "分泌黏液 (mucus)",
+"B": "產生抗微生物肽 (AMPs)",
+"C": "吸收氧氣",
+"D": "排出黏液和病原體",
+"E": "作為氣體交換場所"
+},
+"answer": "D",
+"explanation": "文字說明指出，支氣管管壁的纖毛上皮細胞 (ciliated epithelium) 的纖毛擺動可以排出杯狀細胞 (goblet cell) 分泌的黏液 (mucus) 和黏附的病原體。"
+},
+{
+"question": "根據提供的圖片 「Bronchial ciliated epithelium」，支氣管管壁的杯狀細胞 (goblet cell) 的主要功能是什麼？",
+"options": {
+"A": "產生纖毛 (cilia)",
+"B": "分泌黏液 (mucus)",
+"C": "產生抗微生物肽 (AMPs)",
+"D": "作為氣體交換場所",
+"E": "吞噬病原體"
+},
+"answer": "B",
+"explanation": "文字說明指出，支氣管管壁的杯狀細胞 (goblet cell) 的主要功能是分泌黏液 (mucus)，黏附病原體並由纖毛排出。"
+}
+]
