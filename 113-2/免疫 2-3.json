@@ -1,0 +1,615 @@
+
+[
+  {
+    "question": "關於前驅T細胞發育的敘述，下列何者**錯誤**？",
+    "options": {
+      "A": "前驅T細胞起源於骨髓。",
+      "B": "Notch受體與其配體結合後，會誘導T細胞相關基因表現。",
+      "C": "前驅T細胞在胸腺中又被稱為thymocyte。",
+      "D": "Notch受體的活化會抑制TCR β鏈基因重組。",
+      "E": "前驅T細胞透過循環系統移動到胸腺進行發育。"
+    },
+    "answer": "D",
+    "explanation": "(D) Notch受體的活化**不會抑制**TCR β鏈基因重組，**反而會誘發** TCR β鏈基因重組，啟動T細胞的發育。"
+  },
+  {
+    "question": "下列關於未成熟T細胞在胸腺中進行正選擇的敘述，何者**正確**？",
+    "options": {
+      "A": "正選擇的目的是為了移除對自身抗原反應過強的T細胞。",
+      "B": "正選擇發生於胸腺髓質區。",
+      "C": "通過正選擇的T細胞必須能夠辨識自身MHC分子，但對於自身抗原不應有太強的反應。",
+      "D": "正選擇是為了確保T細胞能夠攻擊被感染的細胞。",
+      "E": "未能通過正選擇的T細胞將會分化為調節型T細胞。"
+    },
+    "answer": "C",
+    "explanation": "(C) 正選擇的目的是確認T細胞能夠辨識自身MHC分子，這是T細胞執行免疫功能的前提，同時，為了避免自體免疫疾病，對於自身抗原不應有過強反應。 (A) 描述的是負選擇。 (B) 正選擇主要發生於胸腺皮質區。 (D) 描述的是成熟T細胞的功能。 (E) 未能通過正選擇的T細胞會凋亡，而非分化為調節型T細胞。"
+  },
+  {
+    "question": "關於T細胞表面分子CD4與CD8的敘述，下列哪些**正確**？",
+    "options": {
+      "A": "CD4及CD8皆屬於T細胞的抗原受體。",
+      "B": "表現CD4及CD8的T細胞在功能上皆為毒殺型T細胞。",
+      "C": "CD4T細胞主要為輔助型T細胞，CD8T細胞主要為毒殺型T細胞。",
+      "D": "Double negative thymocyte 不表現CD4與CD8。",
+      "E": "Double positive thymocyte 同時表現CD4及CD8。"
+    },
+    "answer": ["C", "D", "E"],
+    "explanation": "(C), (D), (E) 正確。 (A) CD4及CD8為T細胞的**輔助受體**，而非抗原受體。T細胞的抗原受體為TCR。 (B) 表現CD4的T細胞主要為輔助型T細胞，而非毒殺型。"
+  },
+  {
+    "question": "在T細胞發育過程中，Double negative (DN) thymocyte 階段可以再細分為DN1至DN4，下列關於DN階段的敘述，何者**錯誤**？",
+    "options": {
+      "A": "DN thymocyte 不表現CD4及CD8。",
+      "B": "DN1至DN2階段，胸腺細胞需要與表皮細胞結合才能存活。",
+      "C": "DN3時期開始有pre-TCR的表現。",
+      "D": "DN4時期細胞會停止增殖。",
+      "E": "DN階段主要發生在胸腺皮質區。"
+    },
+    "answer": "D",
+    "explanation": "(D) DN4時期，細胞會**開始大量增殖**，為後續的發育階段做準備。 DN1至DN3時期，細胞增殖活動相對較低。"
+  },
+  {
+    "question": "根據提供的流程圖，下列關於γδ T細胞發育的敘述，何者**正確**？",
+    "options": {
+      "A": "γδ T細胞佔所有Double negative thymocyte 的絕大多數。",
+      "B": "γδ T細胞需要經過正選擇及負選擇才能輸出到周邊組織。",
+      "C": "γδ T細胞發育成熟後，會表現CD4及CD8分子。",
+      "D": "γδ T細胞在Double negative thymocyte 階段即可輸出到周邊組織執行功能。",
+      "E": "γδ T細胞的發育途徑與αβ T細胞完全相同。"
+    },
+    "answer": "D",
+    "explanation": "(D) γδ T細胞在Double negative thymocyte 階段，約佔5%，即可輸出到周邊組織執行功能。 (A) γδ T細胞僅佔Double negative thymocyte 的**少部分** (約5%)，絕大多數為αβ T細胞的前驅細胞。 (B) γδ T細胞**不需要**經過典型的正選擇及負選擇過程。 (C) γδ T細胞發育成熟後，**不表現** CD4及CD8分子，仍維持CD4-CD8-的狀態。 (E) γδ T細胞的發育途徑與αβ T細胞**不完全相同**，γδ T細胞發育較為快速且簡化。"
+  },
+  {
+    "question": "關於胸腺的構造與功能分區，下列敘述何者**正確**？",
+    "options": {
+      "A": "胸腺髓質的細胞密度高於皮質。",
+      "B": "胸腺皮質主要負責負選擇。",
+      "C": "Hassall's corpuscle 主要位於胸腺皮質。",
+      "D": "胸腺由許多小葉組成，每個小葉包含皮質與髓質。",
+      "E": "胸腺功能在青春期後會逐漸增強。"
+    },
+    "answer": "D",
+    "explanation": "(D) 胸腺由許多小葉 (lobule) 組成，每個小葉都包含外側的皮質 (Cortex) 和內側的髓質 (Medulla)。 (A) 胸腺髓質的細胞密度**低於**皮質。 (B) 胸腺皮質主要負責**正選擇**，負選擇主要發生在皮質-髓質連接帶及髓質。 (C) Hassall's corpuscle 主要位於胸腺**髓質**。 (E) 胸腺功能在青春期後會逐漸**下降**。"
+  },
+  {
+    "question": "關於SCID小鼠與Nude小鼠在T細胞發育研究上的應用，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "SCID小鼠因DNA-PK基因突變，導致V（D）J重組異常。",
+      "B": "Nude小鼠因Foxn1基因突變，導致胸腺表皮細胞發育異常，缺乏胸腺。",
+      "C": "SCID小鼠缺乏成熟的T細胞與B細胞。",
+      "D": "Nude小鼠僅缺乏成熟的T細胞，B細胞發育正常。",
+      "E": "將SCID小鼠的骨髓幹細胞移植到Nude小鼠，Nude小鼠可以發育成成熟T細胞。"
+    },
+    "answer": "E",
+    "explanation": "(E) 將SCID小鼠的骨髓幹細胞移植到Nude小鼠，**Nude小鼠仍然無法發育成成熟T細胞**。因為Nude小鼠缺乏胸腺微環境，即使移植了正常的骨髓幹細胞，也缺乏胸腺提供T細胞發育所需的場所。相反地，將Nude小鼠的骨髓幹細胞移植到SCID小鼠 (有胸腺) 中，SCID小鼠可以發育成成熟T細胞。"
+  },
+  {
+    "question": "下列關於人類DiGeorge syndrome的敘述，何者**正確**？",
+    "options": {
+      "A": "DiGeorge syndrome 是由於DNA-PK基因突變所導致。",
+      "B": "DiGeorge syndrome 的主要缺陷是B細胞發育異常。",
+      "C": "DiGeorge syndrome 患者通常具有胸腺功能過強的特徵。",
+      "D": "DiGeorge syndrome 可能導致心臟及面部器官發育異常。",
+      "E": "DiGeorge syndrome 可以透過移植Nude小鼠的胸腺進行治療。"
+    },
+    "answer": "D",
+    "explanation": "(D) DiGeorge syndrome 是一種先天性疾病，**缺乏胸腺** (成因多且機制尚未完全確定)，可能症狀為心臟及面部器官發育異常。 (A) DNA-PK基因突變導致的是SCID。 (B) DiGeorge syndrome 的主要缺陷是**T細胞發育異常**，因為缺乏胸腺。 (C) DiGeorge syndrome 患者**胸腺功能低下或缺乏**。 (E) DiGeorge syndrome 的治療可能涉及胸腺移植，但**並非Nude小鼠的胸腺**，因為Nude小鼠本身就缺乏胸腺。理論上需要移植正常的胸腺組織。"
+  },
+  {
+    "question": "關於TCR基因重組過程中 β 鏈基因重組的順序，下列何者**正確**？",
+    "options": {
+      "A": "Vβ -> Dβ -> Jβ",
+      "B": "Dβ -> Vβ -> Jβ",
+      "C": "Dβ -> Jβ -> Vβ",
+      "D": "Jβ -> Dβ -> Vβ",
+      "E": "Vβ 及 Jβ 同時重組"
+    },
+    "answer": "C",
+    "explanation": "(C) TCR β 鏈基因重組的順序為 **Dβ to Jβ** 重組，接著是 **Vβ to DJβ** 重組。"
+  },
+  {
+    "question": "下列關於pre-TCR的敘述，何者**錯誤**？",
+    "options": {
+      "A": "pre-TCR 由β鏈和代理α鏈組成。",
+      "B": "pre-TCR 在DN3 階段開始表現。",
+      "C": "pre-TCR 能夠接收訊號，促進T細胞存活與複製。",
+      "D": "pre-TCR 的訊號會抑制RAG-1 和 RAG-2 的表現。",
+      "E": "pre-TCR 具有高度辨識抗原的能力。"
+    },
+    "answer": "E",
+    "explanation": "(E) pre-TCR 形成的 receptor **雖然沒有很強的辨識抗原的能力**，但可以接收訊號，讓此時期的T細胞可以存活、複製。 (D) pre-TCR 的訊號會**促使RAG-2降解**，進而使β鏈的基因重組停止，但並非抑制RAG-1和RAG-2的表現。"
+  },
+  {
+    "question": "關於T細胞正選擇的分子機制，下列敘述何者**正確**？",
+    "options": {
+      "A": "正選擇主要發生在胸腺髓質上皮細胞。",
+      "B": "通過正選擇的T細胞會表現高量的TCR。",
+      "C": "若TCR與MHC-peptide複合物結合強度過高，則會通過正選擇。",
+      "D": "活化的轉錄因子ThPOK會促使T細胞表現CD8。",
+      "E": "正選擇的訊號產生需要T細胞受體與CD4或CD8輔助受體合作產生。"
+    },
+    "answer": "E",
+    "explanation": "(E) 正選擇的訊號產生需要 **T細胞受體 (TCR) 與 CD4/CD8 輔助受體 (Co-receptor) 合作產生**。 (A) 正選擇主要發生在胸腺**皮質**上皮細胞。 (B) 通過正選擇的T細胞會表現**適量**的TCR，而非高量。 (C) 若TCR與MHC-peptide複合物結合強度**過低**或**過高**，都無法通過正選擇。 (D) 活化的轉錄因子ThPOK會促使T細胞表現**CD4**，活化的轉錄因子Runx3 才會促使T細胞表現CD8。"
+  },
+  {
+    "question": "關於T細胞負選擇的敘述，下列何者**錯誤**？",
+    "options": {
+      "A": "負選擇的目的是清除會過度辨識自身抗原的T細胞。",
+      "B": "負選擇主要發生在double positive thymocyte 階段的後期。",
+      "C": "通過負選擇的T細胞僅佔double positive thymocyte 的少數（約2%）。",
+      "D": "負選擇只發生在胸腺髓質區。",
+      "E": "負選擇有助於建立自體耐受性。"
+    },
+    "answer": "D",
+    "explanation": "(D) 負選擇發生在胸腺**皮質與髓質**，不只發生在胸腺髓質區。負選擇主要發生在皮質-髓質連接帶以及髓質區。(A), (B), (C), (E) 皆為正確敘述。"
+  },
+  {
+    "question": "根據提供的圖表，關於正選擇與負選擇的比較，下列何者**正確**？",
+    "options": {
+      "A": "正選擇的媒介細胞為胸腺髓質樹突細胞。",
+      "B": "負選擇的結合強度為弱。",
+      "C": "正選擇的結果是使T細胞凋亡。",
+      "D": "負選擇的功能是建立MHC限制性。",
+      "E": "負選擇的媒介細胞包含胸腺皮質上皮細胞。"
+    },
+    "answer": "E",
+    "explanation": "(E) 負選擇的媒介細胞包含胸腺**皮質**、髓質上皮細胞 (cortical、medullary epithelial cell)。 (A) 正選擇的媒介細胞為**胸腺皮質上皮細胞**。 (B) 負選擇的結合強度為**強**。 (C) 正選擇的結果是使**能辨識自身MHC的T細胞存活**，未能通過的才會凋亡。 (D) 正選擇的功能是建立**MHC限制性**，負選擇的功能是建立**自體耐受性**。"
+  },
+  {
+    "question": "關於AIRE (autoimmune regulator) 的敘述，下列何者**正確**？",
+    "options": {
+      "A": "AIRE 主要在胸腺皮質中表現。",
+      "B": "AIRE 的功能是促進正選擇的進行。",
+      "C": "AIRE 誘發在胸腺髓質中表現的蛋白質，通常只在胸腺中表現。",
+      "D": "AIRE 有助於篩選掉可能會攻擊周邊組織的 autoreactive T 細胞。",
+      "E": "AIRE 基因突變會導致免疫功能增強。"
+    },
+    "answer": "D",
+    "explanation": "(D) AIRE 在胸腺髓質中表現，誘發一般在周圍組織上才表現的蛋白質之表現，幫助負選擇進行，篩選掉可能會攻擊周邊組織的 autoreactive T 細胞。 (A) AIRE 主要在胸腺**髓質**中表現。 (B) AIRE 的功能是幫助**負選擇**的進行。 (C) AIRE 誘發在胸腺髓質中表現的蛋白質，通常在**周邊組織**中才表現，目的是讓胸腺中的T細胞可以接觸到更多種類的自身抗原。 (E) AIRE 基因突變會導致**自體免疫疾病**，表示免疫功能**失調**，而非增強。"
+  },
+  {
+    "question": "關於S1PR1 (Sphingosine 1-phosphate receptor 1) 的敘述，下列何者**錯誤**？",
+    "options": {
+      "A": "S1PR1 屬於趨化因子受器。",
+      "B": "S1PR1 的配體為S1P (sphingosine 1-phosphate)。",
+      "C": "成熟T細胞在胸腺髓質中會開始表現S1PR1。",
+      "D": "S1PR1 訊號引導成熟T細胞離開胸腺進入血液循環。",
+      "E": "S1PR1 的表現與T細胞的正選擇有關。"
+    },
+    "answer": "E",
+    "explanation": "(E) S1PR1 的表現與T細胞的**離開胸腺**有關，與**正選擇無直接關聯**。 S1PR1 的作用主要在於引導成熟T細胞離開胸腺髓質，進入血液循環。 (A), (B), (C), (D) 皆為關於S1PR1 的正確敘述。"
+  },
+  {
+    "question": "根據提供的基因重組圖示，下列關於α:β T細胞發育過程中基因重組檢查點的敘述，何者**正確**？",
+    "options": {
+      "A": "第一個檢查點發生在DB to JB 重組之後。",
+      "B": "第二個檢查點檢查是否有α鏈蛋白的產生。",
+      "C": "若β鏈成功重組並表現於細胞表面，β鏈基因重組就會停止。",
+      "D": "成功通過檢查點的細胞會停止增殖。",
+      "E": "檢查點的主要目的是確保T細胞具有辨識MHC的能力。"
+    },
+    "answer": "C",
+    "explanation": "(C) 若β鏈成功重組並表現於細胞表面 (與代理α鏈形成pre-TCR)，β鏈基因重組就會停止。這是為了避免同一個細胞表達多種不同的β鏈，確保抗原受體的專一性。 (A) 第一個檢查點是**pre-TCR 的產生** (Surface expression of β chain with surrogate α chain) 之後。 (B) 第二個檢查點**並非檢查α鏈蛋白的產生**，而是後續 α:β:CD3 complex 的表面表現。 (D) 成功通過檢查點的細胞會**增殖**。 (E) 檢查點的主要目的是確保 **β 鏈基因的成功重組與表達**，而非直接檢查辨識MHC的能力。辨識MHC的能力是在後續的正選擇過程中檢測的。"
+  },
+  {
+    "question": "關於自體耐受性 (Self-Tolerance) 的機制，下列敘述何者**正確**？",
+    "options": {
+      "A": "自體耐受性主要透過活化 autoreactive T 細胞來達成。",
+      "B": "調節型T細胞 (Treg) 主要在周邊組織中發育。",
+      "C": "負選擇是建立自體耐受性的主要機制之一。",
+      "D": "缺乏調節型T細胞通常對癌症患者有利。",
+      "E": "誘導型細胞凋亡 (Activation-induced cell death) 主要發生在胸腺中。"
+    },
+    "answer": "C",
+    "explanation": "(C) 負選擇是建立自體耐受性的主要機制之一，透過負選擇可以清除掉在胸腺中對自身抗原反應過強的T細胞。 (A) 自體耐受性主要透過**抑制或清除** autoreactive T 細胞來達成。 (B) 調節型T細胞 (Treg) 主要在**胸腺**中發育，也可能在周邊組織中誘導產生。 (D) 缺乏調節型T細胞**可能對自體免疫疾病患者有利**，因為調節型T細胞的功能是抑制免疫反應，但在癌症患者中，可能不利於抗腫瘤免疫反應。 (E) 誘導型細胞凋亡 (Activation-induced cell death) 主要發生在**周邊組織**，當T細胞在周邊組織中過度活化時，會透過誘導型細胞凋亡機制被清除，以維持免疫平衡。"
+  },
+  {
+    "question": "根據提供的胸腺細胞CD4與CD8表現量圖，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "Double positive thymocyte (CD4+CD8+) 約佔胸腺細胞的80%。",
+      "B": "Single positive thymocyte (CD4+CD8- 或 CD4-CD8+) 約佔胸腺細胞的17%。",
+      "C": "Double negative thymocyte (CD4-CD8-) 約佔胸腺細胞的3%。",
+      "D": "臨床上可透過染色胸腺細胞並分析CD4與CD8表現量比例，判斷T細胞發育是否異常。",
+      "E": "Double positive thymocyte 皆已完成正選擇與負選擇。"
+    },
+    "answer": "E",
+    "explanation": "(E) Double positive thymocyte **正在進行**正選擇與負選擇，尚未完成。 完成正負選擇後，才會分化為 single positive thymocyte。 (A), (B), (C), (D) 皆為根據圖表和內文得出的正確敘述。"
+  },
+  {
+    "question": "關於T細胞發育過程中，轉錄因子TCF-1與GATA-3的作用，下列敘述何者**正確**？",
+    "options": {
+      "A": "TCF-1 與 GATA-3 主要在成熟T細胞中表現。",
+      "B": "Notch 訊號會抑制TCF-1 與 GATA-3 的表現。",
+      "C": "TCF-1 與 GATA-3 參與調控TCR α 鏈基因的重組。",
+      "D": "TCF-1 與 GATA-3 的表現受pre-TCR 訊號的調控。",
+      "E": "TCF-1 與 GATA-3 參與調控早期T細胞發育相關基因的表現。"
+    },
+    "answer": "E",
+    "explanation": "(E) TCF-1 與 GATA-3 為轉錄因子，參與調控**早期T細胞發育相關基因的表現**，例如CD3複合體、Rag-1、Bcl11b 等。 (A) TCF-1 與 GATA-3 在**前驅T細胞發育早期**即開始表現，而非主要在成熟T細胞中。 (B) Notch 訊號會**啟動** TCF-1 與 GATA-3 的表現。 (C) TCF-1 與 GATA-3 主要參與**早期T細胞發育**的調控，與TCR α 鏈基因的重組**沒有直接關聯**，TCR基因重組的調控更為複雜，涉及多種轉錄因子和訊號通路。 (D) TCF-1 與 GATA-3 的表現**主要受 Notch 訊號**的調控， pre-TCR 訊號主要影響後續的細胞存活、增殖和分化。"
+  },
+  {
+    "question": "下列哪些免疫缺陷疾病與T細胞發育異常**直接相關**？",
+    "options": {
+      "A": "嚴重複合型免疫缺陷症 (SCID)",
+      "B": "狄喬治氏症候群 (DiGeorge syndrome)",
+      "C": "自體免疫性多內分泌腺病變-念珠菌病-外胚層營養不良症 (APECED)",
+      "D": "X染色體性無丙種球蛋白血症 (X-linked agammaglobulinemia, XLA)",
+      "E": "選擇性IgA缺乏症 (Selective IgA deficiency)"
+    },
+    "answer": ["A", "B", "C"],
+    "explanation": "(A), (B), (C) 與T細胞發育異常直接相關。 (A) SCID 是T細胞和B細胞發育皆有缺陷的嚴重免疫缺陷疾病。 (B) DiGeorge syndrome 主要缺陷是胸腺發育不全或缺乏，導致T細胞發育嚴重受阻。 (C) APECED 是一種自體免疫疾病，與AIRE基因突變有關，AIRE在T細胞負選擇中扮演重要角色，因此與T細胞的自體耐受性建立有關。 (D) XLA 主要影響B細胞發育，T細胞發育通常正常。 (E) 選擇性IgA缺乏症 主要影響B細胞分化為漿細胞產生IgA，T細胞發育通常正常。"
+  },
+  {
+    "question": "關於正選擇的強度訊號模型 (strength of signal model) ，下列敘述何者**正確**？",
+    "options": {
+      "A": "TCR 與 MHC-peptide 的結合強度越高，越容易通過正選擇。",
+      "B": "正選擇的強度訊號模型適用於解釋負選擇的機制。",
+      "C": "正選擇訊號強度過強會導致細胞凋亡，如同負選擇的結果。",
+      "D": "正選擇訊號強度必須達到一定閾值才能啟動下游存活訊號。",
+      "E": "正選擇的強度訊號模型暗示T細胞對自身MHC-peptide 的親和力越高越好。"
+    },
+    "answer": "D",
+    "explanation": "(D) 正選擇的強度訊號模型認為，TCR 與 MHC-peptide 的結合強度必須達到一定閾值才能啟動下游存活訊號，使T細胞得以存活並繼續發育。 (A) TCR 與 MHC-peptide 的結合強度**並非越高越好**，過高的結合強度可能導致負選擇。 (B) **Affinity Model** 更能同時解釋正選擇與負選擇的機制，強度訊號模型主要解釋正選擇。 (C) 正選擇訊號強度**過低**會導致細胞凋亡 (death by neglect)，訊號強度過**高**則可能導致負選擇。 (E) 正選擇的強度訊號模型暗示T細胞對自身MHC-peptide 的親和力**適中**就好，過高或過低都不利於正選擇。"
+  },
+  {
+    "question": "在T細胞發育過程中，下列哪些階段會發生細胞凋亡？",
+    "options": {
+      "A": "Double negative thymocyte 階段",
+      "B": "Double positive thymocyte 階段",
+      "C": "Single positive thymocyte 階段",
+      "D": "未能通過正選擇的 thymocyte",
+      "E": "通過負選擇的 thymocyte"
+    },
+    "answer": ["B", "D"],
+    "explanation": "(B), (D) 正確。 (B) Double positive thymocyte 階段，絕大多數未能通過正選擇的細胞會發生細胞凋亡 (death by neglect)。 (D) 未能通過正選擇的 thymocyte 會發生細胞凋亡。 (A) Double negative thymocyte 階段也會有細胞凋亡，但主要發生在早期DN1/DN2階段，未能接收到存活訊號的細胞會凋亡。 (C) Single positive thymocyte 階段，通過負選擇的細胞會存活並輸出到周邊組織，但未能通過負選擇的細胞會凋亡，因此也可能發生細胞凋亡。 (E) **通過**負選擇的 thymocyte **不會**發生細胞凋亡，而是存活並輸出到周邊組織。"
+  },
+  {
+    "question": "關於αβ T細胞與 γδ T細胞發育途徑的比較，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "αβ T細胞與 γδ T細胞皆起源於骨髓中的前驅T細胞。",
+      "B": "γδ T細胞的TCR基因重組發生在αβ T細胞之前。",
+      "C": "γδ T細胞不需經過胸腺的正選擇及負選擇。",
+      "D": "γδ T細胞在胸腺內的發育時間較αβ T細胞短。",
+      "E": "γδ T細胞主要辨識MHC-peptide複合物。"
+    },
+    "answer": "E",
+    "explanation": "(E) γδ T細胞主要辨識**非經典MHC分子或非peptide抗原**，例如磷酸抗原、脂質抗原等，而非主要辨識MHC-peptide複合物。 αβ T細胞主要辨識MHC-peptide複合物。 (A), (B), (C), (D) 皆為αβ T細胞與 γδ T細胞發育途徑的正確比較。"
+  },
+  {
+    "question": "根據提供的Figure 8.17，關於Nude小鼠與SCID小鼠實驗結果的解釋，下列何者**正確**？",
+    "options": {
+      "A": "將Nude小鼠的骨髓細胞移植到SCID小鼠，可以恢復SCID小鼠的胸腺功能。",
+      "B": "將SCID小鼠的胸腺移植到Nude小鼠，可以恢復Nude小鼠的骨髓造血功能。",
+      "C": "SCID小鼠的缺陷在於骨髓幹細胞，Nude小鼠的缺陷在於胸腺微環境。",
+      "D": "實驗結果顯示，胸腺對於T細胞發育至關重要。",
+      "E": "Nude小鼠與SCID小鼠的脾臟細胞皆無法被正常細胞重新populate。"
+    },
+    "answer": "D",
+    "explanation": "(D) 實驗結果顯示，無論是Nude小鼠還是SCID小鼠的實驗，都證明了**胸腺對於T細胞發育至關重要**。 (A) 將Nude小鼠的骨髓細胞移植到SCID小鼠，**無法恢復SCID小鼠的胸腺功能**，但可以使SCID小鼠產生成熟T細胞，因為SCID小鼠有胸腺，只是自身骨髓細胞無法正常發育T細胞。 (B) 將SCID小鼠的胸腺移植到Nude小鼠，**無法恢復Nude小鼠的骨髓造血功能**，但可以使Nude小鼠產生成熟T細胞，因為Nude小鼠骨髓細胞正常，只是缺乏胸腺。 (C) SCID小鼠的缺陷在於**骨髓細胞發育T細胞的能力**，Nude小鼠的缺陷在於**胸腺本身**。 (E) Nude小鼠與SCID小鼠的脾臟細胞**可以被正常細胞重新populate**，圖中顯示移植後，脾臟細胞的T細胞數量可以恢復。"
+  },
+  {
+    "question": "關於Double positive thymocyte 階段的正選擇與負選擇發生位置，下列何者**正確**？",
+    "options": {
+      "A": "正選擇與負選擇皆發生於胸腺皮質。",
+      "B": "正選擇與負選擇皆發生於胸腺髓質。",
+      "C": "正選擇發生於胸腺皮質，負選擇發生於胸腺髓質。",
+      "D": "正選擇發生於胸腺髓質，負選擇發生於胸腺皮質。",
+      "E": "正選擇發生於胸腺皮質，負選擇發生於皮質-髓質連接帶及髓質。"
+    },
+    "answer": "E",
+    "explanation": "(E) 正選擇主要發生於胸腺**皮質**，與胸腺皮質上皮細胞 (cortical epithelial cell) 互動。負選擇主要發生於胸腺**皮質-髓質連接帶及髓質**，與樹突細胞 (dendritic cell)、巨噬細胞 (macrophage) 及髓質上皮細胞 (medullary epithelial cell) 互動。"
+  },
+  {
+    "question": "關於T細胞發育過程中，CD4+ 或 CD8+ single positive thymocyte 的命運決定，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "命運決定發生在double positive thymocyte 通過正選擇之後。",
+      "B": "與MHC class II 結合的T細胞會發育成CD4+ T細胞。",
+      "C": "與MHC class I 結合的T細胞會發育成CD8+ T細胞。",
+      "D": "轉錄因子ThPOK 的活化會促使T細胞發育成CD8+ T細胞。",
+      "E": "轉錄因子Runx3 的活化會促使T細胞發育成CD8+ T細胞。"
+    },
+    "answer": "D",
+    "explanation": "(D) 轉錄因子**ThPOK 的活化會促使T細胞發育成CD4+ T細胞**，而非CD8+ T細胞。 轉錄因子Runx3 的活化才會促使T細胞發育成CD8+ T細胞。 (A), (B), (C), (E) 皆為關於T細胞命運決定的正確敘述。"
+  },
+  {
+    "question": "關於成熟T細胞 (mature T cell) 的功能，下列敘述何者**正確**？",
+    "options": {
+      "A": "成熟T細胞主要在胸腺中執行免疫功能。",
+      "B": "成熟T細胞遇到抗原呈現細胞後，會直接進行細胞毒殺。",
+      "C": "成熟T細胞分化成的作用細胞 (effector cell) 能夠清除被病毒感染的細胞。",
+      "D": "成熟T細胞分化成的記憶細胞 (memory cell) 壽命短暫，僅能提供短期的免疫保護。",
+      "E": "成熟T細胞只能辨識游離的抗原分子。"
+    },
+    "answer": "C",
+    "explanation": "(C) 成熟T細胞分化成的作用細胞 (effector cell)，例如毒殺型T細胞，能夠清除被病毒感染的細胞。 (A) 成熟T細胞主要在**周邊淋巴器官及感染部位**執行免疫功能，而非在胸腺中。 (B) 成熟T細胞遇到抗原呈現細胞後，需要**先活化、增殖、分化**，才能執行免疫功能，例如毒殺或輔助。**並非直接**進行細胞毒殺。 (D) 成熟T細胞分化成的記憶細胞 (memory cell) **壽命較長**，能夠提供**長期的免疫保護**。 (E) 成熟T細胞主要辨識**抗原呈現細胞表面呈現的抗原-MHC複合物**，而非游離的抗原分子。"
+  },
+  {
+    "question": "關於T細胞發育的總體流程，下列敘述何者**正確**？",
+    "options": {
+      "A": "T細胞發育是一個不可逆的過程，一旦進入某個階段就無法回到前一階段。",
+      "B": "T細胞發育過程主要受到環境因素的影響，基因調控作用較小。",
+      "C": "T細胞發育是一個高度隨機的過程，缺乏精確的調控機制。",
+      "D": "T細胞發育是一個多步驟、多檢查點、高度精細調控的過程。",
+      "E": "T細胞發育的最終目的是產生能夠辨識所有種類抗原的T細胞。"
+    },
+    "answer": "D",
+    "explanation": "(D) T細胞發育是一個**多步驟、多檢查點、高度精細調控的過程**，涉及基因重組、正負選擇、訊號傳遞、轉錄調控等多個複雜機制，以確保產生功能完善且自體耐受的T細胞。 (A) T細胞發育**並非完全不可逆**，例如在某些特定條件下，成熟T細胞可能轉變為其他類型的免疫細胞。 (B) T細胞發育受到**基因與環境因素的共同影響**，基因調控在其中扮演至關重要的作用。 (C) T細胞發育是一個**高度調控的過程**，而非隨機過程。 (E) T細胞發育的最終目的是產生**能夠辨識外來抗原，同時不攻擊自身組織**的T細胞，而非辨識所有種類抗原，過度廣泛的抗原辨識能力可能導致自體免疫疾病。"
+  },
+  {
+    "question": "關於positive selection (正選擇) 和 negative selection (負選擇) 的敘述，下列哪些**正確**？",
+    "options": {
+      "A": "Positive selection 確保T細胞能夠辨識自身MHC分子。",
+      "B": "Negative selection 確保T細胞不會過度攻擊自身組織。",
+      "C": "Positive selection 主要發生在胸腺髓質。",
+      "D": "Negative selection 主要發生在胸腺皮質。",
+      "E": "Positive selection 和 negative selection 皆需要TCR與MHC-peptide複合物的相互作用。"
+    },
+    "answer": ["A", "B", "E"],
+    "explanation": "(A), (B), (E) 正確。 (C) Positive selection 主要發生在胸腺**皮質**。 (D) Negative selection 主要發生在胸腺**皮質-髓質連接帶及髓質**。"
+  },
+  {
+    "question": "下列關於α鏈基因重組的敘述，何者**正確**？",
+    "options": {
+      "A": "α鏈基因重組發生在β鏈基因重組之前。",
+      "B": "α鏈基因重組的順序為 Vα -> Dα -> Jα。",
+      "C": "α鏈基因重組發生在double negative thymocyte 階段。",
+      "D": "α鏈基因重組的目的是產生多樣性的TCR抗原辨識區。",
+      "E": "α鏈基因重組的成功與否，會影響T細胞是否能通過正選擇。"
+    },
+    "answer": "D",
+    "explanation": "(D) α鏈基因重組的目的是產生**多樣性的TCR抗原辨識區**，使得T細胞能夠辨識不同種類的抗原。 (A) α鏈基因重組發生在β鏈基因重組**之後**。 (B) α鏈基因重組的順序為 **Vα -> Jα**，α鏈基因沒有D基因片段。 (C) α鏈基因重組發生在**double positive thymocyte 階段**。 (E) α鏈基因重組的成功與否，**不會直接影響**T細胞是否能通過正選擇，正選擇主要取決於TCR能否與自身MHC分子產生適當的結合。"
+  },
+  {
+    "question": "關於T細胞發育過程中，細胞表面分子CD3的作用，下列敘述何者**正確**？",
+    "options": {
+      "A": "CD3 是T細胞的抗原受體。",
+      "B": "CD3 分子負責辨識MHC-peptide複合物。",
+      "C": "CD3 分子與TCR 共同組成TCR-CD3複合體。",
+      "D": "CD3 分子主要在double negative thymocyte 階段表現。",
+      "E": "CD3 分子的表現與T細胞是否能通過負選擇有關。"
+    },
+    "answer": "C",
+    "explanation": "(C) CD3 分子與TCR 共同組成 **TCR-CD3複合體**，CD3 分子負責訊號傳遞，TCR 負責抗原辨識。 (A) **TCR** 是T細胞的抗原受體，而非CD3。 (B) **TCR** 分子負責辨識MHC-peptide複合物，而非CD3。 (D) CD3 分子在T細胞發育的**各個階段**都表現，包括double negative thymocyte 階段。 (E) CD3 分子的表現與T細胞**能否執行免疫功能有關**，與T細胞是否能通過負選擇**沒有直接關聯**，負選擇主要取決於TCR與自身MHC-peptide複合物的結合強度。"
+  },
+  {
+    "question": "根據提供的流程圖，下列關於mature CD4+8- or CD8+4- thymocytes 的敘述，何者**錯誤**？",
+    "options": {
+      "A": "此階段的細胞為single positive thymocyte。",
+      "B": "此階段的細胞已完成正選擇與負選擇。",
+      "C": "此階段的細胞會migrate 到周邊淋巴器官。",
+      "D": "此階段的細胞仍在胸腺皮質進行發育。",
+      "E": "此階段的細胞已經決定成為TH或Tc的命運。"
+    },
+    "answer": "D",
+    "explanation": "(D) 此階段的細胞 **不在胸腺皮質** 進行發育，而是位於胸腺髓質或即將離開胸腺。 mature CD4+8- or CD8+4- thymocytes 已經完成在胸腺皮質的正選擇，並在皮質-髓質連接帶及髓質完成了負選擇，準備輸出到周邊組織。 (A), (B), (C), (E) 皆為關於mature CD4+8- or CD8+4- thymocytes 的正確敘述。"
+  },
+  {
+    "question": "關於胸腺功能在個體生命週期中的變化，下列敘述何者**正確**？",
+    "options": {
+      "A": "胸腺功能在出生後立即達到高峰。",
+      "B": "胸腺功能在青春期後會持續增強。",
+      "C": "胸腺功能在老年期會完全喪失。",
+      "D": "胸腺功能在青春期前主要負責建立T-cell repertoire。",
+      "E": "胸腺功能在成年期後對維持免疫系統的完整性不再重要。"
+    },
+    "answer": "D",
+    "explanation": "(D) 胸腺功能在青春期前，主要負責建立 **T-cell repertoire (T細胞抗體基因庫)**，確保個體擁有足夠多樣性的T細胞來應對各種病原體。 (A) 胸腺功能在**出生時即已存在**，並非出生後立即達到高峰，而是在青春期前達到高峰。 (B) 胸腺功能在青春期後會**開始下降**，而非持續增強。 (C) 胸腺功能在老年期會**逐漸衰退**，但**並非完全喪失**，仍有部分T細胞輸出功能。 (E) 胸腺功能在成年期後，**仍然對維持免疫系統的完整性很重要**，雖然功能下降，但仍持續產生新的T細胞，特別是調節型T細胞，對於維持免疫平衡和自體耐受性至關重要。"
+  },
+  {
+    "question": "下列關於positive selection (正選擇) 的敘述，何者為**非**必要條件？",
+    "options": {
+      "A": "TCR 能夠與自身 MHC 分子結合",
+      "B": "結合強度需在一定範圍內",
+      "C": "需要胸腺皮質上皮細胞參與",
+      "D": "需要 CD4 或 CD8 輔助受體參與",
+      "E": "需要 RAG 基因持續進行基因重組"
+    },
+    "answer": "E",
+    "explanation": "(E) **需要 RAG 基因持續進行基因重組** 並非 positive selection 的必要條件。 RAG 基因在T細胞發育早期基因重組階段發揮作用，positive selection 階段主要檢測已重組的TCR能否與自身MHC分子適當結合。 (A), (B), (C), (D) 皆為 positive selection 的必要條件。"
+  },
+  {
+    "question": "關於 negative selection (負選擇) 的敘述，下列何者為**非**主要功能？",
+    "options": {
+      "A": "清除對自身抗原高親和力的T細胞",
+      "B": "建立周邊免疫耐受",
+      "C": "預防自體免疫疾病",
+      "D": "決定 T 細胞是 CD4+ 還是 CD8+",
+      "E": "確保免疫系統不攻擊自身組織"
+    },
+    "answer": "D",
+    "explanation": "(D) **決定 T 細胞是 CD4+ 還是 CD8+** 並非 negative selection 的主要功能。 T細胞的 CD4+ 或 CD8+ 命運決定主要發生在 positive selection 之後，與 TCR 結合 MHC 分子的種類有關。 Negative selection 的主要功能是清除對自身抗原高親和力的T細胞，建立自體耐受，預防自體免疫疾病，確保免疫系統不攻擊自身組織。 (A), (B), (C), (E) 皆為 negative selection 的主要功能。"
+  },
+  {
+    "question": "在T細胞發育過程中，DN3 時期的 pre-TCR 訊號主要作用為何？",
+    "options": {
+      "A": "啟動 α 鏈基因重組",
+      "B": "抑制 β 鏈基因重組",
+      "C": "誘導細胞進入 double positive 階段",
+      "D": "促進細胞凋亡",
+      "E": "促進細胞增殖與存活"
+    },
+    "answer": "E",
+    "explanation": "(E) 在T細胞發育過程中，DN3 時期的 pre-TCR 訊號主要作用是 **促進細胞增殖與存活**。 pre-TCR 訊號確保成功進行 β 鏈基因重組的細胞能夠存活並擴增，為後續 α 鏈基因重組和正負選擇提供足夠的細胞數量。 (A) 啟動 α 鏈基因重組 發生在 **double positive 階段**。 (B) 抑制 β 鏈基因重組 是 pre-TCR 訊號的**次要**作用，主要目的是 allele exclusion，確保每個細胞只表達一種 β 鏈。 (C) 誘導細胞進入 double positive 階段 是 pre-TCR 訊號的**結果之一**，但主要作用還是促進細胞存活與增殖。 (D) 促進細胞凋亡 **不是** pre-TCR 訊號的主要作用，pre-TCR 訊號**促進細胞存活**。"
+  },
+  {
+    "question": "關於T細胞發育過程中，Double negative thymocyte 的特性，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "不表現 CD4 和 CD8 分子",
+      "B": "經歷 DN1 到 DN4 四個亞階段",
+      "C": "主要發生於胸腺髓質",
+      "D": "DN3 時期開始表達 pre-TCR",
+      "E": "早期 DN 階段需要與胸腺表皮細胞互動以獲得存活訊號"
+    },
+    "answer": "C",
+    "explanation": "(C) Double negative thymocyte 主要發生於**胸腺皮質**，而非胸腺髓質。 DN thymocyte 從骨髓遷移到胸腺後，首先進入胸腺皮質的 subcapsular region，經歷 DN1 到 DN4 各階段的發育。 (A), (B), (D), (E) 皆為 Double negative thymocyte 的正確特性。"
+  },
+  {
+    "question": "關於T細胞發育過程中，Runx3 轉錄因子的主要功能，下列敘述何者**正確**？",
+    "options": {
+      "A": "促進 CD4 基因表達",
+      "B": "抑制 CD8 基因表達",
+      "C": "促進 CD8 基因表達",
+      "D": "參與 α 鏈基因重組",
+      "E": "參與 β 鏈基因重組"
+    },
+    "answer": "C",
+    "explanation": "(C) Runx3 轉錄因子的主要功能是 **促進 CD8 基因表達**。 在正選擇過程中，若 TCR 與 MHC class I 結合，會活化 Runx3 轉錄因子，進而誘導 T 細胞分化為 CD8+ T 細胞。 (A) Runx3 **不促進** CD4 基因表達，**ThPOK** 轉錄因子促進 CD4 基因表達。 (B) Runx3 **不抑制** CD8 基因表達，而是促進 CD8 基因表達。 (D), (E) Runx3 主要參與 **CD4/CD8 命運決定**，與 α 鏈和 β 鏈基因重組 **沒有直接關聯**，基因重組主要由 RAG 基因等調控。"
+  },
+  {
+    "question": "下列哪些分子參與 T 細胞發育早期的 Notch 訊號傳遞？",
+    "options": {
+      "A": "Notch 受體",
+      "B": "Notch 配體",
+      "C": "TCF-1",
+      "D": "GATA-3",
+      "E": "RAG-1"
+    },
+    "answer": ["A", "B", "C", "D"],
+    "explanation": "(A), (B), (C), (D) 皆參與 T 細胞發育早期的 Notch 訊號傳遞。 Notch 訊號傳遞起始於 **Notch 受體與 Notch 配體** 的結合，活化 Notch 受體後，會誘導下游 **轉錄因子 TCF-1 和 GATA-3** 的表現，進而調控 T 細胞相關基因的表達，啟動 T 細胞發育程序。 (E) RAG-1 參與 **TCR 基因重組**，與 Notch 訊號傳遞 **沒有直接關聯**，但 Notch 訊號可以誘導 RAG-1 的表達，間接影響基因重組。"
+  },
+  {
+    "question": "關於T細胞發育過程中，allelic exclusion (等位基因排除) 的機制，下列敘述何者**正確**？",
+    "options": {
+      "A": "Allelic exclusion 確保每個T細胞表達兩種不同的TCR抗原受體。",
+      "B": "Allelic exclusion 主要發生在 α 鏈基因重組階段。",
+      "C": "Allelic exclusion 的目的是增加TCR的多樣性。",
+      "D": "pre-TCR 訊號參與調控 β 鏈基因的 allelic exclusion。",
+      "E": "Allelic exclusion 對於建立T細胞的自體耐受性至關重要。"
+    },
+    "answer": "D",
+    "explanation": "(D) pre-TCR 訊號參與調控 β 鏈基因的 **allelic exclusion**。 pre-TCR 訊號促使 RAG-2 降解，抑制 β 鏈基因的二次重組，確保每個 T 細胞只表達一種 β 鏈基因，實現 allelic exclusion。 (A) Allelic exclusion 確保每個T細胞**只表達一種** TCR 抗原受體，而非兩種。 (B) Allelic exclusion 主要發生在 **β 鏈基因重組階段**，α 鏈基因由於可以多次重組，allelic exclusion 機制相對較弱。 (C) Allelic exclusion 的目的是 **確保 TCR 的專一性**，而非增加 TCR 的多樣性，TCR 的多樣性主要來自基因重組的隨機性。 (E) Allelic exclusion 對於 **確保 TCR 的專一性** 至關重要，但與建立 T 細胞的自體耐受性 **沒有直接關聯**，自體耐受性主要通過負選擇建立。"
+  },
+  {
+    "question": "根據提供的圖示，關於胸腺髓質細胞種類的敘述，下列何者**錯誤**？",
+    "options": {
+      "A": "髓質上皮細胞 (medullary epithelial cell) 源自骨髓",
+      "B": "樹突細胞 (dendritic cell) 源自骨髓",
+      "C": "巨噬細胞 (macrophage) 源自骨髓",
+      "D": "胸腺細胞 (thymocyte) 源自骨髓",
+      "E": "髓質上皮細胞參與負選擇"
+    },
+    "answer": "A",
+    "explanation": "(A) 髓質上皮細胞 (medullary epithelial cell) **並非源自骨髓**，而是胸腺組織的固有細胞，由內皮細胞衍生而來。 樹突細胞 (dendritic cell)、巨噬細胞 (macrophage) 和胸腺細胞 (thymocyte) 皆源自骨髓。 (B), (C), (D), (E) 皆為關於胸腺髓質細胞種類的正確敘述。"
+  },
+  {
+    "question": "在T細胞發育過程中，下列哪些階段的 thymocyte 具有增殖能力？",
+    "options": {
+      "A": "Double negative DN1",
+      "B": "Double negative DN3",
+      "C": "Double negative DN4",
+      "D": "Double positive",
+      "E": "Single positive"
+    },
+    "answer": ["C", "D"],
+    "explanation": "(C), (D) 正確。 (C) Double negative DN4 階段，細胞開始 **大量增殖**。 (D) Double positive 階段，細胞 **持續增殖**。 (A) Double negative DN1 階段，細胞增殖能力 **較低**。 (B) Double negative DN3 階段，細胞增殖能力 **開始增強**，但不如 DN4 和 double positive 階段顯著。 (E) Single positive 階段，細胞增殖能力 **顯著下降**，主要進行分化成熟。"
+  },
+  {
+    "question": "關於T細胞發育過程中，CD4 和 CD8 輔助受體的作用機制，下列敘述何者**正確**？",
+    "options": {
+      "A": "CD4 和 CD8 輔助 TCR 辨識抗原",
+      "B": "CD4 和 CD8 直接參與 TCR 基因重組",
+      "C": "CD4 和 CD8 穩定 TCR 與 MHC 分子的結合",
+      "D": "CD4 和 CD8 傳遞 TCR 活化訊號",
+      "E": "CD4 和 CD8 決定 T 細胞的輔助或毒殺功能"
+    },
+    "answer": "C",
+    "explanation": "(C) CD4 和 CD8 輔助受體的主要作用是 **穩定 TCR 與 MHC 分子的結合**，增強 TCR 對 MHC-peptide 複合物的親和力，促進 T 細胞活化。 (A) CD4 和 CD8 **不直接輔助** TCR 辨識抗原，TCR 的抗原辨識區負責辨識 MHC-peptide 複合物。 (B) CD4 和 CD8 **不參與** TCR 基因重組，基因重組由 RAG 基因等調控。 (D) **CD3 分子** 負責傳遞 TCR 活化訊號，CD4 和 CD8 輔助受體 **間接參與** 訊號傳遞，主要通過與 Lck 等激酶的相互作用。 (E) CD4 和 CD8 **決定** T 細胞的輔助或毒殺功能，CD4+ T 細胞主要為輔助型，CD8+ T 細胞主要為毒殺型，但 CD4 和 CD8 的作用機制主要是穩定 TCR-MHC 結合。"
+  },
+  {
+    "question": "根據提供的表格，關於正選擇與負選擇的比較，下列哪些敘述**錯誤**？",
+    "options": {
+      "A": "正選擇的結合強度為弱，負選擇的結合強度為強",
+      "B": "正選擇的結果是能結合則存活，負選擇的結果是能結合則細胞凋亡",
+      "C": "正選擇的媒介細胞為胸腺皮質上皮細胞，負選擇的媒介細胞為胸腺髓質樹突細胞",
+      "D": "正選擇建立 MHC 限制性，負選擇建立周邊耐受性",
+      "E": "正選擇與負選擇的目的都是確保產生功能完善的T細胞"
+    },
+    "answer": "D",
+    "explanation": "(D) 正選擇建立 **MHC 限制性**，負選擇建立 **自體耐受性**。 表格中將負選擇的功能錯誤地寫成建立周邊耐受性，應為建立自體耐受性 (self-tolerance)。 周邊耐受性是自體耐受性的其中一種機制，但負選擇的主要功能是建立**中樞耐受性**。 (A), (B), (C), (E) 皆為表格中關於正選擇與負選擇的正確比較。"
+  },
+  {
+    "question": "關於T細胞發育過程中，ThPOK 轉錄因子的主要功能，下列敘述何者**正確**？",
+    "options": {
+      "A": "促進 CD8 基因表達",
+      "B": "抑制 CD4 基因表達",
+      "C": "促進 CD4 基因表達",
+      "D": "參與 α 鏈基因重組",
+      "E": "參與 β 鏈基因重組"
+    },
+    "answer": "C",
+    "explanation": "(C) ThPOK 轉錄因子的主要功能是 **促進 CD4 基因表達**。 在正選擇過程中，若 TCR 與 MHC class II 結合，會活化 ThPOK 轉錄因子，進而誘導 T 細胞分化為 CD4+ T 細胞。 (A) ThPOK **不促進** CD8 基因表達，**Runx3** 轉錄因子促進 CD8 基因表達。 (B) ThPOK **不抑制** CD4 基因表達，而是促進 CD4 基因表達。 (D), (E) ThPOK 主要參與 **CD4/CD8 命運決定**，與 α 鏈和 β 鏈基因重組 **沒有直接關聯**，基因重組主要由 RAG 基因等調控。"
+  },
+  {
+    "question": "下列哪些因素可能導致T細胞發育異常，進而引起免疫缺陷？",
+    "options": {
+      "A": "RAG 基因缺陷",
+      "B": "DNA-PK 基因缺陷",
+      "C": "Foxn1 基因缺陷",
+      "D": "AIRE 基因缺陷",
+      "E": "S1PR1 基因缺陷"
+    },
+    "answer": ["A", "B", "C"],
+    "explanation": "(A), (B), (C) 可能 **直接** 導致T細胞發育異常，進而引起免疫缺陷。 (A) RAG 基因缺陷 導致 **TCR 基因重組障礙**，T細胞發育受阻，引起 SCID。 (B) DNA-PK 基因缺陷 也導致 **TCR 基因重組障礙**，T細胞發育受阻，引起 SCID。 (C) Foxn1 基因缺陷 導致 **胸腺發育不全或缺乏**，T細胞發育嚴重受阻，引起 Nude 小鼠的免疫缺陷。 (D) AIRE 基因缺陷 導致 **負選擇障礙**，可能引起自體免疫疾病，**並非免疫缺陷**。 (E) S1PR1 基因缺陷 可能導致 **T細胞離開胸腺受阻**，但 **並非發育的直接缺陷**，免疫缺陷程度相對較輕。"
+  },
+  {
+    "question": "關於T細胞發育過程中，Double positive thymocyte 的特性，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "同時表現 CD4 和 CD8 分子",
+      "B": "正在進行 α 鏈基因重組",
+      "C": "主要發生於胸腺髓質",
+      "D": "正在經歷正選擇和負選擇",
+      "E": "細胞增殖活躍"
+    },
+    "answer": "C",
+    "explanation": "(C) Double positive thymocyte 主要發生於**胸腺皮質**，而非胸腺髓質。 Double positive thymocyte 在胸腺皮質與胸腺皮質上皮細胞互動，進行正選擇。 負選擇主要發生在皮質-髓質連接帶及髓質。 (A), (B), (D), (E) 皆為 Double positive thymocyte 的正確特性。"
+  },
+  {
+    "question": "根據提供的圖示，關於胸腺皮質細胞種類的敘述，下列何者**正確**？",
+    "options": {
+      "A": "皮質上皮細胞 (cortical epithelial cell) 源自骨髓",
+      "B": "巨噬細胞 (macrophage) 主要位於胸腺皮質",
+      "C": "樹突細胞 (dendritic cell) 主要位於胸腺皮質",
+      "D": "胸腺細胞 (thymocyte) 在皮質的細胞密度低於髓質",
+      "E": "皮質上皮細胞參與正選擇"
+    },
+    "answer": "E",
+    "explanation": "(E) 皮質上皮細胞 (cortical epithelial cell) 參與 **正選擇**，為正選擇的媒介細胞。 (A) 皮質上皮細胞 (cortical epithelial cell) **並非源自骨髓**，而是胸腺組織的固有細胞，由內皮細胞衍生而來。 (B) 巨噬細胞 (macrophage) **主要位於胸腺髓質和皮質-髓質連接帶**，在皮質中也有分佈，但不如髓質集中。 (C) 樹突細胞 (dendritic cell) **主要位於胸腺髓質和皮質-髓質連接帶**，在皮質中分佈較少。 (D) 胸腺細胞 (thymocyte) 在皮質的細胞密度 **高於** 髓質，因為T細胞從骨髓遷移到胸腺後首先進入皮質，並在此大量增殖。"
+  },
+  {
+    "question": "關於T細胞發育過程中，negative selection (負選擇) 的強度訊號模型 (strength of signal model) ，下列敘述何者**正確**？",
+    "options": {
+      "A": "TCR 與 MHC-peptide 的結合強度越低，越容易通過負選擇。",
+      "B": "負選擇的強度訊號模型適用於解釋正選擇的機制。",
+      "C": "負選擇訊號強度過低會導致細胞凋亡，如同正選擇的結果。",
+      "D": "負選擇訊號強度必須達到一定閾值才能啟動下游凋亡訊號。",
+      "E": "負選擇的強度訊號模型暗示T細胞對自身MHC-peptide 的親和力越低越好。"
+    },
+    "answer": "D",
+    "explanation": "(D) 負選擇的強度訊號模型認為，TCR 與 MHC-peptide 的結合強度必須達到一定閾值才能啟動下游凋亡訊號，清除 autoreactive T 細胞。 (A) TCR 與 MHC-peptide 的結合強度**並非越低越好**，過低的結合強度可能導致無法通過 positive selection。 (B) **Affinity Model** 更能同時解釋正選擇與負選擇的機制，強度訊號模型主要解釋負選擇。 (C) 負選擇訊號強度**過低** 會導致細胞 **存活** (通過負選擇)，訊號強度**過高** 才會導致細胞凋亡。 (E) 負選擇的強度訊號模型暗示T細胞對自身MHC-peptide 的親和力 **不能過高**，過高會導致負選擇，但也不能過低，過低可能無法通過 positive selection。"
+  },
+  {
+    "question": "在T細胞發育過程中，下列哪些階段的 thymocyte 主要位於胸腺髓質？",
+    "options": {
+      "A": "Double negative DN1",
+      "B": "Double negative DN4",
+      "C": "Double positive",
+      "D": "Single positive mature CD4+8-",
+      "E": "Single positive mature CD4-8+"
+    },
+    "answer": ["D", "E"],
+    "explanation": "(D), (E) 正確。 Single positive mature CD4+8- 和 Single positive mature CD4-8+ thymocytes 主要位於 **胸腺髓質**，在髓質中完成最後的發育成熟階段，並準備輸出到周邊組織。 (A) Double negative DN1, (B) Double negative DN4, (C) Double positive thymocytes 主要位於 **胸腺皮質**。"
+  },
+  {
+    "question": "關於T細胞發育過程中，胸腺上皮細胞 (thymic epithelial cells) 的功能，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "胸腺皮質上皮細胞 (cortical epithelial cells) 參與正選擇",
+      "B": "胸腺髓質上皮細胞 (medullary epithelial cells) 參與負選擇",
+      "C": "胸腺上皮細胞分泌細胞激素，促進T細胞增殖",
+      "D": "胸腺上皮細胞表達 MHC class I 和 class II 分子",
+      "E": "胸腺上皮細胞源自骨髓"
+    },
+    "answer": "E",
+    "explanation": "(E) 胸腺上皮細胞 (thymic epithelial cells) **並非源自骨髓**，而是胸腺組織的固有細胞，由內皮細胞衍生而來。 (A), (B), (C), (D) 皆為關於胸腺上皮細胞的正確功能敘述。 胸腺上皮細胞在T細胞發育中扮演至關重要的微環境支持作用。"
+  }
+]
