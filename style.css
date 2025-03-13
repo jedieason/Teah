@@ -70,14 +70,13 @@ p {
 /* Button Styles */
         .back-button {
             font-size: 1rem;
-            padding: 4px 6px;
             color: #262b34;  /* Deep slate blue */
             border: none;  /* Vibrant blue-purple */
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
             position: absolute;
-            top: 27px;
+            top: 31px;
             left: 30px;
             background-color: transparent;
         }
