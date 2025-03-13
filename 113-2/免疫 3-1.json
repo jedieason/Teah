@@ -1,0 +1,195 @@
+
+[
+  {
+    "question": "關於抗原辨識後 T 細胞活化過程，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "初始型 T 細胞 (Naive T cell) 需經由抗原呈現細胞 (APC) 呈現抗原才能活化。",
+      "B": "T 細胞活化後會經歷細胞增殖 (Proliferation) 與細胞分化 (Differentiation) 兩個主要階段。",
+      "C": "效應型 T 細胞 (Effector T cell) 的主要功能包含細胞激素分泌 (Cytokine secretion) 與細胞毒殺 (Cytotoxicity)。",
+      "D": "記憶型 T 細胞 (Memory T cell) 能夠立即執行毒殺受感染細胞或腫瘤細胞之功能，無需再次活化。",
+      "E": "細胞分化 (Differentiation) 的目的在於使 Naive T cell 形成作用型與記憶型 T 細胞。"
+    },
+    "answer": "D",
+    "explanation": "(D) 記憶型 T 細胞 (Memory T cell) 雖然對抗原具有記憶性，但仍需再次活化才能有效執行毒殺受感染細胞或腫瘤細胞之功能，選項敘述其無需再次活化為**錯誤**。"
+  },
+  {
+    "question": "根據 B 細胞與 T 細胞抗原辨識之比較，下列哪一項敘述**正確**？",
+    "options": {
+      "A": "B 細胞受體 (BCR) 辨識抗原時具有 MHC restriction，而 T 細胞受體 (TCR) 則無。",
+      "B": "B 細胞受體 (BCR) 可辨識蛋白質、胜肽、醣類、磷脂等多種抗原，而 T 細胞受體 (TCR) 僅能辨識胜肽抗原。",
+      "C": "B 細胞受體 (BCR) 為 Monovalent (一個抗原決定位)，T 細胞受體 (TCR) 為 Divalent (兩個抗原決定位)。",
+      "D": "B 細胞受體 (BCR) 辨識抗原時，抗原需為線性結構；T 細胞受體 (TCR) 辨識抗原時，抗原需為立體結構。",
+      "E": "B 細胞活化後分泌之抗體 (Antibody) 為膜結合型，而 T 細胞受體 (TCR) 則為可溶性型態。"
+    },
+    "answer": "B",
+    "explanation": "(B) B 細胞透過 BCR 可辨識多種抗原，包含蛋白質、胜肽、醣類等；T 細胞透過 TCR 主要辨識經 MHC 呈現的胜肽抗原，此敘述為**正確**。(A) 敘述相反，T 細胞受體 (TCR) 具有 MHC restriction，B 細胞受體 (BCR) 則無。(C) 敘述相反，B 細胞受體 (BCR) 為 Divalent，T 細胞受體 (TCR) 為 Monovalent。(D) 敘述相反，B 細胞 BCR 可辨識立體結構與線性結構抗原，T 細胞 TCR 主要辨識線性胜肽抗原。(E) 敘述相反，抗體 (Antibody) 為可溶性型態，T 細胞受體 (TCR) 為膜結合型態。"
+  },
+  {
+    "question": "關於 T 細胞抗原辨識的特性，下列哪些敘述**正確**？",
+    "options": {
+      "A": "大部分的 B 細胞只辨識多肽，而 MHC 只跟多肽結合。",
+      "B": "MHC I 結合的多肽介於 8~11 個 residues，MHC II 則為 10~30 個。",
+      "C": "T 細胞辨識的是線性多肽，因為只有線性多肽才能與 MHC 的 clefts 結合，且與 MHC 結合的多肽在形成時，便已經喪失了蛋白質的構型。",
+      "D": "T 細胞只會結合附著於其他細胞表面，由細胞呈現抗原。因為大部分 T 細胞只會辨識多肽-MHC 複合體，且 MHC 是一種膜蛋白。",
+      "E": "含有 CD4 受體的 T 細胞容易辨識胞外病原入侵的囊泡中經處理後的抗原 (II)，含有 CD8 受體的 T 細胞則傾向辨識在細胞質中產生的抗原 (I)。"
+    },
+    "answer": ["B", "C", "D", "E"],
+    "explanation": "(B), (C), (D), (E) 敘述均為**正確**。(A) 敘述**錯誤**，應為大部分的 *T* 細胞只辨識多肽，而 MHC 只跟多肽結合。"
+  },
+  {
+    "question": "關於 TCR/MHC 複合體結合示意圖，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "多肽鏈與 MHC 結合處 (Anchor pocket) 常見疏水性胺基酸，以疏水作用力緊密結合。",
+      "B": "MHC 和 TCR 依和處具有高度變異性 (Polymorphic)，主要在於與多樣胜肽結合。",
+      "C": "TCR 除了專一性辨識 MHC 外，也會辨識多肽上的 Residue。",
+      "D": "MHC 分子上的 Polymorphic residue 主要影響 MHC 分子呈現胜肽的種類。",
+      "E": "TCR 的變異性主要集中在與 Peptide-MHC 複合體接觸的區域。"
+    },
+    "answer": "B",
+    "explanation": "(B) 敘述**錯誤**，MHC 和 TCR 的 Polymorphic 主要目的在於 **MHC 能夠呈現多樣胜肽** 以及 **TCR 能夠辨識多樣的 Peptide-MHC 複合體**，而非僅限於與多樣胜肽結合。選項敘述略為簡化，導致意義偏差。"
+  },
+  {
+    "question": "根據不同抗原在抗原呈現細胞中的處理途徑，下列配對何者**錯誤**？",
+    "options": {
+      "A": "胞內病原體 (Cytosolic pathogens) : 病毒、細菌 → Degradation: Cytosol → Peptides bind to: MHC class I → Presented to: Effector CD8 T cells",
+      "B": "囊泡內病原體 (Intravesicular pathogens) : 寄生蟲、細菌 → Degradation: Endocytic vesicles (low pH) → Peptides bind to: MHC class II → Presented to: Effector CD4 T cells",
+      "C": "胞外病原體與毒素 (Extracellular pathogens and toxins) : 蛋白質 → Degradation: Endocytic vesicles (low pH) → Peptides bind to: MHC class II → Presented to: Effector CD4 T cells",
+      "D": "胞內病原體 (Cytosolic pathogens) 引起細胞呈現抗原後，主要影響為細胞死亡 (Cell death)。",
+      "E": "囊泡內病原體 (Intravesicular pathogens) 引起細胞呈現抗原後，主要影響為活化巨噬細胞殺死囊泡內病原體與寄生蟲 (Activation of macrophage to kill intravesicular bacteria and parasites)。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**錯誤**，胞內病原體 (Cytosolic pathogens) 引起細胞呈現抗原後，主要影響為 **Effector CD8 T cells 介導的細胞毒殺作用**，而非直接導致細胞死亡 (Cell death)。細胞死亡是細胞毒殺作用的結果，但並非直接影響。"
+  },
+  {
+    "question": "關於抗原呈現路徑的例外 - 交叉呈現 (Cross presentation)，下列敘述何者**正確**？",
+    "options": {
+      "A": "交叉呈現主要發生在 B 細胞 (淋巴結內)。",
+      "B": "交叉呈現是指某些抗原呈現細胞 (APC) 可將胞外抗原以 MHC II 呈現給 CD4+ T 細胞，使其得以辨識胞外抗原。",
+      "C": "交叉呈現的主要意義在於使樹突細胞 (Dendritic cell) 可以呈現胞外抗原給 CD8+ T 細胞，啟動細胞毒殺免疫反應。",
+      "D": "交叉呈現僅發生在一種途徑，即將胞外抗原攝入吞噬溶酶體 (Phagolysosome) 中，經蛋白酶體 (Proteasome) 降解後，再與 MHC I 結合。",
+      "E": "自噬作用 (Autophagy pathway) 也屬於交叉呈現的一種，主要處理胞外病原體。"
+    },
+    "answer": "C",
+    "explanation": "(C) 敘述**正確**，交叉呈現主要由樹突細胞執行，將胞外抗原以 MHC I 呈現給 CD8+ T 細胞，啟動細胞毒殺免疫反應。(A) 敘述**錯誤**，交叉呈現主要發生在 **樹突細胞 (Dendritic cell)**，而非 B 細胞。(B) 敘述**錯誤**，交叉呈現是將胞外抗原以 **MHC I** 呈現給 **CD8+ T 細胞**。(D) 敘述**錯誤**，交叉呈現有兩種途徑，選項僅描述其中一種。(E) 敘述**錯誤**，自噬作用 (Autophagy pathway) 主要處理 **胞內** 病原體或自身成分，而非胞外病原體。"
+  },
+  {
+    "question": "關於泛素-蛋白酶體系統 (Ubiquitin-Proteasome System)，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "蛋白酶體 (Proteasome) 包含兩個 19S 調節顆粒和一個 20S 核心顆粒。",
+      "B": "19S 調節顆粒辨識 K48 ubiquitination chain，並結合泛素化的目標蛋白。",
+      "C": "K48 ubiquitination 是指在 Lysine 的第 48 個胺基酸位置連接泛素鏈。",
+      "D": "蛋白經由 20S 核心顆粒降解，產生多肽片段，並釋放至細胞質。",
+      "E": "釋放的多肽片段會進一步與 MHC I 結合，呈現於細胞表面。"
+    },
+    "answer": "C",
+    "explanation": "(C) 敘述**錯誤**，K48 ubiquitination 是指 **泛素鏈** 是透過 **Lysine 48** 的位置互相連接，形成多泛素鏈，而非指 Lysine 的第 48 個胺基酸位置連接泛素鏈。Lysine 是泛素連接的胺基酸種類，48 指的是連接方式。"
+  },
+  {
+    "question": "關於 MHC restriction，下列敘述何者**正確**？",
+    "options": {
+      "A": "Th 與 Tc 的重要差異在於，Th 只有在感染細胞上具有 MHC 單倍體 (haplotype) 時，才能辨識。",
+      "B": "成熟 T 細胞需要也只能辨識一種和特定 MHC 結合的抗原片段 (例如多肽)。",
+      "C": "MHC restriction 為體內重要的機制，可以呈現出想呈現的抗原，而非全部皆辨識。",
+      "D": "具有高度變異性 (polymorphic) 的 MHC 分子，個體間 MHC 分子的差異會影響 peptide bonding 跟 T cell recognition。",
+      "E": "同一種 T 細胞只能辨識其中一種 MHC 所呈現的特定多肽。"
+    },
+    "answer": "B",
+    "explanation": "(B) 敘述**正確**，MHC restriction 的核心概念是成熟 T 細胞需要辨識 **特定 MHC 分子** 呈現的 **特定抗原片段**。(A) 敘述**錯誤**，Th 和 Tc 都具有 MHC restriction，且 MHC 單倍體 (haplotype) 與 MHC restriction 無直接關聯。(C) 敘述**錯誤**，MHC restriction 的重點在於 **限制 T 細胞的辨識範圍**，而非呈現特定抗原。(D) 敘述**正確**，MHC 的 polymorphic 會影響 peptide binding 和 T cell recognition。(E) 敘述**正確**，同一 T 細胞的 TCR 具有專一性，只能辨識特定 MHC 分子呈現的特定多肽。"
+  },
+  {
+    "question": "關於 MHC restriction 的實驗 - LCMV 實驗，下列敘述哪些**正確**？",
+    "options": {
+      "A": "LCMV 感染小鼠後，七天後將老鼠體內產生之 LCMV-specific CTLs (Cytolytic T lymphocytes) 取出。",
+      "B": "將 CTLs 和已感染/未感染 LCMV 之品系 A 及 B 的目標細胞共同培養。",
+      "C": "取出之 CTLs 只會和自身 (A 品系) MHC (Self MHC) 結合，由於異體 MHC (allogeneic MHC) 之結構不同，因此無法與 CTLs 結合。",
+      "D": "實驗結果顯示， Strain A LCMV infected 的 Target cell 會被 Specific killing，Strain A uninfected 的 Target cell 則否。",
+      "E": "結論 : TCR 辨識的是抗原多肽和自身 MHC 的複合體，缺一不可，否則無法辨識。"
+    },
+    "answer": ["A", "B", "C", "D", "E"],
+    "explanation": "(A), (B), (C), (D), (E) 敘述均為**正確**，完整描述了 LCMV 實驗的步驟、設計與結論，證明了 MHC restriction 的現象。"
+  },
+  {
+    "question": "關於 Class I 和 Class II MHC 的特性與比較，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "人類的 Class I MHC locus 命名為 HLA-A、HLA-B、HLA-C；Class II MHC locus 命名為 HLA-DR、HLA-DQ、HLA-DP、HLA-DM。",
+      "B": "DR、DQ、DP 是主要有功能的 Class II MHC 基因，DM 則沒有功能。",
+      "C": "人類的 Class II MHC locus 中 LMP/TAP 和 antigen loading 有關。",
+      "D": "老鼠的 Class I MHC locus 命名為 H2-K、H2-D、H2-L；Class II MHC locus 命名為 I-A、I-E 等等。",
+      "E": "A、E 是老鼠 Class II MHC locus 中主要有功能的基因，M 負責幫助 peptide loading 到 MHC 上。"
+    },
+    "answer": "B",
+    "explanation": "(B) 敘述**錯誤**，DM 在 Class II MHC 的抗原呈現過程中扮演 **重要角色**，協助 peptide loading，並非沒有功能。選項敘述 DM 沒有功能為誤導。"
+  },
+  {
+    "question": "關於 Class I MHC 和 Class II MHC 的結構特性，下列敘述哪些**正確**？",
+    "options": {
+      "A": "Class I MHC 由 α1 和 α2 domains 結合 peptide，由 α3 domain 結合 CD8。",
+      "B": "Class II MHC 由 α1 和 β1 (較重要) domains (對應 A、B locus) 結合 peptide，由 α2 和 β2 domains 形成的 pocket 結合 CD4。",
+      "C": "MHC I 結合的多肽介於 8~11 個 residues，MHC II 結合的多肽介於 10~30 個 residues。",
+      "D": "MHC I 的 Polymorphism 發生的地方主要在 α1 和 α2 domains；MHC II 則主要在 β1 > α1。",
+      "E": "Class I MHC 的 peptide-binding cleft 由 α1 和 α2 構成，Class II MHC 的 peptide-binding cleft 由 β1 和 β2 構成。"
+    },
+    "answer": ["A", "C", "D"],
+    "explanation": "(A), (C), (D) 敘述均為**正確**。(B) 敘述**錯誤**，Class II MHC 應是由 **α1 和 β1 domains** 結合 peptide，由 **β2 domain** 結合 CD4。(E) 敘述**錯誤**，Class II MHC 的 peptide-binding cleft 由 **α1 和 β1** 構成。"
+  },
+  {
+    "question": "關於 MHC 分子的結構，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "雙股螺旋和疏水性作用力來維持結構完整，穩定的結構極為重要。",
+      "B": "MHC I 的 peptide-binding cleft 呈現封閉型 (閉口較窄)。",
+      "C": "Class I MHC 包含 α1、α2、α3 三個 alpha chain 以及 β2-microglobulin。",
+      "D": "Class II MHC 包含 α1 和 α2 兩個 alpha chain 以及 β1 和 β2 兩個 beta chain。",
+      "E": "抗原分子的兩端各與 MHC I 之 α1、α2 形成氫鍵；抗原中間外凸，可容納 TCR 辨識。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**錯誤**，Class II MHC 應包含 **α1 和 α2 兩個 alpha chain 以及 β1 和 β2 兩個 beta chain**，但實際上 Class II MHC 是由 **α chain 和 β chain 各一條** 組成，而非各有兩條。選項敘述容易誤導為各有兩條鏈。"
+  },
+  {
+    "question": "關於 TCR 及其 CD3 複合體 (T cell receptor complex)，下列敘述哪些**正確**？",
+    "options": {
+      "A": "TCR 在 cytoplasm 裡的區段非常少，需透過其他分子幫忙才能傳遞訊號。",
+      "B": "CD3 包含 ε, δ, γ, ζ 等 subunits。",
+      "C": "CD3 subunits 包含 Immunoreceptor tyrosine-based activation motif (ITAM)。",
+      "D": "TCR α chain 和 β chain 之間以 disulfide bond 連接。",
+      "E": "CD4 分子會與 Class II pMHC 複合體結合，協助 TCR 訊號傳遞。"
+    },
+    "answer": ["A", "C", "D", "E"],
+    "explanation": "(A), (C), (D), (E) 敘述均為**正確**。(B) 敘述**錯誤**，CD3 包含 ε, δ, γ, **ζ (zeta) 鏈 (通常以 ζζ 表示)** 等 subunits，選項少了 **重複的 ζ 鏈**。"
+  },
+  {
+    "question": "根據不同組織細胞的 MHC 表現量比較，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "淋巴組織 (Lymphoid tissues) 的 T cells, B cells, Macrophages, Dendritic cells 皆表現 MHC class I 和 MHC class II。",
+      "B": "其他核細胞 (Other nucleated cells) 如 Hepatocytes, Kidney, Brain 等主要表現 MHC class I，不表現 MHC class II。",
+      "C": "非核細胞 (Nonnucleated cells) 如 Red blood cells 不表現 MHC class I 和 MHC class II。",
+      "D": "上皮細胞 (Epithelial cells of thymus) 表現 MHC class I 和 MHC class II。",
+      "E": "纖維母細胞 (Fibroblasts) 表現 MHC class I 但不表現 MHC class II。"
+    },
+    "answer": "E",
+    "explanation": "(E) 敘述**錯誤**，纖維母細胞 (Fibroblasts) 根據圖表顯示為 **++** 表現 MHC class I，但根據圖表也顯示為 **+** 表現 MHC class II，選項敘述其不表現 MHC class II 為誤導。"
+  },
+  {
+    "question": "關於 MHC II 表現與活化調控，下列敘述何者**正確**？",
+    "options": {
+      "A": "MHC II 主要表現在能進行免疫調控、抗原呈現的細胞上，如樹突細胞等。",
+      "B": "紅血球細胞具有 MHC，故無法表現抗原。",
+      "C": "B12 未提及，紅血球細胞不具有 MHC，故無法表現抗原。由於紅血球不具有 MHC I 來呈現抗原，雖然偶爾可以在紅血球裡躲過身體的免疫系統很長一段時間。",
+      "D": "人類的活化 T 細胞會表現 MHC class II，然而老鼠體內所有的 T 細胞皆為 MHC II negative (無 MHC class II)。",
+      "E": "腦中的微膠細胞 (microglia) 亦表現 MHC II，因為它跟巨噬細胞同源。"
+    },
+    "answer": "A",
+    "explanation": "(A) 敘述**正確**，MHC II 主要表現在 APCs 上，負責免疫調控與抗原呈現。(B) 敘述**錯誤**，紅血球細胞 **不具有 MHC**，故無法表現抗原。(C) 敘述**錯誤**，紅血球細胞 **不具有 MHC I**，也 **不具有 MHC II**，無法呈現抗原。(D) 敘述**錯誤**，**活化 B 細胞** 會表現 MHC class II，而非活化 T 細胞。(E) 敘述**正確**，微膠細胞 (microglia) 為腦中的巨噬細胞，亦表現 MHC II。"
+  },
+  {
+    "question": "關於 Class II MHC 的增強作用，下列敘述哪些**正確**？",
+    "options": {
+      "A": "NK cell、Macrophage 和活化之 Th 1 分泌 type II 干擾素 (IFN-γ) 活化 APC 使其有較高的 MHC II 表現。",
+      "B": "IFN-γ 促進樹突細胞內降解機制，增進 ROS、蛋白酶量。",
+      "C": "IFN-γ 以及 type I 干擾素 (IFN-α、IFN-β) 對於 MHC I 表現也有相似的作用，能夠增強 CD8+ T cell 的活化反應。",
+      "D": "IFN-γ 主要由活化之 CD4+ T cell 分泌。",
+      "E": "Cytokine-mediated class II MHC expression on APCs 主要由 IFN-γ 介導。"
+    },
+    "answer": ["A", "C", "D", "E"],
+    "explanation": "(A), (C), (D), (E) 敘述均為**正確**。(B) 敘述**錯誤**，IFN-γ 主要促進 **MHC class II 的表現量**，而非直接促進樹突細胞內降解機制，ROS 和蛋白酶增加可能與抗原處理有關，但非 IFN-γ 的主要直接作用。"
+  }
+]

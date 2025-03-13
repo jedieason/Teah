@@ -1,0 +1,747 @@
+
+[
+  {
+    "question": "關於 MHC 表現的多樣性，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "多態性 (Polymorphism) 意指 MHC 基因座擁有多個等位基因。",
+      "B": "多基因性 (Polygeny) 意指一個個體會表現多種不同類型的 MHC 分子。",
+      "C": "共顯性 (Codominant) 表現確保了細胞表面同時表現來自父母雙方的 MHC 等位基因。",
+      "D": "MHC 的多樣性主要體現在 MHC class II 分子上，Class I MHC 分子多樣性較低。",
+      "E": "MHC 的多樣性對於群體抵抗多種病原體至關重要，提高群體免疫系統的適應性。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**錯誤**。MHC 的多樣性在 Class I 和 Class II 分子上都很重要，並非僅限於 Class II。Class I 和 Class II 都具有高度多態性，以應對多樣的抗原。"
+  },
+  {
+    "question": "關於 T 細胞辨識抗原的過程，以下哪個步驟**最先**發生？",
+    "options": {
+      "A": "T 細胞受體 (TCR) 與 MHC-peptide 複合體結合。",
+      "B": "抗原呈現細胞 (APC) 處理抗原並將 peptide 呈現於 MHC 分子上。",
+      "C": "樹突細胞 (Dendritic cell) 在周邊組織捕捉抗原。",
+      "D": "T 細胞在淋巴結中巡邏，搜尋 MHC-peptide 複合體。",
+      "E": "T 細胞活化後，大量增殖並分化為效應細胞。"
+    },
+    "answer": "C",
+    "explanation": "(C) **最先**發生的步驟是樹突細胞在周邊組織捕捉抗原。整個免疫反應的啟動始於抗原的入侵和捕捉，然後才是 APC 的處理和呈現，以及 T 細胞的辨識和活化。"
+  },
+  {
+    "question": "在 Class I MHC 分子呈現抗原的路徑中，下列哪些分子或結構**直接參與**將 peptide 轉運至內質網 (ER)？",
+    "options": {
+      "A": "Proteasome",
+      "B": "TAP (Transporter associated with antigen processing)",
+      "C": "Calnexin",
+      "D": "Tapasin",
+      "E": "ERp57"
+    },
+    "answer": ["B"],
+    "explanation": "(B) **直接參與**將 peptide 轉運至 ER 的分子是 TAP (Transporter associated with antigen processing)。Proteasome 負責降解蛋白質，Calnexin、Tapasin 和 ERp57 則是在 ER 內協助 MHC I 分子組裝，但只有 TAP 負責 peptide 的轉運。"
+  },
+  {
+    "question": "關於 MHC class I 分子的組裝過程，下列敘述何者**正確**？",
+    "options": {
+      "A": "α 鏈與 β2-微球蛋白結合後，立即離開內質網 (ER) 運送到細胞表面。",
+      "B": "Calnexin 在 MHC class I 分子組裝完成後，仍持續與之結合以維持穩定性。",
+      "C": "TAP 蛋白在 peptide 與 MHC class I 分子結合後，即釋放 MHC class I 分子。",
+      "D": "PLC (Peptide loading complex) 主要由 calreticulin、ERp57 和 tapasin 組成，協助 peptide 裝載。",
+      "E": "ERAP (Endoplasmic reticulum aminopeptidase associated with antigen processing) 的功能是將過短的 peptide 延長至適當長度。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**正確**。PLC (Peptide loading complex) 的確由 calreticulin、ERp57 和 tapasin 組成，其主要功能是協助 peptide 裝載到 MHC class I 分子上。 (A) 錯誤，α 鏈與 β2-微球蛋白結合後，還需要 peptide 裝載才能離開 ER。(B) 錯誤，Calnexin 在 MHC class I 分子組裝早期階段發揮作用，之後會釋放。(C) 錯誤，MHC class I 分子組裝完成並穩定後，才釋放 TAP 複合體。(E) 錯誤，ERAP 的功能是修剪過長的 peptide。"
+  },
+  {
+    "question": "Class II MHC 分子在內質網 (ER) 中組裝時，會與 Invariant chain (Ii) 結合。Ii 的主要功能**不包含**下列哪一項？",
+    "options": {
+      "A": "防止 MHC class II 分子與內質網中的內源性 peptide 結合。",
+      "B": "協助 MHC class II 分子穩定結構並正確摺疊。",
+      "C": "引導 MHC class II 分子從 ER 運送到晚期內體 (Late endosome)。",
+      "D": "阻止 Class II MHC 分子與 Class I MHC 分子發生交互作用。",
+      "E": "Ii 降解後留下的 CLIP 片段，需被 HLA-DM 取代才能讓外源性 peptide 結合。"
+    },
+    "answer": "D",
+    "explanation": "(D) **不包含**的功能是阻止 Class II MHC 分子與 Class I MHC 分子發生交互作用。Ii 的主要功能是確保 Class II MHC 分子在正確的位置與正確的 peptide 結合，並不會直接影響 Class I MHC 分子。"
+  },
+  {
+    "question": "關於 HLA-DM 在 Class II MHC 抗原呈現路徑中的作用，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "HLA-DM 是一種非典型的 MHC class II 分子，結構與典型 MHC class II 分子相似。",
+      "B": "HLA-DM 主要在晚期內體 (Late endosome) 和溶酶體 (Lysosome) 中發揮作用。",
+      "C": "HLA-DM 的主要功能是促進 CLIP 從 MHC class II 分子上脫落。",
+      "D": "HLA-DM 能夠穩定不含 peptide 的 MHC class II 分子構象。",
+      "E": "HLA-DM 基因缺陷會導致 MHC class II 分子在細胞表面表達量顯著增加。"
+    },
+    "answer": "E",
+    "explanation": "(E) 敘述**錯誤**。HLA-DM 基因缺陷會導致 MHC class II 分子表面表達量**下降**，因為 CLIP 無法有效被移除，阻礙了外源性 peptide 的裝載和 MHC II 分子的穩定表達。"
+  },
+  {
+    "question": "在 VDJ 重組過程中，下列哪個酶負責打開 DNA 髮夾結構，為後續的 nucleotide 添加和修飾步驟做準備？",
+    "options": {
+      "A": "RAG-1/2 複合物",
+      "B": "Ku70:Ku80 複合物",
+      "C": "Artemis:DNA-PK 複合物",
+      "D": "TdT (Terminal deoxynucleotidyl transferase)",
+      "E": "DNA ligase IV:XRCC4 複合物"
+    },
+    "answer": "C",
+    "explanation": "(C) Artemis:DNA-PK 複合物負責打開 DNA 髮夾結構。RAG-1/2 負責切割 DNA，Ku70:Ku80 形成環狀結構保護 DNA 末端，TdT 添加 nucleotide，DNA ligase IV:XRCC4 連接 DNA 末端。"
+  },
+  {
+    "question": "關於 RAG-dependent V(D)J rearrangement 的步驟，下列時間順序何者**正確**？",
+    "options": {
+      "A": "RAG 複合物結合 → Ku70:Ku80 結合 → Artemis:DNA-PK 作用 → DNA ligase IV:XRCC4 連接",
+      "B": "Ku70:Ku80 結合 → RAG 複合物結合 → Artemis:DNA-PK 作用 → DNA ligase IV:XRCC4 連接",
+      "C": "Artemis:DNA-PK 作用 → RAG 複合物結合 → Ku70:Ku80 結合 → DNA ligase IV:XRCC4 連接",
+      "D": "DNA ligase IV:XRCC4 連接 → RAG 複合物結合 → Ku70:Ku80 結合 → Artemis:DNA-PK 作用",
+      "E": "RAG 複合物結合 → Artemis:DNA-PK 作用 → Ku70:Ku80 結合 → DNA ligase IV:XRCC4 連接"
+    },
+    "answer": "A",
+    "explanation": "(A) 時間順序**正確**。首先是 RAG 複合物結合到 RSS，然後 Ku70:Ku80 結合保護 DNA 末端，接著 Artemis:DNA-PK 打開髮夾結構，最後由 DNA ligase IV:XRCC4 連接。"
+  },
+  {
+    "question": "下列關於 TCR 訊號傳遞途徑中關鍵分子 LCK 和 ZAP70 的敘述，何者**正確**？",
+    "options": {
+      "A": "LCK 是一種膜蛋白酪胺酸激酶，直接與 TCR 的胞外區結合。",
+      "B": "ZAP70 在靜止 T 細胞中即活化，並持續磷酸化下游分子。",
+      "C": "LCK 的活化依賴於與 CD4 或 CD8 分子的胞內區結合。",
+      "D": "ZAP70 被 LCK 磷酸化後，主要作用於 PLC-γ1 和 Ras-MAPK 途徑。",
+      "E": "LCK 和 ZAP70 的作用順序是 ZAP70 先活化，再活化 LCK。"
+    },
+    "answer": "C",
+    "explanation": "(C) 敘述**正確**。LCK 的活化確實依賴於與 CD4 或 CD8 分子的胞內區結合，CD4/CD8 將 LCK 定位在 TCR 附近並促進其活化。 (A) 錯誤，LCK 是胞內酪胺酸激酶，與 CD4/CD8 胞內區結合。(B) 錯誤，ZAP70 在 T 細胞活化後才被 LCK 磷酸化並活化。(D) 錯誤，ZAP70 主要作用於 LAT 和 SLP-76，進而啟動 PLC-γ1 和 Ras-MAPK 等途徑。(E) 錯誤，LCK 先活化，磷酸化 ZAP70，進而活化 ZAP70。"
+  },
+  {
+    "question": "在 TCR 訊號傳遞過程中，PLC-γ1 活化後產生 IP3 和 DAG，IP3 的主要作用是？",
+    "options": {
+      "A": "活化蛋白激酶 C (PKC)。",
+      "B": "增加胞內鈣離子 (Ca2+) 濃度。",
+      "C": "啟動 Ras-MAPK 訊號途徑。",
+      "D": "促進細胞骨架重組。",
+      "E": "活化轉錄因子 NF-κB。"
+    },
+    "answer": "B",
+    "explanation": "(B) IP3 的主要作用是增加胞內鈣離子 (Ca2+) 濃度。IP3 釋放 ER 中的鈣離子，導致胞內鈣離子濃度升高，進而活化下游訊號分子。"
+  },
+  {
+    "question": "關於 Superantigen 的作用機制，下列敘述何者**正確**？",
+    "options": {
+      "A": "Superantigen 與 MHC class I 分子的 peptide 結合槽結合。",
+      "B": "Superantigen 只能活化 CD8+ T 細胞，無法活化 CD4+ T 細胞。",
+      "C": "Superantigen 誘導的 T 細胞活化是抗原特異性的，僅活化特定 TCR 的 T 細胞。",
+      "D": "Superantigen 同時結合 MHC class II 分子和 TCR，但結合位置與一般抗原不同。",
+      "E": "Superantigen 誘導的免疫反應主要產生保護性免疫，清除病原體。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**正確**。Superantigen 的確同時結合 MHC class II 分子和 TCR，但結合位置在 MHC class II 分子和 TCR 的側面，而非 peptide 結合槽和抗原結合位。 (A) 錯誤，Superantigen 與 MHC class II 分子結合。(B) 錯誤，Superantigen 主要活化 CD4+ T 細胞。(C) 錯誤，Superantigen 誘導的 T 細胞活化是非抗原特異性的，可以活化大量 T 細胞。(E) 錯誤，Superantigen 誘導的免疫反應可能導致過度免疫反應，例如敗血性休克。"
+  },
+  {
+    "question": "CAR-T 細胞療法中，第二代 CAR-T 細胞與第一代 CAR-T 細胞相比，主要的改進之處在於？",
+    "options": {
+      "A": "第二代 CAR-T 細胞能夠辨識 MHC class I 分子呈現的抗原。",
+      "B": "第二代 CAR-T 細胞的胞外區抗原辨識結構改為 TCR。",
+      "C": "第二代 CAR-T 細胞在胞內區增加了 costimulatory signaling domain。",
+      "D": "第二代 CAR-T 細胞能夠直接殺傷腫瘤細胞，無需 MHC 分子參與。",
+      "E": "第二代 CAR-T 細胞的製備過程更簡便，成本更低。"
+    },
+    "answer": "C",
+    "explanation": "(C) 第二代 CAR-T 細胞與第一代相比，主要的改進在於胞內區增加了 costimulatory signaling domain (例如 CD28 或 4-1BB)。這使得第二代 CAR-T 細胞在抗原結合後能夠更有效地活化和發揮功能。 (A) 錯誤，CAR-T 細胞不依賴 MHC 分子辨識抗原。(B) 錯誤，CAR-T 細胞的胞外區抗原辨識結構是抗體片段 (scFv)，而非 TCR。(D) 錯誤，第一代 CAR-T 細胞也能直接殺傷腫瘤細胞，但活化不足。(E) 錯誤，CAR-T 細胞製備過程仍然複雜，成本較高。"
+  },
+  {
+    "question": "關於抗原的入侵與樹突細胞 (Dendritic cell) 的捕捉，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "樹突細胞可以通過皮膚、腸胃道、呼吸道等途徑捕捉微生物抗原。",
+      "B": "進入血液循環的抗原主要由脾臟內的抗原呈現細胞捕捉。",
+      "C": "淋巴結中的抗原主要來自上皮組織和結締組織。",
+      "D": "成熟的樹突細胞 (Mature DC) 捕捉抗原的能力優於未成熟的樹突細胞 (Immature DC)。",
+      "E": "樹突細胞捕捉抗原後，會將抗原運送到區域性淋巴結，啟動 T 細胞免疫反應。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**錯誤**。**未成熟的樹突細胞 (Immature DC)** 捕捉抗原的能力優於成熟的樹突細胞 (Mature DC)。成熟的樹突細胞主要功能是呈現抗原和活化 T 細胞，捕捉抗原的能力下降。"
+  },
+  {
+    "question": "在皮膚真皮層中，未成熟的樹突細胞 (Immature DC) 又可稱為？",
+    "options": {
+      "A": "Langerhans cells",
+      "B": "Tissue resident resting DC",
+      "C": "Dermal DC",
+      "D": "Activated DC",
+      "E": "Mononuclear phagocytes"
+    },
+    "answer": "C",
+    "explanation": "(C) 在皮膚真皮層中，未成熟的樹突細胞 (Immature DC) 又可稱為 Dermal DC。Langerhans cells 指的是表皮層的樹突細胞，Tissue resident resting DC 是一個更廣泛的稱呼，Activated DC 則是成熟的樹突細胞，Mononuclear phagocytes 則是單核吞噬細胞。"
+  },
+  {
+    "question": "關於成熟樹突細胞 (Mature DC) 和未成熟樹突細胞 (Immature DC) 的比較，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "成熟樹突細胞表面 Class II MHC 分子數量較高。",
+      "B": "未成熟樹突細胞捕捉抗原的能力較強。",
+      "C": "成熟樹突細胞主要功能是作為抗原呈現細胞 (APC) 活化 T 細胞。",
+      "D": "成熟樹突細胞表面受體表現量較未成熟樹突細胞高。",
+      "E": "未成熟樹突細胞遷移至淋巴結的能力較成熟樹突細胞弱。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**錯誤**。**成熟樹突細胞表面受體表現量較未成熟樹突細胞低**。為了專注於抗原呈現和 T 細胞活化，成熟樹突細胞不再需要大量表面受體來捕捉抗原，因此受體表現量會下降。"
+  },
+  {
+    "question": "Class I MHC 分子主要呈現何種來源的抗原？",
+    "options": {
+      "A": "細胞外細菌。",
+      "B": "細胞外病毒。",
+      "C": "細胞質內的病毒蛋白。",
+      "D": "內體和溶酶體中的蛋白質。",
+      "E": "胞外環境中的可溶性抗原。"
+    },
+    "answer": "C",
+    "explanation": "(C) Class I MHC 分子主要呈現**細胞質內的病毒蛋白**。Class I MHC 路徑主要處理細胞質內的抗原，例如病毒感染細胞產生的病毒蛋白。"
+  },
+  {
+    "question": "Class II MHC 分子主要呈現何種來源的抗原？",
+    "options": {
+      "A": "細胞質內的細菌。",
+      "B": "細胞質內的腫瘤抗原。",
+      "C": "細胞質內的自體抗原。",
+      "D": "內體和溶酶體中降解的胞外抗原。",
+      "E": "細胞核內的蛋白質。"
+    },
+    "answer": "D",
+    "explanation": "(D) Class II MHC 分子主要呈現**內體和溶酶體中降解的胞外抗原**。Class II MHC 路徑主要處理胞外環境中被吞噬或胞飲進入細胞的抗原。"
+  },
+  {
+    "question": "下列哪些細胞類型**可以**作為抗原呈現細胞 (APC) 呈現 Class I MHC 分子？",
+    "options": {
+      "A": "紅血球。",
+      "B": "血小板。",
+      "C": "神經細胞。",
+      "D": "肝細胞。",
+      "E": "所有有核細胞。"
+    },
+    "answer": "E",
+    "explanation": "(E) **所有有核細胞** **可以**作為 APC 呈現 Class I MHC 分子。因為所有有核細胞都表達 Class I MHC 分子，可以將細胞質內的抗原呈現給 CD8+ T 細胞。"
+  },
+  {
+    "question": "下列哪些細胞類型**可以**作為抗原呈現細胞 (APC) 呈現 Class II MHC 分子？",
+    "options": {
+      "A": "纖維母細胞。",
+      "B": "肌肉細胞。",
+      "C": "內皮細胞。",
+      "D": "B 淋巴細胞。",
+      "E": "所有有核細胞。"
+    },
+    "answer": "D",
+    "explanation": "(D) **B 淋巴細胞** **可以**作為 APC 呈現 Class II MHC 分子。Class II MHC 分子主要在專業性抗原呈現細胞上表達，包括樹突細胞、巨噬細胞、B 淋巴細胞和某些上皮細胞等。內皮細胞在特定情況下也可以表達 Class II MHC 分子。"
+  },
+  {
+    "question": "Class I MHC 分子呈現抗原後，主要活化哪種類型的 T 細胞？",
+    "options": {
+      "A": "輔助型 T 細胞 (Helper T cell, Th)。",
+      "B": "細胞毒殺型 T 細胞 (Cytotoxic T cell, CTL)。",
+      "C": "調節型 T 細胞 (Regulatory T cell, Treg)。",
+      "D": "自然殺手 T 細胞 (NKT cell)。",
+      "E": "γδ T 細胞。"
+    },
+    "answer": "B",
+    "explanation": "(B) Class I MHC 分子呈現抗原後，主要活化 **細胞毒殺型 T 細胞 (Cytotoxic T cell, CTL)**。Class I MHC-peptide 複合體主要與 CD8+ T 細胞的 TCR 結合，活化 CTL 以殺傷靶細胞。"
+  },
+  {
+    "question": "Class II MHC 分子呈現抗原後，主要活化哪種類型的 T 細胞？",
+    "options": {
+      "A": "細胞毒殺型 T 細胞 (Cytotoxic T cell, CTL)。",
+      "B": "調節型 T 細胞 (Regulatory T cell, Treg)。",
+      "C": "自然殺手 T 細胞 (NKT cell)。",
+      "D": "γδ T 細胞。",
+      "E": "輔助型 T 細胞 (Helper T cell, Th)。"
+    },
+    "answer": "E",
+    "explanation": "(E) Class II MHC 分子呈現抗原後，主要活化 **輔助型 T 細胞 (Helper T cell, Th)**。Class II MHC-peptide 複合體主要與 CD4+ T 細胞的 TCR 結合，活化 Th 細胞以協助其他免疫細胞發揮功能。"
+  },
+  {
+    "question": "Class I MHC 分子呈現抗原的降解場所主要在？",
+    "options": {
+      "A": "內質網 (ER)。",
+      "B": "高基氏體 (Golgi apparatus)。",
+      "C": "溶酶體 (Lysosome)。",
+      "D": "蛋白酶體 (Proteasome)。",
+      "E": "內體 (Endosome)。"
+    },
+    "answer": "D",
+    "explanation": "(D) Class I MHC 分子呈現抗原的降解場所主要在 **蛋白酶體 (Proteasome)**。細胞質內的蛋白質抗原主要由蛋白酶體降解成 peptide。"
+  },
+  {
+    "question": "Class II MHC 分子呈現抗原的降解場所主要在？",
+    "options": {
+      "A": "蛋白酶體 (Proteasome)。",
+      "B": "內質網 (ER)。",
+      "C": "高基氏體 (Golgi apparatus)。",
+      "D": "晚期內體 (Late endosome) 和溶酶體 (Lysosome)。",
+      "E": "早期內體 (Early endosome)。"
+    },
+    "answer": "D",
+    "explanation": "(D) Class II MHC 分子呈現抗原的降解場所主要在 **晚期內體 (Late endosome) 和溶酶體 (Lysosome)**。胞外抗原被吞噬或胞飲後，會在內體和溶酶體中被降解成 peptide。"
+  },
+  {
+    "question": "下列哪些酶參與 Class I MHC 分子呈現抗原的 peptide 生成過程？",
+    "options": {
+      "A": "Cathepsins。",
+      "B": "ERAP (Endoplasmic reticulum aminopeptidase associated with antigen processing)。",
+      "C": "Proteasome 的 β1、β2、β5 次單元。",
+      "D": "V-type ATPase。",
+      "E": "HLA-DM。"
+    },
+    "answer": ["B", "C"],
+    "explanation": "(B) 和 (C) **參與** Class I MHC 分子呈現抗原的 peptide 生成過程。Proteasome 的 β1、β2、β5 次單元負責細胞質內蛋白質的降解，ERAP 負責修剪過長的 peptide。Cathepsins 主要參與 Class II MHC 路徑的抗原降解，V-type ATPase 參與降低內體 pH 值，HLA-DM 參與 Class II MHC 分子的 peptide 交換。"
+  },
+  {
+    "question": "下列哪些分子參與 Class II MHC 分子呈現抗原的 peptide 生成過程？",
+    "options": {
+      "A": "Proteasome 的 βi 次單元 (例如 β1i, β2i, β5i)。",
+      "B": "TAP (Transporter associated with antigen processing)。",
+      "C": "Cathepsins (例如 Cathepsins B, D, S, L)。",
+      "D": "Invariant chain (Ii)。",
+      "E": "HLA-DM。"
+    },
+    "answer": ["C"],
+    "explanation": "(C) **參與** Class II MHC 分子呈現抗原的 peptide 生成過程的是 **Cathepsins** (例如 Cathepsins B, D, S, L)。Cathepsins 是溶酶體蛋白酶，負責降解內體和溶酶體中的胞外抗原。Proteasome 主要參與 Class I MHC 路徑，TAP 參與 peptide 轉運到 ER，Invariant chain 和 HLA-DM 參與 Class II MHC 分子的組裝和 peptide 交換，但不直接參與 peptide 生成。"
+  },
+  {
+    "question": "TAP (Transporter associated with antigen processing) 蛋白的組成和功能，下列敘述何者**正確**？",
+    "options": {
+      "A": "TAP 是一種單體膜蛋白，由 TAP1 或 TAP2 其中之一組成。",
+      "B": "TAP 的主要功能是將 peptide 從內質網 (ER) 轉運到細胞質。",
+      "C": "TAP 的作用需要 GTP 水解提供能量。",
+      "D": "TAP 由 TAP1 和 TAP2 組成 heterodimer，作用需要 ATP。",
+      "E": "TAP 只負責轉運病毒來源的 peptide，不轉運細胞自身蛋白質的 peptide。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**正確**。TAP 由 TAP1 和 TAP2 組成 heterodimer，是一種 ABC 轉運蛋白，其作用需要 ATP 水解提供能量，將 peptide 從細胞質轉運到內質網 (ER)。 (A) 錯誤，TAP 是 heterodimer。(B) 錯誤，TAP 將 peptide 從細胞質轉運到 **ER**。(C) 錯誤，TAP 作用需要 **ATP**，而非 GTP。(E) 錯誤，TAP 轉運 **所有來源**的 peptide，包括病毒和細胞自身蛋白質來源。"
+  },
+  {
+    "question": "若細胞缺乏 TAP 蛋白，會導致下列哪種免疫缺陷？",
+    "options": {
+      "A": "Class II MHC 分子在細胞表面表達量顯著增加。",
+      "B": "CD4+ T 細胞無法正常活化。",
+      "C": "Class I MHC 分子在細胞表面表達量顯著下降。",
+      "D": "B 細胞抗體產生能力完全喪失。",
+      "E": "先天免疫系統功能完全喪失。"
+    },
+    "answer": "C",
+    "explanation": "(C) 若細胞缺乏 TAP 蛋白，會導致 **Class I MHC 分子在細胞表面表達量顯著下降**。因為 TAP 缺失導致 peptide 無法進入 ER 與 MHC I 分子結合，MHC I 分子組裝不完整，容易降解，表面表達量下降。 (A) 錯誤，Class II MHC 分子表達不受 TAP 影響。(B) 錯誤，CD4+ T 細胞主要由 Class II MHC 分子活化，TAP 缺陷主要影響 Class I MHC 路徑。(D) 和 (E) 錯誤，B 細胞抗體產生和先天免疫系統功能不直接受 TAP 影響。"
+  },
+  {
+    "question": "MHC class I 分子組裝過程中，Calnexin 的主要作用是？",
+    "options": {
+      "A": "協助 peptide 與 MHC class I 分子結合。",
+      "B": "促進 β2-微球蛋白與 α 鏈結合。",
+      "C": "將 MHC class I 分子從 ER 轉運到 Golgi。",
+      "D": "穩定 α 鏈結構，等待 β2-微球蛋白結合。",
+      "E": "修剪過長的 peptide。"
+    },
+    "answer": "D",
+    "explanation": "(D) Calnexin 的主要作用是 **穩定 α 鏈結構，等待 β2-微球蛋白結合**。Calnexin 是一種鈣依賴性伴侶蛋白，在 MHC class I 分子組裝早期階段，與 α 鏈結合，防止其錯誤摺疊，等待 β2-微球蛋白結合。"
+  },
+  {
+    "question": "MHC class II 分子組裝過程中，Invariant chain (Ii) 的主要作用是？",
+    "options": {
+      "A": "協助 peptide 與 MHC class II 分子結合。",
+      "B": "促進 α 鏈與 β 鏈結合。",
+      "C": "將 MHC class II 分子從 ER 轉運到 Golgi。",
+      "D": "阻止 MHC class II 分子與 ER 內的 peptide 結合。",
+      "E": "修剪過長的 peptide。"
+    },
+    "answer": "D",
+    "explanation": "(D) Invariant chain (Ii) 的主要作用是 **阻止 MHC class II 分子與 ER 內的 peptide 結合**。Ii 佔據 MHC II 分子的 peptide 結合槽，防止其在 ER 中與內源性 peptide 結合，確保 MHC II 分子能夠運送到晚期內體/溶酶體與外源性 peptide 結合。"
+  },
+  {
+    "question": "下列哪些步驟發生在 Class II MHC 分子抗原呈現路徑的晚期內體 (Late endosome) 或溶酶體 (Lysosome) 中？",
+    "options": {
+      "A": "MHC class II 分子 α 鏈和 β 鏈在 ER 中組裝。",
+      "B": "TAP 蛋白將 peptide 轉運到 ER。",
+      "C": "抗原蛋白質被 Cathepsins 等酶降解為 peptide。",
+      "D": "MHC class II 分子與 Invariant chain (Ii) 在 ER 中結合。",
+      "E": "Class I MHC 分子與 peptide 結合形成穩定的複合體。"
+    },
+    "answer": "C",
+    "explanation": "(C) **抗原蛋白質被 Cathepsins 等酶降解為 peptide** 發生在晚期內體 (Late endosome) 或溶酶體 (Lysosome) 中。這些細胞器具有酸性環境和多種水解酶，包括 Cathepsins，負責降解胞外抗原。其他選項描述的步驟發生在 ER 或其他細胞器中。"
+  },
+  {
+    "question": "V-type ATPase 在 Class II MHC 分子抗原呈現路徑中的作用是？",
+    "options": {
+      "A": "將 peptide 轉運到 ER。",
+      "B": "協助 MHC class II 分子組裝。",
+      "C": "促進蛋白酶體 (Proteasome) 降解抗原。",
+      "D": "降低內體 (Endosome) 內的 pH 值，活化蛋白酶。",
+      "E": "促進 MHC class II 分子與 peptide 結合。"
+    },
+    "answer": "D",
+    "explanation": "(D) V-type ATPase 在 Class II MHC 分子抗原呈現路徑中的作用是 **降低內體 (Endosome) 內的 pH 值，活化蛋白酶**。V-type ATPase 是一種氫離子泵，將 H+ 泵入內體，降低內體 pH 值，創造酸性環境，有利於 Cathepsins 等蛋白酶的活化，降解抗原。"
+  },
+  {
+    "question": "關於 CD4 分子和 CD8 分子，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "CD4 和 CD8 都是 T 細胞表面受體，參與 TCR 訊號傳遞。",
+      "B": "CD4 分子是單鏈蛋白，包含四個免疫球蛋白樣結構域。",
+      "C": "CD8 分子是異源二聚體，由 α 鏈和 β 鏈組成。",
+      "D": "CD4 主要在細胞毒殺型 T 細胞 (CTL) 表面表達，CD8 主要在輔助型 T 細胞 (Th) 表面表達。",
+      "E": "CD4 和 CD8 分子都能與 MHC 分子的非多態性區域結合，協助 TCR 與 MHC-peptide 複合體的交互作用。"
+    },
+    "answer": "D",
+    "explanation": "(D) 敘述**錯誤**。**CD4 主要在輔助型 T 細胞 (Th) 表面表達，CD8 主要在細胞毒殺型 T 細胞 (CTL) 表面表達**。CD4 與 Class II MHC 分子結合，CD8 與 Class I MHC 分子結合，協助 TCR 識別 MHC-peptide 複合體，並參與訊號傳遞。"
+  },
+  {
+    "question": "Superantigen 主要與 TCR 的哪個區域結合？",
+    "options": {
+      "A": "α 鏈的 CDR1 loop。",
+      "B": "β 鏈的 CDR2 loop。",
+      "C": "α 鏈的 CDR3 loop。",
+      "D": "β 鏈的 CDR3 loop。",
+      "E": "α 和 β 鏈的 CDR3 loop。"
+    },
+    "answer": "B",
+    "explanation": "(B) Superantigen 主要與 TCR 的 **β 鏈的 CDR2 loop** 結合。細菌 Superantigen 主要與 TCR Vβ 區的 CDR2 loop 結合，病毒 Superantigen 主要與 TCR HV4 loop 結合。與傳統抗原不同，Superantigen 不與 CDR3 loop 結合。"
+  },
+  {
+    "question": "Superantigen 誘導的免疫反應與一般抗原誘導的免疫反應相比，主要區別在於？",
+    "options": {
+      "A": "Superantigen 誘導的免疫反應更具有抗原特異性。",
+      "B": "Superantigen 只能活化先天免疫系統，不能活化適應性免疫系統。",
+      "C": "Superantigen 誘導的 T 細胞活化量更少，免疫反應較弱。",
+      "D": "Superantigen 能夠同時活化大量的 T 細胞，導致過度免疫反應。",
+      "E": "Superantigen 主要誘導產生細胞毒殺型 T 細胞 (CTL) 反應。"
+    },
+    "answer": "D",
+    "explanation": "(D) Superantigen 誘導的免疫反應與一般抗原誘導的免疫反應相比，主要區別在於 **Superantigen 能夠同時活化大量的 T 細胞，導致過度免疫反應**。由於 Superantigen 非特異性地結合 MHC II 和 TCR，可以活化大量不同 TCR 特異性的 T 細胞，釋放大量細胞激素，導致全身性炎症反應，例如敗血性休克。"
+  },
+  {
+    "question": "下列哪些是 MHC 表現多樣性的重要性？",
+    "options": {
+      "A": "降低自體免疫疾病的發生率。",
+      "B": "提高個體對單一病原體的免疫力。",
+      "C": "增加群體抵抗多種病原體的能力。",
+      "D": "促進移植器官的長期存活。",
+      "E": "增強免疫系統的負向調節能力。"
+    },
+    "answer": ["C"],
+    "explanation": "(C) **增加群體抵抗多種病原體的能力** 是 MHC 表現多樣性的重要性。MHC 的多態性和多基因性使得群體中不同個體能夠呈現不同的 peptide，從而應對多樣的病原體，提高群體的生存適應性。其他選項與 MHC 多樣性的主要作用關聯性較弱或相反。"
+  },
+  {
+    "question": "在 T 細胞免疫反應的起始階段，檢查 APC 上的外來抗原主要由下列哪個分子負責？",
+    "options": {
+      "A": "CD4 分子。",
+      "B": "CD8 分子。",
+      "C": "T 細胞受體 (TCR)。",
+      "D": "B7 家族分子。",
+      "E": "ICAM-1 分子。"
+    },
+    "answer": "C",
+    "explanation": "(C) 檢查 APC 上的外來抗原主要由 **T 細胞受體 (TCR)** 負責。TCR 是 T 細胞表面特異性辨識抗原的受體，通過與 APC 表面 MHC-peptide 複合體結合，啟動 T 細胞免疫反應。"
+  },
+  {
+    "question": "T 細胞活化過程中，T 細胞表面的輔助分子 CD28 主要與 APC 表面的哪個分子交互作用，提供 costimulatory signal？",
+    "options": {
+      "A": "MHC class I 分子。",
+      "B": "MHC class II 分子。",
+      "C": "ICAM-1 分子。",
+      "D": "B7 家族分子 (例如 B7-1/CD80, B7-2/CD86)。",
+      "E": "LFA-3 分子。"
+    },
+    "answer": "D",
+    "explanation": "(D) T 細胞表面的輔助分子 CD28 主要與 APC 表面的 **B7 家族分子 (例如 B7-1/CD80, B7-2/CD86)** 交互作用，提供 costimulatory signal，是 T 細胞完全活化所必需的第二訊號。"
+  },
+  {
+    "question": "T 細胞與 APC 或靶細胞之間形成免疫突觸 (immunological synapse) 時，下列哪個分子對維持細胞間的黏附**最為重要**？",
+    "options": {
+      "A": "T 細胞受體 (TCR)。",
+      "B": "CD28 分子。",
+      "C": "LFA-1 (淋巴球功能相關抗原-1) 和 ICAM-1 (細胞間黏附分子-1)。",
+      "D": "CD4 分子。",
+      "E": "CD3 分子。"
+    },
+    "answer": "C",
+    "explanation": "(C) **LFA-1 (淋巴球功能相關抗原-1) 和 ICAM-1 (細胞間黏附分子-1)** 對維持細胞間的黏附 **最為重要**。LFA-1 是 T 細胞表面的 integrin 分子，與 APC 或靶細胞表面的 ICAM-1 結合，增強細胞間的黏附，促進免疫突觸的形成和穩定。"
+  },
+  {
+    "question": "在 TCR 訊號傳遞途徑中，LAT (Linker for activation of T cells) 的主要功能是？",
+    "options": {
+      "A": "直接活化 PLC-γ1。",
+      "B": "作為一個支架蛋白，募集下游訊號分子。",
+      "C": "磷酸化 ZAP70。",
+      "D": "促進鈣離子內流。",
+      "E": "活化 Ras-MAPK 途徑。"
+    },
+    "answer": "B",
+    "explanation": "(B) LAT (Linker for activation of T cells) 的主要功能是 **作為一個支架蛋白，募集下游訊號分子**。LAT 被 ZAP70 磷酸化後，成為一個 docking site，募集 PLC-γ1, Grb2, SOS, GADS, SLP-76 等訊號分子，形成訊號複合體，啟動下游訊號途徑。"
+  },
+  {
+    "question": "下列哪個分子直接參與活化 Ras-MAPK 訊號途徑，在 TCR 訊號傳遞中發揮重要作用？",
+    "options": {
+      "A": "PLC-γ1。",
+      "B": "IP3。",
+      "C": "DAG。",
+      "D": "SOS (Son of Sevenless)。",
+      "E": "鈣調蛋白 (Calmodulin)。"
+    },
+    "answer": "D",
+    "explanation": "(D) **SOS (Son of Sevenless)** 直接參與活化 Ras-MAPK 訊號途徑。SOS 是一種鳥嘌呤核苷酸交換因子 (GEF)，促進 Ras 蛋白結合 GTP，活化 Ras，進而啟動 MAPK 訊號途徑。PLC-γ1 活化後產生 IP3 和 DAG，IP3 升高鈣離子濃度，DAG 活化 PKC，鈣調蛋白是鈣離子結合蛋白，但不直接活化 Ras-MAPK 途徑。"
+  },
+  {
+    "question": "在 T 細胞活化後，代謝活動會發生顯著改變，主要表現為？",
+    "options": {
+      "A": "氧化磷酸化水平顯著提高。",
+      "B": "糖酵解途徑受到抑制。",
+      "C": "細胞主要依賴氧化磷酸化獲取能量。",
+      "D": "細胞主要依賴有氧糖酵解 (Aerobic glycolysis) 獲取能量。",
+      "E": "脂肪酸代謝成為主要的能量來源。"
+    },
+    "answer": "D",
+    "explanation": "(D) 在 T 細胞活化後，代謝活動會發生顯著改變，主要表現為 **細胞主要依賴有氧糖酵解 (Aerobic glycolysis) 獲取能量**。靜止的 naïve T 細胞主要通過氧化磷酸化獲取能量，活化後代謝模式轉向有氧糖酵解，即使在有氧條件下也主要進行糖酵解，以快速產生能量和生物合成前體，支持細胞增殖和功能發揮，類似於癌細胞的 Warburg effect。"
+  },
+  {
+    "question": "CAR-T 細胞療法中，CAR 分子的胞外區抗原辨識結構通常是什麼？",
+    "options": {
+      "A": "完整的抗體分子 (IgG)。",
+      "B": "T 細胞受體 αβ 鏈 (TCRαβ)。",
+      "C": "單鏈抗體片段 (scFv)。",
+      "D": "MHC class I 分子。",
+      "E": "MHC class II 分子。"
+    },
+    "answer": "C",
+    "explanation": "(C) CAR-T 細胞療法中，CAR 分子的胞外區抗原辨識結構通常是 **單鏈抗體片段 (scFv)**。scFv 包含抗體的可變區重鏈 (VH) 和輕鏈 (VL)，通過 linker 連接，保留了抗體的抗原結合特異性，且體積小，易於基因工程操作。"
+  },
+  {
+    "question": "CAR-T 細胞療法**不具備**下列哪個優點？",
+    "options": {
+      "A": "能夠辨識 MHC 分子非依賴性的腫瘤抗原。",
+      "B": "可以精準靶向腫瘤細胞，減少對正常細胞的傷害。",
+      "C": "製備過程簡單快捷，成本低廉。",
+      "D": "在某些血液腫瘤治療中取得了顯著的臨床療效。",
+      "E": "可以通過基因工程改造，增強 T 細胞的功能。"
+    },
+    "answer": "C",
+    "explanation": "(C) CAR-T 細胞療法 **不具備** 的優點是 **製備過程簡單快捷，成本低廉**。CAR-T 細胞療法製備過程複雜，需要從患者體內分離 T 細胞，進行基因改造，體外擴增，再回輸患者體內，成本非常高昂。其他選項都是 CAR-T 細胞療法的優點。"
+  },
+  {
+    "question": "第五代 CAR-T 細胞 (5th Gen. CAR-T) 與前幾代 CAR-T 細胞相比，主要增加了哪個功能模組？",
+    "options": {
+      "A": "CD28 costimulatory domain。",
+      "B": "4-1BB costimulatory domain。",
+      "C": "細胞激素誘導模組 (cytokine inducer module)，例如 IL-12。",
+      "D": "STAT3 誘導模組 (STAT3 inducer module)。",
+      "E": "TCRαβ 結構。"
+    },
+    "answer": "D",
+    "explanation": "(D) 第五代 CAR-T 細胞 (5th Gen. CAR-T) 與前幾代 CAR-T 細胞相比，主要增加了 **STAT3 誘導模組 (STAT3 inducer module)**。STAT3 是一個轉錄因子，參與細胞存活、增殖和免疫抑制等過程。第五代 CAR-T 細胞通過引入 STAT3 誘導模組，旨在增強 CAR-T 細胞的持久性和抗腫瘤活性。"
+  },
+  {
+    "question": "關於 TCR signaling 途徑中，LCK 磷酸化 CD3 ITAMs 的意義，下列敘述何者**最準確**？",
+    "options": {
+      "A": "直接活化下游轉錄因子，啟動基因表達。",
+      "B": "創建 ZAP70 的 docking site，募集 ZAP70 到 TCR-CD3 複合體附近。",
+      "C": "抑制 PLC-γ1 的活性，負向調節 TCR 訊號。",
+      "D": "促進胞內鈣離子釋放。",
+      "E": "穩定 TCR-MHC-peptide 複合體的結構。"
+    },
+    "answer": "B",
+    "explanation": "(B) **最準確** 的敘述是 **創建 ZAP70 的 docking site，募集 ZAP70 到 TCR-CD3 複合體附近**。ITAMs (Immunoreceptor tyrosine-based activation motifs) 被磷酸化後，成為 SH2 domain 蛋白的結合位點，ZAP70 含有 SH2 domain，可以結合磷酸化的 ITAMs，被募集到 TCR-CD3 複合體附近，進而被 LCK 磷酸化活化，啟動下游訊號。"
+  },
+  {
+    "question": "關於 TCR signaling 途徑中，ZAP70 磷酸化 LAT (Linker for activation of T cells) 的意義，下列敘述何者**最準確**？",
+    "options": {
+      "A": "直接活化 Ras-MAPK 途徑。",
+      "B": "抑制 PLC-γ1 的活性。",
+      "C": "創建多個下游訊號分子的 docking site，形成訊號複合體。",
+      "D": "促進胞內鈣離子釋放。",
+      "E": "穩定 TCR-MHC-peptide 複合體的結構。"
+    },
+    "answer": "C",
+    "explanation": "(C) **最準確** 的敘述是 **創建多個下游訊號分子的 docking site，形成訊號複合體**。LAT 被 ZAP70 磷酸化後，磷酸化的酪胺酸殘基成為 SH2 domain 蛋白的結合位點，募集 PLC-γ1, Grb2, SOS, GADS, SLP-76 等訊號分子，形成 LAT signalosome，作為一個訊號平台，放大和整合 TCR 訊號。"
+  },
+  {
+    "question": "在 TCR signaling 途徑中，VAV1 的主要功能是？",
+    "options": {
+      "A": "活化 PLC-γ1。",
+      "B": "促進胞內鈣離子釋放。",
+      "C": "活化 Ras-MAPK 途徑。",
+      "D": "調節細胞骨架重組。",
+      "E": "活化轉錄因子 NF-κB。"
+    },
+    "answer": "D",
+    "explanation": "(D) 在 TCR signaling 途徑中，**VAV1 的主要功能是調節細胞骨架重組**。VAV1 是一種鳥嘌呤核苷酸交換因子 (GEF)，作用於 Rho 家族 GTP 酶，例如 Rac 和 Rho，調節 actin 細胞骨架的重組，參與 T 細胞的活化、運動、免疫突觸形成等過程。"
+  },
+  {
+    "question": "在 T 細胞免疫反應中，Interferon-γ (IFN-γ) 的主要作用**不包含**下列哪一項？",
+    "options": {
+      "A": "活化巨噬細胞 (Macrophage)，增強其殺菌能力。",
+      "B": "促進 Class I MHC 分子在多種細胞上的表達。",
+      "C": "抑制病毒複製。",
+      "D": "促進 B 細胞抗體分泌。",
+      "E": "參與 Th1 型免疫反應的極化。"
+    },
+    "answer": "D",
+    "explanation": "(D) **不包含** 的作用是 **促進 B 細胞抗體分泌**。IFN-γ 主要參與細胞介導的免疫反應，特別是 Th1 型免疫反應，可以活化巨噬細胞，增強殺菌能力，促進 Class I MHC 分子表達，抑制病毒複製，並參與 Th1 極化。但 IFN-γ 主要促進 B 細胞的 Class switch，而非直接促進抗體分泌。促進 B 細胞抗體分泌主要由其他細胞激素，例如 IL-4, IL-5, IL-6 等負責。"
+  },
+  {
+    "question": "在 Class I MHC 呈現途徑中，Immunoproteasome 與 constitutive proteasome 的主要區別在於？",
+    "options": {
+      "A": "Immunoproteasome 只在免疫細胞中表達，constitutive proteasome 在所有細胞中表達。",
+      "B": "Immunoproteasome 能夠降解 MHC class II 分子，constitutive proteasome 降解 MHC class I 分子。",
+      "C": "Immunoproteasome 的活性部位次單元組成不同，肽酶活性有所差異。",
+      "D": "Immunoproteasome 只在內質網 (ER) 中發揮作用，constitutive proteasome 在細胞質中發揮作用。",
+      "E": "Immunoproteasome 的功能是將 peptide 轉運到 ER，constitutive proteasome 的功能是降解細胞質蛋白。"
+    },
+    "answer": "C",
+    "explanation": "(C) Immunoproteasome 與 constitutive proteasome 的主要區別在於 **Immunoproteasome 的活性部位次單元組成不同，肽酶活性有所差異**。Immunoproteasome 是在 Interferon-γ 等細胞激素誘導下產生的 proteasome 亞型，其活性部位次單元被 βi 次單元 (例如 β1i, β2i, β5i) 取代，導致肽酶活性改變，更適合產生 MHC class I 分子呈現的 peptide。"
+  },
+  {
+    "question": "關於 MHC gene locus (基因座) 的多基因性 (Polygeny)，下列敘述何者**正確**？",
+    "options": {
+      "A": "一個個體只能表達一種 MHC class I 分子和一種 MHC class II 分子。",
+      "B": "MHC gene locus 只包含 Class I MHC 基因，不包含 Class II MHC 基因。",
+      "C": "MHC gene locus 包含多個 Class I MHC 基因 (例如 HLA-B, HLA-C, HLA-A) 和多個 Class II MHC 基因 (例如 HLA-DP, HLA-DQ, HLA-DR)。",
+      "D": "多基因性主要體現在 MHC class Ib 分子上，Class Ia 和 Class II MHC 分子不具有多基因性。",
+      "E": "MHC gene locus 的多基因性是由於基因重複 (gene duplication) 造成的。"
+    },
+    "answer": "C",
+    "explanation": "(C) 敘述**正確**。**MHC gene locus 包含多個 Class I MHC 基因 (例如 HLA-B, HLA-C, HLA-A) 和多個 Class II MHC 基因 (例如 HLA-DP, HLA-DQ, HLA-DR)**。多基因性意指 MHC gene locus 包含多個功能相似但結構不同的基因，使得一個個體可以表達多種不同類型的 MHC 分子，擴大抗原呈現範圍。"
+  },
+  {
+    "question": "關於 MHC 等位基因的共顯性 (Codominant) 表現，下列敘述何者**正確**？",
+    "options": {
+      "A": "個體只表達來自父母一方的 MHC 等位基因。",
+      "B": "來自父母雙方的 MHC 等位基因在細胞表面隨機選擇性表達。",
+      "C": "來自父母雙方的 MHC 等位基因在細胞表面同時表達。",
+      "D": "共顯性表現只發生在 MHC class II 分子上，Class I MHC 分子不具有共顯性。",
+      "E": "共顯性表現的意義是降低自體免疫反應的發生率。"
+    },
+    "answer": "C",
+    "explanation": "(C) 敘述**正確**。**來自父母雙方的 MHC 等位基因在細胞表面同時表達** 是 MHC 等位基因共顯性 (Codominant) 表現的特徵。共顯性表現使得每個個體細胞表面表達的 MHC 分子種類更多，擴大抗原呈現範圍，提高免疫系統的識別能力。"
+  },
+  {
+    "question": "在 Class II MHC 抗原呈現途徑中，CLIP (Class II-associated invariant chain peptide) 的作用是？",
+    "options": {
+      "A": "協助 MHC class II 分子組裝。",
+      "B": "將 peptide 轉運到 ER。",
+      "C": "阻止 MHC class II 分子與溶酶體酶結合。",
+      "D": "佔據 MHC class II 分子的 peptide 結合槽，直到外源性 peptide 交換。",
+      "E": "促進 MHC class II 分子從 ER 運送到晚期內體。"
+    },
+    "answer": "D",
+    "explanation": "(D) CLIP (Class II-associated invariant chain peptide) 的作用是 **佔據 MHC class II 分子的 peptide 結合槽，直到外源性 peptide 交換**。CLIP 是 Invariant chain (Ii) 降解後留下的片段，結合在 MHC II 分子的 peptide 結合槽中，阻止 MHC II 分子提前與其他 peptide 結合，確保 MHC II 分子能夠在晚期內體/溶酶體中與外源性 peptide 結合。"
+  },
+  {
+    "question": "在 Class II MHC 抗原呈現途徑中，HLA-DM 促進 peptide 交換的機制主要是？",
+    "options": {
+      "A": "直接切割 CLIP 片段。",
+      "B": "競爭性結合 MHC class II 分子的 peptide 結合槽。",
+      "C": "改變 MHC class II 分子構象，降低 CLIP 的親和力，促進 CLIP 脫落。",
+      "D": "磷酸化 CLIP，使其更容易被蛋白酶降解。",
+      "E": "將外源性 peptide 運送到 MHC class II 分子附近。"
+    },
+    "answer": "C",
+    "explanation": "(C) HLA-DM 促進 peptide 交換的機制主要是 **改變 MHC class II 分子構象，降低 CLIP 的親和力，促進 CLIP 脫落**。HLA-DM 與 MHC II 分子結合，誘導 MHC II 分子構象改變，使得 CLIP 與 MHC II 分子的結合不穩定，容易脫落，從而允許外源性 peptide 結合。"
+  },
+  {
+    "question": "關於 CAR-T 細胞療法的總結，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "CAR-T 細胞療法是一種基因工程化的 T 細胞療法。",
+      "B": "CAR-T 細胞能夠辨識 MHC 分子非依賴性的腫瘤抗原。",
+      "C": "CAR-T 細胞療法在所有類型的癌症治療中都非常有效。",
+      "D": "CAR-T 細胞療法存在潛在的副作用，例如細胞激素釋放症候群 (CRS)。",
+      "E": "CAR-T 細胞療法的研究和發展仍在不斷進步。"
+    },
+    "answer": "C",
+    "explanation": "(C) 敘述**錯誤**。**CAR-T 細胞療法在所有類型的癌症治療中都非常有效** 是不準確的。雖然 CAR-T 細胞療法在某些血液腫瘤，例如 B 細胞淋巴瘤和急性淋巴細胞白血病中取得了顯著的療效，但在實體腫瘤治療中效果仍有限，仍面臨許多挑戰。其他選項都是 CAR-T 細胞療法的正確描述。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子在 TCR 訊號傳遞途徑中**最先**被磷酸化？",
+    "options": {
+      "A": "ZAP70。",
+      "B": "LAT。",
+      "C": "PLCγ1。",
+      "D": "CD3 的 ITAMs。",
+      "E": "SOS。"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據圖示，**CD3 的 ITAMs** 在 TCR 訊號傳遞途徑中 **最先** 被磷酸化。圖示步驟 (1) 表明，LCK 首先磷酸化 CD3 的 ITAMs，然後步驟 (2) ZAP70 被募集並被 LCK 磷酸化，步驟 (3) ZAP70 再磷酸化 LAT 等下游分子。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子**直接**活化 PLCγ1？",
+    "options": {
+      "A": "LCK。",
+      "B": "ZAP70。",
+      "C": "LAT。",
+      "D": "CD3 的 ITAMs。",
+      "E": "SOS。"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據圖示，**LAT** **直接**活化 PLCγ1。圖示步驟 (3) 表明，ZAP70 磷酸化 LAT，而 PLCγ1 結合磷酸化的 LAT，暗示 LAT 活化 PLCγ1。雖然 ZAP70 磷酸化 LAT，但直接活化 PLCγ1 的分子是 LAT 本身作為一個支架蛋白和募集平台。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子參與活化 Ca2+ flux (鈣離子內流)？",
+    "options": {
+      "A": "LCK。",
+      "B": "ZAP70。",
+      "C": "LAT。",
+      "D": "PLCγ1。",
+      "E": "IP3。"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據圖示，**PLCγ1** 參與活化 Ca2+ flux (鈣離子內流)。圖示顯示 PLCγ1 活化後產生 IP3，而 IP3 進一步導致 Ca2+ flux。因此 PLCγ1 是 Ca2+ flux 上游的活化分子。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子在 TCR signaling 途徑中**不屬於**訊號傳遞的酶 (enzyme)？",
+    "options": {
+      "A": "LCK。",
+      "B": "ZAP70。",
+      "C": "PLCγ1。",
+      "D": "SOS。",
+      "E": "LAT。"
+    },
+    "answer": "E",
+    "explanation": "(E) 根據圖示，**LAT** 在 TCR signaling 途徑中 **不屬於** 訊號傳遞的酶 (enzyme)。LCK 和 ZAP70 是酪胺酸激酶 (tyrosine kinase)，PLCγ1 是磷脂酶 (phospholipase)，SOS 是鳥嘌呤核苷酸交換因子 (GEF)，都屬於酶。LAT 是一個支架蛋白 (scaffold protein)，本身不具酶活性，但通過募集和組織酶及其他訊號分子，參與訊號傳遞。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子在 TCR signaling 途徑中**不屬於**胞內訊號分子？",
+    "options": {
+      "A": "LCK。",
+      "B": "ZAP70。",
+      "C": "LAT。",
+      "D": "CD3。",
+      "E": "SOS。"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據圖示，**CD3** 在 TCR signaling 途徑中 **不屬於** 胞內訊號分子 (嚴格意義上)。雖然 CD3 是 TCR 複合體的重要組成部分，且其 ITAMs 區域位於胞內，但 CD3 本身主要是作為 TCR 的訊號傳導亞單元，將 TCR 的抗原辨識訊號傳遞到胞內，更偏向於訊號傳導的結構組件。LCK, ZAP70, LAT, SOS 都是明確的胞內訊號分子，參與訊號級聯反應。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子在 TCR signaling 途徑中**位於最上游** (closest to the receptor)？",
+    "options": {
+      "A": "LCK。",
+      "B": "ZAP70。",
+      "C": "LAT。",
+      "D": "PLCγ1。",
+      "E": "SOS。"
+    },
+    "answer": "A",
+    "explanation": "(A) 根據圖示，**LCK** 在 TCR signaling 途徑中 **位於最上游** (closest to the receptor)。圖示步驟 (1) 表明，LCK 是第一個被活化的酶，直接作用於 CD3 的 ITAMs，啟動整個訊號傳遞級聯反應。ZAP70, LAT, PLCγ1, SOS 都是 LCK 的下游分子。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子在 TCR signaling 途徑中**位於最下游** (farthest from the receptor)？",
+    "options": {
+      "A": "LCK。",
+      "B": "ZAP70。",
+      "C": "LAT。",
+      "D": "PLCγ1。",
+      "E": "VAV1。"
+    },
+    "answer": "E",
+    "explanation": "(E) 根據圖示，**VAV1** 在 TCR signaling 途徑中 **位於最下游** (farthest from the receptor) (在給出的選項中)。圖示將 VAV1 置於訊號途徑的末端，與 Activation of RAS, MAPK, NFκB, mTOR pathways, cytoskeletal rearrangements, and changes in transcription and translation 並列，暗示 VAV1 的作用更接近於最終的細胞效應器，雖然圖示簡化了實際的複雜訊號網絡，但在給定的選項中，VAV1 相對更下游。"
+  },
+  {
+    "question": "根據圖示，下列哪個分子在 TCR signaling 途徑中**直接**導致 IP3 的產生？",
+    "options": {
+      "A": "LCK。",
+      "B": "ZAP70。",
+      "C": "LAT。",
+      "D": "PLCγ1。",
+      "E": "SOS。"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據圖示，**PLCγ1** 在 TCR signaling 途徑中 **直接** 導致 IP3 的產生。圖示清晰地顯示 PLCγ1 酶催化 PI(4,5)P2 水解，產生 IP3 和 DAG。其他選項分子都位於 PLCγ1 的上游。"
+  }
+]
