@@ -14,7 +14,7 @@ let questionHistory = [];
 // GitHub API相關資訊
 const GITHUB_USER = 'jedieason'; // 替換為您的GitHub用戶名
 const GITHUB_REPO = 'Trivia.tw'; // 替換為您的存儲庫名稱
-const GITHUB_FOLDER_PATH = '113-2'; // JSON檔案所在的目錄
+const GITHUB_FOLDER_PATH = '113-2Midterm'; // JSON檔案所在的目錄
 
 const userQuestionInput = document.getElementById('userQuestion');
 
@@ -593,6 +593,7 @@ window.addEventListener("beforeunload", function (event) {
     event.returnValue = '';
 });
 
+// 修改後的 fetchJsonFiles()：讀取 113-2 目錄，判斷檔案或資料夾
 async function fetchJsonFiles() {
     const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FOLDER_PATH}`;
     try {
@@ -602,20 +603,31 @@ async function fetchJsonFiles() {
         }
         const data = await response.json();
         const buttonContainer = document.getElementById('button-row');
+        buttonContainer.innerHTML = '';  // 清空原有按鈕
         data.forEach(item => {
-            if (item.type === 'file' && item.name.endsWith('.json')) {
-                const relativePath = item.path.replace(/\\/g, '/');
-                const button = document.createElement('button');
-                button.classList.add('select-button');
-                button.dataset.json = relativePath;
-                button.innerText = item.name.replace('.json', '');
-                button.addEventListener('click', () => {
+            if (item.type === 'dir') {
+                // 若是資料夾，建立一個可展開的按鈕
+                const folderButton = document.createElement('button');
+                folderButton.classList.add('select-button');
+                folderButton.dataset.dir = item.path;
+                folderButton.innerText = item.name;
+                folderButton.addEventListener('click', () => {
+                    fetchFolderFiles(item.path);
+                });
+                buttonContainer.appendChild(folderButton);
+            } else if (item.type === 'file' && item.name.endsWith('.json')) {
+                // 若資料夾內也直接放檔案，就直接顯示
+                const fileButton = document.createElement('button');
+                fileButton.classList.add('select-button');
+                fileButton.dataset.json = item.path;
+                fileButton.innerText = item.name.replace('.json', '');
+                fileButton.addEventListener('click', () => {
                     const allButtons = document.querySelectorAll('.select-button');
                     allButtons.forEach(btn => btn.classList.remove('selected'));
-                    button.classList.add('selected');
-                    selectedJson = button.dataset.json;
+                    fileButton.classList.add('selected');
+                    selectedJson = fileButton.dataset.json;
                 });
-                buttonContainer.appendChild(button);
+                buttonContainer.appendChild(fileButton);
             }
         });
     } catch (error) {
@@ -624,7 +636,49 @@ async function fetchJsonFiles() {
     }
 }
 
+// 新增：讀取指定資料夾內的 JSON 檔案
+async function fetchFolderFiles(folderPath) {
+    const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folderPath}`;
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+        }
+        const data = await response.json();
+        const buttonContainer = document.getElementById('button-row');
+        buttonContainer.innerHTML = '';  // 清空按鈕容器
+
+        // 新增返回上一層的按鈕
+        data.forEach(item => {
+            if (item.type === 'file' && item.name.endsWith('.json')) {
+                const fileButton = document.createElement('button');
+                fileButton.classList.add('select-button');
+                fileButton.dataset.json = item.path;
+                fileButton.innerText = item.name.replace('.json', '');
+                fileButton.addEventListener('click', () => {
+                    const allButtons = document.querySelectorAll('.select-button');
+                    allButtons.forEach(btn => btn.classList.remove('selected'));
+                    fileButton.classList.add('selected');
+                    selectedJson = fileButton.dataset.json;
+                });
+                buttonContainer.appendChild(fileButton);
+            }
+        });
+        const backButton = document.createElement('button');
+        backButton.classList.add('back-button');
+        backButton.innerText = '← 返回';
+        backButton.addEventListener('click', fetchJsonFiles);
+        buttonContainer.appendChild(backButton);
+
+    } catch (error) {
+        console.error('Error fetching folder files from GitHub:', error);
+        showCustomAlert('資料夾內容載不出來欸，咋辦？');
+    }
+}
+
+// 初始讀取時改為執行 fetchJsonFiles()
 window.addEventListener('DOMContentLoaded', fetchJsonFiles);
+
 
 // WeeGPT相關程式碼
 const weeGPTButton = document.getElementById('WeeGPT');
