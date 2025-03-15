@@ -1,0 +1,723 @@
+
+[
+  {
+    "question": "Which of the following statements accurately describes the function of **defensins** in the innate immune system?",
+    "options": {
+      "A": "Defensins primarily function as opsonins, enhancing phagocytosis of pathogens.",
+      "B": "Defensins are antimicrobial peptides that disrupt microbial membranes by forming pores.",
+      "C": "Defensins are cytokines that primarily mediate inflammatory responses.",
+      "D": "Defensins are complement proteins that initiate the classical pathway.",
+      "E": "Defensins are enzymes that degrade bacterial cell walls, similar to lysozyme."
+    },
+    "answer": "B",
+    "explanation": "(B) Defensins are antimicrobial peptides (AMPs) known for their ability to insert into microbial membranes and create pores, leading to microbial death."
+  },
+  {
+    "question": "What is the primary role of **Mannose-binding lectin (MBL)** in innate immunity?",
+    "options": {
+      "A": "To directly lyse virus-infected cells through the formation of MAC.",
+      "B": "To activate NK cells to release IFN-γ.",
+      "C": "To recognize and bind to mannose residues on pathogen surfaces, initiating the lectin pathway of complement activation.",
+      "D": "To function as a chemokine, attracting neutrophils to the site of infection.",
+      "E": "To inhibit the alternative pathway of complement activation to prevent autoimmunity."
+    },
+    "answer": "C",
+    "explanation": "(C) MBL is a pattern recognition receptor that binds to mannose on pathogens and activates the lectin pathway of the complement system."
+  },
+  {
+    "question": "Which of the following components are correctly associated with the **classical pathway** of complement activation?",
+    "options": {
+      "A": "Factor B",
+      "B": "Properdin",
+      "C": "C1q",
+      "D": "C4b2a",
+      "E": "Mannose-binding lectin"
+    },
+    "answer": ["C", "D"],
+    "explanation": "(C) C1q is the initiating component of the classical pathway, recognizing antibody-antigen complexes. (D) C4b2a is the C3 convertase formed in the classical and lectin pathways."
+  },
+  {
+    "question": "The **alternative pathway** of complement activation is unique because it can be initiated:",
+    "options": {
+      "A": "Only in the presence of specific antibodies bound to pathogen surfaces.",
+      "B": "By mannose residues on microbial surfaces binding to MBL.",
+      "C": "Spontaneously, through 'C3 tickover' and stabilization on microbial surfaces.",
+      "D": "Solely by C-reactive protein binding to phosphocholine on bacteria.",
+      "E": "Through the direct recognition of pathogen-associated molecular patterns (PAMPs) by TLRs."
+    },
+    "answer": "C",
+    "explanation": "(C) The alternative pathway can be initiated spontaneously via the hydrolysis of C3, known as 'C3 tickover', and subsequent stabilization of the pathway components on microbial surfaces."
+  },
+  {
+    "question": "What is the role of **C3 convertase** in the complement cascade?",
+    "options": {
+      "A": "To directly form pores in microbial membranes, leading to lysis.",
+      "B": "To cleave C3 into C3a and C3b, which are crucial for opsonization and further complement activation.",
+      "C": "To activate C5, initiating the formation of the Membrane Attack Complex (MAC).",
+      "D": "To inhibit complement activation on host cells, preventing autoimmune damage.",
+      "E": "To recruit immune cells to the site of infection by acting as a chemokine."
+    },
+    "answer": "B",
+    "explanation": "(B) C3 convertase is a central enzyme in all complement pathways, responsible for cleaving C3 into C3a (anaphylatoxin) and C3b (opsonin and convertase component)."
+  },
+  {
+    "question": "Which of the following is NOT a known function of **C5a**?",
+    "options": {
+      "A": "Chemotaxis of neutrophils and macrophages to the infection site.",
+      "B": "Induction of inflammatory responses by activating mast cells.",
+      "C": "Opsonization of pathogens to enhance phagocytosis.",
+      "D": "Increase of vascular permeability.",
+      "E": "Activation of endothelial cells."
+    },
+    "answer": "C",
+    "explanation": "(C) C5a is primarily an anaphylatoxin and chemoattractant. Opsonization is mainly mediated by C3b, not C5a."
+  },
+  {
+    "question": "The **Membrane Attack Complex (MAC)** is formed by the sequential assembly of which complement proteins?",
+    "options": {
+      "A": "C1q, C1r, C1s, C4, C2",
+      "B": "C3b, Bb, Properdin",
+      "C": "MBL, MASP-1, MASP-2, C4, C2",
+      "D": "C5b, C6, C7, C8, C9",
+      "E": "C3a, C4a, C5a"
+    },
+    "answer": "D",
+    "explanation": "(D) The MAC is formed by the late complement components: C5b initiates the assembly, followed by C6, C7, C8, and polymerization of C9 to form a pore in the target cell membrane."
+  },
+  {
+    "question": "Which of the following best describes the **sequential order of complement protein action** in the classical pathway?",
+    "options": {
+      "A": "C1 → C2 → C4 → C3 → C5",
+      "B": "C1 → C4 → C2 → C3 → C5",
+      "C": "C3 → C4 → C2 → C1 → C5",
+      "D": "C4 → C2 → C3 → C5 → C1",
+      "E": "C2 → C4 → C1 → C3 → C5"
+    },
+    "answer": "B",
+    "explanation": "(B) The classical pathway sequence is C1, then C4, then C2, leading to C3 convertase formation, and finally C5 convertase and MAC formation."
+  },
+  {
+    "question": "What distinguishes **C2a** from **C2b** in the complement system?",
+    "options": {
+      "A": "C2a is a small subunit, while C2b is the large subunit.",
+      "B": "C2a is the large subunit and is the active enzymatic component of C3 convertase, while C2b is the small subunit.",
+      "C": "C2a is involved in opsonization, while C2b is involved in inflammation.",
+      "D": "C2a is specific to the classical pathway, while C2b is specific to the alternative pathway.",
+      "E": "C2a activates MAC formation, while C2b inhibits it."
+    },
+    "answer": "B",
+    "explanation": "(B) In a deviation from the typical 'a' small, 'b' large rule, C2a is the larger, active subunit of C3 convertase (C4b2a), and C2b is the smaller subunit with less understood function."
+  },
+  {
+    "question": "Which of the following is an example of a **circulating effector protein** in the innate immune system?",
+    "options": {
+      "A": "Epithelial barrier",
+      "B": "Intraepithelial lymphocytes",
+      "C": "Complement",
+      "D": "Defensin",
+      "E": "Keratinocyte"
+    },
+    "answer": "C",
+    "explanation": "(C) Complement proteins are circulating effector proteins in the blood that participate in innate immune responses, unlike barriers, cells, or localized peptides."
+  },
+  {
+    "question": "How do **regulatory proteins** prevent complement from damaging host cells?",
+    "options": {
+      "A": "By directly inhibiting the production of complement proteins in the liver.",
+      "B": "By making host cell membranes resistant to MAC insertion.",
+      "C": "By interfering with complement activation steps on host cell surfaces, such as by disrupting C3 convertase.",
+      "D": "By enhancing the activity of C5a anaphylatoxin, diverting complement away from host tissues.",
+      "E": "By promoting the rapid clearance of all complement components from circulation."
+    },
+    "answer": "C",
+    "explanation": "(C) Regulatory proteins on host cells, like DAF and CR1, disrupt complement activation, particularly at the C3 convertase step, preventing amplification and damage to self-tissues."
+  },
+  {
+    "question": "What is the significance of **tight junctions** in epithelial barriers?",
+    "options": {
+      "A": "They facilitate the movement of immune cells across the epithelial layer.",
+      "B": "They are responsible for mucus secretion on epithelial surfaces.",
+      "C": "They create a seal between epithelial cells, preventing pathogen penetration between cells.",
+      "D": "They enhance the phagocytic activity of epithelial cells.",
+      "E": "They promote the shedding of epithelial cells to eliminate pathogens."
+    },
+    "answer": "C",
+    "explanation": "(C) Tight junctions are crucial for epithelial barrier function as they form impermeable seals between adjacent epithelial cells, blocking paracellular pathogen entry."
+  },
+  {
+    "question": "Which of the following is an example of a **mechanical barrier** in the innate immune system?",
+    "options": {
+      "A": "Lysozyme in tears",
+      "B": "Antimicrobial peptides in skin",
+      "C": "Epithelial layer of the skin",
+      "D": "Complement proteins in serum",
+      "E": "Interferons"
+    },
+    "answer": "C",
+    "explanation": "(C) The epithelial layer of the skin serves as a physical or mechanical barrier, preventing pathogen entry. Lysozyme and AMPs are chemical barriers, while complement and interferons are soluble effector molecules."
+  },
+  {
+    "question": "What is the function of **goblet cells** in the respiratory and gastrointestinal tracts?",
+    "options": {
+      "A": "To secrete antimicrobial peptides that kill pathogens.",
+      "B": "To phagocytose pathogens that breach the epithelial barrier.",
+      "C": "To produce mucus, which traps pathogens and facilitates their removal.",
+      "D": "To present antigens to T cells, initiating adaptive immune responses.",
+      "E": "To form tight junctions that prevent pathogen entry."
+    },
+    "answer": "C",
+    "explanation": "(C) Goblet cells are specialized epithelial cells that secrete mucus, a viscous fluid that traps pathogens and is cleared by cilia or peristalsis, providing a barrier function."
+  },
+  {
+    "question": "**Pulmonary surfactant** in the lungs is primarily composed of:",
+    "options": {
+      "A": "Mucin and water",
+      "B": "Lysozyme and defensins",
+      "C": "Phospholipids and proteins",
+      "D": "Immunoglobulins and complement proteins",
+      "E": "Fibronectin and collagen"
+    },
+    "answer": "C",
+    "explanation": "(C) Pulmonary surfactant is mainly composed of phospholipids (about 90%) and proteins (about 10%), which reduce surface tension in the alveoli, but surfactant proteins also have immune functions."
+  },
+  {
+    "question": "Which surfactant proteins, **SP-A** and **SP-D**, contribute to innate immunity in the lungs?",
+    "options": {
+      "A": "By reducing alveolar surface tension only.",
+      "B": "By directly killing bacteria through pore formation.",
+      "C": "By binding to pathogen surface carbohydrates, facilitating opsonization and clearance.",
+      "D": "By activating the classical complement pathway through C1q binding.",
+      "E": "By inducing the production of antimicrobial peptides in alveolar macrophages."
+    },
+    "answer": "C",
+    "explanation": "(C) SP-A and SP-D are collectins in the lung surfactant that bind to carbohydrates on pathogens, acting as opsonins and enhancing phagocytosis by alveolar macrophages."
+  },
+  {
+    "question": "What is the mechanism of action of **lysozyme** against bacteria?",
+    "options": {
+      "A": "It disrupts bacterial cell membranes by forming pores.",
+      "B": "It inhibits bacterial protein synthesis.",
+      "C": "It cleaves peptidoglycans in bacterial cell walls, leading to bacterial lysis.",
+      "D": "It neutralizes bacterial toxins.",
+      "E": "It activates the complement system on bacterial surfaces."
+    },
+    "answer": "C",
+    "explanation": "(C) Lysozyme is a glycosidase that breaks down the β-1,4-glycosidic bonds in peptidoglycan, a major component of bacterial cell walls, leading to cell lysis."
+  },
+  {
+    "question": "Which cell type in the epidermis is primarily responsible for producing **defensins** and **cathelicidin**?",
+    "options": {
+      "A": "Melanocytes",
+      "B": "Langerhans cells",
+      "C": "Keratinocytes",
+      "D": "Merkel cells",
+      "E": "Fibroblasts"
+    },
+    "answer": "C",
+    "explanation": "(C) Keratinocytes, the predominant cell type in the epidermis, produce antimicrobial peptides like β-defensins and cathelicidin as part of the skin's chemical barrier."
+  },
+  {
+    "question": "What is the role of **Paneth cells** in the gut?",
+    "options": {
+      "A": "To absorb nutrients and water in the small intestine.",
+      "B": "To secrete mucus that lubricates the intestinal lining.",
+      "C": "To produce antimicrobial peptides like α-defensins and RegIII to maintain gut microbial balance.",
+      "D": "To present antigens to immune cells in the Peyer's patches.",
+      "E": "To regulate gut motility and peristalsis."
+    },
+    "answer": "C",
+    "explanation": "(C) Paneth cells, located in the crypts of Lieberkühn in the small intestine, secrete AMPs, including α-defensins and RegIII, which help control the gut microbiota and protect against pathogens."
+  },
+  {
+    "question": "Which of the following cytokines is primarily associated with **inflammation**?",
+    "options": {
+      "A": "IFN-γ",
+      "B": "IL-10",
+      "C": "TGF-β",
+      "D": "TNF-α",
+      "E": "IFN-β"
+    },
+    "answer": "D",
+    "explanation": "(D) TNF-α (Tumor Necrosis Factor-alpha), along with IL-1 and chemokines, are key cytokines that mediate inflammatory responses in the innate immune system."
+  },
+  {
+    "question": "What is the primary function of **Interferon-gamma (IFN-γ)** in innate immunity?",
+    "options": {
+      "A": "To inhibit viral replication directly.",
+      "B": "To activate macrophages, enhancing their phagocytic and microbicidal activities.",
+      "C": "To induce fever and acute phase response.",
+      "D": "To promote the differentiation of B cells into plasma cells.",
+      "E": "To suppress inflammatory responses and promote tissue repair."
+    },
+    "answer": "B",
+    "explanation": "(B) IFN-γ is a key cytokine for macrophage activation, enhancing their ability to phagocytose pathogens and produce reactive oxygen species and nitric oxide for microbial killing."
+  },
+  {
+    "question": "**IL-12** primarily promotes the production of which cytokine by NK cells and T cells?",
+    "options": {
+      "A": "IL-10",
+      "B": "TGF-β",
+      "C": "IFN-γ",
+      "D": "TNF-α",
+      "E": "IL-2"
+    },
+    "answer": "C",
+    "explanation": "(C) IL-12 is a cytokine that stimulates NK cells and T cells to produce IFN-γ, further amplifying innate and adaptive immune responses, particularly against intracellular pathogens."
+  },
+  {
+    "question": "Which cytokines are primarily involved in **antiviral defense** in the innate immune system?",
+    "options": {
+      "A": "TNF-α, IL-1, Chemokines",
+      "B": "IFN-α, IFN-β",
+      "C": "IFN-γ, IL-12",
+      "D": "IL-10, TGF-β",
+      "E": "IL-15, IL-12"
+    },
+    "answer": "B",
+    "explanation": "(B) Type I interferons, IFN-α and IFN-β, are crucial for antiviral immunity. They induce an antiviral state in cells, inhibiting viral replication and promoting immune cell activation."
+  },
+  {
+    "question": "What is the function of **IL-10** and **TGF-β** in the context of inflammation?",
+    "options": {
+      "A": "To promote and amplify inflammatory responses.",
+      "B": "To induce fever and acute phase response.",
+      "C": "To suppress inflammation and promote resolution and tissue repair.",
+      "D": "To activate NK cells and enhance cytotoxicity.",
+      "E": "To stimulate the production of antimicrobial peptides."
+    },
+    "answer": "C",
+    "explanation": "(C) IL-10 and TGF-β are immunosuppressive cytokines that function to downregulate inflammatory responses, prevent excessive tissue damage, and promote the resolution of inflammation and tissue repair."
+  },
+  {
+    "question": "Which of the following statements is **correct** regarding **Antimicrobial Peptides (AMPs)**?",
+    "options": {
+      "A": "AMPs are highly specific to a single type of bacterial species.",
+      "B": "AMPs primarily target viral pathogens, not bacteria or fungi.",
+      "C": "AMPs are synthesized as inactive precursors (Pro-AMPs) and are activated by proteolytic cleavage.",
+      "D": "AMPs are only produced by immune cells, not epithelial cells.",
+      "E": "AMPs exert their antimicrobial effects solely by disrupting the bacterial cell wall."
+    },
+    "answer": "C",
+    "explanation": "(C) AMPs are often produced as inactive pro-peptides (Pro-AMPs) and require proteolytic activation at the site of infection to prevent toxicity to host cells and ensure localized action."
+  },
+  {
+    "question": "Which of the following is a characteristic feature of **Gram-positive bacteria** that differs from Gram-negative bacteria in terms of lysozyme susceptibility?",
+    "options": {
+      "A": "Presence of an outer membrane containing lipopolysaccharide (LPS).",
+      "B": "A thick peptidoglycan layer that is more accessible to lysozyme.",
+      "C": "A thin peptidoglycan layer protected by an outer membrane.",
+      "D": "Lack of peptidoglycan in their cell wall.",
+      "E": "Presence of teichoic acid which inhibits lysozyme activity."
+    },
+    "answer": "B",
+    "explanation": "(B) Gram-positive bacteria have a thick peptidoglycan layer as their outer cell wall component, which is directly exposed to lysozyme and more susceptible to its enzymatic degradation. Gram-negative bacteria have an outer membrane that hinders lysozyme access to the peptidoglycan layer."
+  },
+  {
+    "question": "What is the role of **C1 inhibitor (C1INH)** in complement regulation?",
+    "options": {
+      "A": "To enhance the activity of C1 complex, promoting classical pathway activation.",
+      "B": "To dissociate C1r and C1s from the active C1 complex, inhibiting the classical pathway.",
+      "C": "To promote the formation of C3 convertase in the lectin pathway.",
+      "D": "To stabilize C3bBb complex in the alternative pathway.",
+      "E": "To prevent the insertion of MAC into host cell membranes."
+    },
+    "answer": "B",
+    "explanation": "(B) C1 inhibitor (C1INH) is a key regulator that controls the classical pathway by dissociating the serine proteases C1r and C1s from the active C1 complex, preventing uncontrolled activation."
+  },
+  {
+    "question": "Which of the following complement regulatory proteins promotes the **decay** of both classical and alternative pathway **C3 convertases**?",
+    "options": {
+      "A": "Factor H",
+      "B": "Properdin (Factor P)",
+      "C": "C4BP (C4-binding protein)",
+      "D": "DAF (Decay-accelerating factor)",
+      "E": "CD59"
+    },
+    "answer": "D",
+    "explanation": "(D) DAF (Decay-accelerating factor) is a membrane-bound protein that accelerates the decay of both C3 convertases: C4b2a (classical/lectin) and C3bBb (alternative), by displacing C2a and Bb respectively."
+  },
+  {
+    "question": "How does **Factor H** regulate the alternative pathway of complement activation?",
+    "options": {
+      "A": "By stabilizing the C3bBb convertase, enhancing pathway amplification.",
+      "B": "By competing with Factor B for binding to C3b, and acting as a cofactor for Factor I to cleave C3b.",
+      "C": "By inhibiting the initial 'C3 tickover' event, preventing pathway initiation.",
+      "D": "By directly inhibiting the formation of the MAC.",
+      "E": "By promoting the binding of Properdin to C3bBb, stabilizing the convertase."
+    },
+    "answer": "B",
+    "explanation": "(B) Factor H acts as a key inhibitor in the alternative pathway. It competes with Factor B for binding to C3b, preventing C3bBb formation, and it also acts as a cofactor for Factor I, which cleaves and inactivates C3b into iC3b."
+  },
+  {
+    "question": "What is the function of **CD59** in complement regulation?",
+    "options": {
+      "A": "To inhibit the formation of C3 convertase.",
+      "B": "To promote the decay of C5 convertase.",
+      "C": "To prevent the polymerization of C9 and MAC formation on host cells.",
+      "D": "To enhance the opsonization function of C3b.",
+      "E": "To activate Factor I, leading to C3b inactivation."
+    },
+    "answer": "C",
+    "explanation": "(C) CD59 (Protectin) is a membrane-bound protein that prevents the final steps of MAC formation by inhibiting the polymerization of C9, thereby protecting host cells from complement-mediated lysis."
+  },
+  {
+    "question": "Which evasion mechanism do some pathogens utilize by producing **Factor H binding protein (fHbp)**?",
+    "options": {
+      "A": "To degrade complement proteins directly using secreted proteases.",
+      "B": "To mimic host cell surface molecules, preventing complement recognition.",
+      "C": "To recruit Factor H to their surface, enhancing C3b inactivation and inhibiting complement activation.",
+      "D": "To produce molecules that directly block C3 convertase activity.",
+      "E": "To induce the shedding of complement components from their surface."
+    },
+    "answer": "C",
+    "explanation": "(C) Some pathogens, like *Neisseria meningitidis*, produce Factor H binding protein (fHbp) to recruit the host's complement regulatory protein Factor H to their surface. This enhances the inactivation of C3b by Factor I, thus inhibiting complement activation on the pathogen surface and promoting evasion."
+  },
+  {
+    "question": "What is the primary function of **opsonization** mediated by complement?",
+    "options": {
+      "A": "Direct lysis of bacterial cells by pore formation.",
+      "B": "Neutralization of bacterial toxins.",
+      "C": "Enhancement of phagocytosis by coating pathogens with complement proteins like C3b.",
+      "D": "Recruitment of immune cells to the site of infection via chemotaxis.",
+      "E": "Induction of inflammatory cytokine production by macrophages."
+    },
+    "answer": "C",
+    "explanation": "(C) Opsonization, especially by C3b, enhances phagocytosis. Coating pathogens with opsonins like C3b makes them more easily recognized and ingested by phagocytes through complement receptors like CR1."
+  },
+  {
+    "question": "In the context of complement activation, what is meant by **'C3 tickover'**?",
+    "options": {
+      "A": "The enzymatic cleavage of C3 by C3 convertase in the classical pathway.",
+      "B": "The spontaneous hydrolysis of C3 in the fluid phase, initiating the alternative pathway.",
+      "C": "The activation of C3 convertase by C-reactive protein.",
+      "D": "The regulation of C3b activity by Factor H and Factor I.",
+      "E": "The formation of the C5 convertase complex from C3b and other components."
+    },
+    "answer": "B",
+    "explanation": "(B) 'C3 tickover' refers to the spontaneous, slow rate hydrolysis of C3 in plasma, resulting in C3(H2O). This is the initial event in the fluid phase initiation of the alternative pathway, which can then be amplified on microbial surfaces."
+  },
+  {
+    "question": "Which complement protein acts as a **positive regulator** of the alternative pathway by stabilizing the C3bBb convertase?",
+    "options": {
+      "A": "Factor H",
+      "B": "Factor I",
+      "C": "DAF",
+      "D": "Properdin (Factor P)",
+      "E": "C4BP"
+    },
+    "answer": "D",
+    "explanation": "(D) Properdin (Factor P) is the only known positive regulator of the complement system. It stabilizes the C3bBb convertase of the alternative pathway, prolonging its activity and amplifying complement activation."
+  },
+  {
+    "question": "What is the primary function of **C-reactive protein (CRP)** in innate immunity?",
+    "options": {
+      "A": "To directly lyse bacterial cells by forming pores.",
+      "B": "To activate NK cells to kill virus-infected cells.",
+      "C": "To act as an opsonin and activate the classical complement pathway by binding to phosphocholine on bacteria.",
+      "D": "To stimulate the production of antimicrobial peptides by epithelial cells.",
+      "E": "To inhibit inflammatory responses and promote tissue repair."
+    },
+    "answer": "C",
+    "explanation": "(C) C-reactive protein (CRP) is an acute phase protein that binds to phosphocholine on bacterial surfaces, acting as an opsonin and initiating the classical complement pathway, similar to antibody function."
+  },
+  {
+    "question": "Which of the following cell types is NOT typically considered a component of the **intraepithelial lymphocytes**?",
+    "options": {
+      "A": "T cells",
+      "B": "NK cells",
+      "C": "B cells",
+      "D": "γδ T cells",
+      "E": "αβ T cells"
+    },
+    "answer": "C",
+    "explanation": "(C) Intraepithelial lymphocytes (IELs) are primarily composed of T cells (both αβ and γδ T cells) and NK cells, which reside within the epithelial layers and contribute to local immune surveillance and defense. B cells are not typically categorized as IELs."
+  },
+  {
+    "question": "What is the role of **chemokines** like **IL-8** in innate immunity?",
+    "options": {
+      "A": "To directly kill pathogens through pore formation.",
+      "B": "To activate complement pathways.",
+      "C": "To attract immune cells, such as neutrophils and macrophages, to the site of infection.",
+      "D": "To suppress inflammatory responses.",
+      "E": "To promote the differentiation of T helper cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Chemokines like IL-8 are chemoattractant cytokines that guide the migration of immune cells, particularly neutrophils and macrophages, from the bloodstream to sites of infection or inflammation."
+  },
+  {
+    "question": "Which complement component is cleaved to generate both an anaphylatoxin (involved in inflammation) and a subunit that contributes to C3 convertase?",
+    "options": {
+      "A": "C1",
+      "B": "C2",
+      "C": "C3",
+      "D": "C4",
+      "E": "C5"
+    },
+    "answer": "C",
+    "explanation": "(C) C3 is cleaved into C3a and C3b. C3a is an anaphylatoxin, contributing to inflammation, while C3b is an opsonin and a component of both C3 and C5 convertases."
+  },
+  {
+    "question": "Which of the following is an example of a **Pentraxin**?",
+    "options": {
+      "A": "Defensin",
+      "B": "Cathelicidin",
+      "C": "C-reactive protein",
+      "D": "Mannose-binding lectin",
+      "E": "Complement C3"
+    },
+    "answer": "C",
+    "explanation": "(C) C-reactive protein (CRP) is a classic example of a Pentraxin, a family of cyclic pentameric proteins involved in the acute phase response and innate immunity. The example given in the provided text for Pentraxin is '五肽毒素', which translates to Pentraxin, and specifies C-reactive protein as an example."
+  },
+  {
+    "question": "What is the function of **RegIII (Regenerating islet-derived 3)** lecticidins produced by Paneth cells?",
+    "options": {
+      "A": "To promote mucus secretion in the gut.",
+      "B": "To activate the classical complement pathway in the intestine.",
+      "C": "To kill Gram-positive bacteria by binding to peptidoglycan.",
+      "D": "To enhance the absorption of nutrients in the small intestine.",
+      "E": "To suppress inflammatory responses in the gut mucosa."
+    },
+    "answer": "C",
+    "explanation": "(C) RegIII lecticidins are a type of C-type lectin produced by Paneth cells that have antimicrobial activity, particularly against Gram-positive bacteria, by binding to peptidoglycan in their cell walls."
+  },
+  {
+    "question": "Which complement pathway is initiated by **antibody binding** to pathogen surfaces?",
+    "options": {
+      "A": "Alternative pathway",
+      "B": "Lectin pathway",
+      "C": "Classical pathway",
+      "D": "All complement pathways",
+      "E": "None of the complement pathways"
+    },
+    "answer": "C",
+    "explanation": "(C) The classical pathway is typically initiated by the binding of antibodies (IgG or IgM) to antigens on pathogen surfaces, which then triggers the activation of the C1 complex."
+  },
+  {
+    "question": "In the context of **C5 convertase** formation, what is the key difference between the **classical/lectin pathway** and the **alternative pathway**?",
+    "options": {
+      "A": "Classical/lectin pathways use C3bBbC3b as C5 convertase, while the alternative pathway uses C4b2a3b.",
+      "B": "Classical/lectin pathways use C4b2a3b as C5 convertase, while the alternative pathway uses C3bBbC3b.",
+      "C": "Classical/lectin pathways require Properdin for C5 convertase formation, while the alternative pathway does not.",
+      "D": "Classical/lectin pathways initiate C5 convertase formation directly by antibody binding, while the alternative pathway requires spontaneous C3 hydrolysis.",
+      "E": "There is no significant difference in C5 convertase formation between these pathways."
+    },
+    "answer": "B",
+    "explanation": "(B) The C5 convertase in the classical and lectin pathways is C4b2a3b, formed by adding C3b to the C3 convertase (C4b2a). In the alternative pathway, the C5 convertase is C3bBbC3b, formed by adding another C3b to the alternative pathway C3 convertase (C3bBb)."
+  },
+  {
+    "question": "Which of the following is NOT a function of **complement activation**?",
+    "options": {
+      "A": "Opsonization to enhance phagocytosis.",
+      "B": "Direct lysis of pathogens through MAC formation.",
+      "C": "Induction of inflammatory responses via anaphylatoxins.",
+      "D": "Activation of cytotoxic T lymphocytes.",
+      "E": "Chemotaxis of immune cells to the site of infection."
+    },
+    "answer": "D",
+    "explanation": "(D) Complement activation primarily functions within the innate immune system to directly target pathogens and enhance innate immune cell functions like phagocytosis and inflammation. Activation of cytotoxic T lymphocytes is a function of the adaptive immune system, although complement can indirectly influence adaptive immunity."
+  },
+  {
+    "question": "Which of the following is a characteristic of **AMPs (Antimicrobial Peptides)** that contributes to their ability to interact with microbial membranes?",
+    "options": {
+      "A": "They are highly hydrophobic, allowing them to dissolve in lipid bilayers.",
+      "B": "They are exclusively composed of carbohydrates, enabling binding to microbial glycans.",
+      "C": "They are amphipathic, having both hydrophilic and hydrophobic regions, facilitating insertion into lipid membranes.",
+      "D": "They are positively charged at neutral pH, repelling negatively charged microbial surfaces.",
+      "E": "They are large proteins, creating steric hindrance and disrupting membrane integrity."
+    },
+    "answer": "C",
+    "explanation": "(C) AMPs are typically amphipathic, meaning they have both hydrophilic and hydrophobic regions. This property allows them to interact with the lipid bilayer of microbial membranes, with the hydrophobic regions inserting into the membrane and the hydrophilic regions interacting with the aqueous environment, facilitating pore formation and membrane disruption."
+  },
+  {
+    "question": "Which of the following is a feature of **mucus** that contributes to its function as a barrier in the innate immune system?",
+    "options": {
+      "A": "It is composed primarily of antimicrobial peptides that directly kill pathogens.",
+      "B": "It is a solid, impermeable layer that physically blocks pathogen entry.",
+      "C": "It contains mucins, which are glycoproteins that can trap microorganisms and prevent their adherence to epithelial surfaces.",
+      "D": "It actively transports pathogens out of the body through peristaltic movements.",
+      "E": "It is rich in lysozyme, which degrades bacterial cell walls within the mucus layer."
+    },
+    "answer": "C",
+    "explanation": "(C) Mucus is composed of mucins, which are large glycoproteins that give mucus its viscous nature. Mucins can trap microorganisms, preventing them from reaching and adhering to the underlying epithelial cells. Cilia and peristaltic movements then help clear the mucus and trapped pathogens."
+  },
+  {
+    "question": "Which of the following is NOT a component of the **first line of defense (barriers)** in the innate immune system as described in the provided material?",
+    "options": {
+      "A": "Epithelial barrier",
+      "B": "Antimicrobial peptides",
+      "C": "Complement proteins",
+      "D": "Intraepithelial lymphocytes",
+      "E": "Mucus"
+    },
+    "answer": "C",
+    "explanation": "(C) Complement proteins are considered 'circulating effector proteins' and part of the *second* component of the innate immune system according to the provided material, not the first line of defense barriers. The first line of defense includes mechanical and chemical barriers like epithelial surfaces, mucus, and antimicrobial peptides. Intraepithelial lymphocytes, while residing in the epithelium, are also more of a cellular component than a primary barrier itself, but listed under first line in the table, so complement is the best answer here."
+  },
+  {
+    "question": "What is the significance of **Lamellar bodies** in the stratum granulosum of the epidermis?",
+    "options": {
+      "A": "They contain melanocytes that produce melanin for UV protection.",
+      "B": "They are specialized immune cells that phagocytose pathogens in the skin.",
+      "C": "They release a lipid-rich mixture that forms a waterproof layer, contributing to the skin's barrier function.",
+      "D": "They house Merkel cells responsible for sensory perception in the skin.",
+      "E": "They are involved in the production of keratin, the structural protein of the epidermis."
+    },
+    "answer": "C",
+    "explanation": "(C) Lamellar bodies are organelles in keratinocytes of the stratum granulosum that secrete lipids, including ceramides, cholesterol, and fatty acids, into the intercellular space. This lipid mixture forms a waterproof barrier, preventing water loss and pathogen entry."
+  },
+  {
+    "question": "Which of the following complement components is associated with the **lectin pathway** but NOT the classical pathway?",
+    "options": {
+      "A": "C1q",
+      "B": "C4",
+      "C": "C2",
+      "D": "Mannose-binding lectin (MBL)",
+      "E": "C3b"
+    },
+    "answer": "D",
+    "explanation": "(D) Mannose-binding lectin (MBL) is the initiating pattern recognition receptor specific to the lectin pathway. The classical pathway is initiated by C1q, which recognizes antibody-antigen complexes or directly binds to certain pathogens."
+  },
+  {
+    "question": "What is the enzymatic activity of **C1s** in the classical complement pathway?",
+    "options": {
+      "A": "It cleaves C3 into C3a and C3b.",
+      "B": "It cleaves C5 into C5a and C5b.",
+      "C": "It cleaves C4 and C2.",
+      "D": "It cleaves Factor B into Ba and Bb.",
+      "E": "It polymerizes C9 monomers to form the MAC pore."
+    },
+    "answer": "C",
+    "explanation": "(C) C1s is a serine protease within the C1 complex. Once activated, C1s cleaves C4 and C2, initiating the downstream cascade of the classical pathway."
+  },
+  {
+    "question": "Which of the following cytokines primarily promotes the **proliferation of NK cells**?",
+    "options": {
+      "A": "IL-12",
+      "B": "IFN-γ",
+      "C": "IL-15",
+      "D": "TNF-α",
+      "E": "TGF-β"
+    },
+    "answer": "C",
+    "explanation": "(C) IL-15 is a cytokine that is known to stimulate the proliferation and survival of Natural Killer (NK) cells, enhancing innate cytotoxic responses."
+  },
+  {
+    "question": "Considering the **three complement pathways**, which component is common to **all three pathways** and is cleaved to initiate the later stages of complement activation?",
+    "options": {
+      "A": "C1q",
+      "B": "Factor B",
+      "C": "C3",
+      "D": "C4",
+      "E": "Properdin"
+    },
+    "answer": "C",
+    "explanation": "(C) C3 is central to all three complement pathways (classical, lectin, and alternative). All pathways converge on the formation of a C3 convertase, which cleaves C3 into C3a and C3b, initiating the common terminal pathway leading to MAC formation and other effector functions."
+  },
+  {
+    "question": "Which of the following is NOT a type of **antimicrobial peptide (AMP)** mentioned in the provided text?",
+    "options": {
+      "A": "Defensin",
+      "B": "Cathelicidin",
+      "C": "Histatin",
+      "D": "RegIII",
+      "E": "Lysozyme"
+    },
+    "answer": "E",
+    "explanation": "(E) Lysozyme is an enzyme that degrades bacterial cell walls, but it is not classified as an antimicrobial peptide (AMP) in the context of defensins and cathelicidins. Defensin, Cathelicidin, Histatin, and RegIII are all types of AMPs. While Histatins are mentioned in the table on page 2 in the context of oral cavity, Lysozyme is presented separately under '溶菌酶 (Lysozyme)' as a distinct chemical barrier."
+  },
+  {
+    "question": "What is the function of **Histatins** in the oral cavity?",
+    "options": {
+      "A": "To reduce surface tension in saliva.",
+      "B": "To neutralize acids produced by oral bacteria.",
+      "C": "To act as antimicrobial peptides, particularly against fungi.",
+      "D": "To enhance tooth enamel mineralization.",
+      "E": "To promote wound healing in the oral mucosa."
+    },
+    "answer": "C",
+    "explanation": "(C) Histatins are a group of antimicrobial peptides found in saliva that are particularly effective against fungi, such as *Candida albicans*, contributing to oral mucosal defense against fungal infections."
+  },
+  {
+    "question": "Based on the provided image, what is the consequence of a **MAC deficiency**?",
+    "options": {
+      "A": "Increased susceptibility to viral infections.",
+      "B": "Increased susceptibility to infections by encapsulated bacteria like *Streptococcus pneumoniae*.",
+      "C": "Increased susceptibility to infections by *Neisseria spp.* and other bacteria with thin cell walls.",
+      "D": "Increased susceptibility to fungal infections.",
+      "E": "Increased susceptibility to parasitic infections."
+    },
+    "answer": "C",
+    "explanation": "(C) According to the text, '若存在 MAC 缺陷, 則會增加其被 *Neisseria spp.* 等細胞壁較薄的細菌感染的機率', which translates to 'If MAC deficiency exists, it will increase the susceptibility to infections by *Neisseria spp.* and other bacteria with thinner cell walls'. MAC is particularly effective against bacteria with thin cell walls because it can readily create pores in their membranes."
+  },
+  {
+    "question": "Which of the following is a **Serine protease** involved in the classical complement pathway?",
+    "options": {
+      "A": "C1q",
+      "B": "C4b",
+      "C": "C2a",
+      "D": "C1r",
+      "E": "Factor B"
+    },
+    "answer": "D",
+    "explanation": "(D) C1r and C1s are serine proteases within the C1 complex. C1r is activated first and then cleaves and activates C1s, which then cleaves C4 and C2 to initiate the cascade."
+  },
+  {
+    "question": "According to the provided diagram of complement activation pathways, **C4b2a** is the C3 convertase for which pathways?",
+    "options": {
+      "A": "Classical pathway only.",
+      "B": "Alternative pathway only.",
+      "C": "Lectin pathway only.",
+      "D": "Classical and Lectin pathways.",
+      "E": "Alternative and Lectin pathways."
+    },
+    "answer": "D",
+    "explanation": "(D) As shown in the diagram, C4b2a is formed in both the Classical Pathway and the Lectin Pathway and functions as the C3 convertase in both."
+  },
+  {
+    "question": "Based on the information given, what is the approximate **molecular weight** order of complement components C1, C2, C3, and C4?",
+    "options": {
+      "A": "C1 < C2 < C3 < C4",
+      "B": "C2 < C4 < C1 < C3",
+      "C": "C2 < C4 < C3 < C1",
+      "D": "C4 < C2 < C3 < C1",
+      "E": "C4 < C3 < C2 < C1"
+    },
+    "answer": "C",
+    "explanation": "(C) The text provides approximate protein content in µg/ml: C1 (50-150), C2 (20), C3 (1000-1200), C4 (300-600).  While not directly molecular weight, these values suggest relative abundance, and often abundance correlates with molecular weight in these contexts.  Ordering by these values from least to most abundant gives C2 < C1 < C4 < C3. However, considering the typical order of component naming and general protein sizes in complement, and looking closely at the abundance values, a more plausible order of *molecular weight* (though abundance is given, not MW directly) would be C2 < C4 < C3 < C1.  Option (C) C2 < C4 < C3 < C1 matches this interpretation best given the options and the data provided, even if the data is about concentration, not exact molecular weight.  A more precise question would ask about relative abundance, where option (C) would definitively be correct.  Interpreting the question as about relative size suggested by abundance, (C) is the best fit."
+  },
+  {
+    "question": "Which of the following statements about **defensins** is **incorrect**?",
+    "options": {
+      "A": "Defensins are synthesized as inactive pro-peptides.",
+      "B": "Defensins are found in various eukaryotic organisms including mammals, insects, and plants.",
+      "C": "Defensins are exclusively hydrophobic proteins.",
+      "D": "Defensins can be classified into α, β, and θ families.",
+      "E": "Defensins exert antimicrobial activity by disrupting microbial membranes."
+    },
+    "answer": "C",
+    "explanation": "(C) Defensins are **amphipathic**, not exclusively hydrophobic. They have both hydrophilic and hydrophobic regions, which is crucial for their mechanism of action in inserting into and disrupting lipid membranes. The other statements are correct characteristics of defensins."
+  },
+  {
+    "question": "What is the primary function of **C3b** in complement activation?",
+    "options": {
+      "A": "To initiate the formation of the Membrane Attack Complex (MAC).",
+      "B": "To act as an anaphylatoxin, inducing inflammation.",
+      "C": "To opsonize pathogens, enhancing phagocytosis and to act as a subunit in C5 convertases.",
+      "D": "To activate the classical complement pathway via C1q binding.",
+      "E": "To regulate complement activation and prevent damage to host cells."
+    },
+    "answer": "C",
+    "explanation": "(C) C3b has multiple important functions: it acts as a potent opsonin, coating pathogens and promoting phagocytosis; and it is an essential subunit of both C5 convertases (C4b2a3b and C3bBbC3b), which are necessary for the terminal pathway of complement activation, leading to MAC formation and further inflammation."
+  },
+  {
+    "question": "According to the information provided, what is the role of **C5 convertase**?",
+    "options": {
+      "A": "To cleave C3 into C3a and C3b.",
+      "B": "To cleave C5 into C5a and C5b, initiating the formation of the MAC.",
+      "C": "To activate the classical complement pathway via C1q.",
+      "D": "To regulate the activity of C3 convertase itself.",
+      "E": "To act as an opsonin, coating pathogens for phagocytosis."
+    },
+    "answer": "B",
+    "explanation": "(B) C5 convertase is the enzyme responsible for cleaving C5 into C5a and C5b. C5b is the initiating component for the formation of the Membrane Attack Complex (MAC), which leads to pathogen lysis. C5a is also a potent anaphylatoxin, contributing to inflammation."
+  }
+]

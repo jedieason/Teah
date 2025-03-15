@@ -1,0 +1,387 @@
+
+[
+  {
+    "question": "Which of the following statements accurately describes the antigen recognition characteristics of T cells as compared to B cells, according to the provided text?",
+    "options": {
+      "A": "Both T cells and B cells can recognize antigens in their native, soluble form without processing.",
+      "B": "T cells primarily recognize linear peptide fragments presented by MHC molecules, whereas B cells can recognize diverse forms including proteins, peptides, and toxins.",
+      "C": "B cell receptors (BCRs) are monovalent, recognizing a single antigenic determinant, while T cell receptors (TCRs) are divalent.",
+      "D": "T cells, unlike B cells, secrete their receptors upon activation to function as antibodies.",
+      "E": "Both T cells and B cells are restricted to recognizing antigens derived only from pathogens."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. The text explicitly states that T cells recognize peptide fragments presented by MHC (MHC restriction) and are monovalent, while B cells can recognize diverse antigen forms (proteins, peptides, toxins) and are divalent. (A) is incorrect because T cells require MHC presentation. (C) is incorrect as it reverses the valency - TCR is monovalent, BCR is divalent. (D) is incorrect; T cells do not secrete their receptors; B cells secrete antibodies which are a soluble form of BCR. (E) is incorrect because T cells can also recognize self-antigens in certain contexts, and B cells can recognize a broad range of antigens beyond pathogens."
+  },
+  {
+    "question": "Based on Figure 9.2 and the accompanying text describing T cell activation, what is the most accurate sequence of events following antigen recognition by a naive T cell?",
+    "options": {
+      "A": "Antigen recognition → Differentiation → Proliferation → Cytokine secretion → Lymphocyte activation.",
+      "B": "Antigen recognition → Lymphocyte activation → Cytokine secretion → Differentiation → Proliferation.",
+      "C": "Antigen recognition → Lymphocyte activation → Proliferation → Differentiation → Cytokine secretion.",
+      "D": "Antigen recognition → Lymphocyte activation → Proliferation → Cytokine secretion → Differentiation.",
+      "E": "Antigen recognition → Cytokine secretion → Lymphocyte activation → Proliferation → Differentiation."
+    },
+    "answer": "D",
+    "explanation": "(D) is the most accurate sequence. Figure 9.2 and the text indicate the order: Antigen recognition → Lymphocyte activation → Proliferation → Differentiation. Cytokine secretion (like IL-2) is crucial for proliferation and differentiation and occurs after lymphocyte activation and during proliferation. While cytokine secretion starts relatively early, differentiation into effector and memory cells is considered a later stage than proliferation. Option (C) places cytokine secretion before differentiation which is less aligned with the typical understanding of T cell activation cascade where cytokines like IL-2 drive proliferation and differentiation."
+  },
+  {
+    "question": "Which of the following statements are correct regarding MHC restriction in T cell antigen recognition?",
+    "options": {
+      "A": "MHC restriction ensures that T cells only respond to foreign antigens and not self-antigens.",
+      "B": "MHC restriction implies that T cells recognize both the MHC molecule and the presented peptide simultaneously.",
+      "C": "MHC restriction is a characteristic feature of B cell antigen recognition as well.",
+      "D": "MHC restriction is bypassed when T cells encounter soluble antigens in the extracellular fluid.",
+      "E": "MHC restriction is due to the T cell receptor's (TCR) ability to bind to a wide range of peptides regardless of the MHC molecule presenting them."
+    },
+    "answer": ["B"],
+    "explanation": "Only (B) is correct. MHC restriction means that a T cell receptor recognizes a specific peptide *in the context of a specific MHC molecule*. (A) is incorrect because MHC restriction doesn't prevent self-antigen recognition, which is relevant in autoimmunity. (C) is incorrect; MHC restriction is a defining feature of T cell, not B cell, recognition. (D) is incorrect; T cells *cannot* respond to soluble antigens; MHC presentation is required. (E) is incorrect; TCR specificity is *for* the peptide-MHC complex, not independent of MHC."
+  },
+  {
+    "question": "According to the text, what is the primary reason that T cells recognize processed peptide antigens presented by MHC molecules, rather than native, unprocessed proteins?",
+    "options": {
+      "A": "Unprocessed proteins are too large to physically interact with the T cell receptor (TCR).",
+      "B": "MHC molecules are specifically designed to bind and present only peptide fragments.",
+      "C": "T cells lack the necessary enzymes to break down proteins into smaller peptides.",
+      "D": "Processing of proteins into peptides is essential to linearize the antigen for MHC binding, as T cells recognize linear epitopes.",
+      "E": "Native proteins are exclusively recognized by B cells, ensuring a division of labor in the adaptive immune response."
+    },
+    "answer": "D",
+    "explanation": "(D) is the most accurate reason based on the text. The text emphasizes that T cells recognize *linear peptides* and that MHC molecules have *clefts* that accommodate linear peptides. Protein processing ensures linearity and appropriate size for MHC binding. (A) is partially true regarding size, but the key is MHC's peptide-binding nature. (B) is correct that MHC presents peptides, but doesn't fully explain *why* peptides are needed. (C) is incorrect; T cells don't need to process proteins; antigen-presenting cells (APCs) do. (E) is incorrect; while B cells can recognize native proteins, the reason for T cell peptide recognition is MHC presentation and linear epitope recognition, not division of labor."
+  },
+  {
+    "question": "Considering the information provided about MHC class I and class II pathways, which of the following scenarios would predominantly lead to the presentation of antigens via MHC class II molecules?",
+    "options": {
+      "A": "A viral protein synthesized within the cytoplasm of an infected cell.",
+      "B": "A bacterial toxin circulating in the bloodstream.",
+      "C": "A self-protein degraded by cytosolic proteasomes during normal cellular turnover.",
+      "D": "A phagocytosed bacterium within a macrophage's endocytic vesicle.",
+      "E": "A tumor-specific antigen expressed on the surface of a cancer cell."
+    },
+    "answer": "D",
+    "explanation": "(D) is correct. MHC class II pathway is associated with antigens from *intravesicular pathogens* and *extracellular pathogens and toxins*. Phagocytosis and degradation within endocytic vesicles are characteristic of the MHC class II pathway. (A) and (C) describe cytosolic antigens, processed via MHC class I. (B) while extracellular, toxins are more likely to be recognized by B cells directly or presented via MHC class II after uptake, but (D) is a more direct and stronger association with MHC class II. (E) Tumor antigens can be presented by both MHC I and MHC II, but cytosolic processing (MHC I pathway) is more typical for tumor-associated antigens expressed within the cell. (D) is the clearest example of MHC class II pathway antigen source."
+  },
+  {
+    "question": "According to the description of TCR/MHC complex interaction, what is the role of the 'anchor pocket' in MHC molecules?",
+    "options": {
+      "A": "To provide the primary binding site for the T cell receptor (TCR).",
+      "B": "To stabilize the interaction between the MHC molecule and co-receptors like CD4 or CD8.",
+      "C": "To accommodate and tightly bind specific amino acid residues of the presented peptide.",
+      "D": "To facilitate the covalent linkage between the MHC molecule and the peptide antigen.",
+      "E": "To prevent the MHC molecule from binding to self-peptides, thus ensuring immune tolerance."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. The text states that the 'anchor pocket' in MHC molecules commonly contains hydrophobic amino acids and uses hydrophobic interactions to tightly bind the peptide. (A) is incorrect; the TCR interacts with both the peptide and MHC. (B) is incorrect; co-receptors interact with different domains of MHC. (D) is incorrect; the MHC-peptide interaction is non-covalent. (E) is incorrect; the anchor pocket is for peptide binding, not directly for self/non-self discrimination, though peptide selection in the pocket does influence this."
+  },
+  {
+    "question": "Which of the following is a key distinction between the peptides presented by MHC class I and MHC class II molecules, as indicated in the text and figures?",
+    "options": {
+      "A": "Peptides presented by MHC class I are generally longer than those presented by MHC class II.",
+      "B": "MHC class I presents peptides derived from extracellular antigens, while MHC class II presents peptides from intracellular antigens.",
+      "C": "Peptides presented by MHC class I are typically 8-11 amino acids in length, whereas MHC class II presented peptides are 10-30 amino acids or longer.",
+      "D": "MHC class I presents linear peptides, while MHC class II can present conformational epitopes.",
+      "E": "Peptides presented by MHC class I are primarily composed of hydrophilic amino acids, whereas MHC class II peptides are hydrophobic."
+    },
+    "answer": "C",
+    "explanation": "(C) is a key distinction highlighted in the text. MHC class I peptides are indeed typically 8-11 residues, and MHC class II peptides are 10-30 or more. (A) is incorrect; MHC class II peptides are generally longer. (B) is incorrect; MHC class I presents *intracellular* antigens, MHC class II presents *extracellular/intravesicular* antigens. (D) is incorrect; both MHC classes present linear peptides. (E) is incorrect regarding the general amino acid composition; while anchor residues in pockets might have specific properties, the overall peptide composition isn't defined by hydrophilicity/hydrophobicity in this context."
+  },
+  {
+    "question": "Based on the information about cross-presentation, what is the primary significance of this pathway in the context of immune responses?",
+    "options": {
+      "A": "Cross-presentation allows B cells to present antigens to CD8+ T cells, initiating humoral immune responses.",
+      "B": "Cross-presentation enables dendritic cells to activate CD4+ T cells against intracellular pathogens.",
+      "C": "Cross-presentation permits dendritic cells to present exogenous antigens via MHC class I, activating CD8+ T cells.",
+      "D": "Cross-presentation is essential for the development of central tolerance by presenting self-antigens to thymocytes.",
+      "E": "Cross-presentation facilitates the presentation of lipid antigens by MHC-like molecules (e.g., CD1) to NK T cells."
+    },
+    "answer": "C",
+    "explanation": "(C) accurately describes the primary significance of cross-presentation. It's a pathway where dendritic cells (primarily) present *exogenous* antigens via *MHC class I*, leading to the activation of *CD8+ T cells*. (A) is incorrect; cross-presentation is about T cell activation, not B cell antigen presentation to T cells. (B) is incorrect; cross-presentation is for CD8+ T cell activation, not CD4+. (D) while dendritic cells are involved in tolerance, cross-presentation's main known role is in immunity, especially against viruses and tumors. (E) is incorrect; lipid antigen presentation is a different pathway involving CD1 molecules, not MHC cross-presentation."
+  },
+  {
+    "question": "According to the description of the ubiquitin-proteasome system, what is the immediate fate of peptides generated by the proteasome in the context of MHC class I antigen presentation?",
+    "options": {
+      "A": "They are directly secreted out of the cell to activate cytotoxic T lymphocytes (CTLs).",
+      "B": "They are transported into the endoplasmic reticulum (ER) for binding to MHC class I molecules.",
+      "C": "They are further processed in lysosomes before being presented by MHC class I.",
+      "D": "They remain in the cytosol and are presented by MHC class II molecules.",
+      "E": "They are degraded into amino acids and recycled for protein synthesis within the cell."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. The text and Figure 6.5 indicate that peptides generated by the proteasome are transported into the ER, where they bind to MHC class I molecules. (A) is incorrect; peptides are presented on the cell surface, not secreted to activate CTLs. (C) is incorrect; lysosomal processing is more associated with MHC class II. (D) is incorrect; cytosolic peptides are for MHC class I, not class II. (E) while some peptides might be fully degraded, the pathway for MHC class I presentation specifically directs them to the ER for MHC binding."
+  },
+  {
+    "question": "Which of the following statements best describes the 'MHC restriction' phenomenon observed in T cell recognition of virus-infected cells, as depicted in the MHC restriction experiment?",
+    "options": {
+      "A": "T cells from a virus-infected mouse can kill virus-infected target cells regardless of the MHC haplotype of the target cells.",
+      "B": "T cells from a virus-infected mouse can only kill virus-infected target cells that share the same MHC haplotype as the infected mouse.",
+      "C": "T cells from a virus-infected mouse can kill uninfected target cells as long as they share the same MHC haplotype.",
+      "D": "MHC restriction is overcome if the viral peptide is presented in a soluble form, independent of cell surface MHC molecules.",
+      "E": "MHC restriction primarily affects B cell activation, while T cell activation is independent of MHC haplotype."
+    },
+    "answer": "B",
+    "explanation": "(B) is the best description of MHC restriction based on the experiment. The experiment demonstrates that CTLs from LCMV-infected strain A mice only kill LCMV-infected *strain A* target cells (same MHC haplotype), not strain B (different MHC haplotype) or uninfected strain A cells. (A) is incorrect; MHC restriction is precisely about *not* killing regardless of MHC. (C) is incorrect; CTLs are specific for viral peptide *and* self-MHC, not just self-MHC. (D) is incorrect; soluble peptides won't be recognized by T cells without MHC presentation. (E) is incorrect; MHC restriction is a defining feature of T cell, not B cell, recognition."
+  },
+  {
+    "question": "Based on the information provided in the text and figures about MHC class I and class II molecules, which of the following structural features is unique to MHC class II molecules compared to MHC class I?",
+    "options": {
+      "A": "Association with β2-microglobulin (β2m).",
+      "B": "Presence of α1 and α2 domains that form the peptide-binding cleft.",
+      "C": "Formation of a peptide-binding cleft by two distinct polypeptide chains (α and β).",
+      "D": "Anchoring in the cell membrane via a transmembrane region.",
+      "E": "Involvement of disulfide bonds in maintaining the overall protein structure."
+    },
+    "answer": "C",
+    "explanation": "(C) is unique to MHC class II. MHC class II molecules are composed of *two* polypeptide chains (α and β), both contributing to the peptide-binding cleft. MHC class I molecules are composed of a single α chain associated with β2-microglobulin; the cleft is formed by domains of the *single α chain*. (A) is incorrect; β2-microglobulin is associated with MHC class *I*, not class II. (B) is incorrect; MHC class *I* cleft is formed by α1 and α2. (D) and (E) are features common to *both* MHC class I and class II."
+  },
+  {
+    "question": "According to the text, what is the functional consequence of the polymorphic nature of MHC molecules within a population?",
+    "options": {
+      "A": "Polymorphism ensures that each individual develops a completely unique set of T cell receptors (TCRs).",
+      "B": "Polymorphism leads to variations in the size and shape of the peptide-binding cleft, influencing the range of peptides that can be presented.",
+      "C": "Polymorphism results in different levels of MHC molecule expression on the surface of antigen-presenting cells (APCs).",
+      "D": "Polymorphism is primarily responsible for the distinction between MHC class I and MHC class II molecules.",
+      "E": "Polymorphism enables MHC molecules to directly bind and neutralize pathogens without T cell involvement."
+    },
+    "answer": "B",
+    "explanation": "(B) is the primary functional consequence of MHC polymorphism. Polymorphic residues are located in regions that affect peptide binding, specifically the peptide-binding cleft. This variation in cleft structure leads to differences in the *spectrum of peptides* that different MHC alleles can present. (A) is incorrect; TCR diversity is generated by gene rearrangement, not MHC polymorphism. (C) is incorrect; MHC expression levels are regulated by other factors, not primarily polymorphism. (D) is incorrect; class distinction is based on gene structure and function, not polymorphism within classes. (E) is incorrect; MHC molecules present antigens to T cells; they don't directly neutralize pathogens."
+  },
+  {
+    "question": "Considering the domain structure of MHC class I and class II molecules and their interactions with T cell co-receptors, which of the following pairings is most accurate?",
+    "options": {
+      "A": "MHC class I α3 domain :: CD4 co-receptor",
+      "B": "MHC class II β2 domain :: CD8 co-receptor",
+      "C": "MHC class I α3 domain :: CD8 co-receptor",
+      "D": "MHC class II α2 domain :: CD4 co-receptor",
+      "E": "MHC class I β2-microglobulin :: CD4 co-receptor"
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct pairing. The text and Figure 6.9 and 6.11 indicate that the *α3 domain of MHC class I* interacts with the *CD8 co-receptor*. CD4 co-receptor interacts with MHC class II, specifically with regions within β2 domain (and to some extent β1 and α2 domains forming the pocket as mentioned in option D, but α2 alone is less accurate). (A), (B), (D), and (E) are incorrect pairings based on established MHC-co-receptor interactions. (A) and (E) incorrectly associate MHC class I with CD4. (B) and (D) incorrectly associate MHC class II with CD8 or misidentify the domain interaction."
+  },
+  {
+    "question": "Based on the table comparing tissue distribution of MHC class I and class II molecules, which of the following cell types would be expected to express *both* MHC class I and MHC class II molecules at high levels?",
+    "options": {
+      "A": "Neutrophils",
+      "B": "Hepatocytes",
+      "C": "Brain cells",
+      "D": "Dendritic cells",
+      "E": "Red blood cells"
+    },
+    "answer": "D",
+    "explanation": "(D) Dendritic cells are indicated in the table as expressing *+++* for both MHC class I and MHC class II. This high expression of both classes is characteristic of professional antigen-presenting cells like dendritic cells, macrophages, and B cells. (A), (B), and (C) are shown to have lower or differential expression. Neutrophils express MHC class I but not MHC class II. Hepatocytes and Brain cells have low MHC class I and no MHC class II (or very low in brain with caveat). (E) Red blood cells are non-nucleated and express neither MHC class I nor MHC class II."
+  },
+  {
+    "question": "Considering the 'Class II MHC enhancing effect' described in the text, what is the role of IFN-γ in this process?",
+    "options": {
+      "A": "IFN-γ directly enhances the peptide-binding affinity of MHC class II molecules.",
+      "B": "IFN-γ promotes the degradation of MHC class II molecules, limiting antigen presentation.",
+      "C": "IFN-γ induces increased expression of MHC class II molecules on antigen-presenting cells (APCs).",
+      "D": "IFN-γ selectively inhibits the presentation of self-peptides by MHC class II.",
+      "E": "IFN-γ enhances the interaction between MHC class II molecules and CD8 co-receptors."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct role of IFN-γ. The text explicitly states that IFN-γ (Type II interferon) *activates APCs to have higher MHC class II expression*. This is the core of the 'Class II MHC enhancing effect'. (A) is incorrect; IFN-γ affects expression levels, not direct peptide binding affinity. (B) is opposite to the effect; IFN-γ *increases*, not decreases MHC II expression. (D) is incorrect; IFN-γ doesn't selectively inhibit self-peptide presentation in this context. (E) is incorrect; IFN-γ's effect is on MHC II expression, not MHC II-CD8 interaction (it's MHC II-CD4 interaction relevant here)."
+  },
+  {
+    "question": "Which of the following statements accurately describes the role of CD3 molecules in T cell receptor (TCR) signaling?",
+    "options": {
+      "A": "CD3 molecules directly bind to the peptide-MHC complex, initiating T cell activation.",
+      "B": "CD3 molecules enhance the peptide-binding affinity of the TCR.",
+      "C": "CD3 molecules are essential for transporting the TCR to the cell surface but are not involved in signaling.",
+      "D": "CD3 molecules contain ITAM motifs that are phosphorylated upon TCR engagement, initiating intracellular signaling cascades.",
+      "E": "CD3 molecules function as co-receptors that stabilize the interaction between the TCR and the MHC molecule."
+    },
+    "answer": "D",
+    "explanation": "(D) is correct. The text and Figure 7.8 indicate that CD3 molecules (ε, δ, γ, ζ chains) contain *ITAMs (Immunoreceptor tyrosine-based activation motifs)*. Phosphorylation of ITAMs on CD3 chains upon TCR engagement is the key initial step in TCR signaling. (A) is incorrect; CD3 does *not* bind peptide-MHC; TCR does. (B) is incorrect; CD3 is for signaling, not peptide binding affinity. (C) is incorrect; CD3 is crucial for signaling *after* TCR-MHC interaction. (E) is incorrect; co-receptors are CD4 and CD8, not CD3; CD3's role is primarily signaling."
+  },
+  {
+    "question": "In the context of MHC class II antigen presentation, what is the function of the invariant chain (Ii) which is not explicitly mentioned but is implied by the pathway?",
+    "options": {
+      "A": "To stabilize the MHC class II molecule in the endoplasmic reticulum (ER) and prevent its degradation.",
+      "B": "To guide MHC class II molecules from the ER to the cell surface for antigen presentation.",
+      "C": "To block the peptide-binding cleft of MHC class II in the ER, preventing premature binding of peptides.",
+      "D": "To facilitate the association of MHC class II molecules with β2-microglobulin.",
+      "E": "To transport peptides from the cytosol into the endoplasmic reticulum for MHC class II loading."
+    },
+    "answer": "C",
+    "explanation": "(C) is the most accurate function of the invariant chain (Ii). While not explicitly mentioned, the function of Ii in MHC class II pathway is well-established and *implied* by the pathway described. Ii blocks the MHC class II peptide-binding cleft in the ER *to prevent binding of ER-resident peptides* intended for MHC class I, ensuring MHC class II loads peptides in endosomes/lysosomes instead. (A) is partially true - Ii does stabilize MHC II, but the key function related to peptide binding is blocking the cleft. (B) is incorrect; Ii directs MHC II to endosomes/lysosomes, not directly to the cell surface from ER. (D) is incorrect; β2-microglobulin is for MHC class I, not class II. (E) is incorrect; peptide transport to ER is for MHC class I pathway; MHC class II peptides are generated in endosomes/lysosomes."
+  },
+  {
+    "question": "Based on the historical milestones in TCR and MHC research, the discovery of MHC restriction by Doherty and Zinkernagel in 1974 was crucial because it directly demonstrated:",
+    "options": {
+      "A": "The genetic basis of antibody diversity and somatic hypermutation.",
+      "B": "That T cells recognize antigen in the context of self-MHC molecules.",
+      "C": "The three-dimensional structure of MHC class I molecules.",
+      "D": "The process of V(D)J recombination in T cell receptor genes.",
+      "E": "The role of cytokines in T cell proliferation and differentiation."
+    },
+    "answer": "B",
+    "explanation": "(B) is the direct demonstration of Doherty and Zinkernagel's work in 1974. Their experiments *directly showed MHC restriction*, i.e., T cells recognize antigen *in the context of self-MHC*. This was a groundbreaking discovery in understanding T cell specificity. (A) is related to antibody diversity, work of Tonegawa listed later in the timeline, not MHC restriction. (C) and (D) are also important discoveries in immunology but not the direct outcome of Doherty and Zinkernagel's MHC restriction work; MHC I crystal structure was Bjorkman & Wiley in 1987, V(D)J recombination Tonegawa in 1978. (E) is related to T cell function but not the core finding of MHC restriction itself."
+  },
+  {
+    "question": "According to the text, what is the primary function of autophagy in the context of antigen presentation?",
+    "options": {
+      "A": "To present exogenous antigens via MHC class I molecules, similar to cross-presentation.",
+      "B": "To degrade extracellular pathogens within autophagosomes, preventing infection.",
+      "C": "To deliver cytosolic self-antigens to lysosomes for processing and presentation via MHC class II molecules.",
+      "D": "To eliminate infected cells by inducing programmed cell death (apoptosis).",
+      "E": "To enhance the expression of MHC molecules on antigen-presenting cells during inflammation."
+    },
+    "answer": "C",
+    "explanation": "(C) is the primary function of autophagy in antigen presentation as described in the text. Autophagy pathway, as described, delivers *cytosolic self-antigens* into autophagosomes, which then fuse with lysosomes, leading to processing and presentation via *MHC class II*. (A) is incorrect; autophagy in this context is for *self*-antigen presentation, and it leads to MHC class *II*, not MHC class I presentation of exogenous antigens (cross-presentation is for exogenous antigens via MHC class I). (B) while autophagy can degrade pathogens, the focus here is on antigen presentation, not direct pathogen clearance. (D) apoptosis is different from autophagy-mediated antigen presentation. (E) autophagy itself is not directly described as enhancing MHC expression in this context."
+  },
+  {
+    "question": "Which of the following best describes the 'polymorphic residue of MHC' and 'anchor residue of peptide' in the context of TCR-MHC-peptide interaction?",
+    "options": {
+      "A": "Polymorphic residues of MHC determine the overall structure of the MHC molecule, while anchor residues of peptide are essential for TCR binding.",
+      "B": "Polymorphic residues of MHC contribute to the diversity of peptide-binding clefts, while anchor residues of peptide are crucial for MHC binding.",
+      "C": "Polymorphic residues of MHC are located on the peptide antigen itself, while anchor residues are on the MHC molecule.",
+      "D": "Both polymorphic residues of MHC and anchor residues of peptide are highly conserved regions essential for structural integrity.",
+      "E": "Polymorphic residues of MHC are involved in co-receptor binding (CD4/CD8), while anchor residues of peptide are involved in TCR binding."
+    },
+    "answer": "B",
+    "explanation": "(B) is the most accurate description. *Polymorphic residues of MHC* are in the peptide-binding cleft and contribute to its *diversity*, thus influencing which peptides can bind. *Anchor residues of peptide* are specific amino acids within the peptide that are crucial for *binding to the MHC cleft*. (A) is incorrect; polymorphic residues are not just about overall structure but specifically about cleft diversity; anchor residues are for MHC, not TCR, binding. (C) is incorrect; polymorphic residues are on MHC, not peptide. (D) is incorrect; polymorphic residues are *variable*, not conserved. (E) is incorrect; polymorphic residues are primarily for peptide binding diversity, not directly for co-receptor binding; anchor residues are for MHC binding, not TCR binding directly (indirectly yes as it's part of the complex TCR recognizes)."
+  },
+  {
+    "question": "Considering the information about the 'lymphoid organ' and 'peripheral tissue' in Figure 9.2, what is the primary immunological significance of the 'lymphoid organ' in the context of T cell activation?",
+    "options": {
+      "A": "Lymphoid organs are the sites where effector T cells directly eliminate infected or tumor cells.",
+      "B": "Lymphoid organs are the primary locations where naive T cells encounter antigen-presenting cells (APCs) and become activated.",
+      "C": "Lymphoid organs serve as storage sites for memory T cells after an immune response.",
+      "D": "Lymphoid organs are the main sites of inflammation where effector T cells mediate their functions.",
+      "E": "Lymphoid organs are where T cells undergo differentiation into distinct subsets like CD4+ and CD8+ T cells."
+    },
+    "answer": "B",
+    "explanation": "(B) is the primary immunological significance of lymphoid organs for T cell activation. Lymphoid organs (like lymph nodes, spleen) are structured environments where *naive T cells encounter APCs* bearing antigens and become *activated*. Figure 9.2 places 'Lymphoid organ' at the stage of 'Antigen recognition' and 'Lymphocyte activation'. (A) is incorrect; effector T cell function happens in *peripheral tissues*. (C) memory T cells can reside in both lymphoid and peripheral tissues, but lymphoid organs aren't just storage. (D) inflammation is a peripheral tissue event, though lymphoid organs can be involved indirectly. (E) T cell differentiation into CD4+ and CD8+ lineages happens in the thymus, *before* naive T cells enter lymphoid organs for activation."
+  },
+  {
+    "question": "Based on the comparison of B cell and T cell receptors (BCR and TCR), what is the key functional advantage of the divalent nature of BCR compared to the monovalent nature of TCR?",
+    "options": {
+      "A": "Divalent BCRs can recognize a wider range of antigen types than monovalent TCRs.",
+      "B": "Divalent BCRs exhibit higher avidity for antigens, leading to stronger B cell activation upon encountering low antigen concentrations.",
+      "C": "Divalent BCRs can directly trigger intracellular signaling pathways without the need for co-receptors, unlike monovalent TCRs.",
+      "D": "Divalent BCRs are capable of somatic hypermutation and affinity maturation, resulting in improved antigen binding over time.",
+      "E": "Divalent BCRs can be secreted as antibodies, providing humoral immunity, whereas monovalent TCRs remain cell-surface bound."
+    },
+    "answer": "B",
+    "explanation": "(B) is the key functional advantage of BCR divalency: *higher avidity*. Divalency allows BCRs to bind two antigenic determinants simultaneously, increasing the overall binding strength (avidity), especially important when antigen concentration is low. (A) is incorrect; valency is not directly about the *range* of antigen types, but binding *strength*. (C) is incorrect; both BCR and TCR signaling need associated molecules (Igα/Igβ for BCR, CD3 for TCR), though signaling mechanisms differ. (D) somatic hypermutation and affinity maturation are related to antibody diversity and improvement but not directly to divalency *advantage* in initial activation. (E) antibody secretion is a consequence of B cell activation, and a major functional difference, but not the *advantage of divalency itself* in initial antigen recognition and activation."
+  },
+  {
+    "question": "In the context of MHC class I presentation of cytosolic antigens, what is the role of TAP (Transporter associated with Antigen Processing) mentioned in the gene structure diagrams, but not fully explained in function?",
+    "options": {
+      "A": "TAP is a chaperone protein in the endoplasmic reticulum (ER) that assists in the folding and assembly of MHC class I molecules.",
+      "B": "TAP is a protease complex in the cytosol that generates peptide fragments from cytosolic proteins.",
+      "C": "TAP is a transmembrane protein that transports peptides from the cytosol into the endoplasmic reticulum (ER) for MHC class I loading.",
+      "D": "TAP is an enzyme that modifies peptides in the ER to enhance their binding affinity for MHC class I molecules.",
+      "E": "TAP is a component of the proteasome complex, directly involved in peptide generation from ubiquitinated proteins."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct role of TAP. TAP (Transporter associated with Antigen Processing), as *implied* but not fully explained in function, is a *transmembrane transporter* that moves peptides *from the cytosol into the ER*, where MHC class I molecules are assembled and loaded with peptides. (A) chaperone function is more related to proteins like calnexin, calreticulin, etc., assisting MHC I folding. (B) proteasome is the protease complex in the cytosol. (D) peptide modification in ER is done by enzymes like ERAP1, not TAP. (E) TAP is distinct from the proteasome complex; it's a transporter of peptides generated by the proteasome."
+  },
+  {
+    "question": "Which of the following statements accurately reflects a difference in the effector functions of CD4+ and CD8+ T cells as described in Figure 9.2 and the text?",
+    "options": {
+      "A": "Effector CD4+ T cells primarily mediate direct killing of infected or tumor cells, while effector CD8+ T cells activate macrophages and B cells.",
+      "B": "Effector CD4+ T cells secrete cytokines to activate macrophages, B cells, and other cells, while effector CD8+ T cells directly kill infected or tumor cells.",
+      "C": "Both effector CD4+ and CD8+ T cells are capable of directly killing infected or tumor cells, but CD4+ T cells do so more efficiently.",
+      "D": "Both effector CD4+ and CD8+ T cells primarily function by secreting antibodies to neutralize extracellular pathogens.",
+      "E": "Effector CD4+ T cells are mainly involved in suppressing immune responses, while effector CD8+ T cells enhance immune activation."
+    },
+    "answer": "B",
+    "explanation": "(B) accurately describes the primary effector function difference. Figure 9.2 and text indicate effector CD4+ T cells' 'Principal effector functions' as 'Activation of macrophages, B cells, other cells; inflammation', while effector CD8+ T cells (CTLs) primarily function in 'Killing of infected or tumor cells'. (A) reverses the primary functions. (C) is incorrect; CD8+ CTLs are specialized for direct killing; CD4+ T cells' killing is less direct and secondary. (D) antibody secretion is primarily by B cells, not T cells. (E) CD4+ T cells have subsets including regulatory T cells (Tregs) for suppression, but effector CD4+ T cells (like Th1, Th2, Th17) are primarily activators; CD8+ T cells are activators in their cytotoxic function."
+  },
+  {
+    "question": "Based on the provided information, what is the most significant implication of the fact that T cells recognize 'cell-associated and not soluble antigens'?",
+    "options": {
+      "A": "T cell responses are primarily effective against extracellular pathogens and toxins.",
+      "B": "T cell activation requires direct cell-cell contact with antigen-presenting cells (APCs).",
+      "C": "T cells can only recognize antigens that are presented by MHC molecules on the surface of any cell type.",
+      "D": "T cell immunity is limited to tissues where antigen-presenting cells are abundant.",
+      "E": "T cells are unable to respond to antigens that are circulating freely in the bloodstream or lymph."
+    },
+    "answer": "B",
+    "explanation": "(B) is the most significant implication. T cells recognizing 'cell-associated and not soluble antigens' directly implies that *cell-cell contact* with APCs (or target cells for CTLs) is *required* for T cell activation and function. MHC presentation, being cell-surface associated, necessitates this contact. (A) is incorrect; T cells are crucial for *intracellular* pathogen responses. (C) is partially true regarding MHC presentation, but 'any cell type' is too broad; APCs are specialized for initial activation. (D) T cell immunity is *not* limited to APC-rich tissues; T cells circulate and can be activated in various lymphoid tissues, then migrate to sites of infection. (E) is true - T cells *cannot* respond to soluble antigens directly, reinforcing the need for cell-associated presentation and cell-cell interaction."
+  },
+  {
+    "question": "In the context of the 'TCR/peptide/MHC co-crystal' research milestone by Don Wiley in 1996, what was the major advancement provided by determining this structure?",
+    "options": {
+      "A": "It revealed the detailed mechanism of V(D)J recombination in generating TCR diversity.",
+      "B": "It provided the first atomic-level visualization of how the TCR interacts with the peptide-MHC complex.",
+      "C": "It demonstrated the existence of MHC restriction at the molecular level.",
+      "D": "It elucidated the signaling pathways downstream of TCR engagement and CD3 phosphorylation.",
+      "E": "It confirmed the genetic basis of MHC polymorphism and its role in peptide binding."
+    },
+    "answer": "B",
+    "explanation": "(B) is the major advancement of the 'TCR/peptide/MHC co-crystal' structure determination. This structure, resolved by Don Wiley and colleagues, provided the *first atomic-level view* of the *ternary complex* – TCR bound to peptide-MHC, showing precisely *how* they interact. (A) V(D)J recombination mechanism was understood before 1996, and is a different area. (C) MHC restriction was demonstrated much earlier by Doherty and Zinkernagel. (D) TCR signaling pathways are a separate area of research, though the structure helped understand engagement. (E) MHC polymorphism and peptide binding were also understood before, but the structure gave atomic details of the interaction, not just the genetic basis."
+  },
+  {
+    "question": "Based on the information provided, which of the following cell types is LEAST likely to express MHC class II molecules under normal physiological conditions?",
+    "options": {
+      "A": "Dendritic cells",
+      "B": "Macrophages",
+      "C": "B cells",
+      "D": "Hepatocytes",
+      "E": "Epithelial cells of thymus"
+    },
+    "answer": "D",
+    "explanation": "(D) Hepatocytes are LEAST likely to express MHC class II under normal conditions according to the table. The table shows hepatocytes as having '+' for MHC class I but '-' for MHC class II. Dendritic cells, macrophages, and B cells are professional APCs known for high MHC class II expression ('+++' in table for dendritic cells, '++' for macrophages and B cells). Thymic epithelial cells are shown as '+'+'+' for MHC class II, playing a role in T cell development and tolerance. Hepatocytes are generally considered non-APCs for MHC class II presentation in normal physiology, although they might express it under certain inflammatory conditions."
+  },
+  {
+    "question": "Considering the information about the structure of MHC class I molecules, what is the role of β2-microglobulin (β2m)?",
+    "options": {
+      "A": "β2-microglobulin forms the peptide-binding cleft of MHC class I molecules.",
+      "B": "β2-microglobulin is essential for the cell surface expression and stability of the MHC class I α chain.",
+      "C": "β2-microglobulin directly interacts with the CD8 co-receptor to enhance T cell activation.",
+      "D": "β2-microglobulin is responsible for transporting peptides into the endoplasmic reticulum for MHC class I loading.",
+      "E": "β2-microglobulin is a polymorphic component of MHC class I, contributing to its functional diversity."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct role of β2-microglobulin (β2m). β2m is *essential for proper folding, stability, and cell surface expression* of the MHC class I α chain. Without β2m, the α chain is unstable and not efficiently expressed on the cell surface. (A) is incorrect; the peptide-binding cleft is formed by domains of the *α chain* (α1 and α2), not β2m. (C) is incorrect; CD8 interacts with the *α3 domain* of the α chain, not β2m. (D) TAP is for peptide transport. (E) β2m is *non-polymorphic* and encoded outside the MHC locus; polymorphism resides in the α chain of MHC class I."
+  },
+  {
+    "question": "Which of the following is a characteristic feature of the peptides that bind to MHC class II molecules, contributing to the 'more open and roomy' peptide-binding cleft?",
+    "options": {
+      "A": "They typically contain a single, centrally located anchor residue that fits into a deep pocket in the MHC cleft.",
+      "B": "They are often constrained at both ends, fitting snugly within the closed ends of the MHC class II cleft.",
+      "C": "They can extend beyond the ends of the MHC class II cleft, allowing for longer peptides to be accommodated.",
+      "D": "They primarily consist of hydrophobic amino acids, facilitating strong interactions with the hydrophobic anchor pockets of MHC class II.",
+      "E": "They are covalently linked to the MHC class II molecule, ensuring stable presentation on the cell surface."
+    },
+    "answer": "C",
+    "explanation": "(C) describes the characteristic feature of MHC class II binding peptides and their cleft. The 'more open and roomy' cleft of MHC class II *allows peptides to extend beyond the ends*, accommodating *longer peptides*. (A) is more characteristic of MHC class I, with a defined pocket and constrained ends. (B) is opposite to the 'open' nature of MHC class II cleft. (D) while hydrophobic interactions are important in MHC binding, it's not the defining feature of *length and extension* in MHC class II peptides. (E) MHC-peptide binding is non-covalent."
+  },
+  {
+    "question": "Based on the provided information, what is a potential immunological consequence of the fact that red blood cells do not express MHC class I molecules?",
+    "options": {
+      "A": "Red blood cells become highly efficient antigen-presenting cells, activating both CD4+ and CD8+ T cells.",
+      "B": "Red blood cells are susceptible to lysis by cytotoxic T lymphocytes (CTLs) regardless of viral infection status.",
+      "C": "Red blood cells can serve as a 'hiding place' for certain pathogens, evading detection by CD8+ T cell-mediated immunity.",
+      "D": "Red blood cells are unable to interact with T helper cells (Th cells), limiting their role in adaptive immune responses.",
+      "E": "Red blood cells primarily present lipid antigens via CD1 molecules, compensating for the lack of MHC class I."
+    },
+    "answer": "C",
+    "explanation": "(C) is a significant immunological consequence. Red blood cells lacking MHC class I *can serve as a 'hiding place'* for pathogens, as they cannot present antigens via MHC class I and thus *evade CD8+ CTL recognition*. The text mentions malaria parasite hiding in RBCs as an example. (A) is incorrect; RBCs are *not* APCs due to lack of MHC. (B) is incorrect; lack of MHC class I makes them *less* susceptible to CTL lysis (unless through NK cell mechanisms). (D) RBCs don't interact with Th cells significantly; their lack of MHC is more about evading CTLs. (E) lipid presentation by CD1 is a different pathway, not directly compensating for MHC class I absence in RBCs for typical antigen presentation."
+  },
+  {
+    "question": "Which of the following is NOT a known mechanism by which cytotoxic T lymphocytes (CTLs) induce target cell death, based on the information implicitly present in the material?",
+    "options": {
+      "A": "Release of perforin and granzymes.",
+      "B": "Induction of apoptosis via Fas-FasL interaction.",
+      "C": "Secretion of antibodies that opsonize target cells for phagocytosis.",
+      "D": "Release of cytokines like TNF-α and IFN-γ that can contribute to target cell destruction.",
+      "E": "Direct induction of necrosis in target cells through membrane disruption."
+    },
+    "answer": "C",
+    "explanation": "(C) is NOT a mechanism of CTL-induced target cell death. CTLs primarily kill via *perforin/granzyme* pathway and *Fas-FasL* pathway (inducing apoptosis). (A), (B), and (D) are established CTL killing mechanisms (cytokines like TNF-α and IFN-γ can contribute to cell death or inflammation). (E) while membrane disruption *can* occur with high perforin levels leading to necrosis-like death, apoptosis is the primary and more controlled mechanism. (C) antibody secretion is a function of *B cells*, not CTLs; opsonization and phagocytosis are antibody-mediated mechanisms, not primary CTL mechanisms, although CTLs can induce phagocytosis indirectly via cytokines or target cell changes."
+  },
+  {
+    "question": "Considering the 'antigen recognition' step in T cell activation, what is the most critical requirement for a naive T cell to become activated and initiate an immune response?",
+    "options": {
+      "A": "Encountering a soluble antigen at a high concentration in the bloodstream.",
+      "B": "Binding to a native, unprocessed protein antigen on the surface of any cell.",
+      "C": "Interacting with an antigen-presenting cell (APC) that displays a specific peptide-MHC complex recognized by its TCR.",
+      "D": "Receiving co-stimulatory signals from non-immune cells in the peripheral tissue.",
+      "E": "Undergoing somatic hypermutation to diversify its T cell receptor and enhance antigen binding affinity."
+    },
+    "answer": "C",
+    "explanation": "(C) is the most critical requirement for naive T cell activation. Naive T cells need to *interact with APCs* presenting *peptide-MHC complexes* recognized by their TCR. This is the central event in initiating adaptive T cell responses. (A) is incorrect; naive T cells don't respond to soluble antigens directly. (B) is incorrect; T cells recognize processed peptides, not native proteins, and require MHC. (D) co-stimulatory signals are *essential* but secondary to antigen recognition via peptide-MHC-TCR interaction; APCs provide co-stimulation. (E) somatic hypermutation is for B cells/antibodies, not TCRs; TCR diversity is generated *before* antigen encounter."
+  }
+]

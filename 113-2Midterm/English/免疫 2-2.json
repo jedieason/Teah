@@ -1,0 +1,723 @@
+
+[
+  {
+    "question": "Which of the following statements accurately describes humoral immunity?",
+    "options": {
+      "A": "It is primarily mediated by cells.",
+      "B": "It involves molecules in the cellular cytoplasm.",
+      "C": "It is regulated by molecules in the body fluids.",
+      "D": "It exclusively targets intracellular pathogens.",
+      "E": "It does not involve complement activation."
+    },
+    "answer": "C",
+    "explanation": "(C) Humoral immunity is defined as the immune response mediated by molecules in the body fluids, specifically antibodies and complement."
+  },
+  {
+    "question": "During B cell development, somatic mutation primarily occurs in which location?",
+    "options": {
+      "A": "Bone marrow",
+      "B": "Thymus",
+      "C": "Peripheral blood",
+      "D": "Germinal Center",
+      "E": "Lymph node cortex"
+    },
+    "answer": "D",
+    "explanation": "(D) Somatic mutation, along with class switching, takes place in the Germinal Center, where B cells undergo refinement and optimization."
+  },
+  {
+    "question": "Which of the following are key functions of antibodies in humoral immunity?",
+    "options": {
+      "A": "Neutralization",
+      "B": "Opsonization",
+      "C": "Complement activation",
+      "D": "Direct killing of infected cells",
+      "E": "Antigen presentation to T cells"
+    },
+    "answer": ["A", "B", "C"],
+    "explanation": "(A), (B), and (C) are the three main effector functions of antibodies: neutralization, opsonization, and complement activation, which are crucial for humoral immune responses."
+  },
+  {
+    "question": "What is the primary role of the Fc region of an antibody in opsonization?",
+    "options": {
+      "A": "To bind to the antigen on the pathogen.",
+      "B": "To activate the complement cascade.",
+      "C": "To facilitate antibody class switching.",
+      "D": "To be recognized by Fc receptors on phagocytes.",
+      "E": "To neutralize toxins directly."
+    },
+    "answer": "D",
+    "explanation": "(D) In opsonization, the Fc region of antibodies coating pathogens is recognized and bound by Fc receptors on phagocytic cells, enhancing phagocytosis."
+  },
+  {
+    "question": "Which complement pathway is typically associated with antibody-mediated complement activation?",
+    "options": {
+      "A": "Alternative pathway",
+      "B": "Lectin pathway",
+      "C": "Classical pathway",
+      "D": "MBL pathway",
+      "E": "Spontaneous pathway"
+    },
+    "answer": "C",
+    "explanation": "(C) Complement activation via antibodies typically proceeds through the classical pathway, initiated by antibody binding to antigen."
+  },
+  {
+    "question": "Why is innate immunity considered essential for the most effective clearance of pathogens even when adaptive immunity is involved?",
+    "options": {
+      "A": "Innate immunity directly produces antibodies.",
+      "B": "Adaptive immunity is too slow to respond initially.",
+      "C": "Innate immunity components like phagocytes and complement are necessary for antibody effector functions.",
+      "D": "Adaptive immunity only targets intracellular pathogens.",
+      "E": "Innate immunity is not affected by pathogen mutations."
+    },
+    "answer": "C",
+    "explanation": "(C) Even though B cells are part of adaptive immunity, effective pathogen clearance often requires the cooperation of innate immune mechanisms, such as phagocytosis and complement, which are enhanced by antibodies."
+  },
+  {
+    "question": "What is the first signal required for B cell activation?",
+    "options": {
+      "A": "Binding of CD40L to CD40.",
+      "B": "Interaction with TFH cells.",
+      "C": "Crosslinking of Toll-like receptors.",
+      "D": "Antigen binding to the B cell receptor (BCR).",
+      "E": "Complement C3b binding to CR2 (CD21)."
+    },
+    "answer": "D",
+    "explanation": "(D) The initial signal for B cell activation is always antigen binding to the B cell receptor (BCR) on the B cell surface."
+  },
+  {
+    "question": "Which signaling molecules are immediately downstream of BCR engagement?",
+    "options": {
+      "A": "NFκB and AP-1",
+      "B": "PI 3-kinase and Ras/MAPK",
+      "C": "STAT3 and Bcl-2",
+      "D": "IKK and NEMO",
+      "E": "RelB and p52"
+    },
+    "answer": "B",
+    "explanation": "(B) Upon BCR engagement, key downstream signaling molecules activated include PI 3-kinase and Ras/MAPK pathways."
+  },
+  {
+    "question": "Thymus-independent antigens are characterized by which of the following?",
+    "options": {
+      "A": "They are primarily protein antigens.",
+      "B": "They require T cell help for B cell activation.",
+      "C": "They often consist of bacterial polysaccharides or lipopolysaccharides.",
+      "D": "They activate B cells through MHC II interaction.",
+      "E": "They induce somatic hypermutation extensively."
+    },
+    "answer": "C",
+    "explanation": "(C) Thymus-independent antigens are typically non-protein antigens like bacterial polysaccharides and LPS, which can directly activate B cells without T cell help."
+  },
+  {
+    "question": "Activation of NFκB in B cells by thymus-independent antigens typically involves which receptor?",
+    "options": {
+      "A": "B Cell Receptor (BCR)",
+      "B": "Toll-like Receptor (TLR)",
+      "C": "Fc Receptor",
+      "D": "Complement Receptor",
+      "E": "MHC Class II"
+    },
+    "answer": "B",
+    "explanation": "(B) Thymus-independent antigens, such as LPS, often activate B cells by binding to Toll-like Receptors (TLRs), leading to NFκB activation."
+  },
+  {
+    "question": "What is the role of TFH (follicle helper) cells in thymus-dependent B cell activation?",
+    "options": {
+      "A": "To directly kill pathogen-infected cells.",
+      "B": "To present antigen to B cells via MHC I.",
+      "C": "To provide the second signal necessary for B cell activation through CD40L interaction and cytokine secretion.",
+      "D": "To suppress B cell responses to self-antigens.",
+      "E": "To mediate class switching in the bone marrow."
+    },
+    "answer": "C",
+    "explanation": "(C) TFH cells are crucial for thymus-dependent B cell activation by providing the second activation signal through CD40L binding to CD40 on B cells and secreting cytokines."
+  },
+  {
+    "question": "In thymus-dependent B cell activation, B cells present processed antigen to TFH cells using:",
+    "options": {
+      "A": "MHC Class I molecules",
+      "B": "MHC Class II molecules",
+      "C": "B Cell Receptor (BCR)",
+      "D": "Toll-like Receptors (TLRs)",
+      "E": "Fc Receptors"
+    },
+    "answer": "B",
+    "explanation": "(B) B cells, after internalizing and processing antigens, present peptide fragments bound to MHC Class II molecules to TFH cells."
+  },
+  {
+    "question": "Complement fragment C3b can enhance B cell activation by binding to which receptor on B cells?",
+    "options": {
+      "A": "CD40",
+      "B": "CD40L",
+      "C": "CD21",
+      "D": "CD19",
+      "E": "MHC II"
+    },
+    "answer": "C",
+    "explanation": "(C) Complement fragment C3b can bind to CD21 (CR2) on B cells, which, together with CD19, forms a complex that enhances BCR signaling and B cell activation."
+  },
+  {
+    "question": "What is the significance of linked recognition in T-B cell cooperation?",
+    "options": {
+      "A": "It ensures that B cells and T cells recognize different epitopes of the same antigen.",
+      "B": "It requires B cells and T cells to recognize completely unrelated antigens for activation.",
+      "C": "It mandates that B cells and TFH cells recognize epitopes of the same antigen, enhancing specificity and reducing autoimmunity.",
+      "D": "It allows T cells to directly activate B cells without antigen presentation.",
+      "E": "It primarily functions in thymus-independent B cell activation."
+    },
+    "answer": "C",
+    "explanation": "(C) Linked recognition is a crucial mechanism that ensures that B cells and TFH cells must recognize epitopes derived from the same antigen for effective B cell activation, thereby minimizing the risk of autoimmune responses."
+  },
+  {
+    "question": "Which of the following cytokines secreted by TFH cells is primarily responsible for B cell survival and proliferation?",
+    "options": {
+      "A": "IL-4",
+      "B": "TGF-β",
+      "C": "IFN-γ",
+      "D": "IL-6",
+      "E": "IL-21"
+    },
+    "answer": "E",
+    "explanation": "(E) IL-21, secreted by TFH cells, is a key cytokine that promotes B cell survival and proliferation, acting downstream via STAT3 signaling."
+  },
+  {
+    "question": "Cytokines like IL-6, TGF-β, IFN-γ, and IL-4 from TFH cells primarily regulate which aspect of B cell differentiation?",
+    "options": {
+      "A": "Somatic hypermutation",
+      "B": "Affinity maturation",
+      "C": "Class switching (isotype switch)",
+      "D": "Plasma cell differentiation",
+      "E": "Memory B cell formation"
+    },
+    "answer": "C",
+    "explanation": "(C) Cytokines such as IL-6, TGF-β, IFN-γ, and IL-4 secreted by TFH cells are crucial in determining B cell isotype switching, leading to the production of different antibody classes."
+  },
+  {
+    "question": "What is the concept of paracrine signaling in the context of TFH and B cell interaction?",
+    "options": {
+      "A": "Cytokines act on cells distant from the secreting cell via the bloodstream.",
+      "B": "Cytokines act on the same cell that secretes them.",
+      "C": "Cytokines secreted by TFH cells act only on adjacent B cells.",
+      "D": "Cytokines act on all immune cells regardless of proximity.",
+      "E": "Cytokines are stored within the TFH cell and released upon direct contact."
+    },
+    "answer": "C",
+    "explanation": "(C) In the context of TFH-B cell interaction, cytokine signaling is primarily paracrine, meaning that cytokines from TFH cells act locally on neighboring B cells, ensuring targeted regulation."
+  },
+  {
+    "question": "Plasmablasts generated immediately after B cell activation primarily form the:",
+    "options": {
+      "A": "Germinal center",
+      "B": "Primary focus",
+      "C": "Memory B cell pool",
+      "D": "Mantle zone",
+      "E": "Marginal zone"
+    },
+    "answer": "B",
+    "explanation": "(B) After initial activation, B cells differentiate into plasmablasts that accumulate to form the primary focus, an early site of antibody production."
+  },
+  {
+    "question": "Which of the following is NOT a strategy to ensure B cells and TFH cells meet efficiently for activation?",
+    "options": {
+      "A": "High density of immune cells in secondary lymphoid tissues.",
+      "B": "Random encounter in the bloodstream.",
+      "C": "Chemokine-guided migration.",
+      "D": "Concentration of immune cells in lymph nodes.",
+      "E": "Controlled movement by chemokine gradients."
+    },
+    "answer": "B",
+    "explanation": "(B) Random encounters in the bloodstream are not an efficient strategy. The immune system utilizes high cell density in lymphoid tissues and chemokine gradients to ensure that B cells and TFH cells meet efficiently."
+  },
+  {
+    "question": "In secondary lymphoid organs, resting B cells are primarily located in:",
+    "options": {
+      "A": "T-cell zones",
+      "B": "Follicles",
+      "C": "Medullary cords",
+      "D": "Paracortex",
+      "E": "Periarteriolar lymphoid sheath (PALS)"
+    },
+    "answer": "B",
+    "explanation": "(B) In the absence of activation, resting B cells are predominantly located within follicles in secondary lymphoid organs."
+  },
+  {
+    "question": "Which chemokine receptor is primarily expressed on resting B cells to direct them to follicles?",
+    "options": {
+      "A": "CCR7",
+      "B": "CXCR5",
+      "C": "CXCL13",
+      "D": "CCL21",
+      "E": "EBI2"
+    },
+    "answer": "B",
+    "explanation": "(B) Resting B cells express CXCR5, which responds to CXCL13 produced in follicles, guiding them to these areas."
+  },
+  {
+    "question": "T cells are guided to the T-cell zones of secondary lymphoid organs by which chemokine receptor and ligand pair?",
+    "options": {
+      "A": "CXCR5 and CXCL13",
+      "B": "CCR7 and CCL21",
+      "C": "EBI2 and 7α,25-HC",
+      "D": "CCR5 and CCL5",
+      "E": "CXCR4 and CXCL12"
+    },
+    "answer": "B",
+    "explanation": "(B) T cells express CCR7, which responds to CCL21 and CCL19 produced in T-cell zones, directing their migration to these areas."
+  },
+  {
+    "question": "Upon activation, B cells upregulate the expression of which chemokine receptor and lipid receptor, enabling them to move towards T cell zones?",
+    "options": {
+      "A": "CXCR5 and EBI2",
+      "B": "CCR7 and CXCR5",
+      "C": "CCR7 and EBI2",
+      "D": "CXCR5 and CCR7",
+      "E": "CXCL13 and EBI2"
+    },
+    "answer": "C",
+    "explanation": "(C) Activated B cells upregulate CCR7 and EBI2, allowing them to respond to chemokines and lipid mediators present at the T cell zone-follicle boundary."
+  },
+  {
+    "question": "What is the role of Bcl-6 in TFH cell differentiation?",
+    "options": {
+      "A": "Promotes migration to follicles.",
+      "B": "Inhibits cytokine production.",
+      "C": "Induces expression of CXCR5.",
+      "D": "Suppresses expression of CD40L.",
+      "E": "Facilitates germinal center reactions."
+    },
+    "answer": "C",
+    "explanation": "(C) T cells increase Bcl-6 expression to become TFH cells, and Bcl-6 is crucial for the expression of CXCR5, which is essential for follicular homing and TFH function."
+  },
+  {
+    "question": "SAP protein, induced in TFH cells, is important for:",
+    "options": {
+      "A": "Preventing B cell activation.",
+      "B": "Sustaining contact between TFH and B cells.",
+      "C": "Inducing somatic hypermutation.",
+      "D": "Promoting B cell migration to T cell zones.",
+      "E": "Inhibiting class switch recombination."
+    },
+    "answer": "B",
+    "explanation": "(B) SAP protein in TFH cells facilitates sustained interaction with B cells by regulating SLAM family receptors, which are crucial for effective T-B cell cooperation."
+  },
+  {
+    "question": "X-linked Lymphoproliferative Syndrome (XLP) is associated with a defect in:",
+    "options": {
+      "A": "BCR signaling.",
+      "B": "MHC Class II expression.",
+      "C": "SAP protein function.",
+      "D": "TCR signaling.",
+      "E": "Complement activation."
+    },
+    "answer": "C",
+    "explanation": "(C) X-linked Lymphoproliferative Syndrome (XLP) is caused by mutations in the gene encoding SAP protein, leading to impaired T-B cell interactions and immune dysregulation."
+  },
+  {
+    "question": "The germinal center reaction is initiated in which location?",
+    "options": {
+      "A": "Primary focus",
+      "B": "Follicle",
+      "C": "T-cell zone",
+      "D": "Medullary cord",
+      "E": "Bone marrow"
+    },
+    "answer": "B",
+    "explanation": "(B) The germinal center reaction, the second phase of B cell immune response, occurs within the follicle of secondary lymphoid tissues."
+  },
+  {
+    "question": "What is the primary outcome of the germinal center reaction?",
+    "options": {
+      "A": "Production of IgM antibodies.",
+      "B": "Formation of primary foci.",
+      "C": "Generation of high-affinity antibodies and memory B cells.",
+      "D": "Activation of innate immunity.",
+      "E": "Suppression of autoimmune responses."
+    },
+    "answer": "C",
+    "explanation": "(C) The germinal center reaction is essential for generating high-affinity antibodies through somatic hypermutation and affinity maturation, as well as for the development of memory B cells."
+  },
+  {
+    "question": "Plasma cells generated in the germinal center primarily migrate to:",
+    "options": {
+      "A": "Follicles",
+      "B": "T-cell zones",
+      "C": "Medullary cords or bone marrow",
+      "D": "Primary foci",
+      "E": "Marginal zone"
+    },
+    "answer": "C",
+    "explanation": "(C) Plasma cells, differentiated in the germinal center, migrate to the medullary cords of lymph nodes or to the bone marrow to secrete large amounts of antibodies."
+  },
+  {
+    "question": "Which of the following processes occur in the germinal center?",
+    "options": {
+      "A": "Positive selection of T cells",
+      "B": "Negative selection of B cells",
+      "C": "Somatic hypermutation, class switch recombination, and affinity maturation",
+      "D": "Primary B cell activation",
+      "E": "Thymus-independent B cell activation"
+    },
+    "answer": "C",
+    "explanation": "(C) The key processes occurring within the germinal center are somatic hypermutation, class switch recombination, and affinity maturation, which refine the antibody response."
+  },
+  {
+    "question": "Germinal centers are considered secondary lymphoid follicles because:",
+    "options": {
+      "A": "They are the first site of B cell activation.",
+      "B": "They develop after the primary B cell response in primary lymphoid follicles.",
+      "C": "They are located in the thymus.",
+      "D": "They are involved in thymus-independent responses.",
+      "E": "They produce IgM antibodies exclusively."
+    },
+    "answer": "B",
+    "explanation": "(B) Germinal centers are located within secondary lymphoid follicles, which develop after the initial B cell activation and proliferation that may occur outside the follicle in primary foci."
+  },
+  {
+    "question": "What is the mantle zone in the context of germinal centers?",
+    "options": {
+      "A": "The central region of active B cell proliferation.",
+      "B": "The outer layer of resting B cells surrounding the germinal center.",
+      "C": "The area where somatic hypermutation occurs.",
+      "D": "The T cell-rich region within the follicle.",
+      "E": "The location of plasma cell differentiation."
+    },
+    "answer": "B",
+    "explanation": "(B) The mantle zone is the outer rim of the lymphoid follicle, composed of naive or resting B cells that are displaced outwards by the proliferating germinal center B cells."
+  },
+  {
+    "question": "Centroblasts, found in the dark zone of germinal centers, are characterized by:",
+    "options": {
+      "A": "Slow proliferation rate.",
+      "B": "High surface Ig expression.",
+      "C": "Rapid proliferation and low surface Ig expression.",
+      "D": "Predominantly undergoing class switching.",
+      "E": "Differentiating into memory B cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Centroblasts in the dark zone are rapidly proliferating B cells with low surface Ig expression, actively undergoing somatic hypermutation."
+  },
+  {
+    "question": "Centrocytes, located in the light zone of germinal centers, are characterized by:",
+    "options": {
+      "A": "Rapid proliferation.",
+      "B": "Low surface Ig expression.",
+      "C": "Slower proliferation and higher surface Ig expression.",
+      "D": "Primarily undergoing somatic hypermutation.",
+      "E": "Differentiating into plasmablasts."
+    },
+    "answer": "C",
+    "explanation": "(C) Centrocytes in the light zone are B cells that proliferate more slowly and have higher surface Ig expression. They are selected based on their antigen affinity."
+  },
+  {
+    "question": "What is the cyclic re-entry model in germinal center reactions?",
+    "options": {
+      "A": "B cells continuously move from bone marrow to germinal center.",
+      "B": "B cells cycle between the dark and light zones of the germinal center.",
+      "C": "TFH cells migrate in and out of the germinal center.",
+      "D": "Antigens are recycled within the germinal center.",
+      "E": "Plasma cells re-enter the germinal center for further maturation."
+    },
+    "answer": "B",
+    "explanation": "(B) The cyclic re-entry model describes the movement of B cells between the dark and light zones of the germinal center, undergoing mutation and selection in cycles."
+  },
+  {
+    "question": "Stromal cells in the dark zone of the germinal center produce which chemokine to attract centroblasts?",
+    "options": {
+      "A": "CXCL13",
+      "B": "CCL21",
+      "C": "CXCL12",
+      "D": "CCL19",
+      "E": "CXCR5"
+    },
+    "answer": "C",
+    "explanation": "(C) Stromal cells in the dark zone produce CXCL12, which attracts centroblasts that express CXCR4, guiding their movement within the germinal center."
+  },
+  {
+    "question": "Follicular dendritic cells (FDCs) in the light zone of the germinal center produce which chemokine?",
+    "options": {
+      "A": "CXCL12",
+      "B": "CCL21",
+      "C": "CXCL13",
+      "D": "CCL19",
+      "E": "CXCR4"
+    },
+    "answer": "C",
+    "explanation": "(C) Follicular dendritic cells (FDCs) in the light zone produce CXCL13, attracting centrocytes and TFH cells that express CXCR5 to the light zone."
+  },
+  {
+    "question": "Somatic Hypermutation (SHM) primarily targets which region of the antibody molecule?",
+    "options": {
+      "A": "Constant region (C)",
+      "B": "Heavy chain constant region",
+      "C": "Light chain constant region",
+      "D": "Variable region (V)",
+      "E": "Fc region"
+    },
+    "answer": "D",
+    "explanation": "(D) Somatic hypermutation (SHM) is specifically targeted to the variable (V) regions of both heavy and light chain genes, responsible for antigen binding."
+  },
+  {
+    "question": "Class Switch Recombination (CSR) primarily alters which region of the antibody molecule?",
+    "options": {
+      "A": "Variable region (V)",
+      "B": "Light chain variable region",
+      "C": "Heavy chain variable region",
+      "D": "Constant region (C) of the heavy chain",
+      "E": "Light chain constant region"
+    },
+    "answer": "D",
+    "explanation": "(D) Class switch recombination (CSR) changes the constant (C) region of the heavy chain, determining the antibody isotype (IgM, IgG, IgA, IgE) while preserving antigen specificity."
+  },
+  {
+    "question": "Which enzyme is essential for both Somatic Hypermutation (SHM) and Class Switch Recombination (CSR)?",
+    "options": {
+      "A": "UNG (Uracil-N-Glycosylase)",
+      "B": "APE1 (Apurinic/apyrimidinic endonuclease 1)",
+      "C": "AID (Activation-Induced Cytidine Deaminase)",
+      "D": "DSBR (Double-Strand Break Repair) machinery",
+      "E": "RNA polymerase"
+    },
+    "answer": "C",
+    "explanation": "(C) Activation-Induced Cytidine Deaminase (AID) is crucial for initiating both SHM and CSR by deaminating cytosine to uracil in DNA, which is then processed by downstream repair pathways."
+  },
+  {
+    "question": "Affinity maturation is a process that selects B cells based on:",
+    "options": {
+      "A": "Proliferation rate.",
+      "B": "Isotype switching efficiency.",
+      "C": "Binding affinity of their antibodies to antigen.",
+      "D": "Migration speed within germinal centers.",
+      "E": "Expression level of surface IgM."
+    },
+    "answer": "C",
+    "explanation": "(C) Affinity maturation is the process in germinal centers where B cells producing antibodies with higher affinity for the antigen are preferentially selected to survive and proliferate."
+  },
+  {
+    "question": "In affinity maturation, B cells with higher affinity for antigen are selected because they:",
+    "options": {
+      "A": "Proliferate faster in the dark zone.",
+      "B": "Bind antigen on FDCs more effectively and receive survival signals from TFH cells.",
+      "C": "Undergo somatic hypermutation more frequently.",
+      "D": "Express higher levels of CXCR4.",
+      "E": "Migrate to the medullary cords more rapidly."
+    },
+    "answer": "B",
+    "explanation": "(B) B cells with higher affinity antibodies can more effectively capture antigen presented by FDCs in the light zone, process it, and present it to TFH cells, receiving crucial survival and proliferation signals."
+  },
+  {
+    "question": "During affinity maturation, B cells with low affinity for antigen are likely to undergo:",
+    "options": {
+      "A": "Class switch recombination.",
+      "B": "Differentiation into plasma cells.",
+      "C": "Apoptosis (cell death).",
+      "D": "Migration to the dark zone.",
+      "E": "Differentiation into memory B cells."
+    },
+    "answer": "C",
+    "explanation": "(C) B cells with low affinity antibodies are outcompeted in antigen binding and TFH cell interaction, leading to their apoptosis due to lack of survival signals."
+  },
+  {
+    "question": "Isotype switching from IgM to other isotypes (like IgG, IgA, IgE) involves:",
+    "options": {
+      "A": "mRNA splicing.",
+      "B": "Somatic hypermutation.",
+      "C": "DNA recombination in the constant region locus.",
+      "D": "Changes in the variable region genes.",
+      "E": "Increased transcription of IgM genes."
+    },
+    "answer": "C",
+    "explanation": "(C) Isotype switching requires DNA recombination events in the heavy chain constant region locus, which deletes the Cμ and Cδ genes and brings a downstream constant region gene (like Cγ, Cα, or Cε) next to the VDJ region."
+  },
+  {
+    "question": "IgM and IgD expression by naive B cells is primarily determined by:",
+    "options": {
+      "A": "DNA recombination.",
+      "B": "Somatic hypermutation.",
+      "C": "Alternative mRNA splicing.",
+      "D": "Affinity maturation.",
+      "E": "Class switch recombination."
+    },
+    "answer": "C",
+    "explanation": "(C) Naive B cells express both IgM and IgD due to alternative mRNA splicing, which allows for the production of both heavy chain constant regions from a single transcriptional unit without DNA recombination."
+  },
+  {
+    "question": "Which cytokine primarily induces class switching to IgE?",
+    "options": {
+      "A": "IFN-γ",
+      "B": "TGF-β",
+      "C": "IL-4",
+      "D": "IL-5",
+      "E": "IL-21"
+    },
+    "answer": "C",
+    "explanation": "(C) IL-4 is a key cytokine that promotes class switching to IgE, which is important in allergic responses and defense against helminths."
+  },
+  {
+    "question": "Which cytokine primarily induces class switching to IgA?",
+    "options": {
+      "A": "IFN-γ",
+      "B": "TGF-β",
+      "C": "IL-4",
+      "D": "IL-5",
+      "E": "IL-21"
+    },
+    "answer": "B",
+    "explanation": "(B) TGF-β is a cytokine that promotes class switching to IgA, which is crucial for mucosal immunity."
+  },
+  {
+    "question": "Plasmablasts differ from plasma cells in that plasmablasts:",
+    "options": {
+      "A": "Do not secrete antibodies.",
+      "B": "Are terminally differentiated and cannot further mature.",
+      "C": "Can still undergo somatic hypermutation and affinity maturation.",
+      "D": "Are found only in the bone marrow.",
+      "E": "Express very low levels of IgG."
+    },
+    "answer": "C",
+    "explanation": "(C) Plasmablasts are earlier stage antibody-secreting cells that can still proliferate and potentially re-enter germinal centers for further maturation, unlike terminally differentiated plasma cells."
+  },
+  {
+    "question": "Resting B cells are primarily located in the:",
+    "options": {
+      "A": "Germinal center",
+      "B": "Primary focus",
+      "C": "Follicle",
+      "D": "Medullary cord",
+      "E": "Bloodstream"
+    },
+    "answer": "C",
+    "explanation": "(C) Resting or naive B cells are located in the follicles of secondary lymphoid organs, prepared for activation upon antigen encounter."
+  },
+  {
+    "question": "TI-1 antigens are characterized by:",
+    "options": {
+      "A": "Requiring T cell help for B cell activation.",
+      "B": "Being primarily protein antigens.",
+      "C": "Having intrinsic activity to activate B cells directly, often through TLRs.",
+      "D": "Inducing high-affinity antibody responses.",
+      "E": "Primarily activating memory B cells."
+    },
+    "answer": "C",
+    "explanation": "(C) TI-1 antigens possess intrinsic activity to activate B cells without T cell help, often by engaging both BCR and TLRs on B cells."
+  },
+  {
+    "question": "Polyclonal B cell activation is a characteristic of:",
+    "options": {
+      "A": "Low concentrations of TI-1 antigens.",
+      "B": "Thymus-dependent antigens.",
+      "C": "High concentrations of TI-1 antigens, leading to non-specific antibody production.",
+      "D": "TI-2 antigens.",
+      "E": "Affinity maturation."
+    },
+    "answer": "C",
+    "explanation": "(C) At high concentrations, TI-1 antigens can cause polyclonal B cell activation, leading to the activation of many B cell clones regardless of their antigen specificity, resulting in non-specific antibody production."
+  },
+  {
+    "question": "TI-2 antigens are characterized by:",
+    "options": {
+      "A": "Intrinsic activity to activate B cells directly.",
+      "B": "High valency and repetitive structures that crosslink BCRs.",
+      "C": "Primarily activating B cells through TLRs.",
+      "D": "Inducing polyclonal B cell activation.",
+      "E": "Requiring high concentrations for B cell activation."
+    },
+    "answer": "B",
+    "explanation": "(B) TI-2 antigens are characterized by their high valency and repetitive structures, which can crosslink multiple BCRs on a B cell surface, providing a strong activation signal."
+  },
+  {
+    "question": "MZB (Marginal Zone B) cells are particularly responsive to which type of antigen?",
+    "options": {
+      "A": "Thymus-dependent antigens.",
+      "B": "TI-1 antigens.",
+      "C": "TI-2 antigens, especially polysaccharide antigens.",
+      "D": "Protein antigens presented by MHC II.",
+      "E": "Lipid antigens."
+    },
+    "answer": "C",
+    "explanation": "(C) Marginal Zone B (MZB) cells are specialized to respond to TI-2 antigens, particularly polysaccharide antigens found on bacterial capsules, providing early defense against encapsulated bacteria."
+  },
+  {
+    "question": "Parental transfer of IgG antibodies to the fetus primarily occurs via:",
+    "options": {
+      "A": "IgA in breast milk.",
+      "B": "Active transport across the placenta.",
+      "C": "IgM transfer through umbilical cord.",
+      "D": "Diffusion across the blood-brain barrier.",
+      "E": "Direct injection from mother's bone marrow."
+    },
+    "answer": "B",
+    "explanation": "(B) IgG antibodies are actively transported across the placenta from mother to fetus, providing passive immunity to the newborn during early life."
+  },
+  {
+    "question": "Why are immunoglobulins typically absent in the brain under normal conditions?",
+    "options": {
+      "A": "Brain cells do not express Fc receptors.",
+      "B": "The blood-brain barrier restricts immunoglobulin entry.",
+      "C": "Immunoglobulins are rapidly degraded in the brain.",
+      "D": "Brain antigens do not stimulate immunoglobulin production.",
+      "E": "Brain immune responses are exclusively cell-mediated."
+    },
+    "answer": "B",
+    "explanation": "(B) The blood-brain barrier is a tight physiological barrier that largely restricts the entry of large molecules like immunoglobulins into the brain parenchyma."
+  },
+  {
+    "question": "Neutralizing antibodies protect cells from toxins by:",
+    "options": {
+      "A": "Activating complement on toxin molecules.",
+      "B": "Opsonizing toxins for phagocytosis.",
+      "C": "Blocking toxin binding to cellular receptors.",
+      "D": "Inducing toxin degradation by intracellular enzymes.",
+      "E": "Promoting toxin excretion via the kidneys."
+    },
+    "answer": "C",
+    "explanation": "(C) Neutralizing antibodies protect cells from toxins by directly binding to the toxin and blocking its interaction with cellular receptors, thus preventing toxin entry and damage."
+  },
+  {
+    "question": "In ADCC (Antibody-Dependent Cell-mediated Cytotoxicity), NK cells are recruited to kill target cells by recognizing:",
+    "options": {
+      "A": "MHC Class I molecules on target cells.",
+      "B": "Antigens presented by target cells via MHC II.",
+      "C": "Antibodies bound to antigens on target cell surfaces through Fc receptors.",
+      "D": "Complement fragments deposited on target cells.",
+      "E": "Viral proteins expressed on target cell surfaces."
+    },
+    "answer": "C",
+    "explanation": "(C) In ADCC, NK cells recognize and bind to antibodies (typically IgG) coating target cells through their FcγRIII (CD16) receptors, leading to target cell lysis."
+  },
+  {
+    "question": "Mast cell degranulation in allergic reactions is triggered by:",
+    "options": {
+      "A": "IgG crosslinking on mast cell surface.",
+      "B": "IgM binding to Fc receptors on mast cells.",
+      "C": "Crosslinking of IgE bound to FcεRI by multivalent antigens.",
+      "D": "Complement activation on mast cell surface.",
+      "E": "Direct antigen binding to mast cell receptors."
+    },
+    "answer": "C",
+    "explanation": "(C) Mast cell degranulation in allergic reactions is triggered by the crosslinking of IgE antibodies, which are bound to FcεRI receptors on mast cells, by multivalent allergens, leading to release of inflammatory mediators."
+  },
+  {
+    "question": "FcγRI (CD64) is characterized by:",
+    "options": {
+      "A": "Low affinity binding to IgG.",
+      "B": "High affinity binding to IgE.",
+      "C": "High affinity binding to IgG, even in monomeric form.",
+      "D": "Exclusively expressed on B cells.",
+      "E": "Primarily involved in inhibitory signaling."
+    },
+    "answer": "C",
+    "explanation": "(C) FcγRI (CD64) is unique among Fcγ receptors for its high affinity binding to IgG, even in monomeric form, making it effective in capturing even low concentrations of IgG."
+  },
+  {
+    "question": "ITIM (immunoreceptor tyrosine-based inhibitory motif) containing Fc receptors primarily mediate:",
+    "options": {
+      "A": "Phagocytosis.",
+      "B": "Activation of NK cells.",
+      "C": "Inhibitory signaling, preventing excessive immune responses.",
+      "D": "Mast cell degranulation.",
+      "E": "Complement activation."
+    },
+    "answer": "C",
+    "explanation": "(C) Fc receptors containing ITIM domains, like FcγRII-B1 and FcγRII-B2, deliver inhibitory signals upon IgG binding, helping to regulate and prevent excessive immune activation."
+  }
+]

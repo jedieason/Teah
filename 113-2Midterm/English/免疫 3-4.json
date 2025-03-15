@@ -1,0 +1,411 @@
+
+[
+  {
+    "question": "During the formation of the immunological synapse, which of the following statements accurately describes the role and composition of the central supramolecular activation cluster (cSMAC)?",
+    "options": {
+      "A": "cSMAC is located at the periphery of the synapse and primarily functions to stabilize the cell-cell junction through interactions like LFA-1 and ICAM-1.",
+      "B": "cSMAC is centrally located and is primarily responsible for signal transduction, containing the TCR complex, CD4, MHC, and costimulatory molecules such as CD28 and B7-1.",
+      "C": "cSMAC is characterized by a lipid-poor cell membrane and is devoid of signaling molecules, serving mainly as a structural anchor for the synapse.",
+      "D": "cSMAC is exclusively composed of adhesion molecules like LFA-1 and ICAM-1, facilitating initial cell contact but not signal transduction.",
+      "E": "cSMAC's primary function is to present antigens to the T cell, and it is mainly composed of MHC molecules and antigen peptides."
+    },
+    "answer": "B",
+    "explanation": "(B) cSMAC, or the central supramolecular activation cluster, is indeed located centrally within the immunological synapse. It's crucial for signal transduction, housing the TCR complex, CD4, MHC, and costimulatory molecules like CD28 and B7-1 (CD80).  Option (A) describes pSMAC, not cSMAC. Options (C), (D), and (E) misrepresent the composition and function of cSMAC, which is rich in lipids in its cell membrane and vital for signaling, not just structural support or antigen presentation."
+  },
+  {
+    "question": "PKCθ is mentioned as a downstream regulatory protein of the TCR. In which specific region of the immunological synapse and during what stage of T cell activation is PKCθ primarily active?",
+    "options": {
+      "A": "PKCθ is primarily active in the pSMAC during the initial adhesion phase of synapse formation.",
+      "B": "PKCθ is mainly active in the cSMAC after TCR engagement and is involved in downstream signaling pathways.",
+      "C": "PKCθ is distributed evenly across both cSMAC and pSMAC and is continuously active throughout T cell activation.",
+      "D": "PKCθ activity is localized to the APC and is not directly involved in T cell signaling within the synapse.",
+      "E": "PKCθ becomes active only after the third signal, influencing T cell differentiation rather than initial activation."
+    },
+    "answer": "B",
+    "explanation": "(B) PKCθ is indeed a downstream regulatory protein of the TCR and is primarily active within the **cSMAC**. It becomes active after the TCR engages with the MHC-peptide complex and plays a crucial role in the subsequent intracellular signaling cascades that lead to T cell activation. Options (A), (C), (D), and (E) are incorrect as they mislocalize PKCθ activity or misrepresent its timing and role in T cell activation."
+  },
+  {
+    "question": "Which of the following statements accurately describe the three-signal model for T cell activation?",
+    "options": {
+      "A": "Signal 1, provided by cytokines from APCs, initiates T cell differentiation into effector cells.",
+      "B": "Signal 2, involving MHC-peptide complex recognition by the TCR, is essential for T cell survival and proliferation.",
+      "C": "Signal 1, involving costimulatory molecules like B7-CD28 interaction, ensures T cell survival.",
+      "D": "Signal 3, delivered by various cytokines from APCs, determines the effector T cell subtype differentiation.",
+      "E": "Signal 2, the engagement of the TCR with MHC-peptide, is the primary activation signal for T cells."
+    },
+    "answer": ["D"],
+    "explanation": "Only (D) is correct. Signal 3, which involves cytokines like IL-6, IL-4, IL-12, and TGF-β from APCs, is indeed responsible for directing the differentiation of CD4+ T cells into specific effector subtypes. Option (A) incorrectly assigns the role of cytokines to Signal 1. Options (B), (C), and (E) are incorrect because Signal 1 is the TCR-MHC-peptide interaction for activation, and Signal 2 is the costimulatory signal (like B7-CD28) necessary for survival, not the other way around. Signal 2 ensures survival, not Signal 1."
+  },
+  {
+    "question": "Anergy in T cells is described as a state of functional inactivation. Which of the following molecular mechanisms is associated with the induction of anergy in T cells when Signal 2 is lacking?",
+    "options": {
+      "A": "Increased expression of IL-2 and enhanced T cell proliferation.",
+      "B": "Activation of Cbl and GRAIL, leading to the downregulation of TCR signaling.",
+      "C": "Upregulation of CD28 expression, enhancing costimulatory signals.",
+      "D": "Inhibition of apoptosis and promotion of T cell survival despite the absence of Signal 2.",
+      "E": "Enhanced production of inflammatory cytokines such as TNF-α and IL-1β."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. When Signal 2 (costimulation) is lacking, T cells can become anergic. This state is associated with the activation of molecules like Cbl and GRAIL, which act to dampen TCR signaling, leading to functional inactivation. Options (A), (C), (D), and (E) describe outcomes that are contrary to or not directly related to the mechanisms of T cell anergy induction due to lack of Signal 2. Anergy is characterized by *decreased*, not increased, activation and proliferation."
+  },
+  {
+    "question": "According to the two-signal model of T cell activation, what is the primary role of the second signal (costimulation via B7-CD28 interaction) in ensuring effective T cell responses?",
+    "options": {
+      "A": "To initiate the immediate cytotoxic function of CD8+ T cells.",
+      "B": "To induce the expression of high-affinity IL-2 receptors and stabilize IL-2 mRNA, promoting T cell survival and proliferation.",
+      "C": "To directly trigger T cell differentiation into specific effector subtypes such as Th1, Th2, or Th17.",
+      "D": "To solely enhance the antigen recognition capabilities of the T cell receptor (TCR).",
+      "E": "To suppress regulatory T cell (Treg) activity, thus amplifying effector T cell responses."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. The second signal, primarily through B7-CD28 interaction, is critical for T cell survival and proliferation because it stabilizes IL-2 mRNA and promotes the expression of high-affinity IL-2 receptors. IL-2 is a key growth factor for T cells. Options (A), (C), (D), and (E) describe functions that are either not the primary role of the second signal or are incorrect. While costimulation is essential for overall T cell function, its immediate survival and proliferative effect via IL-2 is paramount."
+  },
+  {
+    "question": "Consider a scenario where a naive T cell receives Signal 1 (TCR engagement with MHC-peptide) but is experimentally prevented from receiving Signal 2 (costimulation). What is the most likely outcome for this T cell?",
+    "options": {
+      "A": "The T cell will become fully activated, differentiate into effector cells, and initiate an immune response.",
+      "B": "The T cell will undergo apoptosis due to insufficient survival signals.",
+      "C": "The T cell will enter a state of anergy, characterized by functional inactivation and unresponsiveness to subsequent stimuli.",
+      "D": "The T cell will differentiate into regulatory T cells (Tregs) and suppress immune responses.",
+      "E": "The T cell will proceed with activation but will only produce IgM antibodies, lacking isotype switching."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. When a naive T cell receives Signal 1 without Signal 2, it typically leads to a state of anergy. This is a mechanism of peripheral tolerance where T cells become functionally inactivated and unresponsive to further stimulation, even if they later encounter both signals. Options (A), (B), (D), and (E) are incorrect outcomes under these conditions. Without costimulation, full activation, apoptosis, Treg differentiation, or antibody production (which is B cell function) are not the expected consequences."
+  },
+  {
+    "question": "Which of the following statements accurately describes the changes in L-selectin expression on T cells as they transition from a naive to an activated effector state?",
+    "options": {
+      "A": "L-selectin expression is upregulated on effector T cells to enhance their entry into lymph nodes.",
+      "B": "L-selectin expression remains unchanged on T cells regardless of their activation state.",
+      "C": "L-selectin expression is downregulated upon T cell activation, reducing their ability to home to lymph nodes.",
+      "D": "L-selectin expression is initially downregulated but then upregulated again in effector memory T cells.",
+      "E": "L-selectin expression is replaced by PSGL-1 expression on effector T cells to facilitate entry into inflamed tissues."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Naive T cells express L-selectin, which facilitates their entry into lymph nodes via HEV. Upon activation and differentiation into effector T cells, L-selectin expression is **downregulated**. This reduction in L-selectin expression reduces their homing to lymph nodes. Option (A) is the opposite of what happens. Option (B) is incorrect as expression changes. Option (D) is not described in the text. Option (E) is partially true that PSGL-1 is expressed upon activation, but L-selectin is downregulated, not replaced in the sense of function."
+  },
+  {
+    "question": "PSGL-1 (P-selectin glycoprotein ligand-1) is mentioned as being expressed on T cells upon activation. What is the primary function of PSGL-1 in the context of T cell trafficking and immune responses?",
+    "options": {
+      "A": "To mediate T cell entry into secondary lymphoid organs by binding to addressins on high endothelial venules (HEV).",
+      "B": "To facilitate the interaction between T cells and antigen-presenting cells (APCs) in the lymph nodes.",
+      "C": "To promote T cell migration into inflamed peripheral tissues by interacting with selectins on endothelial cells.",
+      "D": "To enhance T cell adhesion to extracellular matrix components in the thymus during T cell development.",
+      "E": "To regulate the egress of T cells from lymph nodes into the bloodstream by interacting with S1PR1."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. PSGL-1 is expressed on activated T cells and facilitates their migration into inflamed peripheral tissues. It does this by binding to P-selectin and E-selectin, which are expressed on endothelial cells in inflamed tissues. Option (A) describes the function of L-selectin. Option (B) describes general adhesion molecules but not specifically PSGL-1's primary role in trafficking to *inflamed* tissues. Options (D) and (E) are not related to PSGL-1's known function; (D) relates to thymic development, and (E) is the function of S1PR1."
+  },
+  {
+    "question": "S1PR1 (Sphingosine-1-phosphate receptor 1) plays a crucial role in regulating lymphocyte trafficking. Which of the following statements accurately describes the role of S1PR1 in the egress of activated T cells from lymph nodes?",
+    "options": {
+      "A": "S1PR1 expression is upregulated on activated T cells, and high S1P concentration in lymph nodes attracts T cells to remain within the lymph node.",
+      "B": "S1PR1 expression is downregulated on activated T cells initially, causing them to be retained in the lymph node for proliferation and differentiation.",
+      "C": "S1PR1 expression remains constant on T cells, but its ligand S1P concentration gradients direct T cell movement within tissues.",
+      "D": "S1PR1 is only expressed on naive T cells to guide them to lymph nodes, not on activated T cells.",
+      "E": "S1PR1 expression is induced by antigen stimulation and promotes T cell retention in the thymus for central tolerance induction."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. Initially, after activation, T cells *downregulate* S1PR1 expression. This transient downregulation keeps them in the lymph node for proliferation and differentiation. Later, S1PR1 expression is *upregulated* again. High S1P concentration in the blood then attracts these activated T cells out of the lymph node (egress). Option (A) is incorrect because high S1P in blood, not lymph nodes, causes egress and initially S1PR1 is downregulated, not upregulated. Options (C), (D), and (E) misrepresent the expression pattern and function of S1PR1 in T cell egress."
+  },
+  {
+    "question": "CTLA-4 is described as an inhibitory receptor on T cells that can bind to B7 molecules (CD80/CD86). What is the primary mechanism by which CTLA-4 engagement inhibits T cell activation and function?",
+    "options": {
+      "A": "CTLA-4 binding to B7 delivers a stimulatory signal that enhances T cell proliferation but reduces effector functions.",
+      "B": "CTLA-4 competitively binds to B7 with higher affinity than CD28, preventing CD28 costimulatory signals and leading to T cell inhibition.",
+      "C": "CTLA-4 activation directly induces apoptosis of T cells, thereby terminating immune responses.",
+      "D": "CTLA-4 engagement promotes the secretion of pro-inflammatory cytokines, which suppress T cell activation.",
+      "E": "CTLA-4 binding to B7 primarily blocks Signal 1 (TCR-MHC interaction), preventing initial T cell activation."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. CTLA-4 is an inhibitory receptor that competes with CD28 for binding to B7 molecules (CD80/CD86) on APCs. CTLA-4 has a higher affinity for B7 than CD28, so it can effectively outcompete CD28 for binding. When CTLA-4 engages B7, it delivers an inhibitory signal that dampens T cell activation, proliferation, and effector functions. Options (A), (C), (D), and (E) are incorrect as they misrepresent the mechanism of CTLA-4 action. CTLA-4 *inhibits*, not enhances, T cell activation and does so by competing for costimulatory ligand binding, not by inducing apoptosis directly or blocking Signal 1."
+  },
+  {
+    "question": "Consider a scenario where a T cell simultaneously engages both CD28 and CTLA-4 with their ligands on an APC. Given that CTLA-4 has a higher affinity for B7 molecules than CD28, what is the likely outcome regarding T cell activation?",
+    "options": {
+      "A": "T cell activation will be maximally enhanced due to synergistic signaling from both CD28 and CTLA-4.",
+      "B": "T cell activation will proceed normally, as CD28 signaling is dominant over CTLA-4 signaling.",
+      "C": "T cell activation will be suppressed or attenuated due to the inhibitory signals from CTLA-4 overriding the costimulatory signals from CD28.",
+      "D": "T cell activation will be unaffected by CTLA-4, as CTLA-4 only functions to regulate T cell differentiation, not initial activation.",
+      "E": "T cell activation will initially proceed, but CTLA-4 will induce apoptosis after a brief period of activation."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. Because CTLA-4 has a higher affinity for B7 than CD28, in a situation where both are engaged, CTLA-4 is more likely to bind B7 and deliver inhibitory signals. These inhibitory signals can override or attenuate the costimulatory signals from CD28, leading to a suppression or dampening of T cell activation. Options (A), (B), (D), and (E) are incorrect because they do not account for the dominant inhibitory effect of CTLA-4 when it competes effectively with CD28 for ligand binding and delivers opposing signals."
+  },
+  {
+    "question": "In the context of T cell differentiation, Signal 3, mediated by cytokines, is crucial for determining the effector subtype. Which of the following cytokines is primarily responsible for driving the differentiation of naive CD4+ T cells into the Th1 subset?",
+    "options": {
+      "A": "IL-4",
+      "B": "TGF-β",
+      "C": "IL-6",
+      "D": "IFN-γ and IL-12",
+      "E": "IL-21"
+    },
+    "answer": "D",
+    "explanation": "(D) is the correct answer. IFN-γ and IL-12 are the key cytokines that drive the differentiation of naive CD4+ T cells into the Th1 subset. Specifically, IFN-γ and IL-12 activate STAT1 and STAT4 transcription factors, respectively, which in turn induce the expression of T-bet, the master regulator of Th1 differentiation. Option (A) (IL-4) drives Th2 differentiation. Option (B) (TGF-β) is involved in Treg and Th17 differentiation (with IL-6). Option (C) (IL-6) is involved in Th17 and TFH differentiation. Option (E) (IL-21) is associated with TFH differentiation."
+  },
+  {
+    "question": "Which of the following transcription factors is considered the master regulator for the differentiation and function of Th2 cells?",
+    "options": {
+      "A": "T-bet",
+      "B": "GATA-3",
+      "C": "RORγT",
+      "D": "Bcl-6",
+      "E": "FoxP3"
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. GATA-3 is the master regulator transcription factor for Th2 cell differentiation and function. IL-4, a key cytokine for Th2 differentiation, activates STAT6, which in turn induces the expression of GATA-3. GATA-3 then promotes the development of Th2 cells and the production of Th2 cytokines like IL-4, IL-5, and IL-13. Option (A) (T-bet) is the master regulator for Th1 cells. Option (C) (RORγT) is for Th17 cells. Option (D) (Bcl-6) is for TFH cells. Option (E) (FoxP3) is for Treg cells."
+  },
+  {
+    "question": "RORγT is identified as the master regulator transcription factor for Th17 cells. Which cytokine signaling pathway primarily leads to the activation of RORγT and subsequent Th17 differentiation?",
+    "options": {
+      "A": "IFN-γ and STAT1 signaling",
+      "B": "IL-4 and STAT6 signaling",
+      "C": "TGF-β and IL-6 signaling, leading to STAT3 activation",
+      "D": "IL-2 and STAT5 signaling",
+      "E": "IL-21 and STAT3 signaling"
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. The differentiation of Th17 cells is primarily driven by TGF-β and IL-6, which activate the STAT3 transcription factor. Activated STAT3 then induces the expression of RORγT, the master regulator for Th17 differentiation. RORγT, in turn, promotes the development of Th17 cells and the production of Th17-associated cytokines like IL-17 and IL-22. Option (A) (IFN-γ and STAT1) leads to Th1 differentiation. Option (B) (IL-4 and STAT6) leads to Th2 differentiation. Option (D) (IL-2 and STAT5) is associated with Treg differentiation. Option (E) (IL-21 and STAT3) is more related to TFH differentiation, although STAT3 is also involved in Th17."
+  },
+  {
+    "question": "FoxP3 is the master regulator transcription factor for regulatory T cells (Tregs). Which cytokine is most critical for the differentiation and maintenance of Tregs?",
+    "options": {
+      "A": "IFN-γ",
+      "B": "IL-4",
+      "C": "IL-6",
+      "D": "TGF-β and IL-2",
+      "E": "IL-17"
+    },
+    "answer": "D",
+    "explanation": "(D) is the correct answer. TGF-β is crucial for the *differentiation* of Tregs, and IL-2 is essential for their *survival and maintenance*. TGF-β signaling, along with IL-2, leads to the activation of STAT5, which in turn induces the expression of FoxP3, the master regulator of Treg development and function. FoxP3 is critical for the suppressive function of Tregs. Option (A) (IFN-γ) promotes Th1 differentiation. Option (B) (IL-4) promotes Th2 differentiation. Option (C) (IL-6) promotes Th17 and TFH differentiation. Option (E) (IL-17) is a product of Th17 cells, not involved in Treg differentiation."
+  },
+  {
+    "question": "TFH (T follicular helper) cells are essential for B cell help in germinal centers. Which cytokine and transcription factor are primarily associated with the differentiation and function of TFH cells?",
+    "options": {
+      "A": "IL-12 and T-bet",
+      "B": "IL-4 and GATA-3",
+      "C": "IL-6 and Bcl-6",
+      "D": "TGF-β and FoxP3",
+      "E": "IL-17 and RORγT"
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. IL-6 is a key cytokine involved in TFH differentiation, and Bcl-6 is the master regulator transcription factor for TFH cells. IL-6, possibly along with other signals, activates STAT3, and this signaling pathway contributes to the expression of Bcl-6. TFH cells are characterized by their expression of Bcl-6 and their localization in B cell follicles to provide help for B cell maturation and antibody production. Option (A) (IL-12 and T-bet) is for Th1 cells. Option (B) (IL-4 and GATA-3) is for Th2 cells. Option (D) (TGF-β and FoxP3) is for Tregs. Option (E) (IL-17 and RORγT) is for Th17 cells."
+  },
+  {
+    "question": "Which of the following best describes the concept of mutual exclusivity in the context of master regulator transcription factors for CD4+ T cell subsets?",
+    "options": {
+      "A": "Multiple master regulator transcription factors can be co-expressed in a single CD4+ T cell, allowing for functional plasticity.",
+      "B": "The expression of one master regulator transcription factor typically suppresses the expression of other master regulators, ensuring lineage commitment of CD4+ T cell subsets.",
+      "C": "Master regulator transcription factors are expressed sequentially during T cell development, with earlier factors being replaced by later ones.",
+      "D": "Master regulator transcription factors can compensate for each other's absence, ensuring proper T cell differentiation even under suboptimal conditions.",
+      "E": "Master regulator transcription factors are only expressed in effector T cells, but not in naive or memory T cells."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. The concept of mutual exclusivity for master regulator transcription factors means that the expression of one master regulator (e.g., T-bet in Th1 cells) typically suppresses the expression of master regulators for other subsets (e.g., GATA-3 for Th2). This ensures that a T cell commits to a specific lineage and function, rather than expressing characteristics of multiple subsets simultaneously. Option (A) is contrary to mutual exclusivity. Options (C), (D), and (E) misrepresent the concept of mutual exclusivity and the timing or function of master regulator expression."
+  },
+  {
+    "question": "How do Th1 cells primarily contribute to cell-mediated immunity against intracellular pathogens such as bacteria and viruses?",
+    "options": {
+      "A": "By directly killing infected cells through cytotoxic mechanisms.",
+      "B": "By producing IL-4, IL-5, and IL-13 to promote humoral immunity and antibody production.",
+      "C": "By activating macrophages through IFN-γ secretion to enhance phagocytosis and killing of intracellular pathogens.",
+      "D": "By recruiting neutrophils to the site of infection through IL-17 and IL-22 secretion.",
+      "E": "By suppressing immune responses to prevent excessive inflammation and tissue damage."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. Th1 cells are crucial for cell-mediated immunity, particularly against intracellular pathogens. Their primary mechanism of action is to activate macrophages through the secretion of IFN-γ. IFN-γ enhances macrophage functions, including phagocytosis, intracellular killing, and the production of reactive oxygen species and nitric oxide, which are effective against intracellular bacteria and viruses. Option (A) describes the function of cytotoxic T lymphocytes (CTLs), not Th1 cells. Option (B) describes Th2 functions related to humoral immunity. Option (D) describes Th17 functions, which are more geared towards extracellular bacteria and fungi. Option (E) describes Treg functions."
+  },
+  {
+    "question": "Which of the following is a primary effector cytokine secreted by Th1 cells that is crucial for macrophage activation and enhancing cell-mediated immunity?",
+    "options": {
+      "A": "IL-4",
+      "B": "IL-5",
+      "C": "IL-10",
+      "D": "IFN-γ",
+      "E": "TGF-β"
+    },
+    "answer": "D",
+    "explanation": "(D) is the correct answer. IFN-γ (Interferon-gamma) is the signature effector cytokine produced by Th1 cells. Its primary function is to activate macrophages, enhancing their ability to phagocytose and kill intracellular pathogens. IFN-γ also promotes MHC class II expression and antigen presentation, further boosting cell-mediated immunity. Option (A) (IL-4) is a Th2 cytokine. Option (B) (IL-5) is also a Th2 cytokine. Option (C) (IL-10) is a suppressive cytokine, often produced by Tregs. Option (E) (TGF-β) is also a suppressive cytokine and involved in Treg differentiation."
+  },
+  {
+    "question": "How do Th2 cells primarily contribute to immune responses, particularly against helminth parasites and in allergic reactions?",
+    "options": {
+      "A": "By activating macrophages to kill intracellular parasites and bacteria.",
+      "B": "By promoting IgE production by B cells, mast cell degranulation, and eosinophil activation.",
+      "C": "By recruiting neutrophils to clear extracellular bacteria and fungi.",
+      "D": "By inducing cytotoxic T lymphocyte (CTL) responses to eliminate virus-infected cells.",
+      "E": "By suppressing inflammatory responses and maintaining immune homeostasis."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. Th2 cells play a key role in responses against helminth parasites and in allergic reactions. They primarily achieve this by producing cytokines like IL-4, IL-5, and IL-13. IL-4 promotes B cell class switching to IgE, IL-5 activates eosinophils, and IL-13 stimulates mucus production and can contribute to mast cell activation. IgE antibodies, upon crosslinking by allergens or parasite antigens on mast cells, cause mast cell degranulation, leading to allergic symptoms and anti-helminth responses. Option (A) describes Th1 function. Option (C) describes Th17 function. Option (D) describes CTL function. Option (E) describes Treg function."
+  },
+  {
+    "question": "IL-4 is a key cytokine produced by Th2 cells. Which of the following is a major function of IL-4 in the context of Th2-mediated immune responses?",
+    "options": {
+      "A": "Activation of macrophages and promotion of intracellular killing.",
+      "B": "Induction of B cell class switching to IgE and stimulation of mast cell and eosinophil activity.",
+      "C": "Recruitment of neutrophils and induction of antimicrobial peptide production by epithelial cells.",
+      "D": "Promotion of cytotoxic T lymphocyte (CTL) differentiation and killing of virus-infected cells.",
+      "E": "Suppression of Th2 cell differentiation and promotion of Th1 responses."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. IL-4 is a pleiotropic cytokine produced by Th2 cells, and one of its major functions is to induce B cell class switching to IgE. IgE antibodies are crucial for responses against helminth parasites and are also central to allergic reactions. IL-4 also stimulates mast cells and eosinophils, contributing to these types of immune responses. Option (A) describes IFN-γ function. Option (C) describes Th17 functions. Option (D) describes CTL responses. Option (E) is incorrect as IL-4 promotes, not suppresses, Th2 differentiation and does not promote Th1 responses."
+  },
+  {
+    "question": "How do Th17 cells primarily contribute to immune responses, particularly against extracellular bacteria and fungi?",
+    "options": {
+      "A": "By activating macrophages to phagocytose and kill extracellular pathogens.",
+      "B": "By promoting IgE production and mast cell degranulation to expel parasites.",
+      "C": "By recruiting neutrophils and inducing antimicrobial peptide production at epithelial barriers.",
+      "D": "By directly killing infected cells and producing IFN-γ to activate cell-mediated immunity.",
+      "E": "By suppressing immune responses and resolving inflammation at mucosal surfaces."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. Th17 cells are critical for immunity against extracellular bacteria and fungi, particularly at mucosal barriers. Their primary mechanism is to recruit neutrophils to the site of infection. They achieve this by producing cytokines like IL-17 and IL-22. IL-17 induces stromal and epithelial cells to produce chemokines that attract neutrophils, and IL-22 promotes antimicrobial peptide production by epithelial cells, enhancing barrier function and pathogen clearance. Option (A) describes Th1 function. Option (B) describes Th2 function. Option (D) describes CTL and Th1 functions combined. Option (E) describes Treg function, which is the opposite of Th17's role in promoting inflammation and antimicrobial responses."
+  },
+  {
+    "question": "IL-17 is a signature cytokine produced by Th17 cells. What is a major function of IL-17 in the context of Th17-mediated immune responses?",
+    "options": {
+      "A": "Activation of macrophages and promotion of intracellular killing.",
+      "B": "Induction of B cell class switching to IgG and neutralization of extracellular pathogens.",
+      "C": "Recruitment of neutrophils and induction of chemokine production by stromal and epithelial cells.",
+      "D": "Promotion of cytotoxic T lymphocyte (CTL) differentiation and cytotoxicity.",
+      "E": "Suppression of inflammatory responses and promotion of tissue repair."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. IL-17 is a key effector cytokine produced by Th17 cells. Its major function is to recruit neutrophils to sites of infection. IL-17 acts on stromal and epithelial cells to induce the production of chemokines, such as CXCL8 (IL-8 in humans), which are potent chemoattractants for neutrophils. This neutrophil recruitment is essential for clearing extracellular bacteria and fungi. Option (A) describes IFN-γ function. Option (B) describes antibody-mediated immunity, not specifically IL-17 function. Option (D) describes CTL function. Option (E) describes Treg or tissue repair mechanisms, not IL-17's primary role in inflammation and neutrophil recruitment."
+  },
+  {
+    "question": "TFH (T follicular helper) cells are specialized CD4+ T cells that provide help to B cells in germinal centers. What is the primary mechanism by which TFH cells assist B cells in generating high-affinity antibodies?",
+    "options": {
+      "A": "By directly killing B cells that do not undergo somatic hypermutation and affinity maturation.",
+      "B": "By secreting cytokines like IL-4 and IL-5 to induce B cell class switching to IgE.",
+      "C": "By providing cognate help to B cells through CD40L-CD40 interaction and secreting cytokines like IL-21, promoting germinal center reactions and affinity maturation.",
+      "D": "By suppressing B cell activation to prevent autoimmunity and excessive antibody production.",
+      "E": "By promoting B cell migration to the bone marrow for long-lived plasma cell differentiation."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. TFH cells are essential for B cell help in germinal centers. They provide cognate help, meaning they recognize the same antigen presented by B cells. The primary mechanism involves CD40L on TFH cells interacting with CD40 on B cells, delivering crucial activation signals. Additionally, TFH cells secrete cytokines like IL-21, which is vital for germinal center reactions, including somatic hypermutation, affinity maturation, and class switch recombination in B cells, leading to the production of high-affinity antibodies. Option (A) is incorrect as TFH cells *help* B cells, not kill them. Option (B) describes Th2-type help, but TFH cells are distinct and use different mechanisms and cytokines. Option (D) describes Treg function, not TFH. Option (E) describes a later stage of B cell differentiation, but TFH cells act in germinal centers, which are in secondary lymphoid organs, not bone marrow directly for plasma cell differentiation."
+  },
+  {
+    "question": "IL-21 is a key cytokine produced by TFH cells. What is a major function of IL-21 in the context of TFH-mediated B cell help?",
+    "options": {
+      "A": "Induction of B cell apoptosis to eliminate self-reactive B cells.",
+      "B": "Promotion of B cell class switching, somatic hypermutation, and affinity maturation in germinal centers.",
+      "C": "Suppression of B cell activation to prevent excessive antibody responses.",
+      "D": "Recruitment of B cells to the thymus for central tolerance induction.",
+      "E": "Activation of macrophages to phagocytose antibody-opsonized pathogens."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. IL-21 is a critical cytokine produced by TFH cells that plays a key role in B cell help within germinal centers. It promotes several essential processes in B cells, including class switch recombination (isotype switching), somatic hypermutation, and affinity maturation. These processes are crucial for generating high-affinity antibodies and long-lasting humoral immunity. Option (A) is incorrect as IL-21 promotes B cell *survival and maturation* in germinal centers, not apoptosis. Options (C), (D), and (E) describe functions unrelated to IL-21's role in TFH-mediated B cell help. Option (C) describes Treg function. Option (D) is incorrect as B cell tolerance is mainly in bone marrow and spleen, not thymus, and IL-21 is for B cell *activation*, not tolerance. Option (E) describes macrophage function, not IL-21's direct role in B cells."
+  },
+  {
+    "question": "Regulatory T cells (Tregs) are crucial for maintaining immune homeostasis and preventing autoimmunity. What is the primary mechanism by which Tregs suppress immune responses?",
+    "options": {
+      "A": "By directly killing effector T cells through cytotoxic mechanisms.",
+      "B": "By producing cytokines like IFN-γ and TNF-α to induce inflammation and clear pathogens.",
+      "C": "By secreting suppressive cytokines like TGF-β and IL-10, and by contact-dependent mechanisms, to inhibit effector T cell activation and function.",
+      "D": "By promoting B cell class switching to IgE to enhance allergic responses.",
+      "E": "By recruiting neutrophils to sites of inflammation to amplify immune responses."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. Tregs are specialized CD4+ T cells that suppress immune responses to maintain homeostasis and prevent autoimmunity. Their primary mechanism of suppression involves the production of suppressive cytokines like TGF-β and IL-10. TGF-β can inhibit the proliferation and effector function of various immune cells, including T cells, and IL-10 is a potent immunosuppressive cytokine that can inhibit APC function and T cell activation. Tregs also use contact-dependent mechanisms, such as CTLA-4, to inhibit effector T cell activation. Option (A) is incorrect as Tregs are *suppressive*, not cytotoxic to effector T cells. Option (B) describes functions of pro-inflammatory T cells like Th1, not Tregs. Option (D) describes Th2 function. Option (E) describes Th17 function."
+  },
+  {
+    "question": "TGF-β and IL-10 are key suppressive cytokines produced by regulatory T cells (Tregs). Which of the following is a primary function of TGF-β in Treg-mediated immune suppression?",
+    "options": {
+      "A": "Promotion of cytotoxic T lymphocyte (CTL) differentiation and killing of target cells.",
+      "B": "Induction of B cell class switching to IgA for mucosal immunity.",
+      "C": "Inhibition of proliferation and effector functions of various immune cells, including effector T cells and APCs.",
+      "D": "Recruitment of neutrophils and induction of antimicrobial peptide production.",
+      "E": "Promotion of Th1 differentiation and cell-mediated immunity."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. TGF-β (Transforming Growth Factor-beta) is a pleiotropic cytokine produced by Tregs and has broad immunosuppressive effects. A primary function of TGF-β in Treg-mediated suppression is to inhibit the proliferation and effector functions of various immune cells, including effector T cells themselves and antigen-presenting cells (APCs). TGF-β can dampen activation, cytokine production, and cytotoxic activity of effector T cells and can also inhibit APC maturation and function, thus suppressing overall immune responses. Option (A) describes CTL function. Option (B) describes a function of IgA induction, not directly related to TGF-β's suppressive role. Option (D) describes Th17 function. Option (E) describes Th1 function, which is opposite to TGF-β's suppressive role."
+  },
+  {
+    "question": "CD8+ T cells, also known as cytotoxic T lymphocytes (CTLs), play a critical role in eliminating virus-infected cells and tumor cells. What is the primary mechanism by which CTLs induce apoptosis in target cells?",
+    "options": {
+      "A": "By secreting cytokines like IL-4 and IL-5 to induce target cell necrosis.",
+      "B": "By phagocytosing target cells directly and degrading their cellular components.",
+      "C": "By releasing cytotoxic granules containing perforin and granzymes, which induce apoptosis in target cells.",
+      "D": "By producing antibodies that opsonize target cells for macrophage-mediated destruction.",
+      "E": "By suppressing the immune response and preventing inflammation at the site of infection."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. CTLs (Cytotoxic T Lymphocytes or CD8+ T cells) induce apoptosis in target cells, such as virus-infected cells or tumor cells, primarily through the release of cytotoxic granules. These granules contain perforin and granzymes. Perforin creates pores in the target cell membrane, allowing granzymes to enter the target cell cytoplasm. Granzymes are serine proteases that activate caspases, initiating the apoptotic cascade within the target cell. Option (A) describes Th2 cytokines and induces *necrosis* is incorrect for CTL-mediated killing which is *apoptosis*. Option (B) is incorrect; CTLs induce target cell death, but not by phagocytosis. Option (D) describes antibody-mediated immunity, which is a function of B cells and antibodies, not CTLs. Option (E) describes Treg function."
+  },
+  {
+    "question": "Perforin and granzymes are key components of cytotoxic granules released by CTLs to induce apoptosis in target cells. What are the distinct roles of perforin and granzymes in CTL-mediated cytotoxicity?",
+    "options": {
+      "A": "Perforin activates caspases directly, while granzymes create pores in the target cell membrane.",
+      "B": "Perforin is a serine protease that induces DNA fragmentation, while granzymes facilitate perforin entry into the target cell.",
+      "C": "Perforin creates pores in the target cell membrane to allow granzymes to enter and activate caspases, initiating apoptosis.",
+      "D": "Perforin and granzymes synergistically induce necrosis in target cells by disrupting membrane integrity.",
+      "E": "Perforin and granzymes both function as cytokines to attract macrophages to engulf and clear target cells."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. Perforin and granzymes work together in CTL-mediated cytotoxicity, but have distinct roles. **Perforin**'s role is to create pores or channels in the target cell membrane. These pores allow **granzymes**, which are serine proteases, to enter the cytoplasm of the target cell. Once inside, granzymes activate caspases, which are a family of proteases that initiate and execute the apoptotic program within the target cell. Option (A) reverses the roles of perforin and granzymes. Option (B) misrepresents the functions; perforin makes pores, not granzymes. Option (D) is incorrect because CTL-mediated killing induces *apoptosis*, not necrosis, and they don't synergistically induce necrosis. Option (E) misrepresents their function as cytokines attracting macrophages."
+  },
+  {
+    "question": "Fas ligand (FasL) is another key molecule used by CTLs to induce apoptosis in target cells. How does the FasL-Fas pathway differ from the perforin/granzyme pathway in CTL-mediated cytotoxicity?",
+    "options": {
+      "A": "The FasL-Fas pathway induces necrosis, while the perforin/granzyme pathway induces apoptosis.",
+      "B": "The FasL-Fas pathway requires direct cell-cell contact and receptor-ligand interaction, while the perforin/granzyme pathway is cytokine-mediated.",
+      "C": "The FasL-Fas pathway involves surface receptor interaction leading to caspase activation, while the perforin/granzyme pathway involves granule release and intracellular protease delivery.",
+      "D": "The FasL-Fas pathway is primarily used by NK cells, while the perforin/granzyme pathway is used by CTLs.",
+      "E": "The FasL-Fas pathway is more effective against intracellular pathogens, while the perforin/granzyme pathway targets tumor cells."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. The **FasL-Fas pathway** and the **perforin/granzyme pathway** are two distinct mechanisms used by CTLs to induce apoptosis, but they differ in their initiation. The FasL-Fas pathway is initiated by **direct cell-cell contact**. CTLs express FasL on their surface, which binds to Fas (CD95) on the target cell surface. This interaction triggers intracellular signaling in the target cell, leading to caspase activation and apoptosis. In contrast, the **perforin/granzyme pathway** involves the release of cytotoxic granules containing perforin and granzymes into the synapse between the CTL and target cell. Perforin facilitates granzyme entry into the target cell, leading to caspase activation. Option (A) is incorrect as both pathways induce *apoptosis*. Option (B) is incorrect; both pathways require cell-cell contact for CTL-mediated killing, but perforin/granzyme is not cytokine-mediated. Option (D) is incorrect as both pathways are used by CTLs, and NK cells also use perforin/granzyme but often rely more on other mechanisms. Option (E) is incorrect; both pathways are used against various target cells, including virus-infected and tumor cells; there isn't a strict pathogen vs. tumor target specificity difference between them."
+  },
+  {
+    "question": "What is the sequence of molecular events in the perforin/granzyme pathway of CTL-mediated apoptosis following granzyme entry into the target cell?",
+    "options": {
+      "A": "Granzyme activates caspases → tBid displaces Bcl-XL → Cytochrome c release → DNA fragmentation.",
+      "B": "Granzyme cleaves I-CAD → CAD release → tBid activation → Caspase activation.",
+      "C": "Granzyme directly induces DNA fragmentation → Cytochrome c release → Caspase activation.",
+      "D": "Granzyme activates caspases → Cytochrome c release → tBid activation → DNA fragmentation.",
+      "E": "Granzyme activates caspases → tBid activation → Cytochrome c release → Caspase-activated DNase (CAD) activation and DNA fragmentation."
+    },
+    "answer": "E",
+    "explanation": "(E) is the correct answer. The correct sequence of molecular events in the perforin/granzyme pathway, as depicted in Figure 12.11, is as follows: 1. **Granzyme entry:** Granzymes enter the target cell cytoplasm through perforin pores. 2. **Caspase activation:** Granzymes activate caspases (specifically, caspase-3). 3. **tBid activation:** Activated caspases cleave Bid, generating truncated Bid (tBid). 4. **Cytochrome c release:** tBid translocates to the mitochondria and promotes cytochrome c release from the mitochondria into the cytoplasm. 5. **Caspase-activated DNase (CAD) activation and DNA fragmentation:** Cytochrome c contributes to apoptosome formation and further caspase activation, leading to the activation of CAD, which then induces DNA fragmentation, a hallmark of apoptosis. Options (A), (B), (C), and (D) present incorrect sequences or misrepresent the roles of these molecules in the apoptotic pathway."
+  },
+  {
+    "question": "In the perforin/granzyme pathway, truncated Bid (tBid) plays a crucial role in mitochondrial involvement in apoptosis. What is the primary function of tBid in this pathway?",
+    "options": {
+      "A": "tBid directly activates caspases in the cytoplasm.",
+      "B": "tBid facilitates granzyme entry into the target cell.",
+      "C": "tBid promotes the release of cytochrome c from mitochondria into the cytoplasm.",
+      "D": "tBid directly induces DNA fragmentation by activating CAD.",
+      "E": "tBid inhibits the activity of Bcl-XL, preventing apoptosis."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. In the perforin/granzyme pathway, truncated Bid (tBid) is a key link between caspase activation and mitochondrial involvement in apoptosis. The primary function of tBid is to promote the release of **cytochrome c** from the mitochondria into the cytoplasm. tBid achieves this by interacting with and disrupting the outer mitochondrial membrane, leading to cytochrome c leakage. Released cytochrome c then participates in the formation of the apoptosome, which further activates caspases and amplifies the apoptotic signal. Option (A) is incorrect; granzymes, not tBid, directly activate caspases initially. Option (B) is incorrect; perforin, not tBid, facilitates granzyme entry. Option (D) is incorrect; CAD is activated later in the pathway, downstream of cytochrome c release and further caspase activation. Option (E) is incorrect; tBid *promotes* apoptosis, it does not prevent it. Bcl-XL is an anti-apoptotic protein, and tBid disrupts its function."
+  },
+  {
+    "question": "Caspase-activated DNase (CAD) is the effector nuclease responsible for DNA fragmentation during apoptosis in the perforin/granzyme pathway. How is CAD activated in the apoptotic process?",
+    "options": {
+      "A": "CAD is directly activated by granzymes upon entry into the target cell.",
+      "B": "CAD is activated by tBid after it is released from Bcl-XL.",
+      "C": "CAD is activated by caspase-3 through the cleavage of its inhibitor, I-CAD.",
+      "D": "CAD is activated by cytochrome c released from mitochondria.",
+      "E": "CAD is activated by perforin after it forms pores in the target cell membrane."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct answer. Caspase-activated DNase (CAD) is activated by **caspase-3**. CAD exists in the cytoplasm in an inactive form, bound to its inhibitor, **I-CAD** (Inhibitor of CAD). Caspase-3, which is activated earlier in the apoptotic cascade by granzymes and cytochrome c release, cleaves I-CAD. This cleavage releases CAD from its inhibitor, allowing CAD to become active and induce DNA fragmentation, a characteristic feature of apoptosis. Option (A) is incorrect; granzymes activate caspases, not CAD directly. Option (B) is incorrect; tBid promotes cytochrome c release. Option (D) is partially correct in that cytochrome c contributes to caspase activation, but CAD activation is specifically through caspase-3 cleavage of I-CAD. Option (E) is incorrect; perforin creates pores, not directly activating CAD."
+  },
+  {
+    "question": "What is the functional significance of the 'serial killing' capability of CD8+ cytotoxic T lymphocytes (CTLs)?",
+    "options": {
+      "A": "Serial killing allows CTLs to induce necrosis in multiple target cells simultaneously.",
+      "B": "Serial killing enables a single CTL to detach from one target cell after inducing apoptosis and move to kill other infected cells sequentially, maximizing efficiency.",
+      "C": "Serial killing ensures that CTLs only kill target cells that present high concentrations of antigen.",
+      "D": "Serial killing refers to the ability of CTLs to induce apoptosis in target cells through both perforin/granzyme and FasL-Fas pathways concurrently.",
+      "E": "Serial killing describes the process by which CTLs amplify the immune response by recruiting other immune cells to the site of infection."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct answer. The functional significance of 'serial killing' by CTLs is that it allows a single CTL to kill multiple target cells sequentially. After a CTL has induced apoptosis in one target cell, it detaches and migrates to find and kill another infected cell. This serial killing capability maximizes the efficiency of CTLs in eliminating infected or cancerous cells. Option (A) is incorrect because CTLs induce *apoptosis*, not necrosis, and serial killing is sequential, not simultaneous on multiple cells. Option (C) is incorrect; antigen concentration affects activation threshold, not serial killing mechanism. Option (D) is incorrect; serial killing is about *sequential* killing of *different* cells, not using both pathways *concurrently* on one cell. Option (E) describes a broader immune response amplification, not serial killing's direct functional significance."
+  }
+]

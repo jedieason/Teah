@@ -1,0 +1,771 @@
+
+[
+  {
+    "question": "Which of the following statements accurately describes the process of negative selection in T cell development, as mentioned in the text?",
+    "options": {
+      "A": "Negative selection ensures that T cells can recognize self-MHC molecules.",
+      "B": "Negative selection is the process by which T cells that fail to recognize any MHC molecules are eliminated.",
+      "C": "Negative selection leads to the inactivation of all T cells that encounter self-antigens in the periphery.",
+      "D": "Negative selection is primarily responsible for eliminating T cells that exhibit high affinity for self-antigens presented by MHC.",
+      "E": "Negative selection occurs exclusively in the peripheral lymphoid organs and not in the thymus."
+    },
+    "answer": "D",
+    "explanation": "(D) Negative selection in the thymus is crucial for eliminating T cells that strongly react to self-antigens, preventing autoimmunity."
+  },
+  {
+    "question": "According to the text, what is the crucial role of Antigen-Presenting Cells (APCs) in the activation of naïve T cells?",
+      "options": {
+        "A": "APCs are required to induce negative selection of naïve T cells in the thymus.",
+        "B": "APCs facilitate the migration of naïve T cells from the thymus to peripheral lymphoid tissues.",
+        "C": "APCs present self-antigens to naïve T cells to maintain their inactivated state.",
+        "D": "APCs are necessary to present foreign antigens to naïve T cells in conjunction with MHC molecules for activation.",
+        "E": "APCs directly activate naïve T cells by releasing cytokines, independent of antigen presentation."
+      },
+      "answer": "D",
+      "explanation": "(D)  The text emphasizes that APCs are needed to present antigens to naïve T cells using MHC, which is the key step for priming and activating them."
+  },
+  {
+      "question": "Which of the following cytokines are correctly paired with their primary association with T helper cell subsets as described in the provided text?",
+      "options": {
+          "A": "TH1: IL-4",
+          "B": "TH2: IFN-γ",
+          "C": "TH17: IL-17",
+          "D": "TFH: IL-21",
+          "E": "Treg: TGFβ"
+      },
+      "answer": ["C", "D", "E"],
+      "explanation": "(C), (D), and (E) are correct pairings. TH1 is primarily associated with IFN-γ, and TH2 with IL-4 and IL-5, according to the text and the diagram provided. TH17 is correctly paired with IL-17, TFH with IL-21, and Treg with TGFβ."
+  },
+  {
+    "question": "Based on the text's description of lymphocyte recirculation, which statement accurately reflects the movement and location of naïve T cells?",
+    "options": {
+      "A": "Naïve T cells primarily reside in the peripheral tissues, constantly surveying for antigens.",
+      "B": "Naïve T cells circulate through the bloodstream and lymphatic system, continuously passing through lymph nodes.",
+      "C": "Naïve T cells are confined to the thymus after maturation and only exit upon activation.",
+      "D": "Naïve T cells directly enter sites of infection from the bone marrow without passing through lymphoid organs.",
+      "E": "Naïve T cells are exclusively found in the spleen and do not circulate through lymph nodes."
+    },
+    "answer": "B",
+    "explanation": "(B) The text details that naïve T cells circulate in the blood and lymphatic system, entering lymph nodes via HEVs and recirculating if they don't encounter their cognate antigen."
+  },
+  {
+    "question": "According to the information provided in the text, what is the function of high endothelial venules (HEV) in lymphocyte circulation?",
+    "options": {
+      "A": "HEVs are specialized capillaries that facilitate the exit of effector T cells from infected tissues.",
+      "B": "HEVs are responsible for the negative selection of T cells in the thymus.",
+      "C": "HEVs are post-capillary venules in lymph nodes that allow naïve T cells to enter from the bloodstream.",
+      "D": "HEVs are lymphatic vessels that drain lymph fluid from peripheral tissues back into the bloodstream.",
+      "E": "HEVs are arterial vessels that supply oxygenated blood to the lymph nodes."
+    },
+    "answer": "C",
+    "explanation": "(C) HEVs are specifically described as entry points for naïve T cells from the blood into lymph nodes, enabling immune surveillance."
+  },
+  {
+    "question": "Which of the following is NOT mentioned in the text as a typical route for APCs to move within the lymph node?",
+    "options": {
+      "A": "Subcapsular sinus",
+      "B": "Marginal sinus",
+      "C": "Cortical sinus",
+      "D": "Medullary sinus",
+      "E": "Germinal center sinus"
+    },
+    "answer": "E",
+    "explanation": "(E) The text lists the APC migration route within the lymph node: Subcapsular sinus → Marginal sinus → Cortical sinus → Peritrabecular sinus → Paracortical sinus → Medullary sinus. Germinal center sinus is not listed as part of this pathway."
+  },
+  {
+    "question": "Considering the 'Hallmark' of T cell immunity described in the image, what is the primary distinction being emphasized?",
+    "options": {
+      "A": "The recognition of self-antigens by T cells is the basis of autoimmune diseases.",
+      "B": "T cell activation is solely dependent on the strength of TCR affinity for self-MHC complexes.",
+      "C": "The ability of T cells to differentiate between self and non-self antigens is fundamental to adaptive immunity.",
+      "D": "Effective T cell responses are initiated only when self-antigens are presented by APCs.",
+      "E": "Naïve T cells are activated by both self and non-self antigens with equal efficiency."
+    },
+    "answer": "C",
+    "explanation": "(C) The 'Hallmark' explicitly states 'Self antigen VS. Non-self antigen', highlighting the crucial ability of the immune system to distinguish between self and non-self for effective and non-autoimmune responses."
+  },
+  {
+    "question": "In the context of opportunistic pathogens, as described in the text, which statement is most accurate?",
+    "options": {
+      "A": "Opportunistic pathogens are highly virulent microorganisms that cause disease in healthy individuals.",
+      "B": "Opportunistic pathogens primarily infect individuals with pre-existing genetic immunodeficiencies.",
+      "C": "Opportunistic pathogens are normally harmless but can cause disease when the host's immune system is compromised.",
+      "D": "Opportunistic pathogens are easily eradicated by a healthy immune system, making infections rare.",
+      "E": "Opportunistic pathogens are exclusively bacterial and do not include fungal or viral agents."
+    },
+    "answer": "C",
+    "explanation": "(C) The text defines opportunistic pathogens as those that cause disease mainly in individuals with weakened immune systems, whereas healthy individuals can usually handle them."
+  },
+  {
+    "question": "According to the case study of the infant with SCID and Candida albicans infection, what was the underlying cellular defect that led to her condition?",
+    "options": {
+      "A": "Deficiency in B cells, leading to impaired antibody production.",
+      "B": "Mutation in the gene encoding for MHC class II molecules, preventing antigen presentation.",
+      "C": "Absence of NK cells, resulting in reduced innate immune responses.",
+      "D": "Mutation in the IL-2 receptor, impairing T cell activation and function.",
+      "E": "Defect in phagocytic cells, leading to ineffective clearance of Candida."
+    },
+    "answer": "D",
+    "explanation": "(D) The case study explicitly mentions a mutation in the IL-2 receptor of the infant, which impaired T cell activation as IL-2 signaling is crucial for T cell function."
+  },
+  {
+    "question": "Which statement accurately describes the process of lymphocyte diapedesis, as mentioned in the text?",
+    "options": {
+      "A": "Diapedesis is the process of lymphocyte maturation in the thymus.",
+      "B": "Diapedesis refers to the recirculation of lymphocytes between blood and lymph.",
+      "C": "Diapedesis is the movement of lymphocytes across the blood vessel endothelium into tissues or lymph nodes.",
+      "D": "Diapedesis is the engulfment of pathogens by lymphocytes.",
+      "E": "Diapedesis is the differentiation of lymphocytes into effector cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Diapedesis, also described as 'blood cell extravasation' in the text, is the process where lymphocytes move from the bloodstream into tissues or lymph nodes by crossing the endothelial barrier."
+  },
+  {
+    "question": "According to the text, what is the initial destination of tissue fluid once it enters lymphatic vessels?",
+    "options": {
+      "A": "Venous blood circulation",
+      "B": "Lymph nodes",
+      "C": "Arterial blood circulation",
+      "D": "Bone marrow",
+      "E": "Thymus"
+    },
+    "answer": "B",
+    "explanation": "(B) The text states that tissue fluid becomes lymph once it enters lymphatic vessels, and the small lymphatic vessels pass through lymph nodes."
+  },
+  {
+    "question": "Which of the following statements regarding the thoracic duct and right lymphatic duct is correct, based on the provided text?",
+    "options": {
+      "A": "Both the thoracic duct and right lymphatic duct drain lymph from the entire body.",
+      "B": "The thoracic duct drains lymph from the upper right side of the body, while the right lymphatic duct drains the rest.",
+      "C": "The right lymphatic duct drains lymph from the upper right portion of the body and empties into the right subclavian vein.",
+      "D": "The thoracic duct exclusively drains lymph from the abdominal region and lower limbs.",
+      "E": "Lymph from the thoracic duct directly enters the arterial circulation."
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifies that the right lymphatic duct drains lymph from the upper right side of the body into the right subclavian vein, while the thoracic duct handles the rest of the body's lymph, draining into the left subclavian vein."
+  },
+  {
+    "question": "What are 'privileged sites' in the context of T cell circulation, as mentioned in the text?",
+    "options": {
+      "A": "Regions of the body with enhanced T cell surveillance.",
+      "B": "Areas where T cells undergo positive selection.",
+      "C": "Sites like CNS, eyes, and gonads where T cell entry is normally restricted.",
+      "D": "Lymph nodes that are preferentially targeted by T cells during infection.",
+      "E": "Bone marrow sites where T cell development occurs."
+    },
+    "answer": "C",
+    "explanation": "(C) Privileged sites, as defined in the text, are locations like the CNS, eyes, and gonads where T cell circulation is normally limited or absent, creating a form of immune isolation."
+  },
+  {
+    "question": "According to the text, where do T cells primarily differentiate and mature?",
+    "options": {
+      "A": "Bone marrow",
+      "B": "Lymph nodes",
+      "C": "Spleen",
+      "D": "Thymus",
+      "E": "Peyer's patches"
+    },
+    "answer": "D",
+    "explanation": "(D) The text explicitly states that T cells differentiate in the thymus, while B cells differentiate in the bone marrow."
+  },
+  {
+    "question": "Which of the following accurately describes the sequence of events when a lymphocyte encounters an antigen in a lymph node, based on the text?",
+    "options": {
+      "A": "Lymphocyte activation → Efferent lymphatic vessel exit → Blood circulation to infection site → Proliferation in lymph node.",
+      "B": "Afferent lymphatic vessel entry → Dendritic cell antigen presentation → Lymphocyte activation → Proliferation in lymph node → Efferent lymphatic vessel exit → Blood circulation to infection site.",
+      "C": "Blood circulation to infection site → Lymphocyte activation → Afferent lymphatic vessel entry → Efferent lymphatic vessel exit.",
+      "D": "Efferent lymphatic vessel entry → Dendritic cell antigen presentation → Lymphocyte activation → Blood circulation to infection site.",
+      "E": "Lymphocyte proliferation in lymph node → Blood circulation to infection site → Afferent lymphatic vessel entry."
+    },
+    "answer": "B",
+    "explanation": "(B) The correct sequence is: Antigen-carrying Dendritic cells enter via Afferent lymphatic vessel → Antigen presentation to lymphocyte → Lymphocyte activation and proliferation in the lymph node → Effector lymphocytes exit via Efferent lymphatic vessel and circulate to the infection site via Blood circulation."
+  },
+  {
+    "question": "According to the example provided about a foot injury, what is the first lymph node to receive antigens from the wound site?",
+    "options": {
+      "A": "Spleen",
+      "B": "Thymus",
+      "C": "Draining lymph node",
+      "D": "Peripheral lymph node",
+      "E": "All lymph nodes simultaneously"
+    },
+    "answer": "C",
+    "explanation": "(C) The example clearly mentions that the 'Draining lymph node', which is the lymph node closest to the injury, is the first to receive antigens from the wound."
+  },
+  {
+    "question": "In the context of antigen presentation in the lymph node, which of the following statements about dendritic cells (DCs) and B cells is most accurate according to the text?",
+    "options": {
+      "A": "Both DCs and B cells are primarily located in the T cell zone of the lymph node.",
+      "B": "DCs mainly present antigens in the B cell follicle, while B cells present antigens in the T cell zone.",
+      "C": "DCs are primarily located in the T cell zone and present antigens to T cells, while B cells are in B cell follicles.",
+      "D": "DCs and B cells are evenly distributed throughout the lymph node and present antigens to both T and B cells.",
+      "E": "Only DCs are capable of presenting antigens in the lymph node; B cells do not function as APCs there."
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifies that dendritic cells are mainly in the T cell zone and present antigens to T cells, and B cells are found in B cell follicles, although B cells can also act as APCs, their primary location within the lymph node follicles is highlighted here."
+  },
+  {
+    "question": "According to the text, which cell type is considered the 'most potent' APC for activating T cells in the lymph node?",
+    "options": {
+      "A": "Macrophages",
+      "B": "B cells",
+      "C": "Dendritic cells (DCs)",
+      "D": "Neutrophils",
+      "E": "Fibroblasts"
+    },
+    "answer": "C",
+    "explanation": "(C) The text explicitly describes Dendritic Cells (DCs) as the 'most potent' APCs for T cell activation, due to their co-expression of MHC I and MHC II and strategic location in the T cell zone."
+  },
+  {
+    "question": "Which of the following statements accurately describes the location and primary antigen presentation function of macrophages within the lymph node, according to the text?",
+    "options": {
+      "A": "Macrophages are exclusively located in the B cell follicles and present antigens to B cells.",
+      "B": "Macrophages are primarily found in the T cell zone and are the most potent APCs for T cell activation.",
+      "C": "Macrophages are distributed throughout the lymph node but are mainly concentrated in the medullary sinus.",
+      "D": "Macrophages are mainly located in the cortical sinus and present antigens to both T and B cells.",
+      "E": "Macrophages are confined to the subcapsular sinus and function to filter lymph but not to present antigens."
+    },
+    "answer": "C",
+    "explanation": "(C) While macrophages are found throughout the lymph node, the text notes their main concentration in the medullary sinus, and they function as APCs throughout the node, though not considered the *most* potent for T cell priming compared to DCs."
+  },
+  {
+    "question": "Based on the provided diagram of the lymph node structure, what is the correct sequence of zones a T cell would pass through after entering the lymph node via HEV?",
+    "options": {
+      "A": "Medulla → T-cell zone → B-cell zone",
+      "B": "B-cell zone → T-cell zone → Medulla",
+      "C": "T-cell zone → B-cell zone → Medulla",
+      "D": "B-cell zone → Medulla → T-cell zone",
+      "E": "Medulla → B-cell zone → T-cell zone"
+    },
+    "answer": "C",
+    "explanation": "(C)  Observing the diagram, and considering the described APC migration route, T cells entering via HEV would typically first encounter the T-cell zone (paracortex), then potentially interact with the B-cell zone (follicle), and eventually could move towards the medulla before exiting via the efferent lymphatic vessel."
+  },
+  {
+    "question": "Which of the following is NOT a listed reason for naïve T cells to remain in the lymph node after exiting HEV, as described in the text?",
+    "options": {
+      "A": "HEV secretion of CCL21, attracting CCR7-expressing T cells.",
+      "B": "Stromal zone production of CCL21 and CCL19 in the T cell zone.",
+      "C": "DC secretion of CCL18 and CCL19 in the lymph node.",
+      "D": "Formation of Immunological synapses between APCs and T cells requiring time.",
+      "E": "Direct activation by antigens present in the cortical sinus itself."
+    },
+    "answer": "E",
+    "explanation": "(E) The text mentions CCL21 from HEV, CCL21 and CCL19 from stromal cells, CCL18 and CCL19 from DCs, and the need for time for immunological synapse formation. Direct activation by antigens in the cortical sinus itself is not listed as a specific reason for retention; the text emphasizes the need for APC interaction."
+  },
+  {
+    "question": "What is the primary function of CCL21 in the context of T cell migration to lymph nodes, according to the text?",
+    "options": {
+      "A": "To induce effector T cell exit from lymph nodes.",
+      "B": "To promote B cell migration to germinal centers.",
+      "C": "To attract naïve T cells expressing CCR7 into the T cell zone of lymph nodes.",
+      "D": "To stimulate dendritic cell maturation and antigen uptake.",
+      "E": "To inhibit T cell activation and proliferation."
+    },
+    "answer": "C",
+    "explanation": "(C) CCL21, secreted by HEV and stromal cells, acts as a chemokine to attract naïve T cells that express its receptor CCR7, guiding them to the T cell zone within the lymph node."
+  },
+  {
+    "question": "Which of the following molecules is described as being secreted by both HEV and stromal cells in the T cell zone to attract naïve T cells?",
+    "options": {
+      "A": "CCL18",
+      "B": "CCL19",
+      "C": "CCL21",
+      "D": "DC-CK1",
+      "E": "CXCL13"
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifically states that both HEV and stromal cells in the T cell zone produce CCL21, which is crucial for attracting CCR7-expressing naïve T cells."
+  },
+  {
+    "question": "What is the significance of 'Immunological synapse' formation between APCs and T cells, as described in the text?",
+    "options": {
+      "A": "It is necessary for T cell exit from the lymph node.",
+      "B": "It is primarily involved in B cell activation.",
+      "C": "It ensures a prolonged and close interaction between APC and T cell for effective T cell activation.",
+      "D": "It prevents T cell activation by self-antigens.",
+      "E": "It facilitates the migration of T cells across the HEV."
+    },
+    "answer": "C",
+    "explanation": "(C) The Immunological synapse is described as the closest proximity between APC and T cell, containing MHC-peptide-TCR and other molecules, designed to allow sufficient time for T cell activation signals to be transmitted."
+  },
+  {
+    "question": "According to the text, what is the role of Chemokines and Cell Adhesion Molecules (CAMs) in lymphocyte migration?",
+    "options": {
+      "A": "Chemokines and CAMs are primarily involved in lymphocyte maturation in the thymus.",
+      "B": "Chemokines and CAMs guide lymphocyte differentiation into various T helper subsets.",
+      "C": "Chemokines and CAMs mediate the interaction and movement of lymphocytes across blood vessel endothelium into lymphoid tissues and sites of inflammation.",
+      "D": "Chemokines and CAMs are responsible for the negative selection of self-reactive lymphocytes.",
+      "E": "Chemokines and CAMs exclusively function in B cell migration and antibody production."
+    },
+    "answer": "C",
+    "explanation": "(C) The text explicitly states that chemokines and CAMs collaborate to mediate lymphocyte interactions, enabling them to roll, adhere, and transmigrate across the endothelium into lymph nodes and inflamed tissues."
+  },
+  {
+    "question": "What is the function of chemokines as a type of cytokine, as described in the text?",
+    "options": {
+      "A": "To directly kill pathogen-infected cells.",
+      "B": "To enhance antibody production by B cells.",
+      "C": "To attract immune cells, such as lymphocytes and dendritic cells, from the blood into tissues and lymph nodes.",
+      "D": "To induce fever and inflammation at sites of infection.",
+      "E": "To promote the differentiation of T cells into regulatory T cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Chemokines are defined as cytokines whose function is to attract immune cells, including lymphocytes, monocytes, dendritic cells, and neutrophils, from the blood into tissues or lymph nodes, following a concentration gradient."
+  },
+  {
+    "question": "According to the text, what is the effect of inflammatory signals on blood vessels in terms of Cell Adhesion Molecules (CAMs)?",
+    "options": {
+      "A": "Inflammation reduces the expression of CAMs on blood vessels to prevent excessive immune cell infiltration.",
+      "B": "Inflammation has no effect on CAM expression; CAMs are constitutively expressed.",
+      "C": "Inflammation causes blood vessels to express more CAMs, increasing lymphocyte adhesion and extravasation.",
+      "D": "Inflammation leads to the shedding of CAMs from blood vessel endothelial cells.",
+      "E": "Inflammation only affects CAMs on lymphocytes, not on endothelial cells."
+    },
+    "answer": "C",
+    "explanation": "(C) The text explains that injured tissues release chemokine signals that cause nearby blood vessels to express more CAMs, which increases the adhesion and extravasation of T cells and other immune cells into the inflamed site."
+  },
+  {
+    "question": "Which of the following is a key function of Cell Adhesion Molecules (CAMs) as described in the text?",
+    "options": {
+      "A": "Directly activating T cells upon antigen recognition.",
+      "B": "Enhancing the interaction between lymphocytes and blood vessel endothelial cells, and between lymphocytes and dendritic cells.",
+      "C": "Promoting the differentiation of naïve T cells into effector T cells.",
+      "D": "Inducing apoptosis of self-reactive T cells in the thymus.",
+      "E": "Facilitating the transport of antigens from tissues to lymph nodes."
+    },
+    "answer": "B",
+    "explanation": "(B) CAMs are described as glycoproteins on cell membranes that enhance interactions between lymphocytes and endothelial cells, and between lymphocytes and dendritic cells, crucial for lymphocyte trafficking and antigen presentation."
+  },
+  {
+    "question": "What characteristic of High Endothelial Venules (HEV) facilitates lymphocyte extravasation, according to the text?",
+    "options": {
+      "A": "HEV endothelial cells are very thin, allowing easy passage of lymphocytes.",
+      "B": "HEV endothelial cells have a low density, creating gaps for lymphocytes to squeeze through.",
+      "C": "HEV endothelial cells are tall and cuboidal, creating a bumpy surface and expressing high levels of CAMs.",
+      "D": "HEV endothelial cells lack tight junctions, making them highly permeable.",
+      "E": "HEV endothelial cells actively pump lymphocytes into the lymph node."
+    },
+    "answer": "C",
+    "explanation": "(C) HEVs are characterized by their 'high' endothelium, meaning their endothelial cells are taller and more cuboidal than typical blood vessels, creating a bumpy luminal surface that expresses high levels of CAMs, facilitating lymphocyte binding and extravasation."
+  },
+  {
+    "question": "According to the text, what is the primary stressor for lymphocytes in the bloodstream that necessitates adhesion molecules for controlled movement?",
+    "options": {
+      "A": "Low oxygen concentration in blood.",
+      "B": "High blood pressure.",
+      "C": "Blood flow itself.",
+      "D": "Presence of pathogens in the blood.",
+      "E": "Lack of nutrients in blood."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states that blood flow itself is a significant stressor for lymphocytes, making it difficult for them to stop and interact in desired locations without adhesion molecules to attach to the blood vessel wall."
+  },
+  {
+    "question": "In the context of leukocyte extravasation described in the text, what is the role of 'Selectin ligand'?",
+    "options": {
+      "A": "To activate integrins on leukocytes.",
+      "B": "To bind to selectins on endothelial cells, mediating rolling.",
+      "C": "To induce stable adhesion of leukocytes to endothelium.",
+      "D": "To facilitate migration of leukocytes through the endothelium.",
+      "E": "To attract leukocytes to the site of inflammation via chemotaxis."
+    },
+    "answer": "B",
+    "explanation": "(B) Selectin ligands on leukocytes bind to selectins on endothelial cells, which initiates the rolling phase of leukocyte extravasation, slowing down the leukocytes in the blood flow."
+  },
+  {
+    "question": "Based on the description of 'Inflammatory state' leukocyte extravasation, what is the first cytokine mentioned as being produced at the site of infection and tissue damage?",
+    "options": {
+      "A": "IL-2",
+      "B": "IFN-γ",
+      "C": "TNF-α",
+      "D": "IL-4",
+      "E": "TGF-β"
+    },
+    "answer": "C",
+    "explanation": "(C) The text explicitly mentions TNF-α and IL-1 as the initial cytokines produced at sites of infection and tissue damage in the inflammatory state, with TNF-α being the primary example given."
+  },
+  {
+    "question": "What is the consequence of Selectin-mediated rolling interaction of leukocytes with endothelial cells, according to the text?",
+    "options": {
+      "A": "Immediate and firm adhesion of leukocytes to the endothelium.",
+      "B": "Activation of integrins on leukocytes.",
+      "C": "Slowing down of leukocytes in blood flow, allowing for subsequent steps in extravasation.",
+      "D": "Migration of leukocytes through the endothelial cell layer.",
+      "E": "Release of chemokines by leukocytes."
+    },
+    "answer": "C",
+    "explanation": "(C) Selectin-mediated rolling is described as an initial, weaker interaction that slows down leukocytes in the blood stream, giving them time to sense chemokines and initiate stronger adhesion and subsequent extravasation steps."
+  },
+  {
+    "question": "In the 'Inflammatory state', how are integrins on leukocytes activated to transition from a low-affinity to a high-affinity state, as described in the text?",
+    "options": {
+      "A": "Direct interaction with selectins on endothelial cells.",
+      "B": "Binding of integrin ligands on endothelial cells.",
+      "C": "Chemokine binding to chemokine receptors on leukocytes.",
+      "D": "Mechanical forces exerted by blood flow.",
+      "E": "Changes in intracellular calcium concentration within leukocytes."
+    },
+    "answer": "C",
+    "explanation": "(C) Chemokines secreted at the inflammatory site bind to chemokine receptors on leukocytes, triggering intracellular signaling pathways that lead to a conformational change in integrins, switching them from a low-affinity to a high-affinity state."
+  },
+  {
+    "question": "What is the role of integrins in leukocyte extravasation, specifically in the 'Inflammatory state'?",
+    "options": {
+      "A": "To mediate the initial rolling of leukocytes along the endothelium.",
+      "B": "To facilitate the migration of leukocytes through the basement membrane.",
+      "C": "To mediate strong adhesion of leukocytes to endothelial cells, halting their movement.",
+      "D": "To induce chemokine secretion by endothelial cells.",
+      "E": "To promote leukocyte aggregation in the bloodstream."
+    },
+    "answer": "C",
+    "explanation": "(C) Integrins in their high-affinity state mediate strong adhesion of leukocytes to endothelial cells, allowing them to firmly attach and stop rolling, which is essential for subsequent transmigration through the endothelium."
+  },
+  {
+    "question": "What does 'Transmigration' refer to in the context of leukocyte extravasation?",
+    "options": {
+      "A": "The initial rolling of leukocytes along the endothelium.",
+      "B": "The firm adhesion of leukocytes to endothelial cells.",
+      "C": "The migration of leukocytes through the endothelial cell layer into the tissue.",
+      "D": "The activation of integrins on leukocytes.",
+      "E": "The release of chemokines at the inflammatory site."
+    },
+    "answer": "C",
+    "explanation": "(C) Transmigration, as the name suggests, refers to the process where leukocytes actively move through or between endothelial cells to cross the endothelial barrier and enter the underlying tissue or lymph node."
+  },
+  {
+    "question": "According to the text, what is the final step in the 'Inflammatory state' leukocyte extravasation process?",
+    "options": {
+      "A": "Leukocyte rolling along the endothelium.",
+      "B": "Leukocyte adhesion to endothelial cells.",
+      "C": "Leukocyte migration to the site of infection and tissue damage.",
+      "D": "Activation of leukocytes by chemokines.",
+      "E": "Release of inflammatory cytokines by leukocytes."
+    },
+    "answer": "C",
+    "explanation": "(C) The final step described is the movement of leukocytes to the site of infection and tissue damage, where they can perform their immune functions after successfully extravasating from the bloodstream."
+  },
+  {
+    "question": "In 'Steady state' lymphocyte migration to lymph nodes, which selectin is primarily involved in the rolling process?",
+    "options": {
+      "A": "E-selectin",
+      "B": "P-selectin",
+      "C": "L-selectin",
+      "D": "Integrin-associated selectin",
+      "E": "All types of selectins equally"
+    },
+    "answer": "C",
+    "explanation": "(C) In the 'Steady state' migration to lymph nodes, L-selectin, expressed on lymphocytes, is the primary selectin involved in mediating the rolling interaction with HEV endothelial cells."
+  },
+  {
+    "question": "According to the text, what are the ligands for L-selectin on High Endothelial Venules (HEV) during 'Steady state' lymphocyte migration?",
+    "options": {
+      "A": "ICAM-1 and VCAM-1",
+      "B": "CCL21 and CCL19",
+      "C": "GlyCAM-1 and CD34",
+      "D": "MAdCAM-1 and ICAM-1",
+      "E": "Integrin ligands and chemokines"
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifies that L-selectin on T cells binds to addressins on HEV, specifically GlyCAM-1 and CD34, which are ligands for L-selectin, facilitating the rolling process in 'Steady state' migration."
+  },
+  {
+    "question": "What is the primary chemokine involved in attracting lymphocytes to lymph nodes in 'Steady state' conditions, as described in the text?",
+    "options": {
+      "A": "CCL18",
+      "B": "CCL19",
+      "C": "CCL21",
+      "D": "CXCL12",
+      "E": "TNF-α"
+    },
+    "answer": "C",
+    "explanation": "(C) CCL21 is mentioned as a key chemokine produced in lymph nodes that attracts CCR7-expressing lymphocytes under 'Steady state' conditions, guiding them to the T cell zone."
+  },
+  {
+    "question": "Which integrin is activated on T cells upon interaction with CCL21 in the lymph node, leading to firm adhesion in 'Steady state' migration?",
+    "options": {
+      "A": "VLA-4",
+      "B": "LFA-1",
+      "C": "Mac-1",
+      "D": "Integrin α4β7",
+      "E": "CD11c integrin"
+    },
+    "answer": "B",
+    "explanation": "(B) LFA-1 (Lymphocyte Function-associated Antigen 1) is the integrin that gets activated on T cells upon CCR7 signaling in response to CCL21 in lymph nodes, leading to firm adhesion to ICAM-1 on HEV in 'Steady state' migration."
+  },
+  {
+    "question": "What is the ligand for LFA-1 on High Endothelial Venules (HEV) that mediates firm adhesion of T cells in 'Steady state' migration?",
+    "options": {
+      "A": "GlyCAM-1",
+      "B": "CD34",
+      "C": "ICAM-1",
+      "D": "MAdCAM-1",
+      "E": "CCL21"
+    },
+    "answer": "C",
+    "explanation": "(C) ICAM-1 (Intercellular Adhesion Molecule 1) is the ligand on HEV for the integrin LFA-1 on T cells, and this interaction mediates the firm adhesion step in 'Steady state' lymphocyte migration to lymph nodes."
+  },
+  {
+    "question": "What is the condition Wiskott-Aldrich Syndrome (WAS) characterized by, as described in the text?",
+    "options": {
+      "A": "Overproduction of lymphocytes and autoimmune reactions.",
+      "B": "Severe combined immunodeficiency due to T and B cell absence.",
+      "C": "X-linked recessive genetic disease with eczema, thrombocytopenia, immunodeficiency, and bloody diarrhea.",
+      "D": "Selective IgA deficiency leading to recurrent mucosal infections.",
+      "E": "Acquired immunodeficiency syndrome due to HIV infection."
+    },
+    "answer": "C",
+    "explanation": "(C) The text explicitly defines WAS as an X-linked recessive genetic disease characterized by eczema, low platelet count (thrombocytopenia), immunodeficiency, and bloody diarrhea (bloody diarrhea)."
+  },
+  {
+    "question": "What is the functional consequence of WASP gene deficiency in Wiskott-Aldrich Syndrome?",
+    "options": {
+      "A": "Impaired MHC class II expression on APCs.",
+      "B": "Defective B cell maturation and antibody production.",
+      "C": "Inability to form immunological synapses due to impaired cytoskeleton rearrangement, affecting APC-T cell interaction.",
+      "D": "Absence of T cell receptor expression on T lymphocytes.",
+      "E": "Failure of cytokine production by T helper cells."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states that a deficiency in WASP, a protein involved in actin cytoskeleton rearrangement, leads to an inability to assemble adhesion molecules at the immunological synapse, impairing signal transduction from APCs to T cells."
+  },
+  {
+    "question": "According to the text, how does WASP deficiency affect T cells in Wiskott-Aldrich Syndrome?",
+    "options": {
+      "A": "T cells are completely absent in WAS patients.",
+      "B": "T cells are present but hyperactive, causing autoimmunity.",
+      "C": "T cells are present but functionally impaired due to defects in activation and migration.",
+      "D": "T cells are present and function normally, but B cells are severely deficient.",
+      "E": "T cells are present in normal numbers but fail to undergo negative selection in the thymus."
+    },
+    "answer": "C",
+    "explanation": "(C) While WAS patients have T cells, these T cells are functionally deficient. The text mentions they are 'smooth', affecting their migration ability, and they do not function normally due to impaired immunological synapse formation."
+  },
+  {
+    "question": "What is the consequence of TFH cell dysfunction in Wiskott-Aldrich Syndrome, as mentioned in the text?",
+    "options": {
+      "A": "Impaired cytotoxic T lymphocyte responses.",
+      "B": "Defective regulatory T cell function leading to autoimmunity.",
+      "C": "Lack of germinal center formation and impaired B cell class switching, affecting humoral immunity.",
+      "D": "Reduced activation of macrophages and cell-mediated immunity.",
+      "E": "Failure of dendritic cell maturation and antigen presentation."
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifies that non-functional TFH cells in WAS patients result in a lack of germinal center (GC) formation, which is essential for B cell class switching, thereby impacting humoral immune responses against extracellular pathogens."
+  },
+  {
+    "question": "Which of the following cell types is NOT classified as a professional Antigen-Presenting Cell (APC) according to the information provided in the text?",
+    "options": {
+      "A": "Dendritic cells (DCs)",
+      "B": "Macrophages",
+      "C": "B lymphocytes",
+      "D": "Fibroblasts",
+      "E": "Langerhans cells"
+    },
+    "answer": "D",
+    "explanation": "(D) Dendritic cells, macrophages, and B lymphocytes are all considered professional APCs capable of efficiently presenting antigens to T cells. Langerhans cells are a type of dendritic cell. Fibroblasts are not typically classified as professional APCs."
+  },
+  {
+    "question": "What is a key characteristic that distinguishes dendritic cells (DCs) from other Antigen-Presenting Cells (APCs) in terms of their antigen presentation function?",
+    "options": {
+      "A": "DCs are only capable of presenting antigens to CD8+ T cells.",
+      "B": "DCs are the only APCs that express MHC class II molecules.",
+      "C": "DCs are the most potent APCs capable of activating naïve T cells, due to their ability to express both MHC I and II and co-stimulatory molecules.",
+      "D": "DCs primarily present self-antigens to induce T cell tolerance.",
+      "E": "DCs are restricted to antigen presentation in the lymph nodes and cannot present antigens in peripheral tissues."
+    },
+    "answer": "C",
+    "explanation": "(C) Dendritic cells are highlighted as the 'best' or 'most potent' APCs because they can express both MHC class I and II, and they are highly effective at initiating primary T cell responses by activating naïve T cells in lymphoid tissues."
+  },
+  {
+    "question": "What is the primary function of B lymphocytes as Antigen-Presenting Cells (APCs), as described in the text?",
+    "options": {
+      "A": "Initiating primary T cell responses against viral infections.",
+      "B": "Presenting antigens to CD4+ helper T cells in humoral immune responses, facilitating T-B cell collaboration.",
+      "C": "Activating cytotoxic CD8+ T cells to kill infected cells.",
+      "D": "Inducing T cell tolerance to self-antigens.",
+      "E": "Phagocytosing and clearing large pathogens from tissues."
+    },
+    "answer": "B",
+    "explanation": "(B) B lymphocytes function as APCs primarily in the context of humoral immunity, presenting antigens to CD4+ helper T cells. This interaction is crucial for T-B cell collaboration, leading to B cell activation, differentiation, and antibody production."
+  },
+  {
+    "question": "Which of the following is NOT a characteristic feature of dendritic cells (DCs) according to the text's description of their properties as APCs?",
+    "options": {
+      "A": "Constitutive expression of MHC class II molecules.",
+      "B": "Expression of co-stimulatory molecules like B7.1 and B7.2.",
+      "C": "Increased MHC expression upon maturation and activation by TLR signals.",
+      "D": "Low MHC expression in tissue-resident state but high expression after migration to lymphoid tissues.",
+      "E": "Exclusive antigen presentation to effector CD4+ T cells in effector phase."
+    },
+    "answer": "E",
+    "explanation": "(E) While DCs are crucial for initiating primary T cell responses and activating naïve T cells, they are also involved in presenting antigens to effector T cells, but their primary hallmark is initiating responses with naïve T cells (priming), not exclusively presenting to effector CD4+ T cells in the effector phase. Option E is too restrictive."
+  },
+  {
+    "question": "What is the typical MHC class II expression level on tissue-resident dendritic cells, as mentioned in the text?",
+    "options": {
+      "A": "Very high and constitutive.",
+      "B": "Low, increasing upon maturation and migration to lymphoid tissues.",
+      "C": "Absent until activated by T cells.",
+      "D": "Variable, depending on the type of tissue.",
+      "E": "Higher than on dendritic cells in lymphoid tissues."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states that tissue-resident dendritic cells typically have low MHC expression. This expression increases as they mature and migrate to lymphoid tissues, where they become more effective APCs."
+  },
+  {
+    "question": "Which of the following methods of antigen uptake is described as 'Macropinocytosis' in the text?",
+    "options": {
+      "A": "Engulfment of large particulate matter like bacteria.",
+      "B": "Receptor-mediated endocytosis of specific antigens.",
+      "C": "Uptake of large volumes of extracellular fluid containing soluble antigens.",
+      "D": "Direct viral infection of the APC.",
+      "E": "Transfer of antigens from infected cells to APCs."
+    },
+    "answer": "C",
+    "explanation": "(C) Macropinocytosis is defined in the text as the uptake of large volumes of extracellular fluid, which would contain soluble antigens, by APCs."
+  },
+  {
+    "question": "What is 'Phagocytosis' as described in the text regarding antigen uptake by APCs?",
+    "options": {
+      "A": "Uptake of soluble antigens in fluid.",
+      "B": "Receptor-mediated uptake of specific molecules.",
+      "C": "Engulfment of larger particulate materials, such as solid particles or bacteria.",
+      "D": "Antigen uptake via viral infection.",
+      "E": "Transfer of antigens between dendritic cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Phagocytosis is described as the process of engulfing larger, particulate materials or substances, like solid particles or bacteria, by APCs."
+  },
+  {
+    "question": "In the context of antigen processing and presentation by dendritic cells, what is 'Cross-presentation'?",
+    "options": {
+      "A": "Presentation of self-antigens on MHC class II molecules.",
+      "B": "Presentation of exogenous antigens on MHC class I molecules.",
+      "C": "Presentation of endogenous antigens on MHC class II molecules.",
+      "D": "Simultaneous presentation of antigens on both MHC class I and MHC class II molecules by all APCs.",
+      "E": "Transfer of antigens from dendritic cells to B cells for presentation."
+    },
+    "answer": "B",
+    "explanation": "(B) Cross-presentation is the unique ability of certain APCs, particularly dendritic cells, to present exogenous antigens (antigens taken up from outside the cell) on MHC class I molecules, which typically present endogenous antigens. This is crucial for initiating CD8+ T cell responses against viruses or tumors that do not directly infect APCs."
+  },
+  {
+    "question": "According to the text, which type of dendritic cell is uniquely capable of 'Cross-presentation'?",
+    "options": {
+      "A": "All types of dendritic cells.",
+      "B": "Only plasmacytoid dendritic cells (pDCs).",
+      "C": "Only conventional dendritic cells (cDCs).",
+      "D": "Both conventional and plasmacytoid dendritic cells.",
+      "E": "Macrophages and dendritic cells equally."
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifically notes (※(108補充)) that only Dendritic Cells (DCs), implying conventional DCs (cDCs), possess the capability of cross-presentation. Plasmacytoid DCs are known for other functions, such as type I interferon production."
+  },
+  {
+    "question": "What is the role of CCR7 in dendritic cell activation and function, as described in the text?",
+    "options": {
+      "A": "CCR7 is a co-stimulatory molecule required for T cell activation by DCs.",
+      "B": "CCR7 is a chemokine receptor that guides activated dendritic cells to migrate to lymph nodes.",
+      "C": "CCR7 is an adhesion molecule that facilitates DC-T cell synapse formation.",
+      "D": "CCR7 is a receptor for pathogen-associated molecular patterns (MAMPs) on DCs.",
+      "E": "CCR7 is involved in antigen uptake by dendritic cells in peripheral tissues."
+    },
+    "answer": "B",
+    "explanation": "(B) CCR7, a chemokine receptor, is activated on dendritic cells upon stimulation. This activation induces CCR7 expression, which then responds to chemokines like CCL19 and CCL21 in lymphoid tissues, guiding the DCs to migrate from peripheral tissues to the lymph nodes."
+  },
+  {
+    "question": "Which chemokine receptors are activated on dendritic cells upon stimulation, leading to their migration to lymph nodes?",
+    "options": {
+      "A": "CXCR4 and CXCR5",
+      "B": "CCR4 and CCR5",
+      "C": "CCR7",
+      "D": "CCR2 and CCR5",
+      "E": "CX3CR1 and CCR7"
+    },
+    "answer": "C",
+    "explanation": "(C) CCR7 is the specific chemokine receptor mentioned in the text that is activated on dendritic cells upon stimulation, and it is crucial for guiding their migration to lymph nodes in response to chemokines like CCL19 and CCL21."
+  },
+  {
+    "question": "What are the primary chemokines that attract CCR7-expressing dendritic cells to the lymph nodes, as mentioned in the text?",
+    "options": {
+      "A": "CCL2 and CCL5",
+      "B": "CCL19 and CCL21",
+      "C": "CXCL8 and CXCL10",
+      "D": "CXCL12 and CXCL13",
+      "E": "CCL11 and CCL24"
+    },
+    "answer": "B",
+    "explanation": "(B) CCL19 and CCL21 are the key chemokines produced in lymph nodes that bind to CCR7 on dendritic cells, creating a chemokine gradient that directs the migration of activated DCs to these lymphoid organs."
+  },
+  {
+    "question": "What is the function of CTLA-4 (Cytotoxic T-lymphocyte-associated protein) in T cell activation, as described in the text?",
+    "options": {
+      "A": "To enhance T cell activation by promoting B7-CD28 ligation.",
+      "B": "To inhibit T cell activation by competitively binding to B7 and preventing CD28 ligation.",
+      "C": "To promote T cell proliferation after initial activation.",
+      "D": "To induce cytokine production by activated T cells.",
+      "E": "To facilitate T cell migration to sites of infection."
+    },
+    "answer": "B",
+    "explanation": "(B) CTLA-4 is described as having a higher affinity for B7 molecules (CD80/CD86) than CD28. When CTLA-4 binds to B7, it delivers inhibitory signals to the T cell, thus acting as a negative regulator of T cell activation by competing with CD28 for B7 ligation."
+  },
+  {
+    "question": "How does the interaction of CTLA-4 with B7 molecules affect T cell activation, according to the text?",
+    "options": {
+      "A": "It promotes sustained T cell activation and effector function.",
+      "B": "It leads to enhanced production of IL-2, a T cell growth factor.",
+      "C": "It delivers an inhibitory signal, preventing the formation of a productive second signal via B7-CD28 ligation, thus limiting T cell activation.",
+      "D": "It facilitates the differentiation of T cells into cytotoxic T lymphocytes (CTLs).",
+      "E": "It enhances the migration of T cells to the lymph node T cell zone."
+    },
+    "answer": "C",
+    "explanation": "(C) The text explains that CTLA-4 binding to B7 can prevent the formation of the necessary 'second signal' (B7-CD28 ligation), which is required for full T cell activation. By outcompeting CD28 for B7, CTLA-4 delivers an inhibitory signal, thus dampening T cell responses."
+  },
+  {
+    "question": "Which cell type is primarily responsible for producing IFN-α, a type I interferon, as mentioned in the text?",
+    "options": {
+      "A": "Conventional dendritic cells (cDCs).",
+      "B": "Plasmacytoid dendritic cells (pDCs).",
+      "C": "Macrophages.",
+      "D": "B lymphocytes.",
+      "E": "Neutrophils."
+    },
+    "answer": "B",
+    "explanation": "(B) Plasmacytoid dendritic cells (pDCs) are highlighted as the primary source of large amounts of type I interferons, specifically IFN-α and IFN-β, which are crucial for antiviral immunity."
+  },
+  {
+    "question": "What is the primary function of plasmacytoid dendritic cells (pDCs) according to the text?",
+    "options": {
+      "A": "Presenting antigens to naïve T cells to initiate primary immune responses.",
+      "B": "Producing large amounts of type I interferons (IFN-α, IFN-β) to combat viral infections.",
+      "C": "Phagocytosing and clearing apoptotic cells and debris.",
+      "D": "Activating B cells to produce high-affinity antibodies.",
+      "E": "Suppressing excessive immune responses to prevent autoimmunity."
+    },
+    "answer": "B",
+    "explanation": "(B) The text emphasizes that the main function of plasmacytoid dendritic cells (pDCs) is their ability to produce large quantities of type I interferons, particularly IFN-α and IFN-β, which are critical for antiviral defense."
+  },
+  {
+    "question": "Compared to conventional dendritic cells (cDCs), how does the antigen-presenting ability of plasmacytoid dendritic cells (pDCs) compare, according to the text?",
+    "options": {
+      "A": "pDCs are more potent APCs than cDCs.",
+      "B": "pDCs and cDCs have equal antigen-presenting capabilities.",
+      "C": "pDCs are less efficient at antigen presentation compared to cDCs.",
+      "D": "pDCs primarily present antigens to CD8+ T cells, while cDCs present to CD4+ T cells.",
+      "E": "pDCs only present self-antigens, while cDCs present foreign antigens."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states that plasmacytoid dendritic cells (pDCs) are less efficient in antigen presentation compared to conventional dendritic cells (cDCs). Their primary role is type I interferon production, not potent antigen presentation."
+  },
+  {
+    "question": "Which MHC class molecules are primarily utilized by plasmacytoid dendritic cells (pDCs) for antigen presentation, as indicated in the text?",
+    "options": {
+      "A": "MHC class I only.",
+      "B": "MHC class II only.",
+      "C": "Both MHC class I and MHC class II equally.",
+      "D": "Primarily MHC class II, with limited MHC class I usage.",
+      "E": "Neither MHC class I nor MHC class II; pDCs use a different presentation pathway."
+    },
+    "answer": "D",
+    "explanation": "(D) The text mentions that plasmacytoid dendritic cells (pDCs) mainly use MHC class II for antigen presentation, and they 'rarely use MHC class I', indicating a preference for MHC class II and a limited role for MHC class I presentation."
+  }
+]

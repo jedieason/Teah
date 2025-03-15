@@ -1,0 +1,759 @@
+
+[
+  {
+    "question": "Regarding the development of B and T cells, what is the primary purpose of the positive/negative selection checkpoints during maturation?",
+    "options": {
+      "A": "To ensure that all B and T cells can recognize any foreign antigen.",
+      "B": "To eliminate cells that produce useless antibodies to conserve energy.",
+      "C": "To promote the survival of cells that strongly react to self-antigens.",
+      "D": "To accelerate the maturation process of B and T cells in the thymus.",
+      "E": "To guarantee that every lymphocyte expresses both alleles of the receptor gene."
+    },
+    "answer": "B",
+    "explanation": "(B) The checkpoints are designed to prevent energy waste by removing cells that produce non-functional or self-reactive antibodies. This is achieved through positive and negative selection processes."
+  },
+  {
+    "question": "Allelic exclusion is a critical process in lymphocyte development. What is the MOST significant outcome of allelic exclusion in B and T cells?",
+    "options": {
+      "A": "It allows lymphocytes to express receptors from both parental alleles to increase diversity.",
+      "B": "It ensures that each lymphocyte expresses receptors for multiple different antigens.",
+      "C": "It prevents lymphocytes from expressing multiple receptor specificities, ensuring clonal specificity.",
+      "D": "It promotes the expression of allelic variants that have higher affinity for self-antigens.",
+      "E": "It leads to the silencing of both alleles in some lymphocytes to reduce autoimmune potential."
+    },
+    "answer": "C",
+    "explanation": "(C) Allelic exclusion ensures that each B or T cell expresses only one functional receptor specificity, derived from one allele, thus maintaining clonal specificity and preventing receptor ambiguity."
+  },
+  {
+    "question": "MHC restriction is essential for T cell function. Which of the following statements accurately describe the role and mechanism of MHC restriction?",
+    "options": {
+      "A": "MHC restriction allows T cells to recognize antigens directly without needing antigen-presenting cells (APCs).",
+      "B": "MHC restriction ensures that TCRs on T cells can only recognize antigens presented by MHC molecules on APCs.",
+      "C": "MHC restriction is primarily involved in B cell development and has no direct impact on T cell function.",
+      "D": "MHC restriction prevents T cells from recognizing self-MHC molecules, thereby avoiding autoimmunity.",
+      "E": "MHC restriction dictates that TCRs must bind to MHC molecules with very high affinity to initiate an immune response."
+    },
+    "answer": ["B"],
+    "explanation": "(B) MHC restriction means T cells can only recognize processed antigens when presented by MHC molecules on APCs. This ensures that T cells respond appropriately to cellular contexts signaling infection or abnormality."
+  },
+  {
+    "question": "What does the term *repertoire*, when referring to T and B cells, specifically describe?",
+    "options": {
+      "A": "The total number of lymphocytes circulating in the bloodstream at any given time.",
+      "B": "The physical location within the body where lymphocytes mature and reside.",
+      "C": "The collective diversity of antigen receptors (BCRs and TCRs) within the lymphocyte population.",
+      "D": "The specific set of self-antigens that each lymphocyte is tolerant to.",
+      "E": "The ability of lymphocytes to undergo clonal expansion upon antigen encounter."
+    },
+    "answer": "C",
+    "explanation": "(C) The *repertoire* of T and B cells refers to the vast diversity of antigen receptors they collectively express, enabling the immune system to recognize a wide array of potential pathogens."
+  },
+  {
+    "question": "Based on the Clonal Selection Theory, what is the immediate consequence of a mature naive lymphocyte encountering a foreign antigen that it specifically recognizes?",
+    "options": {
+      "A": "Clonal deletion of the lymphocyte to prevent autoimmunity.",
+      "B": "Immediate apoptosis of the lymphocyte due to activation-induced cell death.",
+      "C": "Proliferation and differentiation of that specific lymphocyte into effector and memory cells.",
+      "D": "Induction of anergy in the lymphocyte, leading to immune tolerance.",
+      "E": "Migration of the lymphocyte back to the bone marrow or thymus for further maturation."
+    },
+    "answer": "C",
+    "explanation": "(C) Clonal Selection Theory dictates that lymphocytes specific for a foreign antigen will be activated upon encounter, leading to their proliferation and differentiation into effector cells to eliminate the antigen and memory cells for future responses."
+  },
+  {
+    "question": "Hematopoietic stem cells (HSCs) are crucial for lymphopoiesis. Which of the following characteristics distinguishes HSCs from multipotent progenitor cells (MPPs)?",
+    "options": {
+      "A": "MPPs are capable of self-renewal, whereas HSCs are not.",
+      "B": "HSCs can differentiate into a wider range of cell types compared to MPPs.",
+      "C": "MPPs are found exclusively in the thymus, while HSCs reside in the bone marrow.",
+      "D": "Only MPPs can give rise to both myeloid and lymphoid lineages.",
+      "E": "HSCs are derived from MPPs and represent a more differentiated state."
+    },
+    "answer": "B",
+    "explanation": "(B) HSCs are defined by their ability to self-renew and differentiate into all blood cell types, including lymphoid and myeloid lineages. MPPs, while multipotent, have lost the capacity for self-renewal and have a more restricted differentiation potential."
+  },
+  {
+    "question": "Consider the myeloid lineage in hematopoiesis. Which of the following cell types is NOT typically derived from the common myeloid progenitor (CMP)?",
+    "options": {
+      "A": "Neutrophils",
+      "B": "Erythrocytes",
+      "C": "Megakaryocytes",
+      "D": "B lymphocytes",
+      "E": "Monocytes"
+    },
+    "answer": "D",
+    "explanation": "(D) B lymphocytes are derived from the lymphoid lineage, specifically from the common lymphoid progenitor (CLP), not the common myeloid progenitor (CMP). CMP gives rise to granulocytes, erythrocytes, megakaryocytes, and monocytes (and their derivatives like macrophages and dendritic cells)."
+  },
+  {
+    "question": "The common lymphoid progenitor (CLP) is a crucial intermediate in lymphocyte development. What are the major downstream fates of CLP cells?",
+    "options": {
+      "A": "Differentiation exclusively into T cells and NK cells.",
+      "B": "Differentiation into myeloid cells and erythroid cells.",
+      "C": "Differentiation into pre-NK cells, pre-B cells, and thymocytes (pre-T cells).",
+      "D": "Direct maturation into mature B cells and T cells without intermediate stages.",
+      "E": "Transformation into hematopoietic stem cells for self-renewal."
+    },
+    "answer": "C",
+    "explanation": "(C) CLPs are the precursors to cells of the lymphoid lineage. They differentiate into pre-NK cells (leading to innate immunity), pre-B cells (leading to B cells), and thymocytes (leading to T cells)."
+  },
+  {
+    "question": "Refer to Fig. 8.1. Which of the following developmental transitions is depicted as occurring within the 'Lymphoid lineage'?",
+    "options": {
+      "A": "CMP/MEP to mature blood cells",
+      "B": "HSC to Lymphoid-myeloid primed multipotent progenitor",
+      "C": "Common lymphoid progenitor to Pre-B cell",
+      "D": "Early innate lymphoid progenitor to Innate lymphoid cell",
+      "E": "Early thymic progenitor to Thymocyte"
+    },
+    "answer": "C",
+    "explanation": "(C) Fig. 8.1 clearly shows the 'Lymphoid lineage' pathway including the transition from Common lymphoid progenitor (CLP) to Pre-B cell. The other options describe transitions in the Myeloid lineage or earlier stages common to both lineages."
+  },
+  {
+    "question": "Which of the following statements accurately compares the B-cell Receptor (BCR) and the T-cell Receptor (TCR)?",
+    "options": {
+      "A": "BCRs and TCRs both consist of two identical heavy chains and two identical light chains.",
+      "B": "BCRs and TCRs both recognize processed antigens presented by MHC molecules.",
+      "C": "BCRs are composed of heavy and light chains, while TCRs are composed of alpha and beta chains.",
+      "D": "The constant regions (C regions) of BCRs and TCRs are highly variable, allowing for antigen specificity.",
+      "E": "Both BCRs and TCRs undergo somatic hypermutation to increase antigen-binding affinity."
+    },
+    "answer": "C",
+    "explanation": "(C) BCRs are heterotetramers composed of two heavy chains and two light chains. TCRs are heterodimers composed of an alpha (α) chain and a beta (β) chain.  The other options contain inaccuracies about their structure, antigen recognition, or affinity maturation."
+  },
+  {
+    "question": "In both B and T cell receptor development, V region gene sequences exhibit significant diversity, while C region sequences are relatively conserved. What is the functional significance of this difference?",
+    "options": {
+      "A": "Variable V regions ensure structural stability of the receptors, whereas constant C regions mediate antigen recognition.",
+      "B": "Variable V regions are responsible for antigen binding specificity, while constant C regions mediate effector functions.",
+      "C": "Constant C regions undergo somatic recombination to generate diversity, while variable V regions remain germline.",
+      "D": "Variable V regions are identical across all B and T cells, while constant C regions determine cell type.",
+      "E": "The difference is inconsequential as both V and C regions contribute equally to antigen binding and effector functions."
+    },
+    "answer": "B",
+    "explanation": "(B) The variable (V) regions of BCRs and TCRs contain the antigen-binding sites, and their diversity is crucial for recognizing a wide range of antigens. The constant (C) regions are more conserved and are responsible for mediating effector functions like antibody isotype switching or TCR signaling."
+  },
+  {
+    "question": "Refer to Fig. 7.11 and Fig. 4.18. What is a key structural difference highlighted between the B-cell receptor complex and the T-cell receptor complex?",
+    "options": {
+      "A": "Only the B-cell receptor complex utilizes disulfide bonds for chain association.",
+      "B": "The T-cell receptor complex includes carbohydrate moieties, while the B-cell receptor complex does not.",
+      "C": "The B-cell receptor complex contains ITAM signaling motifs, whereas the T-cell receptor complex does not.",
+      "D": "Only the T-cell receptor complex has transmembrane and cytoplasmic tail regions.",
+      "E": "The B-cell receptor complex utilizes alpha and beta chains, while the T-cell receptor complex uses heavy and light chains."
+    },
+    "answer": "B",
+    "explanation": "(B) Fig. 4.18 explicitly shows 'carbohydrate' attached to the T-cell receptor complex. Fig 7.11 doesn't show carbohydrates on the B-cell receptor complex, and other options misrepresent structural features or signaling motifs."
+  },
+  {
+    "question": "During lymphocyte development, the expression of a pre-receptor is a critical checkpoint. What is the primary role of the pre-receptor in both B and T cell maturation?",
+    "options": {
+      "A": "To initiate somatic hypermutation in the variable regions of antigen receptor genes.",
+      "B": "To signal for cell survival and proliferation after successful heavy/beta chain gene rearrangement.",
+      "C": "To directly bind to self-antigens and induce negative selection.",
+      "D": "To facilitate the expression of both heavy and light chains/alpha and beta chains simultaneously.",
+      "E": "To prevent allelic exclusion and allow for expression of multiple receptor specificities."
+    },
+    "answer": "B",
+    "explanation": "(B) The pre-receptor (Pre-BCR in B cells, Pre-TCR in T cells) signals for cell survival and further development after successful rearrangement of the heavy chain (B cells) or beta chain (T cells). This checkpoint ensures that only cells with potentially functional receptors proceed to the next stage."
+  },
+  {
+    "question": "In sequential DNA recombination during B and T cell development, what is the correct order of gene rearrangement events?",
+    "options": {
+      "A": "Light chain (L) before Heavy chain (H) in BCR; Beta (β) chain before Alpha (α) chain in TCR.",
+      "B": "Heavy chain (H) before Light chain (L) in BCR; Alpha (α) chain before Beta (β) chain in TCR.",
+      "C": "Heavy chain (H) before Light chain (L) in BCR; Beta (β) chain before Alpha (α) chain in TCR.",
+      "D": "Light chain (L) and Heavy chain (H) simultaneously in BCR; Alpha (α) chain and Beta (β) chain simultaneously in TCR.",
+      "E": "The order of chain rearrangement is random and not sequential in both BCR and TCR development."
+    },
+    "answer": "C",
+    "explanation": "(C) The sequential order is Heavy chain (H) gene rearrangement first, followed by Light chain (L) in B cells, and Beta (β) chain rearrangement first, followed by Alpha (α) chain in T cells. This ordered process ensures that a potentially functional heavy or beta chain is expressed before attempting light or alpha chain rearrangement."
+  },
+  {
+    "question": "BCR light chain is mentioned to be κ and λ chains, while V pre-B and λ5 are surrogate light chains. What is the significance of surrogate light chains in pre-BCR?",
+    "options": {
+      "A": "Surrogate light chains replace functional light chains in mature B cells to enhance antigen binding.",
+      "B": "Surrogate light chains are essential for signaling through mature BCRs after antigen encounter.",
+      "C": "Surrogate light chains associate with the rearranged heavy chain to form the pre-BCR and test for functional heavy chain.",
+      "D": "Surrogate light chains are only expressed in mature B cells and are not involved in pre-BCR formation.",
+      "E": "Surrogate light chains are identical to functional light chains in sequence and function."
+    },
+    "answer": "C",
+    "explanation": "(C) Surrogate light chains (VpreB and λ5) are crucial for forming the pre-BCR complex with the rearranged heavy chain. This complex signals for survival, proliferation, and subsequent light chain rearrangement, effectively testing if the heavy chain is functional."
+  },
+  {
+    "question": "Pre-Tα is described as a surrogate α chain homologous to Vα in pre-TCR. What is the analogous component in pre-BCR to Pre-Tα?",
+    "options": {
+      "A": "Igβ",
+      "B": "Igα",
+      "C": "V pre-B and λ5",
+      "D": "CD3",
+      "E": "RAG-1/2"
+    },
+    "answer": "C",
+    "explanation": "(C) Just as Pre-Tα serves as a surrogate for the α chain in pre-TCR, VpreB and λ5 together act as surrogate light chains in pre-BCR, testing the functionality of the rearranged heavy chain before light chain rearrangement begins."
+  },
+  {
+    "question": "Compare Pre-BCR and Pre-TCR signaling. Which of the following functions is primarily associated with Pre-BCR but NOT Pre-TCR?",
+    "options": {
+      "A": "Inhibition of further heavy/beta chain gene recombination.",
+      "B": "Promotion of cell proliferation.",
+      "C": "Stimulation of light/alpha chain gene recombination.",
+      "D": "Expression of CD4 and CD8.",
+      "E": "Shut off of surrogate chain transcription."
+    },
+    "answer": "C",
+    "explanation": "(C) While both Pre-BCR and Pre-TCR signal for proliferation and inhibit further heavy/beta chain rearrangement, Pre-BCR specifically stimulates *light* chain recombination, whereas Pre-TCR stimulates *alpha* chain recombination.  CD4 and CD8 expression is associated with Pre-TCR signaling in T cell development."
+  },
+  {
+    "question": "What is the functional consequence of Pre-BCR signaling on RAG1/2 mRNA and RAG2 protein levels?",
+    "options": {
+      "A": "Pre-BCR signaling increases both RAG1/2 mRNA and RAG2 protein to promote heavy chain recombination.",
+      "B": "Pre-BCR signaling decreases both RAG1/2 mRNA and RAG2 protein to halt heavy chain recombination.",
+      "C": "Pre-BCR signaling increases RAG1/2 mRNA but decreases RAG2 protein to fine-tune recombination.",
+      "D": "Pre-BCR signaling decreases RAG1/2 mRNA but increases RAG2 protein to switch to light chain recombination.",
+      "E": "Pre-BCR signaling has no significant impact on RAG1/2 mRNA or RAG2 protein levels."
+    },
+    "answer": "B",
+    "explanation": "(B) Pre-BCR signaling leads to the inactivation of RAG2 protein and suppression of RAG1/2 mRNA transcription. This is part of the mechanism to halt heavy chain rearrangement after a successful rearrangement event and to allow for allelic exclusion."
+  },
+  {
+    "question": "During T cell development, the 'double negative' stage refers to cells that do NOT express which of the following cell surface markers?",
+    "options": {
+      "A": "CD4 and CD8",
+      "B": "CD3 and TCR",
+      "C": "Pre-TCR and CD3",
+      "D": "RAG-1 and RAG-2",
+      "E": "MHC class I and MHC class II"
+    },
+    "answer": "A",
+    "explanation": "(A) The 'double negative' (DN) stage in T cell development is characterized by the absence of both CD4 and CD8 cell surface markers. These cells are precursors before lineage commitment to helper T cells (CD4+) or cytotoxic T cells (CD8+)."
+  },
+  {
+    "question": "What is the primary function of the 'first checkpoint' during lymphocyte development, specifically focusing on Pre-BCR/TCR formation?",
+    "options": {
+      "A": "To ensure that lymphocytes can recognize self-MHC molecules.",
+      "B": "To eliminate lymphocytes that strongly react to self-antigens.",
+      "C": "To verify that lymphocytes can assemble a pre-antigen receptor and signal for further development.",
+      "D": "To promote clonal expansion of lymphocytes with high-affinity antigen receptors.",
+      "E": "To induce somatic hypermutation in antigen receptor genes to increase diversity."
+    },
+    "answer": "C",
+    "explanation": "(C) The first checkpoint, marked by Pre-BCR/TCR formation, is primarily to assess if a lymphocyte can successfully assemble a pre-antigen receptor. Successful assembly triggers signaling for survival and progression to the next developmental stage. Failure leads to cell death."
+  },
+  {
+    "question": "The 'second checkpoint' in lymphocyte development is BCR/TCR formation. What is being assessed at this stage?",
+    "options": {
+      "A": "The ability of lymphocytes to recognize foreign antigens.",
+      "B": "The ability of lymphocytes to generate complete antigen receptors (BCR or TCR).",
+      "C": "The affinity of lymphocyte receptors for self-MHC molecules.",
+      "D": "The expression levels of CD4 and CD8 co-receptors.",
+      "E": "The capacity of lymphocytes to undergo somatic hypermutation."
+    },
+    "answer": "B",
+    "explanation": "(B) The second checkpoint evaluates whether the lymphocyte has successfully rearranged and expressed a complete antigen receptor (BCR or TCR). This ensures that only cells with functional receptors proceed to the selection stages."
+  },
+  {
+    "question": "What is the defining characteristic of the 'third checkpoint' in lymphocyte development, known as positive and negative selection?",
+    "options": {
+      "A": "Assessment of the overall diversity of the lymphocyte repertoire.",
+      "B": "Evaluation of the lymphocyte's ability to respond to growth factors.",
+      "C": "Testing the lymphocyte's reactivity to self-antigens and MHC molecules.",
+      "D": "Confirmation of successful light/alpha chain gene rearrangement.",
+      "E": "Verification of the lymphocyte's migration to peripheral lymphoid organs."
+    },
+    "answer": "C",
+    "explanation": "(C) The third checkpoint, positive and negative selection, is crucial for shaping the lymphocyte repertoire to be self-tolerant yet capable of recognizing foreign antigens. It involves testing reactivity to self-antigens (negative selection) and MHC molecules (positive selection for T cells)."
+  },
+  {
+    "question": "What is the meaning of 'ligand-independent tonic signal' in the context of positive selection of lymphocytes?",
+    "options": {
+      "A": "Lymphocytes must receive a strong signal from self-antigens to survive.",
+      "B": "Lymphocytes receive continuous survival signals even in the absence of antigen binding.",
+      "C": "Lymphocytes require continuous interaction with foreign antigens to prevent apoptosis.",
+      "D": "Lymphocytes undergo apoptosis unless they receive a strong signal from foreign antigens.",
+      "E": "Lymphocytes ignore signals in the absence of high-affinity antigen binding."
+    },
+    "answer": "B",
+    "explanation": "(B) 'Ligand-independent tonic signal' refers to the baseline survival signal that lymphocytes receive, even without strong antigen engagement. For positive selection, this means that lymphocytes that can interact with self-MHC (for T cells) receive this tonic signal and are allowed to survive, regardless of strong antigen binding at this stage."
+  },
+  {
+    "question": "Negative selection during lymphocyte development primarily aims to prevent which immunological outcome?",
+    "options": {
+      "A": "Immunodeficiency due to excessive clonal deletion.",
+      "B": "Autoimmunity caused by self-reactive lymphocytes.",
+      "C": "Allergy resulting from over-reactive responses to harmless antigens.",
+      "D": "Infection due to inadequate immune response capacity.",
+      "E": "Cancer caused by uncontrolled lymphocyte proliferation."
+    },
+    "answer": "B",
+    "explanation": "(B) Negative selection is the process by which strongly self-reactive lymphocytes are eliminated (clonal deletion) or rendered non-functional (anergy). This is a critical mechanism to prevent autoimmunity, where the immune system attacks the body's own tissues."
+  },
+  {
+    "question": "Ikaros, PU.1, E2A, EBF, and Pax5/BSAP are listed as important transcription factors in B cell development. What is their overarching role?",
+    "options": {
+      "A": "They primarily regulate antigen receptor gene rearrangement.",
+      "B": "They control the expression of effector cytokines in mature B cells.",
+      "C": "They are crucial for lineage commitment and progression through different stages of B cell development.",
+      "D": "They mediate somatic hypermutation and affinity maturation in germinal centers.",
+      "E": "They are involved in the migration of B cells to peripheral lymphoid organs."
+    },
+    "answer": "C",
+    "explanation": "(C) These transcription factors are fundamental for regulating gene expression programs that drive B cell lineage commitment and progression through various developmental stages, from progenitor cells to mature B cells. They influence cell fate decisions and the expression of stage-specific genes."
+  },
+  {
+    "question": "Pax5 is highlighted with specific functions in B cell development. Which of the following is a MAIN function attributed to Pax5?",
+    "options": {
+      "A": "Promoting somatic hypermutation of immunoglobulin genes.",
+      "B": "Facilitating the migration of B cell precursors from the liver to the bone marrow.",
+      "C": "Inducing the expression of B cell co-receptor CD19 and Igα.",
+      "D": "Mediating negative selection of self-reactive B cells in the bone marrow.",
+      "E": "Regulating the secretion of IgM antibodies from plasma cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Pax5 is crucial for B cell lineage commitment and development. One of its key functions is to promote the expression of B cell-specific genes, including the co-receptor CD19 and the signaling molecule Igα, which are essential for B cell receptor function and signaling."
+  },
+  {
+    "question": "CXCL12 (SDF-1) is mentioned as a stromal cell-derived factor. What role does CXCL12 play in early B cell development?",
+    "options": {
+      "A": "It induces apoptosis of B cell precursors that fail to rearrange heavy chain genes.",
+      "B": "It promotes somatic hypermutation in B cells within germinal centers.",
+      "C": "It guides hematopoietic stem cells and progenitor cells to appropriate bone marrow stromal cells.",
+      "D": "It stimulates the secretion of IgM antibodies from mature B cells upon antigen encounter.",
+      "E": "It mediates negative selection of self-reactive B cells in the bone marrow."
+    },
+    "answer": "C",
+    "explanation": "(C) CXCL12 acts as a chemoattractant, guiding HSCs and B cell progenitors to specific niches within the bone marrow where stromal cells provide necessary signals for their development and survival. This ensures proper localization and interaction with supportive cells."
+  },
+  {
+    "question": "Stem cell factor (SCF) and its receptor Kit are important for early hematopoiesis. What is the nature of interaction between SCF and Kit in B cell development?",
+    "options": {
+      "A": "SCF-Kit interaction primarily mediates negative selection of B cells.",
+      "B": "SCF-Kit interaction is essential for somatic hypermutation in B cell precursors.",
+      "C": "SCF-Kit interaction is a cytokine-receptor interaction crucial for cell survival and proliferation.",
+      "D": "SCF-Kit interaction directly triggers antigen receptor gene rearrangement in B cells.",
+      "E": "SCF-Kit interaction inhibits B cell differentiation and promotes myeloid lineage development."
+    },
+    "answer": "C",
+    "explanation": "(C) SCF (stem cell factor) binding to its receptor Kit (CD117, Receptor tyrosine kinase) is a classic cytokine-receptor interaction. This signaling pathway is critical for the survival, proliferation, and early development of hematopoietic cells, including B cell precursors, in the bone marrow microenvironment."
+  },
+  {
+    "question": "Interleukin-7 (IL-7) is described as an essential early growth factor in B cell development. What is the primary function of IL-7 in this context?",
+    "options": {
+      "A": "To induce somatic hypermutation in immunoglobulin genes.",
+      "B": "To promote class switch recombination in mature B cells.",
+      "C": "To regulate the differentiation and development of the B cell lineage, especially at early stages.",
+      "D": "To mediate negative selection of self-reactive B cells in the bone marrow.",
+      "E": "To facilitate the migration of mature B cells to peripheral lymphoid organs."
+    },
+    "answer": "C",
+    "explanation": "(C) IL-7 is a crucial cytokine that acts as a survival and proliferation factor, particularly important in early B cell development. It promotes the development of the B cell lineage, ensuring the survival and expansion of B cell precursors at early stages in the bone marrow."
+  },
+  {
+    "question": "Refer to the 'Steps' section regarding B cell development. What is the IMMEDIATE consequence of CXCL12 attracting MPP (Multipotent progenitor cell) to the bone marrow?",
+    "options": {
+      "A": "Induction of Pre-B cell formation.",
+      "B": "Initiation of light chain gene rearrangement.",
+      "C": "Activation of FLT3 ligand signaling to promote further differentiation.",
+      "D": "Negative selection of self-reactive progenitors.",
+      "E": "Mature B cell migration to the spleen."
+    },
+    "answer": "C",
+    "explanation": "(C) According to the 'Steps' section, after CXCL12 attracts MPP to the bone marrow, the next step is the interaction of FLT3 ligand (from stromal cells) with FLT3 receptor on MPP. This FLT3 signaling is what helps the MPP to proceed further down the B cell development pathway."
+  },
+  {
+    "question": "What is the role of CAMs (Cell adhesion molecules) in early pro-B cell stage?",
+    "options": {
+      "A": "CAMs are involved in antigen presentation to pro-B cells.",
+      "B": "CAMs mediate the migration of pro-B cells to the thymus.",
+      "C": "CAMs facilitate adhesion of pro-B cells to bone marrow stromal cells, providing survival signals.",
+      "D": "CAMs directly induce gene rearrangement in pro-B cells.",
+      "E": "CAMs are expressed only on mature B cells and are not relevant in early development."
+    },
+    "answer": "C",
+    "explanation": "(C) Cell adhesion molecules (CAMs) are crucial for interactions between pro-B cells and bone marrow stromal cells. These interactions, including CAM-CAM interactions, help anchor pro-B cells in the bone marrow microenvironment and facilitate the delivery of survival and differentiation signals from stromal cells."
+  },
+  {
+    "question": "VLA-4 and VCAM-1 interaction is mentioned in the context of CLP and stromal cells. What is the function of this interaction?",
+    "options": {
+      "A": "To trigger apoptosis of CLP cells.",
+      "B": "To promote migration of CLP cells out of the bone marrow.",
+      "C": "To mediate adhesion of CLP cells to stromal cells, contributing to their retention and signaling.",
+      "D": "To induce somatic hypermutation in CLP cells.",
+      "E": "To present antigens to CLP cells for negative selection."
+    },
+    "answer": "C",
+    "explanation": "(C) VLA-4 (on CLP) and VCAM-1 (on stromal cells) are adhesion molecules that mediate cell-cell interactions. Their binding helps in the adhesion of CLP cells to bone marrow stromal cells, facilitating their retention in the bone marrow niche and enabling signaling interactions necessary for their development and survival."
+  },
+  {
+    "question": "Refer to the diagram of Ig gene rearrangement (top of page 8). Which of the following gene segments is rearranged FIRST during heavy chain gene rearrangement in early pro-B cells?",
+    "options": {
+      "A": "V and J segments",
+      "B": "V, D, and J segments",
+      "C": "D and J segments",
+      "D": "V and D segments",
+      "E": "L and V segments"
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram explicitly shows that in Early pro-B cell stage, the first rearrangement event in heavy chain genes is D-J rearranging (Diversity to Joining segments). V-DJ rearrangement occurs later, in the Late pro-B cell stage."
+  },
+  {
+    "question": "During which stage of B cell development does V-J rearrangement of the light chain occur?",
+    "options": {
+      "A": "Early pro-B cell",
+      "B": "Late pro-B cell",
+      "C": "Large pre-B cell",
+      "D": "Small pre-B cell",
+      "E": "Immature B cell"
+    },
+    "answer": "D",
+    "explanation": "(D) The diagram clearly indicates that V-J rearranging of the light chain happens in the Small pre-B cell stage, *after* the V-DJ rearrangement of the heavy chain which occurs in the Late pro-B cell and Large pre-B cell stages."
+  },
+  {
+    "question": "In large pre-B cells, Pre-BCR is expressed. What is the composition of the Pre-BCR complex?",
+    "options": {
+      "A": "Rearranged heavy chain paired with functional light chain.",
+      "B": "Rearranged light chain paired with surrogate heavy chain.",
+      "C": "Rearranged heavy chain paired with surrogate light chain (VpreB and λ5).",
+      "D": "Functional heavy and light chains assembled with CD3 signaling molecules.",
+      "E": "Only rearranged heavy chain expressed on the cell surface."
+    },
+    "answer": "C",
+    "explanation": "(C) In large pre-B cells, the Pre-BCR complex consists of a successfully rearranged heavy chain associated with surrogate light chains (VpreB and λ5) and signaling molecules Igα and Igβ. This complex signals for further B cell development."
+  },
+  {
+    "question": "What is the significance of intracellular μ chain expression in small pre-B cells?",
+    "options": {
+      "A": "It indicates successful light chain rearrangement is complete.",
+      "B": "It signals the initiation of heavy chain gene rearrangement.",
+      "C": "It represents the functional BCR expressed on the cell surface.",
+      "D": "It signifies that light chain rearrangement is underway, but not yet surface expressed.",
+      "E": "It indicates a failure in heavy chain rearrangement and signals for apoptosis."
+    },
+    "answer": "D",
+    "explanation": "(D) In small pre-B cells, the presence of intracellular μ chain (heavy chain) indicates that light chain rearrangement is in progress. The μ chain is present inside the cell, but the complete BCR with light chain is not yet expressed on the cell surface. Surface expression of IgM occurs in the subsequent immature B cell stage."
+  },
+  {
+    "question": "What is the key difference in surface immunoglobulin expression between immature B cells and mature B cells?",
+    "options": {
+      "A": "Immature B cells express both IgM and IgD, while mature B cells express only IgM.",
+      "B": "Immature B cells express only IgD, while mature B cells express both IgM and IgD.",
+      "C": "Immature B cells express only IgM, while mature B cells express both IgM and IgD.",
+      "D": "Immature B cells express neither IgM nor IgD, while mature B cells express both.",
+      "E": "Immature B cells express IgA, while mature B cells express IgG."
+    },
+    "answer": "C",
+    "explanation": "(C) Immature B cells are characterized by the surface expression of IgM. Mature B cells, in contrast, co-express both IgM and IgD on their surface. The co-expression of IgD is a marker of B cell maturation."
+  },
+  {
+    "question": "RAG-1 and RAG-2 proteins are essential for gene rearrangement. What is their primary enzymatic activity?",
+    "options": {
+      "A": "DNA polymerase activity, synthesizing new DNA segments.",
+      "B": "DNA ligase activity, joining gene segments together.",
+      "C": "V(D)J recombinase activity, mediating DNA cleavage and recombination.",
+      "D": "Somatic hypermutation activity, introducing point mutations in V regions.",
+      "E": "Class switch recombination activity, changing the constant region of heavy chain."
+    },
+    "answer": "C",
+    "explanation": "(C) RAG-1 and RAG-2 proteins form the V(D)J recombinase complex. Their primary function is to catalyze the DNA cleavage and recombination events necessary for V(D)J joining during antigen receptor gene rearrangement. They are central to generating receptor diversity."
+  },
+  {
+    "question": "TdT (Terminal deoxynucleotidyl transferase) adds N-nucleotides during gene rearrangement. What is the effect of N-nucleotide addition on antigen receptor diversity?",
+    "options": {
+      "A": "It reduces diversity by creating non-functional reading frames.",
+      "B": "It increases diversity by adding random nucleotides at V-D and D-J junctions.",
+      "C": "It has no significant impact on antigen receptor diversity.",
+      "D": "It is essential for somatic hypermutation but not for initial receptor diversity.",
+      "E": "It primarily ensures the correct reading frame is maintained during rearrangement."
+    },
+    "answer": "B",
+    "explanation": "(B) TdT adds non-templated (N) nucleotides randomly at the junctions between V, D, and J gene segments during heavy chain and TCR beta chain rearrangement. This addition of random nucleotides significantly increases the diversity of antigen receptors by altering the coding sequence at these junctions."
+  },
+  {
+    "question": "Refer to Fig 8.5. What is the significance of 'Alternative splicing' in mature B cell heavy chain expression?",
+    "options": {
+      "A": "It leads to somatic hypermutation in the constant region.",
+      "B": "It allows for the expression of both IgM and IgD from the same rearranged heavy chain gene.",
+      "C": "It initiates class switch recombination to generate IgG, IgA, and IgE isotypes.",
+      "D": "It ensures allelic exclusion by silencing one of the heavy chain alleles.",
+      "E": "It facilitates V(D)J recombination in mature B cells within germinal centers."
+    },
+    "answer": "B",
+    "explanation": "(B) Alternative splicing of the heavy chain transcript in mature B cells allows for the production of both IgM and IgD isotypes from a single functional VDJ rearranged gene. By choosing different polyadenylation sites and splicing patterns, the same gene can encode for either the IgM or IgD constant region."
+  },
+  {
+    "question": "What is the consequence of a 'nonproductive join' during light chain gene rearrangement?",
+    "options": {
+      "A": "The B cell is immediately triggered to undergo apoptosis.",
+      "B": "The B cell proceeds to express both kappa and lambda light chains.",
+      "C": "The B cell attempts rearrangement on the other light chain allele.",
+      "D": "The B cell becomes anergic and unable to respond to antigens.",
+      "E": "The B cell matures but expresses a low affinity BCR."
+    },
+    "answer": "C",
+    "explanation": "(C) A 'nonproductive join' means that the gene rearrangement resulted in a reading frame shift or stop codon, leading to a non-functional light chain. In such cases, the B cell has a chance to rearrange the light chain genes on the other allele. This is a rescue mechanism to achieve a functional light chain."
+  },
+  {
+    "question": "Refer to the diagram of 'Number of functional gene segments in human immunoglobulin loci'. Which immunoglobulin chain locus has D (Diversity) gene segments?",
+    "options": {
+      "A": "Kappa light chain locus (κ)",
+      "B": "Lambda light chain locus (λ)",
+      "C": "Heavy chain locus (H)",
+      "D": "Both kappa and lambda light chain loci",
+      "E": "All three loci: kappa, lambda, and heavy chain"
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram clearly indicates that only the heavy chain locus (H) contains Diversity (D) gene segments. Light chain loci (κ and λ) only have Variable (V) and Joining (J) gene segments, but no D segments."
+  },
+  {
+    "question": "What is the role of cross-linking of Pre-BCR molecules by VpreB and λ5 termini in Pre-B cells?",
+    "options": {
+      "A": "To induce negative selection of self-reactive Pre-B cells.",
+      "B": "To trigger apoptosis of Pre-B cells lacking functional heavy chains.",
+      "C": "To initiate light chain gene rearrangement and promote Pre-B cell proliferation.",
+      "D": "To facilitate migration of Pre-B cells out of the bone marrow.",
+      "E": "To directly activate effector functions of Pre-B cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Cross-linking of Pre-BCR molecules, mediated by the unique termini of VpreB and λ5, is essential for signaling. This signaling cascade promotes light chain gene rearrangement, B cell proliferation, and further development beyond the Pre-B cell stage. It confirms the successful rearrangement of the heavy chain."
+  },
+  {
+    "question": "What is the consequence for a Pro-B cell that fails to express Pre-BCR and receive survival signals?",
+    "options": {
+      "A": "It undergoes somatic hypermutation to improve receptor expression.",
+      "B": "It is redirected to differentiate into a T cell instead.",
+      "C": "It undergoes apoptosis due to lack of essential survival signals.",
+      "D": "It becomes anergic but can still mature into a functional B cell.",
+      "E": "It remains in the Pro-B cell stage indefinitely."
+    },
+    "answer": "C",
+    "explanation": "(C) Pro-B cells that fail to express Pre-BCR and consequently do not receive the necessary survival signals are destined for apoptosis (programmed cell death). This is a crucial checkpoint to eliminate cells that have not successfully rearranged their heavy chain genes and cannot form a functional pre-receptor."
+  },
+  {
+    "question": "Allelic exclusion is a crucial process to ensure clonal specificity. What is the molecular mechanism that initially prevents rearrangement of the second heavy chain allele after successful rearrangement of the first allele?",
+    "options": {
+      "A": "Increased expression of RAG-1/2 recombinase activity on the second allele.",
+      "B": "Reduced accessibility of the second heavy chain locus to recombinase machinery.",
+      "C": "Epigenetic silencing of the second heavy chain allele through methylation.",
+      "D": "Increased degradation of the second heavy chain locus DNA.",
+      "E": "Transcriptional activation of inhibitory genes specifically targeting the second allele."
+    },
+    "answer": "B",
+    "explanation": "(B)  While the exact mechanisms are complex, a key aspect of allelic exclusion involves reducing the accessibility of the second heavy chain locus to the RAG recombinase machinery after a successful rearrangement on the first allele. This reduced accessibility is thought to involve changes in chromatin structure and locus contraction, making it less likely for the second allele to be rearranged."
+  },
+  {
+    "question": "In the context of allelic exclusion, what is the outcome of a rabbit experiment involving homozygous strains (a/a and b/b) and their heterozygous offspring (a/b)?",
+    "options": {
+      "A": "Heterozygous offspring express both a and b heavy chain alleles in every B cell.",
+      "B": "Heterozygous offspring express either a or b heavy chain alleles in individual B cells, but not both.",
+      "C": "Heterozygous offspring express a mixture of a and b heavy chain alleles in each B cell.",
+      "D": "Heterozygous offspring preferentially express the a allele over the b allele in all B cells.",
+      "E": "Heterozygous offspring fail to express any functional heavy chain alleles due to allelic exclusion."
+    },
+    "answer": "B",
+    "explanation": "(B) The rabbit experiment demonstrates allelic exclusion. Heterozygous offspring (a/b) will express either the 'a' allele or the 'b' allele in a given B cell, but not both. This confirms that only one heavy chain allele is functionally expressed per B cell, ensuring monospecificity."
+  },
+  {
+    "question": "During receptor editing, what is the INITIAL cellular response of an immature B cell that strongly recognizes a self-antigen in the bone marrow?",
+    "options": {
+      "A": "Immediate apoptosis to prevent autoimmunity.",
+      "B": "Class switch recombination to change antibody isotype.",
+      "C": "Downregulation of surface IgM expression and continued light chain rearrangement.",
+      "D": "Upregulation of RAG gene expression to enhance heavy chain rearrangement.",
+      "E": "Migration to the periphery to undergo peripheral tolerance mechanisms."
+    },
+    "answer": "C",
+    "explanation": "(C) When an immature B cell strongly reacts to self-antigen, the first step in receptor editing is to downregulate surface IgM expression. Critically, RAG genes remain active, allowing the B cell to continue light chain gene rearrangement in an attempt to generate a new, non-self-reactive light chain and BCR."
+  },
+  {
+    "question": "If receptor editing fails to produce a non-self-reactive BCR, what is the ultimate fate of the immature B cell?",
+    "options": {
+      "A": "It becomes an anergic B cell in the bone marrow.",
+      "B": "It migrates to the periphery and becomes clonally ignorant.",
+      "C": "It undergoes apoptosis (clonal deletion).",
+      "D": "It differentiates into a regulatory B cell to suppress autoimmunity.",
+      "E": "It remains in the bone marrow as a memory B cell precursor."
+    },
+    "answer": "C",
+    "explanation": "(C) If receptor editing attempts fail to produce a non-self-reactive BCR, the immature B cell will ultimately undergo apoptosis, a process known as clonal deletion. This is a fail-safe mechanism to eliminate potentially autoreactive B cells that receptor editing could not rescue."
+  },
+  {
+    "question": "Anergy is a mechanism of B cell tolerance. What is the characteristic feature of anergic B cells compared to normal mature B cells?",
+    "options": {
+      "A": "Anergic B cells express higher levels of surface IgM and IgD.",
+      "B": "Anergic B cells are highly proliferative and readily undergo clonal expansion.",
+      "C": "Anergic B cells are unresponsive to antigen stimulation and have reduced migratory capacity.",
+      "D": "Anergic B cells preferentially secrete IgA antibodies.",
+      "E": "Anergic B cells have an extended lifespan compared to normal B cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Anergic B cells are functionally inactivated or silenced. They are characterized by their unresponsiveness to antigen stimulation, reduced migratory capacity (poorly migrate to lymphoid follicles), and shortened lifespan. They represent a state of tolerance induced by weak or soluble self-antigen recognition."
+  },
+  {
+    "question": "Immunological ignorance is another mechanism of B cell tolerance. Under what circumstances might a clonally ignorant B cell become activated?",
+    "options": {
+      "A": "Upon encountering soluble self-antigens at high concentrations.",
+      "B": "After migrating to the thymus for further negative selection.",
+      "C": "In the presence of inflammation or very high concentrations of self-antigen.",
+      "D": "Through strong cross-linking of their BCRs by multivalent self-antigens.",
+      "E": "By receiving T cell help in the absence of antigen stimulation."
+    },
+    "answer": "C",
+    "explanation": "(C) Clonally ignorant B cells are typically non-reactive because they do not encounter their cognate self-antigen at sufficient concentrations or in an immunogenic context under normal conditions. However, in specific situations like inflammation (which can increase antigen presentation and co-stimulation) or very high concentrations of self-antigen, these B cells *can* be activated, potentially leading to autoimmunity."
+  },
+  {
+    "question": "In central tolerance, B cell fates are determined in the bone marrow. What are the potential outcomes for immature B cells in the bone marrow based on their reactivity to self-antigens?",
+    "options": {
+      "A": "Survival and maturation, receptor editing, clonal deletion, anergy.",
+      "B": "Only survival and maturation or clonal deletion.",
+      "C": "Survival and maturation, class switching, somatic hypermutation.",
+      "D": "Clonal deletion, anergy, immunological ignorance, peripheral tolerance.",
+      "E": "Receptor editing, anergy, peripheral tolerance, maturation in spleen."
+    },
+    "answer": "A",
+    "explanation": "(A) In the bone marrow, immature B cells encountering self-antigens can have several fates: *survival and maturation* if non-reactive, *receptor editing* to change receptor specificity, *clonal deletion* (apoptosis) if strongly self-reactive, or *anergy* (functional inactivation) if weakly self-reactive. These are the primary mechanisms of central tolerance."
+  },
+  {
+    "question": "In peripheral tolerance, what happens to transitional B cells that encounter multivalent self-molecules in the periphery?",
+    "options": {
+      "A": "They undergo receptor editing in the spleen.",
+      "B": "They differentiate into marginal zone B cells.",
+      "C": "They undergo apoptosis (clonal deletion).",
+      "D": "They become anergic and migrate to B cell follicles.",
+      "E": "They mature into follicular B cells and gain self-tolerance."
+    },
+    "answer": "C",
+    "explanation": "(C) In peripheral tolerance, transitional B cells that encounter multivalent self-molecules, which indicate strong self-reactivity, undergo apoptosis. This peripheral clonal deletion mechanism removes self-reactive B cells that may have escaped central tolerance in the bone marrow."
+  },
+  {
+    "question": "What is the fate of transitional B cells that encounter soluble self-antigens in the periphery?",
+    "options": {
+      "A": "They undergo clonal deletion.",
+      "B": "They differentiate into follicular B cells.",
+      "C": "They become anergic and eventually die if they cannot enter B cell follicles.",
+      "D": "They mature into marginal zone B cells for rapid responses.",
+      "E": "They initiate class switch recombination in the spleen."
+    },
+    "answer": "C",
+    "explanation": "(C) Transitional B cells that encounter soluble self-antigens in the periphery become anergic. These anergic B cells are then unable to efficiently enter B cell follicles in the spleen, and without follicular entry and survival signals, they eventually die. This is a mechanism of peripheral anergy induction."
+  },
+  {
+    "question": "What is the key survival signal for transitional B cells to mature into follicular B cells in the spleen?",
+    "options": {
+      "A": "Strong interaction with self-antigens presented by dendritic cells.",
+      "B": "Ligand-independent tonic signaling from BCR.",
+      "C": "BAFF (B-cell activating factor) provided by follicular dendritic cells.",
+      "D": "High affinity interaction with T cells in the T cell zone.",
+      "E": "MHC class II presentation of foreign antigens in the spleen."
+    },
+    "answer": "C",
+    "explanation": "(C) BAFF (B-cell activating factor), secreted by follicular dendritic cells (FDCs) in the spleen follicles, is a critical survival signal for transitional B cells. To mature into follicular B cells, they must enter follicles and receive this BAFF signal via their BAFF receptor. Without BAFF, they will not survive and mature."
+  },
+  {
+    "question": "Compare follicular B cells (FOB) and marginal zone B cells (MZB). Which of the following is a DISTINGUISHING characteristic of MZB cells?",
+    "options": {
+      "A": "Located primarily in lymphoid follicles of secondary lymphoid organs.",
+      "B": "Exhibit high levels of CD21 expression.",
+      "C": "Respond predominantly to protein antigens.",
+      "D": "Require T cell help for antibody production.",
+      "E": "Undergo extensive somatic hypermutation in germinal centers."
+    },
+    "answer": "B",
+    "explanation": "(B) Marginal zone B cells (MZB) are characterized by high expression levels of CD21 (complement receptor 2). While follicular B cells (FOB) are located in follicles and are the main population responding to protein antigens with T cell help and somatic hypermutation, MZB are specialized for rapid responses to blood-borne antigens and have distinct characteristics including high CD21."
+  },
+  {
+    "question": "What is the primary function of marginal zone B cells (MZB) in immune responses?",
+    "options": {
+      "A": "To initiate T-dependent antibody responses in lymph nodes.",
+      "B": "To produce high-affinity IgG antibodies through somatic hypermutation.",
+      "C": "To provide rapid antibody responses to blood-borne pathogens and antigens.",
+      "D": "To regulate T cell responses and maintain immune homeostasis.",
+      "E": "To generate long-lived plasma cells in the bone marrow."
+    },
+    "answer": "C",
+    "explanation": "(C) Marginal zone B cells (MZB) are strategically located in the marginal zone of the spleen, positioned to rapidly respond to antigens and pathogens circulating in the blood. They are specialized for quick, often T-independent, antibody responses, particularly to polysaccharide antigens and blood-borne pathogens."
+  },
+  {
+    "question": "Compare B-1 and B-2 B cells. Which of the following statements accurately describes a key difference between B-1 and B-2 cells?",
+    "options": {
+      "A": "B-2 cells are the source of 'natural antibodies', while B-1 cells are involved in adaptive immunity.",
+      "B": "B-1 cells develop primarily in the bone marrow, while B-2 cells develop in the fetal liver.",
+      "C": "B-1 cells are largely self-renewing and are found in body cavities, while B-2 cells are replenished from bone marrow and reside in lymphoid organs.",
+      "D": "B-2 cells respond predominantly to carbohydrate antigens, while B-1 cells respond to protein antigens.",
+      "E": "B-1 cells undergo extensive somatic hypermutation and class switch recombination, unlike B-2 cells."
+    },
+    "answer": "C",
+    "explanation": "(C) B-1 cells are distinct from conventional B-2 cells. B-1 cells are self-renewing, reside in body cavities like the peritoneum and pleura, and are a source of 'natural antibodies'. B-2 cells originate in the bone marrow, are replenished from bone marrow precursors, and populate secondary lymphoid organs. The other options contain inaccuracies regarding their origin, location, and function."
+  },
+  {
+    "question": "B-1 cells are described as a source of 'natural antibodies'. What is a defining characteristic of these natural antibodies produced by B-1 cells?",
+    "options": {
+      "A": "They are primarily high-affinity IgG antibodies against protein antigens.",
+      "B": "They are predominantly IgM antibodies and are produced even in the absence of overt infection.",
+      "C": "They are mainly IgE antibodies involved in allergic reactions.",
+      "D": "They require T cell help for their production and secretion.",
+      "E": "They undergo extensive somatic hypermutation to increase their affinity."
+    },
+    "answer": "B",
+    "explanation": "(B) 'Natural antibodies' produced by B-1 cells are characteristically IgM antibodies. They are produced constitutively, even without known infection, providing a first line of defense. These antibodies often have broad reactivity, recognizing common microbial antigens and self-antigens, and are generally of lower affinity compared to antibodies from B-2 cells in adaptive responses."
+  },
+  {
+    "question": "Refer to the table comparing B-1 and B-2 cells. Which of the following properties is TRUE for B-1 cells but FALSE or less pronounced for Follicular B cells?",
+    "options": {
+      "A": "Dependence on BAFF for survival.",
+      "B": "Response to protein antigens.",
+      "C": "Self-renewing mode of renewal.",
+      "D": "Extensive V-region repertoire diversity.",
+      "E": "Memory development after antigen encounter."
+    },
+    "answer": "C",
+    "explanation": "(C) The table indicates that B-1 cells are self-renewing, meaning they can proliferate and maintain their population without constant replenishment from bone marrow precursors. Follicular B cells, in contrast, are primarily replaced from bone marrow and are not self-renewing in the same way. The other properties are either shared or more characteristic of Follicular B cells."
+  },
+  {
+    "question": "B cell lymphomas are categorized based on the stage of B cell development where the malignant transformation occurs. Acute lymphoblastic leukemia (ALL) is associated with which stage of B cell development?",
+    "options": {
+      "A": "Mature B cell",
+      "B": "Immature B cell",
+      "C": "Pre-B cell",
+      "D": "Lymphoid progenitor",
+      "E": "Hematopoietic stem cell"
+    },
+    "answer": "D",
+    "explanation": "(D) Acute lymphoblastic leukemia (ALL), as indicated in the table of B cell tumors, is associated with the Lymphoid progenitor stage of B cell development. ALL is a malignancy of immature lymphoid precursors, often affecting children."
+  },
+  {
+    "question": "Mantle cell lymphoma is listed as a B cell tumor. At which stage of B cell development does mantle cell lymphoma originate?",
+    "options": {
+      "A": "Pre-B cell",
+      "B": "Germinal center B cell",
+      "C": "Mature, memory B cell",
+      "D": "Resting, naive B cell",
+      "E": "Plasma cell"
+    },
+    "answer": "D",
+    "explanation": "(D) Mantle cell lymphoma arises from Resting, naive B cells. This lymphoma is characterized by the proliferation of B cells resembling naive B cells that reside in the mantle zone of lymphoid follicles."
+  },
+  {
+    "question": "Burkitt's lymphoma and Follicular center cell lymphoma are both associated with germinal center B cells. What is a key difference in the Ig V gene status between these two lymphoma types as described in the table?",
+    "options": {
+      "A": "Burkitt's lymphoma is typically unmutated, while Follicular center cell lymphoma is mutated.",
+      "B": "Both Burkitt's and Follicular center cell lymphomas are always unmutated.",
+      "C": "Burkitt's lymphoma shows mutated Ig V genes with intraclonal variability, while Follicular center cell lymphoma shows mutated Ig V genes with intraclonal variability.",
+      "D": "Burkitt's lymphoma shows mutated Ig V genes with intraclonal variability, while Follicular center cell lymphoma shows mutated Ig V genes without intraclonal variability.",
+      "E": "Burkitt's lymphoma is mutated, while Follicular center cell lymphoma is usually unmutated."
+    },
+    "answer": "C",
+    "explanation": "(C) Both Burkitt's lymphoma and Follicular center cell lymphoma originate from germinal center B cells and thus typically have *mutated* Ig V genes, reflecting somatic hypermutation in the germinal center. The table indicates that both exhibit *intraclonal variability* in V gene mutations, suggesting ongoing or heterogeneous mutational processes within the tumor clone."
+  },
+  {
+    "question": "Multiple myeloma is a malignancy of plasma cells. What is the typical status of Ig V genes in multiple myeloma?",
+    "options": {
+      "A": "Unmutated Ig V genes.",
+      "B": "Mutated Ig V genes with intraclonal variability.",
+      "C": "Mutated Ig V genes with no variability within the clone.",
+      "D": "Germline Ig V genes.",
+      "E": "Randomly rearranged Ig V genes."
+    },
+    "answer": "C",
+    "explanation": "(C) Multiple myeloma, being a plasma cell malignancy, arises from terminally differentiated B cells that have undergone somatic hypermutation in germinal centers. The table indicates that Multiple myeloma typically shows *mutated* Ig V genes, but with *no variability within the clone*. This lack of variability suggests that the tumor originates from a single plasma cell clone that has undergone mutation, and then expanded."
+  }
+]

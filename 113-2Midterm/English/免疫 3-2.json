@@ -1,0 +1,591 @@
+
+[
+  {
+    "question": "Within the context of MHC class I antigen processing, which statement accurately describes the function of TAP?",
+    "options": {
+      "A": "TAP is a protease responsible for cleaving cytosolic proteins into peptides of appropriate size.",
+      "B": "TAP is a chaperone protein within the endoplasmic reticulum that stabilizes MHC class I molecules.",
+      "C": "TAP is a transmembrane protein complex that transports peptides from the cytosol into the endoplasmic reticulum.",
+      "D": "TAP is a component of the peptide loading complex (PLC) that assists in peptide binding to MHC class I.",
+      "E": "TAP is an enzyme that modifies peptides within the endoplasmic reticulum to enhance their binding affinity for MHC class I."
+    },
+    "answer": "C",
+    "explanation": "(C) TAP (Transporter associated with Antigen Processing) is responsible for transporting peptides generated in the cytosol into the ER, where MHC class I molecules are assembled."
+  },
+  {
+    "question": "Considering the process of VDJ rearrangement in T-cell receptor genes, what is the precise role of the Artemis:DNA-PK complex?",
+    "options": {
+      "A": "To catalyze the synapsis of recombination signal sequences (RSSs).",
+      "B": "To introduce single-strand breaks within the DNA coding segments.",
+      "C": "To form a hairpin structure at the ends of the cleaved DNA.",
+      "D": "To open the DNA hairpin structures created by RAG complex.",
+      "E": "To ligate the coding joints and signal joints during recombination."
+    },
+    "answer": "D",
+    "explanation": "(D) The Artemis:DNA-PK complex functions to open the DNA hairpin structures that are formed after RAG-mediated cleavage during VDJ recombination, allowing for further processing and junctional diversity."
+  },
+  {
+    "question": "Which of the following statements accurately describe the characteristics of MHC class II molecules and their antigen presentation pathway?",
+    "options": {
+      "A": "MHC class II molecules primarily present antigens derived from cytosolic proteins.",
+      "B": "Peptide loading onto MHC class II molecules occurs in the endoplasmic reticulum.",
+      "C": "Invariant chain (Ii) prevents MHC class II molecules from binding peptides prematurely in the ER.",
+      "D": "MHC class II molecules are expressed on all nucleated cells in the body.",
+      "E": "The proteasome is the primary site of antigen degradation for MHC class II presentation."
+    },
+    "answer": ["C"],
+    "explanation": "(C) Invariant chain (Ii) is crucial for preventing premature peptide binding to MHC class II in the ER and directing MHC class II to endosomes for peptide loading. Options (A), (B), (D), and (E) are incorrect regarding MHC class II pathway characteristics."
+  },
+  {
+    "question": "In the context of TCR signaling, what is the immediate consequence of LCK kinase activity following TCR engagement with pMHC?",
+    "options": {
+      "A": "Activation of PLC-γ and subsequent calcium flux.",
+      "B": "Phosphorylation of ITAMs within the CD3 complex.",
+      "C": "Recruitment of ZAP-70 to the TCR signaling complex.",
+      "D": "Phosphorylation of LAT by ZAP-70.",
+      "E": "Initiation of the RAS-MAPK pathway."
+    },
+    "answer": "B",
+    "explanation": "(B) LCK, a Src family kinase, is activated upon TCR engagement and its primary immediate action is to phosphorylate ITAMs (Immunoreceptor Tyrosine-based Activation Motifs) on the CD3 complex."
+  },
+  {
+    "question": "Considering the concept of superantigens, which of the following is a distinctive feature that differentiates them from conventional antigens?",
+    "options": {
+      "A": "Superantigens are processed and presented by MHC class I molecules.",
+      "B": "Superantigens bind to the peptide-binding groove of MHC class II molecules.",
+      "C": "Superantigens activate a polyclonal T cell response involving a large proportion of T cells.",
+      "D": "Superantigens require intracellular processing by antigen-presenting cells before recognition.",
+      "E": "Superantigens are exclusively derived from viral pathogens."
+    },
+    "answer": "C",
+    "explanation": "(C) Superantigens uniquely cause polyclonal T cell activation by crosslinking MHC class II and the Vβ region of the TCR outside the peptide-binding groove, leading to a massive, non-specific immune response."
+  },
+  {
+    "question": "Which molecular event directly follows the phosphorylation of LAT (Linker for Activation of T cells) in TCR signaling?",
+    "options": {
+      "A": "Activation of LCK.",
+      "B": "Recruitment of ZAP-70.",
+      "C": "Phosphorylation of CD3 ITAMs.",
+      "D": "Assembly of the LAT signalosome.",
+      "E": "Calcium influx into the T cell."
+    },
+    "answer": "D",
+    "explanation": "(D) Phosphorylated LAT serves as a docking site for multiple adaptor proteins and enzymes, leading to the assembly of the LAT signalosome, a critical signaling complex in TCR activation."
+  },
+  {
+    "question": "Regarding the genetic organization of the MHC locus, what is meant by the term polygeny in the context of MHC genes?",
+    "options": {
+      "A": "The presence of multiple alleles for each MHC gene within a population.",
+      "B": "The existence of multiple distinct MHC class I and class II genes.",
+      "C": "The co-dominant expression of MHC alleles inherited from both parents.",
+      "D": "The high degree of genetic polymorphism observed in MHC genes.",
+      "E": "The clustering of MHC genes within a specific region of the genome."
+    },
+    "answer": "B",
+    "explanation": "(B) Polygeny refers to the presence of multiple genes encoding MHC class I (like HLA-A, -B, -C) and class II (like HLA-DP, -DQ, -DR) molecules, each with distinct functions and expression patterns."
+  },
+  {
+    "question": "Which of the following enzymes is specifically responsible for trimming peptides that are too long in the endoplasmic reticulum during MHC class I antigen presentation?",
+    "options": {
+      "A": "Proteasome.",
+      "B": "Cathepsins.",
+      "C": "ERAP (Endoplasmic Reticulum Aminopeptidase associated with antigen Processing).",
+      "D": "TAP.",
+      "E": "Calnexin."
+    },
+    "answer": "C",
+    "explanation": "(C) ERAP is an aminopeptidase located in the ER that trims longer peptides to fit optimally into the peptide-binding groove of MHC class I molecules."
+  },
+  {
+    "question": "What is the functional consequence of HLA-DM in the MHC class II antigen presentation pathway?",
+    "options": {
+      "A": "It stabilizes the interaction between MHC class II and the invariant chain (Ii).",
+      "B": "It facilitates the transport of MHC class II molecules from the ER to endosomes.",
+      "C": "It promotes the release of CLIP from MHC class II and allows for peptide binding.",
+      "D": "It enhances the degradation of extracellular antigens within lysosomes.",
+      "E": "It increases the surface expression of MHC class II molecules on antigen-presenting cells."
+    },
+    "answer": "C",
+    "explanation": "(C) HLA-DM is a non-classical MHC class II molecule that functions in endosomes to catalyze the removal of CLIP (Class II-associated Invariant chain Peptide) from MHC class II, enabling the binding of antigenic peptides."
+  },
+  {
+    "question": "In the context of T cell activation, what is the role of CD28 co-stimulatory receptor?",
+    "options": {
+      "A": "To enhance TCR binding to pMHC.",
+      "B": "To deliver survival signals to the T cell.",
+      "C": "To promote adhesion of T cells to antigen-presenting cells.",
+      "D": "To initiate the phosphorylation of CD3 ITAMs.",
+      "E": "To induce T cell effector functions like cytokine secretion and cytotoxicity."
+    },
+    "answer": "B",
+    "explanation": "(B) CD28 is a crucial co-stimulatory receptor on T cells that, upon binding to B7 molecules (CD80/CD86) on APCs, delivers essential survival and proliferation signals to the T cell, complementing the TCR signal."
+  },
+  {
+    "question": "Which of the following cellular compartments is the primary site for peptide loading onto MHC class I molecules?",
+    "options": {
+      "A": "Cytosol.",
+      "B": "Endosomes.",
+      "C": "Lysosomes.",
+      "D": "Endoplasmic Reticulum (ER).",
+      "E": "Golgi apparatus."
+    },
+    "answer": "D",
+    "explanation": "(D) Peptide loading onto MHC class I molecules predominantly occurs in the endoplasmic reticulum. This is where MHC class I heavy chains and β2-microglobulin assemble and associate with TAP for peptide acquisition."
+  },
+  {
+    "question": "During VDJ recombination, what is the significance of P-nucleotide addition at the coding joints?",
+    "options": {
+      "A": "It ensures precise joining of V, D, and J gene segments.",
+      "B": "It reduces the diversity of the T cell receptor repertoire.",
+      "C": "It introduces palindromic sequences at the junctions, increasing junctional diversity.",
+      "D": "It is mediated by RAG recombinase to enhance recombination efficiency.",
+      "E": "It is essential for the formation of signal joints but not coding joints."
+    },
+    "answer": "C",
+    "explanation": "(C) P-nucleotide addition, resulting from the opening of DNA hairpins and subsequent DNA repair synthesis, introduces palindromic sequences at the coding junctions, thereby increasing the diversity of the T cell receptor repertoire."
+  },
+  {
+    "question": "Which of the following antigen-presenting cells (APCs) is considered the most potent in initiating primary T cell responses?",
+    "options": {
+      "A": "Macrophages.",
+      "B": "B lymphocytes.",
+      "C": "Fibroblasts.",
+      "D": "Dendritic cells.",
+      "E": "Endothelial cells."
+    },
+    "answer": "D",
+    "explanation": "(D) Dendritic cells are widely regarded as the most potent APCs for initiating primary T cell responses due to their high expression of MHC molecules, co-stimulatory molecules (like B7), and their strategic location in tissues to capture antigens and migrate to lymphoid organs."
+  },
+  {
+    "question": "What is the role of the proteasome in MHC class I antigen presentation?",
+    "options": {
+      "A": "To transport peptides into the endoplasmic reticulum.",
+      "B": "To degrade extracellular proteins taken up by endocytosis.",
+      "C": "To cleave cytosolic and nuclear proteins into peptides.",
+      "D": "To remove CLIP from MHC class II molecules.",
+      "E": "To stabilize MHC class I molecules in the endoplasmic reticulum."
+    },
+    "answer": "C",
+    "explanation": "(C) The proteasome is a multi-subunit protease complex in the cytosol responsible for degrading intracellular proteins, including cytosolic and nuclear proteins, into peptides that can be presented by MHC class I molecules."
+  },
+  {
+    "question": "Considering the structure of the T cell receptor (TCR), where are the complementarity-determining regions (CDRs) located, and what is their primary function?",
+    "options": {
+      "A": "Within the constant regions, mediating interaction with CD3.",
+      "B": "Within the transmembrane regions, anchoring the TCR to the cell membrane.",
+      "C": "Within the variable regions, forming the antigen-binding site.",
+      "D": "Within the cytoplasmic tail, initiating intracellular signaling.",
+      "E": "Within the hinge region, providing flexibility for antigen recognition."
+    },
+    "answer": "C",
+    "explanation": "(C) The complementarity-determining regions (CDRs), particularly CDR1, CDR2, and CDR3 loops, are located within the variable regions of both the α and β chains of the TCR. These CDRs collectively form the antigen-binding site responsible for recognizing and interacting with the peptide-MHC complex."
+  },
+  {
+    "question": "Which of the following molecules is responsible for stabilizing the peptide-MHC class I complex in the endoplasmic reticulum and facilitating its release from the peptide loading complex (PLC)?",
+    "options": {
+      "A": "Calnexin.",
+      "B": "Tapasin.",
+      "C": "ERp57.",
+      "D": "Calreticulin.",
+      "E": "β2-microglobulin."
+    },
+    "answer": "B",
+    "explanation": "(B) Tapasin, a component of the peptide loading complex (PLC), plays a key role in bridging TAP and MHC class I, stabilizing the MHC class I molecule, and facilitating the exchange of low-affinity peptides for high-affinity peptides, ultimately leading to the release of stable peptide-MHC class I complexes from the PLC."
+  },
+  {
+    "question": "What is the consequence of disrupting the function of RAG genes in lymphocyte development?",
+    "options": {
+      "A": "Impaired MHC class I expression.",
+      "B": "Defective antigen processing in APCs.",
+      "C": "Block in VDJ and VJ recombination, leading to a lack of functional T and B cell receptors.",
+      "D": "Increased susceptibility to autoimmune diseases.",
+      "E": "Failure to develop mature dendritic cells."
+    },
+    "answer": "C",
+    "explanation": "(C) RAG (Recombination Activating Genes) 1 and 2 are essential for initiating VDJ recombination in T cells and B cells. Disruption of RAG function leads to a severe block in receptor gene rearrangement, resulting in a lack of mature lymphocytes and severe combined immunodeficiency (SCID)."
+  },
+  {
+    "question": "In the process of T cell activation, what is the role of Integrin molecules, such as LFA-1?",
+    "options": {
+      "A": "To initiate the primary signaling cascade upon TCR engagement.",
+      "B": "To provide co-stimulatory signals necessary for T cell proliferation.",
+      "C": "To mediate adhesion between T cells and antigen-presenting cells or target cells, stabilizing the interaction.",
+      "D": "To facilitate the migration of T cells into lymphoid tissues.",
+      "E": "To regulate the expression of MHC molecules on antigen-presenting cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Integrin molecules, like LFA-1 (Lymphocyte Function-associated Antigen 1) on T cells, and their ligands, like ICAM-1 (Intercellular Adhesion Molecule 1) on APCs or target cells, mediate adhesion between these cells, strengthening and prolonging the cell-cell contact required for effective T cell activation and effector functions."
+  },
+  {
+    "question": "Which of the following best describes the phenomenon of co-dominant expression in the context of MHC genes?",
+    "options": {
+      "A": "Only one allele of each MHC gene is expressed in an individual.",
+      "B": "MHC genes are expressed in a tissue-specific manner.",
+      "C": "Both alleles of each MHC gene, inherited from each parent, are expressed simultaneously.",
+      "D": "MHC gene expression is regulated by epigenetic modifications.",
+      "E": "MHC gene expression is suppressed in antigen-presenting cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Co-dominant expression of MHC genes means that an individual expresses both alleles inherited from each parent for each MHC gene. This results in a broader repertoire of MHC molecules on the cell surface, enhancing the range of peptides that can be presented to T cells."
+  },
+  {
+    "question": "During MHC class II antigen processing, in which cellular compartment does the cleavage of the invariant chain (Ii) primarily occur?",
+    "options": {
+      "A": "Endoplasmic Reticulum (ER).",
+      "B": "Golgi apparatus.",
+      "C": "Early endosomes.",
+      "D": "Late endosomes and lysosomes.",
+      "E": "Cytosol."
+    },
+    "answer": "D",
+    "explanation": "(D) The invariant chain (Ii) is progressively cleaved in the endosomal pathway. Initial cleavage begins in early endosomes, but the more complete removal of Ii, leaving CLIP, and the subsequent removal of CLIP by HLA-DM, primarily occur in late endosomes and lysosomes, where the environment is more acidic and rich in cathepsins."
+  },
+  {
+    "question": "What is the primary function of Terminal deoxynucleotidyl transferase (TdT) in VDJ recombination?",
+    "options": {
+      "A": "To cleave DNA at recombination signal sequences (RSSs).",
+      "B": "To ligate coding joints and signal joints.",
+      "C": "To add N-nucleotides randomly at the coding joints, increasing junctional diversity.",
+      "D": "To open DNA hairpin structures.",
+      "E": "To trim nucleotides from the ends of DNA segments before joining."
+    },
+    "answer": "C",
+    "explanation": "(C) Terminal deoxynucleotidyl transferase (TdT) is an enzyme that randomly adds nucleotides, known as N-nucleotides, at the coding joints during VDJ recombination. This addition of non-templated nucleotides significantly increases the diversity at the junctions, contributing to the vast diversity of T and B cell receptors."
+  },
+  {
+    "question": "Considering the 'two-signal' model of T cell activation, which of the following represents signal 1 and signal 2 for a naïve T cell?",
+    "options": {
+      "A": "Signal 1: CD28-B7 interaction; Signal 2: TCR-pMHC interaction.",
+      "B": "Signal 1: Cytokine stimulation; Signal 2: Co-stimulatory molecule engagement.",
+      "C": "Signal 1: TCR-pMHC interaction; Signal 2: CD28-B7 interaction.",
+      "D": "Signal 1: Adhesion molecule interaction; Signal 2: Cytokine receptor signaling.",
+      "E": "Signal 1: MHC class I presentation; Signal 2: MHC class II presentation."
+    },
+    "answer": "C",
+    "explanation": "(C) In the 'two-signal' model, Signal 1 is provided by the TCR interacting with peptide-MHC (pMHC) on APCs, which ensures antigen specificity. Signal 2, or co-stimulation, is typically provided by the CD28 receptor on the T cell engaging with B7 molecules (CD80/CD86) on APCs. Both signals are required for full T cell activation and preventing anergy."
+  },
+  {
+    "question": "Which of the following is a characteristic of Immunoproteasomes compared to constitutive proteasomes?",
+    "options": {
+      "A": "Immunoproteasomes are primarily involved in degrading extracellular proteins.",
+      "B": "Immunoproteasomes are expressed only in thymic epithelial cells.",
+      "C": "Immunoproteasomes are induced by interferons and generate peptides that preferentially bind MHC class I.",
+      "D": "Immunoproteasomes are located exclusively in the endoplasmic reticulum.",
+      "E": "Immunoproteasomes are less efficient at generating peptides for MHC class I presentation."
+    },
+    "answer": "C",
+    "explanation": "(C) Immunoproteasomes are specialized proteasomes induced by interferons, particularly IFN-γ, in response to inflammation and infection. They have altered subunit composition (including β1i, β2i, β5i subunits instead of β1, β2, β5) that enhances their ability to generate peptides suitable for MHC class I presentation."
+  },
+  {
+    "question": "In CAR-T cell therapy, what is the function of the scFv (single-chain variable fragment) domain within the chimeric antigen receptor?",
+    "options": {
+      "A": "To activate intracellular signaling pathways in the T cell.",
+      "B": "To mediate co-stimulatory signals for T cell activation.",
+      "C": "To target and bind to a specific antigen on tumor cells, independent of MHC.",
+      "D": "To enhance the cytotoxic activity of CAR-T cells.",
+      "E": "To promote the proliferation and survival of CAR-T cells in vivo."
+    },
+    "answer": "C",
+    "explanation": "(C) The scFv domain in a CAR (Chimeric Antigen Receptor) is derived from the variable regions of an antibody (both heavy and light chains) and is engineered to recognize and bind to a specific target antigen on tumor cells. This binding is MHC-independent, allowing CAR-T cells to target tumor cells without MHC restriction."
+  },
+  {
+    "question": "What is the Warburg effect, as mentioned in the context of T cell metabolism, and how is it relevant to T cell activation?",
+    "options": {
+      "A": "It refers to the shift from aerobic glycolysis to oxidative phosphorylation in activated T cells.",
+      "B": "It describes the increased reliance on oxidative phosphorylation for energy production in resting T cells.",
+      "C": "It is the phenomenon of cancer cells preferentially using aerobic glycolysis even in the presence of oxygen, which activated T cells also adopt to support their rapid growth and cytokine production.",
+      "D": "It is a metabolic state characterized by decreased glucose uptake and lactate production in T cells during activation.",
+      "E": "It describes the metabolic adaptation of T cells to survive in hypoxic tumor microenvironments."
+    },
+    "answer": "C",
+    "explanation": "(C) The Warburg effect, originally observed in cancer cells, is the phenomenon of increased aerobic glycolysis, even under normoxic conditions. Activated T cells also switch to aerobic glycolysis to meet the high energy and biosynthetic demands of proliferation and effector function, similar to cancer cells. This metabolic shift is crucial for their rapid response."
+  },
+  {
+    "question": "Which of the following statements accurately describes the difference in peptide-binding cleft characteristics between MHC class I and MHC class II molecules?",
+    "options": {
+      "A": "MHC class I cleft is open-ended, whereas MHC class II cleft is closed-ended.",
+      "B": "MHC class I cleft accommodates longer peptides than MHC class II cleft.",
+      "C": "MHC class I cleft is formed by two domains from a single chain, while MHC class II cleft is formed by domains from two different chains.",
+      "D": "MHC class I cleft primarily binds basic residues, while MHC class II cleft binds acidic residues.",
+      "E": "MHC class I cleft is more polymorphic than MHC class II cleft."
+    },
+    "answer": "C",
+    "explanation": "(C) The peptide-binding cleft of MHC class I is formed by the α1 and α2 domains of the MHC heavy chain, while the MHC class II cleft is formed by the α1 domain of the α chain and the β1 domain of the β chain. Both are open-ended but have different structural characteristics influencing peptide length preference."
+  },
+  {
+    "question": "What is the role of Calnexin in MHC class I assembly?",
+    "options": {
+      "A": "To transport MHC class I molecules from the ER to the Golgi.",
+      "B": "To stabilize the peptide-MHC class I complex after peptide loading.",
+      "C": "To act as a chaperone that binds to MHC class I α chains in the ER until β2-microglobulin binding.",
+      "D": "To facilitate peptide loading onto MHC class I in the peptide loading complex (PLC).",
+      "E": "To degrade misfolded MHC class I molecules in the ER."
+    },
+    "answer": "C",
+    "explanation": "(C) Calnexin is a chaperone protein in the endoplasmic reticulum that binds to newly synthesized MHC class I α heavy chains. It retains the α chain in the ER in a partially folded state until β2-microglobulin binds, which is necessary for further folding and peptide loading."
+  },
+  {
+    "question": "During VDJ recombination, what are signal joints and coding joints, and what is their fate?",
+    "options": {
+      "A": "Signal joints are formed by joining coding sequences, while coding joints are formed by joining RSSs; both are retained in the genome.",
+      "B": "Signal joints are formed by joining recombination signal sequences (RSSs), while coding joints are formed by joining coding segments (V, D, J); signal joints are typically excised as a DNA circle.",
+      "C": "Signal joints and coding joints are formed by alternative splicing of RNA transcripts; both are essential for gene expression.",
+      "D": "Signal joints are formed during somatic hypermutation, while coding joints are formed during class switch recombination; both are retained in the genome.",
+      "E": "Signal joints are formed in B cells, while coding joints are formed in T cells; their fate varies depending on lymphocyte lineage."
+    },
+    "answer": "B",
+    "explanation": "(B) During VDJ recombination, coding joints are formed by the precise joining of the V, D, and J gene segments that will encode the variable region of the receptor. Signal joints are formed by joining the flanking recombination signal sequences (RSSs) that were brought together during recombination. The DNA segment containing the signal joint is typically excised as a circular DNA molecule and is not further replicated or transcribed."
+  },
+  {
+    "question": "Which of the following is a shared characteristic of both Class I and Class II MHC antigen processing pathways?",
+    "options": {
+      "A": "Antigens are primarily derived from extracellular sources.",
+      "B": "Peptide loading occurs in late endosomes and lysosomes.",
+      "C": "The proteasome is the major enzyme responsible for peptide generation.",
+      "D": "Peptides are transported into the endoplasmic reticulum for MHC binding.",
+      "E": "Both pathways involve peptide-MHC complexes being transported to the cell surface for T cell recognition."
+    },
+    "answer": "E",
+    "explanation": "(E) A common endpoint of both MHC class I and class II antigen processing pathways is the transport of stable peptide-MHC complexes to the cell surface. These complexes are then displayed on the cell surface for surveillance and recognition by T cells, enabling the adaptive immune response."
+  },
+  {
+    "question": "In the context of CAR-T cell therapy, what is the function of the co-stimulatory domain (e.g., CD28 or 4-1BB) incorporated into second and third generation CARs?",
+    "options": {
+      "A": "To enhance the antigen-binding affinity of the CAR.",
+      "B": "To promote CAR-T cell trafficking to tumor sites.",
+      "C": "To provide signal 2 for T cell activation, improving CAR-T cell proliferation, survival, and effector function.",
+      "D": "To reduce the immunogenicity of the CAR-T cells.",
+      "E": "To enable CAR-T cell recognition of MHC-presented antigens."
+    },
+    "answer": "C",
+    "explanation": "(C) The incorporation of co-stimulatory domains, such as CD28 or 4-1BB, into second and third generation CARs provides signal 2, or co-stimulation, to the T cell upon antigen binding. This co-stimulation is critical for enhancing CAR-T cell activation, proliferation, persistence, and effector functions, improving the efficacy of CAR-T cell therapy."
+  },
+  {
+    "question": "What is the role of VAV1 in TCR signaling downstream of LAT phosphorylation?",
+    "options": {
+      "A": "To recruit ZAP-70 to the TCR complex.",
+      "B": "To activate PLC-γ and induce calcium flux.",
+      "C": "To promote actin polymerization and cytoskeletal reorganization, essential for T cell activation and effector functions.",
+      "D": "To phosphorylate ITAMs on the CD3 complex.",
+      "E": "To activate the RAS-MAPK pathway."
+    },
+    "answer": "C",
+    "explanation": "(C) VAV1 is a guanine nucleotide exchange factor (GEF) activated downstream of LAT phosphorylation in TCR signaling. VAV1 promotes actin polymerization and cytoskeletal rearrangements, which are crucial for T cell activation, immunological synapse formation, and effector functions such as cytotoxicity and migration."
+  },
+  {
+    "question": "Which of the following is a characteristic feature of MHC class Ib molecules compared to classical MHC class Ia molecules?",
+    "options": {
+      "A": "MHC class Ib molecules are highly polymorphic.",
+      "B": "MHC class Ib molecules present peptides to CD8+ T cells in a similar manner to MHC class Ia.",
+      "C": "MHC class Ib molecules often have specialized functions, such as presenting non-peptide antigens or regulating immune responses in specific tissues.",
+      "D": "MHC class Ib molecules are expressed on all nucleated cells.",
+      "E": "MHC class Ib molecules are essential for thymic positive selection of T cells."
+    },
+    "answer": "C",
+    "explanation": "(C) MHC class Ib molecules are non-classical MHC molecules that often exhibit limited polymorphism and specialized functions compared to classical MHC class Ia molecules (HLA-A, -B, -C). MHC class Ib molecules, such as HLA-E, HLA-G, and MICA/MICB, can present non-peptide antigens, regulate NK cell activity, or have tissue-specific roles in immune modulation."
+  },
+  {
+    "question": "In the context of MHC class II antigen presentation, what is the function of the invariant chain (Ii)?",
+    "options": {
+      "A": "To transport peptides into the endoplasmic reticulum.",
+      "B": "To stabilize MHC class II molecules in the endoplasmic reticulum.",
+      "C": "To prevent MHC class II molecules from binding peptides in the ER and direct them to endosomes.",
+      "D": "To facilitate peptide loading onto MHC class II molecules in endosomes.",
+      "E": "To promote the surface expression of MHC class II molecules on APCs."
+    },
+    "answer": "C",
+    "explanation": "(C) The invariant chain (Ii) has several critical functions in MHC class II antigen presentation. Most importantly, it prevents MHC class II molecules from binding peptides prematurely in the endoplasmic reticulum by occupying the peptide-binding groove. It also assists in the proper folding and transport of MHC class II molecules from the ER to endosomes, where peptide loading should occur."
+  },
+  {
+    "question": "What is the functional outcome of PLC-γ (Phospholipase C gamma) activation in TCR signaling?",
+    "options": {
+      "A": "Activation of RAS and MAPK pathway.",
+      "B": "Production of IP3 and DAG, leading to calcium release from the ER and activation of protein kinase C (PKC).",
+      "C": "Recruitment of adaptor proteins to the LAT signalosome.",
+      "D": "Phosphorylation of ITAMs within the CD3 complex.",
+      "E": "Promotion of actin polymerization and cytoskeletal changes."
+    },
+    "answer": "B",
+    "explanation": "(B) PLC-γ (Phospholipase C gamma) is activated downstream of LAT phosphorylation in TCR signaling. Activated PLC-γ hydrolyzes phosphatidylinositol bisphosphate (PIP2) into inositol trisphosphate (IP3) and diacylglycerol (DAG). IP3 induces the release of calcium ions from the endoplasmic reticulum (ER), while DAG activates protein kinase C (PKC). These second messengers are crucial for downstream signaling events leading to T cell activation."
+  },
+  {
+    "question": "Which of the following factors contributes most significantly to the extensive polymorphism observed in MHC genes?",
+    "options": {
+      "A": "Somatic recombination.",
+      "B": "Class switch recombination.",
+      "C": "Gene conversion and point mutations accumulated over evolutionary time, driven by selection pressure from pathogens.",
+      "D": "Transcriptional regulation.",
+      "E": "Epigenetic modifications."
+    },
+    "answer": "C",
+    "explanation": "(C) The high degree of polymorphism in MHC genes is primarily attributed to gene conversion and point mutations that have accumulated over evolutionary time. This genetic diversity is strongly driven by selection pressure from pathogens. Different MHC alleles can bind and present different sets of peptides derived from pathogens. Individuals with diverse MHC alleles are more likely to survive and reproduce in the face of evolving pathogens, leading to the maintenance of MHC polymorphism in populations."
+  },
+  {
+    "question": "What is the role of ERp57 in the peptide loading complex (PLC) during MHC class I assembly?",
+    "options": {
+      "A": "To transport peptides into the endoplasmic reticulum.",
+      "B": "To stabilize MHC class I heavy chain and β2-microglobulin heterodimer.",
+      "C": "To act as a thiol reductase that assists in proper folding of MHC class I molecules and peptide binding.",
+      "D": "To facilitate the release of peptide-MHC class I complexes from the PLC.",
+      "E": "To remove misfolded MHC class I molecules from the endoplasmic reticulum."
+    },
+    "answer": "C",
+    "explanation": "(C) ERp57 (Endoplasmic Reticulum protein 57 kDa) is a thiol reductase that is a component of the peptide loading complex (PLC). It assists in the proper folding of MHC class I heavy chains and β2-microglobulin and is involved in disulfide bond formation and reduction, which are crucial for MHC class I conformation and peptide binding."
+  },
+  {
+    "question": "Which of the following describes the mechanism by which superantigens activate T cells?",
+    "options": {
+      "A": "Superantigens bind directly to the peptide-binding groove of MHC class II molecules, presenting themselves as antigens.",
+      "B": "Superantigens are processed and presented as peptides by MHC class I molecules to CD8+ T cells.",
+      "C": "Superantigens crosslink MHC class II molecules on APCs and the Vβ region of the T cell receptor outside the peptide-binding groove, leading to polyclonal T cell activation.",
+      "D": "Superantigens block the interaction between TCR and pMHC, leading to T cell inactivation.",
+      "E": "Superantigens require co-stimulation through CD28-B7 interaction to activate T cells, similar to conventional antigens."
+    },
+    "answer": "C",
+    "explanation": "(C) Superantigens have a unique mechanism of T cell activation. They bind simultaneously to MHC class II molecules on antigen-presenting cells (APCs) and the Vβ region of the T cell receptor (TCR) β chain. This interaction occurs outside the conventional peptide-binding groove and bypasses the need for specific peptide-MHC recognition. This crosslinking activates a large proportion of T cells bearing particular Vβ regions, leading to a polyclonal T cell response and massive cytokine release."
+  },
+  {
+    "question": "What is the functional significance of the ITAMs (Immunoreceptor Tyrosine-based Activation Motifs) present in the cytoplasmic tails of CD3 molecules?",
+    "options": {
+      "A": "To bind to peptide-MHC complexes.",
+      "B": "To interact with co-stimulatory receptors like CD28.",
+      "C": "To serve as docking sites for tyrosine kinases like ZAP-70 upon phosphorylation by LCK, initiating downstream signaling.",
+      "D": "To mediate adhesion of T cells to APCs or target cells.",
+      "E": "To regulate the surface expression of TCR-CD3 complex."
+    },
+    "answer": "C",
+    "explanation": "(C) ITAMs (Immunoreceptor Tyrosine-based Activation Motifs) are crucial signaling motifs found in the cytoplasmic tails of CD3 molecules (γ, δ, ε, and ζ chains) and also CD79a/b of the B cell receptor. Upon TCR engagement and LCK activation, ITAMs are phosphorylated on tyrosine residues. These phosphorylated ITAMs then act as docking sites for tyrosine kinases like ZAP-70 (in T cells) or Syk (in B cells), which are recruited to the complex and become activated, initiating downstream signaling cascades leading to lymphocyte activation."
+  },
+  {
+    "question": "Which of the following is a key difference between the antigens presented by MHC class I and MHC class II molecules?",
+    "options": {
+      "A": "MHC class I presents only peptide antigens, while MHC class II presents only non-peptide antigens.",
+      "B": "MHC class I presents antigens derived from extracellular pathogens, while MHC class II presents antigens from intracellular pathogens.",
+      "C": "MHC class I primarily presents antigens derived from cytosolic proteins (e.g., viral proteins), while MHC class II presents antigens derived from proteins internalized from the extracellular environment (e.g., bacterial proteins).",
+      "D": "MHC class I presents antigens to CD4+ T cells, while MHC class II presents antigens to CD8+ T cells.",
+      "E": "MHC class I presentation requires TAP, while MHC class II presentation does not."
+    },
+    "answer": "C",
+    "explanation": "(C) A fundamental difference is the source of antigens. MHC class I pathway typically presents peptides derived from proteins in the cytosol, such as viral proteins or tumor antigens. MHC class II pathway primarily presents peptides derived from proteins taken up from the extracellular environment, such as bacterial antigens or toxins."
+  },
+  {
+    "question": "What is the role of HLA-DM in editing the peptide repertoire presented by MHC class II molecules?",
+    "options": {
+      "A": "HLA-DM enhances the degradation of low-affinity peptides in endosomes.",
+      "B": "HLA-DM promotes the binding of high-affinity peptides to MHC class II by facilitating the release of CLIP and other weakly bound peptides, thus 'editing' the peptide repertoire.",
+      "C": "HLA-DM stabilizes MHC class II molecules in the endoplasmic reticulum, preventing peptide binding.",
+      "D": "HLA-DM facilitates the transport of MHC class II-peptide complexes from endosomes to the cell surface.",
+      "E": "HLA-DM increases the overall expression of MHC class II molecules on antigen-presenting cells."
+    },
+    "answer": "B",
+    "explanation": "(B) HLA-DM acts as a peptide editor in the MHC class II pathway. It does not directly load peptides onto MHC class II. Instead, it promotes the release of CLIP and other weakly bound peptides from MHC class II molecules in endosomes. This allows higher affinity peptides, which are more likely to elicit a relevant immune response, to bind and stabilize the MHC class II molecule. By favoring high-affinity peptide binding, HLA-DM effectively edits the peptide repertoire presented by MHC class II."
+  },
+  {
+    "question": "Which of the following is a characteristic of the TCR signaling pathway that ensures T cell activation is tightly regulated and not easily triggered by self-antigens?",
+    "options": {
+      "A": "TCR signaling requires only signal 1 (TCR-pMHC interaction) for full activation.",
+      "B": "TCR signaling is initiated even in the absence of antigen stimulation.",
+      "C": "TCR signaling requires two signals: signal 1 (TCR-pMHC) for specificity and signal 2 (co-stimulation) for full activation and prevention of anergy.",
+      "D": "TCR signaling is primarily regulated by inhibitory receptors, not co-stimulatory receptors.",
+      "E": "TCR signaling is independent of intracellular tyrosine kinases like LCK and ZAP-70."
+    },
+    "answer": "C",
+    "explanation": "(C) The 'two-signal' model of T cell activation is a critical mechanism for ensuring immune tolerance and preventing autoimmunity. Signal 1 (TCR-pMHC interaction) provides antigen specificity, but signal 2 (co-stimulation, e.g., CD28-B7 interaction) is essential for full T cell activation, proliferation, and effector function. Without signal 2, TCR engagement alone can lead to T cell anergy or apoptosis, contributing to self-tolerance."
+  },
+  {
+    "question": "How does cross-presentation differ from the conventional MHC class I antigen presentation pathway?",
+    "options": {
+      "A": "Cross-presentation involves presentation of extracellular antigens by MHC class II molecules, unlike conventional MHC class I pathway.",
+      "B": "Cross-presentation is a pathway in which certain antigen-presenting cells (primarily dendritic cells) can present extracellular antigens on MHC class I molecules to CD8+ T cells, typically antigens are presented on MHC class I from cytosolic sources.",
+      "C": "Cross-presentation is a mechanism for presenting self-antigens on MHC class I molecules, while conventional MHC class I pathway presents foreign antigens.",
+      "D": "Cross-presentation does not require TAP for peptide loading onto MHC class I molecules.",
+      "E": "Cross-presentation occurs exclusively in B lymphocytes, whereas conventional MHC class I presentation occurs in all nucleated cells."
+    },
+    "answer": "B",
+    "explanation": "(B) Cross-presentation, also known as cross-priming, is a specialized pathway mainly performed by dendritic cells. It enables these APCs to present extracellular antigens, which are typically processed for MHC class II presentation, on MHC class I molecules. This is crucial for initiating CD8+ T cell responses against pathogens that do not directly infect APCs, such as viruses that infect non-APCs or tumor cells."
+  },
+  {
+    "question": "Which of the following is a characteristic of the genetic diversity of MHC genes that contributes to population-level immunity against a wide range of pathogens?",
+    "options": {
+      "A": "Gene conversion.",
+      "B": "Somatic hypermutation.",
+      "C": "Polymorphism and polygeny.",
+      "D": "Allelic exclusion.",
+      "E": "Isotype switching."
+    },
+    "answer": "C",
+    "explanation": "(C) The extensive genetic diversity of MHC genes, characterized by polymorphism (multiple alleles for each MHC gene within a population) and polygeny (multiple distinct MHC class I and class II genes), is critical for population-level immunity. This diversity ensures that, within a population, there will be individuals capable of presenting a wide range of pathogen-derived peptides, enhancing the overall ability of the population to respond to diverse and evolving pathogens."
+  },
+  {
+    "question": "What is the role of autophagy in MHC class II antigen presentation?",
+    "options": {
+      "A": "Autophagy is a pathway for degrading cytosolic proteins for MHC class I presentation, not MHC class II.",
+      "B": "Autophagy delivers extracellular antigens into endosomes for MHC class II loading.",
+      "C": "Autophagy can deliver cytosolic contents, including intracellular pathogens or self-antigens, into lysosomes for degradation and subsequent presentation by MHC class II molecules.",
+      "D": "Autophagy enhances the surface expression of MHC class II molecules on antigen-presenting cells.",
+      "E": "Autophagy is involved in the removal of MHC class II molecules from the cell surface."
+    },
+    "answer": "C",
+    "explanation": "(C) Autophagy, a cellular self-degradative process, can play a role in MHC class II antigen presentation. Autophagy can engulf cytosolic components, including intracellular pathogens (like bacteria or viruses residing in the cytoplasm) or self-antigens, and deliver these contents to lysosomes. Within lysosomes, these engulfed materials are degraded, and the resulting peptides can then be loaded onto MHC class II molecules for presentation to CD4+ T cells. This pathway is particularly important for presenting antigens derived from intracellular pathogens or self-antigens that are not accessible through the endocytic pathway."
+  },
+  {
+    "question": "In the context of TCR signaling, what is the function of adaptor proteins like GADS and SLP-76 within the LAT signalosome?",
+    "options": {
+      "A": "To directly phosphorylate PLC-γ.",
+      "B": "To activate LCK and ZAP-70 kinases.",
+      "C": "To scaffold and bring together signaling molecules, facilitating signal transduction downstream of LAT phosphorylation.",
+      "D": "To directly bind to and activate transcription factors in the nucleus.",
+      "E": "To regulate calcium influx into the T cell."
+    },
+    "answer": "C",
+    "explanation": "(C) Adaptor proteins like GADS (GRB2-associated protein 2) and SLP-76 (SH2 domain-containing leukocyte protein of 76 kDa) are key components of the LAT signalosome. They function as molecular scaffolds, lacking intrinsic enzymatic activity but containing multiple protein-protein interaction domains (like SH2 and SH3 domains). These adaptor proteins bind to phosphorylated LAT and recruit and organize other signaling molecules, such as PLC-γ, VAV1, and PI3K, into a signaling complex, facilitating efficient signal transduction downstream of TCR engagement."
+  },
+  {
+    "question": "Which of the following mechanisms contributes to the generation of junctional diversity during VDJ recombination?",
+    "options": {
+      "A": "Allelic exclusion.",
+      "B": "Somatic hypermutation.",
+      "C": "P-nucleotide addition and N-nucleotide addition.",
+      "D": "Class switch recombination.",
+      "E": "Co-dominant expression."
+    },
+    "answer": "C",
+    "explanation": "(C) Junctional diversity, a major source of T and B cell receptor diversity, is generated at the junctions between V, D, and J gene segments during VDJ recombination. P-nucleotide addition (palindromic sequences from hairpin opening) and N-nucleotide addition (non-templated nucleotides added by TdT) are key mechanisms that introduce variability at these junctions, creating highly diverse receptor sequences."
+  },
+  {
+    "question": "How do CD4 and CD8 co-receptors enhance T cell receptor signaling?",
+    "options": {
+      "A": "CD4 and CD8 directly bind to the peptide-binding groove of MHC molecules, increasing TCR affinity.",
+      "B": "CD4 and CD8 stabilize the interaction between T cell and APC or target cell through adhesion molecules.",
+      "C": "CD4 and CD8 bind to the constant regions of MHC class II and MHC class I molecules, respectively, bringing associated LCK kinase in proximity to the TCR-CD3 complex and facilitating ITAM phosphorylation.",
+      "D": "CD4 and CD8 compete with co-stimulatory receptors like CD28, preventing excessive T cell activation.",
+      "E": "CD4 and CD8 are essential for the transport of peptide-MHC complexes to the cell surface."
+    },
+    "answer": "C",
+    "explanation": "(C) CD4 and CD8 co-receptors play a crucial role in enhancing TCR signaling. CD4 binds to the β2 domain of MHC class II molecules, and CD8 binds to the α3 domain of MHC class I molecules. By binding to MHC molecules, CD4 and CD8 bring the associated Src family kinase LCK (which is physically associated with the cytoplasmic tails of CD4 and CD8) into close proximity to the TCR-CD3 complex upon TCR engagement. This proximity facilitates efficient phosphorylation of ITAMs on the CD3 complex by LCK, initiating downstream signaling events."
+  },
+  {
+    "question": "Which of the following is the primary mechanism by which cytotoxic T lymphocytes (CTLs) kill target cells?",
+    "options": {
+      "A": "Antibody-dependent cellular cytotoxicity (ADCC).",
+      "B": "Complement-dependent cytotoxicity (CDC).",
+      "C": "Release of perforin and granzymes, inducing apoptosis in target cells.",
+      "D": "Phagocytosis of target cells.",
+      "E": "Secretion of cytokines like TNF-α and IL-1β, leading to inflammation and target cell lysis."
+    },
+    "answer": "C",
+    "explanation": "(C) Cytotoxic T lymphocytes (CTLs) primarily kill target cells, such as virus-infected cells or tumor cells, through the directed release of cytotoxic granules. These granules contain perforin and granzymes. Perforin creates pores in the target cell membrane, allowing granzymes to enter the target cell cytoplasm. Granzymes are serine proteases that activate apoptotic pathways in the target cell, leading to programmed cell death."
+  },
+  {
+    "question": "What is the significance of the 'immunological synapse' formed between a T cell and an antigen-presenting cell?",
+    "options": {
+      "A": "It is a physical barrier that prevents pathogen entry into the T cell.",
+      "B": "It is the site where T cells undergo VDJ recombination.",
+      "C": "It is a specialized cell-cell junction that concentrates receptors, ligands, and signaling molecules, optimizing T cell activation and effector functions.",
+      "D": "It is the region where T cells present antigens to B cells.",
+      "E": "It is the area where T cells are negatively selected in the thymus."
+    },
+    "answer": "C",
+    "explanation": "(C) The immunological synapse is a highly organized and dynamic cell-cell junction formed between a T cell and an antigen-presenting cell (APC) or target cell upon TCR engagement. It is characterized by a central supramolecular activation cluster (cSMAC) containing TCR-pMHC complexes and co-stimulatory molecules, and a peripheral supramolecular activation cluster (pSMAC) containing adhesion molecules like integrins. The immunological synapse serves to concentrate receptors, ligands, signaling molecules, and effector molecules at the interface, optimizing T cell activation, signal transduction, and directed delivery of effector functions."
+  }
+]

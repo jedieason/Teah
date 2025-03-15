@@ -1,0 +1,675 @@
+
+[
+  {
+    "question": "Which of the following statements accurately describes the initial development of T cells as depicted in the provided text?",
+    "options": {
+      "A": "Precursor T cells originate in the thymus and then migrate to the bone marrow for maturation.",
+      "B": "The thymus serves as the primary site for the generation of precursor T cells, which then circulate to the bone marrow for further development.",
+      "C": "Precursor T cells are produced in the bone marrow and subsequently migrate to the thymus for their development into mature T cells.",
+      "D": "Mature T cells are generated in the bone marrow and migrate to the thymus to initiate their effector functions.",
+      "E": "Both bone marrow and thymus contribute equally to the generation of precursor T cells, which mature in peripheral lymphoid organs."
+    },
+    "answer": "C",
+    "explanation": "(C) The text explicitly states, 'T-cell progenitors develop in the bone marrow and migrate to the thymus where the cells complete their development...'"
+  },
+  {
+    "question": "What is the primary role of Notch receptor signaling in the early stages of T cell development, according to the text?",
+    "options": {
+      "A": "To initiate negative selection of T cells reacting strongly to self-antigens.",
+      "B": "To promote the migration of mature T cells from the thymus to peripheral lymphoid organs.",
+      "C": "To induce the expression of specific transcription factors and T cell-related genes, thereby committing precursors to the T cell lineage.",
+      "D": "To facilitate the recognition of self MHC molecules by immature T cells during positive selection.",
+      "E": "To suppress the rearrangement of T cell receptor genes in precursor T cells until they reach the thymus."
+    },
+    "answer": "C",
+    "explanation": "(C) The text mentions 'Precursors commit to the T-cell lineage following Notch signaling and initiate T-cell receptor gene rearrangements' and lists examples like transcription factors and T cell-related genes induced by Notch."
+  },
+  {
+    "question": "Which of the following statements correctly describe the processes of positive and negative selection in T cell development as outlined in the text?",
+    "options": {
+      "A": "Positive selection ensures that T cells do not react too strongly to self-antigens, while negative selection confirms their ability to recognize self MHC.",
+      "B": "Positive selection occurs in the bone marrow and negative selection in the thymus.",
+      "C": "Positive selection is intended to remove T cells that cannot recognize self MHC, and negative selection eliminates T cells that react too strongly to self-antigens.",
+      "D": "Both positive and negative selection processes occur primarily in the bone marrow and are mediated by stromal cells.",
+      "E": "Neither positive nor negative selection is related to self-antigen recognition; they are primarily focused on ensuring T cell survival and proliferation."
+    },
+    "answer": ["C"],
+    "explanation": "(C) The text clearly states positive selection as 'to confirm T cells possess the ability to recognize self-antigen presenting molecules' and negative selection as 'to ensure T cells do not react too strongly to self-antigens'."
+  },
+  {
+    "question": "According to the text, what distinguishes double-negative thymocytes from double-positive thymocytes in terms of surface molecule expression?",
+    "options": {
+      "A": "Double-negative thymocytes express both CD4 and CD8, while double-positive thymocytes express neither.",
+      "B": "Double-negative thymocytes express neither CD4 nor CD8, while double-positive thymocytes express both CD4 and CD8.",
+      "C": "Double-negative thymocytes express only CD4, while double-positive thymocytes express only CD8.",
+      "D": "Double-negative thymocytes express both CD3 and TCR, while double-positive thymocytes express neither.",
+      "E": "Double-negative thymocytes express γδ TCR, while double-positive thymocytes express αβ TCR."
+    },
+    "answer": "B",
+    "explanation": "(B) The text defines 'Double negative thymocyte (不表現 CD4 和 CD8)' and 'double positive (表現 CD4 和 CD8)'. The image also visually represents this difference."
+  },
+  {
+    "question": "What is the approximate percentage of double-negative thymocytes that differentiate into γδ T-cells, as indicated in the text?",
+    "options": {
+      "A": "Approximately 50%",
+      "B": "Approximately 20%",
+      "C": "Approximately 10%",
+      "D": "Approximately 5%",
+      "E": "Less than 1%"
+    },
+    "answer": "D",
+    "explanation": "(D) The text states '最初的 Double negative thymocyte...其中一群 (大約 5%) 會變γδ T-cells...'"
+  },
+  {
+    "question": "Which of the following represents the correct sequence of T cell developmental stages in the thymus, based on CD4 and CD8 expression, as described in the provided material?",
+    "options": {
+      "A": "Single positive → Double positive → Double negative",
+      "B": "Double positive → Single positive → Double negative",
+      "C": "Double negative → Single positive → Double positive",
+      "D": "Double negative → Double positive → Single positive",
+      "E": "Single positive (CD4+) → Single positive (CD8+) → Double positive"
+    },
+    "answer": "D",
+    "explanation": "(D) The diagram and text progression show 'CD3-4-8- 'double-negative' thymocytes' becoming 'CD3+4+8+ 'double-positive' thymocytes', which then differentiate into 'CD4+8-' or 'CD4-8+ 'single-positive' thymocytes'."
+  },
+  {
+    "question": "According to the text, when is the T-cell repertoire, or T-cell receptor gene pool, largely established in humans?",
+    "options": {
+      "A": "During fetal development, before birth.",
+      "B": "At birth, when the thymus is fully functional.",
+      "C": "Before puberty, in childhood.",
+      "D": "During puberty, coinciding with thymic maturation.",
+      "E": "Throughout adulthood, with continuous thymic generation of new T cells."
+    },
+    "answer": "C",
+    "explanation": "(C) The text indicates '在青春期前,大概就把 T-cell repertoire (T-cell 抗體基因庫)建立完了...;青春期後胸腺功能開始下降.'"
+  },
+  {
+    "question": "Based on the information provided, what is the primary functional distinction between CD4+ T cells and CD8+ T cells?",
+    "options": {
+      "A": "CD4+ T cells are primarily involved in cytotoxic activity, while CD8+ T cells are mainly helper cells.",
+      "B": "CD4+ T cells are helper cells, while CD8+ T cells are cytotoxic T lymphocytes.",
+      "C": "CD4+ T cells recognize antigens presented by MHC class I, and CD8+ T cells recognize antigens presented by MHC class II.",
+      "D": "CD4+ T cells mediate negative selection in the thymus, and CD8+ T cells mediate positive selection.",
+      "E": "CD4+ T cells primarily reside in the thymus, while CD8+ T cells circulate in the peripheral lymphoid organs."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states, '在功能上,CD4T 細胞要為輔助型,CD8T 細胞則為毒殺型', meaning CD4+ T cells are helper type and CD8+ T cells are cytotoxic."
+  },
+  {
+    "question": "In the context of the SCID mouse experiment described in the text, what was the key finding regarding T cell development?",
+    "options": {
+      "A": "SCID mice are able to develop mature T cells despite having a defect in thymic epithelial cell development.",
+      "B": "Transplantation of bone marrow from SCID mice into nude mice restores T cell development in nude mice.",
+      "C": "SCID mice can develop mature B cells but not mature T cells due to a defect in V(D)J recombination.",
+      "D": "Transplantation of nude mouse bone marrow into SCID mice results in the development of mature T cells in SCID mice.",
+      "E": "Both SCID and nude mice are capable of developing mature T cells, but with significant delays compared to wild-type mice."
+    },
+    "answer": "D",
+    "explanation": "(D) The text describes experiment 1: '將 Nude 小鼠的骨髓幹細胞移植到 SCID 小鼠...結果 SCID 小鼠發育出成熟T細胞.', indicating that providing bone marrow (with functional lymphocytes precursors) to SCID mice (with thymus) allows for T cell development."
+  },
+  {
+    "question": "What is the underlying genetic defect in Nude mice that leads to their characteristic phenotype, as mentioned in the provided text?",
+    "options": {
+      "A": "A mutation in the DNA-PK gene, preventing V(D)J recombination.",
+      "B": "A mutation in the Rag-1 gene, impairing T cell receptor gene rearrangement.",
+      "C": "A mutation in the Foxn1 gene, causing abnormal development of thymic epithelial cells and thymic aplasia.",
+      "D": "A mutation in the Bcl11b gene, affecting T cell lineage commitment.",
+      "E": "A mutation in the CD3 gene, disrupting T cell receptor complex formation."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states 'Nude 小鼠:Foxn1 基因突變,造成胸腺表皮細胞發育異常,即缺乏胸腺...'"
+  },
+  {
+    "question": "Based on the description of DiGeorge syndrome, which of the following is a potential consequence of thymic aplasia in humans?",
+    "options": {
+      "A": "Overproduction of T cells leading to autoimmune disorders.",
+      "B": "Normal T cell development but impaired B cell function.",
+      "C": "Severe deficiency in mature T cells and potential developmental abnormalities in the heart and facial structures.",
+      "D": "Exclusive defect in CD8+ T cell development, while CD4+ T cell development remains unaffected.",
+      "E": "Enhanced T cell mediated immunity and resistance to infections."
+    },
+    "answer": "C",
+    "explanation": "(C) The text describes '人類 DiGeorge syndrome:缺乏胸線...可能症狀為心臟及面部器官發育異常.', linking thymic deficiency to heart and facial organ development issues and implying T cell deficiency."
+  },
+  {
+    "question": "According to the thymus structure diagram, what is the corticomedullary junction?",
+    "options": {
+      "A": "The outermost layer of the thymus, directly beneath the capsule.",
+      "B": "The innermost region of the thymus, containing Hassall's corpuscles.",
+      "C": "The boundary area between the cortex and medulla of the thymus.",
+      "D": "The region within the cortex where T cell precursors enter the thymus.",
+      "E": "The primary site of T cell positive selection within the thymus."
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram labels 'cortico-medullary junction' as the area between 'cortex' and 'medulla'."
+  },
+  {
+    "question": "Which cell type in the thymus cortex is described as being involved in clearing dead cells?",
+    "options": {
+      "A": "Cortical epithelial cells",
+      "B": "Medullary epithelial cells",
+      "C": "Thymocytes",
+      "D": "Dendritic cells",
+      "E": "Macrophages"
+    },
+    "answer": "E",
+    "explanation": "(E) In the '皮質(cortex)' section, point 2 states '巨噬細胞(macrophage):清理死掉的細胞.'"
+  },
+  {
+    "question": "What is the function of cortical epithelial cells in the thymus cortex, according to the provided text?",
+    "options": {
+      "A": "Primarily involved in negative selection of T cells.",
+      "B": "To produce Hassall's corpuscles and maintain thymic architecture.",
+      "C": "To present self-antigens to T cells and provide Notch signaling for T cell development.",
+      "D": "To clear dead thymocytes and prevent autoimmunity.",
+      "E": "To facilitate the migration of mature T cells to the medulla."
+    },
+    "answer": "C",
+    "explanation": "(C) In the '皮質(cortex)' section, point 3 for '網狀的皮質上皮細胞' mentions '(1) Notch 傳訊... (2) 呈現自身的抗原給T細胞.'"
+  },
+  {
+    "question": "Which cell type is primarily responsible for negative selection in the thymus medulla, as per the text?",
+    "options": {
+      "A": "Cortical epithelial cells",
+      "B": "Medullary epithelial cells",
+      "C": "Thymocytes",
+      "D": "Hassall's corpuscles",
+      "E": "Macrophages and Dendritic cells"
+    },
+    "answer": "E",
+    "explanation": "(E) In the '髓質(medulla)' section, points 2 and 3 mention '樹突細胞(dendritic cell):負責負選擇' and '巨噬細胞(macrophage):...負責負選擇.'"
+  },
+  {
+    "question": "What is the role of Hassall's corpuscles in the thymus medulla, based on the text's description?",
+    "options": {
+      "A": "They are the primary sites of positive selection.",
+      "B": "They are responsible for presenting self-antigens for negative selection.",
+      "C": "Their function is not fully understood, but T cell development does not require their presence.",
+      "D": "They are essential for the migration of mature T cells out of the thymus.",
+      "E": "They are involved in the differentiation of γδ T cells within the medulla."
+    },
+    "answer": "C",
+    "explanation": "(C) In the '髓質(medulla)' section, point 5 mentions '哈氏小體(Hassal's corpuscle):目前對其功能尚不清楚,但沒有此結構T細胞發育會產生缺失.'"
+  },
+  {
+    "question": "According to the detailed T cell development flow diagram, at which stage do thymocytes enter the thymus venule?",
+    "options": {
+      "A": "DN1 stage",
+      "B": "DN2 stage",
+      "C": "DN3 stage",
+      "D": "DN4 stage",
+      "E": "After becoming mature CD4+8- or CD8+4- thymocytes"
+    },
+    "answer": "E",
+    "explanation": "(E) The diagram shows 'mature CD4+8 or CD8+4- thymocytes' exiting via the 'venule' after the single-positive stage."
+  },
+  {
+    "question": "At which DN stage does pre-TCR expression first appear in developing thymocytes, according to the detailed flow diagram?",
+    "options": {
+      "A": "DN1",
+      "B": "DN2",
+      "C": "DN3",
+      "D": "DN4",
+      "E": "After DN4, in the double-positive stage"
+    },
+    "answer": "C",
+    "explanation": "(C) The text mentions 'DN3時期始有 pre TCR, 接收訊號並存活...'" and the diagram shows 'pre-TCR' annotation at DN3 stage."
+  },
+  {
+    "question": "What is the primary location within the thymus where positive selection of T cells occurs, as indicated in the detailed flow diagram?",
+    "options": {
+      "A": "Subcapsular region",
+      "B": "Cortex, specifically in areas with cortical epithelial cells",
+      "C": "Corticomedullary junction",
+      "D": "Medulla",
+      "E": "Throughout the entire thymus, without specific localization"
+    },
+    "answer": "B",
+    "explanation": "(B) The text states '便在內皮質中具有皮質上皮細胞(cortical epithelial cell)的地方,進行正選擇.' and the diagram places '正選擇' in the cortex with cortical epithelial cells."
+  },
+  {
+    "question": "Which cell types are involved in mediating negative selection at the corticomedullary junction, according to the text?",
+    "options": {
+      "A": "Cortical epithelial cells only",
+      "B": "Medullary epithelial cells only",
+      "C": "Cortical epithelial cells and medullary epithelial cells",
+      "D": "Dendritic cells and macrophages derived from bone marrow",
+      "E": "Thymocytes and cortical epithelial cells"
+    },
+    "answer": "D",
+    "explanation": "(D) The text states '經過正選擇後,到達皮質—髓質連接帶,開始和從骨髓發育來的樹突細胞(dendritic cell)與巨噬細胞(macrophage)進行負選擇.'"
+  },
+  {
+    "question": "What is the significance of the 'proliferation' stage in T cell development, as depicted in the 'TCR β and α chain rearrangement' diagram?",
+    "options": {
+      "A": "It is the stage where T cells undergo negative selection to remove self-reactive clones.",
+      "B": "It is the stage where T cells differentiate into CD4+ and CD8+ lineages.",
+      "C": "It is a phase of expansion after successful β-chain rearrangement and pre-TCR expression to generate a sufficient pool of cells for selection.",
+      "D": "It represents the initial migration of T cell precursors from the bone marrow to the thymus.",
+      "E": "It is the stage where T cells mature into single-positive thymocytes ready to exit the thymus."
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram shows 'proliferation' after 'Small pre-T (DN3)' and before 'Large pre-T (DN4)' which is right after 'pre-TCR' appearance, suggesting expansion after successful beta-chain rearrangement."
+  },
+  {
+    "question": "In the context of T cell receptor gene rearrangement, which of the following accurately describes the order of events for the β chain, according to the diagram?",
+    "options": {
+      "A": "Vβ to Dβ rearrangement followed by Dβ to Jβ rearrangement.",
+      "B": "Dβ to Jβ rearrangement followed by Vβ to DJβ rearrangement.",
+      "C": "Simultaneous rearrangement of Vβ, Dβ, and Jβ segments.",
+      "D": "Jβ to Dβ rearrangement followed by Vβ to DJβ rearrangement.",
+      "E": "Vβ to Jβ rearrangement followed by Dβ to DJβ rearrangement."
+    },
+    "answer": "B",
+    "explanation": "(B) The diagram under 'Rearrangement' shows 'DB to JB' first, then 'VB to DJB' for the beta chain."
+  },
+  {
+    "question": "What is the role of the surrogate α chain in pre-TCR complex formation, as described in the text?",
+    "options": {
+      "A": "It replaces the β chain during negative selection, ensuring self-tolerance.",
+      "B": "It forms a functional TCR complex with the α chain to initiate positive selection.",
+      "C": "It pairs with the rearranged β chain to form a pre-TCR, enabling signal transduction for survival and proliferation despite limited antigen recognition.",
+      "D": "It is expressed only in mature T cells and facilitates antigen recognition in peripheral lymphoid organs.",
+      "E": "It is a variant of the α chain expressed during γδ T cell development."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states 'Pre-T 細胞開始有 T-cell receptor 表現。從DN3 開始,細胞有自行重組完的 ẞchain,與細胞提供的代理a chain,形成的 receptor 雖然沒有很強的辨識抗原的能力,但可以接收訊號,讓此時期的T細胞可以存活、複製。'"
+  },
+  {
+    "question": "What is the consequence of a double-positive thymocyte failing positive selection, as mentioned in the text?",
+    "options": {
+      "A": "It undergoes negative selection and is eliminated.",
+      "B": "It differentiates into a γδ T cell.",
+      "C": "It undergoes apoptosis (programmed cell death).",
+      "D": "It matures into a regulatory T cell.",
+      "E": "It becomes an anergic T cell, unable to respond to antigens."
+    },
+    "answer": "C",
+    "explanation": "(C) The text says '而這些T細胞大多無法順利辨識自身的MHC 抗原,這些沒用而失敗的 T細胞會進行細胞凋亡...'" which means apoptosis."
+  },
+  {
+    "question": "According to the text, what determines whether a T cell becomes CD4+ or CD8+ single-positive after positive selection?",
+    "options": {
+      "A": "The strength of interaction between the TCR and MHC class I or MHC class II molecules.",
+      "B": "The timing of TCR α chain rearrangement.",
+      "C": "The expression level of CD3 molecules on the cell surface.",
+      "D": "The presence or absence of co-stimulatory signals during positive selection.",
+      "E": "The location of positive selection within the thymus cortex or medulla."
+    },
+    "answer": "A",
+    "explanation": "(A) The text in 'Single positive' section and '4. 誘導正選擇的 MHC 抗原會決定T細胞將發展為CD4或CD8群係...' indicates that the MHC class (I or II) interaction determines CD4 or CD8 lineage commitment."
+  },
+  {
+    "question": "Which transcription factor is associated with the development of CD4+ single-positive T cells after positive selection, as described in the text?",
+    "options": {
+      "A": "Runx3",
+      "B": "TCF1",
+      "C": "GATA3",
+      "D": "ThPOK",
+      "E": "Bcl11b"
+    },
+    "answer": "D",
+    "explanation": "(D) The text states '(1) 若活化的轉錄因子為 ThPOK,會促使 T細胞表現 CD4.'"
+  },
+  {
+    "question": "What is the primary purpose of negative selection in T cell development?",
+    "options": {
+      "A": "To ensure that T cells can recognize foreign antigens effectively.",
+      "B": "To promote the survival and proliferation of T cells that recognize self MHC.",
+      "C": "To eliminate T cells that react too strongly to self-antigens, preventing autoimmunity.",
+      "D": "To differentiate T cells into CD4+ and CD8+ lineages.",
+      "E": "To induce the expression of CD4 and CD8 co-receptors on thymocytes."
+    },
+    "answer": "C",
+    "explanation": "(C) The text defines '負選擇(negative selection):清除會過度辨識自身抗原的T細胞...'" and mentions '預防自體免疫'."
+  },
+  {
+    "question": "What percentage of double-positive thymocytes typically survive both positive and negative selection processes, according to the text?",
+    "options": {
+      "A": "Approximately 80%",
+      "B": "Approximately 50%",
+      "C": "Approximately 20%",
+      "D": "Approximately 5%",
+      "E": "Approximately 2%"
+    },
+    "answer": "E",
+    "explanation": "(E) The text states '大約只有2%的 double-positive thymocyte 能通過正選擇及負選擇的雙重篩選...'"
+  },
+  {
+    "question": "According to the section on 'α:β chain gene rearrangement stages', what is the checkpoint for T-cell development after β chain rearrangement?",
+    "options": {
+      "A": "Expression of CD4 and CD8.",
+      "B": "Successful α chain rearrangement.",
+      "C": "Surface expression of β chain with surrogate α chain (pre-TCR).",
+      "D": "Migration to the medulla.",
+      "E": "Positive selection in the cortex."
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram labels 'Check point of T-cell development' at the stage of 'Surface expression of β chain with surrogate α chain'."
+  },
+  {
+    "question": "In the 'α:β chain gene rearrangement' diagram, what is indicated by 'CD4- 8- CD4+ 8+' surface pTa:β+CD3 very low'?",
+    "options": {
+      "A": "Mature single-positive T cells ready to exit the thymus.",
+      "B": "Double-negative thymocytes undergoing β chain rearrangement.",
+      "C": "Double-positive thymocytes expressing pre-TCR at low levels.",
+      "D": "γδ T cells expressing CD3 but lacking αβ TCR.",
+      "E": "Thymocytes undergoing negative selection in the medulla."
+    },
+    "answer": "C",
+    "explanation": "(C) The label 'CD4- 8- CD4+ 8+ surface pTa:β+CD3 very low' is placed at the stage right after beta-chain rearrangement and before double-positive stage, indicating it's a transition stage with low CD3 and pre-TCR (pTa:β) expression, and starting to express CD4 and CD8."
+  },
+  {
+    "question": "According to the 'Overview' section, which gene rearrangement is directly induced by Notch signaling in precursor T cells?",
+    "options": {
+      "A": "α chain gene rearrangement",
+      "B": "β chain gene rearrangement",
+      "C": "γ chain gene rearrangement",
+      "D": "δ chain gene rearrangement",
+      "E": "Both α and β chain gene rearrangements simultaneously"
+    },
+    "answer": "B",
+    "explanation": "(B) The text in '流程總覽 (一)' states '...誘發 TCR 的 β鏈基因重組,啟動T細胞的發育.', indicating Notch signaling induces beta-chain rearrangement."
+  },
+  {
+    "question": "What is 'allelic exclusion' in the context of β chain gene rearrangement, as mentioned in the text's 'Overview' section?",
+    "options": {
+      "A": "The simultaneous rearrangement of both β chain alleles to increase receptor diversity.",
+      "B": "The preferential rearrangement of the δ chain locus over the β chain locus.",
+      "C": "The process that ensures only one allele of the β chain gene is productively rearranged and expressed in a T cell.",
+      "D": "The exclusion of β chain rearrangement in favor of α chain rearrangement during T cell development.",
+      "E": "The mechanism that prevents rearrangement of the β chain gene until positive selection is complete."
+    },
+    "answer": "C",
+    "explanation": "(C) The text in '(三)(B12未提) pre-TCR 在DN3 時期的作用 1.' explains '...確保β鏈基因座 (locus)的對偶基因排除(allelic exclusion),即當一條染色體的基因重組完成後,會抑制另一條染色體的基因重組...'"
+  },
+  {
+    "question": "What is the role of RAG-2 downregulation after pre-TCR signaling, as explained in the text?",
+    "options": {
+      "A": "To initiate α chain gene rearrangement.",
+      "B": "To promote further β chain gene rearrangements for increased diversity.",
+      "C": "To stop β chain gene rearrangement and enforce allelic exclusion.",
+      "D": "To induce the expression of CD4 and CD8 co-receptors.",
+      "E": "To facilitate migration of thymocytes to the medulla for negative selection."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '促使 RAG-2(一種重組酶)降解,使β鏈的基因重組停止,並確保β鏈基因座 (locus)的對偶基因排除(allelic exclusion)...'"
+  },
+  {
+    "question": "According to the text, what happens to RAG-1 and RAG-2 gene expression in DN4 stage thymocytes?",
+    "options": {
+      "A": "RAG-1 and RAG-2 expression is upregulated to initiate α chain rearrangement.",
+      "B": "RAG-1 and RAG-2 expression is completely silenced to prevent further receptor gene rearrangement.",
+      "C": "RAG-1 and RAG-2 expression remains suppressed, preventing α chain rearrangement until the double-positive stage.",
+      "D": "RAG-1 and RAG-2 expression fluctuates, allowing for both β and α chain rearrangement in DN4 stage.",
+      "E": "RAG-1 and RAG-2 expression is essential for proliferation in DN4 stage, but not for gene rearrangement."
+    },
+    "answer": "C",
+    "explanation": "(C) The text in '(四)(B12未提)DN4的情形 1.' says '...同時持續抑制 RAG-1 和 RAG-2 基因表現,因此不會發生a鏈的重組。直到細胞增殖完成,細胞表面也開始同時表現 CD4 和 CD8 之後(即進入 double-positive時期),RAG-1 和 RAG-2 基因不再受到抑制,才會開始進行a鏈的重組.'"
+  },
+  {
+    "question": "What is the typical percentage of double-positive thymocytes observed in a healthy thymus, based on the text's clinical perspective?",
+    "options": {
+      "A": "Approximately 3%",
+      "B": "Approximately 5%",
+      "C": "Approximately 12%",
+      "D": "Approximately 50%",
+      "E": "Approximately 80%"
+    },
+    "answer": "E",
+    "explanation": "(E) The text in '(一)臨床上看T細胞發育是否異常:' mentions '正常情況下應如上圖,double positive 的細胞約佔80%...'"
+  },
+  {
+    "question": "According to the 'T cell development overview' diagram, at which stage does 'Death by neglect' occur?",
+    "options": {
+      "A": "Stem cell stage",
+      "B": "Pro-T stage",
+      "C": "Pre-T stage",
+      "D": "Double positive stage",
+      "E": "Single positive stage"
+    },
+    "answer": "D",
+    "explanation": "(D) The diagram shows 'Death by neglect (no recognition of MHC-peptide)' happening at the 'Double positive' stage."
+  },
+  {
+    "question": "In the 'T cell development overview' diagram, 'Positive selection' is shown to rescue thymocytes from which fate?",
+    "options": {
+      "A": "Negative selection",
+      "B": "Death by neglect",
+      "C": "Differentiation into γδ T cells",
+      "D": "Maturation into regulatory T cells",
+      "E": "Migration to the medulla"
+    },
+    "answer": "B",
+    "explanation": "(B) The diagram visually links 'Positive selection' arrow originating from 'Death by neglect' area, implying positive selection prevents death by neglect."
+  },
+  {
+    "question": "According to the 'T cell development overview' diagram, at which stage does 'Negative selection' primarily occur?",
+    "options": {
+      "A": "Pro-T stage",
+      "B": "Pre-T stage",
+      "C": "Double positive stage",
+      "D": "Single positive stage",
+      "E": "Mature T cell stage"
+    },
+    "answer": "D",
+    "explanation": "(D) The diagram places 'Negative selection (strong recognition of self antigen)' at the 'Single positive' stage."
+  },
+  {
+    "question": "In the context of MHC restriction, as explained in the 'Positive Selection' section, which of the following is true?",
+    "options": {
+      "A": "CD8 T cells are restricted to recognizing peptide antigens presented by MHC class II molecules.",
+      "B": "CD4 T cells are restricted to recognizing lipid antigens presented by MHC class I molecules.",
+      "C": "Mature T cells are restricted to recognizing MHC molecules regardless of the peptide presented.",
+      "D": "CD8 T cells are restricted to recognizing peptide antigens presented by MHC class I molecules, and CD4 T cells to MHC class II.",
+      "E": "Neither CD4 nor CD8 T cells exhibit MHC restriction; they can recognize antigens presented by either MHC class I or II."
+    },
+    "answer": "D",
+    "explanation": "(D) The text states '(1) CD8 T細胞專一於具有 Class I MHC 抗原之多肽. (2) CD4 T細胞專一於具有 Class II MHC 抗原之多肽.', which defines MHC class restriction for CD4 and CD8 T cells."
+  },
+  {
+    "question": "Based on the 'Positive Selection' section's explanation and the 'Transgenic receptor restricted to MHCa/b' diagrams, what is the key factor for positive selection to occur?",
+    "options": {
+      "A": "The expression level of TCR on thymocytes.",
+      "B": "The presence of both MHC class I and class II molecules on thymic epithelial cells.",
+      "C": "The presentation of self-peptides by MHC molecules on thymic epithelial cells, and the ability of TCR to recognize this MHC-peptide complex.",
+      "D": "The absence of strong signals from TCR engagement to prevent negative selection.",
+      "E": "The migration of thymocytes from the cortex to the medulla."
+    },
+    "answer": "C",
+    "explanation": "(C) The 'Positive Selection' section emphasizes '確保 T細胞可以辨識自身的抗原呈現分子與呈現出的 peptide.' and the diagrams show 'stroma expressing MHCa' and 'MHСb' presenting antigens for selection."
+  },
+  {
+    "question": "In the 'Transgenic receptor restricted to MHCa/b' diagrams, what is the significance of 'stroma expressing MHCa/b'?",
+    "options": {
+      "A": "It indicates the region of the thymus where negative selection is occurring.",
+      "B": "It represents the thymic epithelial cells presenting MHC molecules for positive selection.",
+      "C": "It signifies the dendritic cells and macrophages mediating negative selection.",
+      "D": "It shows the location where T cell precursors enter the thymus.",
+      "E": "It depicts the mature T cells migrating out of the thymus."
+    },
+    "answer": "B",
+    "explanation": "(B) The diagrams are used to illustrate positive selection and are labeled 'stroma expressing MHCa' and 'stroma expressing MHCb', indicating thymic stromal cells (epithelial cells) presenting MHC for positive selection."
+  },
+  {
+    "question": "According to the 'Negative Selection' section, what is the primary consequence for a developing T cell that exhibits high avidity binding to self-antigens?",
+    "options": {
+      "A": "It undergoes positive selection and matures into a functional T cell.",
+      "B": "It differentiates into a regulatory T cell to suppress autoreactivity.",
+      "C": "It is eliminated through apoptosis (cell death) during negative selection.",
+      "D": "It becomes an anergic T cell, unable to respond to antigens but not eliminated.",
+      "E": "It migrates to the thymus medulla and becomes a dendritic cell."
+    },
+    "answer": "C",
+    "explanation": "(C) The 'Negative Selection' section states '但若結合的強度過大(high-avidity),會導致細胞凋亡,此即負選擇.' and '當一胸腺細胞,與自身 MHC 抗原...產生高親和度結合時,該胸腺細胞將進行細胞凋亡.'"
+  },
+  {
+    "question": "Which cell types are mentioned as 'thymic APCs' (antigen-presenting cells) in the context of negative selection, according to the text?",
+    "options": {
+      "A": "Cortical epithelial cells only",
+      "B": "Medullary epithelial cells only",
+      "C": "Cortical and medullary epithelial cells",
+      "D": "Dendritic cells and macrophages",
+      "E": "Thymocytes and medullary epithelial cells"
+    },
+    "answer": "D",
+    "explanation": "(D) The text in '2. 胸腺抗原呈現細胞(thymic APC)' says '胸腺抗原呈現細胞(thymic APC)如樹突細胞或巨噬細胞...'"
+  },
+  {
+    "question": "What is the role of AIRE (autoimmune regulator) in the thymus medulla, as described in the 'Self-Tolerance' section?",
+    "options": {
+      "A": "AIRE promotes positive selection by enhancing MHC class II expression.",
+      "B": "AIRE induces the expression of tissue-specific proteins in the thymus medulla, facilitating negative selection of T cells reactive to these antigens.",
+      "C": "AIRE is essential for the migration of mature T cells out of the thymus.",
+      "D": "AIRE suppresses negative selection to allow for the development of regulatory T cells.",
+      "E": "AIRE enhances the expression of CD4 and CD8 co-receptors on thymocytes."
+    },
+    "answer": "B",
+    "explanation": "(B) The text in '(五)自體免疫調節因子(AIRE,autoimmune regulator) 1.' states 'AIRE 在胸腺髓質中表現,誘發一般在周圍組織上才表現的蛋白質之表現,幫助負選擇進行...'"
+  },
+  {
+    "question": "What is the function of S1PR1 (Sphingosine 1-phosphate receptor 1) in T cell egress from the thymus, according to the 'Self-Tolerance' section?",
+    "options": {
+      "A": "S1PR1 mediates the migration of T cell precursors into the thymus from the bone marrow.",
+      "B": "S1PR1 is required for positive selection of T cells in the thymus cortex.",
+      "C": "S1PR1 promotes the retention of self-reactive T cells in the thymus medulla for negative selection.",
+      "D": "S1PR1 facilitates the exit of mature CD4+ and CD8+ T cells from the thymus into the bloodstream, guided by S1P gradient.",
+      "E": "S1PR1 is involved in the differentiation of regulatory T cells in the thymus."
+    },
+    "answer": "D",
+    "explanation": "(D) The text in '§ Sphingosine 1-phosphate receptor 1 (S1PR1) (一)' says '...開始表現 S1PR1,而血液和淋巴組織中有大量S1P (sphingosine 1-phosphate,為S1PR1 的配體),可幫助T細胞 進入血液中.'" (Note: '進入血液中' should be interpreted as 'exit to blood' in context of mature T cells.)"
+  },
+  {
+    "question": "According to the comparison table of 'Positive and Negative Selection', what is the 'strength' of interaction between TCR and MHC for positive selection?",
+    "options": {
+      "A": "Strong",
+      "B": "Weak",
+      "C": "Intermediate to strong",
+      "D": "Non-existent",
+      "E": "Variable, depending on the peptide presented"
+    },
+    "answer": "B",
+    "explanation": "(B) The table clearly states '結合強度' for '正選擇' as '弱' (weak)."
+  },
+  {
+    "question": "Based on the comparison table, what is the functional outcome for a T cell that interacts with self-antigen during negative selection?",
+    "options": {
+      "A": "Survival",
+      "B": "Activation",
+      "C": "Apoptosis (cell death)",
+      "D": "Differentiation into regulatory T cell",
+      "E": "Anergy (functional inactivation)"
+    },
+    "answer": "C",
+    "explanation": "(C) The table states '與T細胞作用' for '負選擇' as '能結合則細胞凋亡(apoptosis)'."
+  },
+  {
+    "question": "In the 'Affinity Model of T-cell selection' diagram, what does the 'Alternative selection' peak likely represent?",
+    "options": {
+      "A": "T cells undergoing positive selection.",
+      "B": "T cells undergoing negative selection.",
+      "C": "T cells developing into regulatory T cells (Tregs).",
+      "D": "T cells destined for death by neglect.",
+      "E": "T cells that have successfully completed both positive and negative selection."
+    },
+    "answer": "C",
+    "explanation": "(C) The text in '(三) (B12補充)Alternative selection 中的T細胞主要會發展成 Treg.' and the 'Affinity Model' diagram shows 'Alternative selection' peak between 'Positive' and 'Negative' selection, suggesting it's a separate outcome for T cells with intermediate affinity, which corresponds to Treg development."
+  },
+  {
+    "question": "According to the 'Self-Tolerance' section, what is the role of Regulatory T cells (Tregs) in peripheral tolerance?",
+    "options": {
+      "A": "Tregs directly kill self-reactive T cells in the periphery.",
+      "B": "Tregs activate self-reactive T cells, promoting their differentiation into effector cells.",
+      "C": "Tregs produce cytokines like IL-10 and TGF-β to inhibit the activity of other self-reactive T cells in the periphery.",
+      "D": "Tregs mediate negative selection in peripheral lymphoid organs.",
+      "E": "Tregs enhance the effector functions of cytotoxic T cells against infected cells."
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram in 'Self-Tolerance' section explicitly states 'Cytokines (IL-10 and TGF-β) produced by Treg cells inhibit other self-reactive T cells.'"
+  },
+  {
+    "question": "Which of the following genetic defects, as listed in the 'Immunodeficiency' section, would likely affect both T and B cell development?",
+    "options": {
+      "A": "Defect in Coronin 1A",
+      "B": "Defect in MHC Class II",
+      "C": "Defect in RAG",
+      "D": "Defect in LCK",
+      "E": "Defect in ZAP70"
+    },
+    "answer": "C",
+    "explanation": "(C) The 'Immunodeficiency' diagram labels 'Defects in T and B cell development (SCID)' and lists 'RAG1, RAG2...' as causative factors, indicating RAG defects affect both T and B cell development."
+  },
+  {
+    "question": "Based on the 'Immunodeficiency' diagram, defects in which molecule would primarily affect T cell development but not necessarily B cell development?",
+    "options": {
+      "A": "RAG1",
+      "B": "ADA",
+      "C": "Pre-TCR checkpoint molecules",
+      "D": "Pre-BCR checkpoint molecules",
+      "E": "BTK"
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram has a separate section 'Defects in T cell development' and lists 'Pre-TCR checkpoint' related molecules, suggesting defects here specifically affect T cell development path."
+  },
+  {
+    "question": "According to the 'Summary' section, at which stage of T cell development does TCR β chain gene V-D-J rearrangement occur?",
+    "options": {
+      "A": "Stem cell stage",
+      "B": "Pro-T stage (DN2)",
+      "C": "Pre-T stage (DN3/DN4)",
+      "D": "Double-positive stage",
+      "E": "Single-positive stage"
+    },
+    "answer": "B",
+    "explanation": "(B) The 'Summary' section states 'Pre-T階段時,胸線細胞在 double-negative stage,此時 TCR ẞ chain 基因座完成 V-D-J重組...'" which corresponds to Pro-T stage (DN2) based on the earlier diagrams showing DN stages and rearrangement events."
+  },
+  {
+    "question": "What is the role of pre-Ta protein in early T cell development, as mentioned in the 'Summary' section?",
+    "options": {
+      "A": "It forms a complex with the rearranged α chain to create a functional TCR.",
+      "B": "It replaces the β chain during positive selection to ensure MHC restriction.",
+      "C": "It is a surrogate α chain that pairs with the rearranged β chain to form the pre-TCR, signaling for further development.",
+      "D": "It is expressed only in mature T cells and enhances antigen recognition.",
+      "E": "It is a chaperone protein that assists in the folding of the α chain after rearrangement."
+    },
+    "answer": "C",
+    "explanation": "(C) The 'Summary' section describes '此鏈和固定的 pre-Ta蛋白聯繫,產生 pre-TCR,即可產生訊號抑制另一ẞ chain 等位基因的重組,促進之同時表達 CD4 與 CD8受體.', which aligns with the surrogate alpha chain function in pre-TCR."
+  },
+  {
+    "question": "According to the 'Summary' section, when does TCR α chain gene V-J rearrangement occur in T cell development?",
+    "options": {
+      "A": "Simultaneously with β chain rearrangement in the Pro-T stage.",
+      "B": "Immediately after successful β chain rearrangement in the Pre-T stage.",
+      "C": "In the double-positive stage, after the expression of CD4 and CD8.",
+      "D": "In the single-positive stage, after positive and negative selection.",
+      "E": "α chain rearrangement does not occur; only β chain rearrangement is essential for T cell development."
+    },
+    "answer": "C",
+    "explanation": "(C) The 'Summary' section mentions '反之,在double-positive stage時,TCR的 a locus 進行 V-J重組,產生 a chain 多肽鏈...' indicating alpha-chain rearrangement occurs at the double-positive stage."
+  },
+  {
+    "question": "In the 'MHC restriction' section, what is the consequence of using a 'Mutant with MHC class II transgene expressed that cannot interact with CD4' in T cell development?",
+    "options": {
+      "A": "Both CD4+ and CD8+ T cells mature normally.",
+      "B": "Only CD4+ T cells mature, but CD8+ T cell development is blocked.",
+      "C": "Only CD8+ T cells mature, but CD4+ T cell development is blocked.",
+      "D": "Neither CD4+ nor CD8+ T cells mature due to impaired positive selection.",
+      "E": "T cell development proceeds normally, but the T cells exhibit impaired effector functions."
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram 'Mutant with MHC class II transgene expressed that cannot interact with CD4' is labeled 'Only CD8 T cells mature', indicating that if MHC Class II cannot interact with CD4, only CD8 T cells mature, and CD4 T cell development is hindered."
+  },
+  {
+    "question": "Based on the 'MHC restriction' section, what is the role of CD4 and CD8 molecules in T cell receptor signaling during positive selection?",
+    "options": {
+      "A": "CD4 and CD8 are required for TCR gene rearrangement but not for signaling.",
+      "B": "CD4 and CD8 act as co-stimulatory molecules, enhancing TCR signaling regardless of MHC class.",
+      "C": "CD4 and CD8 act as co-receptors, stabilizing the interaction between TCR and MHC, and are essential for signal transduction.",
+      "D": "CD4 and CD8 primarily function in negative selection to eliminate self-reactive T cells.",
+      "E": "CD4 and CD8 are expressed only after positive selection and are not involved in the selection process itself."
+    },
+    "answer": "C",
+    "explanation": "(C) The text in '3. 正選擇的訊號產生需要T細胞受體與 CD4/CD8輔助受體(Co-receptor)合作產生.' and the diagrams 'T-cell receptor recognizing MHC class II/I' showing CD4/CD8 interacting with MHC and TCR, and labeled '1. Recognition 2. signaling', emphasize the co-receptor function for recognition and signaling during positive selection."
+  }
+]

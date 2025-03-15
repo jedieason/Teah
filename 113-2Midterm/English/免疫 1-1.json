@@ -1,0 +1,939 @@
+
+[
+  {
+    "question": "In the context of historical immunology, which of the following statements accurately differentiates variolation from vaccination, as described in the provided text?",
+    "options": {
+      "A": "Variolation, as practiced in 1549 China, involved using cowpox virus, while vaccination, pioneered by Jenner, utilized smallpox scabs.",
+      "B": "Vaccination, termed so after the 天花学名 *Variola major*, involved nasal insufflation of dried smallpox scabs, whereas variolation used cowpox.",
+      "C": "Variolation, originating from 16th century China, employed powdered smallpox scabs administered nasally, while vaccination, from 18th century England, used cowpox virus.",
+      "D": "Both variolation and vaccination aimed to prevent smallpox, but variolation used attenuated smallpox virus, and vaccination used a completely different virus.",
+      "E": "Vaccination, described in *痘診心法*, was the precursor to variolation, with vaccination utilizing cowpox and variolation utilizing *Variola major*."
+    },
+    "answer": "C",
+    "explanation": "(C) Variolation, as described in the *痘診心法* (1549), involved nasal insufflation of powdered smallpox scabs. Vaccination, pioneered by Edward Jenner in 1796, utilized cowpox virus. Option C correctly captures the historical context, methods, and origins of both techniques."
+  },
+  {
+    "question": "According to the text, which of the following is the most precise definition of immunology as a field of study?",
+    "options": {
+      "A": "The study of infectious diseases and their eradication through vaccination.",
+      "B": "The branch of biology focused on understanding the structure and function of immune cells.",
+      "C": "The discipline that investigates the body's physical barriers against pathogens and injuries.",
+      "D": "The molecular and cellular study of how organisms defend against infection and immune dysregulation.",
+      "E": "The clinical practice of treating immunological diseases such as allergies and autoimmune disorders."
+    },
+    "answer": "D",
+    "explanation": "(D) The text defines immunology as the study at the cellular and molecular level of how organisms defend against infection and immune dysregulation. Option D accurately reflects this comprehensive definition, encompassing both defense against pathogens and the study of immune system malfunctions."
+  },
+  {
+    "question": "Which of the following are considered characteristics of an effective immune response, as outlined in the provided text?",
+    "options": {
+      "A": "Immediate reaction upon encountering any foreign substance.",
+      "B": "Ability to distinguish between self and non-self.",
+      "C": "Generation of memory for rapid response upon re-exposure.",
+      "D": "Exclusive activation of humoral immunity in all infections.",
+      "E": "Execution of effector functions to eliminate pathogens."
+    },
+    "answer": ["B", "C", "E"],
+    "explanation": "(B), (C), and (E) are correct. The text lists *Recognition*, *Effector function*, *Regulation*, and *Memory* as characteristics of immune responses. Options B (Recognition - self/non-self discrimination), C (Memory), and E (Effector function) align with these characteristics. Option A is incorrect as immediate response is not always effective and can be harmful. Option D is incorrect as both humoral and cellular immunity are important."
+  },
+  {
+    "question": "Based on the text, which of the following statements accurately describes the size comparison of pathogens?",
+    "options": {
+      "A": "Viruses are significantly larger than fungi and parasites.",
+      "B": "Intracellular bacteria are generally smaller than extracellular bacteria.",
+      "C": "Parasites represent the smallest category of pathogens on the log scale.",
+      "D": "Fungi and extracellular bacteria occupy a similar size range on the log scale.",
+      "E": "The size difference between viruses and parasites spans approximately two orders of magnitude on the log scale."
+    },
+    "answer": "B",
+    "explanation": "(B) Observing the provided image '病原體之大小比較', intracellular bacteria are positioned towards the smaller end of the log scale compared to extracellular bacteria, archaea, and protozoa. Option B accurately reflects this size relationship. Option E is also correct, as parasites are at 10^-2 and viruses are at 10^-7, which is five orders of magnitude, not two. However, option B is more directly answerable by visual inspection of the image, making it the most appropriate single answer if only one can be chosen. If multiple answers are allowed, both B and E could be considered correct based on different interpretations of 'accurate'. However, focusing on direct visual interpretation of relative sizes, B is the stronger answer."
+  },
+  {
+    "question": "According to the hierarchical structure of the immune system, which of the following sequences correctly orders the layers of defense from the first line of defense to the adaptive immune response?",
+    "options": {
+      "A": "Adaptive immunity → Complement system → Skin & Mucosa → Innate immunity",
+      "B": "Skin & Mucosa → Innate immunity → Complement system → Adaptive immunity",
+      "C": "Skin & Mucosa → Complement system → Innate immunity → Adaptive immunity",
+      "D": "Complement system → Skin & Mucosa → Innate immunity → Adaptive immunity",
+      "E": "Innate immunity → Skin & Mucosa → Complement system → Adaptive immunity"
+    },
+    "answer": "C",
+    "explanation": "(C) The text lists the hierarchical layers of defense in the order: 1. 表皮、黏液 (Skin & Mucosa), 2. 補體系統 (Complement system), 3. 先天免疫 (Innate immunity), 4. 適應性/後天免疫 (Adaptive immunity). Option C accurately reflects this sequence, representing the progression from physical barriers to increasingly specific and complex immune mechanisms."
+  },
+  {
+    "question": "Which of the following best describes the role of cell-mediated immunity in eliminating extracellular pathogens, as depicted in the text?",
+    "options": {
+      "A": "Cell-mediated immunity directly produces antibodies to neutralize extracellular pathogens.",
+      "B": "Cell-mediated immunity primarily activates complement pathways to lyse extracellular pathogens.",
+      "C": "Cell-mediated immunity culminates in phagocytes recognizing and engulfing extracellular pathogens via receptors.",
+      "D": "Cell-mediated immunity is ineffective against extracellular pathogens and only targets intracellular threats.",
+      "E": "Cell-mediated immunity functions by releasing NETs from macrophages to trap and degrade extracellular pathogens."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states that cell-mediated immunity ultimately leads to phagocytes recognizing and breaking down extracellular pathogens using receptors. Option C accurately describes this process, highlighting the role of phagocytes as effector cells in cell-mediated immunity against extracellular threats. Option E is partially correct about NETs, but NETs are primarily associated with neutrophils, not macrophages in the context of cell-mediated immunity described here. Option C is a more direct and comprehensive answer based on the text's description."
+  },
+  {
+    "question": "According to the text, which of the following factors can induce inflammation and subsequent immune responses mediated by phagocytes against extracellular pathogens?",
+    "options": {
+      "A": "Increased levels of intracellular viral RNA.",
+      "B": "The presence of antimicrobial proteins in the bloodstream.",
+      "C": "Bacterial lipopolysaccharides (LPS) from the outer membrane.",
+      "D": "Activation of cytotoxic T cells by viral antigens.",
+      "E": "Elevated levels of antiviral proteins produced by infected cells."
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifically mentions bacterial lipopolysaccharides (LPS) from the bacterial cell membrane outer layer as a factor that induces inflammation and phagocyte-mediated immune responses. Other factors listed in the text are ATP released from damaged cells and urate crystals. Option C directly aligns with this information. Options A, B, D, and E are related to immune responses but are not listed as the primary inflammation-inducing factors for extracellular pathogens in this specific context."
+  },
+  {
+    "question": "Neutrophil extracellular traps (NETs) are described in the text as a mechanism to decompose extracellular pathogens. Which cell type is primarily responsible for releasing NETs, according to the provided information?",
+    "options": {
+      "A": "Macrophages",
+      "B": "Dendritic cells",
+      "C": "Cytotoxic T cells",
+      "D": "Neutrophils",
+      "E": "Natural killer cells"
+    },
+    "answer": "D",
+    "explanation": "(D) The text explicitly states '嗜中性球利用釋放 NET(Neutrophil extracellular trap) 分解胞外病原體', which translates to 'Neutrophils utilize the release of NET (Neutrophil extracellular trap) to decompose extracellular pathogens.' Option D correctly identifies neutrophils as the primary cell type responsible for releasing NETs."
+  },
+  {
+    "question": "Cytotoxic T cells are mentioned as destroying virus-infected cells. What is the primary mechanism by which Cytotoxic T cells recognize and target virus-infected cells for destruction, as described in the text?",
+    "options": {
+      "A": "Recognition of bacterial LPS on the surface of infected cells.",
+      "B": "Detection of exposed ATP on the surface of stressed cells.",
+      "C": "Identification of viral antigens presented on the surface of infected cells.",
+      "D": "Binding to urate crystals associated with viral infections.",
+      "E": "Release of cytokines that directly lyse virus-infected cells."
+    },
+    "answer": "C",
+    "explanation": "(C) The text indicates '如 Cytotoxic T cell 透過病毒抗原辨識已感染細胞並破壞已被感染細胞', meaning 'As Cytotoxic T cells recognize virus antigens on infected cells and destroy the infected cells.' Option C accurately describes the mechanism as the recognition of viral antigens on the surface of infected cells by Cytotoxic T cells."
+  },
+  {
+    "question": "According to the text's description of primary lymphoid organs, which of the following statements is most accurate?",
+    "options": {
+      "A": "Primary lymphoid organs are the sites where mature lymphocytes encounter antigens for the first time.",
+      "B": "The bone marrow is the primary site for T cell maturation, while B cells mature in the thymus.",
+      "C": "Primary lymphoid organs are responsible for filtering lymph and trapping pathogens from peripheral tissues.",
+      "D": "Both T and B cells originate and mature within the bone marrow.",
+      "E": "Primary lymphoid organs are the locations where lymphocytes develop, differentiate, and mature."
+    },
+    "answer": "E",
+    "explanation": "(E) The text defines primary lymphoid organs as '初級淋巴器官為淋巴球發生分化、發育以及成熟的地方', which means 'Primary lymphoid organs are the places where lymphocytes are generated, differentiate, develop, and mature.' Option E accurately reflects this definition. Option D is partially correct about origin but incorrect about T cell maturation. Options A, B, and C describe functions of secondary lymphoid organs or misrepresent the roles of primary organs."
+  },
+  {
+    "question": "Based on the information provided, what is the specific role of the thymus in lymphocyte development?",
+    "options": {
+      "A": "It is the primary site for B cell maturation and antibody production.",
+      "B": "It serves as a filter for blood, removing pathogens and cellular debris.",
+      "C": "It is where T cells mature and develop the ability to distinguish between self and foreign proteins.",
+      "D": "It is responsible for the initial activation of both T and B cells upon antigen encounter.",
+      "E": "It is the primary reservoir for naive lymphocytes before they circulate in the blood."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '胸腺(Thymus):T細胞在此成熟,發展出區別自體和外來蛋白的能力', which translates to 'Thymus: T cells mature here, developing the ability to distinguish between self and foreign proteins.' Option C accurately describes the thymus's role in T cell maturation and self/non-self discrimination."
+  },
+  {
+    "question": "According to the text, what is the main function of secondary lymphoid organs?",
+    "options": {
+      "A": "To produce all types of lymphocytes from hematopoietic stem cells.",
+      "B": "To facilitate the encounter between free antigens and lymphocytes.",
+      "C": "To mature T lymphocytes and educate them about self-tolerance.",
+      "D": "To store mature lymphocytes until they are needed in peripheral tissues.",
+      "E": "To filter lymph and remove pathogens before lymph returns to the bloodstream."
+    },
+    "answer": "B",
+    "explanation": "(B) The text describes the function of secondary lymphoid organs as '作用:次級淋巴器官為游離抗原與淋巴球的相遇地', meaning 'Function: Secondary lymphoid organs are the meeting place for free antigens and lymphocytes.' Option B accurately reflects this primary function. Options C and A describe functions of primary lymphoid organs, and Options D and E are related but not the primary defined function of secondary lymphoid organs as described in the text."
+  },
+  {
+    "question": "Which of the following accurately describes the path of naive lymphocytes from the bloodstream to the lymph nodes and back to the circulation, as depicted in the provided diagrams?",
+    "options": {
+      "A": "Naive lymphocytes enter lymph nodes directly from peripheral tissues via lymphatic vessels and return to the blood via efferent lymphatic vessels.",
+      "B": "Naive lymphocytes travel from the blood to lymph nodes, circulate within the lymph node, and return to the blood via the thoracic duct.",
+      "C": "Naive lymphocytes originate in lymph nodes, circulate in the blood, and then migrate to peripheral tissues to encounter antigens.",
+      "D": "Naive lymphocytes enter lymph nodes via afferent lymphatic vessels, encounter antigens, and return to the blood via the subclavian vein.",
+      "E": "Naive lymphocytes are produced in the thymus and directly enter lymph nodes to become activated without circulating in the blood."
+    },
+    "answer": "B",
+    "explanation": "(B) Based on the diagram and text, naive lymphocytes travel from the blood into lymph nodes (紅色箭頭 direction in diagram), circulate within to potentially encounter antigens, and then return to the blood via the thoracic duct (淺黃色箭頭 direction). Option B accurately describes this circulation pathway. Other options misrepresent the entry and exit routes or the overall flow."
+  },
+  {
+    "question": "According to the text, what triggers the activation of antigen-specific lymphocytes within a draining lymph node during an infection?",
+    "options": {
+      "A": "Direct entry of naive lymphocytes into infected tissues to encounter antigens.",
+      "B": "Migration of activated effector cells from the bone marrow to the lymph node.",
+      "C": "Influx of free antigens and antigen-presenting dendritic cells from the infected site via lymphatic vessels.",
+      "D": "Activation of complement proteins within the lymph node itself upon detection of pathogens.",
+      "E": "Release of cytokines from infected tissue that directly activate lymphocytes in the lymph node."
+    },
+    "answer": "C",
+    "explanation": "(C) The text describes that during infection, '游離抗原和呈現抗原的樹突細胞會由受感染處,經淋巴管流入...引流淋巴結', meaning 'free antigens and antigen-presenting dendritic cells from the infected site enter via lymphatic vessels... into the draining lymph node'. This influx triggers the activation of antigen-specific lymphocytes. Option C accurately describes this process."
+  },
+  {
+    "question": "What is the fate of activated lymphocytes after they are stimulated in the lymph node, as described in the text?",
+    "options": {
+      "A": "They remain within the lymph node and differentiate into memory cells.",
+      "B": "They undergo apoptosis within the lymph node to prevent autoimmunity.",
+      "C": "They migrate from the lymph node as effector cells and return to the bloodstream via the thoracic duct.",
+      "D": "They are transported to the spleen for further maturation and activation.",
+      "E": "They directly enter the infected tissue from the lymph node via efferent lymphatic vessels."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '活化的淋巴球會分化並增生,然後離開淋巴結作為作用細胞(Effector cell),最後藉胸管(Thoracic duct)回歸到血液循環中', meaning 'Activated lymphocytes differentiate and proliferate, then leave the lymph node as effector cells, finally returning to blood circulation via the thoracic duct.' Option C accurately describes this fate."
+  },
+  {
+    "question": "In a lymph node, B cells are primarily located in which region, according to the provided text and diagram?",
+    "options": {
+      "A": "Paracortical area",
+      "B": "Medullary cords",
+      "C": "Cortical sinus",
+      "D": "Follicles (濾泡)",
+      "E": "Marginal sinus"
+    },
+    "answer": "D",
+    "explanation": "(D) The text and diagram indicate 'I. B細胞:濾泡(Follicle),構成淋巴結的外層皮質', and the diagram labels 'primary lymphoid follicle (mostly B cells)' in the outer cortical region. Therefore, B cells are primarily located in the follicles of the lymph node."
+  },
+  {
+    "question": "T cells are predominantly found in which specific area within the lymph node, as indicated in the provided text and diagram?",
+    "options": {
+      "A": "Germinal center",
+      "B": "Medullary sinus",
+      "C": "Paracortical area (副皮質區)",
+      "D": "Cortical sinus",
+      "E": "Primary lymphoid follicle"
+    },
+    "answer": "C",
+    "explanation": "(C) The text and diagram state 'II. T細胞:副皮質區(Paracortical area)' and label 'paracortical area (mostly T cells)' in the diagram. Thus, T cells are predominantly located in the paracortical area of the lymph node."
+  },
+  {
+    "question": "What is the functional significance of the distinct spatial segregation of B and T cells within the lymph node, as suggested by the text's mention of chemical gradients and the (B06 supplement)?",
+    "options": {
+      "A": "It prevents B and T cells from interacting, ensuring independent activation.",
+      "B": "It facilitates the efficient filtration of lymph by separating cellular components.",
+      "C": "It creates microenvironments that optimize interactions between B cells, T cells, and antigen-presenting cells for effective immune activation.",
+      "D": "It ensures that B cells are activated in the medulla and T cells in the cortex for distinct effector functions.",
+      "E": "It is primarily for structural organization and does not have a significant functional role in immune responses."
+    },
+    "answer": "C",
+    "explanation": "(C) The text mentions '(B06補充)此一分布方式與特定化學物質的濃度梯度相關', suggesting that the spatial arrangement and chemical gradients are functionally relevant.  Option C, stating that this arrangement optimizes interactions between B cells, T cells, and APCs for immune activation, is the most functionally relevant and logical interpretation. The segregation is not to prevent interaction (Option A), but to organize and facilitate it in a controlled manner."
+  },
+  {
+    "question": "According to the text, what is the initial step in the process of lymphocyte activation within a lymph node, specifically regarding T cells?",
+    "options": {
+      "A": "B cells directly present antigens to naive T cells in the follicles.",
+      "B": "Naive T cells directly encounter free antigens circulating in the lymph node.",
+      "C": "Lymphocytes from the blood first enter the paracortical area, creating an environment for T cell activation by APCs.",
+      "D": "Effector T cells migrate from the medulla to the paracortex to activate naive T cells.",
+      "E": "T cells are activated within the germinal centers of the follicles by B cell interactions."
+    },
+    "answer": "C",
+    "explanation": "(C) The text describes 'I. 來自血液的淋巴球會先進入副皮質區,創造出一個抗原、抗原呈現細胞(APCs)與初始T細胞相鄰的環境,利於T細胞的活化', meaning 'Lymphocytes from the blood first enter the paracortical area, creating an environment where antigens and antigen-presenting cells (APCs) are adjacent to naive T cells, facilitating T cell activation.' Option C accurately describes this initial step for T cell activation."
+  },
+  {
+    "question": "What role do helper T cells play in B cell activation within the lymph node, as described in the text?",
+    "options": {
+      "A": "Helper T cells directly differentiate into plasma cells, producing antibodies.",
+      "B": "Helper T cells suppress B cell activation to prevent excessive antibody production.",
+      "C": "Helper T cells migrate to the T cell zone and prevent B cells from entering.",
+      "D": "Helper T cells move to the boundary between the T cell zone and follicles to assist B cell activation.",
+      "E": "Helper T cells are not involved in B cell activation; B cells are activated independently by free antigens."
+    },
+    "answer": "D",
+    "explanation": "(D) The text states 'II. 輔助 T細胞會移動到T細胞區與濾泡的邊界,幫助B細胞的活化', meaning 'Helper T cells move to the boundary between the T cell zone and follicles to help B cell activation.' Option D accurately describes the helper function of T cells in relation to B cell activation and their location within the lymph node."
+  },
+  {
+    "question": "Germinal centers are mentioned as being present in some follicles of the lymph node. What is the primary function of these germinal centers, according to the text?",
+    "options": {
+      "A": "They are the primary sites for T cell maturation and negative selection.",
+      "B": "They serve as storage areas for naive B cells awaiting antigen encounter.",
+      "C": "They are regions where activated B cells proliferate and differentiate into plasma cells.",
+      "D": "They are the locations where dendritic cells present antigens to initiate T cell activation.",
+      "E": "They function as filtration units within the lymph node, removing cellular debris and pathogens."
+    },
+    "answer": "C",
+    "explanation": "(C) The text indicates 'III. 部分濾泡含有生長中心(Germinal center),裡面活化的B細胞會增殖並分化為漿細胞(Plasma cell)', meaning 'Some follicles contain germinal centers, where activated B cells proliferate and differentiate into plasma cells.' Option C accurately describes the primary function of germinal centers."
+  },
+  {
+    "question": "Which of the following best describes the spleen's function in the immune system, based on the text?",
+    "options": {
+      "A": "It is the primary site for T cell maturation and education.",
+      "B": "It filters lymph and removes pathogens and cellular debris from lymphatic fluid.",
+      "C": "It is a major site for monitoring blood for pathogens and initiating immune responses to blood-borne antigens.",
+      "D": "It is directly connected to the lymphatic system and receives lymph from peripheral tissues.",
+      "E": "It is the primary organ for the production of red blood cells and platelets."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '為偵測病原體的重要場所,但未直接與淋巴系統相連,淋巴球進出脾臟均經由血管', meaning 'It is an important site for detecting pathogens, but not directly connected to the lymphatic system; lymphocyte entry and exit are both via blood vessels.' This points to the spleen's role in monitoring blood for pathogens. Option C accurately reflects this function. Option B describes lymph nodes, and Option D is incorrect about lymphatic connection. Option A is the thymus's function. Option E is a function of bone marrow."
+  },
+  {
+    "question": "According to the text, what is the primary function of the red pulp in the spleen?",
+    "options": {
+      "A": "Production of new red blood cells.",
+      "B": "Maturation of B lymphocytes.",
+      "C": "Filtering and removal of aged red blood cells.",
+      "D": "Activation of T lymphocytes.",
+      "E": "Storage of platelets and white blood cells."
+    },
+    "answer": "C",
+    "explanation": "(C) The text specifies 'I. 紅髓(Red pulp):處理老化的紅血球', which translates to 'Red pulp: processes aged red blood cells.' Option C accurately describes the function of the red pulp."
+  },
+  {
+    "question": "What is the composition and primary function of the white pulp in the spleen, as described in the text?",
+    "options": {
+      "A": "Composed of macrophages and red blood cells; filters blood for pathogens.",
+      "B": "Composed of lymphocytes and lymphoid tissue; functions as a secondary lymphoid organ.",
+      "C": "Composed of neutrophils and dendritic cells; initiates innate immune responses.",
+      "D": "Composed of plasma cells and memory cells; site of antibody production in the spleen.",
+      "E": "Composed of bone marrow stromal cells; supports hematopoiesis in the spleen."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states 'II. 白髓(White pulp):為次級淋巴組織', meaning 'White pulp: is secondary lymphoid tissue.'  Option B accurately describes the white pulp as secondary lymphoid tissue composed of lymphocytes and functioning as a secondary lymphoid organ. Option A describes red pulp and misrepresents white pulp composition. Options C, D, and E are incorrect about the composition and function of white pulp."
+  },
+  {
+    "question": "Mucosa-associated lymphoid tissue (MALT) is described in the text. Which of the following statements accurately reflects the characteristics of MALT?",
+    "options": {
+      "A": "MALT is primarily located in the bone marrow and thymus.",
+      "B": "MALT is a minor component of the immune system compared to lymph nodes and spleen.",
+      "C": "MALT contains a comparable number of lymphocytes to the rest of the immune system.",
+      "D": "MALT is specialized for filtering lymph from peripheral tissues.",
+      "E": "MALT is mainly involved in systemic immune responses rather than mucosal immunity."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(a) 黏膜免疫系統中的淋巴球數量與其他地方匹敵', meaning '(a) The number of lymphocytes in mucosal immune system is comparable to other parts [of the immune system].' Option C accurately reflects this point about the lymphocyte quantity in MALT. Option A is incorrect about location, Option B is incorrect about importance, and Options D and E misrepresent MALT's function and location."
+  },
+  {
+    "question": "Peyer's patches are mentioned as a specific type of MALT. Where are Peyer's patches primarily located, according to the text?",
+    "options": {
+      "A": "Esophagus",
+      "B": "Stomach",
+      "C": "Small intestine (小腸)",
+      "D": "Large intestine",
+      "E": "Respiratory tract"
+    },
+    "answer": "C",
+    "explanation": "(C) The text states 'I. 位置:小腸', meaning 'I. Location: small intestine.' Option C correctly identifies the small intestine as the primary location of Peyer's patches."
+  },
+  {
+    "question": "Microfold cells (M cells) are described in the context of MALT. What is the primary function of M cells in mucosal immunity, according to the text?",
+    "options": {
+      "A": "Secreting antibodies into the mucosal lumen.",
+      "B": "Activating T cells within the Peyer's patches.",
+      "C": "Collecting antigens from the lumen of the intestine for immune surveillance.",
+      "D": "Filtering lymph within the mucosal tissues.",
+      "E": "Producing mucus to trap pathogens in the gut."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states 'II. 抗原是藉由特化的上皮細胞,即微褶皺細胞(Microfold (M) cell) 所收集', meaning 'II. Antigens are collected by specialized epithelial cells, namely microfold cells (M cells).' Option C accurately describes the primary function of M cells in antigen uptake from the intestinal lumen."
+  },
+  {
+    "question": "In Peyer's patches, follicles are described as B cell areas surrounded by T cells. What is the functional significance of this arrangement within MALT?",
+    "options": {
+      "A": "It physically separates B and T cells to prevent autoimmunity in the gut.",
+      "B": "It ensures that only T cells are exposed to antigens in the mucosal lumen.",
+      "C": "It facilitates T cell help for B cell activation and antibody production in the mucosal environment.",
+      "D": "It directs B cells to produce IgA antibodies specifically in the follicles.",
+      "E": "It is primarily for structural organization and does not have a significant immunological function."
+    },
+    "answer": "C",
+    "explanation": "(C) The arrangement of B cell follicles surrounded by T cells in Peyer's patches mirrors the lymph node organization and suggests a similar functional purpose: facilitating T cell help for B cell activation. Option C, stating that it facilitates T cell help for B cell activation and antibody production in the mucosal environment, is the most functionally relevant interpretation."
+  },
+  {
+    "question": "According to the text, where do lymphocytes in MALT originate before reaching the mucosal tissues?",
+    "options": {
+      "A": "Thymus",
+      "B": "Spleen",
+      "C": "Bone marrow",
+      "D": "Peyer's patches themselves",
+      "E": "Mesenchymal stem cells within the gut"
+    },
+    "answer": "C",
+    "explanation": "(C) The text states 'IV. 淋巴球來自血液,由輸出淋巴管(Efferent lymphatic)離開', implying lymphocytes arrive via blood circulation. Lymphocytes originate from hematopoietic stem cells in the bone marrow. Option C correctly identifies the bone marrow as the origin of these lymphocytes before they circulate and reach MALT."
+  },
+  {
+    "question": "Hematopoietic stem cells (HSCs) in the bone marrow are described as the origin of immune cells. Which of the following are direct lineages derived from HSCs, as depicted in the provided diagram?",
+    "options": {
+      "A": "Epithelial cells and endothelial cells",
+      "B": "Neurons and glial cells",
+      "C": "Lymphoid lineage and myeloid lineage",
+      "D": "Fibroblasts and chondrocytes",
+      "E": "Hepatocytes and nephrocytes"
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram '脊椎動物免疫細胞的產生' clearly shows that multipotent hematopoietic stem cells in the bone marrow differentiate into 'common lymphoid progenitor' and 'common myeloid progenitor'. Option C accurately identifies these two major lineages derived from HSCs."
+  },
+  {
+    "question": "Which cell types are classified under the lymphoid lineage, according to the text and diagram?",
+    "options": {
+      "A": "Monocytes, neutrophils, eosinophils",
+      "B": "Erythrocytes, megakaryocytes, platelets",
+      "C": "B cells, T cells, NK cells, ILCs",
+      "D": "Macrophages, dendritic cells, mast cells",
+      "E": "Granulocytes and dendritic cells"
+    },
+    "answer": "C",
+    "explanation": "(C) The text and diagram list '淋巴系(Lymphoid lineage):含B細胞、T細胞、自然殺手(NK, Natural killer cell)細胞、先天性淋巴細胞(ILCs,Innate lymphoid cells)'. Option C accurately lists these cell types belonging to the lymphoid lineage."
+  },
+  {
+    "question": "According to the text and diagram, which cell types are categorized under the myeloid lineage?",
+    "options": {
+      "A": "B cells, T cells, plasma cells",
+      "B": "NK cells, ILCs, dendritic cells",
+      "C": "Monocytes, neutrophils, eosinophils, erythrocytes, megakaryocytes",
+      "D": "Macrophages, lymphocytes, mast cells",
+      "E": "All types of granulocytes and lymphocytes"
+    },
+    "answer": "C",
+    "explanation": "(C) The text and diagram list '骨髓系(Myeloid lineage):含單核球(Monocyte)、嗜中性球(Neutrophil)、嗜酸性球(Eosinophil)、紅血球(Erythrocyte)、巨核細胞(Megakaryocyte)'. Option C accurately lists these cell types belonging to the myeloid lineage."
+  },
+  {
+    "question": "Dendritic cells (DCs) are described as bridging innate and adaptive immunity. Based on the text, from which lineage(s) can dendritic cells be derived?",
+    "options": {
+      "A": "Exclusively from the lymphoid lineage.",
+      "B": "Exclusively from the myeloid lineage.",
+      "C": "From both lymphoid and myeloid lineages.",
+      "D": "From a separate lineage distinct from both lymphoid and myeloid.",
+      "E": "From the megakaryocyte-erythrocyte progenitor lineage only."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '3. 樹突細胞(DC,Dendritic cell):可由以上兩系統分化而來', meaning '3. Dendritic cells (DC): can be differentiated from both lineages mentioned above.' Option C accurately reflects that dendritic cells can originate from both lymphoid and myeloid lineages."
+  },
+  {
+    "question": "Regarding antigen specificity, which of the following statements is accurate based on the text's description of NK cells, ILCs, T cells, and B cells?",
+    "options": {
+      "A": "All immune cells, including NK cells, ILCs, T cells, and B cells, exhibit antigen specificity.",
+      "B": "Only NK cells and ILCs possess antigen-specific receptors, targeting specific pathogens.",
+      "C": "NK cells and ILCs lack antigen specificity, while T cells and B cells exhibit antigen specificity.",
+      "D": "Antigen specificity is exclusive to plasma cells, the effector cells of B lymphocytes.",
+      "E": "Both myeloid and lymphoid lineage cells generally lack antigen specificity."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(三)抗原專一性(Antigen specificity) 1. NK細胞、ILCs 不具有抗原專一性. 2. T細胞、B細胞具有抗原專一性', meaning '(III) Antigen specificity 1. NK cells, ILCs do not have antigen specificity. 2. T cells, B cells have antigen specificity.' Option C accurately reflects this distinction in antigen specificity."
+  },
+  {
+    "question": "Based on Table 1-2, Features of Innate and Adaptive Immunity, which of the following characteristics is primarily associated with innate immunity?",
+    "options": {
+      "A": "Specificity for a wide range of microbial and non-microbial antigens.",
+      "B": "Very large diversity of receptors generated by somatic recombination.",
+      "C": "Presence of memory for enhanced responses upon re-exposure.",
+      "D": "Specificity for molecules shared by groups of related microbes.",
+      "E": "Nonreactivity to self antigens due to clonal deletion."
+    },
+    "answer": "D",
+    "explanation": "(D) Table 1-2 lists 'Specificity' of innate immunity as 'For molecules shared by groups of related microbes'. Option D accurately reflects this characteristic of innate immunity's specificity. Options A, B, C, and E are characteristics associated with adaptive immunity based on the table."
+  },
+  {
+    "question": "According to Table 1-2, what is the mechanism responsible for the diversity of receptors in adaptive immunity?",
+    "options": {
+      "A": "Germline encoded genes.",
+      "B": "Limited receptor repertoire.",
+      "C": "Somatic recombination of gene segments.",
+      "D": "Pattern recognition receptors.",
+      "E": "Invariant receptor types."
+    },
+    "answer": "C",
+    "explanation": "(C) Table 1-2 states 'Diversity' of adaptive immunity is 'Very large; receptors are produced by somatic recombination of gene segments'. Option C accurately identifies somatic recombination as the mechanism for receptor diversity in adaptive immunity. Option A is associated with innate immunity, and Options B, D, and E contradict the concept of high diversity in adaptive immunity."
+  },
+  {
+    "question": "Which component is listed as a cellular and chemical barrier in innate immunity, according to Table 1-2?",
+    "options": {
+      "A": "Antibodies secreted at epithelial surfaces.",
+      "B": "Lymphocytes in epithelia.",
+      "C": "Skin, mucosal epithelia, and antimicrobial molecules.",
+      "D": "Complement proteins in blood.",
+      "E": "Phagocytes such as macrophages and neutrophils."
+    },
+    "answer": "C",
+    "explanation": "(C) Table 1-2 lists 'Cellular and chemical barriers' in innate immunity as 'Skin, mucosal epithelia; antimicrobial molecules'. Option C accurately reflects this component. Options A and B are components of adaptive immunity. Option D is a blood protein component of innate immunity, but Option C is more comprehensive as 'cellular and chemical barriers'. Option E are cells, but the question asks about *barriers*."
+  },
+  {
+    "question": "What is the primary type of cells associated with adaptive immunity, as indicated in Table 1-2?",
+    "options": {
+      "A": "Phagocytes (macrophages, neutrophils).",
+      "B": "Natural killer cells and innate lymphoid cells.",
+      "C": "Lymphocytes.",
+      "D": "Complement proteins.",
+      "E": "Antimicrobial molecules."
+    },
+    "answer": "C",
+    "explanation": "(C) Table 1-2 lists 'Cells' of adaptive immunity as 'Lymphocytes'. Option C accurately identifies lymphocytes as the primary cell type associated with adaptive immunity. Options A and B are cells of innate immunity. Options D and E are not cell types."
+  },
+  {
+    "question": "According to the text and Figure 1, what is the typical temporal sequence of viral load and immune responses during an acute viral infection?",
+    "options": {
+      "A": "Viral load peaks after the adaptive immune response becomes dominant.",
+      "B": "Innate immune responses immediately eliminate the virus before significant viral replication.",
+      "C": "Innate immune responses initially control viral load, followed by a more significant decline with the adaptive immune response.",
+      "D": "Adaptive immune responses are activated before innate immunity to prevent viral spread.",
+      "E": "Viral load continuously increases until the infection becomes chronic due to ineffective immune responses."
+    },
+    "answer": "C",
+    "explanation": "(C) Figure 1 ('How-Innate and Adaptive Response in Acute Infection') and the text describe that innate immune responses (green and blue lines in Figure 1) initially control the viral load to a degree, and then the adaptive immune response (red line in Figure 1) causes a more significant decline in viral titer. Option C accurately depicts this temporal sequence. Other options misrepresent the timing and roles of innate and adaptive immunity in controlling viral load."
+  },
+  {
+    "question": "In Figure 1, 'Type I IFN, TNFα, and IL-12' are associated with which type of immune response?",
+    "options": {
+      "A": "T-mediated killing of infected cells.",
+      "B": "Antibody-mediated neutralization of virus.",
+      "C": "NK-mediated killing of infected cells.",
+      "D": "Complement activation.",
+      "E": "B cell activation and proliferation."
+    },
+    "answer": "C",
+    "explanation": "(C) In Figure 1, 'Type I IFN, TNFα, and IL-12' are placed directly above and linked to 'NK-mediated killing of infected cells'. Option C accurately identifies this association. Option A is linked to a separate curve ('T-mediated killing of infected cells'). Options B, D, and E are not directly associated with these cytokines in the figure."
+  },
+  {
+    "question": "Based on Figure 1, what is the consequence of lacking innate immunity (PMN, MAC) during a viral infection?",
+    "options": {
+      "A": "The infection is rapidly cleared by adaptive immunity.",
+      "B": "Viral load is initially controlled but rebounds later.",
+      "C": "Viral load increases dramatically, leading to severe infection.",
+      "D": "The individual develops chronic infection but survives.",
+      "E": "There is no significant difference in infection outcome compared to individuals with intact innate immunity."
+    },
+    "answer": "C",
+    "explanation": "(C) Figure 1 depicts the 'Microorganism count' graph showing 'Mice and humans lacking innate immunity (PMN, MAC)' curve significantly higher than 'Normal mice and humans' curve, indicating a dramatically increased microorganism count. This suggests that lacking innate immunity leads to a much more severe infection. Option C accurately reflects this consequence. Other options underestimate the severity of lacking innate immunity as depicted in the graph."
+  },
+  {
+    "question": "What is the definition of PMN, as provided in the text?",
+    "options": {
+      "A": "Plasma membrane neutrophils.",
+      "B": "Polymorphonuclear leukocyte.",
+      "C": "Primary myeloid neoplasm.",
+      "D": "Phagocytic mononuclear cell.",
+      "E": "Pro-inflammatory mediator neutrophil."
+    },
+    "answer": "B",
+    "explanation": "(B) The text defines '(1)PMN:多型核白血球(Polymorphonuclear leukocyte)', meaning '(1) PMN: Polymorphonuclear leukocyte'. Option B accurately provides the definition of PMN."
+  },
+  {
+    "question": "What is the Membrane Attack Complex (MAC), as defined in the text?",
+    "options": {
+      "A": "A receptor on macrophages that recognizes pathogens.",
+      "B": "A complex of antibodies and antigens that triggers inflammation.",
+      "C": "A structure formed by complement pathway components that perforates pathogen membranes.",
+      "D": "A complex of cytokines that activate cytotoxic T cells.",
+      "E": "A membrane protein on neutrophils that facilitates phagocytosis."
+    },
+    "answer": "C",
+    "explanation": "(C) The text defines '(2) MAC:攻膜複合體(Membrane attack complex),為補體路徑中將病原菌穿孔之構造', meaning '(2) MAC: Membrane attack complex, is a structure in the complement pathway that perforates pathogen membranes.' Option C accurately describes MAC's function and composition."
+  },
+  {
+    "question": "According to the text, what is the consequence of lacking adaptive immunity (後天性免疫, green curve in Figure 1) during a viral infection?",
+    "options": {
+      "A": "The infection is eliminated rapidly by innate immunity.",
+      "B": "Viral load is not controlled at all, leading to immediate death.",
+      "C": "Innate immunity can control viral load to some extent, but a chronic infection may develop.",
+      "D": "The individual develops memory immunity despite lacking adaptive immunity.",
+      "E": "There is no significant difference in infection outcome compared to individuals with intact adaptive immunity."
+    },
+    "answer": "C",
+    "explanation": "(C) The text and Figure 1 show that in 'SCID or RAG-deficient mice and humans (lacking adaptive immunity)' (green curve), the viral load is controlled to some extent compared to lacking innate immunity (red curve), but it persists over time, indicating a chronic infection. Option C accurately describes this outcome. Option B is too extreme. Option A is incorrect as innate immunity alone does not eliminate the infection in this scenario."
+  },
+  {
+    "question": "Based on the comparison of innate and adaptive immunity in the text, which type of immunity is considered more crucial for immediate survival in the context of pathogen encounter?",
+    "options": {
+      "A": "Adaptive immunity, due to its antigen specificity.",
+      "B": "Innate immunity, due to its rapid response and broad pathogen recognition.",
+      "C": "Both innate and adaptive immunity are equally critical for immediate survival.",
+      "D": "Neither innate nor adaptive immunity is essential for survival without medical intervention.",
+      "E": "Adaptive immunity, because it generates memory responses against future infections."
+    },
+    "answer": "B",
+    "explanation": "(B) The text concludes '4. 此實驗說明,若必須選一個,先天性免疫對於生存更為重要', meaning '4. This experiment explains that, if one must be chosen, innate immunity is more important for survival.' Option B accurately reflects this conclusion, emphasizing the importance of innate immunity's rapid and broad response for immediate survival against pathogens."
+  },
+  {
+    "question": "According to the text 'Why-Comparison of Recognition Molecules of the Innate and Adaptive Immune Systems', which characteristic is exclusive to adaptive immunity receptors but not innate immunity receptors?",
+    "options": {
+      "A": "Specificity inherited in the genome.",
+      "B": "Triggering of an immediate response.",
+      "C": "Recognition of broad classes of pathogens.",
+      "D": "Encoding in multiple gene segments.",
+      "E": "Ability to discriminate between even closely related molecular structures."
+    },
+    "answer": "D",
+    "explanation": "(D)  The table 'Why-Comparison of Recognition Molecules of the Innate and Adaptive Immune Systems' indicates 'Encoded in multiple gene segments' as 'No' for innate immunity and 'Yes' for adaptive immunity. This means encoding in multiple gene segments is exclusive to adaptive immunity receptors. Options A, B, and C are characteristics of innate immunity receptors. Option E is a shared characteristic."
+  },
+  {
+    "question": "Based on the comparison table, which receptor characteristic is shared by both innate and adaptive immunity?",
+    "options": {
+      "A": "Specificity inherited in the genome.",
+      "B": "Triggering of immediate response.",
+      "C": "Encoding in multiple gene segments.",
+      "D": "Requirement of gene rearrangement.",
+      "E": "Ability to discriminate between even closely related molecular structures."
+    },
+    "answer": "E",
+    "explanation": "(E) The table shows 'Able to discriminate between even closely related molecular structures' is marked 'Yes' for both innate and adaptive immunity. This signifies it is a shared characteristic. Options A, B, C, and D are not shared; they are predominantly or exclusively associated with either innate or adaptive immunity."
+  },
+  {
+    "question": "Which of the following statements accurately describes the nature of pathogen recognition by innate immunity?",
+    "options": {
+      "A": "Innate immunity recognizes highly specific antigens unique to individual pathogens.",
+      "B": "Innate immunity recognizes conserved components common to groups of related pathogens.",
+      "C": "Innate immunity requires gene rearrangement to generate diverse pathogen recognition receptors.",
+      "D": "Innate immunity is slow to respond but provides long-lasting memory against pathogens.",
+      "E": "Innate immunity primarily targets non-microbial antigens and self-antigens."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states '1. 先天性免疫透過辨認病原體中常見的成分,以快速且無特異性的控制病原體數量', and '2. 細胞上受器能辨認的外來物質,多是針對多種不同微生物共有之特徵'. This indicates innate immunity recognizes common components of pathogen groups, not specific antigens of individual pathogens. Option B accurately reflects this broad pattern recognition. Other options misrepresent the specificity, mechanism, or targets of innate immunity."
+  },
+  {
+    "question": "Pattern recognition receptors (PRRs) are mentioned in the context of innate immunity. What is the primary function of PRRs on innate immune cells?",
+    "options": {
+      "A": "To recognize and bind to specific antibodies produced by adaptive immunity.",
+      "B": "To present processed antigens to T cells, initiating adaptive immune responses.",
+      "C": "To distinguish between self and non-self by detecting pathogen-associated molecular patterns (PAMPs).",
+      "D": "To directly kill pathogen-infected host cells through cytotoxic mechanisms.",
+      "E": "To produce a wide range of antibodies with diverse specificities against various pathogens."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(四)先天性免疫細胞上的 PRRs (Pattern recognition receptors)能區分敵我細胞,若偵測非我細胞則引發吞噬作用(Phagocytosis)並啟動適應性免疫', and '1. 先天性受體(Innate receptor) (1) 為模式識別受體(PRRs,Pattern recognition receptors),可以辨識病原體上病原相關分子模式(PAMPs,Pathogen-associated molecular patterns)'. This clearly indicates PRRs function to distinguish self from non-self by recognizing PAMPs on pathogens. Option C accurately describes this primary function."
+  },
+  {
+    "question": "Which of the following is an example of a first-line defense mechanism in innate immunity, as described in the text?",
+    "options": {
+      "A": "Activation of complement system.",
+      "B": "Phagocytosis by macrophages.",
+      "C": "Production of antibodies by B cells.",
+      "D": "Skin and mucous membranes.",
+      "E": "Cytotoxic activity of NK cells."
+    },
+    "answer": "D",
+    "explanation": "(D) The text lists '1. 第一道防線 (a) 皮膚和黏膜屏障', meaning '1. First line of defense (a) Skin and mucous membranes'. Option D accurately identifies skin and mucous membranes as a first-line defense mechanism. Options A, B, C, and E are second-line or adaptive immune mechanisms."
+  },
+  {
+    "question": "Natural killer (NK) cells are classified as part of the second line of defense in innate immunity. What is their primary mechanism of action, according to the text, especially in the context of viral infections?",
+    "options": {
+      "A": "Phagocytosis of extracellular bacteria.",
+      "B": "Antibody-dependent cellular cytotoxicity (ADCC).",
+      "C": "Killing of virus-infected cells that do not present antigens for T cell recognition.",
+      "D": "Activation of complement pathways to lyse pathogens.",
+      "E": "Production of cytokines that neutralize viruses directly."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(三)重要性:一部分的病原體(如部分皰疹病毒)在感染一般細胞後不會在細胞表面呈現供T細胞辨識的抗原,因而這些被感染的細胞無法被T細胞辨識,只能仰賴先天免疫系統中的NK 辨識並殺死'. This indicates NK cells are crucial for killing virus-infected cells that evade T cell recognition due to lack of antigen presentation. Option C accurately describes this mechanism. Other options are not the primary mechanism of NK cells as described in this context."
+  },
+  {
+    "question": "Which of the following cell types are categorized as 'multi-nucleated white blood cells (多型核白血球)' or PMNs in the text?",
+    "options": {
+      "A": "Macrophages and dendritic cells.",
+      "B": "Neutrophils, eosinophils, and basophils.",
+      "C": "T lymphocytes and B lymphocytes.",
+      "D": "Natural killer cells and innate lymphoid cells.",
+      "E": "Monocytes and mast cells."
+    },
+    "answer": "B",
+    "explanation": "(B) The text lists '(b) 多型核白血球(PMN, Polymorphonuclear leukocytes):嗜中性球、嗜酸性球、嗜鹼性球', meaning '(b) Polymorphonuclear leukocytes (PMN): neutrophils, eosinophils, basophils'. Option B accurately lists these cell types as PMNs. Option A are mononuclear phagocytes. Option C and D are lymphocytes. Option E contains a mononuclear cell and a mast cell, which are not typically categorized as PMNs."
+  },
+  {
+    "question": "According to the text, what is a key characteristic of adaptive immunity?",
+    "options": {
+      "A": "Rapid and immediate response to pathogens.",
+      "B": "Germline encoded receptors for pathogen recognition.",
+      "C": "Lack of memory response upon re-exposure to the same pathogen.",
+      "D": "Ability to discriminate between self and non-self and generate memory.",
+      "E": "Recognition of broad classes of pathogens rather than specific antigens."
+    },
+    "answer": "D",
+    "explanation": "(D) The text states '2. 可辨識自我與非我,且具抗原專一性、記憶性', meaning '2. Can distinguish between self and non-self, and has antigen specificity and memory'. Option D accurately captures these key characteristics of adaptive immunity. Options A, B, C, and E describe characteristics of innate immunity or contradict adaptive immunity characteristics."
+  },
+  {
+    "question": "Which of the following is NOT a characteristic of adaptive immunity?",
+    "options": {
+      "A": "Antigen specificity.",
+      "B": "Immunological memory.",
+      "C": "Rapid response time.",
+      "D": "Discrimination between self and non-self.",
+      "E": "Involvement of lymphocytes."
+    },
+    "answer": "C",
+    "explanation": "(C) The text contrasts adaptive immunity as not being rapid. Innate immunity is characterized by rapid response. Adaptive immunity is slower to develop but has specificity and memory. Option C, 'Rapid response time', is NOT a characteristic of adaptive immunity; it is a characteristic of innate immunity. Options A, B, D, and E are all characteristics of adaptive immunity."
+  },
+  {
+    "question": "What are the two main branches of adaptive immunity, as described in the text?",
+    "options": {
+      "A": "Innate and acquired immunity.",
+      "B": "Humoral immunity and cellular immunity.",
+      "C": "Active and passive immunity.",
+      "D": "Primary and secondary immunity.",
+      "E": "Natural and artificial immunity."
+    },
+    "answer": "B",
+    "explanation": "(B) The text lists '2. 細胞免疫' and '1. 體液免疫', meaning '2. Cellular immunity' and '1. Humoral immunity' as types of adaptive immune response. Option B accurately identifies humoral and cellular immunity as the two main branches of adaptive immunity."
+  },
+  {
+    "question": "Humoral immunity is primarily mediated by which cell type and effector molecule, according to the text?",
+    "options": {
+      "A": "T cells and cytokines.",
+      "B": "B cells and antibodies.",
+      "C": "Macrophages and antimicrobial proteins.",
+      "D": "NK cells and cytotoxic granules.",
+      "E": "Dendritic cells and chemokines."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states '1. 體液免疫:藉由B細胞活化產生抗體', meaning '1. Humoral immunity: mediated by B cell activation to produce antibodies'. Option B accurately identifies B cells and antibodies as the primary mediators of humoral immunity."
+  },
+  {
+    "question": "Cell-mediated immunity is primarily mediated by which cell type, as described in the text?",
+    "options": {
+      "A": "B cells.",
+      "B": "Plasma cells.",
+      "C": "Helper T cells (TH) and Cytotoxic T cells (Tc).",
+      "D": "Macrophages.",
+      "E": "Neutrophils."
+    },
+    "answer": "C",
+    "explanation": "(C) The text describes '2. 細胞免疫 (1) 先由輔助 T細胞(TH)分泌細胞介素(Cytokine)活化其他免疫細胞,進行後續免疫反應. (2) 再由胞毒 T細胞(Tc)殺死被感染的自體細胞', meaning '2. Cellular immunity (1) First by Helper T cells (TH) secreting cytokines to activate other immune cells, proceeding with subsequent immune responses. (2) Then by Cytotoxic T cells (Tc) killing infected self cells.' Option C accurately identifies Helper T cells and Cytotoxic T cells as primary mediators of cell-mediated immunity."
+  },
+  {
+    "question": "What is the primary effector mechanism of humoral immunity, as described in the text?",
+    "options": {
+      "A": "Direct killing of infected cells.",
+      "B": "Activation of macrophages to phagocytose pathogens.",
+      "C": "Production of secreted antibodies to block infections and eliminate extracellular microbes.",
+      "D": "Release of cytokines to activate other immune cells.",
+      "E": "Induction of apoptosis in infected cells."
+    },
+    "answer": "C",
+    "explanation": "(C) In the 'Humoral immunity' column of the diagram 'Humoral immunity vs Cell-mediated immunity', under 'Functions', it states 'Block infections and eliminate extracellular microbes'. This directly links humoral immunity's function to blocking infections and eliminating extracellular microbes via secreted antibodies. Option C accurately reflects this effector mechanism."
+  },
+  {
+    "question": "What is the primary effector mechanism of cell-mediated immunity, as described in the text?",
+    "options": {
+      "A": "Secretion of antibodies to neutralize pathogens.",
+      "B": "Activation of complement system.",
+      "C": "Killing of infected cells and elimination of reservoirs of infection.",
+      "D": "Phagocytosis of pathogens by neutrophils.",
+      "E": "Release of antimicrobial proteins."
+    },
+    "answer": "C",
+    "explanation": "(C) In the 'Cell-mediated immunity' column of the diagram 'Humoral immunity vs Cell-mediated immunity', under 'Functions', it states 'Kill infected cells and eliminate reservoirs of infection'. Option C accurately describes the primary effector mechanism of cell-mediated immunity. Other options describe mechanisms of humoral or innate immunity."
+  },
+  {
+    "question": "According to the text, what is the first step in the activation of adaptive immune responses?",
+    "options": {
+      "A": "Differentiation of effector lymphocytes.",
+      "B": "Antigen recognition by lymphocytes.",
+      "C": "Contraction of immune response.",
+      "D": "Memory cell generation.",
+      "E": "Effector function execution."
+    },
+    "answer": "B",
+    "explanation": "(B) The text section '(B12未提)作用 1. 過程 (1)抗原辨識' clearly indicates 'Antigen recognition' as the first step in the process of adaptive immune response. Option B accurately identifies this initial step. Other options are subsequent steps in the immune response process."
+  },
+  {
+    "question": "What is clonal expansion in the context of lymphocyte activation, as described in the text?",
+    "options": {
+      "A": "The differentiation of lymphocytes into various effector cell types.",
+      "B": "The programmed cell death (apoptosis) of lymphocytes after antigen clearance.",
+      "C": "The increase in number of lymphocytes with the same antigen specificity upon activation.",
+      "D": "The migration of lymphocytes from primary to secondary lymphoid organs.",
+      "E": "The process of lymphocytes acquiring the ability to distinguish self from non-self."
+    },
+    "answer": "C",
+    "explanation": "(C) The text describes '(a) T細胞與B細胞大量增殖同時成為成熟的淋巴球,此過程稱為株落增殖(Clonal expansion)', meaning '(a) T cells and B cells proliferate extensively and become mature lymphocytes simultaneously, this process is called clonal expansion.' Option C accurately describes clonal expansion as the proliferation of antigen-specific lymphocytes upon activation."
+  },
+  {
+    "question": "What is the process of differentiation in lymphocyte activation, as described in the text?",
+    "options": {
+      "A": "The initial recognition of antigen by naive lymphocytes.",
+      "B": "The proliferation of lymphocytes to increase cell numbers.",
+      "C": "The specialization of activated lymphocytes into effector cells like plasma cells.",
+      "D": "The elimination of self-reactive lymphocytes in primary lymphoid organs.",
+      "E": "The return of immune system to homeostasis after pathogen clearance."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(b) 接著進行分化(Differentiation),如B細胞分化成漿細胞', meaning '(b) Then proceeds to differentiation, such as B cell differentiation into plasma cells.' Option C accurately describes differentiation as the specialization of lymphocytes into effector cells. Option A is antigen recognition, Option B is clonal expansion, Option D is negative selection, and Option E is contraction/homeostasis."
+  },
+  {
+    "question": "What is the immunological purpose of 'contraction' or 'immune response subsidence' (免疫反應的消退) phase, as described in the text?",
+    "options": {
+      "A": "To amplify the immune response for more effective pathogen clearance.",
+      "B": "To generate memory cells for long-term immunity.",
+      "C": "To eliminate most effector lymphocytes after antigen clearance to prevent autoimmunity.",
+      "D": "To allow lymphocytes to migrate to peripheral tissues to continue pathogen surveillance.",
+      "E": "To initiate the process of lymphocyte maturation and education."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(a) 抗原消失後,大部分的T細胞與B細胞會凋亡(Apoptosis),藉此避免大量淋巴球對自身攻擊而引發自體免疫疾病', meaning '(a) After antigen disappearance, most T cells and B cells undergo apoptosis, to avoid excessive lymphocytes attacking self and causing autoimmune diseases'. Option C accurately describes the purpose of contraction as eliminating effector lymphocytes to prevent autoimmunity after antigen clearance. Option B describes memory generation, and Option A is contrary to contraction's function."
+  },
+  {
+    "question": "What is the role of memory cells generated during adaptive immune response, as described in the text?",
+    "options": {
+      "A": "To immediately eliminate the pathogen during the primary infection.",
+      "B": "To suppress the immune response after pathogen clearance.",
+      "C": "To provide a faster and stronger response upon re-encounter with the same antigen.",
+      "D": "To prevent any future infections by the same pathogen.",
+      "E": "To continuously produce antibodies in the absence of antigen stimulation."
+    },
+    "answer": "C",
+    "explanation": "(C) The text describes '(5) 記憶性的產生:僅存少部分的T細胞與B細胞會轉化成記憶細胞(Memory cell),持續儲存在體內' and in '六、(B12帶過)免疫記憶(Immune memory)與疫苗' section, it describes that upon re-exposure to antigen A, a faster and stronger response is observed. Option C accurately describes the role of memory cells in providing enhanced response upon re-encounter. Option A describes effector cells during primary response, and Option B describes regulatory mechanisms. Options D and E are exaggerations or misrepresentations of memory cell function."
+  },
+  {
+    "question": "What is the approximate duration for the entire process of adaptive immune response, from antigen encounter to resolution, as indicated in the text?",
+    "options": {
+      "A": "A few hours.",
+      "B": "1-2 days.",
+      "C": "1-2 weeks.",
+      "D": "1-2 months.",
+      "E": "1-2 years."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '2. 這整個過程需要約一週到兩週,所以生病時若沒有服藥,就需要一至二週才會慢慢好轉', meaning '2. This entire process takes about one to two weeks, so if sick without medication, it will take one to two weeks to gradually recover.' Option C accurately indicates the duration of 1-2 weeks for the adaptive immune response process. Options A and B are too short; Options D and E are too long."
+  },
+  {
+    "question": "According to Table 4.1, what is the approximate number of molecular patterns recognized by innate immunity receptors?",
+    "options": {
+      "A": "Less than 100.",
+      "B": "About 1000.",
+      "C": "Millions.",
+      "D": "More than 10^7.",
+      "E": "Unlimited."
+    },
+    "answer": "B",
+    "explanation": "(B) Table 4.1 states 'Number of microbial molecules recognized' by innate immunity receptors as 'About 1000 molecular patterns (estimated)'. Option B accurately reflects this approximate number. Options A, C, and D represent different scales of recognition capacity, with C and D being associated with adaptive immunity."
+  },
+  {
+    "question": "Based on Table 4.1, what is the approximate number of antigens that can be recognized by adaptive immunity receptors?",
+    "options": {
+      "A": "Less than 100.",
+      "B": "About 1000.",
+      "C": "Millions.",
+      "D": "More than 10^7.",
+      "E": "Unlimited."
+    },
+    "answer": "D",
+    "explanation": "(D) Table 4.1 states 'Number of microbial molecules recognized' by adaptive immunity receptors as '>10^7 antigens'. Option D accurately reflects this large number of antigens recognized by adaptive immunity. Options A and B are too low, representing innate immunity's recognition capacity. Option C is also lower than the stated >10^7."
+  },
+  {
+    "question": "According to Table 4.1, how are genes encoding innate immunity receptors described?",
+    "options": {
+      "A": "Formed by somatic recombination.",
+      "B": "Subject to clonal selection.",
+      "C": "Germline encoded, in all cells.",
+      "D": "Expressed only in lymphocytes.",
+      "E": "Highly variable between individuals."
+    },
+    "answer": "C",
+    "explanation": "(C) Table 4.1 states 'Genes encoding receptors' for innate immunity as 'Germline encoded, in all cells'. Option C accurately describes the genetic encoding of innate immunity receptors. Option A and B describe features of adaptive immunity receptors. Option D is incorrect about expression location, and Option E is contrary to the germline-encoded nature."
+  },
+  {
+    "question": "Based on Table 4.1, how are genes encoding adaptive immunity receptors generated?",
+    "options": {
+      "A": "Germline encoded.",
+      "B": "Invariant across individuals.",
+      "C": "Formed by somatic recombination of gene segments.",
+      "D": "Present in all cell types.",
+      "E": "Limited in diversity."
+    },
+    "answer": "C",
+    "explanation": "(C) Table 4.1 states 'Genes encoding receptors' for adaptive immunity as 'Encoded by genes produced by somatic recombination of gene segments; greater diversity'. Option C accurately describes somatic recombination as the mechanism for generating adaptive immunity receptor genes. Option A describes innate immunity receptor genes. Options B, D, and E contradict the nature of adaptive immunity receptor genes."
+  },
+  {
+    "question": "According to the text on 'Clonal Selection Hypothesis', what is the consequence of negative selection?",
+    "options": {
+      "A": "Proliferation of lymphocytes that recognize self-antigens.",
+      "B": "Activation of lymphocytes upon encountering foreign antigens.",
+      "C": "Elimination of lymphocytes that recognize self-antigens.",
+      "D": "Differentiation of lymphocytes into effector cells.",
+      "E": "Generation of memory lymphocytes for future responses."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '1. 負選擇(Negative selection):如果免疫細胞辨認的抗原為自體抗原(Self-antigen),則該細胞在成熟過程中就會先被身體消滅', meaning '1. Negative selection: If an immune cell recognizes self-antigen, then this cell will be eliminated by the body during maturation'. Option C accurately describes negative selection as the elimination of self-reactive lymphocytes."
+  },
+  {
+    "question": "What is the outcome of positive selection in the clonal selection process, as described in the text?",
+    "options": {
+      "A": "Deletion of lymphocytes that do not recognize any antigens.",
+      "B": "Survival and proliferation of lymphocytes that recognize foreign antigens.",
+      "C": "Induction of tolerance to self-antigens.",
+      "D": "Differentiation of lymphocytes into regulatory cells.",
+      "E": "Suppression of immune responses to prevent autoimmunity."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states '2. 正選擇(Positive selection):接觸到外來抗原後,對應的免疫細胞開始增生', meaning '2. Positive selection: Upon encountering foreign antigens, corresponding immune cells start to proliferate.' Option B accurately describes positive selection as the survival and proliferation of lymphocytes upon encountering foreign antigens. Option A describes a form of selection but in a negative context. Option C is related to negative selection, and Options D and E are not directly related to positive selection as described."
+  },
+  {
+    "question": "According to the 'Clonal Selection Hypothesis', how many antigen specificities does each lymphocyte possess?",
+    "options": {
+      "A": "Multiple antigen specificities.",
+      "B": "A broad range of specificities.",
+      "C": "Only one specific antigen specificity.",
+      "D": "Variable specificity depending on the pathogen encountered.",
+      "E": "No inherent antigen specificity until activated."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '1. 每個淋巴球僅具有一種具專一性(Specificity)的受體', meaning '1. Each lymphocyte possesses only one type of receptor with a single specificity.' Option C accurately reflects that each lymphocyte has only one specific antigen specificity according to clonal selection theory."
+  },
+  {
+    "question": "What is the role of affinity in lymphocyte activation, according to the clonal selection hypothesis?",
+    "options": {
+      "A": "Low affinity interactions trigger lymphocyte deletion.",
+      "B": "High affinity interactions between antigen and lymphocyte receptor lead to lymphocyte activation.",
+      "C": "Affinity is not relevant to lymphocyte activation; only antigen specificity matters.",
+      "D": "Affinity determines the type of effector cell differentiation, not activation itself.",
+      "E": "Affinity is only important in memory responses, not primary activation."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states '2. 外來分子與淋巴球受體進行高親和性(Affinity)的專一性結合,會使該淋巴球活化', meaning '2. High affinity and specific binding between foreign molecules and lymphocyte receptors will activate that lymphocyte.' Option B accurately describes that high affinity interaction is crucial for lymphocyte activation according to clonal selection. Option A is incorrect about low affinity leading to deletion in this context, and Option C misrepresents the importance of affinity."
+  },
+  {
+    "question": "What is the relationship between effector cells and their parental lymphocytes, as described in the clonal selection hypothesis?",
+    "options": {
+      "A": "Effector cells have different antigen specificities compared to their parental lymphocytes.",
+      "B": "Effector cells lose antigen specificity to target a broader range of pathogens.",
+      "C": "Effector cells inherit the same antigen specificity as their parental lymphocytes.",
+      "D": "Effector cells are derived from a different lineage of lymphocytes than their parents.",
+      "E": "Effector cells are produced by memory lymphocytes, not directly from parental lymphocytes."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '3. 由活化的淋巴球分化產生的作用細胞(Effector cell),具有與親代淋巴球相同之受體(Clonal Selection)', meaning '3. Effector cells differentiated from activated lymphocytes have the same receptors as their parental lymphocytes (Clonal Selection)'. Option C accurately describes that effector cells inherit the same antigen specificity as their parental lymphocytes due to clonal selection."
+  },
+  {
+    "question": "What is the primary difference between primary and secondary immune responses, as illustrated in the 'Immune Memory and Vaccines' section and diagram?",
+    "options": {
+      "A": "Primary responses are faster and stronger than secondary responses.",
+      "B": "Secondary responses are mediated by innate immunity, while primary responses are adaptive.",
+      "C": "Secondary responses are characterized by a shorter lag phase and higher antibody levels compared to primary responses.",
+      "D": "Primary responses only involve cellular immunity, while secondary responses are purely humoral.",
+      "E": "There is no significant difference between primary and secondary responses in terms of kinetics or magnitude."
+    },
+    "answer": "C",
+    "explanation": "(C) The diagram 'Immune Memory and Vaccines' clearly shows 'Secondary response' curve with a shorter 'lag phase' and higher antibody levels compared to 'Primary response' curve. The text also describes that secondary response is faster and stronger. Option C accurately reflects these key differences. Option A is incorrect; secondary responses are faster and stronger. Option B is incorrect about immune response types involved. Options D and E misrepresent the nature of primary and secondary responses."
+  },
+  {
+    "question": "What is the immunological basis for the enhanced and accelerated secondary immune response, as explained in the text?",
+    "options": {
+      "A": "Increased activation of innate immune cells during re-infection.",
+      "B": "Higher affinity of antibodies produced during the primary response.",
+      "C": "Presence of memory lymphocytes generated during the primary response.",
+      "D": "Activation of complement pathways more efficiently during secondary exposure.",
+      "E": "Non-specific activation of lymphocytes regardless of antigen specificity during re-exposure."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(一)有少量活化的T細胞和B細胞會變成記憶細胞,所以再次碰到相同的A抗原時就能夠迅速產生反應,且反應較強', meaning '(I) A small number of activated T cells and B cells become memory cells, so upon re-encountering the same antigen A, a rapid and stronger response can be generated'. Option C accurately identifies the presence of memory lymphocytes as the basis for enhanced secondary response. Options A, B, and D describe other aspects of immune response but not the primary basis for memory. Option E is incorrect about non-specificity."
+  },
+  {
+    "question": "Why is it often necessary to administer multiple doses of some vaccines, as mentioned in the text?",
+    "options": {
+      "A": "To induce tolerance and prevent allergic reactions to vaccine components.",
+      "B": "To overcome immune system immaturity and achieve sufficient activation, or because some vaccines require multiple exposures for effective immune activation.",
+      "C": "To ensure that both innate and adaptive immunity are simultaneously activated.",
+      "D": "To maintain continuous antibody production and lifelong immunity.",
+      "E": "To directly stimulate memory cell proliferation without primary activation."
+    },
+    "answer": "B",
+    "explanation": "(B) The text states '(二)由於有一些疫苗的反應需等免疫系統發展得更成熟後才能發揮效用,且部分疫苗需要施打多劑才足以活化免疫系統(如B型肝炎疫苗須打三劑)', meaning '(II) Because some vaccines require the immune system to be more mature to be effective, and some vaccines require multiple doses to sufficiently activate the immune system (e.g., Hepatitis B vaccine requires three doses).' Option B accurately reflects these reasons for multiple vaccine doses: immune system maturity and the need for sufficient activation, and the fact that some vaccines inherently require multiple exposures for efficacy. Other options misrepresent the reasons or mechanisms."
+  },
+  {
+    "question": "What is the primary advantage of 'Digital Vaccine' (mRNA vaccine) compared to traditional 'Analog Vaccine', as described in the text in the context of COVID-19?",
+    "options": {
+      "A": "Analog vaccines are faster to develop and produce in large quantities.",
+      "B": "Digital vaccines require isolation and purification of live viruses, making them safer.",
+      "C": "Digital vaccines can be developed and produced much faster once the viral nucleic acid sequence is known, compared to analog vaccines requiring virus isolation and purification.",
+      "D": "Analog vaccines are more effective in inducing long-term memory responses than digital vaccines.",
+      "E": "Digital vaccines are cheaper to produce and distribute compared to analog vaccines."
+    },
+    "answer": "C",
+    "explanation": "(C) The text states '(四)(B12未提) COVID-19 疫情中藥廠研發 Digital Vaccine...在知道病毒的核酸序列後即可合成 mRNA 製成 mRNA 疫苗,相較於需要分離純化病毒的 Analog Vaccine,可以大幅縮短疫苗開發時間', and '※(B09補充)以前用 analog vaccine 需蒐集病毒...總共耗時10到15年. 現今使用的 digital vaccine 僅耗時一年'. This clearly highlights the significantly shorter development and production time of digital (mRNA) vaccines due to bypassing virus isolation and purification. Option C accurately describes this primary advantage. Other options misrepresent the comparison or benefits."
+  }
+]

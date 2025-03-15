@@ -1,0 +1,651 @@
+
+[
+  {
+    "question": "Ilya Metchnikoff's discovery of phagocytosis as an immune response was primarily based on his research on which organism?",
+    "options": {
+      "A": "Human macrophages",
+      "B": "Bacterial cultures",
+      "C": "Starfish larvae",
+      "D": "Yeast cells",
+      "E": "Neutrophils in rabbits"
+    },
+    "answer": "C",
+    "explanation": "(C) Ilya Metchnikoff's groundbreaking work on phagocytosis, which earned him the 1908 Nobel Prize, was initiated through his studies of starfish larvae."
+  },
+  {
+    "question": "Which of the following accurately describes the morphological difference between a resting monocyte and an activated macrophage?",
+    "options": {
+      "A": "Monocytes have a smaller nucleus and fewer organelles compared to macrophages.",
+      "B": "Macrophages have a larger nucleus and more granules than monocytes.",
+      "C": "Monocytes are characterized by a large nucleus and fewer organelles, while macrophages have a smaller nucleus and more granules/endosomes.",
+      "D": "Both monocytes and macrophages have similar nuclear size and organelle content; activation does not change morphology.",
+      "E": "The primary difference is in cell size; monocytes are significantly larger than macrophages upon activation."
+    },
+    "answer": "C",
+    "explanation": "(C) Resting monocytes are characterized by a large nucleus and fewer organelles. Upon activation into macrophages, the nucleus becomes smaller, and the cytoplasm is filled with more granules or endosomes."
+  },
+  {
+    "question": "Which of the following receptors on macrophages are involved in recognizing pathogen-associated molecular patterns (PAMPs) and initiating phagocytosis?",
+    "options": {
+      "A": "Mannose receptor",
+      "B": "Complement receptor",
+      "C": "Dectin-1",
+      "D": "Fc receptor",
+      "E": "Scavenger receptor"
+    },
+    "answer": ["A", "B", "C", "E"],
+    "explanation": "Options (A), (B), (C), and (E) are correct.  **Mannose receptor** recognizes sugar structures on bacterial cell walls. **Complement receptor** recognizes pathogens opsonized with complement. **Dectin-1** recognizes β-glucan on yeast cell walls. **Scavenger receptor** recognizes a broad range of molecules including some microbial components. **Fc receptors**, however, primarily bind to antibodies, which are part of the adaptive immune response, not directly involved in PAMP recognition for initial phagocytosis."
+  },
+  {
+    "question": "The process of coating a pathogen to enhance phagocytosis is known as:",
+    "options": {
+      "A": "Acidification",
+      "B": "Opsonization",
+      "C": "Chemotaxis",
+      "D": "Degranulation",
+      "E": "Effector function"
+    },
+    "answer": "B",
+    "explanation": "(B) Opsonization is the process where pathogens are coated with molecules like complement or antibodies, which enhances their recognition and phagocytosis by immune cells."
+  },
+  {
+    "question": "Which of the following mechanisms contribute to the pathogen degradation within phagolysosomes in macrophages?",
+    "options": {
+      "A": "Acidification",
+      "B": "Reactive oxygen species (ROS)",
+      "C": "Toxic nitrogen oxides",
+      "D": "Antimicrobial peptides (AMPs)",
+      "E": "Enzymes like lysozyme and acid hydrolases"
+    },
+    "answer": ["A", "B", "C", "D", "E"],
+    "explanation": "Options (A), (B), (C), (D), and (E) are all correct.  Phagolysosomes utilize a multi-pronged approach to pathogen destruction: **Acidification** inhibits bacterial replication. **ROS** and **toxic nitrogen oxides** cause oxidative damage. **AMPs** directly kill microbes. **Enzymes** like lysozyme and acid hydrolases digest microbial components."
+  },
+  {
+    "question": "Compared to macrophage AMPs, neutrophil AMPs are characterized by:",
+    "options": {
+      "A": "Being primarily composed of cathelicidins.",
+      "B": "Having an identical repertoire of antimicrobial peptides.",
+      "C": "Including defensins, such as α-defensins.",
+      "D": "Lacking enzymes like lysozyme for cell wall degradation.",
+      "E": "Primarily targeting extracellular pathogens rather than intracellular ones."
+    },
+    "answer": "C",
+    "explanation": "(C) Neutrophil AMPs are notably different from macrophage AMPs in their composition. While macrophages mainly use cathelicidins, neutrophils are characterized by the presence of **defensins, particularly α-defensins**."
+  },
+  {
+    "question": "Neutrophil extracellular traps (NETs) are composed of:",
+    "options": {
+      "A": "Primarily mitochondrial DNA and lipids.",
+      "B": "Extruded chromatin and antimicrobial substances.",
+      "C": "Aggregated lysosomes and phagosomes.",
+      "D": "Cytoplasmic proteins and reactive oxygen species only.",
+      "E": "Microtubules and intermediate filaments released from neutrophils."
+    },
+    "answer": "B",
+    "explanation": "(B) NETs are primarily composed of **extruded chromatin (DNA and histones)** from neutrophils, along with various **antimicrobial substances** like enzymes and AMPs, designed to trap and kill pathogens extracellularly."
+  },
+  {
+    "question": "Which of the following conditions is associated with a defect in NET formation due to impaired ROS production?",
+    "options": {
+      "A": "Acute inflammation",
+      "B": "Chronic granulomatous disease (CGD)",
+      "C": "Septic shock",
+      "D": "Autoimmune disorders",
+      "E": "Viral infections"
+    },
+    "answer": "B",
+    "explanation": "(B) **Chronic granulomatous disease (CGD)** is characterized by a deficiency in NADPH oxidase, which is crucial for producing ROS. Since NET formation requires ROS, patients with CGD have impaired NETosis, making them more susceptible to infections."
+  },
+  {
+    "question": "Innate lymphoid cells (ILCs) are best described as:",
+    "options": {
+      "A": "Precursors to T and B lymphocytes.",
+      "B": "Effector cells that amplify innate immune signals.",
+      "C": "Antigen-presenting cells that activate T cells.",
+      "D": "A type of phagocytic cell derived from monocytes.",
+      "E": "Cells that primarily function in adaptive immunity by producing antibodies."
+    },
+    "answer": "B",
+    "explanation": "(B) ILCs are crucial **effector cells in innate immunity**. They amplify signals from innate recognition by producing cytokines and other mediators, contributing to inflammation and defense without prior sensitization, unlike adaptive immune cells."
+  },
+  {
+    "question": "NK cells, a subtype of ILCs, are activated by cytokines such as:",
+    "options": {
+      "A": "IL-4 and IL-5",
+      "B": "IL-10 and TGF-β",
+      "C": "IL-12 and IL-18",
+      "D": "IL-17 and IL-22",
+      "E": "IL-25 and IL-33"
+    },
+    "answer": "C",
+    "explanation": "(C) NK cells, and ILC1s, are activated by pro-inflammatory cytokines like **IL-12 and IL-18**, as well as type I interferons. These cytokines are often produced in response to viral infections and intracellular pathogens, aligning with NK cell function."
+  },
+  {
+    "question": "Pattern recognition receptors (PRRs) are defined by their ability to:",
+    "options": {
+      "A": "Recognize specific antigens with high affinity.",
+      "B": "Differentiate between self and non-self MHC molecules.",
+      "C": "Bind to conserved molecular patterns of pathogens.",
+      "D": "Undergo somatic recombination to generate diversity.",
+      "E": "Mediate immunological memory upon repeated exposure to pathogens."
+    },
+    "answer": "C",
+    "explanation": "(C) PRRs are key components of the innate immune system because they recognize **conserved molecular patterns of pathogens**, known as PAMPs. This recognition is broad and immediate, unlike the highly specific and adaptive recognition of antigens by adaptive immune receptors."
+  },
+  {
+    "question": "Activation of PRRs typically leads to the induction of:",
+    "options": {
+      "A": "Antibody production and class switching.",
+      "B": "Cytokine and interferon expression.",
+      "C": "T cell receptor gene rearrangement.",
+      "D": "Immunological memory cell generation.",
+      "E": "B cell differentiation into plasma cells."
+    },
+    "answer": "B",
+    "explanation": "(B) Activation of PRRs triggers intracellular signaling pathways that lead to the expression of **pro-inflammatory cytokines and interferons**. These mediators are crucial for initiating and shaping the immune response, including inflammation and antiviral defense."
+  },
+  {
+    "question": "Which of the following is NOT a major location for PRRs in a cell?",
+    "options": {
+      "A": "Extracellular space",
+      "B": "Endosomal membrane",
+      "C": "Cytosol",
+      "D": "Nucleus",
+      "E": "Plasma membrane"
+    },
+    "answer": "D",
+    "explanation": "(D) PRRs are strategically located to detect pathogens in various cellular compartments: **extracellularly (plasma membrane), endosomally (endosomal membrane), and in the cytoplasm (cytosol)**. They are not typically found in the nucleus, as their function is to detect invading pathogens outside of the nuclear environment."
+  },
+  {
+    "question": "Toll-like receptors (TLRs) are a class of PRRs. Which of the following statements about TLRs is correct?",
+    "options": {
+      "A": "All TLRs are located in the cytoplasm.",
+      "B": "TLRs exclusively recognize viral components.",
+      "C": "Different TLRs recognize distinct PAMPs.",
+      "D": "TLRs are only expressed on innate immune cells.",
+      "E": "TLR signaling primarily leads to antibody production."
+    },
+    "answer": "C",
+    "explanation": "(C) **Different TLRs are specialized to recognize distinct PAMPs**. For example, TLR4 recognizes LPS, while TLR3 recognizes dsRNA. This specialization allows the immune system to detect a wide range of pathogens."
+  },
+  {
+    "question": "TLR4 is known to recognize lipopolysaccharide (LPS), a component of:",
+    "options": {
+      "A": "Gram-positive bacteria",
+      "B": "Gram-negative bacteria",
+      "C": "Fungi",
+      "D": "Viruses",
+      "E": "Parasites"
+    },
+    "answer": "B",
+    "explanation": "(B) TLR4 is the primary receptor for **lipopolysaccharide (LPS)**, which is a major component of the outer membrane of **Gram-negative bacteria**. This recognition is critical for initiating immune responses against Gram-negative bacterial infections."
+  },
+  {
+    "question": "Which of the following TLRs are primarily located in endosomes to detect nucleic acids?",
+    "options": {
+      "A": "TLR2 and TLR4",
+      "B": "TLR1 and TLR6",
+      "C": "TLR3, TLR7, TLR8, and TLR9",
+      "D": "TLR5 and TLR10",
+      "E": "TLR11, TLR12, and TLR13"
+    },
+    "answer": "C",
+    "explanation": "(C) **TLR3, TLR7, TLR8, and TLR9** are strategically located in **endosomes**. This location is ideal for detecting nucleic acids from pathogens that have been internalized through phagocytosis or endocytosis, such as viral RNA and DNA."
+  },
+  {
+    "question": "The adaptor protein MyD88 is critical in signaling pathways for most TLRs. Which TLR is known to signal exclusively through the TRIF pathway?",
+    "options": {
+      "A": "TLR2",
+      "B": "TLR4",
+      "C": "TLR3",
+      "D": "TLR5",
+      "E": "TLR7"
+    },
+    "answer": "C",
+    "explanation": "(C) While most TLRs utilize MyD88 for signaling, **TLR3** is a notable exception. It signals primarily, and sometimes exclusively, through the **TRIF-dependent pathway**. TLR4 can use both MyD88 and TRIF pathways."
+  },
+  {
+    "question": "Activation of NF-κB by TLR signaling leads to the production of:",
+    "options": {
+      "A": "Type I interferons",
+      "B": "Pro-inflammatory cytokines",
+      "C": "Antibodies",
+      "D": "Complement proteins",
+      "E": "Antimicrobial peptides only"
+    },
+    "answer": "B",
+    "explanation": "(B) Activation of NF-κB is a major outcome of TLR signaling, leading to the transcription and production of **pro-inflammatory cytokines**. These cytokines, such as TNF-α and IL-1, are essential for inflammation, immune cell recruitment, and initiating both innate and adaptive immune responses."
+  },
+  {
+    "question": "RIG-I-like receptors (RLRs) are cytosolic PRRs that primarily detect:",
+    "options": {
+      "A": "Bacterial peptidoglycans",
+      "B": "Viral DNA",
+      "C": "Viral RNA",
+      "D": "Fungal β-glucans",
+      "E": "Lipopolysaccharide (LPS)"
+    },
+    "answer": "C",
+    "explanation": "(C) RLRs, specifically RIG-I and MDA5, are cytosolic PRRs that specialize in detecting **viral RNA**. They are crucial for sensing viral infections within the cytoplasm of cells."
+  },
+  {
+    "question": "Upon activation, RLR signaling converges on the adaptor protein:",
+    "options": {
+      "A": "MyD88",
+      "B": "TRIF",
+      "C": "MAVS",
+      "D": "NOD",
+      "E": "CARD"
+    },
+    "answer": "C",
+    "explanation": "(C) When RLRs detect viral RNA, they signal through the adaptor protein **MAVS (Mitochondrial Antiviral-Signaling protein)**. MAVS then activates downstream signaling pathways leading to the production of type I interferons and pro-inflammatory cytokines."
+  },
+  {
+    "question": "NOD-like receptors (NLRs) are another class of cytosolic PRRs. They are primarily involved in detecting:",
+    "options": {
+      "A": "Extracellular pathogens",
+      "B": "Intracellular bacteria",
+      "C": "Viral surface glycoproteins",
+      "D": "Fungal cell wall components",
+      "E": "Complement opsonized pathogens"
+    },
+    "answer": "B",
+    "explanation": "(B) NLRs are cytosolic PRRs that are specialized in detecting **intracellular bacteria**. They recognize bacterial components that enter the cytoplasm, such as peptidoglycans."
+  },
+  {
+    "question": "NOD1 and NOD2, subtypes of NLRs, recognize different components of bacterial peptidoglycans. NOD1 recognizes:",
+    "options": {
+      "A": "Muramyl dipeptide",
+      "B": "Lipopolysaccharide",
+      "C": "iE-DAP",
+      "D": "Flagellin",
+      "E": "Lipoteichoic acid"
+    },
+    "answer": "C",
+    "explanation": "(C) **NOD1** specifically recognizes **iE-DAP (γ-D-glutamyl-meso-diaminopimelic acid)**, a peptidoglycan motif found in Gram-negative bacteria and some Gram-positive bacteria."
+  },
+  {
+    "question": "Activation of NLRs typically leads to the activation of:",
+    "options": {
+      "A": "Type I interferon production only.",
+      "B": "Inflammasome formation and IL-1β/IL-18 production.",
+      "C": "Antibody class switching.",
+      "D": "T cell proliferation.",
+      "E": "Complement activation only."
+    },
+    "answer": "B",
+    "explanation": "(B) NLR activation can lead to **inflammasome formation**, particularly NLRP3 inflammasome, which in turn activates caspase-1. Caspase-1 processes pro-IL-1β and pro-IL-18 into their active forms, leading to the release of these pro-inflammatory cytokines."
+  },
+  {
+    "question": "The NLRP3 inflammasome, upon activation, leads to pyroptosis, a form of cell death, primarily mediated by:",
+    "options": {
+      "A": "Caspase-8",
+      "B": "Caspase-3",
+      "C": "Caspase-1",
+      "D": "Caspase-9",
+      "E": "Caspase-11"
+    },
+    "answer": "C",
+    "explanation": "(C) The NLRP3 inflammasome activates **caspase-1**.  Caspase-1 is crucial for pyroptosis, as it cleaves gasdermin D, which forms pores in the plasma membrane, leading to cell swelling and lysis characteristic of pyroptosis."
+  },
+  {
+    "question": "cGAS (cyclic GMP-AMP synthase) is a cytosolic sensor that detects:",
+    "options": {
+      "A": "Viral RNA",
+      "B": "Bacterial lipopolysaccharide",
+      "C": "Cytosolic DNA",
+      "D": "Fungal cell wall components",
+      "E": "Extracellular ATP"
+    },
+    "answer": "C",
+    "explanation": "(C) **cGAS** is a cytosolic DNA sensor that detects **cytosolic DNA**, which is often indicative of viral or bacterial infection or cellular damage. It is a key PRR for sensing DNA in the cytoplasm."
+  },
+  {
+    "question": "Upon binding to cytosolic DNA, cGAS produces:",
+    "options": {
+      "A": "c-di-GMP",
+      "B": "cGAMP",
+      "C": "ATP",
+      "D": "GTP",
+      "E": "c-di-AMP"
+    },
+    "answer": "B",
+    "explanation": "(B) When cGAS detects cytosolic DNA, it catalyzes the production of **cGAMP (cyclic GMP-AMP)** from ATP and GTP. cGAMP is a second messenger that activates downstream signaling pathways."
+  },
+  {
+    "question": "cGAMP produced by cGAS binds to and activates which adaptor protein?",
+    "options": {
+      "A": "MAVS",
+      "B": "STING",
+      "C": "TRIF",
+      "D": "MyD88",
+      "E": "NOD"
+    },
+    "answer": "B",
+    "explanation": "(B) **cGAMP** binds to and activates **STING (Stimulator of Interferon Genes)**, which is located in the endoplasmic reticulum (ER) membrane. STING activation is crucial for initiating downstream signaling leading to type I interferon production."
+  },
+  {
+    "question": "The acute phase response (APR) is primarily characterized by changes in the synthesis of proteins by which organ?",
+    "options": {
+      "A": "Kidney",
+      "B": "Spleen",
+      "C": "Liver",
+      "D": "Bone marrow",
+      "E": "Thymus"
+    },
+    "answer": "C",
+    "explanation": "(C) The **acute phase response (APR)** is defined by changes in protein synthesis in the **liver**. During APR, the liver produces a range of acute phase proteins in response to inflammatory cytokines."
+  },
+  {
+    "question": "Which of the following cytokines are key mediators that induce the acute phase response in the liver?",
+    "options": {
+      "A": "IL-4 and IL-10",
+      "B": "TGF-β and IL-13",
+      "C": "IL-1β, TNF-α, and IL-6",
+      "D": "IFN-γ and IL-12",
+      "E": "IL-17 and IL-22"
+    },
+    "answer": "C",
+    "explanation": "(C) **IL-1β, TNF-α, and IL-6** are the major pro-inflammatory cytokines that induce the **acute phase response (APR)** in the liver. These cytokines are produced by macrophages and other immune cells during inflammation."
+  },
+  {
+    "question": "C-reactive protein (CRP), an acute phase protein, is characterized by its ability to:",
+    "options": {
+      "A": "Directly kill bacteria through pore formation.",
+      "B": "Opsonize bacteria and activate complement.",
+      "C": "Neutralize viral particles.",
+      "D": "Induce type I interferon production.",
+      "E": "Stimulate antibody production by B cells."
+    },
+    "answer": "B",
+    "explanation": "(B) **C-reactive protein (CRP)** is an acute phase protein that functions as an **opsonin**, enhancing phagocytosis of bacteria. It also activates the classical pathway of the complement system, further promoting pathogen clearance and inflammation."
+  },
+  {
+    "question": "Serum amyloid protein (SAP), another acute phase protein, shares functional similarities with:",
+    "options": {
+      "A": "TLR4",
+      "B": "C3b",
+      "C": "C1q",
+      "D": "IFN-α",
+      "E": "TNF-α"
+    },
+    "answer": "C",
+    "explanation": "(C) **Serum amyloid protein (SAP)** and **C-reactive protein (CRP)** share structural and functional similarities with **C1q**, the first component of the classical complement pathway. They can bind to pathogens and activate complement, although SAP's complement activation is less potent than CRP's."
+  },
+  {
+    "question": "Which of the following is a systemic effect of IL-1β, TNF-α, and IL-6 during the acute phase response?",
+    "options": {
+      "A": "Localized vasodilation at the site of infection.",
+      "B": "Decreased body temperature (hypothermia).",
+      "C": "Fever (increased body temperature).",
+      "D": "Suppression of acute phase protein production in the liver.",
+      "E": "Inhibition of neutrophil mobilization from bone marrow."
+    },
+    "answer": "C",
+    "explanation": "(C) **Fever (increased body temperature)** is a systemic effect induced by IL-1β, TNF-α, and IL-6 during the acute phase response. These cytokines act on the hypothalamus to raise the body's thermostat setting, contributing to fever, which can enhance immune responses and inhibit pathogen growth."
+  },
+  {
+    "question": "The local effects of TNF-α include:",
+    "options": {
+      "A": "Decreased vascular permeability and leukocyte extravasation.",
+      "B": "Increased vascular permeability and leukocyte extravasation.",
+      "C": "Vasoconstriction and reduced blood flow to the infected site.",
+      "D": "Inhibition of lymphocyte activation and antibody production.",
+      "E": "Suppression of inflammation and tissue repair processes."
+    },
+    "answer": "B",
+    "explanation": "(B) The local effects of TNF-α include **increased vascular permeability and leukocyte extravasation**. TNF-α acts on endothelial cells to increase permeability, allowing fluid, complement proteins, and immune cells to enter the infected tissue, contributing to inflammation and pathogen clearance."
+  },
+  {
+    "question": "In septic shock, excessive production of TNF-α can lead to:",
+    "options": {
+      "A": "Localized inflammation and tissue repair.",
+      "B": "Controlled activation of the complement system.",
+      "C": "Systemic edema, disseminated intravascular coagulation, and organ failure.",
+      "D": "Increased blood volume and blood pressure.",
+      "E": "Enhanced localized phagocytosis without systemic effects."
+    },
+    "answer": "C",
+    "explanation": "(C) In **septic shock**, excessive TNF-α production leads to severe systemic effects, including **systemic edema**, **disseminated intravascular coagulation (DIC)**, and **multiple organ failure**. This is due to widespread vascular permeability, blood clotting abnormalities, and circulatory collapse caused by excessive inflammation."
+  },
+  {
+    "question": "Which of the following is NOT an example of an acute phase protein?",
+    "options": {
+      "A": "C-reactive protein (CRP)",
+      "B": "Mannose-binding lectin (MBL)",
+      "C": "Serum amyloid protein (SAP)",
+      "D": "Immunoglobulin G (IgG)",
+      "E": "Fibrinogen"
+    },
+    "answer": "D",
+    "explanation": "(D) **Immunoglobulin G (IgG)** is an antibody, part of the adaptive immune system, and is not classified as an acute phase protein. **CRP, MBL, SAP, and Fibrinogen** are all examples of acute phase proteins produced by the liver during APR in response to inflammation."
+  },
+  {
+    "question": "Mannose-binding lectin (MBL) enhances innate immunity by:",
+    "options": {
+      "A": "Activating TLR4 signaling.",
+      "B": "Directly killing bacteria through pore formation.",
+      "C": "Opsonizing pathogens and activating the lectin pathway of complement.",
+      "D": "Neutralizing viral RNA in the cytoplasm.",
+      "E": "Stimulating NK cell cytotoxicity."
+    },
+    "answer": "C",
+    "explanation": "(C) **Mannose-binding lectin (MBL)** enhances innate immunity primarily by **opsonizing pathogens** that have mannose-rich carbohydrates on their surface. It also **activates the lectin pathway of complement**, leading to further opsonization and pathogen lysis."
+  },
+  {
+    "question": "Competitors, such as lactoferrin and B12-binding protein, primarily function in neutrophils to:",
+    "options": {
+      "A": "Enhance ROS production.",
+      "B": "Degrade pathogen cell walls.",
+      "C": "Sequester essential nutrients from pathogens.",
+      "D": "Stimulate NET formation.",
+      "E": "Activate inflammasome signaling."
+    },
+    "answer": "C",
+    "explanation": "(C) **Competitors** like lactoferrin and B12-binding protein function in neutrophils to **sequester essential nutrients from pathogens**. Lactoferrin binds iron (Fe2+), and B12-binding protein binds vitamin B12, depriving bacteria of nutrients necessary for their replication and survival."
+  },
+  {
+    "question": "Vital NETosis, compared to Suicidal NETosis, is characterized by:",
+    "options": {
+      "A": "Neutrophil death following NET release.",
+      "B": "Neutrophil survival and maintained phagocytic capacity after NET release.",
+      "C": "Exclusive release of nuclear DNA without cytoplasmic components.",
+      "D": "Dependence on caspase-1 activation for NET formation.",
+      "E": "Primarily targeting viral pathogens rather than bacteria."
+    },
+    "answer": "B",
+    "explanation": "(B) **Vital NETosis** differs from suicidal NETosis in that the neutrophil **survives after releasing NETs** and **retains its ability to phagocytose pathogens**. In contrast, suicidal NETosis involves neutrophil death after NET release."
+  },
+  {
+    "question": "The C-type lectin receptor (CLR) family of PRRs is characterized by its ability to recognize:",
+    "options": {
+      "A": "Lipopolysaccharide (LPS)",
+      "B": "Carbohydrate structures on pathogens",
+      "C": "Viral nucleic acids",
+      "D": "Bacterial peptidoglycans",
+      "E": "Formylated peptides"
+    },
+    "answer": "B",
+    "explanation": "(B) **C-type lectin receptors (CLRs)** are a family of PRRs that are known for their ability to recognize **carbohydrate structures on pathogens**. This includes various sugars and glycans found on the surface of bacteria, fungi, and viruses."
+  },
+  {
+    "question": "Dectin-1, a CLR, specifically recognizes:",
+    "options": {
+      "A": "Mannose residues on bacterial cell walls.",
+      "B": "β-glucan in fungal cell walls.",
+      "C": "N-acetylglucosamine in bacterial peptidoglycans.",
+      "D": "Sialic acid residues on viral glycoproteins.",
+      "E": "Chitin in parasite exoskeletons."
+    },
+    "answer": "B",
+    "explanation": "(B) **Dectin-1** is a specific CLR that is known to recognize **β-glucan**, a major polysaccharide component found in the cell walls of **fungi**, particularly yeast and fungi."
+  },
+  {
+    "question": "The 'danger theory' in immunology suggests that the immune system is primarily activated by:",
+    "options": {
+      "A": "Recognition of non-self antigens.",
+      "B": "Detection of tissue damage and cellular stress signals.",
+      "C": "Antibody-mediated responses.",
+      "D": "MHC molecule presentation.",
+      "E": "Adaptive immune responses only."
+    },
+    "answer": "B",
+    "explanation": "(B) The 'danger theory' proposes that the immune system is not solely activated by non-self recognition but more importantly by the **detection of danger signals**, which are released from damaged or stressed cells. These signals indicate tissue injury and the need for immune intervention, even if self-components are involved."
+  },
+  {
+    "question": "Inflammatory inducers like bacterial lipopolysaccharides, ATP, and urate crystals primarily activate sensor cells by interacting with receptors located on:",
+    "options": {
+      "A": "The nucleus of sensor cells.",
+      "B": "The endoplasmic reticulum.",
+      "C": "The cell surface and endosomes of sensor cells.",
+      "D": "Mitochondria within sensor cells.",
+      "E": "The Golgi apparatus of sensor cells."
+    },
+    "answer": "C",
+    "explanation": "(C) Inflammatory inducers such as bacterial lipopolysaccharides (LPS), ATP, and urate crystals activate sensor cells, including macrophages, neutrophils, and dendritic cells, by interacting with receptors located on **the cell surface and endosomes**. These receptors include TLRs and other PRRs that are strategically positioned to detect extracellular and endocytosed danger signals."
+  },
+  {
+    "question": "The term 'cytokine storm' refers to:",
+    "options": {
+      "A": "A localized and controlled inflammatory response.",
+      "B": "The normal physiological production of cytokines during infection.",
+      "C": "An uncontrolled and excessive release of cytokines leading to hyperinflammation and tissue damage.",
+      "D": "The process of cytokine degradation and clearance.",
+      "E": "Cytokine production exclusively by adaptive immune cells."
+    },
+    "answer": "C",
+    "explanation": "(C) A **cytokine storm** is characterized by an **uncontrolled and excessive release of cytokines**, leading to systemic hyperinflammation and severe tissue damage. This dysregulated response can be life-threatening and is associated with severe infections and autoimmune conditions."
+  },
+  {
+    "question": "The absence of 5' triphosphate on viral RNA in the cytoplasm is a feature recognized by:",
+    "options": {
+      "A": "TLR3",
+      "B": "TLR7",
+      "C": "RLRs (RIG-I like receptors)",
+      "D": "NLRs (NOD-like receptors)",
+      "E": "CLRs (C-type lectin receptors)"
+    },
+    "answer": "C",
+    "explanation": "(C) **RLRs (RIG-I like receptors)**, specifically RIG-I, are designed to detect viral RNA in the cytoplasm that lacks a **5' triphosphate cap**.  This uncapped RNA is a hallmark of many viral RNAs produced during replication and distinguishes them from cellular RNAs, which are typically capped."
+  },
+  {
+    "question": "The signaling pathway downstream of TLR3 activation primarily leads to the induction of:",
+    "options": {
+      "A": "Pro-inflammatory cytokines via NF-κB.",
+      "B": "Type I interferons via IRF3.",
+      "C": "Inflammasome activation and IL-1β release.",
+      "D": "Antibody production by B cells.",
+      "E": "Cytotoxic T lymphocyte activation."
+    },
+    "answer": "B",
+    "explanation": "(B) The **TLR3 signaling pathway**, which is TRIF-dependent, primarily leads to the induction of **type I interferons (IFN-α/β) via IRF3**. While TLR4 can activate both NF-κB and IRF3, TLR3 is more specifically associated with type I interferon production as a primary antiviral response."
+  },
+  {
+    "question": "The Leucine-rich repeat (LRR) domain is a structural motif found in:",
+    "options": {
+      "A": "RLRs only.",
+      "B": "NLRs only.",
+      "C": "TLRs and NLRs.",
+      "D": "CLRs only.",
+      "E": "All classes of PRRs."
+    },
+    "answer": "C",
+    "explanation": "(C) The **Leucine-rich repeat (LRR) domain** is a characteristic structural motif found in both **TLRs (Toll-like receptors) and NLRs (NOD-like receptors)**. This domain is involved in ligand recognition and protein-protein interactions, crucial for their function as PRRs."
+  },
+  {
+    "question": "The formation of a phagolysosome involves the fusion of:",
+    "options": {
+      "A": "Phagosome with the endoplasmic reticulum.",
+      "B": "Phagosome with the Golgi apparatus.",
+      "C": "Phagosome with a lysosome.",
+      "D": "Phagosome with mitochondria.",
+      "E": "Phagosome with the nucleus."
+    },
+    "answer": "C",
+    "explanation": "(C) A **phagolysosome** is formed by the **fusion of a phagosome** (a vesicle containing ingested material) **with a lysosome** (an organelle containing hydrolytic enzymes). This fusion delivers lysosomal enzymes to the phagosome, enabling the degradation of the ingested pathogen."
+  },
+  {
+    "question": "The primary function of activated type I interferons (IFN-α/β) is to:",
+    "options": {
+      "A": "Promote antibody production.",
+      "B": "Induce antiviral state in cells.",
+      "C": "Stimulate T cell proliferation.",
+      "D": "Activate complement cascade.",
+      "E": "Suppress inflammatory responses."
+    },
+    "answer": "B",
+    "explanation": "(B) The **primary function of type I interferons (IFN-α/β)** is to **induce an antiviral state in cells**. They achieve this by stimulating the expression of interferon-stimulated genes (ISGs), which encode proteins that inhibit viral replication at various stages."
+  },
+  {
+    "question": "Which of the following is NOT a function of Interferon-stimulated genes (ISGs) induced by type I interferons?",
+    "options": {
+      "A": "Inhibition of protein translation in cells.",
+      "B": "Production of antibodies by plasma cells.",
+      "C": "Degradation of viral genetic material.",
+      "D": "Inhibition of viral assembly.",
+      "E": "Enhancement of MHC class I expression."
+    },
+    "answer": "B",
+    "explanation": "(B) **Production of antibodies by plasma cells** is not a direct function of Interferon-stimulated genes (ISGs). ISGs primarily function to directly inhibit viral replication within cells, enhance viral sensing, and promote antiviral immunity. Antibody production is a function of B cells, part of the adaptive immune system, although type I interferons can influence adaptive responses indirectly."
+  },
+  {
+    "question": "The intracellular domain of TLRs that is crucial for signaling is called:",
+    "options": {
+      "A": "LRR domain.",
+      "B": "CARD domain.",
+      "C": "TIR domain.",
+      "D": "Death domain.",
+      "E": "SH2 domain."
+    },
+    "answer": "C",
+    "explanation": "(C) The **intracellular domain of TLRs** essential for signaling is the **TIR domain (Toll-IL-1 receptor domain)**. This domain mediates interactions with adaptor proteins like MyD88 and TRIF, initiating downstream signaling cascades upon ligand binding."
+  },
+  {
+    "question": "In the TLR4 signaling pathway, both MyD88-dependent and TRIF-dependent pathways are activated. Which of the following is primarily associated with the TRIF-dependent pathway of TLR4 signaling?",
+    "options": {
+      "A": "Production of pro-inflammatory cytokines like TNF-α and IL-1.",
+      "B": "Induction of type I interferons (IFN-α/β).",
+      "C": "Activation of NF-κB.",
+      "D": "Inflammasome activation.",
+      "E": "Complement activation."
+    },
+    "answer": "B",
+    "explanation": "(B) In the TLR4 signaling pathway, the **TRIF-dependent pathway** is primarily associated with the **induction of type I interferons (IFN-α/β) via IRF3 activation**. While the MyD88-dependent pathway mainly leads to pro-inflammatory cytokine production through NF-κB activation, TRIF pathway specifically targets antiviral responses."
+  },
+  {
+    "question": "The term 'opsonization' is derived from the Greek word 'opson', which means:",
+    "options": {
+      "A": "To kill.",
+      "B": "To eat.",
+      "C": "To prepare food for.",
+      "D": "To recognize.",
+      "E": "To signal danger."
+    },
+    "answer": "C",
+    "explanation": "(C) The term 'opsonization' comes from the Greek word 'opson', which means **to prepare food for**. In immunology, opsonization refers to the process of coating pathogens with molecules that enhance their phagocytosis, effectively making them 'more palatable' for phagocytic cells."
+  },
+  {
+    "question": "Which of the following is NOT a characteristic of innate immunity?",
+    "options": {
+      "A": "Rapid response.",
+      "B": "Antigen-specific recognition.",
+      "C": "Germline-encoded receptors.",
+      "D": "Limited diversity of receptors.",
+      "E": "Lack of immunological memory."
+    },
+    "answer": "B",
+    "explanation": "(B) **Antigen-specific recognition** is NOT a characteristic of innate immunity. Innate immunity is characterized by broad recognition of conserved pathogen patterns using germline-encoded receptors. Antigen-specific and highly diverse recognition is a hallmark of adaptive immunity."
+  },
+  {
+    "question": "The enzyme lysozyme, found in macrophage granules and neutrophil enzymes, primarily targets:",
+    "options": {
+      "A": "Viral envelopes.",
+      "B": "Bacterial cell walls.",
+      "C": "Fungal cell membranes.",
+      "D": "Parasite exoskeletons.",
+      "E": "Host cell DNA."
+    },
+    "answer": "B",
+    "explanation": "(B) **Lysozyme** is an enzyme that primarily targets **bacterial cell walls**. It specifically cleaves peptidoglycans, a major component of bacterial cell walls, leading to cell lysis and pathogen destruction."
+  }
+]

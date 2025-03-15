@@ -1,0 +1,351 @@
+
+[
+  {
+    "question": "Which of the following characteristics is/are crucial for signal transduction in immune cells, given their need to quickly respond to pathogens?",
+    "options": {
+      "A": "*Irreversible* signal propagation to ensure a sustained response.",
+      "B": "Signal transduction processes operating within a timescale of seconds, or even milliseconds.",
+      "C": "Redundant signaling pathways to amplify initial stimuli significantly.",
+      "D": "*Slow and deliberate* signal initiation to prevent over-activation.",
+      "E": "Mechanisms for signal *reversibility* to return to a resting state after the signal’s purpose is achieved."
+    },
+    "answer": ["B", "E"],
+    "explanation": "(B) and (E) are correct. Immune cells require rapid responses to threats (milliseconds to seconds), making option (B) crucial. Option (E) is also vital because signal reversibility prevents over-activation and ensures the system returns to a resting state after the signal is no longer needed. Option (A) is incorrect because irreversibility can lead to uncontrolled responses. Option (C) while amplification is important, redundancy isn't primarily about speed but robustness. Option (D) is the opposite of what is needed for pathogen response."
+  },
+  {
+    "question": "Considering the methods of signal switching, if a cell signaling pathway needs to be rapidly turned *off* after being activated by phosphorylation, which enzymatic activity would be most directly involved?",
+    "options": {
+      "A": "Kinase activity, to add phosphate groups.",
+      "B": "Methyltransferase activity, to add methyl groups.",
+      "C": "Phosphatase activity, to remove phosphate groups.",
+      "D": "Acetyltransferase activity, to add acetyl groups.",
+      "E": "Ubiquitin ligase activity, to add ubiquitin chains."
+    },
+    "answer": "C",
+    "explanation": "(C) Phosphatase activity is directly involved in turning off a signal activated by phosphorylation. Phosphorylation is the addition of a phosphate group, and phosphatases are enzymes that remove these phosphate groups, thus reversing the activation and turning off the signal. Kinases (A) do the opposite – they add phosphate groups. Methyltransferase (B), Acetyltransferase (D) and Ubiquitin ligase (E) activities are involved in other types of signal modulation, not direct reversal of phosphorylation."
+  },
+  {
+    "question": "Which of the following statements accurately describe Receptor Tyrosine Kinases (RTKs)?",
+    "options": {
+      "A": "RTKs are characterized by *lacking* intrinsic kinase domains, relying on associated kinases for activity.",
+      "B": "Ligand binding to RTKs typically promotes *receptor dimerization*, leading to kinase activation.",
+      "C": "Activation of RTKs involves *dephosphorylation* of tyrosine residues within the receptor.",
+      "D": "Upon activation, RTKs phosphorylate *downstream substrates* to propagate the signal.",
+      "E": "EGFR, Flt3, and c-Kit are examples of receptors that *do not* belong to the RTK family."
+    },
+    "answer": ["B", "D"],
+    "explanation": "(B) and (D) are correct. RTKs are activated by ligand-induced dimerization, which brings kinase domains close to phosphorylate each other and downstream substrates. Option (A) is incorrect because RTKs *possess* intrinsic kinase domains. Option (C) is incorrect because activation involves *phosphorylation*, not dephosphorylation. Option (E) is incorrect as EGFR, Flt3, and c-Kit *are* explicitly mentioned as examples of RTKs in the provided text."
+  },
+  {
+    "question": "How do Non-receptor tyrosine kinases differ fundamentally from Receptor Tyrosine Kinases (RTKs) in their activation mechanism?",
+    "options": {
+      "A": "Non-receptor tyrosine kinases are activated directly by ligand binding, similar to RTKs.",
+      "B": "Non-receptor tyrosine kinases become active only after *dephosphorylation*, unlike RTKs.",
+      "C": "Non-receptor tyrosine kinases require *association with a receptor* to become activated, as they lack intrinsic kinase domains within the receptor itself.",
+      "D": "Activation of non-receptor tyrosine kinases does not involve receptor dimerization.",
+      "E": "Non-receptor tyrosine kinases primarily phosphorylate the receptor itself, not downstream substrates."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Non-receptor tyrosine kinases, by definition, are not part of the receptor itself. They must first associate with a receptor, often after ligand binding to that receptor, to become activated and participate in signaling. Option (A) is incorrect because they are *not* directly activated by ligand binding in the same way RTKs are. Option (B) is incorrect; activation generally involves phosphorylation. Option (D) is incorrect; dimerization of the receptor they associate with is often a key step. Option (E) is incorrect; they *do* phosphorylate downstream substrates after activation."
+  },
+  {
+    "question": "Nuclear Hormone Receptors operate through a distinct mechanism compared to cell surface receptors like RTKs and GPCRs. Which of the following best describes a key feature of Nuclear Hormone Receptor signaling?",
+    "options": {
+      "A": "They initiate signal transduction at the cell membrane and utilize second messengers like cAMP.",
+      "B": "Their ligands are typically *hydrophilic* and cannot cross the cell membrane.",
+      "C": "Upon ligand binding, the receptor-ligand complex directly influences gene transcription in the nucleus.",
+      "D": "They activate kinase cascades at the cell surface, leading to phosphorylation of cytoplasmic targets.",
+      "E": "Their activation is characterized by rapid, millisecond-scale responses, similar to ion channel receptors."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Nuclear Hormone Receptors are located in the cytoplasm or nucleus, and upon binding to their lipophilic ligands (like steroid hormones), the receptor-ligand complex translocates to the nucleus to directly regulate gene transcription. Option (A) is incorrect because they don't primarily operate at the cell membrane or use second messengers in the same way GPCRs do. Option (B) is incorrect; their ligands are *lipophilic* to cross the membrane. Option (D) describes RTK or GPCR signaling, not Nuclear Hormone Receptors. Option (E) is incorrect; nuclear hormone receptor signaling is typically slower, involving changes in gene expression, not millisecond-scale events."
+  },
+  {
+    "question": "Notch signaling presents a unique mechanism of signal transduction. Which of the following statements accurately describes a key characteristic of Notch receptor activation?",
+    "options": {
+      "A": "Notch receptors are activated by soluble ligands in the extracellular space that induce receptor dimerization.",
+      "B": "Notch signaling primarily involves the activation of intracellular kinase domains upon ligand binding.",
+      "C": "Activation of Notch requires *cell-cell contact*, with the ligand presented on an adjacent cell.",
+      "D": "Upon ligand binding, the Notch receptor undergoes *phosphorylation* and activates downstream kinases.",
+      "E": "Activated Notch receptors function by directly altering membrane permeability to ions."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Notch signaling is distinctive because it requires direct cell-cell contact. The Notch ligand is on the surface of a neighboring cell. Option (A) is incorrect because it's not a soluble ligand action like typical dimerization. Option (B) is incorrect, Notch doesn't primarily rely on kinase domain activation in the same way as RTKs. Option (D) is incorrect, Notch activation is more about receptor cleavage and release of intracellular domain. Option (E) is not the primary mechanism of Notch signaling; it's about gene regulation."
+  },
+  {
+    "question": "G protein-coupled receptors (GPCRs) utilize a specific mechanism involving G proteins and second messengers. Which of the following sequences correctly describes the initial steps in GPCR signaling upon ligand binding?",
+    "options": {
+      "A": "Ligand binding → GPCR activation → cAMP production → G protein activation.",
+      "B": "Ligand binding → GPCR activation → G protein activation → GTP exchange on Gα subunit.",
+      "C": "Ligand binding → G protein activation → GPCR activation → ATP hydrolysis.",
+      "D": "Ligand binding → cAMP production → GPCR activation → G protein activation.",
+      "E": "Ligand binding → GTP hydrolysis by GPCR → G protein activation → downstream signaling."
+    },
+    "answer": "B",
+    "explanation": "(B) is the correct sequence. Ligand binding to the GPCR causes a conformational change, leading to the activation of the associated G protein. Activation of the G protein involves the exchange of GDP for GTP on the Gα subunit. Option (A) is incorrect because G protein activation precedes cAMP production (in pathways where cAMP is the second messenger). Option (C) is incorrect; GPCR activation precedes G protein activation, and ATP hydrolysis is not the immediate next step. Option (D) is incorrect; cAMP production is a downstream effect of G protein activation, not an initial step after ligand binding. Option (E) is incorrect; GPCR itself doesn't hydrolyze GTP directly to activate G protein in this initial step; GTP exchange is the activation event."
+  },
+  {
+    "question": "Scaffold proteins play a critical role in signal transduction. What is the primary function of scaffold proteins in these pathways?",
+    "options": {
+      "A": "To degrade signaling molecules, thereby terminating signal transduction.",
+      "B": "To amplify the signal by phosphorylating multiple downstream targets simultaneously.",
+      "C": "To physically organize and bring together multiple signaling proteins, facilitating efficient signal transmission.",
+      "D": "To act as enzymes that directly modify signaling molecules, such as kinases and phosphatases.",
+      "E": "To transport signaling molecules from the cytoplasm to the nucleus for gene regulation."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Scaffold proteins primarily function to organize signaling pathways by physically bringing together different signaling molecules. This spatial organization enhances the efficiency and specificity of signal transduction. Option (A) describes termination, not the role of scaffolds. Option (B) describes amplification but not the organizational role of scaffolds. Option (D) is incorrect; scaffolds are not primarily enzymes themselves. Option (E) is incorrect; while some signaling pathways lead to the nucleus, the primary role of scaffolds is organizational in the cytoplasm."
+  },
+  {
+    "question": "Adaptor proteins, like Grb2, are essential components of signal transduction pathways. What is a defining characteristic of adaptor proteins like Grb2?",
+    "options": {
+      "A": "They possess intrinsic enzymatic activity, such as kinase or phosphatase activity.",
+      "B": "They directly bind to and phosphorylate downstream target proteins.",
+      "C": "They contain multiple protein-protein interaction domains, like SH2 and SH3 domains, but lack intrinsic enzymatic activity.",
+      "D": "They are exclusively involved in terminating signal transduction pathways.",
+      "E": "They are transmembrane receptors that initiate signaling upon ligand binding."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Adaptor proteins like Grb2 are characterized by having multiple protein-protein interaction domains (like SH2 and SH3) but lacking intrinsic enzymatic activity. They act as linkers, bringing different signaling proteins together. Option (A) is incorrect because they lack enzymatic activity. Option (B) is incorrect; they don't directly phosphorylate. Option (D) is incorrect; they are involved in signal relaying and amplification, not just termination. Option (E) is incorrect; they are not transmembrane receptors; they are cytoplasmic proteins."
+  },
+  {
+    "question": "Ubiquitination is a key regulatory mechanism in signal transduction. Which of the following statements accurately describes the role of ubiquitination in signal termination?",
+    "options": {
+      "A": "Ubiquitination primarily serves to activate kinase enzymes, enhancing signal propagation.",
+      "B": "Polyubiquitination, specifically K48-linked, often targets proteins for degradation by the proteasome.",
+      "C": "Di-ubiquitination primarily targets membrane receptors for activation and increased cell surface expression.",
+      "D": "Ubiquitination is solely involved in signal initiation, not in signal termination.",
+      "E": "Ubiquitination is irreversible and leads to permanent inactivation of target proteins."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. K48-linked polyubiquitination is a signal for protein degradation by the proteasome, a major pathway for signal termination. Option (A) is incorrect; ubiquitination is often associated with degradation and termination. Option (C) is incorrect; di-ubiquitination (as mentioned for Cbl and lysosomes) targets for lysosomal degradation, not activation. Option (D) is incorrect; ubiquitination is crucial in termination. Option (E) is incorrect; while ubiquitination leads to degradation, the process is part of a dynamic regulatory system, not necessarily permanent in all contexts (though degradation itself is a terminal event for the targeted protein molecule)."
+  },
+  {
+    "question": "Distinguish between the roles of the proteasome and lysosome in signal termination via ubiquitination.",
+    "options": {
+      "A": "Both proteasomes and lysosomes are involved in *activating* ubiquitinated proteins for further signaling.",
+      "B": "Proteasomes degrade ubiquitinated proteins into *amino acids*, while lysosomes degrade them into *lipids*.",
+      "C": "Proteasomes primarily degrade *cytoplasmic and nuclear proteins* marked with K48-polyubiquitin, whereas lysosomes can degrade *membrane proteins and organelles* marked with di-ubiquitination.",
+      "D": "Lysosomes are involved in *dephosphorylation* of signaling proteins, while proteasomes handle ubiquitination.",
+      "E": "Proteasomes and lysosomes are functionally redundant, both capable of degrading all types of ubiquitinated proteins equally."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Proteasomes are primarily responsible for degrading cytoplasmic and nuclear proteins, especially when marked with K48-linked polyubiquitin chains. Lysosomes are more involved in degrading membrane proteins, organelles, and extracellular material, and in the context of ubiquitination (like with di-ubiquitination of receptors by Cbl), they target membrane receptors. Option (A) is incorrect because both are involved in degradation, thus termination. Option (B) is incorrect; lysosomes also degrade proteins into amino acids. Option (D) is incorrect; lysosomes do not dephosphorylate proteins in this context; phosphatases do that. Option (E) is incorrect; they have distinct roles and substrate preferences."
+  },
+  {
+    "question": "Cytokines are a broad category of signaling molecules in the immune system. Which of the following properties accurately describe cytokines?",
+    "options": {
+      "A": "Cytokines are primarily *large, complex proteins* with molecular weights exceeding 100 kDa.",
+      "B": "Cytokine production is *constitutive and continuous*, ensuring constant immune surveillance.",
+      "C": "Cytokines exhibit *pleiotropy*, meaning a single cytokine can have diverse effects on different target cells.",
+      "D": "Cytokine actions are strictly *localized* to the producing cell and immediate neighbors (autocrine and paracrine), with no endocrine effects.",
+      "E": "Cytokines demonstrate *redundancy*, where multiple different cytokines can mediate similar or overlapping biological effects."
+    },
+    "answer": ["C", "E"],
+    "explanation": "(C) and (E) are correct. Cytokines are known for pleiotropy (one cytokine, multiple effects) and redundancy (multiple cytokines, similar effects). Option (A) is incorrect; cytokines are typically *small peptides*. Option (B) is incorrect; cytokine production is generally *induced* by stimuli, not constitutive. Option (D) is incorrect; cytokines can have endocrine effects, acting at distant sites via the bloodstream, although paracrine and autocrine actions are also important."
+  },
+  {
+    "question": "What is meant by the term cytokine storm, and under what conditions is it most likely to occur?",
+    "options": {
+      "A": "Cytokine storm refers to a *suppression* of cytokine production, leading to immune deficiency.",
+      "B": "Cytokine storm is characterized by a *balanced and controlled* release of cytokines, promoting effective pathogen clearance without harm to host tissues.",
+      "C": "Cytokine storm describes an *excessive and uncontrolled* release of pro-inflammatory cytokines, often resulting in tissue damage and systemic illness.",
+      "D": "Cytokine storm is primarily associated with *autoimmune diseases*, where cytokines attack self-tissues.",
+      "E": "Cytokine storm is a beneficial process, enhancing the immune response to eliminate pathogens more rapidly and effectively."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. A cytokine storm is an overreaction of the immune system, characterized by excessive and uncontrolled release of pro-inflammatory cytokines. This can lead to systemic inflammation, tissue damage, and is often associated with severe infections like in some cases of Coronavirus infection. Option (A) is the opposite of cytokine storm. Option (B) describes a healthy, regulated immune response, not a storm. Option (D) while autoimmune diseases involve cytokines, cytokine storm is more acutely linked to infections and over-reactive immunity. Option (E) is incorrect because while the immune response aims to be beneficial, a cytokine storm is *detrimental* due to its excessive nature."
+  },
+  {
+    "question": "In the context of innate immunity and the response to tissue injury and infection, which cytokine(s) released by macrophages play a key role in inducing vasodilation and attracting neutrophils to the site of infection?",
+    "options": {
+      "A": "IL-12 and IFN-γ.",
+      "B": "IL-1 and TNF-α.",
+      "C": "IFN-γ only.",
+      "D": "IL-12 only.",
+      "E": "Chemokines only, without the involvement of IL-1 or TNF-α."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. IL-1 and TNF-α are key cytokines released by macrophages that induce vasodilation (increased blood vessel permeability) and, along with chemokines, attract neutrophils to the site of infection. Option (A) is incorrect; IL-12 and IFN-γ are more involved in NK cell and T cell activation, and macrophage activation. Options (C), (D), and (E) are incomplete as IL-1 and TNF-α are specifically mentioned in the text as inducing vasodilation in this context, along with chemokines for neutrophil recruitment."
+  },
+  {
+    "question": "How does the JAK-STAT signaling pathway operate in cytokine signaling?",
+    "options": {
+      "A": "Cytokine binding directly activates the *kinase domain* of the cytokine receptor itself.",
+      "B": "Cytokine receptors associate with and activate *Janus kinases (JAKs)*, which then phosphorylate *STAT proteins*.",
+      "C": "STAT proteins are transmembrane receptors that directly bind cytokines and initiate signaling.",
+      "D": "JAK kinases are recruited to the cell membrane and become activated upon *STAT protein* binding.",
+      "E": "The JAK-STAT pathway is primarily involved in signaling downstream of GPCRs, not cytokine receptors."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. In the JAK-STAT pathway, cytokine receptors themselves typically lack intrinsic kinase activity. Instead, they associate with JAKs. Upon cytokine binding and receptor dimerization, JAKs are activated, and they then phosphorylate STAT proteins. Option (A) is incorrect; cytokine receptors in this pathway lack intrinsic kinase domains. Option (C) is incorrect; STATs are cytoplasmic transcription factors, not transmembrane receptors. Option (D) is incorrect; JAK activation precedes STAT binding and phosphorylation. Option (E) is incorrect; the JAK-STAT pathway is *central* to cytokine signaling."
+  },
+  {
+    "question": "In GPCR-mediated signaling, specifically in neutrophil chemotaxis towards bacterial products like fMLP, what is the role of G proteins and subsequent downstream effectors?",
+    "options": {
+      "A": "G proteins directly activate *gene transcription* in the nucleus, leading to chemotaxis.",
+      "B": "Activated G proteins lead to the production of *cAMP*, which directly induces neutrophil movement.",
+      "C": "G proteins dissociate into α and βγ subunits, which activate downstream effectors like Rac, Rho, and Cdc42 GTPases, leading to cytoskeletal changes and chemotaxis.",
+      "D": "G proteins function to *dephosphorylate* cytoskeletal proteins, causing neutrophil movement.",
+      "E": "GPCR signaling in chemotaxis primarily involves the activation of *JAK-STAT pathway* via G proteins."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. In GPCR signaling for chemotaxis, activated G proteins dissociate into α and βγ subunits. These subunits then activate downstream GTPases like Rac, Rho, and Cdc42. These GTPases are crucial for regulating the actin cytoskeleton, which is essential for cell movement and chemotaxis. Option (A) is incorrect; while GPCR signaling can affect gene transcription long term, the immediate chemotactic response is more directly linked to cytoskeletal changes. Option (B) cAMP is a second messenger in some GPCR pathways, but not the primary mediator of chemotaxis in neutrophils towards fMLP; Rac/Rho/Cdc42 are more directly involved. Option (D) is incorrect; it's about cytoskeletal *reorganization*, not just dephosphorylation. Option (E) is incorrect; GPCR signaling typically uses second messengers and GTPases, not JAK-STAT."
+  },
+  {
+    "question": "Immunoreceptors, such as TCR and BCR, utilize specific signaling motifs in their cytoplasmic domains. What is the function of ITAMs (Immunoreceptor Tyrosine-based Activation Motifs)?",
+    "options": {
+      "A": "ITAMs mediate *inhibitory* signals, suppressing immune cell activation.",
+      "B": "ITAMs are characterized by a short amino acid sequence and primarily function to *block kinase* recruitment.",
+      "C": "Upon tyrosine phosphorylation, ITAMs serve as docking sites for *PTK (Protein Tyrosine Kinases)*, like Src and Syk families, to initiate activation signals.",
+      "D": "ITAMs are only found in cytokine receptors, not in immunoreceptors like TCR and BCR.",
+      "E": "ITAMs primarily activate *phosphatases* to dampen immune responses."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. ITAMs are activation motifs. When tyrosine residues within ITAMs are phosphorylated, they become docking sites for PTKs like Src and Syk family kinases. These kinases are then recruited and activated, initiating downstream signaling pathways that lead to immune cell activation. Option (A) describes ITIMs, not ITAMs. Option (B) is incorrect; ITAMs *promote* kinase recruitment. Option (D) is incorrect; ITAMs are *key* to immunoreceptor signaling in TCRs and BCRs. Option (E) is incorrect; ITAMs recruit kinases, not phosphatases."
+  },
+  {
+    "question": "How do ITIMs (Immunoreceptor Tyrosine-based Inhibitory Motifs) differ in function from ITAMs?",
+    "options": {
+      "A": "ITIMs promote *activation* of immune cells, similar to ITAMs, but through different kinases.",
+      "B": "ITIMs are characterized by a *longer* amino acid sequence compared to ITAMs and recruit PTKs.",
+      "C": "Upon tyrosine phosphorylation, ITIMs serve as docking sites for *PTP (Protein Tyrosine Phosphatases)*, like SHP-1 and SHP-2, to deliver inhibitory signals.",
+      "D": "ITIMs are primarily located in the extracellular domains of receptors, while ITAMs are intracellular.",
+      "E": "ITIMs and ITAMs are functionally redundant, both capable of initiating and inhibiting immune responses depending on the context."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. ITIMs are inhibitory motifs. When phosphorylated on tyrosine residues, ITIMs recruit PTPs (Protein Tyrosine Phosphatases) like SHP-1 and SHP-2. These phosphatases remove phosphate groups from signaling molecules, thereby dampening or inhibiting immune responses. Option (A) is incorrect; ITIMs are inhibitory, not activating. Option (B) is incorrect; ITIMs are actually *shorter* than ITAMs and recruit phosphatases, not PTKs. Option (D) is incorrect; both ITIMs and ITAMs are intracellular motifs. Option (E) is incorrect; they have *opposite* functions – ITAMs activate, ITIMs inhibit."
+  },
+  {
+    "question": "In T cell receptor (TCR) signaling, what is the role of the CD3 complex and ζ chain?",
+    "options": {
+      "A": "CD3 and ζ chains are the *ligand-binding subunits* of the TCR complex, directly recognizing MHC-peptide complexes.",
+      "B": "CD3 and ζ chains *possess intrinsic kinase activity* and directly phosphorylate downstream signaling molecules upon antigen recognition.",
+      "C": "CD3 and ζ chains associate with the TCR αβ heterodimer and contain *ITAMs* in their cytoplasmic domains, which are crucial for signal transduction.",
+      "D": "CD3 and ζ chains are *inhibitory receptors* that prevent T cell activation unless co-stimulation is provided.",
+      "E": "CD3 and ζ chains function primarily to *internalize and degrade* the TCR complex after antigen recognition, thereby terminating signaling."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. The TCR αβ heterodimer is responsible for antigen recognition, but it has very short cytoplasmic tails lacking signaling motifs. CD3 (γε, δε, εε dimers) and ζ chains associate with the TCR and contain ITAMs in their cytoplasmic regions. These ITAMs are essential for initiating intracellular signaling upon TCR engagement with MHC-peptide. Option (A) is incorrect; TCR αβ heterodimer is the ligand-binding subunit, not CD3/ζ. Option (B) is incorrect; CD3/ζ lack intrinsic kinase activity; they provide ITAMs for kinase recruitment. Option (D) is incorrect; they are *activation* components, not inhibitory. Option (E) is incorrect; they are for signal initiation, not termination by degradation."
+  },
+  {
+    "question": "What is the sequential order of key events in the early stages of T cell receptor (TCR) signaling, starting from antigen recognition?",
+    "options": {
+      "A": "Antigen recognition → ZAP-70 phosphorylation → Lck activation → ITAM phosphorylation.",
+      "B": "Antigen recognition → ITAM phosphorylation → Lck activation → ZAP-70 phosphorylation.",
+      "C": "Antigen recognition → Lck activation → ITAM phosphorylation → ZAP-70 phosphorylation.",
+      "D": "Antigen recognition → ITAM phosphorylation → ZAP-70 activation → Lck phosphorylation.",
+      "E": "Antigen recognition → ZAP-70 activation → ITAM phosphorylation → Lck activation."
+    },
+    "answer": "C",
+    "explanation": "(C) is the correct order. The sequence is: 1. Antigen recognition by TCR. 2. Activation of Lck (Src-family kinase associated with CD4/CD8 co-receptors). 3. Lck phosphorylates ITAMs on CD3 and ζ chains. 4. Phosphorylated ITAMs serve as docking sites for ZAP-70, which is then also phosphorylated and activated by Lck. Option (A), (B), (D), and (E) present incorrect sequences of Lck and ZAP-70 activation and ITAM phosphorylation."
+  },
+  {
+    "question": "Explain the activation mechanism of Lck kinase in TCR signaling.",
+    "options": {
+      "A": "Lck is constitutively active and does not require specific activation steps in TCR signaling.",
+      "B": "Lck is activated by *phosphorylation* of a tyrosine residue in its C-terminal tail by Csk.",
+      "C": "Lck is activated by *dephosphorylation* of a tyrosine residue in its C-terminal tail by CD45, and subsequent autophosphorylation in its activation loop.",
+      "D": "Lck activation requires direct binding of antigen to its kinase domain.",
+      "E": "Lck is activated by dimerization upon TCR engagement with MHC-peptide."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. Lck's activation is a two-step process. Initially, Lck is inactive due to phosphorylation at a C-terminal tyrosine residue by Csk. Activation starts when CD45 (a phosphatase) dephosphorylates this inhibitory tyrosine. This 'primed' Lck can then undergo autophosphorylation in its activation loop to become fully active. Option (A) is incorrect; Lck is not constitutively active and requires activation. Option (B) is incorrect; phosphorylation by Csk *inactivates* Lck. Option (D) is incorrect; Lck is associated with co-receptors, not directly with antigen-MHC. Option (E) is incorrect; dimerization is not the activation mechanism for Lck itself, but for some receptors like RTKs."
+  },
+  {
+    "question": "What is the role of ZAP-70 in TCR signaling after its recruitment to phosphorylated ITAMs?",
+    "options": {
+      "A": "ZAP-70 functions primarily to *dephosphorylate* ITAMs, thereby terminating the TCR signal.",
+      "B": "ZAP-70, once recruited and phosphorylated by Lck, phosphorylates downstream adaptor proteins like LAT, initiating further signaling cascades.",
+      "C": "ZAP-70 directly activates *gene transcription* in the nucleus upon recruitment to ITAMs.",
+      "D": "ZAP-70 acts as a scaffold protein to bring together Lck and CD45 for signal termination.",
+      "E": "ZAP-70 is only involved in signaling through ITIMs, not ITAMs, in T cells."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. After ZAP-70 is recruited to phosphorylated ITAMs and phosphorylated by Lck, it becomes an active kinase itself. Its main role then is to phosphorylate downstream adaptor proteins, notably LAT (Linker for Activation of T cells). Phosphorylation of LAT creates docking sites for other signaling molecules and initiates multiple downstream pathways. Option (A) is incorrect; ZAP-70 is a kinase, not a phosphatase, and it propagates, not terminates, the signal. Option (C) is incorrect; ZAP-70 is cytoplasmic and doesn't directly go to the nucleus. Option (D) is incorrect; ZAP-70 is for signal propagation, not termination, and not a scaffold for Lck and CD45 in the context of termination. Option (E) is incorrect; ZAP-70 is crucial for ITAM-mediated activation."
+  },
+  {
+    "question": "How does the B cell receptor (BCR) signaling pathway compare to the T cell receptor (TCR) signaling pathway in terms of initial activation events?",
+    "options": {
+      "A": "BCR signaling is fundamentally different from TCR signaling, utilizing completely distinct kinases and adaptor proteins.",
+      "B": "BCR signaling *does not require* ITAM motifs for signal initiation, unlike TCR signaling.",
+      "C": "BCR signaling, similar to TCR signaling, relies on ITAM-containing subunits (Igα and Igβ) and Src-family kinases for initial activation.",
+      "D": "BCR signaling directly activates GPCRs, while TCR signaling activates receptor tyrosine kinases.",
+      "E": "BCR signaling is initiated by phosphatases, whereas TCR signaling is initiated by kinases."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. BCR signaling pathways share significant similarities with TCR signaling pathways, especially in the initial activation events. Like TCR, BCR relies on ITAM-containing subunits (Igα and Igβ, analogous to CD3/ζ in TCR) and Src-family kinases (like Blk, Fyn, Lyn, analogous to Lck in TCR) for early steps of activation upon antigen binding. Option (A) is incorrect; there are many parallels. Option (B) is incorrect; BCR signaling *does* rely on ITAMs in Igα and Igβ. Option (D) is incorrect; neither directly activates GPCRs or RTKs in this initial stage; both use Src-family kinases initially. Option (E) is incorrect; both are initiated by kinases (Src-family)."
+  },
+  {
+    "question": "In CAR-T cell therapy, how does the chimeric antigen receptor (CAR) differ from a natural T cell receptor (TCR) in terms of antigen recognition and signaling?",
+    "options": {
+      "A": "CARs, unlike TCRs, require MHC presentation of peptides to recognize target antigens.",
+      "B": "CARs combine an antibody-derived antigen-binding domain with intracellular signaling domains, directly integrating antigen recognition and activation signals into a single receptor, bypassing MHC restriction and complex co-stimulation requirements of TCRs.",
+      "C": "CARs primarily activate inhibitory signaling pathways, whereas TCRs primarily activate stimulatory pathways.",
+      "D": "CARs recognize only protein antigens, while TCRs can recognize a broader range of antigens including lipids and carbohydrates.",
+      "E": "CAR-T cell therapy utilizes TCRs engineered to target tumor antigens, not chimeric receptors."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. CARs are engineered receptors that fuse an antibody-derived antigen-binding domain (like scFv) to intracellular signaling domains (often derived from CD3ζ and co-stimulatory molecules). This design allows CARs to recognize cell surface antigens *directly*, without MHC presentation, and to initiate T cell activation through the integrated signaling domains. This bypasses the MHC restriction and complex co-stimulation requirements of natural TCRs. Option (A) is incorrect; CARs are designed to *avoid* MHC restriction. Option (C) is incorrect; CARs are designed for activation. Option (D) is incorrect; while initial CARs focused on protein antigens, the antigen range is expanding but the statement is inaccurate in this context of comparison. Option (E) is incorrect; CAR-T therapy is defined by the use of *chimeric* receptors, not engineered TCRs (though TCR-engineered therapies also exist, CAR-T is distinct)."
+  },
+  {
+    "question": "CTLA-4 and PD-1 are crucial checkpoint molecules in T cell regulation. What is their primary function in controlling T cell responses?",
+    "options": {
+      "A": "CTLA-4 and PD-1 *enhance* T cell activation and proliferation, promoting robust immune responses.",
+      "B": "CTLA-4 and PD-1 are *co-stimulatory* molecules required for initial T cell activation.",
+      "C": "CTLA-4 and PD-1 function as *inhibitory* receptors, dampening T cell activation and preventing excessive or prolonged immune responses.",
+      "D": "CTLA-4 and PD-1 are primarily involved in *cytokine production* by T cells, regulating the inflammatory environment.",
+      "E": "CTLA-4 and PD-1 promote T cell *differentiation* into effector and memory subsets."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. CTLA-4 and PD-1 are immune checkpoint molecules that act as *inhibitory* receptors. Their main function is to dampen T cell activation, preventing over-reactive immune responses and maintaining immune homeostasis. They are crucial for preventing autoimmunity and limiting tissue damage from inflammation. Option (A) is incorrect; they are inhibitory, not enhancing. Option (B) is incorrect; they are *not* co-stimulatory but co-*inhibitory*. Option (D) is incorrect; while they can indirectly affect cytokine production by modulating T cell activity, their primary role isn't direct cytokine regulation. Option (E) is incorrect; their primary role is in modulating *activation* and *effector function*, not differentiation into subsets in the context of checkpoint function."
+  },
+  {
+    "question": "How does CTLA-4 exert its inhibitory function on T cells?",
+    "options": {
+      "A": "CTLA-4 activates intracellular kinase cascades that directly suppress TCR signaling.",
+      "B": "CTLA-4 competes with CD28 for binding to B7 ligands (CD80/CD86) on antigen-presenting cells, with *higher affinity*, thus reducing CD28 co-stimulation.",
+      "C": "CTLA-4 directly degrades TCR complexes at the cell surface, reducing antigen recognition.",
+      "D": "CTLA-4 promotes the production of inhibitory cytokines like IL-10 and TGF-β.",
+      "E": "CTLA-4 functions by blocking the interaction between MHC and TCR, preventing antigen recognition."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. CTLA-4's primary mechanism of inhibition is by competing with CD28 for binding to the same ligands on APCs, B7-1 (CD80) and B7-2 (CD86). CTLA-4 has a *higher affinity* for B7 than CD28, effectively outcompeting CD28 and reducing the co-stimulatory signal needed for full T cell activation. Option (A) is incorrect; CTLA-4 primarily acts extracellularly by ligand competition and intracellularly by phosphatase recruitment, not by activating kinase cascades for suppression. Option (C) is incorrect; it doesn't degrade TCR complexes. Option (D) while CTLA-4 activation can indirectly influence cytokine environment, ligand competition is its primary direct mechanism. Option (E) is incorrect; it doesn't block MHC-TCR interaction, but co-stimulation via CD28."
+  },
+  {
+    "question": "What is the mechanism by which PD-1 inhibits T cell activation?",
+    "options": {
+      "A": "PD-1, upon ligand binding, activates kinase pathways that directly suppress TCR signaling.",
+      "B": "PD-1 competes with TCR for binding to MHC-peptide complexes, preventing antigen recognition.",
+      "C": "PD-1, upon ligand binding (PD-L1 or PD-L2), recruits phosphatases like SHP-2 to ITIM motifs in its cytoplasmic tail, leading to dephosphorylation of signaling molecules and signal termination.",
+      "D": "PD-1 promotes the degradation of CD3 and ζ chains, thereby reducing TCR signaling capacity.",
+      "E": "PD-1 functions by inducing T cell apoptosis (programmed cell death) upon prolonged activation."
+    },
+    "answer": "C",
+    "explanation": "(C) is correct. PD-1's inhibitory mechanism involves recruiting phosphatases. Upon binding to its ligands PD-L1 or PD-L2, PD-1's ITIM motif becomes phosphorylated, which then recruits phosphatases like SHP-2. These phosphatases dephosphorylate key signaling molecules downstream of the TCR and CD28, effectively dampening T cell activation and inducing a state of 'exhaustion'. Option (A) is incorrect; PD-1 recruits phosphatases for suppression, not activating kinases for suppression. Option (B) is incorrect; it doesn't compete for MHC-peptide. Option (D) is incorrect; it doesn't directly degrade CD3/ζ. Option (E) while prolonged PD-1 signaling can contribute to exhaustion, apoptosis is not its primary immediate inhibitory mechanism."
+  },
+  {
+    "question": "Checkpoint blockade immunotherapy, using antibodies against CTLA-4 or PD-1, aims to enhance anti-tumor immune responses. How does blocking these checkpoint molecules achieve this?",
+    "options": {
+      "A": "Antibodies against CTLA-4 or PD-1 directly kill tumor cells by inducing antibody-dependent cellular cytotoxicity (ADCC).",
+      "B": "Blocking CTLA-4 or PD-1 *removes the brakes* on T cell activation, allowing for a more potent and sustained T cell response against tumor cells.",
+      "C": "Checkpoint blockade antibodies enhance the production of inhibitory cytokines like IL-10 and TGF-β, suppressing tumor growth.",
+      "D": "Antibodies against CTLA-4 or PD-1 directly activate T cell proliferation and differentiation into memory cells.",
+      "E": "Checkpoint blockade therapy functions primarily by enhancing the innate immune response, not T cell-mediated immunity."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. Checkpoint blockade immunotherapy works by using antibodies to block the inhibitory checkpoint molecules CTLA-4 and PD-1. By blocking these 'brakes', the antibodies remove the suppression on T cell activation, allowing the immune system, particularly T cells, to mount a stronger and more effective anti-tumor response. Option (A) is incorrect; checkpoint blockade is not primarily about ADCC. Option (C) is incorrect; it *reduces* inhibition, not enhances inhibitory cytokines. Option (D) is incorrect; it's about *releasing* existing T cells from suppression to become *more effective* effectors, not direct proliferation or differentiation enhancement. Option (E) is incorrect; while innate immunity is important, checkpoint blockade focuses on *enhancing adaptive, particularly T cell-mediated*, immunity."
+  },
+  {
+    "question": "What is a potential major side effect of checkpoint blockade immunotherapy, and why does it occur?",
+    "options": {
+      "A": "Increased susceptibility to opportunistic infections, due to general immune suppression.",
+      "B": "Autoimmune reactions and inflammatory toxicities, due to *unleashing* the immune system from its regulatory checkpoints, potentially leading to attacks on healthy tissues.",
+      "C": "Severe allergic reactions to the checkpoint blockade antibodies themselves.",
+      "D": "Rapid tumor progression due to enhanced tumor cell proliferation.",
+      "E": "Bone marrow suppression and reduced production of immune cells."
+    },
+    "answer": "B",
+    "explanation": "(B) is correct. A major potential side effect of checkpoint blockade immunotherapy is autoimmune reactions and inflammatory toxicities. This occurs because checkpoint blockade 'unleashes' the immune system by removing inhibitory controls. While this can be beneficial for attacking tumors, it also increases the risk of the immune system attacking healthy tissues, leading to autoimmune-like side effects. Option (A) is incorrect; checkpoint blockade aims to *enhance* immune responses, not suppress them generally, though some immune dysregulation can occur. Option (C) while allergic reactions are possible with any antibody therapy, autoimmunity is a more characteristic and significant side effect of checkpoint blockade itself. Option (D) is incorrect; the aim is to *reduce* tumor progression. Option (E) is not the primary or characteristic side effect of checkpoint blockade; it's more related to cytotoxic chemotherapy or radiation."
+  }
+]
