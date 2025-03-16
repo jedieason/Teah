@@ -1,6 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  signOut, 
+  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence 
+} from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,9 +29,10 @@ const signInButtons = document.querySelectorAll(".login-button");
 const signOutButtons = document.querySelectorAll(".signOutButton");
 const userInfos = document.querySelectorAll(".user-info");
 
-// 登入函式
+// 登入函式，先設定使用 local persistence
 const userSignIn = async () => {
   try {
+    await setPersistence(auth, browserLocalPersistence);
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     // 登入成功後隱藏所有登入按鈕並顯示使用者資訊
