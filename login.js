@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -23,26 +23,10 @@ const userInfos = document.querySelectorAll(".user-info");
 const userButtons = document.querySelectorAll(".user-button");
 const userButtonsHomepage = document.querySelectorAll(".user-button-homepage");
 
+// 使用 redirect 登入方式
 const userSignIn = async () => {
   try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    // 登入成功後隱藏所有登入按鈕並顯示使用者資訊
-    signInButtons.forEach(button => button.style.display = "none");
-    userInfos.forEach(info => {
-      info.style.display = "block";
-      const userButton = info.querySelector(".user-button");
-      const userButtonHomepage = info.querySelector(".user-button-homepage");
-      if (userButton) {
-        userButton.src = user.photoURL;
-        userButton.style.display = "block";
-      }
-      if (userButtonHomepage) {
-        userButtonHomepage.src = user.photoURL;
-        userButtonHomepage.style.display = "block";
-      }
-    });
-    console.log(user);
+    await signInWithRedirect(auth, provider);
   } catch (error) {
     console.error(`Error ${error.code}: ${error.message}`);
   }
@@ -72,7 +56,33 @@ const userSignOut = async () => {
   }
 };
 
-// 監聽認證狀態變化
+// 處理從 redirect 回來的結果
+getRedirectResult(auth)
+  .then((result) => {
+    if (result && result.user) {
+      // 登入成功後隱藏所有登入按鈕並顯示使用者資訊
+      signInButtons.forEach(button => button.style.display = "none");
+      userInfos.forEach(info => {
+        info.style.display = "block";
+        const userButton = info.querySelector(".user-button");
+        const userButtonHomepage = info.querySelector(".user-button-homepage");
+        if (userButton) {
+          userButton.src = result.user.photoURL;
+          userButton.style.display = "block";
+        }
+        if (userButtonHomepage) {
+          userButtonHomepage.src = result.user.photoURL;
+          userButtonHomepage.style.display = "block";
+        }
+      });
+      console.log(result.user);
+    }
+  })
+  .catch((error) => {
+    console.error(`Redirect error: ${error.message}`);
+  });
+
+// 監聽認證狀態變化（除 redirect 之外的登入狀態變化）
 onAuthStateChanged(auth, (user) => {
   if (user) {
     signInButtons.forEach(button => button.style.display = "none");
