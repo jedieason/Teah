@@ -20,9 +20,8 @@ const provider = new GoogleAuthProvider();
 const signInButtons = document.querySelectorAll(".login-button");
 const signOutButtons = document.querySelectorAll(".signOutButton");
 const userInfos = document.querySelectorAll(".user-info");
-const userButtons = document.querySelectorAll(".user-button");
-const userButtonsHomepage = document.querySelectorAll(".user-button-homepage");
 
+// 登入函式
 const userSignIn = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
@@ -48,6 +47,7 @@ const userSignIn = async () => {
   }
 };
 
+// 登出函式
 const userSignOut = async () => {
   try {
     await signOut(auth);
@@ -72,41 +72,6 @@ const userSignOut = async () => {
   }
 };
 
-// 監聽認證狀態變化
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    signInButtons.forEach(button => button.style.display = "none");
-    userInfos.forEach(info => {
-      info.style.display = "block";
-      const userButton = info.querySelector(".user-button");
-      const userButtonHomepage = info.querySelector(".user-button-homepage");
-      if (userButton) {
-        userButton.src = user.photoURL;
-        userButton.style.display = "block";
-      }
-      if (userButtonHomepage) {
-        userButtonHomepage.src = user.photoURL;
-        userButtonHomepage.style.display = "block";
-      }
-    });
-  } else {
-    signInButtons.forEach(button => button.style.display = "block");
-    userInfos.forEach(info => {
-      info.style.display = "none";
-      const userButton = info.querySelector(".user-button");
-      const userButtonHomepage = info.querySelector(".user-button-homepage");
-      if (userButton) {
-        userButton.src = "";
-        userButton.style.display = "none";
-      }
-      if (userButtonHomepage) {
-        userButtonHomepage.src = "";
-        userButtonHomepage.style.display = "none";
-      }
-    });
-  }
-});
-
 // 為所有登入按鈕添加事件監聽器
 signInButtons.forEach(button => {
   button.addEventListener('click', userSignIn);
@@ -117,7 +82,43 @@ signOutButtons.forEach(button => {
   button.addEventListener('click', userSignOut);
 });
 
-// 初始載入時隱藏所有使用者資訊
+// 等待 DOM 完全載入後執行初始化及認證狀態監聽
 document.addEventListener('DOMContentLoaded', () => {
+  // 初始載入時隱藏所有使用者資訊
   userInfos.forEach(info => info.style.display = "none");
+
+  // 綁定認證狀態監聽器
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      signInButtons.forEach(button => button.style.display = "none");
+      userInfos.forEach(info => {
+        info.style.display = "block";
+        const userButton = info.querySelector(".user-button");
+        const userButtonHomepage = info.querySelector(".user-button-homepage");
+        if (userButton) {
+          userButton.src = user.photoURL;
+          userButton.style.display = "block";
+        }
+        if (userButtonHomepage) {
+          userButtonHomepage.src = user.photoURL;
+          userButtonHomepage.style.display = "block";
+        }
+      });
+    } else {
+      signInButtons.forEach(button => button.style.display = "block");
+      userInfos.forEach(info => {
+        info.style.display = "none";
+        const userButton = info.querySelector(".user-button");
+        const userButtonHomepage = info.querySelector(".user-button-homepage");
+        if (userButton) {
+          userButton.src = "";
+          userButton.style.display = "none";
+        }
+        if (userButtonHomepage) {
+          userButtonHomepage.src = "";
+          userButtonHomepage.style.display = "none";
+        }
+      });
+    }
+  });
 });
