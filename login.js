@@ -64,12 +64,7 @@ const userSignOut = async () => {
     signInButtons.forEach(button => button.style.display = "block");
     userInfos.forEach(info => {
       info.style.display = "none";
-      const userButton = info.querySelector(".user-button");
       const userButtonHomepage = info.querySelector(".user-button-homepage");
-      if (userButton) {
-        userButton.src = "";
-        userButton.style.display = "none";
-      }
       if (userButtonHomepage) {
         userButtonHomepage.src = "";
         userButtonHomepage.style.display = "none";
