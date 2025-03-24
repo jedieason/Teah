@@ -1,0 +1,399 @@
+
+[
+  {
+    "question": "Vaccination is a way to manipulate immune response. Which of the following statements is correct?",
+    "options": {
+      "A": "Using a live vaccine is better than using a killed vaccine because it involves MHC II antigen presentation.",
+      "B": "The variolation introduced by the Chinese in 16th century was, in particular, the same as the vaccination introduced by Edward Jenner.",
+      "C": "The process of making a traditionally labor-intensive attenuated live vaccine using non-human cell line can be sped up using recombinant DNA technology.",
+      "D": "Although a peptide-based vaccine is safer, it is less effective than a live vaccine."
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "Brunet's postulate on the clonal selection has laid the foundations of adaptive immunity. Based on clonal selection, which is not correct?",
+    "options": {
+      "A": "A progenitor cell can generate a large number of lymphocytes, each with different specificity, including self-reactive and non-self reactive.",
+      "B": "Once mature, a specific lymphocyte can be activated, proliferate, differentiate, and form a clone of effector cells.",
+      "C": "If a transplantation (different strain) occurs during fetus stage, it won't be rejected.",
+      "D": "The ability to differentiate self and non-self is hereditary."
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Tyrosine signaling is very important in immunology. Which of the statements about tyrosine phosphorylation is incorrect?",
+    "options": {
+      "A": "Tyrosine on the receptor is phosphorylated for initiation.",
+      "B": "Scaffold protein is phosphorylated to recruit downstream molecules.",
+      "C": "When the phosphate is removed, the signal will be terminated.",
+      "D": "Non-tyrosine kinase receptors use intracellular kinase domain to phosphorylate it downstream molecules."
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "AMPs (antimicrobial peptides) are involved in innate immunity. Which of the following description concerning AMPs is not correct?",
+    "options": {
+      "A": "AMPs can be secreted by the epithelium cells of lung and guts.",
+      "B": "Cathelithidin, defensins, lysozymes are all AMPs.",
+      "C": "AMPs are amphipathic and bear a hydrophilic end and a hydrophobic end.",
+      "D": "AMPs are only activated when being cleaved by the protease."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following is not correct?",
+    "options": {
+      "A": "Upon activation, ITAM 會 Recruit kinase, ITIM 會 Recruit phosphatase",
+      "B": "TCR有10個ITAM,BCR有2個ITAM",
+      "D": "If a new synthetic TCR has an ITIM in its intracellular domain, the activation of the TCR will down-regulate the signaling pathway."
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "immunity suppression drugs, which is not correct?",
+    "options": {
+      "A": "Cyclosporin 用 $Ca^{2+}$ 使 NFkB 失去作用",
+      "B": "類固醇進核使細胞介素無法轉錄",
+      "C": "Anti IL-6 antigen 使免疫細胞不分泌細胞介素",
+      "D": "Anti-TNF α 使之失去作用"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "(原題目為英文)關於MZB(marginal zone B-cell)哪項正確?",
+    "options": {
+      "A": "Fetus 就有。",
+      "B": "對 Carbohydrate antigen 不反應。",
+      "C": "主要分泌 IgG。",
+      "D": "Replaced from bone marrow.",
+      "E": "Primary location is spleen."
+    },
+    "answer": "E",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following immunodeficiency has no B, T and NK cells in both mice and human?",
+    "options": {
+      "A": "RAG1 deficiency.",
+      "B": "RAG2 deficiency.",
+      "C": "IL-7 receptor deficiency.",
+      "D": "Artemis deficiency.",
+      "E": "ADA deficiency."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following is NOT involved in positive selection?",
+    "options": {
+      "A": "CD4 co-receptor.",
+      "B": "Macrophages in thymus.",
+      "C": "MHC class II on thymic epithelial cells.",
+      "D": "Peptides on MHC class I.",
+      "E": "Thymic cortical epithelial cells."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following is the receptor of CCL21?",
+    "options": {
+      "A": "CCR1.",
+      "B": "CCR7.",
+      "C": "CXCR4.",
+      "D": "CXCR5.",
+      "E": "CXCR1."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following molecule is NOT involved in T lymphocyte migration?",
+    "options": {
+      "A": "CD-4.",
+      "B": "GlyCAM-1.",
+      "C": "L-selectin.",
+      "D": "LFA-1.",
+      "E": "ICAM-1."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "STAT-6 會使 T細胞分化成甚麼細胞?",
+    "options": {
+      "A": "$T_{H}1$.",
+      "B": "$T_{H}2$.",
+      "C": "$T_{H}17$.",
+      "D": "$T_{FH}$.",
+      "E": "$T_{reg}$."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "$T_{H}1$ 主要是針對甚麼細胞活化?",
+    "options": {
+      "A": "Macrophage.",
+      "B": "Neutrophil."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "活化的 CD8 T 細胞不會釋放下列何種物質?",
+    "options": {
+      "A": "IL-4.",
+      "B": "Perforin.",
+      "C": "IFN-γ.",
+      "D": "TNF-α.",
+      "E": "Granzymes."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "The one which reacts in BCR recombination?",
+    "options": {
+      "A": "TdT.",
+      "B": "DNA polymerase.",
+      "C": "DNA exonuclease.",
+      "D": "AID.",
+      "E": "V(D)J recombinase."
+    },
+    "answer": "E",
+    "explanation": ""
+  },
+  {
+    "question": "MHC genes are highly polymorphic. During TCR and MHC recognition, TCR binds to the peptide fit in the groove. Which one else does TCR bond?",
+    "options": {
+      "A": "Anchor peptide.",
+      "C": "the β2 microglobulin.",
+      "D": "the α helix of MHC."
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "MHC class 2 is composed of _____ chain, and it presents antigen to _____ T cells",
+    "options": {
+      "A": "α and β; CD4.",
+      "B": "α and β2 microglobulin; CD4.",
+      "C": "α and β; CD8.",
+      "D": "α and β2 microglobulin; CD8.",
+      "E": "α and β; γ:δ."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Identify the mismatched pair:",
+    "options": {
+      "A": "B lymphocyte - phagocytosis.",
+      "C": "Neutrophil – inflammation."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Matching: pick up the right answer from the below list. (single choice, 1 point each)\n(1) Anaphylaxis\n(2) Contact dermatitis\n(3) Stevens-Johnson syndrome\n(4) Serum sickness",
+    "options": {
+      "A": "Type I hypersensitivity",
+      "B": "Type II hypersensitivity",
+      "C": "Type III hypersensitivity",
+      "D": "Both Type II and Type III hypersensitivity",
+      "E": "Type I, II and III hypersensitivity",
+      "F": "Type IV hypersensitivity",
+      "G": "All of the Type I, II, III and IV hypersensitivity",
+      "H": "None of any type of hypersensitivity"
+    },
+    "answer": "A",
+    "explanation": "Question Group: Matching: pick up the right answer from the below list. (single choice, 1 point each)\n(1) Anaphylaxis\n(2) Contact dermatitis\n(3) Stevens-Johnson syndrome\n(4) Serum sickness"
+  },
+  {
+    "question": "For each of the following select the most appropriate characteristic listed below.\n(a) Experimental allergic encephalomyelitis (EAE)",
+    "options": {
+      "1": "Auto-antibodies to acetylcholine receptor",
+      "2": "$T_{H}1$-cell reaction to antigens",
+      "3": "Autoimmunity due to lack of regulatory T cell activity",
+      "4": "An autoimmune disease due to T cell response to neurons",
+      "5": "Induced by injection of myelin basic protein plus complete Freund's adjuvant",
+      "6": "Auto-antibodies to basement membrane",
+      "7": "Auto-antibodies to DNA and DNA-associated protein",
+      "8": "Induced by injection of acetylcholine receptors",
+      "9": "T-cell response to pancreatic β cell",
+      "10": "Anti-bacteria cell wall antibody cross-react with cardiac tissue",
+      "11": "Associated with HLA-B27",
+      "12": "Cytotoxic T cell response to thyroid tissues",
+      "13": "Baruj Benacerraf",
+      "14": "G. Snell",
+      "15": "P. Doherty",
+      "16": "D. Baltimore",
+      "17": "S. Tonegawa"
+    },
+    "answer": "5",
+    "explanation": "Question Group: For each of the following select the most appropriate characteristic listed below.\n(a) Experimental allergic encephalomyelitis (EAE)\n(b) Inflammatory bowel disease\n(c) Myasthenia gravis\n(d) The scientist who discovered MHC restriction and won Nobel prize"
+  },
+  {
+    "question": "For each of the following select the most appropriate characteristic listed below.\n(b) Inflammatory bowel disease",
+    "options": {
+      "1": "Auto-antibodies to acetylcholine receptor",
+      "2": "$T_{H}1$-cell reaction to antigens",
+      "3": "Autoimmunity due to lack of regulatory T cell activity",
+      "4": "An autoimmune disease due to T cell response to neurons",
+      "5": "Induced by injection of myelin basic protein plus complete Freund's adjuvant",
+      "6": "Auto-antibodies to basement membrane",
+      "7": "Auto-antibodies to DNA and DNA-associated protein",
+      "8": "Induced by injection of acetylcholine receptors",
+      "9": "T-cell response to pancreatic β cell",
+      "10": "Anti-bacteria cell wall antibody cross-react with cardiac tissue",
+      "11": "Associated with HLA-B27",
+      "12": "Cytotoxic T cell response to thyroid tissues",
+      "13": "Baruj Benacerraf",
+      "14": "G. Snell",
+      "15": "P. Doherty",
+      "16": "D. Baltimore",
+      "17": "S. Tonegawa"
+    },
+    "answer": "3",
+    "explanation": "Question Group: For each of the following select the most appropriate characteristic listed below.\n(a) Experimental allergic encephalomyelitis (EAE)\n(b) Inflammatory bowel disease\n(c) Myasthenia gravis\n(d) The scientist who discovered MHC restriction and won Nobel prize"
+  },
+  {
+    "question": "For each of the following select the most appropriate characteristic listed below.\n(c) Myasthenia gravis",
+    "options": {
+      "1": "Auto-antibodies to acetylcholine receptor",
+      "2": "$T_{H}1$-cell reaction to antigens",
+      "3": "Autoimmunity due to lack of regulatory T cell activity",
+      "4": "An autoimmune disease due to T cell response to neurons",
+      "5": "Induced by injection of myelin basic protein plus complete Freund's adjuvant",
+      "6": "Auto-antibodies to basement membrane",
+      "7": "Auto-antibodies to DNA and DNA-associated protein",
+      "8": "Induced by injection of acetylcholine receptors",
+      "9": "T-cell response to pancreatic β cell",
+      "10": "Anti-bacteria cell wall antibody cross-react with cardiac tissue",
+      "11": "Associated with HLA-B27",
+      "12": "Cytotoxic T cell response to thyroid tissues",
+      "13": "Baruj Benacerraf",
+      "14": "G. Snell",
+      "15": "P. Doherty",
+      "16": "D. Baltimore",
+      "17": "S. Tonegawa"
+    },
+    "answer": "1",
+    "explanation": "Question Group: For each of the following select the most appropriate characteristic listed below.\n(a) Experimental allergic encephalomyelitis (EAE)\n(b) Inflammatory bowel disease\n(c) Myasthenia gravis\n(d) The scientist who discovered MHC restriction and won Nobel prize"
+  },
+  {
+    "question": "For each of the following select the most appropriate characteristic listed below.\n(d) The scientist who discovered MHC restriction and won Nobel prize",
+    "options": {
+      "1": "Auto-antibodies to acetylcholine receptor",
+      "2": "$T_{H}1$-cell reaction to antigens",
+      "3": "Autoimmunity due to lack of regulatory T cell activity",
+      "4": "An autoimmune disease due to T cell response to neurons",
+      "5": "Induced by injection of myelin basic protein plus complete Freund's adjuvant",
+      "6": "Auto-antibodies to basement membrane",
+      "7": "Auto-antibodies to DNA and DNA-associated protein",
+      "8": "Induced by injection of acetylcholine receptors",
+      "9": "T-cell response to pancreatic β cell",
+      "10": "Anti-bacteria cell wall antibody cross-react with cardiac tissue",
+      "11": "Associated with HLA-B27",
+      "12": "Cytotoxic T cell response to thyroid tissues",
+      "13": "Baruj Benacerraf",
+      "14": "G. Snell",
+      "15": "P. Doherty",
+      "16": "D. Baltimore",
+      "17": "S. Tonegawa"
+    },
+    "answer": "15",
+    "explanation": "Question Group: For each of the following select the most appropriate characteristic listed below.\n(a) Experimental allergic encephalomyelitis (EAE)\n(b) Inflammatory bowel disease\n(c) Myasthenia gravis\n(d) The scientist who discovered MHC restriction and won Nobel prize"
+  },
+  {
+    "question": "Which of the following molecules is recently found to be associated with severe drug hypersensitivity reaction, Stevens-Johnson syndrome, to anti-seizure drug carbamazepine?",
+    "options": {
+      "A": "CTLA4",
+      "B": "RORYT",
+      "C": "HLA",
+      "D": "Foxp-3",
+      "E": "Interferon gamma (IFN-γ)"
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "You cross two inbred strain mice A and B to have F1, then you further cross these F1 to generate F2. If you transplant the skin graft from parent A to one of the F2 mice, what will be the chance the skin graft is rejected?",
+    "options": {
+      "A": "100%",
+      "B": "75%",
+      "C": "50%",
+      "D": "25%",
+      "E": "0%"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statements about “X-linked hyper IgM syndrome” is incorrect?",
+    "options": {
+      "A": "This is immunodeficiency affects both B cell and T cell",
+      "B": "There is a defect in CD40L, a critical molecule expressed on T cells",
+      "C": "Because CD40-CD40L is important for B cell class-switching, IgM is increased and IgG is decreased",
+      "D": "Patients are usually asymptomatic and only develops opportunistic infection",
+      "E": "Besides extracellular bacteria, protection against intracellular pathogen is also impaired"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statements about influenza virus is incorrect?",
+    "options": {
+      "A": "Severe epidemic is caused by antigenic drift.",
+      "B": "Influenza is an RNA virus.",
+      "C": "Low fidelity of RNA polymerase cause mutations in antigenic drift.",
+      "D": "Influenza does not integrate its genome into host DNA.",
+      "E": "Influenza virus is smaller than other larger DNA viruses."
+    },
+    "answer": "E",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following immunodeficiency has no B, T and NK cells in both mice and human?",
+    "options": {
+      "A": "RAG1 deficiency",
+      "B": "RAG2 deficiency",
+      "C": "IL-7 receptor deficiency",
+      "D": "Artemis deficiency",
+      "E": "ADA deficiency (B98 MT II, B92 MT III )"
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statement about adoptive T cell therapy for cancer is incorrect?",
+    "options": {
+      "A": "Endogenous T cells specific for tumor antigen can be expanded for transfusion in patients",
+      "B": "TCR gene transfer can produce different T cells with the same antigen specificity",
+      "C": "CAR-T cell therapy has been successful in treating hematological cancers",
+      "D": "CAR-T cells are not genetically modified T cells",
+      "E": "Quantity of infused T cells is as important as quantity of cell products"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "About immune checkpoint therapy, which one is incorrect?",
+    "options": {
+      "A": "It works by activating exhausted tumor-infiltrating T cells",
+      "B": "Tumors PD-L1 expression can be used to predict responsiveness toward therapy",
+      "C": "Tumors with high mutation burden are usually more immunogenic thus more responsive",
+      "D": "Tumors cells express not only PD-1 but other inhibitory molecules",
+      "E": "Combination treatment of adoptive T cell therapy with checkpoint blockade is synergistic"
+    },
+    "answer": "D",
+    "explanation": ""
+  }
+]

@@ -1,0 +1,260 @@
+
+[
+  {
+    "question": "Which subset of $CD4^+$ T cells mediate selection of high-affinity mutant B lymphocytes in the germinal center?",
+    "options": {
+      "A": "$T_{H1}$",
+      "B": "$T_{H2}$",
+      "C": "$T_{H17}$",
+      "D": "$T_{FH}$",
+      "E": "$T_{reg}$"
+    },
+    "answer": "D",
+    "explanation": "TFH 在生發中心(GC)調控親和力成熟(affinity maturation)、B細胞活化、類型轉換(class switching)。\n［出自考古第1題］"
+  },
+  {
+    "question": "The block in the stage of double positive (DP) T cell to single positive (SP) $CD8^+$ T cell will be caused by a deficiency in which of the following protein?",
+    "options": {
+      "A": "Btk",
+      "B": "FoxP3",
+      "C": "Ikaros",
+      "D": "PU.1",
+      "E": "TAP-1"
+    },
+    "answer": "E",
+    "explanation": "(E) TAP 缺失，會使得抗原無法裝載到 MHCI上，從而抑制 $CD8^+$ T 細胞產生。見共筆 Vol.2 p.7、Vol.2 p.37、Vol.4 p.19\n［出自考古第2題］"
+  },
+  {
+    "question": "Which of the following is expressed in the medulla of the thymus and promotes the expression of proteins normally expressed in peripheral tissues?",
+    "options": {
+      "A": "AIRE",
+      "B": "BAFF",
+      "C": "Btk"
+    },
+    "answer": "A",
+    "explanation": "(A) AIRE (autoimmune regulator)可以協助表現正常情況下僅存在於其他組織的蛋白質，幫助胸腺進行負選擇，以篩選掉可能會攻擊周邊組織的T細胞，為建立自體耐受性重要的一環。(見共筆 Vol.2 p.35)\n［出自考古第3題］"
+  },
+  {
+    "question": "Which of the following description about marginal zone B cell is incorrect?",
+    "options": {
+      "A": "first formed in fetal",
+      "B": "located in the spleen",
+      "C": "long lived",
+      "D": "recognize carbohydrate antigens",
+      "E": "recognize protein antigens"
+    },
+    "answer": "A",
+    "explanation": "(A) 選項應改為 first formed after birth(出生後才有)。\n［出自考古第4題］"
+  },
+  {
+    "question": "Which is not B cells tumor?",
+    "options": {
+      "A": "Waldenström's macroglobulinemia",
+      "B": "Sézary syndrome",
+      "C": "Multiple myeloma",
+      "D": "Mantle cell lymphoma",
+      "E": "Hodgkin's lymphoma"
+    },
+    "answer": "B",
+    "explanation": "(A)(C)(D)(E) 皆屬於B細胞腫瘤。(見共筆 Vol.2 p.18)\n(B)屬於T細胞腫瘤。\n［出自考古第5題］"
+  },
+  {
+    "question": "Which one is not an example of secondary immunodeficiency?",
+    "options": {
+      "A": "medical device transplantation",
+      "B": "malnutrition",
+      "C": "destruction of spleen",
+      "D": "XLA"
+    },
+    "answer": "D",
+    "explanation": "(D) XLA: X-linked agammaglobulinemia (genetic disease) primary immunodeficiency\n［出自考古第6題］"
+  },
+  {
+    "question": "有關免疫球蛋白的輕鏈何者正確?",
+    "options": {
+      "A": "人類是λ light chain。",
+      "B": "λ light chain 和 κ light chain 功能上沒差異。",
+      "C": "一個抗體可以由兩條λ light chain、兩條κ light chain 或λ light chain與κ light chain 各一條組成。"
+    },
+    "answer": "B",
+    "explanation": "(B) 兩者的功能確實沒有差異。\n［出自考古第7題］"
+  },
+  {
+    "question": "Which of the following is correct about adaptive immune receptors?",
+    "options": {
+      "A": "Binding epitope of Ig is structurally different from TCR.",
+      "B": "Binding of TCR with MHC I is different from binding with MHC II.",
+      "C": "CDR3 of TCR α and β chains forms a peripheral binding site that binds with β chain of MHC molecules.",
+      "D": "CDR3 of TCR consists of both α and β chains.",
+      "E": "Above statements are all correct."
+    },
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "explanation": "(A) Ig 是直接結合抗原,TCR 是結合 MHC 與其上的多肽片段,兩者不同。\n(B) MHCI和 MHC II 的多肽片段不同。\n(D) 正確\n［出自考古第8題］"
+  },
+  {
+    "question": "Chemokines are known for their ability to attract leukocytes. Which of the following descriptions about chemokines are true?",
+    "options": {
+      "A": "Chemokines can bind to tissue matrix proteins.",
+      "B": "Chemokines can activate immune cells to kill pathogens.",
+      "C": "Chemokines in general can bind to more than one specific chemokine receptors.",
+      "D": "Leukocytes respond to chemokines through expression of adhesion molecules."
+    },
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "explanation": "(A)(D) Chemokines bound to the vascular endothelium then signal the monocyte to migrate across the endothelium into the underlying tissue。\n［出自考古第9題］"
+  },
+  {
+    "question": "Naive $CD8^+$ T cells can be activated through two different ways. Concerning their activation, which of the following statements are incorrect?",
+    "options": {
+      "A": "Naive $CD8^+$ T cells can be activated directly by IL-2 and IL-18.",
+      "B": "Naive $CD8^+$ T cells activated to become effector cells does not need $CD4^+$ T cell help.",
+      "C": "Naive $CD8^+$ T cells activated by cytokines are equipped to kill targets.",
+      "D": "Naive $CD8^+$ T cells activated through TCR are equipped to secret cytokine and kill target cells."
+    },
+    "answer": [
+      "A",
+      "C"
+    ],
+    "explanation": "(A) Naïve $CD8^+$ T cells can be activated directly by potent APCs through their T-cell receptor or through the action of cytokines (IL-12 and IL-18)。\n(C) 透過細胞介素(cytokine) IL-12 與IL-18 活化的 $CD8^+$ T 細胞主要產生 IFN-γ 來活化巨噬細胞，並提升其他細胞抵抗細菌或病毒的能力，但自身不直接參與病菌的清除，類似旁觀者(bystander)的輔助角色。\n［出自考古第10題］"
+  },
+  {
+    "question": "Which of the following molecules is recently found to be associated with severe drug hypersensitivity reaction, Stevens-Johnson syndrome, to anti-seizure drug carbamazepine?",
+    "options": {
+      "A": "HLA",
+      "B": "RORγT",
+      "C": "CTLA4",
+      "D": "Foxp-3",
+      "E": "IFN-γ"
+    },
+    "answer": "A",
+    "explanation": "11. Stevens-Johnson syndrome 是一個嚴重的皮膚過敏性疾病,臨床上常發生於病人對藥物的過敏反應,嚴重可能致死。先前在東亞人種的研究發現 HLA-B*1502 和對藥物 carbamazepine (CBZ)引起的 Steven-Johnson syndrome 有強烈相關,目前遺傳諮詢或是用藥前同意書都會調查是否帶有HLA-B*1502 allele。另外 HLA-B*5801 在歐洲人種的研究中被發現與藥物 allopurinol 有關。\n［出自考古第11題］"
+  },
+  {
+    "question": "The inclusion of GM-CSF in tumor vaccine is to?",
+    "options": {
+      "A": "Up-regulate MHC molecules in tumor cells",
+      "B": "Enhance NK cytotoxic activity",
+      "C": "Enhance $CD8^+$ cytotoxic T cell killing activity",
+      "D": "Recruit and enhance dendritic cell function",
+      "E": "Enhance B cell to produce tumor specific antibody"
+    },
+    "answer": "D",
+    "explanation": "12. Some cytokines have distant effects. IL-3 and GM-CSF are released by $T_{H1}$, $T_{H2}$, and $T_{H17}$ cells and act on bone marrow cells to stimulate the production of macrophages and granulocytes, which are important innate effector cells in both antibody- and T-cell-mediated immunity. IL-3 and GM-CSF also stimulate the production of dendritic cells from bone marrow precursors。\n［出自考古第12題］"
+  },
+  {
+    "question": "B細胞和T細胞辨識相同種類抗原。",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "F",
+    "explanation": "1. Ig 辨認的物質為 macromolecules and small chemicals。TCR 辨認 linear peptide-MHC complex。\n［出自考古第1題］"
+  },
+  {
+    "question": "T cells and B cells require MHC molecules for recognition of peptide antigens.",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "F",
+    "explanation": "2. B細胞不需要 MHC 來辨認多肽抗原。\n［出自考古第2題］"
+  },
+  {
+    "question": "The T-cell receptor has a structural similarity to an immunoglobulin Fab segment.",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "T",
+    "explanation": "3. 兩者都有三個互補性決定區(CDR)。\n［出自考古第3題］"
+  },
+  {
+    "question": "配合題 1. $T_{H1}$ : ______",
+    "options": {
+      "A": "IL-4",
+      "B": "IFN-γ & IL-12",
+      "C": "IL-2",
+      "D": "IL-10"
+    },
+    "answer": "B",
+    "explanation": "Fate-specifying cytokines for $T_{H1}$ cells are IFN-γ and IL-12。\n［出自考古配合題1-(1)］"
+  },
+  {
+    "question": "配合題 1. $T_{H2}$ : ______",
+    "options": {
+      "A": "IL-4",
+      "B": "IFN-γ & IL-12",
+      "C": "IL-2",
+      "D": "IL-10"
+    },
+    "answer": "A",
+    "explanation": "Fate-specifying cytokines for $T_{H2}$ cells are IL-4。\n［出自考古配合題1-(2)］"
+  },
+  {
+    "question": "配合題 2. $T_{H1}$ : ______",
+    "options": {
+      "A": "T-bet",
+      "B": "NF-κB",
+      "C": "GATA3",
+      "D": "Blimp-1",
+      "E": "RORγt",
+      "F": "FixP3",
+      "G": "Bcl-2",
+      "H": "Bcl-6"
+    },
+    "answer": "A",
+    "explanation": "T-bet is the transcription factor for $T_{H1}$ cells。\n［出自考古配合題2-(1)］"
+  },
+  {
+    "question": "配合題 2. $T_{H2}$ : ______",
+    "options": {
+      "A": "T-bet",
+      "B": "NF-κB",
+      "C": "GATA3",
+      "D": "Blimp-1",
+      "E": "RORγt",
+      "F": "FixP3",
+      "G": "Bcl-2",
+      "H": "Bcl-6"
+    },
+    "answer": "C",
+    "explanation": "GATA3 is the transcription factor for $T_{H2}$ cells。\n［出自考古配合題2-(2)］"
+  },
+  {
+    "question": "配合題 3. contact hypersensitivity ______",
+    "options": {
+      "A": "Type I hypersensitivity",
+      "B": "Type II hypersensitivity",
+      "C": "Type III hypersensitivity",
+      "D": "both Type II and Type III hypersensitivity",
+      "E": "Type I, II and III hypersensitivity",
+      "F": "Type IV hypersensitivity",
+      "G": "all of the Type I, II, III and IV hypersensitivity",
+      "H": "none of any type of hypersensitivity"
+    },
+    "answer": "F",
+    "explanation": "(1) 接觸性皮膚炎一般可分為刺激性與過敏性接觸性皮膚炎。常見的過敏性物質為有毒植物(包括毒常春藤、毒橡樹、漆樹等)。為 Type IV hypersensitivity。\n［出自考古配合題3-(1)］"
+  },
+  {
+    "question": "配合題 3. serum sickness (inject animal serum) ______",
+    "options": {
+      "A": "Type I hypersensitivity",
+      "B": "Type II hypersensitivity",
+      "C": "Type III hypersensitivity",
+      "D": "both Type II and Type III hypersensitivity",
+      "E": "Type I, II and III hypersensitivity",
+      "F": "Type IV hypersensitivity",
+      "G": "all of the Type I, II, III and IV hypersensitivity",
+      "H": "none of any type of hypersensitivity"
+    },
+    "answer": "C",
+    "explanation": "(2) Type III hypersensitivity 由 IgG 造成,針對可溶性抗原(soluble antigen,形成 immune complex)。例如 serum sickness (inject animal serum)。\n［出自考古配合題3-(2)］"
+  }
+]

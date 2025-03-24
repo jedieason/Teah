@@ -1,0 +1,616 @@
+
+[
+{
+"question": "AMPs製造出來時通常處於不活化狀態(Pro-AMP)，需要經蛋白酶切割pro-region後才能作用，稱為proteolysis。",
+"options": {
+"A": "AMPS製造出來時通常處於不活化狀態(Pro-AMP)，需要經蛋白酶切割pro-region後才能作用，稱為proteolysis。",
+"B": "AMPs(抗微生物肽)由上皮組織與吞噬細胞製造。如:皮膚中的stratum spinosum、腸上皮中的Paneth cell。",
+"C": "AMPs為親疏水兩重性(amphipathic)多肽，可以穿入細胞膜並形成穿孔，而非細胞壁。",
+"D": "AMPs屬於第一道防線，不具專一性。當細菌出現時，Pro-AMP才會被切割活化，因此才不會殺死host cell。另一種說法是，細菌細胞膜的結構相對於host cell更容易吸引AMPs。",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "(A)AMPs製造出來時通常處於不活化狀態(Pro-AMP)，需要經蛋白酶切割pro-region後才能作用，稱為proteolysis。(B)AMPs(抗微生物肽)由上皮組織與吞噬細胞製造。如:皮膚中的stratumspinosum、腸上皮中的Panethcell。(C)AMPs為親疏水兩重性(amphipathic)多肽，可以穿入細胞膜並形成穿孔，而非細胞壁。(D)AMPs屬於第一道防線，不具專一性。當細菌出現時，Pro-AMP才會被切割活化，因此才不會殺死hostcell。另一種說法是，細菌細胞膜的結構相對於hostcell更容易吸引AMPs。參考資料:免疫學共筆Vol1.p27-29 [出自考古第1題]"
+},
+{
+"question": "下列關於補體系統的敘述何者正確？",
+"options": {
+"A": "C1r和C1s與MASP1、MASP2結構相近。",
+"B": "MBL則是結構與C1q相近。",
+"C": "MBL和ficolin都在肝臟製造，非腎臟。",
+"D": "C3b不是inhibitor。Inhibitor(調節蛋白)是CR1、FactorH，只有一般細胞上有。",
+"E": "C3a、C5a能促進吞噬細胞移動到感染、發炎區域。"
+},
+"answer": "C",
+"explanation": "(A)C1r和C1s與MASP1、MASP2結構相近。(B)MBL則是結構與C1q相近。(C)MBL和ficolin都在肝臟製造，非腎臟。(D)正確。(E)C3a、C5a能促進吞噬細胞移動到感染、發炎區域。參考資料:免疫學共筆Vol1.p29 [出自考古第2題]"
+},
+{
+"question": "關於TNF-α的敘述，下列何者正確？",
+"options": {
+"A": "正確",
+"B": "錯誤",
+"C": "Type I Interferons(IFN-I,包括IFN-α和IFN-β)是抗病毒的中一的重要細胞激素。TLR-3 & TLR-7 是負責偵測病毒 RNA的PRRs (模式識別受體),啟動抗病毒免疫反應",
+"D": "TNF-α 和IL-1β可以影響下視丘(Hypothalamus)的體溫調節中樞，誘發發燒。機制(未提):TNF-α 和 IL-1β 會促進前列腺素 E2 (PGE2)成→影響下視丘→提高體溫。",
+"E": "LPS 刺激 PRRs(如TLR4)→巨噬細胞大量釋放 TNF-α、IL-6、IL-1β。大量 IL-6 會促進凝血因子活化，導致彌散性血管內凝血(DIC, Disseminated Intravascular Coagulation),造成多重器官衰竭(MOF, Multi-Organ Failure)。"
+},
+"answer": "B",
+"explanation": "(A)正確。當身體組織受傷，巨噬細胞會釋放TNF-alpha讓血管通透性增加，同時出現局部血栓防止細菌擴散。(B)錯誤。見下圖,IL-6會和肝臟結合，誘導Acute-phaseprotein合成，而非腎臟。(C)TypeIInterferons(IFN-I,包括IFN-α和IFN-β)是抗病毒的中一的重要細胞激素。TLR-3&TLR-7是負責偵測病毒RNA的PRRs(模式識別受體),啟動抗病毒免疫反應(D)TNF-α和IL-1β可以影響下視丘(Hypothalamus)的體溫調節中樞，誘發發燒。機制(未提):TNF-α和IL-1β會促進前列腺素E2(PGE2)成→影響下視丘→提高體溫。(E)LPS刺激PRRs(如TLR4)→巨噬細胞大量釋放TNF-α、IL-6、IL-1β。大量IL-6會促進凝血因子活化，導致彌散性血管內凝血(DIC,DisseminatedIntravascularCoagulation),造成多重器官衰竭(MOF,Multi-OrganFailure)。參考資料:免疫學共筆Vol.1p53-55 [出自考古第3題]"
+},
+{
+"question": "關於NS4A與MAVS的交互作用，下列敘述何者正確？",
+"options": {
+"A": "RIG-I和MDA-5原本就負責辨識病毒RNA，但NS4A主要影響的是MAVS，不影響病毒RNA與RIG-I的結合。",
+"B": "如果MAVS聚合被促進，會增強IFN-a/β的產生，反而有助於抗病毒。但NS4A是病毒蛋白，目的是抑制MAVS，而非促進。",
+"C": "RIG-I需要病毒RNA來解除自我抑制(auto-inhibition)，但NS4A影響的是MAVS，不是RIG-I本身。",
+"D": "如果MAVS更容易與RIG-I/MDA-5結合，那抗病毒訊號會增強，但NS4A其實是在「阻斷」這個結合，幫助病毒逃脫。",
+"E": "正確。NS4A與MAVS的CARD結合後，會干擾MAVS的功能，使其無法與RIG-I/MDA-5結合，進而抑制抗病毒訊號的傳遞。"
+},
+"answer": "E",
+"explanation": "(A)RIG-I和MDA-5原本就負責辨識病毒RNA，但NS4A主要影響的是MAVS，不影響病毒RNA與RIG-I的結合。(B)如果MAVS聚合被促進，會增強IFN-α/β的產生，反而有助於抗病毒。但NS4A是病毒蛋白，目的是抑制MAVS，而非促進。(C)RIG-I需要病毒RNA來解除自我抑制(auto-inhibition)，但NS4A影響的是MAVS，不是RIG-I本身。(D)如果MAVS更容易與RIG-I/MDA-5結合，那抗病毒訊號會增強，但NS4A其實是在「阻斷」這個結合，幫助病毒逃脫。(E)正確。NS4A與MAVS的CARD結合後，會干擾MAVS的功能，使其無法與RIG-I/MDA-5結合，進而抑制抗病毒訊號的傳遞。參考資料:免疫學Vol1.p50 [出自考古第4題]"
+},
+{
+"question": "關於胞內細菌的敘述，下列何者正確？",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "有些胞內細菌被巨噬細胞吞噬後，可以利用各種方法來阻斷吞噬小體(phagosome)和溶體(lysosome)兩者融合以分解細菌的機制。例如結核桿菌(Mycobacterium tuberculosis)就無法被巨噬細胞完全消滅，因此只能將其暫時圍困住，時間長了仍有機會衝破封鎖造成疾病復發。",
+"E": "選項E"
+},
+"answer": "D",
+"explanation": "有些胞內細菌被巨噬細胞吞噬後，可以利用各種方法來阻斷吞噬小體(phagosome)和溶體(lysosome)兩者融合以分解細菌的機制。例如結核桿菌(Mycobacteriumtuberculosis)就無法被巨噬細胞完全消滅，因此只能將其暫時圍困住，時間長了仍有機會衝破封鎖造成疾病復發。參考資料:免疫學b11共筆Vol4.p14 [出自考古第5題]"
+},
+{
+"group_topic": "林志萱老師 - 一、選擇",
+"question": "關於淋巴器官的敘述，下列何者正確？",
+"options": {
+"A": "develop",
+"B": "hematopoiesis",
+"C": "develop and mature; are activated",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "C",
+"explanation": "(A)吞噬作用(phagocytosis)指的是細胞(如巨噬細胞和嗜中性球)吞入並殺死微生物的過程。(B)造血作用(hematopoiesis)指的是血球細胞的生成，這個過程發生在骨髓，而胸腺主要負責T細胞的成熟，不參與血球細胞的生成。(C)髓系前驅細胞(myeloidprogenitor)能夠分化出嗜中性球(neutrophil)，為先天免疫的一部分，主要負責吞噬和清除病原體。(D)肥大細胞(mastcells)造成過敏反應，透過去顆粒化(degranulation)釋放組織胺(histamine)等介質，引發過敏症狀。(E)適應性免疫(Adaptiveimmunity)是高度專一的免疫反應，包括B、T細胞的作用，可針對特定抗原產生免疫記憶。參考資料:林志萱老師Hostdefenseagainstinfection簡報p.9,Allergy&Hypersensitivity簡報p.7、8,B11共筆vol.4p.30 [出自考古第6題]"
+},
+{
+"group_topic": "林志萱老師 - 一、選擇",
+"question": "關於胸腺的敘述，下列何者正確？",
+"options": {
+"A": "phagocytosis",
+"B": "hematopoiesis: thymus",
+"C": "myeloid progenitor",
+"D": "mast cells",
+"E": "Adaptive immunity"
+},
+"answer": "B",
+"explanation": "初級淋巴器官是淋巴細胞發育與成熟的場所，包括骨髓和胸腺。B細胞在骨髓中發育和成熟，而T細胞則在胸腺中成熟。次級淋巴器官則是淋巴細胞執行免疫反應的地方，包括淋巴結、脾臟以及與黏膜相關的淋巴組織。淋巴細胞與抗原在這些地方相遇並被活化，進一步進行免疫反應。 [出自考古第7題]"
+},
+{
+"group_topic": "林志萱老師 - 一、選擇",
+"question": "關於先天性淋巴細胞(Innate Lymphoid Cells, ILCs)的敘述，下列何者錯誤？",
+"options": {
+"A": "先天性淋巴細胞(Innate Lymphoid Cells, ILCs)來自共同淋巴前驅細胞(Common Lymphoid Progenitor, CLP),而非髓系前驅細胞(myeloid progenitor)。",
+"B": "ILCs不表達T細胞受體(TCR)，與T細胞不同，但功能類似(尤其是CD4+ T cell)。",
+"C": "ILCs產生的細胞激素與作用的細胞和NK、$CD4^+$ T cell (TH1, TH2, TH17)與$CD8^+$ T cell 的功能類似",
+"D": "ILC2主要產生IL-5、IL-13，與過敏反應和對抗寄生蟲感染相關，而不是IFN-γ(IFN-γ主要由ILC1產生)。",
+"E": "ILC3產生IL-17和IL-22，活化嗜中性球(neutrophils)，以對抗細菌和真菌感染。"
+},
+"answer": "C",
+"explanation": "(A)先天性淋巴細胞(InnateLymphoidCells,ILCs)來自共同淋巴前驅細胞(CommonLymphoidProgenitor,CLP),而非髓系前驅細胞(myeloidprogenitor)。(B)ILCs不表達T細胞受體(TCR)，與T細胞不同，但功能類似(尤其是$CD4^+$Tcell)。(C)ILCs產生的細胞激素與作用的細胞和NK、$CD4^+$Tcell ($T_{H}1$,$T_{H}2$,$T_{H}17$)與$CD8^+$Tcell的功能類似(D)ILC2主要產生IL-5、IL-13，與過敏反應和對抗寄生蟲感染相關，而不是IFN-γ(IFN-γ主要由ILC1產生)。(E)ILC3產生IL-17和IL-22，活化嗜中性球(neutrophils)，以對抗細菌和真菌感染。參考資料:林志萱老師Hostdefenseagainstinfection簡報p.9、11 [出自考古第8題]"
+},
+{
+"group_topic": "林志萱老師 - 一、選擇",
+"question": "關於濾泡輔助型T細胞($T_{FH}$)的敘述，下列何者正確？",
+"options": {
+"A": "TH1 cell 主要針對細胞內病原體，分泌IFNγ來活化巨噬細胞(M1 macrophage),協助清除病原體。",
+"B": "TH2 cell 對抗蠕蟲、寄生蟲感染，會分泌IL-4、IL-5、IL-13，促進 B細胞產生IgE、活化 M2 macrophage 與嗜酸性球，並促進組織修復。",
+"C": "濾泡幫助型 T細胞($T_{FH}$, $T_{follicular helper cells}$)透過 IL-21、IL-4 來協助 B細胞類型轉換與親和力成熟。",
+"D": "調節性T細胞($T_{reg}$)透過 IL-10 和 TGF-β 抑制免疫反應，防止過度發炎和自身免疫反應。",
+"E": "細胞毒性T細胞(Cytotoxic T cell, CTL, $CD8^+$ T cell)負責毒殺被細胞內病原體感染的細胞(主要針對病毒感染),釋放穿孔素(perforin)和顆粒酶(granzyme)來誘導目標細胞凋亡。"
+},
+"answer": "C",
+"explanation": "(A)TH1cell主要針對細胞內病原體，分泌IFNγ來活化巨噬細胞(M1macrophage)，協助清除病原體。(B)TH2cell對抗蠕蟲、寄生蟲感染，會分泌IL-4、IL-5、IL-13，促進B細胞產生IgE、活化M2macrophage與嗜酸性球，並促進組織修復。(C)濾泡幫助型T細胞($T_{FH}$,$T_{follicularhelpercells}$)透過IL-21、IL-4來協助B細胞類型轉換與親和力成熟。(D)調節性T細胞($T_{reg}$)透過IL-10和TGF-β抑制免疫反應，防止過度發炎和自身免疫反應。(E)細胞毒性T細胞(CytotoxicTcell,CTL,$CD8^+$Tcell)負責毒殺被細胞內病原體感染的細胞(主要針對病毒感染),釋放穿孔素(perforin)和顆粒酶(granzyme)來誘導目標細胞凋亡。參考資料:林志萱老師Hostdefenseagainstinfection簡報p.18、22、24、25、29、30、33 [出自考古第9題]"
+},
+{
+"group_topic": "林志萱老師 - 一、選擇",
+"question": "關於抗原呈現細胞(Antigen-presenting cells, APCs)的敘述，下列何者正確？",
+"options": {
+"A": "the site of infection",
+"B": "the site of infection; secondary lymphoid organs; the site of infection",
+"C": "primary lymphoid organs",
+"D": "tertiary lymphoid organs",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "抗原呈現細胞(APCs,如樹突細胞)在感染部位捕捉抗原，然後移動到次級淋巴器官(如淋巴結、脾臟)。樹突細胞將抗原呈現給T細胞，啟動適應性免疫反應(adaptiveimmunity)。最後Teffectorcell(如TH1、TH2、CTLs)和B細胞分泌的抗體會循環回到感染部位，清除病原體。 [出自考古第10題]"
+},
+{
+"group_topic": "林志萱老師 - 一、選擇",
+"question": "關於肺炎鏈球菌(Streptococcus pneumoniae)的敘述，下列何者錯誤？",
+"options": {
+"A": "病毒潛伏(latency)指病毒在宿主細胞內處於非活躍狀態，但在宿主免疫系統受損時可以重新活化，例如HSV或HIV。",
+"B": "Antibody against one serotype of Streptococcus pneumoniae can protect against another serotype.",
+"C": "T細胞在適應性免疫中扮演核心角色，缺陷會影響B細胞的活化(如X-linked SCID),甚至影響先天免疫(如巨噬細胞活化)。",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "(A)病毒潛伏(latency)指病毒在宿主細胞內處於非活躍狀態，但在宿主免疫系統受損時可以重新活化，例如HSV或HIV。(B)Streptococcuspneumoniae(肺炎鏈球菌)有多種血清型(serotypes),不同血清型的莢膜多醣(capsularpolysaccharides)不同。肺炎鏈球菌為serotype-specific,針對一種血清型產生的抗體無法有效保護其他血清型，因此多價疫苗(如PCV13、PPSV23)需要涵蓋多種血清型來提供廣泛保護。(C)T細胞在適應性免疫中扮演核心角色，缺陷會影響B細胞的活化(如X-linkedSCID),甚至影響先天免疫(如巨噬細胞活化)。 [出自考古第11題]"
+},
+{
+"question": "關於免疫反應的敘述，下列何者錯誤？",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "於理想情形下,免疫系統對於有害之抗原(如感染源或腫瘤)應產生正常之免疫反應以清除之,而對無害之抗原(如無害物質、移植之器官或自體器官)則不應有免疫反應。故而對(B)選項而言,對於無害物質之正常免疫反應應屬有害(即過敏反應),免疫反應之缺失方為有利。(可參考Janeway'simmunobiology第十版,頁32) [出自考古第12題]"
+},
+{
+"question": "關於過敏反應的敘述，下列何者錯誤？",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "E",
+"explanation": "(A)選項:過敏及自體免疫屬於對不合適抗原之正常免疫反應。(C)選項:過敏性休克(Anaphylacticshock)確係由免疫球蛋白E(IgE)所介導,然而其並非由肥大細胞(Mastcell)所分泌,而是由漿細胞(Plasmacell)所製造並分泌。免疫球蛋白E會與肥大細胞上之FcεRI受體結合,而當該結合態抗體與抗原(過敏原)結合時,則會促進FcεRI之偶聯,啟動下游傳訊機制,最終導致肥大細胞之去顆粒作用(degranulation),釋出組織胺及其他發炎介導物質而造成過敏。(可參考Janeway'simmunobiology第十版,頁671) [出自考古第13題]"
+},
+{
+"question": "關於過敏反應類型的敘述，下列何者錯誤？",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "E",
+"explanation": "各型過敏反應之介導物質如下表所示:\n| 過敏反應類型 | 介導物質         |\n| -------- | -------------- |\n| 第一型     | 免疫球蛋白E(IgE) |\n| 第二型     | 免疫球蛋白G(IgG) |\n| 第三型     | 免疫球蛋白G     |\n| 第四型     | 抗原特異性T細胞   |\n(可參考Janeway'simmunobiology第十版,第14章) [出自考古第14題]"
+},
+{
+"question": "關於衛生假說(hygiene hypothesis)的敘述，下列何者錯誤？",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "C",
+"explanation": "衛生假說(hygienehypothesis)主張現代衛生條件、疫苗及抗生素之施用使得人體免疫系統對於天然抗原之暴露與反應不足，進而導致免疫系統對過敏原產生反應，從而引發過敏。而已開發國家在過敏病例上較開發中國家多之現象亦支持此一假說。故而(C)選項與衛生假說並不相符。(可參考Janeway'simmunobiology第十版,頁669) [出自考古第15題]"
+},
+{
+"question": "請寫出兩種記憶性T細胞的名稱。",
+"options": {},
+"answer": null,
+"explanation": "1.中央記憶性T細胞(centralmemoryTcell)\n2.組織駐留記憶性T細胞(tissue-residentmemoryTcell)\n如下圖所示,T細胞在成為記憶性T細胞後會分化為中央記憶性T細胞(TCM)、效應記憶性T細胞(TEM)及組織駐留記憶性T細胞(TRM)三者。其中TCM表現有CCR7,主要循環於血液、淋巴及次級淋巴器官(secondarylymphoidorgan,SLO)中;TRM分布於非淋巴組織(non-lymphoidtissue,NLT),如體表黏膜等;TEM則於全身循環。(可參考Janeway'simmunobiology第十版,頁488) [出自考古第16題]"
+},
+{
+"question": "請寫出兩種流感病毒抗原變異的名稱。",
+"options": {},
+"answer": null,
+"explanation": "1.抗原轉移(antigenicshift)\n2.抗原漂移(antigenicdrift)\n流感疫苗之表面抗原主要為血球凝集素(hemagglutinin)與神經胺酸酶(neuraminidase),其可藉由抗原結構之改變以逃脫免疫反應。抗原轉移指當二種以上病毒同時感染同一細胞時,兩者之基因組片段可發生互換,造成其表面抗原組合之劇烈轉變,從而無法為抗體所辨識;抗原漂移則指編碼表面抗原之基因漸次發生點突變而使抗原結構有所改變,使抗體抑制能力減弱,僅能藉交叉反應減輕其感染力。(可參考Janeway'simmunobiology第十版,頁567) [出自考古第17題]"
+},
+{
+"group_topic": "陳淑靜老師 - 一、選擇題",
+"question": "下列何者為B細胞的耐受機制？",
+"options": {
+"A": "Clonal deletion",
+"B": "Anergy",
+"C": "Immunological ignorance",
+"D": "Receptor editing",
+"E": "Suppressor T cells"
+},
+"answer": "D",
+"explanation": "Receptorediting是B細胞的耐受機制,而非T細胞的,因此它不是T細胞耐受的機制。 [出自考古第18題]"
+},
+{
+"group_topic": "柯俊榮老師 - 一、選擇題",
+"question": "下列何者為SH2 Domain的結合對象？",
+"options": {
+"A": "SH2 Domain",
+"B": "SH3 Domain",
+"C": "PH domain",
+"D": "PTB domain",
+"E": "WW domain"
+},
+"answer": "A",
+"explanation": "(A)SH2Domain會和Phosphorylatedtyrosine(pTyr)結合,常見於Src-familykinase等眾多蛋白,保守性頗高。(B)SH3Domain會結合富含Proline的區域,例如和Sos結合(C)PHdomain(PleckstrinHomologydomain),和phosphoinositides結合(D)PTBdomain(Phosphotyrosine-bindingdomain),顧名思義是結合pTyr的區域(E)WWdomain雙色胺酸功能區,能和富含Proline的蛋白質作用\n*補充:這題敘述疑似不夠(可能原題有加其他定語),不過課程中提到SH2的次數明顯比較多,姑且選SH2吧。參考資料:Vol.1-p.71Grb2中介者蛋白、p.75細胞介素傳導途徑 [出自考古第19題]"
+},
+{
+"group_topic": "柯俊榮老師 - 一、選擇題",
+"question": "下列何者能夠刺激T細胞的毒殺作用？",
+"options": {
+"A": "LAG-3",
+"B": "TIM",
+"C": "4-1BB",
+"D": "CTLA-4",
+"E": "PD-1"
+},
+"answer": "C",
+"explanation": "(A)LAG-3(Lymphocyte-activationgene3)是T細胞表面的免疫檢查點,可調節T細胞的毒殺作用,避免毒殺過度激烈引起自體免疫反應。(B)TIM(T-cellimmunoglobulinandmucinprotein),如圖所示會使T細胞毒殺被抑制。(C)4-1BB又叫TNFSF9(Tumornecrosisfactorligandsuperfamilymember9),能夠刺激T細胞的毒殺作用(D)(E)T細胞上的CTLA-4和PD-1如果被抗原呈現細胞結合,會產生抑制效果參考資料:Vol.1-p.73癌症免疫療法 [出自考古第20題]"
+},
+{
+"question": "下列何者為腫瘤壞死因子配體超家族成員9？",
+"options": {
+"A": "LAG-3",
+"B": "TIM",
+"C": "Tumor necrosis factor ligand superfamily member 9 (4-1BB)",
+"D": "CTLA-4",
+"E": "PD-1"
+},
+"answer": "C",
+"explanation": "合理懷疑是前一題的排列組合產物,請參考前一題詳解 [出自考古第21題]"
+},
+{
+"question": "一個典型的抗體分子包含幾條鏈？",
+"options": {
+"A": "Two",
+"B": "Three",
+"C": "Four",
+"D": "Five",
+"E": "Six"
+},
+"answer": "D",
+"explanation": "兩條重鏈(H)、兩條輕鏈(L),由雙硫鍵連結參考資料:Vol.2-p.2抗體的結構 [出自考古第22題]"
+},
+{
+"question": "下列何者為MHC分子辨識自身分子的能力？",
+"options": {
+"A": "recognition of non-self MHC molecules",
+"B": "recognition of altered self MHC molecules",
+"C": "recognition of self MHC molecules",
+"D": "no recognition of MHC molecules",
+"E": "選項E"
+},
+"answer": "C",
+"explanation": "(A)自體耐受性(Self-tolerance)。(C)選項比較接近正選擇(positiveselection,見下一題)(D)負選擇的過程中,親和力中等的T細胞會發育成regulatoryTcell。(E)負選擇(NegativeSelection)是讓產生自身抗體(Auto-antibody)的細胞死亡(就是(E)選項描述的過程),所以可以達成參考資料:Vol.1-p.19株系選擇假說Vol.1p.93淋巴球發育過程中的三道檢查點Vol.2-p.75自體耐受性 [出自考古第23題]"
+},
+{
+"question": "下列何者描述胸腺細胞高親和力結合自身MHC分子與肽導致細胞凋亡？",
+"options": {
+"A": "Low avidity binding of a thymocyte to self MHC molecules with bound peptides on thymic APCs leading to cell survival of the thymocyte.",
+"B": "High avidity binding of a thymocyte to self MHC molecules with bound peptides on thymic APCs leading to apoptotic cell death of the thymocyte.",
+"C": "No binding of a thymocyte to self MHC molecules with bound peptides on thymic APCs leading to cell survival of the thymocyte.",
+"D": "Intermediate avidity binding of a thymocyte to self MHC molecules with bound peptides on thymic APCs leading to regulatory T cell development.",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "(A)(D)選項描述過程。(B)選項比較接近負選擇(negativeselection,見上一題)(C)(E)選項就是這個過程的結果 正選擇(PositiveSelection)是指篩選出能夠辨識自身MHC的T細胞使其存活(不被細胞凋亡),參考資料Vol.1p.93淋巴球發育過程中的三道檢查點 [出自考古第24題]"
+},
+{
+"question": "下列何者參與重組訊號序列(RSS)的辨識與DNA斷裂？",
+"options": {
+"A": "TdT",
+"B": "DNA ligase IV",
+"C": "ZAP70",
+"D": "RAG",
+"E": "AID"
+},
+"answer": "D",
+"explanation": "TdT及DNAligaseIV參與重組但皆非重組訊號,唯有RAG參與識別重組訊號序列(RSS)並進行DNA斷裂。ZAP70為受體信號下游路徑中的一蛋白質。 [出自考古第25題]"
+},
+{
+"question": "下列何者描述樹突細胞利用吞噬作用、巨胞飲作用和受體媒介的胞吞作用？",
+"options": {
+"A": "dendritic cell using phagocytosis, marcopinocytosis, receptor-mediated phagocytosis",
+"B": "B cell using phagocytosis, marcopinocytosis, receptor-mediated phagocytosis",
+"C": "Macrophage cell using phagocytosis, marcopinocytosis, receptor-mediated phagocytosis",
+"D": "Neutrophil cell using phagocytosis, marcopinocytosis, receptor-mediated phagocytosis",
+"E": "Eosinophil cell using phagocytosis, marcopinocytosis, receptor-mediated phagocytosis"
+},
+"answer": "A",
+"explanation": "(A)正確。(B)因為樹突細胞為最有效的抗原呈現細胞,故有較多的MHC分子。(C)由周邊組織回到淋巴結。(D)抗原呈現需要MHC分子。(E)不知所云。不過T細胞在胸腺成熟的過程中,dendriticcell負責negativeselection。參考資料:vol.3P.49-53 [出自考古第26題]"
+},
+{
+"question": "癌症免疫編輯的三個階段依序為何？",
+"options": {
+"A": "Equilibrium, Elimination, Escape",
+"B": "Equilibrium, Escape, Elimination",
+"C": "Elimination, Equilibrium, Escape",
+"D": "Elimination, Escape, Equilibrium",
+"E": "Escape, Equilibrium, Elimination"
+},
+"answer": "C",
+"explanation": "免疫消除癌細胞->癌細胞與免疫系統達到平衡->癌細胞逃避免疫機制快速生長。 [出自考古第27題]"
+},
+{
+"question": "下列何者與冷腫瘤(Cold tumor)的描述不符？",
+"options": {
+"A": "Low immune cell infiltration",
+"B": "Low PD-L1 expression",
+"C": "Limited response to immunotherapy",
+"D": "Immunosuppressive microenvironment",
+"E": "Elevated effector cytokine, such as Granzyme B."
+},
+"answer": "E",
+"explanation": "Coldtumor是免疫逃脫型腫瘤,因此周遭微環境免疫反應較低,選項中只有E不符合這個描述。 [出自考古第28題]"
+},
+{
+"question": "胸腺細胞發育的哪個階段會表現CD4和CD8兩種分子？",
+"options": {
+"A": "In the double negative stage.",
+"B": "In the single positive stage.",
+"C": "In the early thymocyte progenitor stage.",
+"D": "In the double positive stage.",
+"E": "In the mature T cell stage."
+},
+"answer": "D",
+"explanation": "參考資料:vol.2P.49 [出自考古第29題]"
+},
+{
+"question": "請將下列細胞激素與其主要產生的T細胞亞群配對。",
+"options": {},
+"answer": null,
+"explanation": "TH1: b, e, 5\nTH2: c, 2, 3, 6\nTH17: a, d, f, 1 (若column2有IL-17須選)\n參考資料:vol.3P.60 [出自考古第30題]"
+},
+{
+"question": "請將下列轉錄因子與其主要調控的T細胞亞群配對。",
+"options": {},
+"answer": null,
+"explanation": "|        | IFN-γ | IL-12 | IL-4  | IL-6  | IL-23 | IL-6? | IL-2  |\n|--------|-------|-------|-------|-------|-------|-------|-------|\n|        | STAT1 | STAT4 | STAT6 | STAT3 | STAT3 | STAT5 |       |\n|        | Tbet  | GATA3 | RORγt | Bcl-6 | FoxP3 |       |       |\n|        | $T_{H}1$  | $T_{H}2$  | $T_{H}17$ | $T_{FH}$ | $pT_{reg}$ |       |       |\n參考資料:免疫學共筆Vol.3p.61、上課簡報Tcellmediatedimmunity(II)03062025p.8、Janeway'sImmunobiology10/e2022Fig.9.35 [出自考古第31題]"
+},
+{
+"question": "下列關於T細胞辨識抗原的敘述，何者正確？",
+"options": {
+"A": "錯誤",
+"B": "正確",
+"C": "正確",
+"D": "正確",
+"E": "正確"
+},
+"answer": [
+"B",
+"C",
+"D",
+"E"
+],
+"explanation": "(A)錯誤,T細胞僅辨識線性多肽。只有線性多肽才能與MHC的clefts結合,且多肽在與MHC結合時,便已經喪失了蛋白質原有的構型(B)正確(C)正確。T細胞只會辨認由自身細胞經過MHC分子表現出來的抗原片段,對游離抗原則沒有反應(D)(E)皆正確 參考資料:免疫學共筆Vol.2p.15、Vol.3p.2-3;上課簡報AntigenrecognitionbyTlymphocytesI03062025p.6 [出自考古第32題]"
+},
+{
+"question": "下列關於PD-1/PD-L1抑制劑的敘述，何者正確？",
+"options": {
+"A": "正確",
+"B": "正確",
+"C": "正確",
+"D": "錯誤",
+"E": "錯誤"
+},
+"answer": [
+"A",
+"B",
+"C",
+"D"
+],
+"explanation": "(A)正確。以癌症患者為例,腫瘤細胞上的PD-L1會與T細胞上的PD-1結合,降低$CD8^+$T細胞的毒殺功能,阻止免疫系統攻擊腫瘤細胞;PD-1/PD-L1抑制劑則可以防止腫瘤細胞以此發生免疫逃脫。APC及tumorcell皆會表達PD-L1。(B)正確。(C)正確,如TGF-β,IL-6,IL-10,VEGF等。當TCR與CTLA-4共同結合B7.1/CD80或B7.2/CD86時,會導致細胞週期停滯(Cell-cyclearrest),並終止T細胞活化。但B7主要由APC表達,tumorcell較少表現出B7。 [出自考古第33題]"
+},
+{
+"question": "下列關於$T_{H}1$細胞與$T_{H}2$細胞交互作用的敘述，何者正確？",
+"options": {
+"A": "錯誤",
+"B": "正確",
+"C": "選項C",
+"D": "正確",
+"E": "錯誤"
+},
+"answer": [
+"B",
+"D"
+],
+"explanation": "(A)錯誤。Tc細胞會促進目標細胞凋亡(apoptosis),凋亡的細胞需要由巨噬細胞進行吞噬作用(phagocytosis)(胞葬作用)清除細胞殘骸。但題目問如何進行毒殺作用,而非收拾殘局。(B)正確。穿孔素(perforin)會在受感染細胞上打洞,方便顆粒酶(granenzyme)進入;而顆粒酶進入細胞後,則會切割特定蛋白質,活化caspase訊號傳遞,進而促使細胞凋亡。(D)CD8+$T$細胞上的FasL與目標細胞上的Fasreceptor(CD95)結合後,使細胞啟動細胞凋亡路徑;但其重要性小於顆粒酶。(E)錯誤,應該是downregulation。詳解見(B)選項圖。其他參考資料:免疫學共筆Vol.3p.59,p.62、上課簡報Tcellmediatedimmunity(II)03062025p.6,p.10、上課簡報Clinicalimmunology(III)TumorImmunology0319p.6,p.17、NatureReviewsImmunologyISSN1474-1741、Janeway'sImmunobiology10/e2022Fig.9.38 [出自考古第34題]"
+},
+{
+"question": "下列關於MHC I類分子抗原呈現途徑的敘述，何者正確？",
+"options": {
+"A": "錯誤",
+"B": "正確",
+"C": "正確",
+"D": "正確",
+"E": "選項從缺"
+},
+"answer": [
+"B",
+"C",
+"D"
+],
+"explanation": "(A)錯誤,MHCI結合的多肽約8~11個residues,MHCII則為10~30個(B)正確。當peptide送至ER準備組裝MHCI時,若其peptide太長則由ERAP(EndoplasmicReticulumAminopeptidaseassociatedwithantigenProcessing)剪切(C)TAP1和TAP2組成heterodimerTAP,作用時需要ATP。其功能為運送細胞質的peptide至ER,並協助peptide與MHCI的結合,再將peptide-MHCIcomplex運送到細胞膜上表現(D)正確。見上圖。(E)選項從缺 參考資料:免疫學共筆Vol.3p.3-5,p.19-20、Janeway'sImmunobiology10/e2022Fig.6.14 [出自考古第35題]"
+},
+{
+"group_topic": "黃冠穎老師 - 一、選擇題",
+"question": "下列何者為B細胞發育的早期階段？",
+"options": {
+"A": "Common lymphoid progenitor",
+"B": "Pre-B cell",
+"C": "Early innate lymphocyte progenitor",
+"D": "Immature B cell",
+"E": "Mature B cell"
+},
+"answer": "C",
+"explanation": "(A)Commonlymphoidprogenitor(共同淋巴前驅細胞),為B細胞發育的早期階段,由造血幹細胞分化而來。可以發育成B細胞、T細胞、NK細胞等,是B細胞發育的關鍵步驟之一。(B)在B細胞發育的pre-B細胞階段,Pre-Bcellreceptor會測試重鏈是否成功表達,此為B細胞發育的關鍵檢查點,若測試失敗則細胞進入凋亡。(C)Earlyinnatelymphocyteprogenitor與B細胞發育無關!它主要會分化成先天性淋巴細胞(ILCs)、NKcell,不會形成B細胞。(D)B細胞發育過程中,先發生重鏈VDJ重組,再進行輕鏈VJ重組,此為B細胞成熟的必要步驟,使之能表達完整的B細胞受體。參考資料:Vol.1單元五 [出自考古第36題]"
+},
+{
+"group_topic": "黃冠穎老師 - 一、選擇題",
+"question": "下列何者為B細胞發育過程中，測試重鏈是否成功表達的階段？",
+"options": {
+"A": "Common lymphoid progenitor",
+"B": "Pre-B cell",
+"C": "Early innate lymphocyte progenitor",
+"D": "Immature B cell",
+"E": "Mature B cell"
+},
+"answer": "B",
+"explanation": "(A)B細胞的發育起源於骨髓的造血幹細胞(hematopoieticstemcells,HSCs),這些細胞首先分化為共同淋巴祖細胞(commonlymphoidprogenitor,CLP),再分化為B細胞。(B)B細胞的發育過程中,先發生重鏈VDJ基因重排,確保產生一條功能性的重鏈後,再進行輕鏈VJ重排。(完整過程:重鏈基因重排→形成Pre-Bcell→輕鏈基因重排→形成immatureBcell)(C)當重鏈重排成功並形成pre-BCR時,會發送信號抑制另一條染色體的重鏈重排,確保一個B細胞只表達一條重鏈,達成等位基因排除(AllelicExclusion),促進細胞分裂,讓這些B細胞擴增。參考資料:Vol.1單元五 [出自考古第37題]"
+},
+{
+"group_topic": "黃冠穎老師 - 一、選擇題",
+"question": "下列何者為免疫球蛋白酶解酶，但頁面遺失，故跳過。",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": null,
+"explanation": "不見了 [出自考古第38題]"
+},
+{
+"group_topic": "黃冠穎老師 - 一、選擇題",
+"question": "下列何者為木瓜蛋白酶(papain)作用於IgG的結果？",
+"options": {
+"A": "pepsin",
+"B": "papain",
+"C": "trypsin",
+"D": "complement C3",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "(A)pepsin切在兩重鏈之間雙硫鍵C端,產生F(ab')2及Fc小碎片(B)papain切在兩重鏈之間雙硫鍵N端,產生兩條Fab和一條Fc,且雙硫鍵仍在Fc上(C)主要作用在鹼性胺基酸附近,並不特異性地作用於IgG,因此不會像papain那樣特異性產生Fab和Fc片段。(D)是補體系統中的一種酶,主要負責補體C3的裂解,與IgG分解無關。參考資料:Vol.2單元六 [出自考古第39題]"
+},
+{
+"group_topic": "黃冠穎老師 - 一、選擇題",
+"question": "下列何者描述線性抗原決定位(linear epitope)？",
+"options": {
+"A": "Antibodies can recognize peptides that are discontinous in the linear amino acid sequence of the protein, and they are known as linear epitopes",
+"B": "Antibodies can only recognize peptides that are continuous in the linear amino acid sequence of the protein, and they are known as linear epitopes",
+"C": "Antibodies can recognize peptides that are discontinous in the 3D structure of the protein, and they are known as conformational epitopes",
+"D": "Antibodies can only recognize peptides that are continuous in the 3D structure of the protein, and they are known as conformational epitopes",
+"E": "選項E"
+},
+"answer": "A",
+"explanation": "Linearepitope:抗原決定位位於一連續線型的分子構造中,通常出現在較小的抗原上。例如:一條多肽上有一串連續的胺基酸可以被抗體辨識 參考資料:共筆vol.2/p.15/(四)(B11補充) [出自考古第40題]"
+},
+{
+"question": "下列何者為MHC I類分子的結構圖？",
+"options": {
+"A": "MHC class II molecule a",
+"B": "MHC class I molecule b",
+"C": "MHC class II molecule c",
+"D": "MHC class I molecule d",
+"E": "MHC class II molecule e"
+},
+"answer": "C",
+"explanation": "參考資料:共筆vol.2/p.9 [出自考古第41題]"
+},
+{
+"question": "下列何者為Fc區域抗體？",
+"options": {
+"A": "Fab region antibody",
+"B": "Fc region antibody",
+"C": "monoclonal antibodies",
+"D": "x ray crystallography",
+"E": "Epitope"
+},
+"answer": "B",
+"explanation": "(A)monoclonalantibodies:通常會分析抗原-抗體複合物的結構,以了解其特異性和結合機制。(C)xraycrystallography:這是用來解析抗原-抗體複合物結構的主要方法,可達到原子級解析度。(D)Epitope:對抗原-抗體複合物的結構分析,經常用來識別和描述抗體辨識的表位(抗原上的特定結合部位)。而(B)Fcregionantibody:Fc(可結晶片段)區域不直接參與抗原結合,而是與免疫細胞的Fc受體或補體蛋白作用。由於抗原-抗體複合物的結構分析主要關注Fab(抗原結合片段)區域,Fc區域通常不涉及這類研究。 [出自考古第42題]"
+},
+{
+"question": "下列何者為生發中心(germinal center)的事件？",
+"options": {
+"A": "(A)(B)",
+"B": "(B)",
+"C": "(A)(C)(D)",
+"D": "(A)(B)(C)(D)",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "(A)(C)(D)發生在germinalcenter的事件,通稱為germinalcenterreaction,如體細胞高度變異(somatichypermutation)、抗體類型轉換重組(classswitchrecombination)、親和力成熟(affinitymaturation)。參考資料:免疫學B12共筆Vol2P27六、生發中心(GerminalCenters) [出自考古第43題]"
+},
+{
+"question": "下列何者為非胸腺依賴型抗原(TI抗原)？",
+"options": {
+"A": "TI-2 (T-independent type 2)",
+"B": "TI-1 (T-independent type 1)",
+"C": "TD (T-dependent)",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "D",
+"explanation": "TI-1(T-independanttype1)抗原能夠在沒有Tcell的情況下刺激naïveBcell,通常具有與TLR(Toll-likereceptor)結合的能力。參考資料:h.Thehumoralimmuneresponse_2025&免疫學B12共筆Vol2P42 [出自考古第44題]"
+},
+{
+"question": "下列何者為減毒疫苗？",
+"options": {
+"A": "13 價結合型肺炎鏈球菌疫苗",
+"B": "人類乳突病毒疫苗",
+"C": "麻疹腮腺炎德國麻疹混合疫苗",
+"D": "季節性流感疫苗",
+"E": "選項E"
+},
+"answer": "C",
+"explanation": "(A)13價結合型肺炎鏈球菌疫苗,次單位疫苗(B)人類乳突病毒疫苗,次單位疫苗。(C)麻疹腮腺炎德國麻疹混合疫苗,減毒疫苗。 [出自考古第45題]"
+},
+{
+"question": "下列何者為不活化疫苗？",
+"options": {
+"A": "正確，如HIV",
+"B": "正確",
+"C": "正確",
+"D": "季節性流感疫苗，次單位疫苗。",
+"E": "選項E"
+},
+"answer": "C",
+"explanation": "(A)正確,如HIV(B)正確(C)小兒麻痺病毒疫苗為不活化疫苗(inactivatedpoliovaccine),可以產生對抗病毒的抗體,可以防止小兒麻痺侵入中樞神經以及防止癱瘓,而不是主要依賴Tcell免疫反應(D)正確,Live-attenuatedvaccines通常比Killedvaccines更有效,因為它們能夠模擬天然感染 [出自考古第46題]"
+},
+{
+"question": "下列何者為FDA核准的佐劑？",
+"options": {
+"A": "正確",
+"B": "Alumium hydroxide",
+"C": "Squalene and water emulsion",
+"D": "CPG 1018",
+"E": "選項E"
+},
+"answer": "A",
+"explanation": "(A)正確。(B)Alumiumhydroxide:是FDA核准的佐劑,廣泛用於疫苗,如百日咳、白喉、破傷風疫苗等。(C)Squaleneandwateremulsion(角鯊烯與水乳劑,如MF59、AS03):也是FDA批准的佐劑,常見於流感疫苗。(D)CPG1018:是一種含CpG寡核苷酸的佐劑,已獲FDA核准用於乙型肝炎疫苗(HEPLISAV-B)。參考資料:衛生福利部疾病管制署。(2021)。COVID-19疫苗接種指南 取自https://www.cdc.gov.tw/Uploads/archives/909d5d9e-25ee-4a08-b7fc-ae88a88831b8.pdf [出自考古第47題]"
+},
+{
+"question": "下列何者為減活疫苗的製造方法？",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "B為減活疫苗,其製造方法為將病毒培養在人類之外的動物活體(如猴子)中,在大量複製過程中會需要突變以適應其他動物的細胞。在病毒適應其他動物細胞後,對人體細胞的感染力反而沒有以前那麼高,即為減毒(attenuated)現象。此時因其感染人類細胞的能力變差,故可以被做成疫苗。 [出自考古第48題]"
+},
+{
+"question": "下列何者為CAR-T細胞的組成？",
+"options": {
+"A": "選項A",
+"B": "選項B",
+"C": "選項C",
+"D": "選項D",
+"E": "選項E"
+},
+"answer": "B",
+"explanation": "CAR-T的概念:用生物技術把能辨識tumorcell表面CD19antigen的CAR基因插到從病人提取的Tcell上,改造成CAR-T來對付癌症,像在T-cell上面裝上了個辨識癌細胞的GPS,當CAR-T遇到tumorcell的時候,就會辨識鎖定tumorcell,然後T-cell就會啟動毒殺tumorcell的反應,並沒有包含CD16。4-1BB及CD28會共同組成第二訊號提供區,能直接提供T細胞活化所需的第二訊號。CD3ζ和其餘傳訊片段則會共同組成訊號傳遞區Retrovirus則用來把CAR基因轉到Tcell上。 [出自考古第49題]"
+},
+{
+"question": "此敘述正確。",
+"options": {
+"T": "True",
+"F": "False"
+},
+"answer": "T",
+"explanation": "此敘述正確。詳請參考B11共筆第四本46頁 [出自考古第50題]"
+},
+{
+"question": "此敘述正確。",
+"options": {
+"T": "True",
+"F": "False"
+},
+"answer": "T",
+"explanation": "此敘述正確。詳請參考B11共筆第四本42-44頁 [出自考古第51題]"
+}
+]

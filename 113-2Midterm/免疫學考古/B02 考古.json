@@ -1,0 +1,91 @@
+
+[
+  {
+    "question": "Regarding the following diseases which statement is NOT correct?",
+    "options": {
+      "A": "Omenn syndrome, an autosomal recessive severe combined immunodeficiency (SCID), is due to mutation in RAG-1 & RAG-2 which result in deficiency in V(D)J recombination.",
+      "B": "X-SCID (or SCID-X1) is due to mutation in Jak3 which is a critical signal molecule of receptors for various cytokines such as IL-2, IL-4, IL-7, IL-9 & IL-15.",
+      "C": "X-linked agammaglobulinemia (XLA), an immunodeficiency with very low amount of Ig, is due to mutation of Btk, a signal molecule downstream of BCR.",
+      "D": "Bare lymphocyte syndromes are caused by mutations that lead to an absence of MHC molecules."
+    },
+    "answer": "B",
+    "explanation": "(A) 正確。Omenn syndrome 為體染色體隱性 SCID,因為RAG1、RAG2 的突變，使得原始(pro)淋巴球無法變成前驅(pre)淋巴球，造成免疫缺陷。\n(B) 錯誤。X-SCID 為人類 X 染色體上 IL2RG 基因突變，影響其編碼的γC。IL-2 細胞介素家族(包含 IL-2、4、7、9、15、21)的受體皆需要 γC，其中 IL-7 和IL-15 缺乏會造成T細胞和 NK 細胞無法發育、B細胞發育正常但會因缺乏T細胞協助活化而功能異常。而 SCID 中有一類為 JAK3 基因突變(如選項所述)，由於 JAK3 為γC 的訊息傳遞分子，造成免疫缺乏的機制相同，因此此種AR-SCID 的免疫表現型與 X-SCID 相同而無法區分(同為T-B+ NK-,但B細胞功能異常)。\n(C) 正確。X性聯無γ免疫球蛋白血症(XLA,又稱Bruton agammaglobulinemia)為Btk(Bruton's tyrosine kinase)基因發生突變，導致患者周邊血液缺乏B細胞且無γ免疫球蛋白或低下。Btk是Tec-family kinases 的一員，負責傳遞 Pre-BCR 傳下來的訊息，缺乏Btk 功能使B細胞發育被抑制在前驅B細胞，因此在B細胞的發育中扮演重要角色。\n(D) 正確。Bare lymphocyte syndrome 為細胞表面 MHC 不表現，可分為第一、二型，分別對應MHC I和MHC II 的缺乏。前者主要源自 TAP1/TAP2 或 Tapasin的突變。\n［出自考古第1題］"
+  },
+  {
+    "question": "Regarding ITAM & ITIM which statement is NOT correct?",
+    "options": {
+      "A": "ITAM is a motif that can transduce activating signals.",
+      "B": "ITAM & ITIM are only found in immunoreceptors of the adaptive immune cells, such as T & B cells.",
+      "C": "Cell response is determined by the summation of activation and inhibitory signals transduced by ITAM and ITIM.",
+      "D": "There are 2 ITAM motifs in a BCR."
+    },
+    "answer": "B",
+    "explanation": "(A) 正確。ITAM 和 ITIM 分別是傳遞活化和抑制訊號的模體(motif)。\n(B) 錯誤。TCR 和BCR 的次單元都包含ITAM 以進行訊號傳導,此外其他免疫系統的受體也會包含 ITAM 與ITIM,如NK的各種受體上也包含 ITIM 和ITAM以辨識其他細胞;NK、巨噬細胞和嗜中性球上的 FcyRIII (CD16)上連結Fcy chain 或 TCR 上也有的 ζ鏈,使NK細胞進行 ADCC,而後兩者則促進吞噬與抗體結合的病原體。\n(C) 正確。\n(D) 正確。BCR 結合的 Iga 和 Igβ 上各包含一個ITAM。\n［出自考古第2題］"
+  },
+  {
+    "question": "Regarding the structure of antibody which statement is NOT correct?",
+    "options": {
+      "A": "There is one variable domain and three constant domains in a heavy chain of an antibody.",
+      "B": "An antibody has two antigen binding sites and one Fc domain.",
+      "C": "Hinge region of an antibody is a molecular ball-and-socket joint that is very flexible.",
+      "D": "Carbohydrate is attached to CH3 domain of the heavy chain."
+    },
+    "answer": "D",
+    "explanation": "(A)正確。重鏈由一個變異區(V)跟三個恆定區(C)構成。\n(B)正確。一個抗體可以被木瓜酵素(papain)切成三塊:兩個 Fab 與一個 Fc。\n(C)正確。樞紐(hinge)類似球窩關節(ball-and socket joint),可以改變抗體兩臂的角度,以便結合分開一段距離的抗原,如細菌細胞壁多醣體的重複單元;或是使抗體可以和免疫蛋白作用,以調控免疫反應。\n(D)錯誤。醣類修飾是在 CH2 功能區。\n［出自考古第3題］"
+  },
+  {
+    "question": "Regarding development of T & B lymphocytes, which statement is NOT correct?",
+    "options": {
+      "A": "During lymphocyte development, TCR and BCR undergo gene rearrangement or re-combination.",
+      "B": "The gene rearrangement is a random event because the rearranged TCR or BCR can recognized both self and non-self antigens.",
+      "C": "Negative selection of both immature T & B cells occurs in the bone marrow.",
+      "D": "Following development, mature T & B cells will migrate to spleen & lymph nodes."
+    },
+    "answer": "C",
+    "explanation": "(C)T細胞的負選擇(negative selection)主要發生在胸線的皮質與髓質。\n［出自考古第4題］"
+  },
+  {
+    "question": "Diversity of immunoglobulin repertoire is determined by the following mechanisms except:",
+    "options": {
+      "A": "Junctional diversity",
+      "B": "Combinatorial diversity",
+      "C": "Somatic hypermutation",
+      "D": "Isotype switching"
+    },
+    "answer": "D",
+    "explanation": "(D)抗體的不同類型(isotype)的差異在於重鏈的組成與修飾,而這不會改變抗原結合位的構造,故不會對抗體的組譜(repertoire)產生影響。\n［出自考古第5題］"
+  },
+  {
+    "question": "Regarding cytokines, which statement is NOT correct?",
+    "options": {
+      "A": "The JAK-STAT pathway is the major signaling pathway transduced by cytokine receptors.",
+      "B": "Different cytokines may have the same biological effects.",
+      "C": "Most of the cytokines are constantly expressed without stimulation.",
+      "D": "One cytokine can regulate the production of other cytokines."
+    },
+    "answer": "C",
+    "explanation": "(A)正確。細胞介素在免疫細胞最常活化的就是 JAK-STAT 途徑。\n(B)正確。此性質為細胞介素的冗餘性(redundancy)。\n(C)錯誤。大部分的細胞介素都是有刺激才會產生的。\n(D)正確。細胞介素之間會互相調控,形成梯瀑式(cascade)的放大效果。\n［出自考古第7題］"
+  },
+  {
+    "question": "Regarding monoclonal antibodies, which statement is NOT correct?",
+    "options": {
+      "A": "It is produced by hybridoma cells that is fusion between naive B cells & myeloma, a tumor cell line.",
+      "B": "It is possible to make a monoclonal antibody against antibodies.",
+      "C": "Monoclonal antibodies can be used as a drug to treat patients with autoimmune disease like rheumatoid arthritis.",
+      "D": "You can use label toxin or isotopes to monoclonal antibodies to target tumors."
+    },
+    "answer": "A",
+    "explanation": "(A)錯誤。透過融合漿細胞與癌細胞(如骨髓瘤細胞),可以形成融合瘤(hybridoma),會同時具有腫瘤細胞不斷分裂和漿細胞製造抗體的能力。初始B細胞本身不製造抗體,因此融合為融合瘤後依然無法產生抗體。\n(B)正確。例如 Omalizumab 透過結合人類 IgE 來達到治療過敏性氣喘。\n(C)正確。Adalimumab 是一種重組過的 IgG,可以治療類風濕性關節炎(rheumatoid arthritis)。\n(D)正確。見下圖。\n［出自考古第8題］"
+  },
+  {
+    "question": "Regarding variable domain of an antibody, which statement is NOT correct?",
+    "options": {
+      "A": "There are three hypervariable domains in one light chain or heavy chain variable domain.",
+      "B": "The hypervariable domain is called complementary determining region of CDR.",
+      "C": "Antigen binding site is determined by 3 CDRs of either light chain or heavy chain.",
+      "D": "CDR3 is the most diverse of all CDRs because it is encoded by combined VJ or VDJ gene segments."
+    },
+    "answer": "C",
+    "explanation": "(C)錯誤。抗原結合位是由重鏈的3個互補性決定區(CDR)和輕鏈的3個互補性決定區共同決定的,此性質稱為組合多樣性(combinational diversity)。\n［出自考古第9題］"
+  }
+]

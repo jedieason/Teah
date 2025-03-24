@@ -1,0 +1,520 @@
+
+[
+  {
+    "question": "Concerning viral infections, which statement is CORRECT?",
+    "options": {
+      "A": "Since most viruses are intracellular infection and they are hijacking the machinery from the host cells to replicate, there is no medicine available to cure any viral infections.",
+      "B": "The idea of Dr. Edward Jenner's vaccination and Chinese variolation to immunize people against smallpox is the same. They all used cowpox to induce immunity.",
+      "C": "During viral infections, the first-line of host defense is usually mediated by TLR-induced cytokines like type I interferons which trigger antiviral state in cells.",
+      "D": "During viral infections, adaptive immunity is more important than innate immunity as viruses are cleared only when adaptive immunity is initiated."
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "Immunology is the study of host defense against pathogens or immune disorders. Which disease DOES NOT belong to immune disorders?",
+    "options": {
+      "A": "Cancers",
+      "B": "Color blindness",
+      "C": "Inflammatory bowel diseases",
+      "D": "Diabetes mellitus"
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Antimicrobial peptides (AMP) are one of the important innate immune components. Which statement is NOT CORRECT?",
+    "options": {
+      "A": "AMPs can specifically target and kill bacteria without damaging host cells.",
+      "B": "Structure of AMPs contains a hydrophilic end and a hydrophobic end.",
+      "C": "AMPs are only activated by proteolysis after release.",
+      "D": "AMPs are present in the skin and gut."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Complement belongs to humoral immunity. Which statement concerning the of complement is NOT CORRECT?",
+    "options": {
+      "A": "The highest concentration of complement component is C3. Therefore, C3 deficiency is highly susceptible to bacterial infections.",
+      "B": "Three pathways of complement activation differ in how C3 is activated but follow a common sequence after C5 cleavage.",
+      "C": "Both free IgM and antigen bound IgM are able to activate complement.",
+      "D": "Structure of mannose-binding lectin (MBL) in the lectin pathway is similar to C1q of the classical pathway."
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "Concerning the effector functions of activated complement which statement is NOT CORRECT?",
+    "options": {
+      "A": "Membrane Attack Complex (MAC) consists of C5-C9 can form holes on the membrane of bacteria.",
+      "B": "C3b and C5b can act on blood vessels to increase vascular permeability and induce inflammation.",
+      "C": "C5a enhances the phagocytosis of microorganisms through opsonization.",
+      "D": "Complement receptors and Fc receptor on macrophages can synergize to enhance phagocytosis of bacteria."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Pattern recognition receptors (PRR) are expressed on most innate immune cells that can recognize pathogen-associated molecular patterns (PAMPs). Which of following statement is NOT CORRECT?",
+    "options": {
+      "A": "TLR4 requires MD2 to facilitate the binding of LPS, a key component of gram-negative bacterial cell wall.",
+      "B": "PRRs are expressed on different compartments of immune cells, including plasma membrane, cytosol, endosome and nucleus",
+      "C": "NLR (Nod-like receptor), CLR (C-type lectin receptor), RLR (Rig-I like receptor), TLR (Toll-like receptor) and CDS (Cytosolic DNA sensor) all belong to PRR.",
+      "D": "The binding of PAMP to PRR usually results in production of cytokines, including IL-6, TNFα and type I interferon."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Phagocytes like neutrophils and macrophages are key innate immune cells. Which statement is NOT CORRECT?",
+    "options": {
+      "A": "Both cells are able to produce NETs (extracellular traps) to trap and kill bacteria.",
+      "B": "Once phagocytose bacteria, the phagosome will undergo acidification which has bactericidal or bacteriostatic activity.",
+      "C": "Macrophages can be activated by IFNγ to increase their phagocytic activity.",
+      "D": "Both cells can produce antimicrobial peptides."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "The research works of many Nobel prize winners in Physiology and Medicine were in the field of immunology. Which statement is NOT CORRECT?",
+    "options": {
+      "A": "Ilya Metchnikoff discovered macrophages as phagocytes",
+      "B": "Jules Bordet discovered the complement system",
+      "C": "Jules Hoffmann discovered Toll as an innate immune sensor",
+      "D": "Gerald Edelman developed the method for generating monoclonal antibody"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Monoclonal antibodies (mAbs) have been successfully used as therapeutic drugs for different diseases, including cancers. Which statement is NOT CORRECT?",
+    "options": {
+      "A": "We can generate anti-IgE mAb to treat asthma which is caused by elevated IgE.",
+      "B": "Based on the name “Nivolumab\", we know it is a humanized mAb.",
+      "C": "mAb can be secreted by a hybridoma cell that is generated by fusing plasma cells with a myeloma, a tumor cell line.",
+      "D": "In theory, we can conjugate a toxin to a mAb to specifically target and kill cancers."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Concerning the structural domains of an antibody, which statement is NOT CORRECT?",
+    "options": {
+      "A": "The antigen binding domain is called Fab",
+      "B": "There are 1 variable region and 1 constant region in a light chain of an antibody",
+      "C": "The hinge domain of allows an antibody to rotate at a very wide angle.",
+      "D": "Three hypervariable loops of light chain alone determine antigen specificity by forming a complementary to the antigen and termed CDR"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Cytokines are mediators of immune responses. Which statement is NOT CORRECT?",
+    "options": {
+      "A": "Cytokines can bind to their receptors and trigger signaling events through JAK-STAT pathway",
+      "B": "Cytokines are usually induced in immune cells upon stimulation.",
+      "C": "The bubble boy David Vetter is due to the deficiency in common β chain of a shared cytokine receptor for IL-2, IL-4, IL-7, IL-9, IL-15 and IL-21.",
+      "D": "Chemokines can chemoattract leukocytes to the site of infection."
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "ITAM and ITIM in immunoreceptors are critical for regulating the functions of the receptors. Which statement is NOT CORRECT?",
+    "options": {
+      "A": "Upon activation by tyrosine phosphorylation, ITAM recruits kinases to positively regulate immune response",
+      "B": "CTLA4 can negatively regulate T cell response by competing the binding of B7 with CD28 and simultaneously transduce negative signal",
+      "C": "T cell receptor (TCR) itself has 6 ITAMs in its intracellular domain to trigger signal events after engaging with MHC-peptide",
+      "D": "Immune checkpoint blockade for cancer treatment is using anti-CTLA-4 or anti-PD1 to inhibit the negative signals in T cells"
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "Indicate whether each of the following statements regarding T cells and B cells is true (T) or false (F). (1% each, 5% total)",
+    "options": {
+      "A": "T cells and B cells recognize the same types of antigen.",
+      "B": "T cells and B cells require MHC molecules for the recognition of peptide antigens.",
+      "C": "T cells require an accessory cell called an antigen-presenting cell, which bears MHC molecules on its surface.",
+      "D": "T-cell receptor and immunoglobulin genes are encoded on the MHC.",
+      "E": "The T-cell receptor has structural similarity to an immunoglobulin Fab fragment."
+    },
+    "answer": ["F", "F", "T", "F", "T"],
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statements ARE correct regarding memory B cells? (3%)",
+    "options": {
+      "A": "Memory B cells die after secondary exposure to the same pathogen.",
+      "B": "In secondary responses, the number of pathogen-specific B cells is about 10–100-fold that seen in primary responses.",
+      "C": "The sensitivity of memory B cells is improved compared with naive B bells because affinity maturation has occurred.",
+      "D": "Memory B cells differentiate into plasma cells more rapidly than do naive B cells."
+    },
+    "answer": ["B", "C", "D"],
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statements ARE correct regarding memory T cells? (3%)",
+    "options": {
+      "A": "CD4+ T cells are required for the maintenance of CD8+ memory cells.",
+      "B": "Memory T cells are long lived because they are more sensitive to IFN-γ.",
+      "C": "The survival of memory T cells (both CD4+ and CD8+) requires IL-7.",
+      "D": "Memory T cells are activated without contact with peptide:MHC complexes."
+    },
+    "answer": ["A", "C"],
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statements do not describe immunological memory responses? (3%)",
+    "options": {
+      "A": "Original antigenic sin",
+      "B": "IgM response",
+      "C": "Low level of somatic hypermutation",
+      "D": "The same man was never attacked twice"
+    },
+    "answer": ["B", "C", "D"],
+    "explanation": ""
+  },
+  {
+    "question": "Match the term in Column A with its correct description in Column B (Select all that apply).",
+    "options": {
+      "a. MHC Class I molecules": ["1. They bind peptides of 8-10 amino acids.", "3. They are unstable when peptides are not bound", "5. They present antigens for CD8+ T cells.", "6. They are not expressed on red blood cells."],
+      "b. MHC Class II molecules": ["2. They are encoded by alpha (a, 34 kDa) and beta (β, 29 kDa) polypeptides.", "3. They are unstable when peptides are not bound", "4. They present antigens for CD4+ T cells", "6. They are not expressed on red blood cells."]
+    },
+    "answer": [],
+    "explanation": ""
+  },
+  {
+    "question": "Which one of the following transcription factors is NOT specifically expressed in the early stages of B-cell development?",
+    "options": {
+      "A": "PU.1",
+      "B": "Pax5",
+      "C": "Ikaros",
+      "D": "EBF",
+      "E": "GATA3"
+    },
+    "answer": "E",
+    "explanation": ""
+  },
+  {
+    "question": "Marginal zone B (MZB) cells are poised to make rapid responses to blood-borne antigens or pathogens in the spleen. MZB cells express very high levels of the complement receptor X. What is the X?",
+    "options": {
+      "A": "CCR7",
+      "B": "CXCR4",
+      "C": "CXCR5",
+      "D": "CD21",
+      "E": "EBI2"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Double-negative αβ T cells with CD44lowCD25+ markers",
+    "options": {
+      "A": "DN1 cells",
+      "B": "DN2 cells",
+      "C": "DN3 cells",
+      "D": "DN4 cells"
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "Which one of the following factors is NOT involved in Negative Selection?",
+    "options": {
+      "A": "AIRE",
+      "B": "Dendritic cells in the thymus",
+      "C": "RAG",
+      "D": "Thymic cortical epithelial cells",
+      "E": "Thymic medullary epithelial cells."
+    },
+    "answer": "C",
+    "explanation": ""
+  },
+  {
+    "question": "Which one of the following tumors represent clonal outgrowths of T cells?",
+    "options": {
+      "A": "Chronic lymphocytic leukemia (CLL)",
+      "B": "Hodgkin's lymphoma",
+      "C": "Multiple myeloma",
+      "D": "Sezary syndrome",
+      "E": "Waldenstrom's macroglobulinemia."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Different cytokines regulate switching to different antibody classes. Which one of following cytokines induces switching to IgE?",
+    "options": {
+      "A": "IL-4",
+      "B": "IL-5",
+      "C": "IL-21",
+      "D": "IFN-γ",
+      "E": "TGF-β"
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Which one of following antibody binds tightly to Fc Receptor FcγRIII (CD16)?",
+    "options": {
+      "A": "IgM",
+      "B": "IgG",
+      "C": "IgE",
+      "D": "IgD",
+      "E": "IgA"
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Most CD8+ T cell responses require CD4+ T cells. The CD4+ T cells produce abundant cytokine X and thus help drive CD8+ T cell proliferation. What is the X?",
+    "options": {
+      "A": "IL-2",
+      "B": "IL-4",
+      "C": "IL-17",
+      "D": "IL-21",
+      "E": "IFN-γ"
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Which one of the following cell-surface molecules does NOT express in activated T cells?",
+    "options": {
+      "A": "CD4",
+      "B": "CD45RO",
+      "C": "LFA-1",
+      "D": "PSGL-1",
+      "E": "S1PR1"
+    },
+    "answer": "E",
+    "explanation": ""
+  },
+  {
+    "question": "STAT5 is exclusively expressed in which subset of CD4+ T cells?",
+    "options": {
+      "A": "$T_{H}1$ cell",
+      "B": "$T_{H}2$ cell",
+      "C": "$T_{H}17$ cell",
+      "D": "$T_{FH}$ cell",
+      "E": "$T_{REG}$ cell."
+    },
+    "answer": "E",
+    "explanation": ""
+  },
+  {
+    "question": "Different subset of CD4+ T cells produces distinct profile of cytokines and mediates different types of immune responses. Which immune cell type is the target of $T_{H}2$ cell?",
+    "options": {
+      "A": "B cell",
+      "B": "Basophil",
+      "C": "Dendritic cell",
+      "D": "Macrophage",
+      "E": "Neutrophil."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Which one of following microbes is the target of $T_{H}17$ cell?",
+    "options": {
+      "A": "Fungi (Candida albicans)",
+      "B": "Helminth",
+      "C": "Listeria",
+      "D": "Mycobacteria",
+      "E": "Parasites."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statement is NOT correct?",
+    "options": {
+      "A": "A vaccine needs to be evaluated through preclinical and clinical studies to determine its safety and efficacy.",
+      "B": "Potential benefits of an effective vaccine must be weighed against potential risk of adverse events following immunization.",
+      "C": "Phase I clinical trials are designed to test the safety, side effects, best dose and formulation for a candidate vaccine.",
+      "D": "Phase II clinical trials enroll <100 health volunteers in randomized and well-controlled experiments to confirm the effectiveness of the new vaccine.",
+      "E": "Pneumococcal conjugated vaccine is a vaccine which includes purified capsular polysaccharide conjugated to nontoxic diphtheria toxin. It is to convert TI antigen into TD antigen."
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "All of the following are tenets of the hygiene hypothesis except?",
+    "options": {
+      "A": "childhood exposure to microorganisms is reduced",
+      "B": "widespread use of antibiotics interferes with the use and education of the immune system",
+      "C": "widespread immunization practices compromise the development of a fully functional immune response",
+      "D": "a decrease in allergic disease in developed countries compared to developing countries",
+      "E": "antibiotic-driven selection of superbacteria perturbs the immune system"
+    },
+    "answer": "D",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statement is True?",
+    "options": {
+      "A": "Allergy and autoimmunity are caused by normal immune responses that are direct against inappropriate antigens.",
+      "B": "Type I hypersensitivity reaction is caused by IgG-mediated immune response whose main physiological role is to defend against parasite infection.",
+      "C": "The targets of immune responses in autoimmunity do not remain fixed, but can be extended to include other epitopes on the same protein or other proteins in the same tissue. This phenomenon is called “molecular mimicry”."
+    },
+    "answer": "A",
+    "explanation": ""
+  },
+  {
+    "question": "Autoimmunity is thought to result from:",
+    "options": {
+      "A": "breakdown of self-tolerance mechanisms",
+      "B": "mast cell degranulation and activation",
+      "C": "environmental triggers",
+      "D": "genetic susceptibility",
+      "E": "all of the above",
+      "F": "a combination of a, b, and c",
+      "G": "a combination of a, c, and d",
+      "H": "a combination of b, c, and d",
+      "I": "a combination of a and b",
+      "J": "a combination of a and d",
+      "K": "none of the above"
+    },
+    "answer": "G",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statement is NOT true?",
+    "options": {
+      "A": "CAR-T cells include an extracellular tumor antigen-specific domain, a transmembrane domain, and an intracellular signaling domain.",
+      "B": "One of the benefit effects of treating diseases with immunosuppressive agents is the decreased risk of infection.",
+      "C": "Therapeutic antibodies can be engineered to reduce their immunogenicity in humans by a process called humanization.",
+      "D": "Tumor cells may be eliminated by the immune system initially, but as they evolve, variants occur and eventually escape immune surveillance and form tumor.",
+      "E": "(e) An effective vaccine against human papilloma virus (HPV) infection can prevent the occurrence of cervical cancer."
+    },
+    "answer": "B",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following molecule(s) can transduce inhibitory signal to T cells? (select ALL that apply)",
+    "options": {
+      "A": "CD3",
+      "B": "CD28",
+      "C": "PD-1",
+      "D": "4-1BB",
+      "E": "CTLA-4",
+      "F": "CD25"
+    },
+    "answer": ["C", "E"],
+    "explanation": ""
+  },
+  {
+    "question": "Place each of the 10 outcomes listed below into the adequate space to complete the table\n\n選項:\n1. Autoimmunity 2. Cancer 3. Rejection 4. Self tolerance 5. Tumor immunity\n6. No response 7. Protective immunity 8. Acceptance 9. Allergy\n10. Recurrent infection",
+    "options": {
+      "Antigen": ["Infectious agent", "Innocuous substance", "Grafted organ", "Self organ", "Tumor"],
+      "Normal response": ["", "", "", "", ""],
+      "Deficient response": ["", "", "", "", ""]
+    },
+    "answer": [],
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statements about “X-linked SCID syndrome” is correct:",
+    "options": {
+      "1": "This immunodeficiency affects only T cells",
+      "2": "There is a defect in IL-2 receptor subunit, a critical molecule expressed on many immune cells",
+      "3": "Because the defect involves critical step in B cell activation and results in decreased B cell number",
+      "4": "Patients are usually asymptomatic but only develops opportunistic infection when stressed",
+      "5": "Unlike extracellular bacteria, protection against intracellular pathogen is not impaired"
+    },
+    "answer": "2",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statements about “COVID-19 virus” is incorrect?",
+    "options": {
+      "1": "Severe epidemic is observed",
+      "2": "It is a type of RNA virus",
+      "3": "Reverse transcriptase is not a key molecule for its pathogenicity",
+      "4": "COVID-19 virus does not integrate its genome into host DNA",
+      "5": "COVID-19 kills more people worldwide in the last month than any other currently-existing viruses"
+    },
+    "answer": "5",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following is incorrect about human immunodeficiency virus (HIV) and AIDS?",
+    "options": {
+      "1": "It is a type of RNA virus",
+      "2": "Decreased CD4+ T cell count is couple with CD8+ T cell dysfunction, or exhaustion",
+      "3": "HIV virus has a relatively low mutation rate thus can remain latency and create drug resistance",
+      "4": "Patients may exhibit skin cancer as the first symptom of AIDS",
+      "5": "HIV virus depends on co-receptor CCR5 to enter CD4+ T cells"
+    },
+    "answer": "4",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statement about adoptive T cell therapy for cancer is incorrect?",
+    "options": {
+      "1": "Endogenous T cells specific for tumor antigen have shown efficacy in clinical trials",
+      "2": "TCR gene transfer can induce diverse T cells with the same antigen specificity",
+      "3": "CAR-T cell therapy has so far only been successful in treating hematological cancers",
+      "4": "CAR-T cells are genetically modified T cells",
+      "5": "Quality of infused T cells is less important than quantity of cell products"
+    },
+    "answer": "5",
+    "explanation": ""
+  },
+  {
+    "question": "About immune checkpoint therapy (PD1-PD-L1 blockade), which one is incorrect?",
+    "options": {
+      "1": "It primarily works by activating exhausted tumor-infiltrating PD-L1+ T cells",
+      "2": "PD-L1 expression levels on tumor cells are used to predict responsiveness toward such therapy",
+      "3": "PD1-PD-L1 signaling inhibits downstream T cell receptor signaling and “turns off” T cells",
+      "4": "T cells can co-express many other inhibitory molecules such as CTLA-4",
+      "5": "2018 Nobel Prize was awarded to researchers who worked in this field of cancer immunology"
+    },
+    "answer": "1",
+    "explanation": ""
+  },
+  {
+    "question": "Match the type of immune responses in Column A with its correct description in Column B (Select all that apply).",
+    "options": {
+      "a. Type I immune responses": ["1. They enhance effector function of neutrophils against extracellular bacteria and fungi.", "4. They produce IFN-γ that activate bactericidal activity in macrophages.", "5. They are important to control human immunodeficiency virus (HIV) infection."],
+      "b. Type II immune responses": ["2. They are induced by helminths and increase the level of IgE."],
+      "c. Type III immune responses": ["3. They increase local production of IL-23 and IL-1beta."]
+    },
+    "answer": [],
+    "explanation": ""
+  },
+  {
+    "question": "Which one of the following transcription factors is NOT specifically expressed in the early stages of B-cell development?",
+    "options": {
+      "1": "E",
+      "2": "D",
+      "3": "C",
+      "4": "C",
+      "5": "AD",
+      "6": "A",
+      "7": "B",
+      "8": "A",
+      "9": "E",
+      "10": "E",
+      "11": "B",
+      "12": "A"
+    },
+    "answer": "E",
+    "explanation": ""
+  },
+  {
+    "question": "Which of the following statement is NOT correct?",
+    "options": {
+      "1": "(2)",
+      "2": "(5)",
+      "3": "(3)",
+      "4": "(5)",
+      "5": "(1)"
+    },
+    "answer": "2",
+    "explanation": ""
+  }
+]
