@@ -1,0 +1,108 @@
+
+[
+  {
+    "question": "Which one of the following tumors (A) ~ (D) is involved in:\nSézary syndrome\nMultiple myeloma\nHodgkin's lymphoma",
+    "options": {
+      "A": "T-cell tumor",
+      "B": "B-cell tumor",
+      "C": "Both T and B-cell tumor",
+      "D": "Neither"
+    },
+    "answer": "C",
+    "explanation": "Sézary syndrome is a T-cell lymphoma. Multiple myeloma and Hodgkin's lymphoma are B-cell tumors. Therefore, all three tumors involve both T and B cells in a broader context of hematological malignancies, although their cellular origins differ. \n[出自考古第1題]"
+  },
+  {
+    "question": "Which one of the following defects (A) ~ (D) affects:\nPurine nucleoside phosphorylase (PNP) deficiency\nIL-4 deficiency\nγc deficiency\nBtk deficiency",
+    "options": {
+      "A": "T cell development only",
+      "B": "B cell development only",
+      "C": "Both B and T cell development",
+      "D": "Neither B nor T cell development"
+    },
+    "answer": "C",
+    "explanation": "Purine nucleoside phosphorylase (PNP) deficiency and γc deficiency are known to cause Severe Combined Immunodeficiency (SCID), which affects both T and B cell development. Btk deficiency primarily affects B cell development, leading to X-linked agammaglobulinemia. IL-4 deficiency has less direct impact on early T and B cell development compared to PNP and γc deficiencies, but it can influence the function and differentiation of both T and B cells. Considering the most significant impact among the listed options for all defects, the broadest answer encompassing the most severe developmental impacts is 'Both B and T cell development'.\n[出自考古第2題]"
+  },
+  {
+    "question": "Which one of the following chemokine receptors is expressed by the activated follicular B cells at the border between the T-cell area and a B-cell follicle in secondary lymphoid tissue?",
+    "options": {
+      "A": "CCR5",
+      "B": "CCR7",
+      "C": "CXCR5",
+      "D": "CXCR6",
+      "E": "CXCR7"
+    },
+    "answer": "C",
+    "explanation": "Activated follicular B cells express CXCR5, which is essential for their migration towards the B-cell follicle guided by the chemokine CXCL13 produced within the follicle. CCR7 is typically expressed by T cells and B cells migrating to the T-cell area.\n[出自考古第3題]"
+  },
+  {
+    "question": "Which deficiency leads to type 2 hyper IgM syndrome (HyperIgM-2)?",
+    "options": {
+      "A": "AID",
+      "B": "Btk",
+      "C": "CD40",
+      "D": "CD40L",
+      "E": "Pax5"
+    },
+    "answer": "A",
+    "explanation": "Type 2 Hyper IgM syndrome (HyperIgM-2) is caused by a deficiency in Activation-Induced Cytidine Deaminase (AID). AID is crucial for class switch recombination in B cells. Deficiencies in CD40L (CD154) lead to HyperIgM-1, and CD40 deficiency is related to HyperIgM-3. Btk deficiency causes X-linked agammaglobulinemia, and Pax5 is a transcription factor important for B cell development, but its deficiency is not directly linked to HyperIgM syndromes in the context of typical classifications.\n[出自考古第4題]"
+  },
+  {
+    "question": "Which one of the followings is NOT the property of TI-1 antigens?",
+    "options": {
+      "A": "Antibody response in absence of T cells.",
+      "B": "Antibody response in infants.",
+      "C": "Antibody production in congenitally athymic individual.",
+      "D": "Polyclonal B cells activation at high concentration.",
+      "E": "Primes T cells."
+    },
+    "answer": "E",
+    "explanation": "TI-1 antigens are T-independent type 1 antigens. Their properties include the ability to induce antibody responses in the absence of T cells, in infants, and in congenitally athymic individuals. At high concentrations, they can cause polyclonal B cell activation. However, TI-1 antigens do not prime T cells; this is a characteristic of T-dependent antigens.\n[出自考古第5題]"
+  },
+  {
+    "question": "Mice have deficiency in MHC I and CD3 molecules:",
+    "options": {
+      "A": "Both CD4 and CD8 cells mature",
+      "B": "Either CD4 or CD8 cells mature",
+      "C": "Neither CD4 nor CD8 cells mature",
+      "D": "Only CD4 cells mature",
+      "E": "Only CD8 cells mature"
+    },
+    "answer": "C",
+    "explanation": "MHC class I molecules are essential for the development of CD8+ T cells, and CD3 molecules are crucial for the development of all T cells (both CD4+ and CD8+). A deficiency in both MHC I and CD3 would result in neither CD4 nor CD8 T cells maturing.\n[出自考古第6題]"
+  },
+  {
+    "question": "Which one is not the mechanism for tumor to avoid immune recognition?",
+    "options": {
+      "A": "apoptosis",
+      "B": "antigenic modulation",
+      "C": "low immunogenicity",
+      "D": "immune suppression"
+    },
+    "answer": "A",
+    "explanation": "Apoptosis, in the context of tumor immunology, typically refers to programmed cell death of tumor cells, which is a mechanism by which the immune system can eliminate cancer cells, not a mechanism for tumors to avoid immune recognition. Antigenic modulation, low immunogenicity, and tumor-induced immune suppression are all established mechanisms tumors use to evade immune detection and destruction.\n[出自考古第4題]"
+  },
+  {
+    "question": "Which of the following statement about “tumor immunoediting” is incorrect?",
+    "options": {
+      "A": "Tumor can down-regulate the expression of MHC class I molecules",
+      "B": "Tumor can down-regulate the expression of TCR molecules in T cells",
+      "C": "Tumor can recruit the infiltration of immunosuppressive regulatory T cells",
+      "D": "Tumor can secret immunosuppressive cytokines",
+      "E": "Tumor can cause T cell apoptosis"
+    },
+    "answer": "B",
+    "explanation": "Tumor immunoediting describes the process where the immune system shapes tumor immunogenicity over time. Tumors can indeed down-regulate MHC class I molecules to evade CD8+ T cells, recruit Tregs, and secrete immunosuppressive cytokines. However, tumors do not down-regulate the expression of TCR molecules in T cells; TCR downregulation would be a mechanism within the T cells themselves, not induced by the tumor to evade recognition. Tumor can cause T cell apoptosis through mechanisms like PD-L1/PD-1 interaction or FasL/Fas interaction.\n[出自考古第7題]"
+  },
+  {
+    "question": "Which of the following statement is incorrect?",
+    "options": {
+      "A": "Tumor cells expressing MHC class I can be killed by CD8+ T cells",
+      "B": "Tumors cells with MHC class I down-regulated can be killed by NK cells",
+      "C": "Tumor antigens are recognized by NK cells",
+      "D": "Tumor antigens can be different in wild-type and nude mice",
+      "E": "Nude mice do not have normal adaptive immunity against tumor"
+    },
+    "answer": "C",
+    "explanation": "Tumor cells expressing MHC class I can be killed by CD8+ T cells, and tumor cells with down-regulated MHC class I are more susceptible to killing by NK cells. Nude mice lack T cells and thus have impaired adaptive immunity against tumors. Tumor antigens can indeed be different between wild-type and nude mice, potentially due to different immune pressures in their development. However, tumor antigens are generally not recognized by NK cells. NK cells recognize 'missing self' (like downregulation of MHC class I), stress ligands, or antibody-coated cells, but not specific tumor antigens in the same way T cells do through TCR recognition of peptide-MHC complexes.\n[出自考古第8題]"
+  }
+]
