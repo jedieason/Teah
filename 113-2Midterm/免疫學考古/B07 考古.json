@@ -9,7 +9,7 @@
       "D": "During viral infections, adaptive immunity is more important than innate immunity as viruses are cleared only when adaptive immunity is initiated."
     },
     "answer": "C",
-    "explanation": ""
+    "explanation": "選項C 正確。\n選項A 對於病毒感染，有抗病毒藥物 (anti-viral drug) 與殺病毒劑 (viricide) 可使用。前者是用於抑制體內的病毒，而後者是用於消滅體外的病毒。抗病毒藥物的機理主要是通過影響干擾病毒複製週期的某個環節來實現抵抗病毒的進一步感染。例如直接抑制或殺滅病毒、干擾病毒吸附、阻止病毒穿入細胞、抑制病毒生物合成、抑制病毒釋放或增強宿主抗病毒能力等。此選項說沒有藥物可用是錯誤的。\n選項B 前者是利用牛痘引起免疫反應；後者是採用天花病人的結痂和膿汁，接種到健康人的身上。讓人感染輕微的天花，輕微發病之後，即可獲得免疫力，之後便不會再犯天花。此選項說法牛痘與天花膿汁相同是錯誤的。\n選項D 先天免疫比後天免疫重要。雖然先天免疫無法完全消滅病原體，但可以將其控制在一定數量。若沒有先天免疫，則病原體會在體內大量滋生而導致個體死亡。此選項說法後天免疫比先天免疫重要是錯誤的。\n［出自考古第1題］"
   },
   {
     "question": "Immunology is the study of host defense against pathogens or immune disorders. Which disease DOES NOT belong to immune disorders?",
@@ -20,7 +20,7 @@
       "D": "Diabetes mellitus"
     },
     "answer": "B",
-    "explanation": ""
+    "explanation": "選項B 色盲非免疫疾病。\n［出自考古第2題］"
   },
   {
     "question": "Antimicrobial peptides (AMP) are one of the important innate immune components. Which statement is NOT CORRECT?",
@@ -31,7 +31,7 @@
       "D": "AMPs are present in the skin and gut."
     },
     "answer": "A",
-    "explanation": ""
+    "explanation": "選項A 錯誤。AMPs 無專一性。\n選項B 結構正確，AMPs具雙親性。\n選項C 活化方式正確。\n選項D 分佈位置正確。\n［出自考古第3題］"
   },
   {
     "question": "Complement belongs to humoral immunity. Which statement concerning the of complement is NOT CORRECT?",
@@ -42,7 +42,7 @@
       "D": "Structure of mannose-binding lectin (MBL) in the lectin pathway is similar to C1q of the classical pathway."
     },
     "answer": "C",
-    "explanation": ""
+    "explanation": "選項C 錯誤。游離的IgM無法活化補體，需抗原結合後，Fc段才會露出，進而活化補體。\n選項A 正確。C3為補體中濃度最高的成分，缺乏易受細菌感染。\n選項B 正確。三種途徑活化C3方式不同，但C5之後的步驟相同。\n選項D 正確。MBL與C1q結構相似，皆為辨識病原體的分子。\n［出自考古第4題］"
   },
   {
     "question": "Concerning the effector functions of activated complement which statement is NOT CORRECT?",
@@ -53,7 +53,7 @@
       "D": "Complement receptors and Fc receptor on macrophages can synergize to enhance phagocytosis of bacteria."
     },
     "answer": "B",
-    "explanation": ""
+    "explanation": "選項B 錯誤。應為C3a和C5a。\n選項A 正確。MAC由C5-9組成，可在細菌膜上形成孔洞。\n選項C 正確。C5a可促進吞噬作用。\n選項D 正確。補體受體與Fc受體可協同增強巨噬細胞的吞噬作用。\n［出自考古第5題］"
   },
   {
     "question": "Pattern recognition receptors (PRR) are expressed on most innate immune cells that can recognize pathogen-associated molecular patterns (PAMPs). Which of following statement is NOT CORRECT?",
@@ -63,8 +63,8 @@
       "C": "NLR (Nod-like receptor), CLR (C-type lectin receptor), RLR (Rig-I like receptor), TLR (Toll-like receptor) and CDS (Cytosolic DNA sensor) all belong to PRR.",
       "D": "The binding of PAMP to PRR usually results in production of cytokines, including IL-6, TNFα and type I interferon."
     },
-    "answer": "A",
-    "explanation": ""
+    "answer": "B",
+    "explanation": "選項B 錯誤。PRRs 分布位置不含nucleus。\n選項A 正確。TLR4 需 MD2 輔助辨識 LPS。\n選項C 正確。列舉的受體皆屬於 PRR。\n選項D 正確。PAMPs 與 PRR 結合通常會誘導細胞產生細胞激素。\n［出自考古第6題］"
   },
   {
     "question": "Phagocytes like neutrophils and macrophages are key innate immune cells. Which statement is NOT CORRECT?",
@@ -75,7 +75,7 @@
       "D": "Both cells can produce antimicrobial peptides."
     },
     "answer": "A",
-    "explanation": ""
+    "explanation": "選項A 錯誤。macrophages cannot produce NETs。\n選項B 正確。吞噬體酸化具殺菌能力。\n選項C 正確。巨噬細胞可被 IFN-γ 活化，增強吞噬能力。\n選項D 正確。兩者皆可產生抗菌胜肽。\n［出自考古第7題］"
   },
   {
     "question": "The research works of many Nobel prize winners in Physiology and Medicine were in the field of immunology. Which statement is NOT CORRECT?",
@@ -86,7 +86,7 @@
       "D": "Gerald Edelman developed the method for generating monoclonal antibody"
     },
     "answer": "D",
-    "explanation": ""
+    "explanation": "選項D 錯誤。應為 Gerald Edelman discovered the chemical structure of antibodies. Georges J.F. Köhler and César Milstein developed the method for generating monoclonal antibody。\n選項A 正確。Metchnikoff 發現巨噬細胞的吞噬作用。\n選項B 正確。Bordet 發現補體系統。\n選項C 正確。Hoffmann 發現 Toll 受體。\n［出自考古第8題］"
   },
   {
     "question": "Monoclonal antibodies (mAbs) have been successfully used as therapeutic drugs for different diseases, including cancers. Which statement is NOT CORRECT?",
@@ -97,7 +97,7 @@
       "D": "In theory, we can conjugate a toxin to a mAb to specifically target and kill cancers."
     },
     "answer": "B",
-    "explanation": ""
+    "explanation": "選項B 錯誤。 “Nivolumab” 為全人源單株抗體，非人源化單株抗體。\n選項A 正確。可產生抗 IgE 單株抗體治療氣喘。\n選項C 正確。單株抗體可由雜交瘤細胞分泌。\n選項D 正確。可將毒素與單株抗體結合，精準殺傷癌細胞。\n［出自考古第9題］"
   },
   {
     "question": "Concerning the structural domains of an antibody, which statement is NOT CORRECT?",
@@ -108,7 +108,7 @@
       "D": "Three hypervariable loops of light chain alone determine antigen specificity by forming a complementary to the antigen and termed CDR"
     },
     "answer": "D",
-    "explanation": ""
+    "explanation": "選項D 錯誤。抗原專一性由重鏈與輕鏈共同決定。\n選項A 正確。Fab 為抗原結合區。\n選項B 正確。輕鏈包含一個變異區與一個恆定區。\n選項C 正確。鉸鏈區使抗體能彎曲。\n［出自考古第10題］"
   },
   {
     "question": "Cytokines are mediators of immune responses. Which statement is NOT CORRECT?",
@@ -119,7 +119,7 @@
       "D": "Chemokines can chemoattract leukocytes to the site of infection."
     },
     "answer": "C",
-    "explanation": ""
+    "explanation": "選項C 錯誤。應為 common gamma chain (γc) )\n選項A 正確。細胞激素可經由 JAK-STAT 路徑傳遞訊息。\n選項B 正確。細胞激素通常在免疫細胞受刺激後產生。\n選項D 正確。趨化激素可引導白血球移動至感染部位。\n［出自考古第11題］"
   },
   {
     "question": "ITAM and ITIM in immunoreceptors are critical for regulating the functions of the receptors. Which statement is NOT CORRECT?",
@@ -130,10 +130,10 @@
       "D": "Immune checkpoint blockade for cancer treatment is using anti-CTLA-4 or anti-PD1 to inhibit the negative signals in T cells"
     },
     "answer": "C",
-    "explanation": ""
+    "explanation": "選項C 錯誤。TCR胞內區短小，本身不具ITAM，需與CD3、ζ鏈結合。\n選項A 正確。ITAM 磷酸化後可活化激酶，促進免疫反應。\n選項B 正確。CTLA4 可抑制T細胞反應。\n選項D 正確。免疫檢查點阻斷療法使用抗CTLA-4 或抗PD-1 抗體。\n［出自考古第12題］"
   },
   {
-    "question": "Indicate whether each of the following statements regarding T cells and B cells is true (T) or false (F). (1% each, 5% total)",
+    "question": "Indicate whether each of the following statements regarding T cells and B cells is true (T) or false (F).",
     "options": {
       "A": "T cells and B cells recognize the same types of antigen.",
       "B": "T cells and B cells require MHC molecules for the recognition of peptide antigens.",
@@ -141,50 +141,93 @@
       "D": "T-cell receptor and immunoglobulin genes are encoded on the MHC.",
       "E": "The T-cell receptor has structural similarity to an immunoglobulin Fab fragment."
     },
-    "answer": ["F", "F", "T", "F", "T"],
-    "explanation": ""
+    "answer": [
+      "F",
+      "F",
+      "T",
+      "F",
+      "T"
+    ],
+    "explanation": "(A) 錯誤。T cell 是辨認抗原經 APCs 處理過的 peptide, MHC complexes；B cell 則是直接辨認抗原。\n(B) 錯誤。B cell 不需要 MHC 協助抗原的辨識。\n(C) 正確\n(D) 錯誤。TCR 與 BCR 的基因編碼與 MHC 無關。\n(E) 正確\n［出自考古第1題］"
   },
   {
-    "question": "Which of the following statements ARE correct regarding memory B cells? (3%)",
+    "question": "Which of the following statements ARE correct regarding memory B cells?",
     "options": {
       "A": "Memory B cells die after secondary exposure to the same pathogen.",
       "B": "In secondary responses, the number of pathogen-specific B cells is about 10–100-fold that seen in primary responses.",
       "C": "The sensitivity of memory B cells is improved compared with naive B bells because affinity maturation has occurred.",
       "D": "Memory B cells differentiate into plasma cells more rapidly than do naive B cells."
     },
-    "answer": ["B", "C", "D"],
-    "explanation": ""
+    "answer": [
+      "B",
+      "C",
+      "D"
+    ],
+    "explanation": "(A) 錯誤。記憶B細胞在第二次碰到相同病原體時會快速分化並增殖。\n(B) 正確\n(C) 正確\n(D) 正確\n［出自考古第2題］"
   },
   {
-    "question": "Which of the following statements ARE correct regarding memory T cells? (3%)",
+    "question": "Which of the following statements ARE correct regarding memory T cells?",
     "options": {
       "A": "CD4+ T cells are required for the maintenance of CD8+ memory cells.",
       "B": "Memory T cells are long lived because they are more sensitive to IFN-γ.",
       "C": "The survival of memory T cells (both CD4+ and CD8+) requires IL-7.",
       "D": "Memory T cells are activated without contact with peptide:MHC complexes."
     },
-    "answer": ["A", "C"],
-    "explanation": ""
+    "answer": [
+      "A",
+      "C"
+    ],
+    "explanation": "(A) 正確\n(B) 錯誤。IFN-γ 的信號調控會抑制「接收較弱刺激的 TCR」的分化，使得高親和力且長壽的記憶T細胞可以大量分化，而低親和力的記憶T細胞 (由接收較弱刺激的T細胞分化而來) 不會被分化出來，這種機制使次級免疫更有效，且可預防低親和力的記憶T細胞產生自體免疫。\n(C) 正確\n(D) 錯誤。仍需要 peptide, MHC complexes 活化。\n［出自考古第3題］"
   },
   {
-    "question": "Which of the following statements do not describe immunological memory responses? (3%)",
+    "question": "Which of the following statements do not describe immunological memory responses?",
     "options": {
       "A": "Original antigenic sin",
       "B": "IgM response",
       "C": "Low level of somatic hypermutation",
       "D": "The same man was never attacked twice"
     },
-    "answer": ["B", "C", "D"],
-    "explanation": ""
+    "answer": [
+      "B",
+      "C"
+    ],
+    "explanation": "(A) 錯誤。\n(B) 正確。IgM response 非免疫記憶特徵。\n(C) 正確。體細胞高頻突變在免疫記憶反應中會增加。\n(D) 錯誤。\n［出自考古第4題］"
   },
   {
-    "question": "Match the term in Column A with its correct description in Column B (Select all that apply).",
+    "question": "Match the term in Column A with its correct description in Column B (Select all that apply).\n\n**Column A**\na. MHC Class I molecules\nb. MHC Class II molecules",
     "options": {
-      "a. MHC Class I molecules": ["1. They bind peptides of 8-10 amino acids.", "3. They are unstable when peptides are not bound", "5. They present antigens for CD8+ T cells.", "6. They are not expressed on red blood cells."],
-      "b. MHC Class II molecules": ["2. They are encoded by alpha (a, 34 kDa) and beta (β, 29 kDa) polypeptides.", "3. They are unstable when peptides are not bound", "4. They present antigens for CD4+ T cells", "6. They are not expressed on red blood cells."]
+      "a": [
+        "They bind peptides of 8-10 amino acids.",
+        "They are encoded by alpha (α, 34 kDa) and beta (β, 29 kDa) polypeptides.",
+        "They are unstable when peptides are not bound",
+        "They present antigens for CD4+ T cells",
+        "They present antigens for CD8+ T cells.",
+        "They are not expressed on red blood cells."
+      ],
+      "b": [
+        "They bind peptides of 8-10 amino acids.",
+        "They are encoded by alpha (α, 34 kDa) and beta (β, 29 kDa) polypeptides.",
+        "They are unstable when peptides are not bound",
+        "They present antigens for CD4+ T cells",
+        "They present antigens for CD8+ T cells.",
+        "They are not expressed on red blood cells."
+      ]
     },
-    "answer": [],
-    "explanation": ""
+    "answer": {
+      "a": [
+        "1",
+        "3",
+        "5",
+        "6"
+      ],
+      "b": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ]
+    },
+    "explanation": "**Column B**\n1. They bind peptides of 8-10 amino acids.\n2. They are encoded by alpha (α, 34 kDa) and beta (β, 29 kDa) polypeptides.\n3. They are unstable when peptides are not bound\n4. They present antigens for CD4+ T cells\n5. They present antigens for CD8+ T cells.\n6. They are not expressed on red blood cells。\n\n選項a. MHC class I molecules 對應 1, 3, 5, 6。\nMHC class I 是由achain (43kDa) 及 β2-microglobulin (12kDa) 所組成；呈現 peptide 給 CD8+ T cells；穩定性較差，需 peptide 結合。\n選項b. MHC class II molecules 對應 2, 3, 4, 6。\nMHC class II 是由 achain (34kDa) 及 β chain (29kDa) 所組成；呈現 peptide 給 CD4+ T cells；穩定性較差，需 peptide 結合。\n［出自考古第1題］"
   },
   {
     "question": "Which one of the following transcription factors is NOT specifically expressed in the early stages of B-cell development?",
@@ -196,7 +239,7 @@
       "E": "GATA3"
     },
     "answer": "E",
-    "explanation": ""
+    "explanation": "選項E。GATA3 非 B 細胞早期發育轉錄因子。\n［出自考古第1題］"
   },
   {
     "question": "Marginal zone B (MZB) cells are poised to make rapid responses to blood-borne antigens or pathogens in the spleen. MZB cells express very high levels of the complement receptor X. What is the X?",
@@ -208,10 +251,10 @@
       "E": "EBI2"
     },
     "answer": "D",
-    "explanation": ""
+    "explanation": "選項D。CD21 (CR2) 為 MZB 細胞高表達的補體受體。\n［出自考古第2題］"
   },
   {
-    "question": "Double-negative αβ T cells with CD44lowCD25+ markers",
+    "question": "Double-negative αβ T cells with CD44$^{low}$CD25$^{+}$ markers",
     "options": {
       "A": "DN1 cells",
       "B": "DN2 cells",
@@ -219,7 +262,7 @@
       "D": "DN4 cells"
     },
     "answer": "C",
-    "explanation": ""
+    "explanation": "選項C。DN3 細胞為 CD44$^{low}$CD25$^{+}$ 的 DN 細胞。\n［出自考古第3題］"
   },
   {
     "question": "Which one of the following factors is NOT involved in Negative Selection?",
@@ -228,10 +271,10 @@
       "B": "Dendritic cells in the thymus",
       "C": "RAG",
       "D": "Thymic cortical epithelial cells",
-      "E": "Thymic medullary epithelial cells."
+      "E": "Thymic medullary epithelial cells"
     },
     "answer": "C",
-    "explanation": ""
+    "explanation": "選項C。RAG 參與 VDJ recombination，與負選擇無關。\n［出自考古第4題］"
   },
   {
     "question": "Which one of the following tumors represent clonal outgrowths of T cells?",
@@ -240,10 +283,10 @@
       "B": "Hodgkin's lymphoma",
       "C": "Multiple myeloma",
       "D": "Sezary syndrome",
-      "E": "Waldenstrom's macroglobulinemia."
+      "E": "Waldenstrom's macroglobulinemia"
     },
-    "answer": "A",
-    "explanation": ""
+    "answer": "D",
+    "explanation": "選項D。Sézary syndrome 為 T 細胞腫瘤。\n［出自考古第5題］"
   },
   {
     "question": "Different cytokines regulate switching to different antibody classes. Which one of following cytokines induces switching to IgE?",
@@ -255,7 +298,7 @@
       "E": "TGF-β"
     },
     "answer": "A",
-    "explanation": ""
+    "explanation": "選項A。IL-4 誘導 B 細胞 class switch 轉換為 IgE。\n［出自考古第6題］"
   },
   {
     "question": "Which one of following antibody binds tightly to Fc Receptor FcγRIII (CD16)?",
@@ -267,7 +310,7 @@
       "E": "IgA"
     },
     "answer": "B",
-    "explanation": ""
+    "explanation": "選項B。IgG 為 FcγRIII (CD16) 的主要結合對象。\n［出自考古第7題］"
   },
   {
     "question": "Most CD8+ T cell responses require CD4+ T cells. The CD4+ T cells produce abundant cytokine X and thus help drive CD8+ T cell proliferation. What is the X?",
@@ -279,7 +322,7 @@
       "E": "IFN-γ"
     },
     "answer": "A",
-    "explanation": ""
+    "explanation": "選項A。IL-2 為 CD4+ T 細胞輔助 CD8+ T 細胞增殖的重要細胞激素。\n［出自考古第8題］"
   },
   {
     "question": "Which one of the following cell-surface molecules does NOT express in activated T cells?",
@@ -291,43 +334,43 @@
       "E": "S1PR1"
     },
     "answer": "E",
-    "explanation": ""
+    "explanation": "選項E。S1PR1 (CD69) 在活化 T 細胞表現量下降。\n［出自考古第9題］"
   },
   {
     "question": "STAT5 is exclusively expressed in which subset of CD4+ T cells?",
     "options": {
-      "A": "$T_{H}1$ cell",
-      "B": "$T_{H}2$ cell",
-      "C": "$T_{H}17$ cell",
-      "D": "$T_{FH}$ cell",
-      "E": "$T_{REG}$ cell."
+      "A": "T$_{H}$1 cell",
+      "B": "T$_{H}$2 cell",
+      "C": "T$_{H}$17 cell",
+      "D": "T$_{FH}$ cell",
+      "E": "T$_{REG}$ cell"
     },
     "answer": "E",
-    "explanation": ""
+    "explanation": "選項E。STAT5 主要在 T$_{REG}$ 細胞中表現。\n［出自考古第10題］"
   },
   {
-    "question": "Different subset of CD4+ T cells produces distinct profile of cytokines and mediates different types of immune responses. Which immune cell type is the target of $T_{H}2$ cell?",
+    "question": "Different subset of CD4+ T cells produces distinct profile of cytokines and mediates different types of immune responses. Which immune cell type is the target of T$_{H}$2 cell?",
     "options": {
       "A": "B cell",
       "B": "Basophil",
       "C": "Dendritic cell",
       "D": "Macrophage",
-      "E": "Neutrophil."
+      "E": "Neutrophil"
     },
     "answer": "B",
-    "explanation": ""
+    "explanation": "選項B。T$_{H}$2 細胞主要作用於嗜鹼性球 (Basophil)。\n［出自考古第11題］"
   },
   {
-    "question": "Which one of following microbes is the target of $T_{H}17$ cell?",
+    "question": "Which one of following microbes is the target of T$_{H}$17 cell?",
     "options": {
       "A": "Fungi (Candida albicans)",
       "B": "Helminth",
       "C": "Listeria",
       "D": "Mycobacteria",
-      "E": "Parasites."
+      "E": "Parasites"
     },
     "answer": "A",
-    "explanation": ""
+    "explanation": "選項A。T$_{H}$17 細胞主要對抗真菌 (Fungi)。\n［出自考古第12題］"
   },
   {
     "question": "Which of the following statement is NOT correct?",
@@ -339,7 +382,7 @@
       "E": "Pneumococcal conjugated vaccine is a vaccine which includes purified capsular polysaccharide conjugated to nontoxic diphtheria toxin. It is to convert TI antigen into TD antigen."
     },
     "answer": "D",
-    "explanation": ""
+    "explanation": "選項d 錯誤。phase II 試驗者應為病人或必須施打疫苗者，且到 phase III 才能確認疫苗效果 (comfirm the effectiveness)。\n選項a 正確。\n選項b 正確，見 ppt (q) Vaccine p.24, A vaccine is licensed only if: 1.It's safe and effective 2.Benefits outweigh risks。\n選項c 正確。\n選項e 正確，見共筆 Vol.5 p.21。\n［出自考古第1題］"
   },
   {
     "question": "All of the following are tenets of the hygiene hypothesis except?",
@@ -350,8 +393,8 @@
       "D": "a decrease in allergic disease in developed countries compared to developing countries",
       "E": "antibiotic-driven selection of superbacteria perturbs the immune system"
     },
-    "answer": "D",
-    "explanation": ""
+    "answer": "G",
+    "explanation": "選項g (d) 錯誤。(a)(b)(c)(e) 正確。\n選項d 過敏在已開發國家應是增加。\n［出自考古第2題］"
   },
   {
     "question": "Which of the following statement is True?",
@@ -360,8 +403,8 @@
       "B": "Type I hypersensitivity reaction is caused by IgG-mediated immune response whose main physiological role is to defend against parasite infection.",
       "C": "The targets of immune responses in autoimmunity do not remain fixed, but can be extended to include other epitopes on the same protein or other proteins in the same tissue. This phenomenon is called “molecular mimicry”."
     },
-    "answer": "A",
-    "explanation": ""
+    "answer": "G",
+    "explanation": "選項g (a) 正確。(b)(c) 錯誤。\n選項a 正確。\n選項b Type I hypersensitivity reaction 應是 IgE-mediated。\n選項c 見 ppt (t) Autoimmunity and Transplantation p.11、p.16, 選項敘述應為 Epitope spreading, molecular mimicry 是指當外來抗原與自己的組織細胞有共同或相似的抗原決定基，原來對抗外來抗原的抗體也開始攻擊自己的組織。\n［出自考古第3題］"
   },
   {
     "question": "Autoimmunity is thought to result from:",
@@ -379,7 +422,7 @@
       "K": "none of the above"
     },
     "answer": "G",
-    "explanation": ""
+    "explanation": "選項g (g) 正確。(a)(c)(d)正確，故選(g)。\n選項a 自體免疫即是指自體耐受性崩壞，免疫細胞無法區辨敵我而攻擊自身的情形。\n選項b 肥大細胞活化和去顆粒化 (degranulation) 常見於 typeI 過敏而非自體免疫。\n選項c (d) 外來環境和體質特異性為自體免疫疾病發生的兩大主因。\n［出自考古第4題］"
   },
   {
     "question": "Which of the following statement is NOT true?",
@@ -390,8 +433,8 @@
       "D": "Tumor cells may be eliminated by the immune system initially, but as they evolve, variants occur and eventually escape immune surveillance and form tumor.",
       "E": "(e) An effective vaccine against human papilloma virus (HPV) infection can prevent the occurrence of cervical cancer."
     },
-    "answer": "B",
-    "explanation": ""
+    "answer": "G",
+    "explanation": "選項g (b) 錯誤。(a)(c)(d)(e) 正確。\n選項a 見共筆 Vol.5.\n選項b 見共筆 Vol.5.p30 及 p.31 的圖, CAR-T 的結構有膜外抗原辨識區、穿膜區以及膜內區三大部分。\n選項c 見共筆 Vol.5.p28, 使用免疫抑制劑會提升 (increase) 而非降低感染風險。\n選項d 見共筆 Vol.5.p26, 透過將外源抗體人類化 (humanization) 僅保留互補性決定區的方式可降低該抗體的免疫原性 (immunogenicity)。\n選項e 見共筆 Vol.5.p29, 正確。\n選項f 見共筆 Vol.5.p32, 正確。\n［出自考古第5題］"
   },
   {
     "question": "Which of the following molecule(s) can transduce inhibitory signal to T cells? (select ALL that apply)",
@@ -403,118 +446,160 @@
       "E": "CTLA-4",
       "F": "CD25"
     },
-    "answer": ["C", "E"],
-    "explanation": ""
+    "answer": [
+      "C",
+      "E"
+    ],
+    "explanation": "選項ce (c)(e) 正確。(a)(b)(d)(f) 錯誤。\n選項c(e) 見共筆 Vol.3.p.31 的圖、Vol.4.p.15、p.22、Vol.5.p32。\n選項a CD3 是活化 T 細胞的 co-receptor。\n選項b CD28 是活化 T 細胞的 receptor, 接受 costimulator, 屬於 signal2。\n選項c (e) 皆為抑制 T 細胞活性的 receptor, 即 2018 年諾貝爾生理醫學獎。\n選項d 41BB 是活化 T 細胞的 receptor, 和 costimulator 41BBL 結合。\n選項f CD25 是活化 T 細胞的 receptor, 和 IL-2 結合以維持 T 細胞存活。\n［出自考古第6題］"
   },
   {
-    "question": "Place each of the 10 outcomes listed below into the adequate space to complete the table\n\n選項:\n1. Autoimmunity 2. Cancer 3. Rejection 4. Self tolerance 5. Tumor immunity\n6. No response 7. Protective immunity 8. Acceptance 9. Allergy\n10. Recurrent infection",
+    "question": "Place each of the 10 outcomes listed below into the adequate space to complete the table\n\n**Antigen**\nInfectious agent\nInnocuous substance\nGrafted organ\nSelf organ\nTumor",
     "options": {
-      "Antigen": ["Infectious agent", "Innocuous substance", "Grafted organ", "Self organ", "Tumor"],
-      "Normal response": ["", "", "", "", ""],
-      "Deficient response": ["", "", "", "", ""]
+      "Normal response": [
+        "Autoimmunity",
+        "Cancer",
+        "Rejection",
+        "Self tolerance",
+        "Tumor immunity",
+        "No response",
+        "Protective immunity",
+        "Acceptance",
+        "Allergy",
+        "Recurrent infection"
+      ],
+      "Deficient response": [
+        "Autoimmunity",
+        "Cancer",
+        "Rejection",
+        "Self tolerance",
+        "Tumor immunity",
+        "No response",
+        "Protective immunity",
+        "Acceptance",
+        "Allergy",
+        "Recurrent infection"
+      ]
     },
-    "answer": [],
-    "explanation": ""
+    "answer": {
+      "Normal response": [
+        "Protective immunity",
+        "Allergy",
+        "Rejection",
+        "Self tolerance",
+        "Tumor immunity"
+      ],
+      "Deficient response": [
+        "Recurrent infection",
+        "No response",
+        "Acceptance",
+        "Autoimmunity",
+        "Cancer"
+      ]
+    },
+    "explanation": "**Effect of response to antigen**\n|Antigen|Normal response|Deficient response|\n|---|---|---|\n|Infectious agent|7. Protective immunity|10. Recurrent infection|\n|Innocuous substance|9. Allergy|6. No response|\n|Grafted organ|3. Rejection|8. Acceptance|\n|Self organ|1. Autoimmunity|4. Self tolerance|\n|Tumor|5. Tumor immunity|2. Cancer|\n\n選項：\n1. Autoimmunity 2. Cancer 3. Rejection 4. Self tolerance 5. Tumor immunity\n6. No response 7. Protective immunity 8. Acceptance 9. Allergy\n10. Recurrent infection\n［出自考古第1題］"
   },
   {
     "question": "Which of the following statements about “X-linked SCID syndrome” is correct:",
     "options": {
-      "1": "This immunodeficiency affects only T cells",
-      "2": "There is a defect in IL-2 receptor subunit, a critical molecule expressed on many immune cells",
-      "3": "Because the defect involves critical step in B cell activation and results in decreased B cell number",
-      "4": "Patients are usually asymptomatic but only develops opportunistic infection when stressed",
-      "5": "Unlike extracellular bacteria, protection against intracellular pathogen is not impaired"
+      "A": "This immunodeficiency affects only T cells",
+      "B": "There is a defect in IL-2 receptor subunit, a critical molecule expressed on many immune cells",
+      "C": "Because the defect involves critical step in B cell activation and results in decreased B cell number",
+      "D": "Patients are usually asymptomatic but only develops opportunistic infection when stressed",
+      "E": "Unlike extracellular bacteria, protection against intracellular pathogen is not impaired"
     },
-    "answer": "2",
-    "explanation": ""
+    "answer": "B",
+    "explanation": "選項(2) 正確(超出本次範圍，詳見 07 共筆 Vol.5 單元 16)\n選項(1) B 細胞的功能缺失不一定要來自 B 細胞本身的基因缺陷，因為 B 細胞產生抗體的過程需要 T 細胞的幫助，所以當 T 細胞上發生基因缺陷，也能同時造成 B 細胞的功能缺失。\n選項(3) B 細胞數量正常，但因為 T 細胞出問題所以造成 B 細胞不具功能性。\n選項(4) 因為既沒有 T 細胞依賴性抗體反應，亦沒有細胞媒介反應，通常會導致嚴重的感染。\n選項(5) 因為出問題的是 IL-12 family 的受體次單元，而 intracellular pathogen 引起的第一類免疫反應 (Type 1 response) 正需要 IL-12，故會造成嚴重的保護缺失。\n{09 勘誤內容:XSCID 出問題的是 IL-2R common gamma chain}\n［出自考古第1題］"
   },
   {
     "question": "Which of the following statements about “COVID-19 virus” is incorrect?",
     "options": {
-      "1": "Severe epidemic is observed",
-      "2": "It is a type of RNA virus",
-      "3": "Reverse transcriptase is not a key molecule for its pathogenicity",
-      "4": "COVID-19 virus does not integrate its genome into host DNA",
-      "5": "COVID-19 kills more people worldwide in the last month than any other currently-existing viruses"
+      "A": "Severe epidemic is observed",
+      "B": "It is a type of RNA virus",
+      "C": "Reverse transcriptase is not a key molecule for its pathogenicity",
+      "D": "COVID-19 virus does not integrate its genome into host DNA",
+      "E": "COVID-19 kills more people worldwide in the last month than any other currently-existing viruses"
     },
-    "answer": "5",
-    "explanation": ""
+    "answer": "E",
+    "explanation": "選項(5) 本題應已超出本次範圍。COVID-19 在 2020 年三月 (07 考試前一個月) 全球死亡人數約為 41588 人，而根據 WHO 統計，2019 年全球因 TB 死亡人數約為 1.4 百萬人，平均每月達十萬人以上，在 2020 年三月死亡人數應也較 COVID-19 多。T 細胞。\n選項(1)(2)(4)(5) 皆正確\n選項(3) HIV virus 有 reverse transcriptase，更容易出現變異。\n［出自考古第2題］"
   },
   {
     "question": "Which of the following is incorrect about human immunodeficiency virus (HIV) and AIDS?",
     "options": {
-      "1": "It is a type of RNA virus",
-      "2": "Decreased CD4+ T cell count is couple with CD8+ T cell dysfunction, or exhaustion",
-      "3": "HIV virus has a relatively low mutation rate thus can remain latency and create drug resistance",
-      "4": "Patients may exhibit skin cancer as the first symptom of AIDS",
-      "5": "HIV virus depends on co-receptor CCR5 to enter CD4+ T cells"
+      "A": "It is a type of RNA virus",
+      "B": "Decreased CD4+ T cell count is couple with CD8+ T cell dysfunction, or exhaustion",
+      "C": "HIV virus has a relatively low mutation rate thus can remain latency and create drug resistance",
+      "D": "Patients may exhibit skin cancer as the first symptom of AIDS",
+      "E": "HIV virus depends on co-receptor CCR5 to enter CD4+ T cells"
     },
-    "answer": "4",
-    "explanation": ""
+    "answer": "C",
+    "explanation": "選項(3) HIV virus 有 reverse transcriptase，更容易出現變異。\n選項(1)(2)(4)(5) 皆正確\n［出自考古第3題］"
   },
   {
     "question": "Which of the following statement about adoptive T cell therapy for cancer is incorrect?",
     "options": {
-      "1": "Endogenous T cells specific for tumor antigen have shown efficacy in clinical trials",
-      "2": "TCR gene transfer can induce diverse T cells with the same antigen specificity",
-      "3": "CAR-T cell therapy has so far only been successful in treating hematological cancers",
-      "4": "CAR-T cells are genetically modified T cells",
-      "5": "Quality of infused T cells is less important than quantity of cell products"
+      "A": "Endogenous T cells specific for tumor antigen have shown efficacy in clinical trials",
+      "B": "TCR gene transfer can induce diverse T cells with the same antigen specificity",
+      "C": "CAR-T cell therapy has so far only been successful in treating hematological cancers",
+      "D": "CAR-T cells are genetically modified T cells",
+      "E": "Quality of infused T cells is less important than quantity of cell products"
     },
-    "answer": "5",
-    "explanation": ""
+    "answer": "E",
+    "explanation": "選項(5) 見 07 共筆 Vol.5 p57-62。\n選項(2) correct\n選項(3) 目前 CAR-T 僅成功應用於 B 型急性淋巴性白血病及惡性淋巴瘤。\n選項(4) correct\n選項(5) 若 T 細胞表面表現較多 CD28 或 CD27，代表其品質較好 (端粒較長，較年輕)，成功率較高。\n［出自考古第4題］"
   },
   {
     "question": "About immune checkpoint therapy (PD1-PD-L1 blockade), which one is incorrect?",
     "options": {
-      "1": "It primarily works by activating exhausted tumor-infiltrating PD-L1+ T cells",
-      "2": "PD-L1 expression levels on tumor cells are used to predict responsiveness toward such therapy",
-      "3": "PD1-PD-L1 signaling inhibits downstream T cell receptor signaling and “turns off” T cells",
-      "4": "T cells can co-express many other inhibitory molecules such as CTLA-4",
-      "5": "2018 Nobel Prize was awarded to researchers who worked in this field of cancer immunology"
+      "A": "It primarily works by activating exhausted tumor-infiltrating PD-L1+ T cells",
+      "B": "PD-L1 expression levels on tumor cells are used to predict responsiveness toward such therapy",
+      "C": "PD1-PD-L1 signaling inhibits downstream T cell receptor signaling and “turns off” T cells",
+      "D": "T cells can co-express many other inhibitory molecules such as CTLA-4",
+      "E": "2018 Nobel Prize was awarded to researchers who worked in this field of cancer immunology"
     },
-    "answer": "1",
-    "explanation": ""
+    "answer": "A",
+    "explanation": "選項(1) 見 07 共筆 Vol.5 p55-56。\n選項(2)(3)(4)(5) correct\n選項(1) PD-L1 由 cancer cells 或 APC 表現，PD-1 由 T-cell 表現。\n［出自考古第5題］"
   },
   {
-    "question": "Match the type of immune responses in Column A with its correct description in Column B (Select all that apply).",
+    "question": "Match the type of immune responses in Column A with its correct description in Column B (Select all that apply).\n\n**Column A**\na. Type I immune responses\nb. Type II immune responses\nc. Type III immune responses",
     "options": {
-      "a. Type I immune responses": ["1. They enhance effector function of neutrophils against extracellular bacteria and fungi.", "4. They produce IFN-γ that activate bactericidal activity in macrophages.", "5. They are important to control human immunodeficiency virus (HIV) infection."],
-      "b. Type II immune responses": ["2. They are induced by helminths and increase the level of IgE."],
-      "c. Type III immune responses": ["3. They increase local production of IL-23 and IL-1beta."]
+      "a": [
+        "They enhance effector function of neutrophils against extracellular bacteria and fungi.",
+        "They are induced by helminths and increase the level of IgE.",
+        "They increase local production of IL-23 and IL-1beta.",
+        "They produce IFN-γ that activate bactericidal activity in macrophages.",
+        "They are important to control human immunodeficiency virus (HIV) infection.",
+        "They enhance tissue modeling and repair."
+      ],
+      "b": [
+        "They enhance effector function of neutrophils against extracellular bacteria and fungi.",
+        "They are induced by helminths and increase the level of IgE.",
+        "They increase local production of IL-23 and IL-1beta.",
+        "They produce IFN-γ that activate bactericidal activity in macrophages.",
+        "They are important to control human immunodeficiency virus (HIV) infection.",
+        "They enhance tissue modeling and repair."
+      ],
+      "c": [
+        "They enhance effector function of neutrophils against extracellular bacteria and fungi.",
+        "They are induced by helminths and increase the level of IgE.",
+        "They increase local production of IL-23 and IL-1beta.",
+        "They produce IFN-γ that activate bactericidal activity in macrophages.",
+        "They are important to control human immunodeficiency virus (HIV) infection.",
+        "They enhance tissue modeling and repair."
+      ]
     },
-    "answer": [],
-    "explanation": ""
-  },
-  {
-    "question": "Which one of the following transcription factors is NOT specifically expressed in the early stages of B-cell development?",
-    "options": {
-      "1": "E",
-      "2": "D",
-      "3": "C",
-      "4": "C",
-      "5": "AD",
-      "6": "A",
-      "7": "B",
-      "8": "A",
-      "9": "E",
-      "10": "E",
-      "11": "B",
-      "12": "A"
+    "answer": {
+      "a": [
+        "1",
+        "4",
+        "5"
+      ],
+      "b": [
+        "2",
+        "6"
+      ],
+      "c": [
+        "3"
+      ]
     },
-    "answer": "E",
-    "explanation": ""
-  },
-  {
-    "question": "Which of the following statement is NOT correct?",
-    "options": {
-      "1": "(2)",
-      "2": "(5)",
-      "3": "(3)",
-      "4": "(5)",
-      "5": "(1)"
-    },
-    "answer": "2",
-    "explanation": ""
+    "explanation": "**Column B**\n1. They enhance effector function of neutrophils against extracellular bacteria and fungi.\n2. They are induced by helminths and increase the level of IgE.\n3. They increase local production of IL-23 and IL-1beta.\n4. They produce IFN-γ that activate bactericidal activity in macrophages.\n5. They are important to control human immunodeficiency virus (HIV) infection.\n6. They enhance tissue modeling and repair.\n\n選項a. Type I immune responses 對應 1, 4, 5。\n選項b. Type II immune responses 對應 2, 6。\n選項c. Type III immune responses 對應 3。\n［出自考古第1題］"
   }
 ]

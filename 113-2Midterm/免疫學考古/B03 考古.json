@@ -1,472 +1,429 @@
 
 [
-  {
-    "question": "What is the T helper cell response to the antigen required on the antigen presenting cells?",
-    "options": {
-      "A": "MHC Class II, CD4.",
-      "B": "MHC Class II, CD8.",
-      "C": "MHC Class II, co-stimulator.",
-      "D": "MHC Class I, CD4.",
-      "E": "MHC Class I, co-stimulator."
-    },
-    "answer": "A",
-    "explanation": "T helper cells recognize antigens presented by MHC Class II molecules on antigen-presenting cells and require CD4 as a co-receptor. [出自考古第1題]"
-  },
-  {
-    "question": "下列哪一個沒有表現 FcyRI?",
-    "options": {
-      "A": "Neutrophil.",
-      "B": "Eosinophil.",
-      "C": "Macrophage.",
-      "D": "Dendritic cell.",
-      "E": "NK cell."
-    },
-    "answer": "E",
-    "explanation": "NK cells primarily express FcyRIII (CD16), while FcyRI (CD64) is expressed on macrophages, neutrophils, eosinophils, and some dendritic cells. [出自考古第2題]"
-  },
-  {
-    "question": "Which is the most abundant Ig isotype in the blood?",
-    "options": {
-      "A": "IgM.",
-      "B": "IgD.",
-      "C": "IgG.",
-      "D": "IgA.",
-      "E": "IgE."
-    },
-    "answer": "C",
-    "explanation": "IgG is the most abundant immunoglobulin isotype in the blood. [出自考古第3題]"
-  },
-  {
-    "question": "Which of the following is not an example of a checkpoint in lymphocyte development that contributes to the selection maturation of cells with useful antigen receptors?",
-    "options": {
-      "A": "B cell precursors that cannot express Ig$\gamma$ heavy chains die by apoptosis.",
-      "B": "T cell precursors that cannot express TCR$\beta$ chains die by apoptosis.",
-      "C": "Immature B cells that bind to self antigen with high affinity die by apoptosis.",
-      "D": "Developing T cells that fail to express TCR$\alpha$ chains die by apoptosis.",
-      "E": "Developing T cells that recognize self major histocompatibility complex (MHC) molecules with high affinity die by apoptosis."
-    },
-    "answer": "E",
-    "explanation": "All options are examples of checkpoints. However, if the question intends to ask which is LEAST directly related to 'useful antigen receptors' (and more about self-tolerance), option (E) might be considered, although this is ambiguous and the question is likely flawed. Options (A), (B), (C), and (D) are more directly related to positive selection for receptor expression or negative selection for self-reactivity to antigens, while (E) is about negative selection to self-MHC.  [出自考古第4題]"
-  },
-  {
-    "question": "Isotype found predominantly in mucosal secretion?",
-    "options": {
-      "A": "IgM.",
-      "B": "IgD.",
-      "C": "IgG.",
-      "D": "IgA.",
-      "E": "IgE."
-    },
-    "answer": "D",
-    "explanation": "IgA is the immunoglobulin isotype predominantly found in mucosal secretions. [出自考古第5題]"
-  },
-  {
-    "question": "請問 CD4$^+$ T-cell 要轉化成 $T_{H}1$ 需要哪些 cytokine 或 transcription factor 介入?(複選題)",
-    "options": {
-      "A": "IL-12.",
-      "B": "IFN-$\gamma$.",
-      "C": "TGF-$\beta$.",
-      "D": "T-bet.",
-      "E": "GATA3."
-    },
-    "answer": ["A", "B", "D"],
-    "explanation": "IL-12, IFN-$\gamma$, and T-bet are key cytokines and transcription factors involved in the differentiation of CD4$^+$ T-cells into $T_{H}1$ cells. [出自考古第1題]"
-  },
-  {
-    "question": "CD8 subpopulation are specialized to combat ______ pathogen, whereas CD4 subpopulation are specialized to combat ______ pathogen.",
-    "options": {
-      "A": "bacterial; viral.",
-      "B": "dead; alive.",
-      "C": "extracellular; intracellular.",
-      "D": "intracellular; extracellular.",
-      "E": "virulent; attenuated."
-    },
-    "answer": "D",
-    "explanation": "CD8$^+$ T cells are specialized to combat intracellular pathogens (like viruses), while CD4$^+$ T cells are specialized to combat extracellular pathogens (like bacteria, fungi). [出自考古第2題]"
-  },
-  {
-    "question": "Which is correct?(複選題)",
-    "options": {
-      "A": "MHC II present antigen to CD4 T cells.",
-      "B": "HIV used CD4 to make entry to T cell.",
-      "C": "CD4 is made up of two separate membrane-bound chains.",
-      "D": "CD4 secreted by T cell after activation.",
-      "E": "CD4 act as a T cell co-receptor."
-    },
-    "answer": ["A", "B", "E"],
-    "explanation": "Options (A), (B), and (E) are correct statements about CD4 and its function. CD4 is a single-chain transmembrane protein and is not secreted. [出自考古第3題]"
-  },
-  {
-    "question": "According to VDJ gene segment recombination, T cell receptor $\alpha$ chain locus resembles immunoglobulin ______ locus, whereas $\beta$ chain locus resembles immunoglobulin ______ locus.",
-    "options": {
-      "A": "$\lambda$ light chain; $\kappa$ light chain.",
-      "B": "heavy chain; $\lambda$ light chain.",
-      "C": "$\kappa$ light chain; heavy chain.",
-      "D": "$\lambda$ light chain; heavy chain.",
-      "E": "$\kappa$ light chain; $\lambda$ light chain."
-    },
-    "answer": "D",
-    "explanation": "The TCR$\alpha$ locus is similar to the immunoglobulin $\lambda$ light chain locus in gene organization (V and J segments, no D), and the TCR$\beta$ locus is similar to the immunoglobulin heavy chain locus (V, D, and J segments). Option (D) is the most likely intended answer based on gene organization and recombination mechanism similarities, although option (C) is also somewhat plausible if considering a simplified comparison to light and heavy chains in general. [出自考古第4題]"
-  },
-  {
-    "question": "The process by which cytotoxic T cells kill their target ______",
-    "options": {
-      "A": "induces target cell to necrosis.",
-      "B": "induces apoptosis in the cytotoxic T cell.",
-      "C": "releases perforin to deliver the contents of cytotoxin granules to target cell membrane.",
-      "D": "releases IFN-$\gamma$ to degrade DNA in target cell.",
-      "E": "releases granzymes to activate caspase and induce apoptosis of target cells."
-    },
-    "answer": ["C", "E"],
-    "explanation": "Cytotoxic T cells kill target cells primarily by releasing perforin and granzymes. Perforin facilitates the entry of granzymes into the target cell, and granzymes activate caspases, leading to apoptosis. [出自考古第5題]"
-  },
-  {
-    "question": "Pick up the right answer from the below list - mismatch blood transfusion.",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of any type of hypersensitivity."
-    },
-    "answer": "B",
-    "explanation": "Mismatch blood transfusion is a Type II hypersensitivity reaction, involving antibody-mediated cytotoxicity against cell surface antigens. [出自考古第1.1題，配合題]"
-  },
-  {
-    "question": "Pick up the right answer from the below list - hay fever.",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of any type of hypersensitivity."
-    },
-    "answer": "A",
-    "explanation": "Hay fever (allergic rhinitis) is a Type I hypersensitivity reaction, mediated by IgE and mast cell activation in response to allergens. [出自考古第1.2題，配合題]"
-  },
-  {
-    "question": "Pick up the right answer from the below list - Stevens-Johnson syndrome.",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of any type of hypersensitivity."
-    },
-    "answer": "F",
-    "explanation": "Stevens-Johnson syndrome is a Type IV hypersensitivity reaction, often drug-induced, involving T cell-mediated cytotoxicity against skin and mucous membrane cells. [出自考古第1.3題，配合題]"
-  },
-  {
-    "question": "Pick up the right answer from the below list - serum sickness.",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of any type of hypersensitivity."
-    },
-    "answer": "C",
-    "explanation": "Serum sickness is a Type III hypersensitivity reaction, caused by the deposition of immune complexes formed by soluble antigens and antibodies, leading to complement activation and inflammation. [出自考古第1.4題，配合題]"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below - The scientist who discovered MHC restriction and won Nobel prize.",
-    "options": {
-      "A": "Auto-antibodies to acetylcholine receptor.",
-      "B": "$T_{H}1$-cell reaction to thyroid antigens.",
-      "C": "Autoimmunity due to lack of regulatory T cell activity.",
-      "D": "T-cell response to neurons.",
-      "E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
-      "F": "Auto-antibodies to basement membrane.",
-      "G": "Auto-antibodies to DNA and DNA-associated protein.",
-      "H": "Induced by injection of acetylcholine receptors.",
-      "I": "T-cell response to pancreatic beta cell.",
-      "J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
-      "K": "associated with HLA-B27.",
-      "L": "Cytotoxic T cell response to thyroid tissues.",
-      "M": "B. Benacerraf.",
-      "N": "G. Snell.",
-      "O": "P. Doherty.",
-      "P": "D. Baltimore.",
-      "Q": "S. Tonegawa."
-    },
-    "answer": "O",
-    "explanation": "Peter Doherty, along with Rolf Zinkernagel, won the Nobel Prize in Physiology or Medicine in 1996 for their discovery of MHC restriction. [出自考古第2.1題，配合題]"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below - Inflammatory bowel disease.",
-    "options": {
-      "A": "Auto-antibodies to acetylcholine receptor.",
-      "B": "$T_{H}1$-cell reaction to thyroid antigens.",
-      "C": "Autoimmunity due to lack of regulatory T cell activity.",
-      "D": "T-cell response to neurons.",
-      "E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
-      "F": "Auto-antibodies to basement membrane.",
-      "G": "Auto-antibodies to DNA and DNA-associated protein.",
-      "H": "Induced by injection of acetylcholine receptors.",
-      "I": "T-cell response to pancreatic beta cell.",
-      "J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
-      "K": "associated with HLA-B27.",
-      "L": "Cytotoxic T cell response to thyroid tissues.",
-      "M": "B. Benacerraf.",
-      "N": "G. Snell.",
-      "O": "P. Doherty.",
-      "P": "D. Baltimore.",
-      "Q": "S. Tonegawa."
-    },
-    "answer": "C",
-    "explanation": "Inflammatory bowel disease is associated with autoimmunity due to a lack of regulatory T cell activity, leading to excessive immune responses in the gut. [出自考古第2.2題，配合題]"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below - Multiple sclerosis.",
-    "options": {
-      "A": "Auto-antibodies to acetylcholine receptor.",
-      "B": "$T_{H}1$-cell reaction to thyroid antigens.",
-      "C": "Autoimmunity due to lack of regulatory T cell activity.",
-      "D": "T-cell response to neurons.",
-      "E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
-      "F": "Auto-antibodies to basement membrane.",
-      "G": "Auto-antibodies to DNA and DNA-associated protein.",
-      "H": "Induced by injection of acetylcholine receptors.",
-      "I": "T-cell response to pancreatic beta cell.",
-      "J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
-      "K": "associated with HLA-B27.",
-      "L": "Cytotoxic T cell response to thyroid tissues.",
-      "M": "B. Benacerraf.",
-      "N": "G. Snell.",
-      "O": "P. Doherty.",
-      "P": "D. Baltimore.",
-      "Q": "S. Tonegawa."
-    },
-    "answer": "E",
-    "explanation": "Experimental Autoimmune Encephalomyelitis (EAE), an animal model for multiple sclerosis, is induced by injection of myelin basic protein plus complete Freund's adjuvant, leading to T cell-mediated autoimmune attack on myelin. [出自考古第2.3題，配合題]"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below - Goodpasture's syndrome.",
-    "options": {
-      "A": "Auto-antibodies to acetylcholine receptor.",
-      "B": "$T_{H}1$-cell reaction to thyroid antigens.",
-      "C": "Autoimmunity due to lack of regulatory T cell activity.",
-      "D": "T-cell response to neurons.",
-      "E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
-      "F": "Auto-antibodies to basement membrane.",
-      "G": "Auto-antibodies to DNA and DNA-associated protein.",
-      "H": "Induced by injection of acetylcholine receptors.",
-      "I": "T-cell response to pancreatic beta cell.",
-      "J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
-      "K": "associated with HLA-B27.",
-      "L": "Cytotoxic T cell response to thyroid tissues.",
-      "M": "B. Benacerraf.",
-      "N": "G. Snell.",
-      "O": "P. Doherty.",
-      "P": "D. Baltimore.",
-      "Q": "S. Tonegawa."
-    },
-    "answer": "F",
-    "explanation": "Goodpasture's syndrome is characterized by auto-antibodies to the basement membrane of the glomeruli and alveoli, causing glomerulonephritis and pulmonary hemorrhage. [出自考古第2.4題，配合題]"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below - Rheumatic fever.",
-    "options": {
-      "A": "Auto-antibodies to acetylcholine receptor.",
-      "B": "$T_{H}1$-cell reaction to thyroid antigens.",
-      "C": "Autoimmunity due to lack of regulatory T cell activity.",
-      "D": "T-cell response to neurons.",
-      "E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
-      "F": "Auto-antibodies to basement membrane.",
-      "G": "Auto-antibodies to DNA and DNA-associated protein.",
-      "H": "Induced by injection of acetylcholine receptors.",
-      "I": "T-cell response to pancreatic beta cell.",
-      "J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
-      "K": "associated with HLA-B27.",
-      "L": "Cytotoxic T cell response to thyroid tissues.",
-      "M": "B. Benacerraf.",
-      "N": "G. Snell.",
-      "O": "P. Doherty.",
-      "P": "D. Baltimore.",
-      "Q": "S. Tonegawa."
-    },
-    "answer": "J",
-    "explanation": "Rheumatic fever is caused by anti-bacterial cell wall antibodies against Streptococcus pyogenes that cross-react with cardiac tissue, leading to heart damage. [出自考古第2.5題，配合題]"
-  },
-  {
-    "question": "Which of the following molecules is recently found to be associated with severe drug hypersensitivity reaction, Stevens-Johnson syndrome, to anti-seizure drug carbamazepine?",
-    "options": {
-      "A": "HLA.",
-      "B": "ROR$\gamma$T.",
-      "C": "CTLA4.",
-      "D": "Foxp-3.",
-      "E": "Interferon gamma (IFN-$\gamma$)."
-    },
-    "answer": "A",
-    "explanation": "Specific HLA alleles, particularly HLA-B*1502, are strongly associated with an increased risk of Stevens-Johnson syndrome and toxic epidermal necrolysis in individuals taking carbamazepine. [出自考古第1題]"
-  },
-  {
-    "question": "Which of the following is employed by cancer cells to escape being eliminated by the immune system?",
-    "options": {
-      "A": "low immunogenicity.",
-      "B": "expressing PD-L1.",
-      "C": "antigenic modulation.",
-      "D": "all of the above."
-    },
-    "answer": "D",
-    "explanation": "Cancer cells employ various mechanisms to evade immune elimination, including reducing immunogenicity, expressing immunosuppressive molecules like PD-L1, and undergoing antigenic modulation. [出自考古第1題]"
-  },
-  {
-    "question": "Memory T cells have distinct characteristics that contributes to their biology. Which of the following are the characteristics of memory T cells? (more than one answer)",
-    "options": {
-      "A": "Express early activation antigen CD69 and high levels of adhesion molecule CD44.",
-      "B": "Express Bcl-2 and CD45RO.",
-      "C": "Memory T cell can survive with IL-15 and IL-17.",
-      "D": "Memory T cell can survive by contact with self peptide."
-    },
-    "answer": ["B", "C"],
-    "explanation": "Memory T cells are characterized by the expression of Bcl-2 (anti-apoptotic protein) and CD45RO, and their survival is supported by cytokines like IL-15 and IL-7. CD69 is an early activation marker, not a memory marker, and self-peptide contact is more relevant for naïve T cell survival. [出自考古第1題]"
-  },
-  {
-    "question": "What is important to $T_{H}17$ cell development when a host encounters a pathogen?",
-    "options": {
-      "A": "Dendritic cells respond by producing high levels of IL-4, IL-6 and IL-17.",
-      "B": "Dendritic cells respond by producing high levels of TGF$\beta$, IL-6 and IL-23.",
-      "C": "Dendritic cells respond by producing high levels of TGF$\beta$, low levels of IL-6 and IL-23.",
-      "D": "Dendritic cells respond by producing high levels of IL-12 and IL-18."
-    },
-    "answer": "B",
-    "explanation": "For $T_{H}17$ cell development, it is important for dendritic cells to produce high levels of TGF$\beta$, IL-6, and IL-23. These cytokines promote the differentiation of naïve CD4$^+$ T cells into $T_{H}17$ cells. [出自考古第2題]"
-  },
-  {
-    "question": "What is the reason for repeated immunization to generate protective immunity? (more than one answer)",
-    "options": {
-      "A": "To generate higher affinity of antigen-specific IgM.",
-      "B": "The frequency of antigen-specific B cells in immunized individual is about 10$^2$-$10^3$ higher than unimmunized naive individuals.",
-      "C": "To generate lower affinity of antigen-specific IgM.",
-      "D": "To generate higher concentration of antigen-specific IgG."
-    },
-    "answer": ["B", "D"],
-    "explanation": "Repeated immunization leads to a significant increase in the frequency of antigen-specific B cells (memory B cells) and class switching to IgG, resulting in a higher concentration of antigen-specific IgG antibodies with potentially higher affinity. [出自考古第3題]"
-  },
-  {
-    "question": "Naïve CD8 T cells can be activated through two different ways. Concerning their activation, which of the following statements are incorrect?",
-    "options": {
-      "A": "Naïve CD8 T cells can be activated directly by IL-2 and IL-18.",
-      "B": "Naïve CD8 T cells activated to become effector cells does not need CD4$^+$ T cell help.",
-      "C": "Naïve CD8 T cells activated by cytokines are equipped to kill targets.",
-      "D": "Naïve CD8 T cells activated through TCR are equipped to secret cytokine and kill target cells."
-    },
-    "answer": ["A", "C"],
-    "explanation": "Naïve CD8$^+$ T cells cannot be directly activated by IL-2 and IL-18 alone. While cytokines can contribute to bystander activation, TCR activation is essential for naïve CD8$^+$ T cells to become cytotoxic effector cells.  Naïve CD8 T cells activated by cytokines alone are not equipped to kill targets.  [出自考古第4題]"
-  },
-  {
-    "question": "Activated lymphocytes homing to a specific tissue are guided by the molecule expressed on their cell surface. Which of the following are the characteristic of large intestine-homing lymphocytes? (more than one answer)",
-    "options": {
-      "A": "Express aE$\beta$7.",
-      "B": "Express CCR10.",
-      "C": "Express CCR9.",
-      "D": "Express a4:$\beta$7 adhesion molecule."
-    },
-    "answer": ["B", "D"],
-    "explanation": "Lymphocytes homing to the large intestine characteristically express CCR10 and the integrin $\alpha$4$\beta$7, which interact with ligands in the large intestine to facilitate tissue-specific homing. CCR9 is associated with small intestine homing, and aE$\beta$7 is more characteristic of intraepithelial lymphocytes. [出自考古第5題]"
-  },
-    {
-    "question": "$T_{H}1$ 細胞:IFN-$\gamma$ 及 IL-12 等細胞介素會分別活化 STAT1、STAT4 兩種轉錄因子,進而刺激 T-bet ($T_{H}1$ 的轉錄因子)的表現,才能產生 $T_{H}1$。若缺少了轉錄因子 T-bet,$T_{H}1$ 就無法產生。",
-    "options": {
-      "A": "ABD",
-      "B": "D",
-      "C": "ABE",
-      "D": "C",
-      "E": "E"
-    },
-    "answer": "A",
-    "explanation": "Based on the description, IFN-$\gamma$, IL-12, and T-bet are essential for $T_{H}1$ differentiation, corresponding to options A, B, and D from previous questions. Therefore, ABD is the correct combination. [出自考古第1題]"
-  },
-  {
-    "question": "(1) CD8 T 細胞會辨認受到感染的細胞上 MHC I 呈現的病毒抗原,毒殺受感染細胞,以病毒感染為主,為細胞內抗原。(2) CD4 T 細胞可藉細胞介素活化並分化為 $T_{H}$,其中 $T_{H}1$ 的目標為巨噬細胞囊泡內的微生物或胞外的細菌(巨噬細胞去吞細菌之後會呈現 MHC II 給 $T_{H}1$);$T_{H}2$ 召集肥大細胞、嗜酸性球和嗜鹼性球攻擊寄生蟲;$T_{H}17$ 會促進 AMPs 生成並召集嗜中性球吞噬胞外細菌與真菌,故以細胞外抗原為主。",
-    "options": {
-      "A": "ABD",
-      "B": "D",
-      "C": "ABE",
-      "D": "C",
-      "E": "E"
-    },
-    "answer": "D",
-    "explanation": "Given the answer (D) C and the highly flawed question format, it's speculated that 'C' refers to option C from a prior question (TGF-$\beta$). TGF-$\beta$'s role in $T_{H}17$ differentiation might be considered relevant to the broad description of CD4/CD8 functions, although the connection is weak and the question is largely uninterpretable in this format. This is highly ambiguous and likely contains errors. [出自考古第2題]"
-  },
-  {
-    "question": "(A) APCs present peptide: MHC class II complexes to CD4 T cells; APC and infected cells present peptide: MHC class I complexes to CD8 T cells. (B) HIV 上的gp120 結合到 CD4 以進行融合。(C) CD8 co-receptor: two separate membrane-bound chains; CD4 co-receptor: one membrane-bound chain. (D) T細胞不會分泌 CD4。另外,輔助受體 CD4 和 CD8 從T細胞發育時的 Double-positive stage 開始就會被T細胞表現,只是在 TCR:MHC 複合體結合時會移動到旁邊協助。",
-    "options": {
-      "A": "ABD",
-      "B": "D",
-      "C": "ABE",
-      "D": "C",
-      "E": "E"
-    },
-    "answer": "C",
-    "explanation": "Assuming ABE refers to options A, B, and the first part of D ('T cells don't secrete CD4'), options A and B are correct.  Option 'T cells don't secrete CD4' is also correct. Option C ('CD8 co-receptor: two separate membrane-bound chains') is incorrect, as both CD4 and CD8 are single-chain. Due to the unclear option E and flawed formatting, the interpretation of ABE as A, B, and the first part of D is speculative but the most plausible given the provided answer (C) ABE.  This question is highly ambiguous and likely contains errors. [出自考古第3題]"
-  },
-    {
-    "question": "Options from page 13 - Question 1",
-    "options": {
-      "A": "(A) CD69 (early activation antigen)在Effector T cell 表現,在Naïve/memory T cell 不表現;CD44 在活化後(effector/memory T cells)表現量更多。",
-      "B": "(B) Bcl-2 為 Survival factor,在Memory T cell 中表現較多,使細胞有較長的半生期;CD45RO 則在 Effector/memory T cell surface 表現量較多。",
-      "C": "(C) 課本寫 Memory T cell survival 與IL-2、IL-7、IL-15有關,而IL-17則與 Neutrophils recruitment有關。",
-      "D": "(D) 課本寫 Memory T cell survival 需要 Self peptide/MHC molecules 的 Contact。"
-    },
-    "answer": ["B", "D"],
-    "explanation": "Options (B) and (D) accurately describe characteristics of memory T cells. Bcl-2 promotes survival, CD45RO is a memory marker, and self-peptide/MHC contact supports memory T cell survival. Options (A) and (C) are incorrect as explained previously. [出自考古第1題]"
-  },
-  {
-    "question": "Options from page 13 - Question 2 (actually Question 3 from page 6)",
-    "options": {
-      "A": "(A) TGF-$\beta$, IL-6 and IL-23 可以促使 Naïve CD4 T cell 分化為 $T_{H}17$ effector cell,TGF-$\beta$, IL-6 負責 Induce,IL-23 負責 Maintain。",
-      "B": "(B) 製造 Higher affinity of IgG、IgA、IgE(經歷 Class switching 和 Somatic hyper mutation),非IgM。",
-      "C": "(C) Frequency 從 $10^{-4}$ ~ $10^{-5}$ 增加到 $10^{-2}$ ~ $10^{-3}$,約增加 10~1000倍。",
-      "D": "(D) IgG 的 Concentration 和 Affinity 皆會提高。"
-    },
-    "answer": "B",
-    "explanation": "Based on the provided answer key (B) and the highly mismatched question/option numbering, it's assumed that answer (B) refers to option (B) description from page 13. While option (B) description is not a direct answer to 'reason for repeated immunization', it describes isotype switching and affinity maturation, which are consequences of repeated immunization. This is a highly speculative interpretation due to significant errors and mismatches in the original material. A more accurate answer to 'reason for repeated immunization' would be option D from page 6, or option D description from page 13 if interpreted differently.  [出自考古第2題 (actually Question 3 from page 6),  highly ambiguous due to errors]"
-  },
-  {
-    "question": "Options from page 13 - Question 3 (actually Question 4 from page 6)",
-    "options": {
-      "A": "(A) 課本寫 Naïve CD8 T cells 可行 Bystander activation,藉由 IL-12 和 IL-18 活化 產生 IFN-$\gamma$。",
-      "B": "(B) 課本敘述有些病原體可以 Induce CD8 T-cell response without CD4 T-cell help, 但並非「所有病原體」。所以寫手認為題目敘述不佳,若改為「does not \"always\" need」較為正確。",
-      "C": "(C) 透過細胞介素進行 Bystander activation 的 CD8 T cell 產生 IFN-$\gamma$,並無毒殺細胞的能力。",
-      "D": "(D) 透過 TCR 活化的 CD8 T cell 會增殖並分化為Pathogenic-specific 的 Cytotoxic CD8 T cells。"
-    },
-    "answer": ["B", "D"],
-    "explanation": "Options (B) and (D) are correct statements regarding CD8 T cell activation. Some pathogens can induce CD8 T cell responses without CD4$^+$ T cell help, and TCR activation is crucial for CD8 T cell proliferation and differentiation into cytotoxic effector cells. Options (A) and (C) are incorrect as bystander activation by cytokines alone does not equip CD8 T cells with cytotoxicity. [出自考古第3題 (actually Question 4 from page 6)]"
-  },
-    {
-    "question": "Options from page 13 - Question 4 (actually Question 5 from page 6)",
-    "options": {
-      "A": "(A) T細胞活化後會產生 CCR9 (if primed in the small intestine) / CCR10 (if primed in the large intestine)和 a4:$\beta$7 integrin(和 Mucosal tissue 的血管內皮上的 MAdCAM-1結合移動)。",
-      "B": "(B) 製造 Higher affinity of IgG、IgA、IgE(經歷 Class switching 和 Somatic hyper mutation),非IgM。",
-      "C": "(C) Frequency 從 $10^{-4}$ ~ $10^{-5}$ 增加到 $10^{-2}$ ~ $10^{-3}$,約增加 10~1000倍。",
-      "D": "(D) IgG 的 Concentration 和 Affinity 皆會提高。"
-    },
-    "answer": ["A", "C"],
-    "explanation": "The provided answer (AC) and its relation to question 5 of page 6 is highly problematic and likely incorrect. Option (A) description about tissue-homing markers is partially correct (CCR9 for small intestine, CCR10 for large intestine, $\alpha$4$\beta$7 for mucosal homing), but option (C) description about B cell frequency is completely unrelated to tissue homing and is likely misplaced. A more accurate answer for large intestine homing would be options B and D from page 6 (CCR10 and $\alpha$4$\beta$7).  The answer AC is unexplainable and inconsistent based on the provided options and question about large intestine homing. This question is severely flawed. [出自考古第4題 (actually Question 5 from page 6), severely flawed and uninterpretable]"
-  },
-      {
-    "question": "Options from page 13 - Question 5 (actually Question 6)",
-    "options": {
-      "A": "(A) CD69 (early activation antigen)在Effector T cell 表現,在Naïve/memory T cell 不表現;CD44 在活化後(effector/memory T cells)表現量更多。",
-      "B": "(B) Bcl-2 為 Survival factor,在Memory T cell 中表現較多,使細胞有較長的半生期;CD45RO 則在 Effector/memory T cell surface 表現量較多。",
-      "C": "(C) 透過細胞介素進行 Bystander activation 的 CD8 T cell 產生 IFN-$\gamma$,並無毒殺細胞的能力。",
-      "D": "(D) IgG 的 Concentration 和 Affinity 皆會提高。"
-    },
-    "answer": ["B", "D"],
-    "explanation": "Assuming the intent is to choose the combination of correct statements from the given options, BD is a plausible answer. Option (B) describes memory T cell characteristics, and option (D) describes effects of repeated immunization. While the options are a mix of concepts and potentially reused/misplaced, BD represents a combination of correct statements from the provided set. This is speculative and likely contains errors due to the lack of a clear question and option reuse. [出自考古第5題 (actually Question 6), highly ambiguous and speculative due to errors]"
-  }
+{
+"question": "Please explain the following terms. (2 points each)\n(1) Complementarity determining region.",
+"options": {},
+"answer": null,
+"explanation": "(1) Ig 和 TCR 的可變區中變異性最大的部分，是抗原和受體結合的地方。\n［出自考古第1題］"
+},
+{
+"question": "(2) Signal transduction.",
+"options": {},
+"answer": null,
+"explanation": "(2) 指細胞由接收到刺激、到產生反應的傳訊過程。步驟又可以再細分成訊號產生(initiation)、傳遞與放大(relaying)、和訊號的終結(termination)。\n［出自考古第1題］"
+},
+{
+"question": "(3) Omenn syndrome.",
+"options": {},
+"answer": null,
+"explanation": "(3) 因為缺乏RAG-1 或RAG-2 導致的 SCID。後天免疫細胞的受體類型缺少重組,導致變異很少,難以對付眾多抗原。\n［出自考古第1題］"
+},
+{
+"question": "What is a clonal selection hypothesis?\nWhat is the biological significance of the hypothesis?",
+"options": {},
+"answer": null,
+"explanation": "株系選擇(clonal selection)假說有四個基本假設如下:\n(A) 每個淋巴細胞僅具有一種專一性的受體(透過V(D)J重組形成)。\n(B) 外來的分子與淋巴細胞受體進行高親和性的專一性結合，會使該淋巴細胞活化。\n(C) 由活化的淋巴細胞分化產生的作用細胞(effector cell)，具有和親代淋巴細胞相同專一性的受體。\n(D) 會辨識自體抗原的淋巴球在發育早期就會被消滅，因此成熟的淋巴球庫(repertoire)中不會存在這種細胞。\n意義:試圖解釋在免疫反應啟動過程中抗體的多樣性的形成，對免疫細胞的正選擇(positive selection)和負選擇(negative selection)做出描述。\n［出自考古第2題］"
+},
+{
+"question": "Please describe the checkpoint that control the B cell development.",
+"options": {},
+"answer": null,
+"explanation": "(A) Pre-BCR 的形成: Pro-B cell 增生時檢查是否能生成 Pre-BCR (重鏈+替代輕鏈),表現於膜上,若成功則為 Large pre-B cell,若不成功則凋亡。\n(B) BCR形成: Pre-B cell 轉變至未成熟B細胞的階段中,檢查是否能產生完整抗原受體(antigen receptor),即輕鏈有無成功基因重組並取代掉替代輕鏈。\n(C) 正/負選擇: 將會與抗原產生適當交互作用的淋巴細胞保留並使其成熟,稱為正選擇;使會與自身抗原產生過強交互作用的淋巴細胞死亡,稱為負選擇。\n［出自考古第3題］"
+},
+{
+"question": "Please describe when and how immunoglobulin gene rearrangement take place in a B cell.",
+"options": {},
+"answer": null,
+"explanation": "B細胞的發育依時間順序分成幹細胞、early pro-B cell、late pro-B cell、large pre-B cell、small pre-B cell、未成熟B細胞和成熟B細胞幾個階段。其中 Pro-B cell 時期重鏈進行 VDJ 重組,而 Small pre-B cell 時期輕鏈發生 VJ 重組。\nB細胞成熟的過程中會進行抗體基因重組,由RAG-1/2 組成的 Heterodimer 透過基因上的 RSS (recombination signal sequence) 將基因中的 V(D)J 基因片段剪接組合成抗體基因。(補充,今年老師沒講,有興趣可以參考課本 p.181)\n［出自考古第4題］"
+},
+{
+"question": "請解釋疫苗作用的機制。",
+"options": {},
+"answer": null,
+"explanation": "疫苗的運作原理即利用後天免疫反應會產生記憶細胞的特性,預先對人體注射減毒或去活化之抗原,使免疫細胞辨識該抗原並引起輕微免疫反應(稱為 Primary response)以消除該抗原。接著,免疫系統便會將某些免疫細胞轉化為記憶細胞。當下次病原體入侵時,因為有記憶細胞的存在,免疫反應(稱為Secondary response)不但反應所需時間較短,強度也較強。\n［出自考古第5題］"
+},
+{
+"question": "What is the T helper cell response to the antigen required on the antigen presenting cells?",
+"options": {
+"A": "MHC Class II, CD4.",
+"B": "MHC Class II, CD8.",
+"C": "MHC Class II, co-stimulator.",
+"D": "MHC Class I, CD4.",
+"E": "MHC Class I, co-stimulator."
+},
+"answer": "A",
+"explanation": "若要和 APC 有反應,必須同時具有 Signal 1 與Signal 2。\nSignal 1 為 TCR 和 MHC 的結合,並利用 APC 上的 MHC class II 與 $T_H$的CD4結合造成Lck 等訊息傳遞而活化 T cell;Signal 2 則是 APC 和 T cell 表現 Co-stimulatory molecules 並互相結合,增加存活和增生的訊號,例如 APC 上的B7 與 T細胞上的CD28 結合、ICOS-L 與ICOS 結合等。只有 Signal 2時 T細胞沒有反應,只有 Signal 1 則 T細胞會變成 Anergic T cell。\n［出自考古第1題］"
+},
+{
+"question": "下列哪一個沒有表現 FcyRI?",
+"options": {
+"A": "Neutrophil.",
+"B": "Eosinophil.",
+"C": "Macrophage.",
+"D": "Dendritic cell.",
+"E": "NK cell."
+},
+"answer": "E",
+"explanation": "Fcy 受體大部分皆位於先天免疫細胞上,如巨噬細胞、嗜中性球、嗜酸性球和樹突細胞。FcyRI(CD64)會表現在巨噬細胞、嗜中性球、嗜酸性球上,而某些源自骨髓/單核球的樹突細胞亦會表現之。NK 上表現的則為FcyRIII(CD16)。\n［出自考古第2題］"
+},
+{
+"question": "Which is the most abundant Ig isotype in the blood?",
+"options": {
+"A": "IgM.",
+"B": "IgD.",
+"C": "IgG.",
+"D": "IgA.",
+"E": "IgE."
+},
+"answer": "C",
+"explanation": "IgM 和 IgG 主要分布在血液中,而身上最主要的抗體種類為IgG (70%)和 IgA (20%),在血漿和細胞外液中以 IgG 為主(IgM 僅約10%,會因清除作用導致其濃度在清除完抗原後迅速下降),上皮與黏膜組織中則以 IgA 為主。\n［出自考古第3題］"
+},
+{
+"question": "Which of the following is not an example of a checkpoint in lymphocyte development that contributes to the selection maturation of cells with useful antigen receptors?",
+"options": {
+"A": "B cell precursors that cannot express Igγ heavy chains die by apoptosis.",
+"B": "T cell precursors that cannot express TCRβ chains die by apoptosis.",
+"C": "Immature B cells that bind to self antigen with high affinity die by apoptosis.",
+"D": "Developing T cells that fail to express TCRα chains die by apoptosis.",
+"E": "Developing T cells that recognize self major histocompatibility complex (MHC) molecules with high affinity die by apoptosis."
+},
+"answer": "A",
+"explanation": "(A)前驅B細胞(precursor)要能夠產生 Igμ才能存活,因為B細胞最早產生的抗體是 IgM,因此,Igy 應改為Igμ。\n［出自考古第4題］"
+},
+{
+"question": "Isotype found predominantly in mucosal secretion?",
+"options": {
+"A": "IgM.",
+"B": "IgD.",
+"C": "IgG.",
+"D": "IgA.",
+"E": "IgE."
+},
+"answer": "D",
+"explanation": "上皮與黏膜組織中以 IgA 為主。\n［出自考古第5題］"
+},
+{
+"question": "請問 CD4$^+$ T-cell 要轉化成 $T_{H}1$ 需要哪些 cytokine 或 transcription factor 介入? (複選題)",
+"options": {
+"A": "IL-12.",
+"B": "IFN-γ.",
+"C": "TGF-β.",
+"D": "T-bet.",
+"E": "GATA3."
+},
+"answer": ["A", "B", "D"],
+"explanation": "$T_{H}1$ 細胞:IFN-γ 及 IL-12 等細胞介素會分別活化 STAT1、STAT4 兩種轉錄因子,進而刺激 T-bet ($T_{H}1$ 的轉錄因子)的表現,才能產生 $T_{H}1$。若缺少了轉錄因子 T-bet，$T_{H}1$ 就無法產生。\n［出自考古第1題］"
+},
+{
+"question": "CD8 subpopulation are specialized to combat _______ pathogen, whereas CD4 subpopulation are specialized to combat _______ pathogen.",
+"options": {
+"A": "bacterial; viral.",
+"B": "dead; alive.",
+"C": "extracellular; intracellular.",
+"D": "intracellular; extracellular.",
+"E": "virulent; attenuated."
+},
+"answer": "C",
+"explanation": "(1) CD8 T 細胞會辨認受到感染的細胞上 MHC I 呈現的病毒抗原,毒殺受感染細胞,以病毒感染為主,為細胞內抗原。\n(2) CD4 T 細胞可藉細胞介素活化並分化為 $T_H$,其中 $T_{H}1$ 的目標為巨噬細胞囊泡內的微生物或胞外的細菌(巨噬細胞去吞細菌之後會呈現 MHC II 給 $T_{H}1$ ); $T_{H}2$ 召集肥大細胞、嗜酸性球和嗜鹼性球攻擊寄生蟲;$T_{H}17$ 會促進 AMPs 生成並召集嗜中性球吞噬胞外細菌與真菌，故以細胞外抗原為主。\n［出自考古第2題］"
+},
+{
+"question": "Which is correct? (複選題)",
+"options": {
+"A": "MHC II present antigen to CD4 T cells.",
+"B": "HIV used CD4 to make entry to T cell.",
+"C": "CD4 is made up of two separate membrane-bound chains.",
+"D": "CD4 secreted by T cell after activation.",
+"E": "CD4 act as a T cell co-receptor."
+},
+"answer": ["A", "B", "E"],
+"explanation": "(A) APCs present peptide: MHC class II complexes to CD4 T cells; APC and infected cells present peptide: MHC class I complexes to CD8 T cells.\n(B) HIV 上的gp120 結合到 CD4 以進行融合。\n(C) CD8 co-receptor: two separate membrane-bound chains; CD4 co-receptor: one membrane-bound chain.\n(D) T細胞不會分泌 CD4。另外,輔助受體 CD4 和 CD8從T細胞發育時的 Double-positive stage 開始就會被T細胞表現,只是在 TCR:MHC 複合體結合時會移動到旁邊協助。\n［出自考古第3題］"
+},
+{
+"question": "According to VDJ gene segment recombination, T cell receptor α chain locus resembles immunoglobulin _______ locus, whereas β chain locus resembles immunoglobulin _______ locus.",
+"options": {
+"A": "λ light chain; κ light chain.",
+"B": "heavy chain; λ light chain.",
+"C": "κ light chain; heavy chain.",
+"D": "λ light chain; heavy chain.",
+"E": "κ light chain; λ light chain."
+},
+"answer": "A",
+"explanation": "TCRα基因座和免疫球蛋白輕鏈的 loci 同樣具有V和J基因片段,而由C基因排列可知 TCRα 基因座與κ輕鏈的基因座較為相似,都只有一個C基因片段(λ輕鏈則有很多個C基因片段)。TCRβ基因座則和重鏈的基因座同樣具有V、D、J基因片段。\n［出自考古第4題］"
+},
+{
+"question": "The process by which cytotoxic T cells kill their target _______.",
+"options": {
+"A": "induces target cell to necrosis.",
+"B": "induces apoptosis in the cytotoxic T cell.",
+"C": "releases perforin to deliver the contents of cytotoxin granules to target cell membrane.",
+"D": "releases IFN-γ to degrade DNA in target cell.",
+"E": "releases granzymes to activate caspase and induce apoptosis of target cells."
+},
+"answer": ["C", "E"],
+"explanation": "Caspase 為 Aspartic acid-specific cysteine proteases,可以切割一些對於細胞機能很重要的蛋白質或活化促進細胞凋亡的酵素。\n(A) Necrosis 應改為 Apoptosis。Necrosis 是指細胞遭遇物理性或化學性傷害時的死亡,例如心肌細胞缺氧或遭遇抗體攻擊而導致細胞膜破損等,而 Apoptosis 有一既定過程,會引發細胞內 Caspase 等酵素切割 ICAD 產生 CAD,造成 DNA fragmentation 而誘發凋亡。CTLs 藉由釋放顆粒酶去活化 Caspase,除了讓細胞凋亡也可藉由過程中的酵素殺死胞內病菌;若是發生 Necrosis 則病菌可能從死亡的細胞釋出造成周邊感染。\n(B) 造成目標細胞的 Apoptosis 而非 CTL 的 Apoptosis。\n(C) 應是 Release serglycin,並攜帶穿孔素和顆粒酶,再由穿孔素在膜上形成孔洞把 Granzyme B等物質送入目標細胞的細胞質中。\n(D) Granzyme B 入細胞後會進行兩個作用。其一為,分解 BID 成tBID (truncated BID),tBID 攻擊粒線體外膜,細胞色素c (cytochrome c) 被釋出,誘發細胞凋亡。其二為,活化 Pro-caspase 3變成 Caspase 3,Caspase 3 切割 ICAD,釋放 CAD (caspase- activated DNase) 使 DNA片段化 (fragmentation),啟動之後的細胞凋亡。(Apaf-1:cytochrome c complex 組合成 Apoptosome,召來 pro-caspase 9 接著活化 pro-caspase 3 cleavage)。\n［出自考古第5題］"
+},
+{
+"question": "Pick up the right answer from the below list (單選)\n(1) mismatch blood transfusion.",
+"options": {
+"A": "Type I hypersensitivity.",
+"B": "Type II hypersensitivity.",
+"C": "Type III hypersensitivity.",
+"D": "both Type II and Type III hypersensitivity.",
+"E": "Type I, II and III hypersensitivity.",
+"F": "Type IV hypersensitivity.",
+"G": "all of the Type I, II, III and IV hypersensitivity.",
+"H": "none of any type of hypersensitivity."
+},
+"answer": "B",
+"explanation": "(1) 如輸血時輸錯血型,會發生第二型過敏反應(type II hypersensitivity)針對細胞表面上的抗原,血液中出現對抗外來血型的 IgG抗體,外來的血球就會被補體破壞。\n［出自考古第1題］"
+},
+{
+"question": "Pick up the right answer from the below list (單選)\n(2) hay fever.",
+"options": {
+"A": "Type I hypersensitivity.",
+"B": "Type II hypersensitivity.",
+"C": "Type III hypersensitivity.",
+"D": "both Type II and Type III hypersensitivity.",
+"E": "Type I, II and III hypersensitivity.",
+"F": "Type IV hypersensitivity.",
+"G": "all of the Type I, II, III and IV hypersensitivity.",
+"H": "none of any type of hypersensitivity."
+},
+"answer": "A",
+"explanation": "(2) 即花粉症或枯草熱,為第一型過敏反應。\n［出自考古第1題］"
+},
+{
+"question": "Pick up the right answer from the below list (單選)\n(3) Stevens-Johnson syndrome.",
+"options": {
+"A": "Type I hypersensitivity.",
+"B": "Type II hypersensitivity.",
+"C": "Type III hypersensitivity.",
+"D": "both Type II and Type III hypersensitivity.",
+"E": "Type I, II and III hypersensitivity.",
+"F": "Type IV hypersensitivity.",
+"G": "all of the Type I, II, III and IV hypersensitivity.",
+"H": "none of any type of hypersensitivity."
+},
+"answer": "F",
+"explanation": "(3) Stevens-Johnson syndrome 是藥物引起的 Type IV hypersensitivity reaction,與患者是否帶有藥物易敏基因 HLA-B 等位基因表現具高度相關,抗癲癇藥物等會使 CD8 T cells and CD4 T cells 產生自體免疫反應攻擊自身組織,導致皮膚廣泛性脫落、壞死及黏膜糜爛等不良反應。\n［出自考古第1題］"
+},
+{
+"question": "Pick up the right answer from the below list (單選)\n(4) serum sickness.",
+"options": {
+"A": "Type I hypersensitivity.",
+"B": "Type II hypersensitivity.",
+"C": "Type III hypersensitivity.",
+"D": "both Type II and Type III hypersensitivity.",
+"E": "Type I, II and III hypersensitivity.",
+"F": "Type IV hypersensitivity.",
+"G": "all of the Type I, II, III and IV hypersensitivity.",
+"H": "none of any type of hypersensitivity."
+},
+"answer": "C",
+"explanation": "(4) 血清病(serum sickness)肇因為血清。治療蛇毒時注射的馬血清(antivenin)含有可溶性抗原。第三型過敏反應由 IgG 造成,針對形成免疫複合體的可溶性抗原。此反應會活化補體,造成發炎,可能發生免疫複合體沉降而血管閉阻。\n［出自考古第1題］"
+},
+{
+"question": "For each of the following select the most appropriate characteristic listed below.\n1. The scientist who discovered MHC restriction and won Nobel prize.",
+"options": {
+"A": "Auto-antibodies to acetylcholine receptor.",
+"B": "TH1-cell reaction to thyroid antigens.",
+"C": "Autoimmunity due to lack of regulatory T cell activity.",
+"D": "T-cell response to neurons.",
+"E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
+"F": "Auto-antibodies to basement membrane.",
+"G": "Auto-antibodies to DNA and DNA-associated protein.",
+"H": "Induced by injection of acetylcholine receptors.",
+"I": "T-cell response to pancreatic beta cell.",
+"J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
+"K": "associated with HLA-B27.",
+"L": "Cytotoxic T cell response to thyroid tissues.",
+"M": "B. Benacerraf.",
+"N": "G. Snell.",
+"O": "P. Doherty.",
+"P": "D. Baltimore.",
+"Q": "S. Tonegawa."
+},
+"answer": "O",
+"explanation": "(1)為Zinkernagel 及 Doherty 共同發現,在1996年一併獲得諾貝爾獎。\n［出自考古第2題］"
+},
+{
+"question": "For each of the following select the most appropriate characteristic listed below.\n2. Inflammatory bowel disease.",
+"options": {
+"A": "Auto-antibodies to acetylcholine receptor.",
+"B": "TH1-cell reaction to thyroid antigens.",
+"C": "Autoimmunity due to lack of regulatory T cell activity.",
+"D": "T-cell response to neurons.",
+"E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
+"F": "Auto-antibodies to basement membrane.",
+"G": "Auto-antibodies to DNA and DNA-associated protein.",
+"H": "Induced by injection of acetylcholine receptors.",
+"I": "T-cell response to pancreatic beta cell.",
+"J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
+"K": "associated with HLA-B27.",
+"L": "Cytotoxic T cell response to thyroid tissues.",
+"M": "B. Benacerraf.",
+"N": "G. Snell.",
+"O": "P. Doherty.",
+"P": "D. Baltimore.",
+"Q": "S. Tonegawa."
+},
+"answer": "C",
+"explanation": "(2) Inflammatory bowel disease 是由於少了 $T_{reg}$,使自體免疫T細胞過度活化造成。\n［出自考古第2題］"
+},
+{
+"question": "For each of the following select the most appropriate characteristic listed below.\n3. Multiple sclerosis.",
+"options": {
+"A": "Auto-antibodies to acetylcholine receptor.",
+"B": "TH1-cell reaction to thyroid antigens.",
+"C": "Autoimmunity due to lack of regulatory T cell activity.",
+"D": "T-cell response to neurons.",
+"E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
+"F": "Auto-antibodies to basement membrane.",
+"G": "Auto-antibodies to DNA and DNA-associated protein.",
+"H": "Induced by injection of acetylcholine receptors.",
+"I": "T-cell response to pancreatic beta cell.",
+"J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
+"K": "associated with HLA-B27.",
+"L": "Cytotoxic T cell response to thyroid tissues.",
+"M": "B. Benacerraf.",
+"N": "G. Snell.",
+"O": "P. Doherty.",
+"P": "D. Baltimore.",
+"Q": "S. Tonegawa."
+},
+"answer": "E",
+"explanation": "(3) Multiple sclerosis 是因為 T細胞攻擊神經髓鞘。\n［出自考古第2題］"
+},
+{
+"question": "For each of the following select the most appropriate characteristic listed below.\n4. Goodpasture's syndrome.",
+"options": {
+"A": "Auto-antibodies to acetylcholine receptor.",
+"B": "TH1-cell reaction to thyroid antigens.",
+"C": "Autoimmunity due to lack of regulatory T cell activity.",
+"D": "T-cell response to neurons.",
+"E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
+"F": "Auto-antibodies to basement membrane.",
+"G": "Auto-antibodies to DNA and DNA-associated protein.",
+"H": "Induced by injection of acetylcholine receptors.",
+"I": "T-cell response to pancreatic beta cell.",
+"J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
+"K": "associated with HLA-B27.",
+"L": "Cytotoxic T cell response to thyroid tissues.",
+"M": "B. Benacerraf.",
+"N": "G. Snell.",
+"O": "P. Doherty.",
+"P": "D. Baltimore.",
+"Q": "S. Tonegawa."
+},
+"answer": "F",
+"explanation": "(4) Goodpasture syndrome 是抗體攻擊肺、腎基底膜的 Type IV collagen,導致肺出血、腎發炎。\n［出自考古第2題］"
+},
+{
+"question": "For each of the following select the most appropriate characteristic listed below.\n5. Rheumatic fever.",
+"options": {
+"A": "Auto-antibodies to acetylcholine receptor.",
+"B": "TH1-cell reaction to thyroid antigens.",
+"C": "Autoimmunity due to lack of regulatory T cell activity.",
+"D": "T-cell response to neurons.",
+"E": "Induced by injection of myelin basic protein plus complete Freund's adjuvant.",
+"F": "Auto-antibodies to basement membrane.",
+"G": "Auto-antibodies to DNA and DNA-associated protein.",
+"H": "Induced by injection of acetylcholine receptors.",
+"I": "T-cell response to pancreatic beta cell.",
+"J": "anti-bacteria cell wall antibody cross react with cardiac tissue.",
+"K": "associated with HLA-B27.",
+"L": "Cytotoxic T cell response to thyroid tissues.",
+"M": "B. Benacerraf.",
+"N": "G. Snell.",
+"O": "P. Doherty.",
+"P": "D. Baltimore.",
+"Q": "S. Tonegawa."
+},
+"answer": "J",
+"explanation": "(5) Rheumatic fever:抗體原本要對付入侵人體的鏈球菌,但由於鏈球菌細胞壁上的抗原和心肌、瓣膜細胞上的蛋白結構相似而產生 Cross reaction。\n［出自考古第2題］"
+},
+{
+"question": "Which of the following molecules is recently found to be associated with severe drug hypersensitivity reaction, Stevens-Johnson syndrome, to anti-seizure drug carbamazepine?",
+"options": {
+"A": "HLA.",
+"B": "RORYT.",
+"C": "CTLA4.",
+"D": "Foxp-3.",
+"E": "Interferon gamma (IFN-γ)."
+},
+"answer": "A",
+"explanation": "由中研院陳垣崇院士研究發現中國、台灣及東南亞使用 carbamazepine 發生 Stevens-Johnson syndrome 的比例明顯較高的原因為 HLA-B*1502。(所以在使用 carbamazepine 前作的檢查是少數有健保補助的基因檢測)\n［出自考古第1題］"
+},
+{
+"question": "Which of the following is employed by cancer cells to escape being eliminated by the immune system?",
+"options": {
+"A": "low immunogenicity.",
+"B": "expressing PD-L1.",
+"C": "antigenic modulation.",
+"D": "all of the above."
+},
+"answer": "D",
+"explanation": "癌細胞會使用許多方式躲避免疫系統,例如:降低 Immunogenicity、失去被免疫系統偵測到的抗原、分泌 Factor (PD-L1) 抑制T細胞或形成物理屏障。\n［出自考古第1題］"
+},
+{
+"question": "請寫出腫瘤生成的三個過程、免疫系統與癌細胞的交互作用。",
+"options": {},
+"answer": null,
+"explanation": "Elimination:在腫瘤初步形成時,Immune surveillance 尚正常運作中,NK cell 與 CD8 T cell 可以辨識腫瘤細胞並毒殺。\nEquilibrium:但在癌化的漫長過程中,腫瘤細胞會發生突變,在免疫系統的篩選之下,漸漸產生不易引起免疫反應的腫瘤細胞,使得癌細胞與免疫細胞和平共處,進入平衡狀態。\nEscape: Equilibrium 後,癌細胞持續突變,直到出現免疫系統無法殺死的細胞株,便會開始大量增生且完全不受抑制,因而逃脫免疫系統形成癌症。\n［出自考古第1題］"
+},
+{
+"question": "Memory T cells have distinct characteristics that contributes to their biology. Which of the following are the characteristics of memory T cells? (more than one answer)",
+"options": {
+"A": "Express early activation antigen CD69 and high levels of adhesion molecule CD44.",
+"B": "Express Bcl-2 and CD45RO.",
+"C": "Memory T cell can survive with IL-15 and IL-17.",
+"D": "Memory T cell can survive by contact with self peptide."
+},
+"answer": ["B", "D"],
+"explanation": "(A) CD69 (early activation antigen)在Effector T cell 表現,在Naïve/memory T cell 不表現;CD44 在活化後(effector/memory T cells)表現量更多。\n(B) Bcl-2 為 Survival factor,在Memory T cell 中表現較多,使細胞有較長的半生期;CD45RO 則在 Effector/memory T cell surface 表現量較多。\n(C)課本寫 Memory T cell survival 與IL-2、IL-7、IL-15有關,而IL-17則與 Neutrophils recruitment有關。\n(D)課本寫 Memory T cell survival 需要 Self peptide/MHC molecules 的 Contact。\n［出自考古第1題］"
+},
+{
+"question": "What is important to $T_{H}17$ cell development when a host encounters a pathogen?",
+"options": {
+"A": "Dendritic cells respond by producing high levels of IL-4, IL-6 and IL-17.",
+"B": "Dendritic cells respond by producing high levels of TGFβ, IL-6 and IL-23.",
+"C": "Dendritic cells respond by producing high levels of TGFβ, low levels of IL-6 and IL-23.",
+"D": "Dendritic cells respond by producing high levels of IL-12 and IL-18."
+},
+"answer": "B",
+"explanation": "TGF-β, IL-6 and IL-23 可以促使 Naïve CD4 T cell 分化為 $T_{H}17$ effector cell,TGF-β, IL-6 負責 Induce,IL-23 負責 Maintain。\n［出自考古第2題］"
+},
+{
+"question": "What is the reason for repeated immunization to generate protective immunity? (more than one answer)",
+"options": {
+"A": "To generate higher affinity of antigen-specific IgM.",
+"B": "The frequency of antigen-specific B cells in immunized individual is about 102-103 higher than unimmunized naive individuals.",
+"C": "To generate lower affinity of antigen-specific IgM.",
+"D": "To generate higher concentration of antigen-specific IgG."
+},
+"answer": ["A", "D"],
+"explanation": "(A) 製造 Higher affinity of IgG、IgA、IgE(經歷 Class switching 和 Somatic hyper mutation),非IgM。\n(B) Frequency 從 10-4 ~ 10-5 增加到 10-2 ~ 10-3,約增加 10~1000倍。\n(C)此非 Repeated immunization 的目的,且IgM 的Affinity 僅略為上升且幾乎不變。\n(D) IgG 的 Concentration 和 Affinity 皆會提高。\n［出自考古第3題］"
+},
+{
+"question": "Naïve CD8 T cells can be activated through two different ways. Concerning their activation, which of the following statements are incorrect?",
+"options": {
+"A": "Naïve CD8 T cells can be activated directly by IL-2 and IL-18.",
+"B": "Naïve CD8 T cells activated to become effector cells does not need CD4$^+$ T cell help.",
+"C": "Naïve CD8 T cells activated by cytokines are equipped to kill targets.",
+"D": "Naïve CD8 T cells activated through TCR are equipped to secret cytokine and kill target cells."
+},
+"answer": ["A", "C"],
+"explanation": "(A)課本寫 Naïve CD8 T cells 可行 Bystander activation,藉由 IL-12 和 IL-18 活化產生 IFN-γ。\n(B)課本敘述有些病原體可以 Induce CD8 T-cell response without CD4 T-cell help,但並非「所有病原體」。所以寫手認為題目敘述不佳,若改為「does not \"always\" need」較為正確。\n(C)透過細胞介素進行 Bystander activation 的 CD8 T cell 產生 IFN-γ,並無毒殺細胞的能力。\n(D)透過 TCR 活化的 CD8 T cell 會增殖並分化為Pathogenic-specific 的 Cytotoxic CD8 T cells。\n［出自考古第4題］"
+},
+{
+"question": "Activated lymphocytes homing to a specific tissue are guided by the molecule expressed on their cell surface. Which of the following are the characteristic of large intestine-homing lymphocytes? (more than one answer)",
+"options": {
+"A": "Express aEβ7.",
+"B": "Express CCR10.",
+"C": "Express CCR9.",
+"D": "Express a4:β7 adhesion molecule."
+},
+"answer": ["A", "C"],
+"explanation": "T細胞活化後會產生 CCR9 (if primed in the small intestine) / CCR10 (if primed in the large intestine)和 α4:β7 integrin(和 Mucosal tissue 的血管內皮上的 MAdCAM-1結合移動)。而Gut-homing effector T cell 會受到 Chemokine induce 跑出來,表現 CCR10與大腸上皮細胞的CCL28結合,使淋巴球停留在上皮;至於小腸的 Homing lymphocyte 則表現 CCR9 與小腸上皮細胞的 與小腸上皮細胞的 CCL25 結合。\n［出自考古第5題］"
+}
 ]

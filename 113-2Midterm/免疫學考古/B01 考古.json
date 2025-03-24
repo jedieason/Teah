@@ -9,7 +9,7 @@
       "D": "NOD like receptor."
     },
     "answer": "B",
-    "explanation": "TNF-α receptor 屬於細胞介素受體，不具有先天免疫辨識的功能。\n［出自考古第1題］"
+    "explanation": "TNF-α receptor 屬於細胞介素受體，不具有先天免疫辨識的功能。 [出自考古第1題]"
   },
   {
     "question": "What kind of disease can probably be controlled by vaccine?",
@@ -20,7 +20,7 @@
       "D": "all of the above."
     },
     "answer": "D",
-    "explanation": "圖中列出的可能疫苗應用，除了感染性疾病外，尚包含癌症、神經退行性疾病、藥物成癮和自體免疫疾病，選項皆在範圍內。\n【出處】超出範圍\n［出自考古第2題］"
+    "explanation": "[出自考古第2題]"
   },
   {
     "question": "Which one is NOT the event during inflammation?",
@@ -31,17 +31,7 @@
       "D": "blood clotting."
     },
     "answer": "A",
-    "explanation": "發炎反應會造成微血管擴張，以增加血流量。\n(A) 發炎時，血管直徑應為「增加」。\n［出自考古第3題］"
-  },
-  {
-    "question": "補體系統 (complement) 中最關鍵的過程是 C3 的分解產生 C3b，然後有三種先天性免疫反應會發生，請簡述這三種反應的作用過程。",
-    "answer": " ",
-    "explanation": "(A) 局部發炎反應 (local inflammatory response)：C3a 和 C5a 會誘發局部發炎反應，作用到周圍血管上使血流量增加、血管通透性增加、多表現細胞黏附分子、增加吞噬細胞與內皮的結合，以召集並活化巨噬細胞、多型核白血球 (PMNs) 和淋巴球；血管通透性增加也會增加抗體和補體分子的外滲；肥大細胞釋出組織胺和 TNF-α 以促進發炎反應。\n(B) 調理作用 (opsonization)：C3b 會結合到微生物表面。具有補體接受器 (CRs, complement receptors) 的吞噬細胞 (phagocytes) 與微生物表面上的補體分子結合，促進吞噬細胞進行吞噬作用。\n(C) 膜攻擊複合體 (membrane-attack complex)：C3b 和 C3 convertase 結合形成 C5 convertase，將 C5 切成 C5a 與 C5b。C5b 和 C6, C7, C8, C9n 組合為插入膜上的 membrane-attack complex (MAC)，C9 聚合出穿膜的通道，破壞細胞膜並溶掉細菌或細胞。\n［出自考古第1題］"
-  },
-  {
-    "question": "請舉出 4 種屬於免疫治療 (immunotherapy) 的例子。",
-    "answer": " ",
-    "explanation": "(A) antibody therapy (monoclonal antibodies)\n(B) chimeric antigen receptor T-cell therapy (CAR-T cell therapy).\n(C) cancer vaccine.\n(D) anti-inflammatory and immunosuppressive drugs.\n［出自考古第2題］"
+    "explanation": "發炎時，血管直徑應為「增加」。 [出自考古第3題]"
   },
   {
     "question": "Thymic cortical epithelial cells mediate positive selection of developing thymocytes. Which cells will mature in the thymus of mouse? MHC class I-negative mutant mice.",
@@ -52,7 +42,7 @@
       "D": "Neither CD4 nor CD8 T cells."
     },
     "answer": "A",
-    "explanation": "此突變小鼠細胞不表現 MHCI，僅表現 MHC II，所以在 Positive selection 的過程中只有可辨識 (self)peptide:self MHC class II complexes 的 Double-positive thymocytes 可以存活，並發育為 CD4 T cells。\n［出自考古第1題］"
+    "explanation": "此突變小鼠細胞不表現 MHCI，僅表現 MHC II，所以在 Positive selection 的過程中只有可辨識 (self)peptide:self MHC class II complexes 的 Double-positive thymocytes 可以存活，並發育為CD4 T cells。 [出自考古第4題]"
   },
   {
     "question": "Thymic cortical epithelial cells mediate positive selection of developing thymocytes. Which cells will mature in the thymus of mouse? MHC class I-negative mutant mice with MHC class I transgene expressed in thymic epithelium.",
@@ -63,7 +53,7 @@
       "D": "Neither CD4 nor CD8 T cells."
     },
     "answer": "C",
-    "explanation": "雖此突變小鼠細胞原本不表現 MHC class I，但 Thymic epithelium 有 MHC class I 的 Transgene (透過基因工程手段移至生物體內的外源性基因) 表現，故 Thymic cortical epithelial cell 依然可以表現 MHC class I 以進行 Positive selection。再加上 MHC class II 基因依然正常表現，因此 CD4 和 CD8 T cell 都會成熟。\n［出自考古第2題］"
+    "explanation": "雖此突變小鼠細胞原本不表現 MHC class I，但 Thymic epithelium 有 MHC class I 的 Transgene(透過基因工程手段移至生物體內的外源性基因)表現，故 Thymic cortical epithelial cell 依然可以表現 MHC class I 以進行 Positive selection。再加上 MHC class II 基因依然正常表現，因此 CD4 和 CD8 T cell 都會成熟。 [出自考古第5題]"
   },
   {
     "question": "Thymic cortical epithelial cells mediate positive selection of developing thymocytes. Which cells will mature in the thymus of mouse? MHC class I-negative mutant mice with MHC class I transgene expressed that cannot interact with CD8.",
@@ -73,8 +63,8 @@
       "C": "Both CD4 and CD8 T cells.",
       "D": "Neither CD4 nor CD8 T cells."
     },
-    "answer": "B",
-    "explanation": "若要使 CD8 T cell 發育，則 MHC class I 必須和 CD8 分子有效的作用 (interact)。雖然 Thymic cortical epithelial cell 可以表現 MHC class I，但無法作用的情形下亦無法使 CD8 T cell 發育。\n［出自考古第3題］"
+    "answer": "A",
+    "explanation": "若要使 CD8 T cell 發育，則 MHC class I 必須和 CD8 分子有效的作用 (interact)。雖然 Thymic cortical epithelial cell 可以表現 MHC class I，但無法作用的情形下亦無法使 CD8 T cell 發育。 [出自考古第6題]"
   },
   {
     "question": "Which one of the following tumors is involved in? Multiple myeloma.",
@@ -85,7 +75,7 @@
       "D": "Neither."
     },
     "answer": "B",
-    "explanation": "多發性骨髓瘤 (multiple myeloma) 為漿細胞 (plasma cell) 增生的惡性疾病，屬於 B 細胞腫瘤。\n［出自考古第4題］"
+    "explanation": "多發性骨髓瘤(multiple myeloma)為漿細胞(plasma cell)增生的惡性疾病，屬於B細胞腫瘤。 [出自考古第7題]"
   },
   {
     "question": "Which one of the following tumors is involved in? Chronic lymphocytic leukemia (CLL).",
@@ -96,7 +86,7 @@
       "D": "Neither."
     },
     "answer": "C",
-    "explanation": "一般所說的 CLL 為 B cell chronic lymphocytic leukemia (B-CLL)，也有 T cell chronic lymphocytic leukemia，成因為周圍淋巴器官的 T 細胞和 B 細胞異常增生。\n［出自考古第5題］"
+    "explanation": "一般所說的 CLL 為 B cell chronic lymphocytic leukemia (B-CLL),也有T cell chronic lymphocytic leukemia,成因為周圍淋巴器官的T細胞和B細胞異常增生。 [出自考古第8題]"
   },
   {
     "question": "Which one of the following tumors is involved in? Thymoma.",
@@ -107,7 +97,7 @@
       "D": "Neither."
     },
     "answer": "D",
-    "explanation": "胸腺瘤 (thymoma) 為胸腺基質/上皮細胞的異常增生，這兩種細胞雖與 T 細胞發育有關，但不屬於 T 細胞，故不屬於 T 或 B 細胞腫瘤。\n［出自考古第6題］"
+    "explanation": "胸腺瘤(thymoma)為胸腺基質/上皮細胞的異常增生，這兩種細胞雖與 T細胞發育有關，但不屬於T細胞，故不屬於T或B細胞腫瘤。 [出自考古第9題]"
   },
   {
     "question": "Which one of the following defects impairs? Adenosine deaminase.",
@@ -118,7 +108,7 @@
       "D": "Neither B nor T cell development."
     },
     "answer": "C",
-    "explanation": "Adenosine deaminase (ADA) 可以移除 DNA 降解時所產生的 Deoxyadenosine。ADA Deficiency 會造成 dATP 累積，將抑制核糖核酸還原酶的活性，進而阻礙 DNA 合成，對於淋巴細胞有高度毒性。因此，缺乏 ADA 會影響 T 細胞和 B 細胞的發育。\n［出自考古第7題］"
+    "explanation": "Adenosine deaminase (ADA)可以移除 DNA 降解時所產生的 Deoxyadenosine。ADA Deficiency 會造成 dATP 累積,將抑制核糖核酸還原酶的活性,進而阻礙 DNA 合成,對於淋巴細胞有高度毒性。因此,缺乏 ADA 會影響T細胞和B細胞的發育。 [出自考古第10題]"
   },
   {
     "question": "Which one of the following defects impairs? IFN-γ deficiency.",
@@ -128,8 +118,8 @@
       "C": "Both B and T cell development.",
       "D": "Neither B nor T cell development."
     },
-    "answer": "A",
-    "explanation": "IFN-γ 理論上只會影響 B 細胞分泌的抗體類型，而不會影響 B 細胞發育；IFN-γ 主要是影響 $T_{H}1$ 的分化和功能，而不影響 T 細胞發育，因為 T 細胞發育和分化是不一樣的。\n［出自考古第8題］"
+    "answer": "D",
+    "explanation": "IFN-γ 理論上只會影響 B細胞分泌的抗體類型,而不會影響 B細胞發育; IFN-γ 主要是影響 $T_{H}1$ 的分化和功能,而不影響T細胞發育,因為T細胞發育和分化是不一樣的。 [出自考古第11題]"
   },
   {
     "question": "Which one of the following defects impairs? RAG deficiency.",
@@ -140,7 +130,7 @@
       "D": "Neither B nor T cell development."
     },
     "answer": "C",
-    "explanation": "RAG-1 和 RAG-2 主要負責 T 細胞及 B 細胞的基因重組，故缺乏 RAG 會影響兩者的發育。\n［出自考古第9題］"
+    "explanation": "RAG-1和RAG-2 主要負責T細胞及B細胞的基因重組,故缺乏 RAG 會影響兩者的發育。 [出自考古第12題]"
   },
   {
     "question": "Which one of the following is the property or example of (A) TD antigen (B) TI-1 antigen (C) TI-2 antigen (D) None? Polyclonal B-cell activation.",
@@ -150,8 +140,8 @@
       "C": "TI-2 antigen",
       "D": "None"
     },
-    "answer": "B",
-    "explanation": "TI-1 antigen 在高濃度下會刺激形成 Polyclonol activation。\n［出自考古第10題］"
+    "answer": "A",
+    "explanation": "TI-1 antigen 在高濃度下會刺激形成 Polyclonol activation。 [出自考古第13題]"
   },
   {
     "question": "Which one of the following is the property or example of (A) TD antigen (B) TI-1 antigen (C) TI-2 antigen (D) None? Requires repeating epitopes.",
@@ -162,7 +152,7 @@
       "D": "None"
     },
     "answer": "C",
-    "explanation": "TI-2 antigen 這類抗原的特色是有重複的片段，如 Polysaccharide capsule (莢膜類細菌的多醣)，而 B 細胞 (B-1 細胞或是 Marginal zone B cell) 可以辨識並產生 IgM，如果樹突細胞介入，其會分泌 BAFF 使 B 細胞進行 Class switch 產生 IgG。\n［出自考古第11題］"
+    "explanation": "TI-2 antigen 這類抗原的特色是有重複的片段,如 Polysaccharide capsule (莢膜類細菌的多醣),而B細胞(B-1 細胞或是 Marginal zone B cell)可以辨識並產生 IgM,如果樹突細胞介入,其會分泌 BAFF 使 B 細胞進行 Class switch 產生 IgG。 [出自考古第14題]"
   },
   {
     "question": "Which one of the following is the property or example of (A) TD antigen (B) TI-1 antigen (C) TI-2 antigen (D) None? Diphtheria toxin.",
@@ -173,7 +163,7 @@
       "D": "None"
     },
     "answer": "A",
-    "explanation": "白喉毒素 (diphetheria toxin) 為 TD，見下圖舉例。\n［出自考古第12題］"
+    "explanation": "白喉毒素(diphetheria toxin)為TD,見下圖舉例。 [出自考古第15題]"
   },
   {
     "question": "Which one of the following functions is mainly mediated by human immunoglobulin? Sensitization of mast cells.",
@@ -185,7 +175,7 @@
       "E": "IgE"
     },
     "answer": "E",
-    "explanation": "Mast cells 利用 FcεRI receptor 與 IgE 結合，致敏化後可以進行後續的過敏反應 (allergy; type I hypersensitivity)\n［出自考古第13題］"
+    "explanation": "Mast cells 利用 FcεRI receptor 與 IgE結合,致敏化後可以進行後續的過敏反應(allergy; type I hypersensitivity) [出自考古第16題]"
   },
   {
     "question": "Which one of the following functions is mainly mediated by human immunoglobulin? Sensitization for killing by NK cells.",
@@ -197,7 +187,7 @@
       "E": "IgE"
     },
     "answer": "C",
-    "explanation": "NK cell 利用 FcyRIII receptor (CD16) 和 IgG 結合，可以啟動 ADCC (antibody- dependent cell-mediated cytotoxicity) 反應殺掉細胞。\n［出自考古第14題］"
+    "explanation": "NK cell 利用 FcyRIII receptor(CD16)和IgG 結合,可以啟動 ADCC (antibody- dependent cell-mediated cytotoxicity)反應殺掉細胞。 [出自考古第17題]"
   },
   {
     "question": "Which one of the following functions is mainly mediated by human immunoglobulin? Neutralization in the gut lumen.",
@@ -209,306 +199,10 @@
       "E": "IgE"
     },
     "answer": "D",
-    "explanation": "雖然 IgM、IgG 和 IgA 皆有中和作用，但上皮組織屬於 Mucosal immune system，在腸道主要由 IgA-switched plasma cell 分泌 Dimeric IgA，並藉由 Polymeric Ig receptor (pIgR) 將 Lamina propria 的 Plasma cells 分泌的 IgA 從上皮細胞的 Basolateral face 轉運到 Apical face 並釋放到 Gut lumen 中 (腸道腔內本身不會有常駐的淋巴球，抗體是由上皮細胞基底膜後方穿過上皮細胞送到腸道腔中)。\n［出自考古第15題］"
+    "explanation": "雖然 IgM、IgG 和 IgA 皆有中和作用,但上皮組織屬於 Mucosal immune system,在腸道主要由 IgA-switched plasma cell 分泌 Dimeric IgA,並藉由 Polymeric Ig receptor(pIgR)將 Lamina propria 的 Plasma cells 分泌的 IgA 從上皮細胞的 Basolateral face 轉運到 Apical face 並釋放到 Gut lumen 中 (腸道腔內本身不會有常駐的淋巴球，抗體是由上皮細胞基底膜後方穿過上皮細胞送到腸道腔中)。 [出自考古第18題]"
   },
   {
-    "question": "MHC (major histocompatibility complex) is essential for mediating T cell immune response. Below figures are cartoon structure of MHC Class I and Class II. (a or b) is MHC Class I; (a or b) is MHC Class II.",
-    "options": {
-      "1": "a",
-      "2": "b"
-    },
-    "answer": "1",
-    "explanation": "(a) 為 MHC Class I；(b) 為 MHC Class II。\n［出自考古第1題］"
-  },
-  {
-    "question": "MHC (major histocompatibility complex) is essential for mediating T cell immune response. Below figures are cartoon structure of MHC Class I and Class II. According to structural analysis, (class I or class II) has a shallow and closed end of peptide-binding cleft so as to present an antigen peptide of 8-10 ammo acids.",
-    "options": {
-      "1": "class I",
-      "2": "class II"
-    },
-    "answer": "1",
-    "explanation": "MHC class I 的 Peptide-binding cleft 兩端較封閉，只能呈現固定長度的 Peptide (Peptide 中間向外突出)；MHC class II 的 Cleft 兩端開放，抗原可延伸過整個 Binding cleft 並穿出 MHC 兩端外，故可以呈現長度不一的 peptide。\n［出自考古第2題］"
-  },
-  {
-    "question": "MHC (major histocompatibility complex) is essential for mediating T cell immune response. Below figures are cartoon structure of MHC Class I and Class II. All somatic tissue except for ______ express MHC Class I.",
-    "answer": " ",
-    "explanation": "MHCI 表現於幾乎所有有核細胞，但是紅血球無核，故不表現 MHCI。\nRed blood cells (erythrocytes)\n［出自考古第3題］"
-  },
-  {
-    "question": "MHC (major histocompatibility complex) is essential for mediating T cell immune response. Below figures are cartoon structure of MHC Class I and Class II. List three types of cells that express MHC Class II.(請寫英文)",
-    "answer": " ",
-    "explanation": "會表現 MHC Class II 的細胞有：\nDendritic cells, macrophages, B cells, epithelial cell of thymus.\n［出自考古第4題］"
-  },
-  {
-    "question": "Lymphocyte entry of lymphoid nodes Naive T cells enter lymph nodes through blood circulation. The process is mainly controlled by the interaction of _(on naive T cells) and CD34 on the endothelium.",
-    "options": {
-      "a": "LFA-1",
-      "b": "CTLA-4",
-      "c": "CCL21",
-      "d": "L-selectin",
-      "e": "high endothelial venule",
-      "f": "thymic epithelium"
-    },
-    "answer": "d",
-    "explanation": "Naive T cell 上的 L-selectin 會和 HEV 上的 GlyCAM-1 和 CD34 結合，產生滾動。\n［出自考古第1題］"
-  },
-  {
-    "question": "Lymphocyte entry of lymphoid nodes The specialized blood vessel that expresses particular adhesion molecules to control the entry of naïve T cells to lymph nodes is called ______.",
-    "options": {
-      "a": "LFA-1",
-      "b": "CTLA-4",
-      "c": "CCL21",
-      "d": "L-selectin",
-      "e": "high endothelial venule",
-      "f": "thymic epithelium"
-    },
-    "answer": "e",
-    "explanation": "HEV (high endothelial venule) 為特化的血管，可以調控 naive T cell 進入 lymph node。\n［出自考古第2題］"
-  },
-  {
-    "question": "T cell activation CD4+ T cell activation requires 2 signals. Signal 1 is given by ______ and Signal 2 is mediated by ______ to enhance IL-2 production from T cells.",
-    "options": {
-      "a": "antigen peptide",
-      "b": "MHC class I",
-      "c": "MHC class II",
-      "d": "CD25",
-      "e": "CD28",
-      "f": "CD44",
-      "g": "apoptosis",
-      "h": "proliferation",
-      "i": "anergic"
-    },
-    "answer": ["a", "e"],
-    "explanation": "第一訊號：抗原呈現細胞利用 MHC II-peptide 複合體呈現抗原給 T 細胞的 TCR 和 CD4，產生 TCR-antigen-MHC II 複合體。\n第二訊號：抗原呈現細胞上的 B7 會和 T 細胞上的 CD28 結合，維持 IL-2 表現。\n［出自考古第1題］"
-  },
-  {
-    "question": "T cell activation If naive CD4+ T cells are stimulated with signal 1 without signal 2, the T cells become ______.",
-    "options": {
-      "a": "antigen peptide",
-      "b": "MHC class I",
-      "c": "MHC class II",
-      "d": "CD25",
-      "e": "CD28",
-      "f": "CD44",
-      "g": "apoptosis",
-      "h": "proliferation",
-      "i": "anergic"
-    },
-    "answer": "i",
-    "explanation": "缺乏第二訊號，T 細胞無法完整活化與分化，變成失能 T 細胞 (anergic)。\n［出自考古第2題］"
-  },
-  {
-    "question": "T cell differentiation and effector function CD4+ T cells can be differentiated into different cell subsets based on the type of cytokines they produced.",
-    "options": {
-      "a": "IL-2",
-      "b": "IL-4",
-      "c": "IL-10",
-      "d": "IL-6",
-      "e": "IL-12",
-      "f": "$T_{H}1$",
-      "g": "$T_{H}2$",
-      "h": "$T_{H}17$",
-      "i": "$T_{FH}$",
-      "j": "$T_{reg}$"
-    },
-    "answer": " ",
-    "explanation": "CD4+ T cells 會因為細胞激素的不同而分化成不同的 subsets，如圖所示。\n［出自考古第1題］"
-  },
-  {
-    "question": "T cell differentiation and effector function Each of the differentiated CD4+ T cell subsets (F-J) has different effector functions in the control of microbial infection. helps B cells to produce IgE.",
-    "options": {
-      "a": "IL-2",
-      "b": "IL-4",
-      "c": "IL-10",
-      "d": "IL-6",
-      "e": "IL-12",
-      "f": "$T_{H}1$",
-      "g": "$T_{H}2$",
-      "h": "$T_{H}17$",
-      "i": "$T_{FH}$",
-      "j": "$T_{reg}$"
-    },
-    "answer": "g",
-    "explanation": "$T_{H}2$ 分泌 IL-4 活化肥大細胞、嗜鹼性球，進而促進 IgE 與過敏生成。\n［出自考古第2題］"
-  },
-  {
-    "question": "T cell differentiation and effector function Each of the differentiated CD4+ T cell subsets (F-J) has different effector functions in the control of microbial infection. helps macrophage activation to eliminate intracellular pathogen.",
-    "options": {
-      "a": "IL-2",
-      "b": "IL-4",
-      "c": "IL-10",
-      "d": "IL-6",
-      "e": "IL-12",
-      "f": "$T_{H}1$",
-      "g": "$T_{H}2$",
-      "h": "$T_{H}17$",
-      "i": "$T_{FH}$",
-      "j": "$T_{reg}$"
-    },
-    "answer": "f",
-    "explanation": "$T_{H}1$ 分泌 IFN-γ 活化 M1 巨噬細胞；誘導單核球 (巨噬細胞前身) 分化；內皮細胞活化 (幫助變形蟲運動)；活化 Naive T 細胞。\n［出自考古第3題］"
-  },
-  {
-    "question": "T cell differentiation and effector function Each of the differentiated CD4+ T cell subsets (F-J) has different effector functions in the control of microbial infection. helps B cells isotype switching at the germinal center.",
-    "options": {
-      "a": "IL-2",
-      "b": "IL-4",
-      "c": "IL-10",
-      "d": "IL-6",
-      "e": "IL-12",
-      "f": "$T_{H}1$",
-      "g": "$T_{H}2$",
-      "h": "$T_{H}17$",
-      "i": "$T_{FH}$",
-      "j": "$T_{reg}$"
-    },
-    "answer": "i",
-    "explanation": "$T_{FH}$ 分泌 IL-21 促進 B 細胞增殖分化幫助形成 Germinal center 並促進 Class switch 及 Affinity maturation。\n［出自考古第4題］"
-  },
-  {
-    "question": "T cell differentiation and effector function Each of the differentiated CD4+ T cell subsets (F-J) has different effector functions in the control of microbial infection. enhances neutrophil responses in infected tissues.",
-    "options": {
-      "a": "IL-2",
-      "b": "IL-4",
-      "c": "IL-10",
-      "d": "IL-6",
-      "e": "IL-12",
-      "f": "$T_{H}1$",
-      "g": "$T_{H}2$",
-      "h": "$T_{H}17$",
-      "i": "$T_{FH}$",
-      "j": "$T_{reg}$"
-    },
-    "answer": "h",
-    "explanation": "$T_{H}17$ 分泌 IL-17 促進嗜中性球生成、移動並形成 NETs；分泌 IL-22 促進上皮細胞產生 AMP 進行防禦。\n［出自考古第5題］"
-  },
-  {
-    "question": "Pick up the correct answer from the list below: mismatched blood transfusion.",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of the four types of hypersensitivity."
-    },
-    "answer": "B",
-    "explanation": "Type II hypersensitivity 由 IgG 造成，IgG 會直接接上細胞表面抗原活化補體和吞噬細胞，造成細胞被破壞。例如: 輸血時，身體對血球表面抗原產生過度反應而有溶血性貧血 (hemolytic anemia)。\n［出自考古第1題］"
-  },
-  {
-    "question": "Pick up the correct answer from the list below: urticaria.",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of the four types of hypersensitivity."
-    },
-    "answer": "A",
-    "explanation": "蕁麻疹為 Type I hypersensitivity。\n［出自考古第2題］"
-  },
-  {
-    "question": "Pick up the correct answer from the list below: contact dermatitis.",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of the four types of hypersensitivity."
-    },
-    "answer": "F",
-    "explanation": "Type IV hypersensitivity 不是抗體造成，而是由細胞 (主要是 $T_{H}$ cell) 造成，稱為 Cell-mediated hypersensitivity。以 $T_{H}1$ 為例: 接觸性皮膚炎 (allergic contact dermatitis) 和結核菌素 (tuberculin) reaction。\n［出自考古第3題］"
-  },
-  {
-    "question": "Pick up the correct answer from the list below: serum sickness (inject animal serum).",
-    "options": {
-      "A": "Type I hypersensitivity.",
-      "B": "Type II hypersensitivity.",
-      "C": "Type III hypersensitivity.",
-      "D": "both Type II and Type III hypersensitivity.",
-      "E": "Type I, II and III hypersensitivity.",
-      "F": "Type IV hypersensitivity.",
-      "G": "all of the Type I, II, III and IV hypersensitivity.",
-      "H": "none of the four types of hypersensitivity."
-    },
-    "answer": "C",
-    "explanation": "Type III hypersensitivity 由 IgG 造成，針對 Soluble antigen (形成 Immune complex)。例如 Serum sickness (inject animal serum)。\n［出自考古第4題］"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below. The scientist who discovered MHC and link it to transplantation rejection and won Nobel prize.",
-    "options": {
-      "A": "The scientist who discovered MHC and link it to transplantation rejection and won Nobel prize.",
-      "B": "Inflammatory bowel disease.",
-      "C": "Myasthenia gravis.",
-      "D": "Experimental allergic encephalomyelitis (EAE).",
-      "E": "Rheumatic fever."
-    },
-    "answer": "A",
-    "explanation": "G. Snell discovered the first components of the MHC in the 1940s through their role in rejecting transplants in mice. He won the Nobel Prize in Physiology or Medicine 1980。\n［出自考古第1題］"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below. Inflammatory bowel disease.",
-    "options": {
-      "A": "The scientist who discovered MHC and link it to transplantation rejection and won Nobel prize.",
-      "B": "Inflammatory bowel disease.",
-      "C": "Myasthenia gravis.",
-      "D": "Experimental allergic encephalomyelitis (EAE).",
-      "E": "Rheumatic fever."
-    },
-    "answer": "B",
-    "explanation": "Inflammatory bowel disease 病因是腸道內 $T_{reg}$ 的數量或活性不足，使 Autoreactive T cell 過度活化造成。\n［出自考古第2題］"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below. Myasthenia gravis.",
-    "options": {
-      "A": "The scientist who discovered MHC and link it to transplantation rejection and won Nobel prize.",
-      "B": "Inflammatory bowel disease.",
-      "C": "Myasthenia gravis.",
-      "D": "Experimental allergic encephalomyelitis (EAE).",
-      "E": "Rheumatic fever."
-    },
-    "answer": "C",
-    "explanation": "病患體內能找到對抗 ACh (acetylcholine) receptor autoantibody，以及可以辨識乙醯膽鹼受器的 CD4 T cell 來幫助活化 B 細胞產生抗體。\n［出自考古第3題］"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below. Experimental allergic encephalomyelitis (EAE).",
-    "options": {
-      "A": "The scientist who discovered MHC and link it to transplantation rejection and won Nobel prize.",
-      "B": "Inflammatory bowel disease.",
-      "C": "Myasthenia gravis.",
-      "D": "Experimental allergic encephalomyelitis (EAE).",
-      "E": "Rheumatic fever."
-    },
-    "answer": "D",
-    "explanation": "透過人工誘發造成自體免疫腦脊髓炎。將正常老鼠的脊髓研磨液 (做為抗原) 加上佐劑打回老鼠體內，可以誘發 Anti-myelin 的 T 細胞產生免疫反應，破壞髓鞘 (myelin) 造成神經受損，造成老鼠癱瘓。\n［出自考古第4題］"
-  },
-  {
-    "question": "For each of the following select the most appropriate characteristic listed below. Rheumatic fever.",
-    "options": {
-      "A": "The scientist who discovered MHC and link it to transplantation rejection and won Nobel prize.",
-      "B": "Inflammatory bowel disease.",
-      "C": "Myasthenia gravis.",
-      "D": "Experimental allergic encephalomyelitis (EAE).",
-      "E": "Rheumatic fever."
-    },
-    "answer": "E",
-    "explanation": "原本是要對付入侵人體鏈球菌的抗體，但因心肌細胞上的蛋白和鏈球菌表面抗原類似，因此抗體和心肌細胞以及瓣膜細胞產生了 Cross-reaction, 攻擊心肌，造成心臟發炎，即為風溼熱 (Rheumatic fever)。\n［出自考古第5題］"
-  },
-  {
-    "question": "What is the most common allergen in patients with allergy?",
-    "answer": " ",
-    "explanation": "塵蟎 (dust mite)，塵蟎糞便中有 Der P I-IV 及其他抗原，所以涵蓋範圍最大。\n［出自考古第1題］"
-  },
-  {
-    "question": "The $T_{reg}$ cells have been demonstrated to play important role in regulation inflammation. Which of the following is associated with the development of such T cells in these patients?",
+    "question": "Which of the following is associated with the development of such $T_{reg}$ cells in these patients?",
     "options": {
       "A": "GATA-3.",
       "B": "RORYT.",
@@ -517,7 +211,7 @@
       "E": "BCL-6."
     },
     "answer": "D",
-    "explanation": "Foxp3 為 $T_{reg}$ 細胞的 transcription factor。\n［出自考古第1題］"
+    "explanation": "[出自考古第19題]"
   },
   {
     "question": "Which of the following molecules is recently found to be associated with severe drug hypersensitivity reaction, Stevens-Johnson syndrome, to anti-seizure drug carbamazepine?",
@@ -529,11 +223,6 @@
       "E": "Interferon gamma (IFN-γ)."
     },
     "answer": "A",
-    "explanation": "HLA-B 會抓住 CBZ (carbamazepine) 呈現給 T 細胞，促使 T 細胞活化而引起史蒂文生強生症候群 (Stevens-Johnson syndrome)，屬於 Type IV hypersensitivity。\n［出自考古第2題］"
-  },
-  {
-    "question": "請簡單舉出五個與自然免疫力有關的組織和細胞。(5分)",
-    "answer": " ",
-    "explanation": "樹突細胞 (dendritic cell)、巨噬細胞 (macrophage)、嗜中性球 (neutrophil)、嗜酸性球 (eosinophil)、嗜鹼性球 (basophil)、自然殺手細胞 (NK)、先天性淋巴細胞 (ILCs, innate lymphoid cells)、皮膚 (skin)、黏膜 (mucosa)......\n(答案不限於以上，五個即可)\n［出自考古第1題］"
+    "explanation": "HLA-B 會抓住 CBZ(carbamazepine)呈現給 T細胞,促使T細胞活化而引起史蒂文生強生症候群(Stevens-Johnson syndrome),屬於 Type IV hypersensitivity。 [出自考古第20題]"
   }
 ]

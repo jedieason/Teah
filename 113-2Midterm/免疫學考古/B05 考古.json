@@ -1,527 +1,529 @@
 
 [
   {
-    "question": "Dr. Burnet’s “clonal selection” hypothesis does NOT include which one of the follows？",
+    "question": "Dr. Burnet's “clonal selection” hypothesis does NOT include which one of the follows?",
     "options": {
-      "A": "A single progenitor cell can give rise to a large number of lymphocytes, each with a different specificity。",
-      "B": "The antigen receptor of each lymphocyte during development can be self-reactive or foreign-reactive。",
-      "C": "Self-reactive and foreign-reactive lymphocytes are deleted during development。",
-      "D": "Cells bearing foreign-reactive receptor are capable of being activated by that particular antigen。"
+      "A": "A single progenitor cell can give rise to a large number of lymphocytes, each with a different specificity.",
+      "B": "The antigen receptor of each lymphocyte during development can be self-reactive or foreign-reactive.",
+      "C": "Self-reactive and foreign-reactive lymphocytes are deleted during development.",
+      "D": "Cells bearing foreign-reactive receptor are capable of being activated by that particular antigen."
     },
     "answer": "C",
-    "explanation": "只有 self-reactive lymphocytes 會在發育過程中被刪除\n【出處】單元1\n［出自考古第1題］"
+    "explanation": "(C)只有self-reactive lymphocytes會在發育過程中被刪除\n［出自考古第1題］"
   },
   {
-    "question": "Which discovery does NOT lead to the winning of the Nobel Prize？",
+    "question": "Which discovery does NOT lead to the winning of the Nobel Prize?",
     "options": {
-      "A": "The complement system。",
-      "B": "A, B, O blood group。",
-      "C": "Toll-like receptor。",
-      "D": "Development of vaccination。"
+      "A": "The complement system.",
+      "B": "A, B, O blood group.",
+      "C": "Toll-like receptor.",
+      "D": "Development of vaccination."
     },
     "answer": "D",
-    "explanation": "(A) 1919年 Jules Bordet\n(B) 1930年 Karl Landsteiner\n(C) 2011年 Bruce Beutler、Jules Hoffmann、Ralph M. Steinman\n【出處】單元1\n［出自考古第2題］"
+    "explanation": "(A) 1919年Jules Bordet\n(B) 1930年Karl Landsteiner\n(C) 2011年Bruce Beutler、Jules Hoffmann、Ralph M. Steinman\n［出自考古第2題］"
   },
   {
-    "question": "Regarding the structure and generation of antibody, which statement is NOT correct？",
+    "question": "Regarding the structure and generation of antibody, which statement is NOT correct?",
     "options": {
-      "A": "Membrane-bound and secreted IgM are produced through RNA splicing。",
-      "B": "IgM and IgD are produced through DNA rearrangement。",
-      "C": "IgM and IgA have additional J chain to facilitate polymer formation。",
-      "D": "Proteolytic cleavage of antibody by pepsin leads to production of F(ab')2。"
+      "A": "Membrane-bound and secreted IgM are produced through RNA splicing.",
+      "B": "IgM and IgD are produced through DNA rearrangement.",
+      "C": "IgM and IgA have additional J chain to facilitate polymer formation.",
+      "D": "Proteolytic cleavage of antibody by pepsin leads to production of F(ab')2."
     },
     "answer": "B",
-    "explanation": "(B) IgM 和IgD 製造來自於 RNA 剪接結果的不同,未牽涉到 DNA 的重組。\n(C) IgM 和 IgA 利用J鏈幫助各自的五聚體或二聚體的形成。\n(D) 利用 Pepsin 切割抗體會產生 F(ab')2和pFc',利用 Papain 切割則會產生2個Fab與1個Fc。\n【出處】單元7\n［出自考古第3題］"
+    "explanation": "(B) IgM和IgD製造來自於RNA剪接結果的不同,未牽涉到DNA的重組。\n(C) IgM和IgA利用J鏈幫助各自的五聚體或二聚體的形成。\n(D) 利用Pepsin切割抗體會產生F(ab')2和pFc',利用Papain切割則會產生2個Fab與1個Fc。\n［出自考古第3題］"
   },
   {
-    "question": "Regarding complementarity determining region (CDR) of an antibody, which statement is NOT correct？",
+    "question": "Regarding complementarity determining region (CDR) of an antibody, which statement is NOT correct?",
     "options": {
-      "A": "The 3D structure of CDRs forms loops。",
-      "B": "CDRs are hyper-variable (HV) regions in a variable domain of light or heavy chain。",
-      "C": "CDR1, CDR2 and CDR3 of either light or heavy chain alone determine the antigen binding specificity。",
-      "D": "CDRs are called because it is complementary to antigen structure。"
+      "A": "The 3D structure of CDRs forms loops.",
+      "B": "CDRs are hyper-variable (HV) regions in a variable domain of light or heavy chain.",
+      "C": "CDR1, CDR2 and CDR3 of either light or heavy chain alone determine the antigen binding specificity.",
+      "D": "CDRs are called because it is complementary to antigen structure."
     },
     "answer": "C",
-    "explanation": "(C) 重鍊及輕鍊上各有3個 CDR,而每個 CDR會形成1個 loop,而抗原專一性由這6個 loop 共同決定。\n【出處】單元7\n［出自考古第4題］"
+    "explanation": "(C) 重鍊及輕鍊上各有3個CDR,而每個CDR會形成1個loop,而抗原專一性由這6個loop共同決定。\n［出自考古第4題］"
   },
   {
-    "question": "Which of the statement concerning complement activation is NOT correct？",
+    "question": "Which of the statement concerning complement activation is NOT correct?",
     "options": {
-      "A": "Products of complement activation become covalently attached to microbial cell surface but not to host cell surface or antibodies。",
-      "B": "Complement activation is inhibited by regulatory proteins which are present on host cells but not on microbes。",
-      "C": "Patients with deficiencies in C3 are more severe than those with deficiencies in membrane attack complex in terms of susceptibility to bacterial infections。",
-      "D": "C6-C9 are structurally related proteins without enzymatic activity。"
+      "A": "Products of complement activation become covalently attached to microbial cell surface but not to host cell surface or antibodies.",
+      "B": "Complement activation is inhibited by regulatory proteins which are present on host cells but not on microbes.",
+      "C": "Patients with deficiencies in C3 are more severe than those with deficiencies in membrane attack complex in terms of susceptibility to bacterial infections.",
+      "D": "C6-C9 are structurally related proteins without enzymatic activity."
     },
     "answer": "A",
-    "explanation": "(A)補體亦會以共價鍵結合到抗體上,如古典途徑中 C1q 結合 IgM 或兩個IgG。\n故選項原文應改為:「Products of complement activation become covalently attached to microbial cell surface and antibodies but not to host cell surface.」\n(B)逆向調節蛋白如 CR1、H。\n【出處】單元2\n［出自考古第5題］"
+    "explanation": "(A)補體亦會以共價鍵結合到抗體上,如古典途徑中C1q結合IgM或兩個IgG。\n故選項原文應改為:「Products of complement activation become covalently attached to microbial cell surface and antibodies but not to host cell surface.」\n(B)逆向調節蛋白如CR1、H。\n［出自考古第5題］"
   },
   {
-    "question": "Regarding classical pathway of complement activation, which statement is NOT correct？",
+    "question": "Regarding classical pathway of complement activation, which statement is NOT correct?",
     "options": {
-      "A": "IgM has better complement fixation ability than IgG。",
-      "B": "Only antigen-bound antibodies and not free circulating antibodies can initiate classical pathway。",
-      "C": "C1 is made of one C1q, two Clr and two C1s, and C1q and Clr are both serine proteases。",
-      "D": "The C3 convertase in this pathway is C4b2a。"
+      "A": "IgM has better complement fixation ability than IgG.",
+      "B": "Only antigen-bound antibodies and not free circulating antibodies can initiate classical pathway.",
+      "C": "C1 is made of one C1q, two Clr and two C1s, and C1q and Clr are both serine proteases.",
+      "D": "The C3 convertase in this pathway is C4b2a."
     },
     "answer": "C",
-    "explanation": "(A)見共筆 Vol.1 p.25。\n(C)見共筆 Vol.1 p.26。C1q 的功能是與抗體結合,Clr與C1s則為 serine protease。\n【出處】單元2\n［出自考古第6題］"
+    "explanation": "(A)見共筆Vol.1 p.25。\n(C)見共筆Vol.1 p.26。C1q的功能是與抗體結合,Clr與C1s則為serine protease。\n［出自考古第6題］"
   },
   {
-    "question": "Regarding antimicrobial peptides (AMPs), which statement is NOT correct？",
+    "question": "Regarding antimicrobial peptides (AMPs), which statement is NOT correct?",
     "options": {
-      "A": "They are produced in inactive forms and are activated by proteolysis after release。",
-      "B": "Active form of AMPs selectively attacks membrane of microbes and not hosts。",
-      "C": "They are amphipathic peptides。",
-      "D": "They can be secreted by skin and intestine。"
+      "A": "They are produced in inactive forms and are activated by proteolysis after release.",
+      "B": "Active form of AMPs selectively attacks membrane of microbes and not hosts.",
+      "C": "They are amphipathic peptides.",
+      "D": "They can be secreted by skin and intestine."
     },
     "answer": "B",
-    "explanation": "(B) 抗微生物肽(AMPs)不具專一性。\n(D) 皮膚會分泌β-Defensins 與Cathelicidin,腸會分泌α-Defensins 與 Cathelicidin。\n【出處】單元2\n［出自考古第7題］"
+    "explanation": "(B) 抗微生物肽(AMPs)不具專一性。\n(D) 皮膚會分泌β-Defensins與Cathelicidin,腸會分泌α-Defensins與Cathelicidin。\n［出自考古第7題］"
   },
   {
-    "question": "Regarding ITAM and ITIM, which statement is NOT correct？",
+    "question": "Regarding ITAM and ITIM, which statement is NOT correct?",
     "options": {
-      "A": "An immune cell can express different immunoreceptors that either contain ITAM or ITIM and the cell response is determined by summation of the activation and inhibitory signals。",
-      "B": "Tyrosine residue(s) in ITAM or ITIM are phosphorylated in response to stimulation。",
-      "C": "ITAMs are found in the intracellular domain of TCRα and TCRβ。",
-      "D": "Once activated, ITIM recruits protein phosphatases to negatively regulate downstream signal pathways。"
+      "A": "An immune cell can express different immunoreceptors that either contain ITAM or ITIM and the cell response is determined by summation of the activation and inhibitory signals.",
+      "B": "Tyrosine residue(s) in ITAM or ITIM are phosphorylated in response to stimulation.",
+      "C": "ITAMs are found in the intracellular domain of TCRα and TCRβ.",
+      "D": "Once activated, ITIM recruits protein phosphatases to negatively regulate downstream signal pathways."
     },
     "answer": "C",
-    "explanation": "(C)見共筆 Vol.1 p.59。TCR 胞內區域很短,需依靠輔助受體 CD3及ζchain,方能活化細胞內的下游反應,因其上有 ITAM motif。\n【出處】單元4\n［出自考古第8題］"
+    "explanation": "(C)見共筆Vol.1 p.59。TCR胞內區域很短,需依靠輔助受體CD3及ζchain,方能活化細胞內的下游反應,因其上有ITAM motif。\n［出自考古第8題］"
   },
   {
-    "question": "Regarding X-linked severe combined immunodeficiency (X-SCID), which statement is NOT correct？",
+    "question": "Regarding X-linked severe combined immunodeficiency (X-SCID), which statement is NOT correct?",
     "options": {
-      "A": "The patients do not have T and NK cells but have B cells。",
-      "B": "This is due to deficiency of common β chain that is shared by cytokines critical for functions and development of lymphocytes such as IL-2, IL-4, IL-7, IL-9 and IL-15。",
-      "C": "Bone marrow transplantation or gene therapy can be used to treat the patients。",
-      "D": "If a mother is carrier of the mutated gene, the probability of her son to inherit the disease is 50%。"
+      "A": "The patients do not have T and NK cells but have B cells.",
+      "B": "This is due to deficiency of common β chain that is shared by cytokines critical for functions and development of lymphocytes such as IL-2, IL-4, IL-7, IL-9 and IL-15.",
+      "C": "Bone marrow transplantation or gene therapy can be used to treat the patients.",
+      "D": "If a mother is carrier of the mutated gene, the probability of her son to inherit the disease is 50%."
     },
     "answer": "B",
-    "explanation": "γc (common γ)chain 為許多細胞介紹受體所必須,此基因位於X染色體上,而X-SCID 的患者製造 γc的基因發生突變。由於無法接收到細胞介素的訊息,而影響NK細胞及T細胞的發育,進而影響B細胞的發育。\n【出處】單元9,16\n［出自考古第9題］"
+    "explanation": "γc (common γ)chain為許多細胞介紹受體所必須,此基因位於X染色體上,而X-SCID的患者製造γc的基因發生突變。由於無法接收到細胞介素的訊息,而影響NK細胞及T細胞的發育,進而影響B細胞的發育。\n［出自考古第9題］"
   },
   {
-    "question": "Regarding innate and adaptive immunity, which statement is NOT correct？",
+    "question": "Regarding innate and adaptive immunity, which statement is NOT correct?",
     "options": {
-      "A": "Adaptive immunity is more important than innate immunity。",
-      "B": "The initiation of innate immunity is faster than adaptive immunity。",
-      "C": "Both innate and adaptive immunity have cellular and humoral components。",
-      "D": "The innate immunity has a relatively limited diversity compared to adaptive immunity。"
+      "A": "Adaptive immunity is more important than innate immunity.",
+      "B": "The initiation of innate immunity is faster than adaptive immunity.",
+      "C": "Both innate and adaptive immunity have cellular and humoral components.",
+      "D": "The innate immunity has a relatively limited diversity compared to adaptive immunity."
     },
     "answer": "A",
-    "explanation": "(A) 見共筆 Vol.1 p.3。先天免疫比後天免疫重要。\n【出處】單元1\n［出自考古第10題］"
+    "explanation": "(A) 見共筆Vol.1 p.3。先天免疫比後天免疫重要。\n［出自考古第10題］"
   },
   {
-    "question": "Regarding monoclonal antibody, which statement is NOT correct？",
+    "question": "Regarding monoclonal antibody, which statement is NOT correct?",
     "options": {
-      "A": "The technology takes advantage of fusion between a tumor cell and antigen-specific B cell。",
-      "B": "The principle for the selection medium for the fused cells is based on metabolic pathway of amino acids。",
-      "C": "Monoclonal antibodies have been successfully used as a drug to treat cancer patients。",
-      "D": "The development of monoclonal antibody technology has received a Nobel Prize。"
+      "A": "The technology takes advantage of fusion between a tumor cell and antigen-specific B cell.",
+      "B": "The principle for the selection medium for the fused cells is based on metabolic pathway of amino acids.",
+      "C": "Monoclonal antibodies have been successfully used as a drug to treat cancer patients.",
+      "D": "The development of monoclonal antibody technology has received a Nobel Prize."
     },
     "answer": "B",
-    "explanation": "(B) 見共筆 Vol.2 p.51~52。HAT 培養基篩選缺乏 HGPRT 而無法進行核苷酸 salvage pathway 的腫瘤細胞。\n【出處】單元7\n［出自考古第11題］"
+    "explanation": "(B) 見共筆Vol.2 p.51~52。HAT培養基篩選缺乏HGPRT而無法進行核苷酸salvage pathway的腫瘤細胞。\n［出自考古第11題］"
   },
   {
-    "question": "Regarding Toll-like receptors (TLRs), which statement is NOT correct？",
+    "question": "Regarding Toll-like receptors (TLRs), which statement is NOT correct?",
     "options": {
-      "A": "TLRs are only present in the innate immune cells, such as macrophages and dendritic cells。",
-      "B": "TLRs can be expressed on the cell surface or endosome。",
-      "C": "TLR4 recognizes lipopolysaccharide, a component of Gram-negative bacteria cell wall。",
-      "D": "Signal transduction of TLR leads to production of inflammatory cytokines and type I interferons。"
+      "A": "TLRs are only present in the innate immune cells, such as macrophages and dendritic cells.",
+      "B": "TLRs can be expressed on the cell surface or endosome.",
+      "C": "TLR4 recognizes lipopolysaccharide, a component of Gram-negative bacteria cell wall.",
+      "D": "Signal transduction of TLR leads to production of inflammatory cytokines and type I interferons."
     },
     "answer": "A",
-    "explanation": "(A)見共筆 Vol.1 p.40;在B細胞中有 TLR-7, 9, 10。共筆 Vol.3 p.36,TI-1 型的抗原可活化B細胞。\n【出處】單元3\n［出自考古第12題］"
+    "explanation": "(A)見共筆Vol.1 p.40;在B細胞中有TLR-7, 9, 10。共筆Vol.3 p.36,TI-1型的抗原可活化B細胞。\n［出自考古第12題］"
   },
   {
-    "question": "Which one of the following proteins is specifically expressed in pre-B cells？",
+    "question": "Which one of the following proteins is specifically expressed in pre-B cells?",
     "options": {
-      "A": "BP-1。",
-      "B": "Btk。",
-      "C": "CD19。",
-      "D": "Kit。",
-      "E": "RAG-1。"
+      "A": "BP-1.",
+      "B": "Btk.",
+      "C": "CD19.",
+      "D": "Kit.",
+      "E": "RAG-1."
     },
     "answer": "A",
-    "explanation": "見共筆 Vol.3. p.23的圖,此圖必須背起來。\n【出處】單元7\n［出自考古第1題］"
+    "explanation": "見共筆Vol.3. p.23的圖,此圖必須背起來。\n［出自考古第1題］"
   },
   {
-    "question": "B-cell follicle provides signals necessary for B-cell survival by which of the following protein？",
+    "question": "B-cell follicle provides signals necessary for B-cell survival by which of the following protein?",
     "options": {
-      "A": "AID。",
-      "B": "BAFF。",
-      "C": "CTLA-4。",
-      "D": "Dectin-1。",
-      "E": "Ets-1。"
+      "A": "AID.",
+      "B": "BAFF.",
+      "C": "CTLA-4.",
+      "D": "Dectin-1.",
+      "E": "Ets-1."
     },
     "answer": "B",
-    "explanation": "見共筆 Vol.3 p.33,濾泡樹突細胞(FDC,follicular dendritic cell)會分泌BAFF,使 B cell 能繼續存活。\n【出處】單元7\n［出自考古第2題］"
+    "explanation": "見共筆Vol.3 p.33,濾泡樹突細胞(FDC,follicular dendritic cell)會分泌BAFF,使B cell能繼續存活。\n［出自考古第2題］"
   },
   {
-    "question": "Which is the property of follicular B cells？",
+    "question": "Which is the property of follicular B cells?",
     "options": {
-      "A": "First produced in the fetus。",
-      "B": "Main isotype secreted is IgM。",
-      "C": "Primary location is in the spleen。",
-      "D": "Requirement for T-cell help。",
-      "E": "Self-renewing。"
+      "A": "First produced in the fetus.",
+      "B": "Main isotype secreted is IgM.",
+      "C": "Primary location is in the spleen.",
+      "D": "Requirement for T-cell help.",
+      "E": "Self-renewing."
     },
     "answer": "D",
-    "explanation": "見共筆 Vol.3 p.33~34。\n(A)所指為B-1 細胞。\n(B) IgG > IgM。\n(C)應改為次級淋巴組織(MALT、淋巴結、脾臟)。\n(D)需要 $T_{FH}$ 的幫忙。\n(E)所指應是B-1 細胞的特徵。\n【出處】單元7\n［出自考古第3題］"
+    "explanation": "見共筆Vol.3 p.33~34。\n(A)所指為B-1細胞。\n(B) IgG > IgM。\n(C)應改為次級淋巴組織(MALT、淋巴結、脾臟)。\n(D)需要$T_{FH}$的幫忙。\n(E)所指應是B-1細胞的特徵。\n［出自考古第3題］"
   },
   {
     "question": "Double-negative α:β T cells with CD44+ CD25+ markers:",
     "options": {
-      "A": "DN1 cells。",
-      "B": "DN2 cells。",
-      "C": "DN3 cells。",
-      "D": "DN4 cells。"
+      "A": "DN1 cells.",
+      "B": "DN2 cells.",
+      "C": "DN3 cells.",
+      "D": "DN4 cells."
     },
     "answer": "B",
-    "explanation": "見 Vol3. p.38的圖,此圖必須背起來。\n【出處】單元8\n［出自考古第4題］"
+    "explanation": "見Vol3. p.38的圖,此圖必須背起來。\n［出自考古第4題］"
   },
   {
-    "question": "Which one of the following transcription factors is specifically expressed in CD8 single-positive cells？",
+    "question": "Which one of the following transcription factors is specifically expressed in CD8 single-positive cells?",
     "options": {
-      "A": "GATA3。",
-      "B": "KLF2。",
-      "C": "Runx3。",
-      "D": "TCF1。",
-      "E": "ThPOK。"
+      "A": "GATA3.",
+      "B": "KLF2.",
+      "C": "Runx3.",
+      "D": "TCF1.",
+      "E": "ThPOK."
     },
     "answer": "C",
-    "explanation": "見 Vol3. p.38 的圖,此圖必須背起來。其中比較特別的是 Runx3 對應 CD8, ThPOK 對應 CD4。\n【出處】單元8\n［出自考古第5題］"
+    "explanation": "見Vol3. p.38的圖,此圖必須背起來。其中比較特別的是Runx3對應CD8, ThPOK對應CD4。\n［出自考古第5題］"
   },
   {
-    "question": "Which one of following antibody mediates the sensitization for killing by NK cells？",
+    "question": "Which one of following antibody mediates the sensitization for killing by NK cells?",
     "options": {
-      "A": "IgA。",
-      "B": "IgD。",
-      "C": "IgE。",
-      "D": "IgG。",
-      "E": "IgM。"
+      "A": "IgA.",
+      "B": "IgD.",
+      "C": "IgE.",
+      "D": "IgG.",
+      "E": "IgM."
     },
     "answer": "D",
-    "explanation": "見共筆 Vol.4 p.18。NKs 上的 FcyRIII 對 IgG1 和 IgG3 的結合效果最好,結合後開始 ADCC(antibody-dependent cell-mediated cytotoxicity)。\n【出處】單元9\n［出自考古第6題］"
+    "explanation": "見共筆Vol.4 p.18。NKs上的FcyRIII對IgG1和IgG3的結合效果最好,結合後開始ADCC(antibody-dependent cell-mediated cytotoxicity)。\n［出自考古第6題］"
   },
   {
-    "question": "Different cytokines induce switching to different antibody classes. Which one of the following cytokines induces switching to IgE？",
+    "question": "Different cytokines induce switching to different antibody classes. Which one of the following cytokines induces switching to IgE?",
     "options": {
-      "A": "TGF。",
-      "B": "IFNγ。",
-      "C": "IL-21。",
-      "D": "IL-5。",
-      "E": "IL-4。"
+      "A": "TGF.",
+      "B": "IFNγ.",
+      "C": "IL-21.",
+      "D": "IL-5.",
+      "E": "IL-4."
     },
     "answer": "E",
-    "explanation": "見Vol4. p13 的圖,此圖必須背起來。\n【出處】單元9\n［出自考古第7題］"
+    "explanation": "見Vol4. p13的圖,此圖必須背起來。\n［出自考古第7題］"
   },
   {
-    "question": "Which is NOT the property of TI-1 antigen？",
+    "question": "Which is NOT the property of TI-1 antigen?",
     "options": {
-      "A": "Antibody response in infants。",
-      "B": "Antibody production in congenitally athymic individual。",
-      "C": "Antibody response in absence of all T cells。",
-      "D": "Primes T cells。",
-      "E": "Polyclonal B-cell activation。"
+      "A": "Antibody response in infants.",
+      "B": "Antibody production in congenitally athymic individual.",
+      "C": "Antibody response in absence of all T cells.",
+      "D": "Primes T cells.",
+      "E": "Polyclonal B-cell activation."
     },
     "answer": "D",
-    "explanation": "見共筆 Vol.4 p.4表格,此表格必須背起來。TI antigen (Thymus-Independent antigen)不會活化 T cells,而是直接活化 B cells。\n【出處】單元9\n［出自考古第8題］"
+    "explanation": "見共筆Vol.4 p.4表格,此表格必須背起來。TI antigen (Thymus-Independent antigen)不會活化T cells,而是直接活化B cells。\n［出自考古第8題］"
   },
   {
-    "question": "Which one of the following cell-surface molecules is NOT expressed on activated T-cells？",
+    "question": "Which one of the following cell-surface molecules is NOT expressed on activated T-cells?",
     "options": {
-      "A": "VLA-4。",
-      "B": "TCR。",
-      "C": "S1PR1。",
-      "D": "PSGL-1。",
-      "E": "LFA-1。"
+      "A": "VLA-4.",
+      "B": "TCR.",
+      "C": "S1PR1.",
+      "D": "PSGL-1.",
+      "E": "LFA-1."
     },
     "answer": "C",
-    "explanation": "見共筆 Vol.4 p.35。\n【出處】單元10\n［出自考古第9題］"
+    "explanation": "見共筆Vol.4 p.35。\n［出自考古第9題］"
   },
   {
-    "question": "Transcriptional factor FoxP3 is exclusively expressed in which subset of effector CD4+ T-cells？",
+    "question": "Transcriptional factor FoxP3 is exclusively expressed in which subset of effector CD4+ T-cells?",
     "options": {
-      "A": "$T_{H}$1 cell。",
-      "B": "$T_{H}$2 cell。",
-      "C": "$T_{H}$17 cell。",
-      "D": "$T_{FH}$ cell。",
-      "E": "Treg cell。"
+      "A": "$T_{H}1$ cell.",
+      "B": "$T_{H}2$ cell.",
+      "C": "$T_{H}17$ cell.",
+      "D": "$T_{FH}$ cell.",
+      "E": "$T_{reg}$ cell."
     },
     "answer": "E",
-    "explanation": "下方二圖必須背起來\n但不是所有 Treg 都是 FoxP3 positive. MALT 系統中,小腸部分的 Treg 多為 FoxP3 negative。\n【出處】單元10\n［出自考古第10題］"
+    "explanation": "下方二圖必須背起來\n但不是所有$T_{reg}$都是FoxP3 positive. MALT系統中,小腸部分的$T_{reg}$多為FoxP3 negative。\n［出自考古第10題］"
   },
   {
-    "question": "Lymphocyte entry into lymphoid tissues depends on chemokines and adhesion molecules. Which action is NOT happening？",
+    "question": "Lymphocyte entry into lymphoid tissues depends on chemokines and adhesion molecules. Which action is NOT happening?",
     "options": {
-      "A": "Activation。",
-      "B": "Adhesion。",
-      "C": "Anergy。",
-      "D": "Diapedesis。",
-      "E": "Rolling。"
+      "A": "Activation.",
+      "B": "Adhesion.",
+      "C": "Anergy.",
+      "D": "Diapedesis.",
+      "E": "Rolling."
     },
     "answer": "B",
-    "explanation": "(C) Activated by CCL19 and CCL21 through CCR7, adhesion to the endothelium through LFA-1-ICAM-1 interaction, rolling by selectin-addressin interaction, and then diapedesis by CCL21 and CXL12。Anergy 指的是免疫失能,是對自體抗原有反應的 T/B cell 可能走的途徑。\n【出處】單元10\n［出自考古第11題］"
+    "explanation": "(C) Activated by CCL19 and CCL21 through CCR7, adhesion to the endothelium through LFA-1-ICAM-1 interaction, rolling by selectin-addressin interaction, and then diapedesis by CCL21 and CXL12。Anergy指的是免疫失能,是對自體抗原有反應的T/B cell可能走的途徑。\n［出自考古第11題］"
   },
   {
-    "question": "Which is NOT the cytotoxic effector molecule released by activated CD8+ T-cells？",
+    "question": "Which is NOT the cytotoxic effector molecule released by activated CD8+ T-cells?",
     "options": {
-      "A": "Perforin。",
-      "B": "Histamine。",
+      "A": "Perforin.",
+      "B": "Histamine.",
       "C": "Granzyme B",
-      "D": "Granulysin。",
-      "E": "Fas ligand。"
+      "D": "Granulysin.",
+      "E": "Fas ligand."
     },
     "answer": "A",
-    "explanation": "(A)(C) 與 pore formation、intrinsic apoptotic pathway 相關。\n(D)會促進 apoptosis,pathway不明。\n(E)會與 Fas 結合,導致extrinsic apoptotic pathway。\n【出處】單元10\n［出自考古第12題］"
+    "explanation": "(A)(C) 與pore formation、intrinsic apoptotic pathway相關。\n(D)會促進apoptosis,pathway不明。\n(E)會與Fas結合,導致extrinsic apoptotic pathway。\n［出自考古第12題］"
   },
   {
     "question": "All of the following are utilized in the binding of antibodies to antigens except:",
     "options": {
-      "A": "Hydrogen bonding。",
-      "B": "Interchain disulfide bonds。",
-      "C": "Hydrophobic interactions。",
-      "D": "Electrostatic forces (salt bridges)。",
-      "E": "Van der Waals interactions。"
+      "A": "Hydrogen bonding.",
+      "B": "Interchain disulfide bonds.",
+      "C": "Hydrophobic interactions.",
+      "D": "Electrostatic forces (salt bridges).",
+      "E": "Van der Waals interactions."
     },
     "answer": "B",
-    "explanation": "Antigen-antibody complex formed by non-covalent forces: electrostatic forces, hydrogen bonds, van der waals forces, hydrophobic forces and cation-pi interaction。\n【出處:共筆 Vol. 2單元五p.1】\n［出自考古第1題］"
+    "explanation": "Antigen-antibody complex formed by non-covalent forces: electrostatic forces, hydrogen bonds, van der waals forces, hydrophobic forces and cation-pi interaction。\n［出自考古第1題］"
   },
   {
     "question": "_____、_____ and _____ are the three most abundant antibodies in blood:",
     "options": {
-      "A": "IgA, IgD and IgE。",
-      "B": "IgA, IgE and IgG。",
-      "C": "IgA, IgG and IgM。",
-      "D": "IgE, IgG and IgM。",
-      "E": "IgD, IgE and IgM。"
+      "A": "IgA, IgD and IgE.",
+      "B": "IgA, IgE and IgG.",
+      "C": "IgA, IgG and IgM.",
+      "D": "IgE, IgG and IgM.",
+      "E": "IgD, IgE and IgM."
     },
     "answer": "C",
-    "explanation": "血液中最主要的抗體是 IgG (14.5mg/ml)、IgA(2.1mg/ml)和 IgM (1.5mg/ml)。\n【出處:共筆 Vol. 4 單元 9 p.14下方表格】\n［出自考古第2題］"
+    "explanation": "血液中最主要的抗體是IgG (14.5mg/ml)、IgA(2.1mg/ml)和IgM (1.5mg/ml)。\n［出自考古第2題］"
   },
   {
     "question": "Which of the following migrates from non-mucosal tissue to draining lymph nodes to facilitate the induction of adaptive immune responses?",
     "options": {
-      "A": "Dendritic cells。",
-      "B": "Macrophages。",
-      "C": "NK cells。",
-      "D": "Neutrophils。",
-      "E": "Commensal microorganisms。"
+      "A": "Dendritic cells.",
+      "B": "Macrophages.",
+      "C": "NK cells.",
+      "D": "Neutrophils.",
+      "E": "Commensal microorganisms."
     },
     "answer": "A",
-    "explanation": "When an infection occurs in a tissue such as the skin (non-mucosal tissue), free antigen and antigen bearing dendritic cells travel from the site of infection through the afferent lymphatic vessels into the draining lymph nodes. (Janeway 9th edition CH1-16)\n【出處:Janeway 9th edition CH12 P.504,單元11】\n［出自考古第3題］"
+    "explanation": "When an infection occurs in a tissue such as the skin (non-mucosal tissue), free antigen and antigen bearing dendritic cells travel from the site of infection through the afferent lymphatic vessels into the draining lymph nodes。\n［出自考古第3題］"
   },
   {
     "question": "All of the following induce fever except:",
     "options": {
-      "A": "IL-12。",
-      "B": "IL-6。",
-      "C": "IL-1。",
-      "D": "TNF-α。"
+      "A": "IL-12.",
+      "B": "IL-6.",
+      "C": "IL-1.",
+      "D": "TNF-α."
     },
     "answer": "A",
-    "explanation": "(A) IL-12:活化 NK、誘使 $CD4^+$ T細胞分化成 $T_{H}$1-like 細胞。\n(B)(C)(D) 急性期發炎反應之細胞介素包含 IL-1、IL-6、IL-8、TNF-α。\n【出處:共筆 Vol.4 p.48】\n［出自考古第4題］"
+    "explanation": "(A) IL-12:活化NK、誘使CD4 T細胞分化成$T_{H}1$-like 細胞。\n(B)(C)(D) 急性期發炎反應之細胞介素包含IL-1、IL-6、IL-8、TNF-α。\n［出自考古第4題］"
   },
   {
-    "question": "Match the term in Column A with its description in Column B (1 point each):\nColumn A\na. Complementarity-determining regions\nb. Isotype switching\nc. Opsonization\nd. Somatic hypermutation\ne. Somatic recombination\nColumn B\n1. The rearrangement of V, D and J segments to form an immunoglobulin.\n2. Parts of the V domains of immunoglobulin and T cell receptors that determine their antigen specificity.\n3. Change of immunoglobulin class but preservation of antigen specificity.\n4. Nucleotide changes in variable regions of immunoglobulin genes affecting affinity for antigen.\n5. Enhancement of receptor-mediated phagocytosis of immunoglobulin-coated antigen.",
+    "question": "Match the term in Column A with its description in Column B",
     "options": {
       "A": "a-2, b-3, c-5, d-4, e-1",
-      "B": "a-2, b-3, c-1, d-4, e-5",
-      "C": "a-3, b-2, c-5, d-4, e-1",
-      "D": "a-2, b-1, c-5, d-4, e-3",
-      "E": "a-5, b-3, c-2, d-4, e-1"
+      "B": "a-2, b-3, c-4, d-5, e-1",
+      "C": "a-2, b-1, c-5, d-4, e-3",
+      "D": "a-2, b-3, c-1, d-4, e-5",
+      "E": "a-1, b-3, c-5, d-4, e-2"
     },
     "answer": "A",
-    "explanation": "(A)【出處:共筆 Vol.2 單元 4 p.7】在 heavy chain 和 light chain 上各有三個 hypervariable regions,位於不同地方的hypervariable sequence 在摺疊起來之後形成在 domain 最外層並列的構造,這些構造就是抗體能和抗原結合的位置,稱之為 complementarity-determining regions (CDRs)。CDRs 在 immunoglobulins 和 BCR 中作為高度變異性的區域,不同的變異可以使結合位結合不同抗原,增加辨識抗原的 repertoire。\n(B) 【出處:共筆 Vol.2 單元 4p.11】Isotype switching 指的是 B cells 受到刺激時,改變產生的 immunoglobulin 種類的現象\n(C) 【出處:共筆 Vol.4 單元9p.1】調理(Opsonization)是指抗體或補體修飾病源體的表面,使吞噬細胞更容易辨認並吞噬\n(D)【出處:共筆 Vol.4 單元 11 p.11】轉錄時在 V-region 發生突變點,因而轉譯出不同的蛋白質,並經由篩選的過程,對抗原親和力越高的越容易保留。\n(E) 【出處:單元4p.9 圖左】Somatic recombination 泛指發生在體細胞的基因重組,其中包含B細胞和T細胞的 VDJ 重組和免疫球蛋白的 Class Switch Recombination(五種抗體之間的轉換),所以答案是 The rearrangement of V, D and J segments to form an immunoglobulin。\n［出自考古第5題］"
+    "explanation": "(A)【出自考古第5題】在heavy chain 和 light chain 上各有三個hypervariable regions,位於不同地方的hypervariable sequence在摺疊起來之後形成在domain最外層並列的構造,這些構造就是抗體能和抗原結合的位置,稱之為complementarity-determining regions (CDRs)。CDRs在immunoglobulins和BCR中作為高度變異性的區域,不同的變異可以使結合位結合不同抗原,增加辨識抗原的 repertoire。\n(B) 【出自考古第5題】Isotype switching指的是B cells 受到刺激時,改變產生的immunoglobulin種類的現象\n(C) 【出自考古第6題】調理(Opsonization)是指抗體或補體修飾病源體的表面,使吞噬細胞更容易辨認並吞噬\n(D)【出自考古第6題】轉錄時在V-region發生突變點,因而轉譯出不同的蛋白質,並經由篩選的過程,對抗原親和力越高的越容易保留。\n(E) 【出自考古第6題】Somatic recombination泛指發生在體細胞的基因重組,其中包含B細胞和T細胞的VDJ重組和免疫球蛋白的Class Switch Recombination(五種抗體之間的轉換),所以答案是The rearrangement of V, D and J segments to form an immunoglobulin。\n［出自考古第5題］"
   },
   {
-    "question": "Whether each of the following statements regarding T cells is true (T) or false (F)? (1 point each)\nA. T cells and B cells recognize the same types of antigen.\nB. T cells and B cells require MHC molecules for the recognition of peptide antigens.\nC. T cells require an accessory cell called an antigen-presenting cell, which bears MHC molecules on its surface.\nD. T-cell receptor and immunoglobulin genes are encoded on the MHC.\nE. The T-cell receptor has structural similarity to an immunoglobulin Fab fragment.",
+    "question": "Whether each of the following statements regarding T cells is true (T) or false (F)?",
     "options": {
       "A": "FFTFT",
-      "B": "FTFTF",
-      "C": "TFFTF",
-      "D": "TFTFF",
+      "B": "TFTFT",
+      "C": "FTFTF",
+      "D": "TTFTF",
       "E": "FTTFF"
     },
     "answer": "A",
-    "explanation": "(A)抗體可以辨識多種類型(多醣、蛋白質等)的抗原,而T細胞受體只能辨識呈現在 MHC 分子上的多肽鏈。【出處:共筆 Vol. 2 P.1 & P.21】\n(B)抗體可以辨識在體內循環的游離抗原,但T細胞無法被游離抗原活化,只能辨識經過 MHC 分子呈現的抗原。【出處:共筆 Vol. 2 P.1 & P.21】\n(C)同(B)。\n(D)TCR、免疫球蛋白、MHC 三者基因都是分離的。\n(E) TCR 和免疫球蛋白的 Fab相似。【出處:共筆 Vol. 2 P.19】\n［出自考古第6題］"
+    "explanation": "(A)抗體可以辨識多種類型(多醣、蛋白質等)的抗原,而T細胞受體只能辨識呈現在MHC分子上的多肽鏈。【出自考古第6題】\n(B)抗體可以辨識在體內循環的游離抗原,但T細胞無法被游離抗原活化,只能辨識經過MHC分子呈現的抗原。【出自考古第6題】\n(C)同(B)。\n(D)TCR、免疫球蛋白、MHC三者基因都是分離的。\n(E) TCR和免疫球蛋白的Fab相似。【出自考古第6題】\n［出自考古第6題］"
   },
   {
     "question": "During infection, the acute phase response can be triggered by inflammation. All of the following proteins are produced and released into the serum except:",
     "options": {
-      "A": "Complement components。",
-      "B": "C-reactive protein。",
-      "C": "IL-23。",
-      "D": "Coagulation protein。",
-      "E": "Protease inhibitors。"
+      "A": "Complement components.",
+      "B": "C-reactive protein.",
+      "C": "IL-23.",
+      "D": "Coagulation protein.",
+      "E": "Protease inhibitors."
     },
     "answer": "C",
-    "explanation": "(A)【出處:共筆 Vol.1 單元2p.27】Mannose-binding lectin (MBL)是由肝臟製造的急性反應蛋白(APP),可引發補體反應\n(B)【出處:單元3 p.47】C-reactive protein 是肝臟製造的急性反應蛋白\n(C)【出處:單元12 p.39】IL-23 is responsible for the 3rd signal to induce T-cell differentiation. 中心概念: The proteins induced by TNF-α, IL-1β, and IL-6 are called the acute-phase proteins.\n(D)【出處:單元 3 p.47 圖】IL-6 作用於肝細胞,增加血纖維蛋白原 (fibrinogen)的合成,此即凝血功能(coagulation)相關蛋白。\n(E) 【出處:單元2p.34】C1INH(C1 inhibitor):補體之負向調節物。一般細胞上存在的一種 Protease inhibitor,它藉由模仿 Clr、Cls的受質,阻止Clr、Cls 附著到 C1q上。為一種acute-phase protein(維基百科)。\n［出自考古第7題］"
+    "explanation": "(A)【出自考古第7題】Mannose-binding lectin (MBL)是由肝臟製造的急性反應蛋白(APP),可引發補體反應\n(B)【出自考古第7題】C-reactive protein 是肝臟製造的急性反應蛋白\n(C)【出自考古第7題】IL-23 is responsible for the 3rd signal to induce T-cell differentiation. 中心概念: The proteins induced by TNF-α, IL-1β, and IL-6 are called the acute-phase proteins.\n(D)【出自考古第7題】IL-6作用於肝細胞,增加血纖維蛋白原(fibrinogen)的合成,此即凝血功能(coagulation)相關蛋白。\n(E) 【出自考古第7題】C1INH(C1 inhibitor):補體之負向調節物。一般細胞上存在的一種Protease inhibitor,它藉由模仿Clr、Cls的受質,阻止Clr、Cls附著到C1q上。為一種acute-phase protein(維基百科)。\n［出自考古第7題］"
   },
   {
     "question": "Which of the following is NOT associated with mobilization of neutrophils to infected tissue?",
     "options": {
-      "A": "TNF-α production by macrophages。",
-      "B": "Upregulation of selectins on blood vessel endothelium。",
-      "C": "Interferon response。",
-      "D": "Generation of a chemokine (CXCL8) gradient。",
-      "E": "Extravasation across endothelium。"
+      "A": "TNF-α production by macrophages.",
+      "B": "Upregulation of selectins on blood vessel endothelium.",
+      "C": "Interferon response.",
+      "D": "Generation of a chemokine (CXCL8) gradient.",
+      "E": "Extravasation across endothelium."
     },
     "answer": "C",
-    "explanation": "(A)TNF-α可使血管通透性增加,再配合趨化因子可吸引嗜中性球從血管跑進組織吞噬細菌。【出處:共筆 Vol.1 單元3P.46】\n(B)血管內皮細胞上的 E-selectin 可以與嗜中性球上的醣受質鍵結,使得嗜中性球可以抓著血管內皮管壁滾動。【出處:Janeway's Immunobiology 9e Fig 3.31 (P. 117)】\n(C)干擾素主要是與抗病毒蛋白的合成、抑制 $T_{H}$2、啟動 $T_{H}$1 等等有關,而與嗜中性球的移動無關。\n(D) $T_{H}$17所分泌的 CXCL8 與 CXCL2 可以做為趨化因子招募嗜中性球。【出處:共筆 Vol. 4單元11 P.51】\n(E) Extravasation(外滲)指的就是白血球從血管中離開的這個過程。\n［出自考古第8題］"
+    "explanation": "(A)TNF-α可使血管通透性增加,再配合趨化因子可吸引嗜中性球從血管跑進組織吞噬細菌。【出自考古第8題】\n(B)血管內皮細胞上的E-selectin可以與嗜中性球上的醣受質鍵結,使得嗜中性球可以抓著血管內皮管壁滾動。【出自考古第8題】\n(C)干擾素主要是與抗病毒蛋白的合成、抑制$T_{H}2$、啟動$T_{H}1$等等有關,而與嗜中性球的移動無關。\n(D) $T_{H}17$所分泌的CXCL8與CXCL2可以做為趨化因子招募嗜中性球。【出自考古第8題】\n(E) Extravasation (外滲)指的就是白血球從血管中離開的這個過程。\n［出自考古第8題］"
   },
   {
     "question": "Which of the following is INCORRECT?",
     "options": {
-      "A": "Type I interferons inhibit the replication of viruses。",
-      "B": "IL-1 and TNF-α together with TGF-β promote the development of $CD4^+$$T_{H}$17 cells。",
-      "C": "DCs producing IL-12 promotes $T_{H}$1 response。",
-      "D": "Macrophage is activated by $T_{H}$2 cytokine IL-4。",
-      "E": "$CD4^+$$CD25^+$ regulatory T cells suppress activation of naive T cells。"
+      "A": "Type I interferons inhibit the replication of viruses.",
+      "B": "IL-1 and TNF-α together with TGF-β promote the development of CD4+ $T_{H}17$ cells.",
+      "C": "DCs producing IL-12 promotes $T_{H}1$ response.",
+      "D": "Macrophage is activated by $T_{H}2$ cytokine IL-4.",
+      "E": "CD4+ CD25+ regulatory T cells suppress activation of naive T cells."
     },
     "answer": "B",
-    "explanation": "(A) type I interferon 即為 antiviral interferon\n(B)(共筆 Vol.4 單元 11 p.47)IL-1、IL-6、IL-23、TGF-β 促使初始T細胞分化為$T_{H}$17。\n(C)(共筆 Vol.4單元 11 p.47) IL-12促使初始T細胞分化為$T_{H}$1。\n(D)(共筆 Vol.4單元 11 p.47) M1 macrophage 是由 $T_{H}$1 分泌的IFN-γ活化,但 M2 macrophage 是由 $T_{H}$2 分泌的IL-4 活化。\n(E)(共筆 Vol.4單元 10 p.37、38)Treg會抑制樹突細胞的功能,進而抑制免疫反應。根據維基百科,目前被研究得最透徹的就是 $CD4^+$$CD25^+$的 Treg。\n［出自考古第9題］"
+    "explanation": "(A) type I interferon 即為 antiviral interferon\n(B)(共筆Vol.4 單元 11 p.47)IL-1、IL-6、IL-23、TGF-β 促使初始T細胞分化為$T_{H}17$。\n(C)(共筆Vol.4單元 11 p.47) IL-12促使初始T細胞分化為$T_{H}1$。\n(D)(共筆Vol.4單元 11 p.47) M1 macrophage 是由$T_{H}1$分泌的IFN-γ活化,但M2 macrophage 是由$T_{H}2$分泌的IL-4活化。\n(E)(共筆Vol.4單元 10 p.37、38) $T_{reg}$會抑制樹突細胞的功能,進而抑制免疫反應。根據維基百科,目前被研究得最透徹的就是CD4+$CD25^+$的$T_{reg}$。\n［出自考古第9題］"
   },
   {
     "question": "Which of the following statements about “X-linked hyper IgM syndrome” is incorrect:",
     "options": {
-      "A": "This immunodeficiency affects both B cell and T cell。",
-      "B": "There is a defect in CD40L, a critical molecule expressed on T cells。",
-      "C": "Because CD40-CD40L is important for B cell class-switching, IgM is increased and IgG is decreased。",
-      "D": "Patients are usually asymptomatic and only develops opportunistic infection。",
-      "E": "Besides extracellular bacteria, protection against intracellular pathogen is also impaired。"
+      "A": "This immunodeficiency affects both B cell and T cell.",
+      "B": "There is a defect in CD40L, a critical molecule expressed on T cells.",
+      "C": "Because CD40-CD40L is important for B cell class-switching, IgM is increased and IgG is decreased.",
+      "D": "Patients are usually asymptomatic and only develops opportunistic infection.",
+      "E": "Besides extracellular bacteria, protection against intracellular pathogen is also impaired."
     },
     "answer": "D",
-    "explanation": "X-linked Hyper IgM syndrome (HIGM1):\n(A) caused by mutation in the CD40L gene in T cell.\n(B) no development of germinal center (main site where class switch occurs).\n(C) low level of IgA/IgG; normal/high level of IgM.\n【出處】單元13\n［出自考古第1題］"
+    "explanation": "X-linked Hyper IgM syndrome (HIGM1):\n(A) caused by mutation in the CD40L gene in T cell.\n(B) no development of germinal center (main site where class switch occurs).\n(C) low level of IgA/IgG; normal/high level of IgM。\n［出自考古第1題］"
   },
   {
     "question": "Which of the following statements about influenza virus is incorrect?",
     "options": {
-      "A": "Severe epidemic is caused by antigenic drift。",
-      "B": "Influenza is an RNA virus。",
-      "C": "Low fidelity of RNA polymerase cause mutations in antigenic drift。",
-      "D": "Influenza does not integrate its genome into host DNA。",
-      "E": "Influenza virus is smaller than other larger DNA viruses。"
+      "A": "Severe epidemic is caused by antigenic drift.",
+      "B": "Influenza is an RNA virus.",
+      "C": "Low fidelity of RNA polymerase cause mutations in antigenic drift.",
+      "D": "Influenza does not integrate its genome into host DNA.",
+      "E": "Influenza virus is smaller than other larger DNA viruses."
     },
     "answer": "A",
-    "explanation": "(Janeway 9th edition CH13-13)\nEvery 2-3 years a variant flu virus arises with mutations that allow it to evade neutralization by the antibodies present in the population. Other mutations may affect epitopes in viral proteins that are recognized by T cells, particularly CD8 cytotoxic T cells, with the consequence that cells infected with the mutant virus also escape destruction. People immune to the old flu virus are thus susceptible to the new variant, but because the changes in the viral proteins are relatively minor, there is still some cross-reaction with antibodies and memory T cells produced against the previous variant, and most of the population still has some level of immunity. Thus, epidemics resulting from antigenic drift are typically mild.\n【出處】單元13\n［出自考古第2題］"
+    "explanation": "(Janeway 9th edition CH13-13)\nEvery 2-3 years a variant flu virus arises with mutations that allow it to evade neutralization by the antibodies present in the population. Other mutations may affect epitopes in viral proteins that are recognized by T cells, particularly CD8 cytotoxic T cells, with the consequence that cells infected with the mutant virus also escape destruction. People immune to the old flu virus are thus susceptible to the new variant, but because the changes in the viral proteins are relatively minor, there is still some cross-reaction with antibodies and memory T cells produced against the previous variant, and most of the population still has some level of immunity. Thus, epidemics resulting from antigenic drift are typically mild。\n［出自考古第2題］"
   },
   {
     "question": "Which of the following immunodeficiency has no B, T and NK cells in both mice and human?",
     "options": {
-      "A": "RAG1 deficiency。",
-      "B": "RAG2 deficiency。",
-      "C": "IL-7 receptor deficiency。",
-      "D": "Artemis deficiency。",
-      "E": "ADA deficiency (B98 MT II, B92 MT III)。"
+      "A": "RAG1 deficiency.",
+      "B": "RAG2 deficiency.",
+      "C": "IL-7 receptor deficiency.",
+      "D": "Artemis deficiency.",
+      "E": "ADA deficiency (B98 MT II, B92 MT III)."
     },
     "answer": "E",
-    "explanation": "【出處】單元16\nDeficiency | T cells | B cells | NK cells\nRAG1/2 | X | X | O\nIL-7 receptor | X | O (in human) | O\nArtemis | X | X | O\nADA | X | X | X\n［出自考古第3題］"
+    "explanation": "Deficiency      T cells   B cells   NK cells\nRAG1/2        X         X         O\nIL-7 receptor   X         O (in human) O\nArtemis        X         X         O\nADA            X         X         X\n［出自考古第3題］"
   },
   {
     "question": "Which of the following statement about adoptive T cell therapy for cancer is incorrect?",
     "options": {
-      "A": "Endogenous T cells specific for tumor antigen can be expanded for transfusion in patients。",
-      "B": "TCR gene transfer can produce different T cells with the same antigen specificity。",
-      "C": "CAR-T cell therapy has been successful in treating haematological cancers。",
-      "D": "CAR-T cells are not genetically modified T cells。",
-      "E": "Quantity of infused T cells is as important as quantity of cell products。"
+      "A": "Endogenous T cells specific for tumor antigen can be expanded for transfusion in patients.",
+      "B": "TCR gene transfer can produce different T cells with the same antigen specificity.",
+      "C": "CAR-T cell therapy has been successful in treating haematological cancers.",
+      "D": "CAR-T cells are not genetically modified T cells.",
+      "E": "Quantity of infused T cells is as important as quantity of cell products."
     },
     "answer": "D",
-    "explanation": "(Janeway 9th edition CH16-16)\nAnother form of adoptive immunotherapy also uses retroviruses to introduce genes into a patient's T cells, but involves expressing a novel type of receptor, known as a chimeric antigen receptor T-cell immunotherapy: CARs are fusion receptors that contain extracellular antigen-specific domains fused to intracellular domains that provide signals for activation and co-stimulation. These receptors are introduced into T cells via retroviral vectors to produce so-called CAR T cells. This approach differs from conventional adoptive T-cell therapies as the use of a CAR allows the T cell's target specificity to be almost any molecule recognizable by an antibody rather than just peptide:MHC complexes.\n【出處】單元16\n［出自考古第4題］"
+    "explanation": "(Janeway 9th edition CH16-16)\nAnother form of adoptive immunotherapy also uses retroviruses to introduce genes into a patient's T cells, but involves expressing a novel type of receptor, known as a chimeric antigen receptor T-cell immunotherapy: CARs are fusion receptors that contain extracellular antigen-specific domains fused to intracellular domains that provide signals for activation and co-stimulation. These receptors are introduced into T cells via retroviral vectors to produce so-called CAR T cells. This approach differs from conventional adoptive T-cell therapies as the use of a CAR allows the T cell's target specificity to be almost any molecule recognizable by an antibody rather than just peptide:MHC complexes。\n［出自考古第4題］"
   },
   {
     "question": "About immune checkpoint therapy, which one is incorrect?",
     "options": {
-      "A": "It works by activating exhausted tumor-infiltrating T cells。",
-      "B": "Tumor's PD-L1 expression can be used to predict responsiveness toward therapy。",
-      "C": "Tumor with high mutation burden are usually more immunogenic thus more responsive。",
-      "D": "Tumor cells express not only PD-1 but other inhibitory molecules。",
-      "E": "Combination treatment of adoptive T cell therapy with checkpoint blockade is synergistic。"
+      "A": "It works by activating exhausted tumor-infiltrating T cells.",
+      "B": "Tumor's PD-L1 expression can be used to predict responsiveness toward therapy.",
+      "C": "Tumor with high mutation burden are usually more immunogenic thus more responsive.",
+      "D": "Tumor cells express not only PD-1 but other inhibitory molecules.",
+      "E": "Combination treatment of adoptive T cell therapy with checkpoint blockade is synergistic."
     },
     "answer": "D",
-    "explanation": "(Janeway 9th edition CH16-19)\nPatients with metastatic melanoma who were treated with ipilimumab showed an increase in the number and activity of T cells recognizing NY-ESO-1, a cancer-testis antigen expressed by melanoma. Another checkpoint involves the inhibitory receptor PD-1 and its ligands PD-L1 and PD-L2.\n(D)腫瘤細胞表現的應該是 PD-L1,而不是 PD-1\n【出處】單元16\n［出自考古第5題］"
+    "explanation": "(Janeway 9th edition CH16-19)\nPatients with metastatic melanoma who were treated with ipilimumab showed an increase in the number and activity of T cells recognizing NY-ESO-1, a cancer-testis antigen expressed by melanoma. Another checkpoint involves the inhibitory receptor PD-1 and its ligands PD-L1 and PD-L2.\n(D)腫瘤細胞表現的應該是PD-L1,而不是PD-1\n［出自考古第5題］"
   },
   {
-    "question": "Matching: pick up the right answer from the below list. (single choice, 1 point each)\n(1) Anaphylaxis\n(2) Tuberculin test\n(3) Stevens Johnson syndrome\n(4) Mismatched blood transfusion",
+    "question": "Matching: pick up the right answer from the below list.",
     "options": {
       "A": "AFFB",
-      "B": "Der P",
-      "C": "A",
-      "D": "4/9/1/15",
-      "E": "B"
+      "B": "AFCF",
+      "C": "AFFC",
+      "D": "AEEB",
+      "E": "AEFB",
+      "F": "AFFF",
+      "G": "AAFB"
     },
     "answer": "A",
-    "explanation": "(1) 全身無防禦性過敏休克:為全身性的立即性過敏反應,是最嚴重的一種過敏反應。發生於循環系統,血壓降低,絕大部分原因是藥物、毒素來的。病人常常來不及做出反應即休克、死亡。主要由 IgE 接上游離抗原產生,屬於 Type I hypersensitivity\n(2) Tuberculin test(結核菌素測驗)為測試受試者是否曾罹患或者正受到結核菌的感染的一種測試法。將少量結核菌的成分注射到皮下組織,如果受試者有感染或者是打過卡介苗,經過 48-72 小時以後可以看到明顯的鼓脹紅斑,藉由測量直徑可以判別陽陰性。屬於 Type IV hypersensitivity\n(3) Stevens-Johnson syndrome 是一個嚴重的皮膚過敏性疾病,臨床上常發生於病人對藥物的過敏反應,嚴重可能致死。先前在東亞人種的研究發現 HLA-B*1502 和對藥物 carbamazepine (CBZ)引起的 Steven-Johnson syndrome 有強烈相關,目前遺傳諮詢或是用藥前同意書都會調查是否帶有 HLA-B*1502的 allele。另外 HLA-B*5801 在歐洲人種的研究中被發現與藥物 allopurinol 有關。屬於 Type IV hypersensitivity\n(4) Type II hypersensitivity 是由於 IgG 接上細胞表面上的抗原引發補體系統與吞噬作用破壞細胞,輸錯血型造成溶血性貧血即是屬於此類。\n【出處】單元13\n［出自考古第1題］"
+    "explanation": "(1) 全身無防禦性過敏休克:為全身性的立即性過敏反應,是最嚴重的一種過敏反應。發生於循環系統,血壓降低,絕大部分原因是藥物、毒素來的。病人常常來不及做出反應即休克、死亡。主要由IgE接上游離抗原產生,屬於Type I hypersensitivity\n(2) Tuberculin test(結核菌素測驗)為測試受試者是否曾罹患或者正受到結核菌的感染的一種測試法。將少量結核菌的成分注射到皮下組織,如果受試者有感染或者是打過卡介苗,經過48-72小時以後可以看到明顯的鼓脹紅斑,藉由測量直徑可以判別陰陽性。屬於Type IV hypersensitivity\n(3) Stevens-Johnson syndrome 是一個嚴重的皮膚過敏性疾病,臨床上常發生於病人對藥物的過敏反應,嚴重可能致死。先前在東亞人種的研究發現HLA-B*1502 和對藥物carbamazepine (CBZ)引起的Steven-Johnson syndrome有強烈相關,目前遺傳諮詢或是用藥前同意書都會調查是否帶有HLA-B*1502的allele。另外HLA-B*5801在歐洲人種的研究中被發現與藥物allopurinol有關。屬於Type IV hypersensitivity\n(4) Type II hypersensitivity 是由於IgG接上細胞表面上的抗原引發補體系統與吞噬作用破壞細胞,輸錯血型造成溶血性貧血即是屬於此類。\n［出自考古第1題］"
   },
   {
-    "question": "What is the most common allergen in patients with allergy？",
+    "question": "What is the most common allergen in patients with allergy?",
     "options": {
-      "A": "塵蟎(dust mite)。",
-      "B": "花粉。",
-      "C": "貓毛。",
-      "D": "塵土。",
-      "E": "狗毛。"
-    },
-    "answer": "B",
-    "explanation": "塵蟎(dust mite)。\n【出處】單元13\n［出自考古第2題］"
-  },
-  {
-    "question": "Which of the following gene is found to be highly associated with the autoimmune disease anykylosin spondylitis (AS)？",
-    "options": {
-      "A": "HLA-B27。",
-      "B": "RORYT。",
-      "C": "CTLA4。",
-      "D": "Foxp-3。",
-      "E": "IFN-γ。"
+      "A": "Der P",
+      "B": "Cat dander",
+      "C": "Pollen",
+      "D": "Mold",
+      "E": "Food"
     },
     "answer": "A",
-    "explanation": "HLA-B27 與 ankylosing spondylitis(僵直性脊椎炎)的相對風險(relative risk)高達87.4,所以在臨床檢查上若 HLA-B27 為陽性,則相對風險比不帶此 allele 的人高。\n【出處】單元15\n［出自考古第3題］"
+    "explanation": "塵蟎(dust mite)。\n［出自考古第2題］"
   },
   {
-    "question": "For each of the following select the most appropriate characteristic listed below.\nA. Multiple sclerosis.\nB. Insulin dependent diabetes mellitus (IDDM).\nC. Myathenia gravis.\nD. The scientist who discovered MHC restriction and won Nobel prize.",
+    "question": "Which of the following gene is found to be highly associated with the autoimmune disease anykylosin spondylitis (AS)?",
+    "options": {
+      "A": "HLA-B27.",
+      "B": "RORYT.",
+      "C": "CTLA4.",
+      "D": "Foxp-3.",
+      "E": "IFN-γ."
+    },
+    "answer": "A",
+    "explanation": "HLA-B27與ankylosing spondylitis(僵直性脊椎炎)的相對風險(relative risk)高達87.4,所以在臨床檢查上若HLA-B27為陽性,則相對風險比不帶此allele的人高。\n［出自考古第3題］"
+  },
+  {
+    "question": "For each of the following select the most appropriate characteristic listed below.",
     "options": {
       "A": "4/9/1/15",
-      "B": "12/9/8/16",
+      "B": "4/8/1/15",
       "C": "1/9/4/15",
-      "D": "4/9/8/15",
-      "E": "1/9/8/15"
+      "D": "4/9/15/1",
+      "E": "5/9/1/15"
     },
     "answer": "B",
-    "explanation": "(A) Multiple sclerosis 多發性硬化症,self-reactive T cell 的目標是 CNS 裡的蛋白質,包含 myelin basic protein (MBP)。經過發炎反應後最終導致神經脫鞘(demyelination),影響神經的信號傳遞,以致多部位的僵硬或喪失功能。\n(B)第一型糖尿病是由於免疫系統攻擊胰臟內的 β cell。\n(C)MG(重症肌無力)是由於自體抗原結合肌肉乙醯膽鹼受器(acetylcholine receptor),導致肌肉無力\n(D)全名是 Peter Doherty (Nobel Prize 1996),13.的 B.Banaceraff是發現 MHC 基因\n【出處】單元15, 1\n［出自考古第4題］"
+    "explanation": "(A) Multiple sclerosis 多發性硬化症,self-reactive T cell的目標是CNS裡的蛋白質,包含myelin basic protein (MBP)。經過發炎反應後最終導致神經脫鞘(demyelination),影響神經的信號傳遞,以致多部位的僵硬或喪失功能。\n(B)第一型糖尿病是由於免疫系統攻擊胰臟內的β cell。\n(C)MG(重症肌無力)是由於自體抗原結合肌肉乙醯膽鹼受器(acetylcholine receptor),導致肌肉無力\n(D)全名是Peter Doherty (Nobel Prize 1996),15.的B.Banaceraff是發現MHC基因\n［出自考古第4題］"
   },
   {
     "question": "You cross two inbred strain mice A and B to have F1, then you further cross these F1 to generate F2. If you transplant the skin graft from parent A to one of the F2 mice, what will be the chance the skin graft is accepted?",
     "options": {
-      "A": "100%。",
-      "B": "75% (Bb98 Final, B96 MT II, B95 MT II, B92 MT III)。",
-      "C": "50%。",
-      "D": "25%。",
-      "E": "0%。"
+      "A": "100%.",
+      "B": "75% (Bb98 Final, B96 MT II, B95 MT II, B92 MT III).",
+      "C": "50%.",
+      "D": "25%.",
+      "E": "0%."
     },
     "answer": "B",
-    "explanation": "F1 基因型 AB\nF2 基因型有四種可能:AA BB AB BA\n將親代(AA)移植到第二子代,只要子代有 A的 allele 就不會排斥因此接受率達 75%\n[圖片 The laws of transplantation]\n【出處】單元15\n［出自考古第5題］"
+    "explanation": "F1 基因型 AB\nF2 基因型有四種可能:AABB AB BA\n將親代(AA)移植到第二子代,只要子代有A的allele 就不會排斥因此接受率達75%\n［出自考古第5題］"
   },
   {
     "question": "Which one is NOT the feature of good vaccine?",
     "options": {
-      "A": "Safe。",
-      "B": "Expensive。",
-      "C": "Induces neutralizing antibody。",
-      "D": "Long-lasting protection。"
+      "A": "Safe.",
+      "B": "Expensive.",
+      "C": "Induces neutralizing antibody.",
+      "D": "Long-lasting protection."
     },
     "answer": "B",
-    "explanation": "不侮辱大家智慧了\n【出處】單元12\n［出自考古第1題］"
+    "explanation": "不侮辱大家智慧了\n［出自考古第1題］"
   },
   {
     "question": "Which one is NOT a kind of immunotherapy?",
     "options": {
-      "A": "Antibiotic drug。",
-      "B": "Anti-inflammatory drug。",
-      "C": "Adoptive T-cell therapy。",
-      "D": "Checkpoint blockade。"
+      "A": "Antibiotic drug.",
+      "B": "Anti-inflammatory drug.",
+      "C": "Adoptive T-cell therapy.",
+      "D": "Checkpoint blockade."
     },
     "answer": "A",
-    "explanation": "(A)免疫療法(immunotherapy)為作用在免疫系統來對抗疾病的治療,而抗生素藥物(antibiotic drug)作用的對象為病原體,屬於化學治療(chemotherapy)\n【出處】單元12\n［出自考古第2題］"
+    "explanation": "(A)免疫療法(immunotherapy)為作用在免疫系統來對抗疾病的治療,而抗生素藥物(antibiotic drug)作用的對象為病原體,屬於化學治療(chemotherapy)\n［出自考古第2題］"
   }
 ]
