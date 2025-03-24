@@ -1,0 +1,661 @@
+
+[
+  {
+    "question": "關於胞毒性 T 細胞 (CTL) 毒殺受感染細胞的途徑，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "穿孔素 (perforin) 的作用是使目標細胞膜形成孔洞。",
+      "B": "顆粒酶 (granzyme) 進入目標細胞後，直接分解細胞膜脂質。",
+      "C": "CTL 可以透過 Fas ligand 與目標細胞表面的 Fas 結合，誘發細胞凋亡。",
+      "D": "細胞凋亡是 CTL 毒殺受感染細胞的結果之一。",
+      "E": "穿孔素與顆粒酶機制和 Fas/FasL 機制是 CTL 毒殺受感染細胞的兩種主要途徑。"
+    },
+    "answer": "B",
+    "explanation": "(B) 顆粒酶 (granzyme) 的作用是進入細胞內部，啟動細胞內部的凋亡途徑，分解細胞內部物質，而非直接分解細胞膜脂質。"
+  },
+  {
+    "question": "根據圖示，在 Perforin/granzyme 介導的細胞毒殺過程中，下列事件發生的順序為何？\n\n1. Caspases 被活化\n2. Granzymes 進入細胞質\n3. Perforin 誘導內吞體形成\n4. CTL 釋放 granule contents 到免疫突觸",
+    "options": {
+      "A": "4 → 3 → 2 → 1",
+      "B": "3 → 4 → 1 → 2",
+      "C": "4 → 2 → 3 → 1",
+      "D": "3 → 2 → 4 → 1",
+      "E": "2 → 3 → 4 → 1"
+    },
+    "answer": "A",
+    "explanation": "(A) 根據圖示，正確順序為：(4) CTL 釋放 granule contents 到免疫突觸 → (3) Perforin 誘導目標細胞內吞體形成 → (2) Granzymes 進入細胞質 → (1) Caspases 被活化，最終導致細胞凋亡。"
+  },
+  {
+    "question": "關於免疫記憶，下列哪些敘述**正確**？",
+    "options": {
+      "A": "免疫記憶是由先天免疫系統所特有的。",
+      "B": "免疫記憶可以使個體在再次遇到相同抗原時產生更快速且強烈的免疫反應。",
+      "C": "所有疫苗產生的抗體都能長期維持，例如 COVID-19 疫苗。",
+      "D": "記憶 T 細胞的壽命通常比初始 T 細胞短。",
+      "E": "免疫記憶的形成是疫苗接種的主要原理之一。"
+    },
+    "answer": ["B", "E"],
+    "explanation": "(B) 和 (E) 是正確的。(A) 免疫記憶是後天免疫系統特有的。(C) COVID-19 疫苗產生的抗體無法長期維持。(D) 記憶 T 細胞壽命通常比初始 T 細胞長。"
+  },
+  {
+    "question": "根據天花疫苗接種後的抗體和 T 細胞變化圖，下列推論何者**最合理**？",
+    "options": {
+      "A": "CD4 記憶 T 細胞的半衰期比 CD8 記憶 T 細胞長。",
+      "B": "抗體濃度在疫苗接種後 30 年顯著下降。",
+      "C": "T 細胞記憶比抗體記憶更持久。",
+      "D": "疫苗接種主要依賴抗體產生長期保護力，而非 T 細胞記憶。",
+      "E": "疫苗接種後，三種免疫指標（抗體、CD8 記憶、CD4 記憶）的濃度下降速率相同。"
+    },
+    "answer": "C",
+    "explanation": "(C) 圖中顯示，30 年後抗體濃度沒有顯著下降，而 T 細胞記憶（CD8 和 CD4）仍然維持高濃度，暗示 T 細胞記憶可能比抗體記憶更持久。但抗體水平的穩定也顯示了長期保護力，只是 T 細胞記憶的半衰期更長。(A) CD8 和 CD4 記憶 T 細胞的半衰期相同。(B) 抗體濃度沒有顯著下降。(D) 疫苗接種同時依賴抗體和 T 細胞記憶。(E) 三種指標下降速率不同。"
+  },
+  {
+    "question": "關於初級抗體反應與次級抗體反應的比較，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "次級抗體反應的抗體濃度通常比初級抗體反應高。",
+      "B": "次級抗體反應的抗體親和力通常比初級抗體反應高。",
+      "C": "次級抗體反應主要產生的抗體類型是 IgM。",
+      "D": "記憶 B 細胞參與次級抗體反應。",
+      "E": "初級抗體反應主要由初始 B 細胞活化產生。"
+    },
+    "answer": "C",
+    "explanation": "(C) 次級抗體反應主要產生的抗體類型是 IgG，而非 IgM。初級抗體反應初期以 IgM 為主，但次級反應會發生 Class Switch，產生更多 IgG、IgA 等抗體。"
+  },
+  {
+    "question": "根據 B 細胞的來源表，下列哪項組合**正確**描述了次級免疫反應的特徵？",
+    "options": {
+      "A": "抗原特異性 B 細胞頻率：1:10⁴-1:10⁵；抗體同型：IgM > IgG",
+      "B": "抗原特異性 B 細胞頻率：1:10²-1:10³；抗體同型：IgM > IgG",
+      "C": "抗原特異性 B 細胞頻率：1:10⁴-1:10⁵；抗體同型：IgG, IgA",
+      "D": "抗原特異性 B 細胞頻率：1:10²-1:10³；抗體同型：IgG, IgA",
+      "E": "抗原特異性 B 細胞頻率：1:10²-1:10³；抗體同型：IgM"
+    },
+    "answer": "D",
+    "explanation": "(D) 表格中 Immunized donor Secondary response 欄位顯示，次級免疫反應的抗原特異性 B 細胞頻率為 1:10²-1:10³，抗體同型為 IgG, IgA。"
+  },
+  {
+    "question": "關於 Plasma Cell (漿細胞) 的分類，下列敘述何者**正確**？",
+    "options": {
+      "A": "短壽命 Plasma Cell 主要在淋巴結的 Germinal Center (生發中心) 中產生。",
+      "B": "長壽命 Plasma Cell 的作用時間長度較短壽命 Plasma Cell 短。",
+      "C": "短壽命 Plasma Cell 和長壽命 Plasma Cell 的作用時間長度相同。",
+      "D": "長壽命 Plasma Cell 可以遷移到骨髓中長期存活並持續產生抗體。",
+      "E": "只有長壽命 Plasma Cell 能夠參與免疫記憶的建立。"
+    },
+    "answer": "D",
+    "explanation": "(D) 長壽命 Plasma Cell 能夠遷移到骨髓等部位長期存活，並持續產生抗體，提供長期的體液免疫保護。(A) 短壽命 Plasma Cell 在早期免疫反應中產生，部分在生發中心，但主要在淋巴結髓質區。(B) 長壽命 Plasma Cell 作用時間較長壽命 Plasma Cell 長。(C) 兩者作用時間長度不同。(E) 短壽命 Plasma Cell 也能提供早期的抗體反應，但長壽命 Plasma Cell 對長期免疫記憶更重要。"
+  },
+  {
+    "question": "根據 Plasma Cell 生成路徑圖，下列哪個細胞類型**不是** Memory B cell (記憶 B 細胞) 的直接前身細胞？",
+    "options": {
+      "A": "Naïve B cell (初始 B 細胞)",
+      "B": "Activated B cell (活化 B 細胞)",
+      "C": "Short-lived PC (短壽命漿細胞)",
+      "D": "Long-lived PC (長壽命漿細胞)",
+      "E": "GC B cell (生發中心 B 細胞)"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據圖示，Memory B cell (MBC) 的前身細胞是 Activated B cell 和 GC B cell， Short-lived PC (短壽命漿細胞) 是免疫反應的終端分化細胞，並非 MBC 的前身細胞。"
+  },
+  {
+    "question": "在 T 細胞數量的變化圖中，**綠色箭頭**指示的 contraction (收縮期) 主要代表什麼生物學意義？",
+    "options": {
+      "A": "T 細胞在初次接觸抗原時的快速增生階段。",
+      "B": "感染被清除後，大部分 effector T 細胞凋亡，留下少數記憶 T 細胞。",
+      "C": "記憶 T 細胞在再次遇到相同抗原時的快速增生反應。",
+      "D": "T 細胞持續維持高數量以對抗持續存在的病原。",
+      "E": "T 細胞數量因疫苗接種而短暫增加的現象。"
+    },
+    "answer": "B",
+    "explanation": "(B) contraction (收縮期) 代表在感染清除後，為了維持免疫系統的平衡，大部分 effector T 細胞會凋亡，留下約 5% 的記憶 T 細胞，以應對未來可能的再次感染。"
+  },
+  {
+    "question": "根據 T 細胞數量變化圖，下列哪一時間點 T 細胞數量**最多**？",
+    "options": {
+      "A": "第一次接觸抗原後第 2 天",
+      "B": "第一次接觸抗原後第 8 天",
+      "C": "感染結束後 contraction 期",
+      "D": "再次遇到相同病原後第 2 天",
+      "E": "再次遇到相同病原後第 8 天"
+    },
+    "answer": "B",
+    "explanation": "(B) 從圖中 LLOP:I-Ab+ cells 曲線來看，第一次接觸抗原後約第 8 天左右，T 細胞數量達到峰值，代表 clonal expansion (選殖擴張) 的高峰期。"
+  },
+  {
+    "question": "關於記憶 T 細胞的來源，Linear model (線性模型) 和 Branching/Asymmetric division model (分支/不對稱分裂模型) 的主要區別在於何者？",
+    "options": {
+      "A": "Linear model 認為記憶 T 細胞直接來自初始 T 細胞，而 Branching model 認為記憶 T 細胞來自 effector T 細胞。",
+      "B": "Linear model 認為記憶 T 細胞直接來自 effector T 細胞，而 Branching model 認為記憶 T 細胞在活化初始 T 細胞時期就已分化。",
+      "C": "Linear model 只適用於 CD4+ T 細胞，Branching model 只適用於 CD8+ T 細胞。",
+      "D": "Linear model 是早期提出的理論，已被 Branching model 完全取代。",
+      "E": "Linear model 和 Branching model 對記憶 T 細胞的功能解釋不同，但來源相同。"
+    },
+    "answer": "B",
+    "explanation": "(B) Linear model (線性模型) 認為記憶 T 細胞是 effector T 細胞分化而來；Branching/Asymmetric division model (分支/不對稱分裂模型) 認為在活化初始 T 細胞時期，就已經分化出記憶 T 細胞的前身細胞，與 effector T 細胞平行發展。"
+  },
+  {
+    "question": "根據 Figure 1 Immunological memory time-scales 圖，下列哪一時期 Specific CD8+ T cells 的數量**最多**？",
+    "options": {
+      "A": "Primary infection (初次感染) 的 Weeks (週) 時期",
+      "B": "Maintenance of memory (記憶維持) 的 Years (年) 時期",
+      "C": "Re-exposure (再次暴露) 的 Weeks (週) 時期",
+      "D": "Primary infection 結束後的 contraction 期",
+      "E": "Re-exposure 結束後的 contraction 期"
+    },
+    "answer": "C",
+    "explanation": "(C) 圖中顯示，在 Re-exposure (再次暴露) 時期，Specific CD8+ T cells 的數量會快速增加，達到最高峰，這是免疫記憶快速反應的體現。雖然 Primary infection 時期數量也會增加，但 Re-exposure 時期的增長更快速更顯著。"
+  },
+  {
+    "question": "關於 CD62L 和 CCR7，下列敘述何者**正確**？",
+    "options": {
+      "A": "CD62L 和 CCR7 主要功能是促進 effector T 細胞遷移到發炎組織。",
+      "B": "CD62L 和 CCR7 表達於 effector memory T cells (TEM) 上，使其能在全身血液循環。",
+      "C": "CD62L 和 CCR7 協助 lymphocyte (淋巴細胞) 留在 lymph node (淋巴結) 中。",
+      "D": "缺乏 CD62L 和 CCR7 會使 central memory T cells (TCM) 無法進入次級淋巴器官。",
+      "E": "CD62L 和 CCR7 的表達與 T 細胞毒殺腫瘤細胞的能力直接相關。"
+    },
+    "answer": "C",
+    "explanation": "(C) CD62L (L-selectin) 是 adhesion molecule，CCR7 是 chemokine receptor，它們共同作用，引導 lymphocyte (淋巴細胞) 進入 lymph node (淋巴結) 和其他 secondary lymphoid organs (次級淋巴器官)，促進淋巴細胞在淋巴系統內的循環和定位。(A) 它們主要促進淋巴細胞進入淋巴結，而非發炎組織。(B) CD62L 和 CCR7 主要表達於 central memory T cells (TCM) 上。(D) TCM 需要 CD62L 和 CCR7 進入次級淋巴器官。(E) CD62L 和 CCR7 主要與淋巴細胞歸巢有關，與毒殺腫瘤細胞能力無直接關係。"
+  },
+  {
+    "question": "根據免疫細胞蛋白質表現量表，下列哪種蛋白質在 Naïve T cell (初始 T 細胞) 上表現量**最高**，而在 Effector T cell (效應 T 細胞) 上表現量**最低**？",
+    "options": {
+      "A": "CD44",
+      "B": "CD45R0",
+      "C": "CD45RA",
+      "D": "CD62L",
+      "E": "CCR7"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據表格，CD45RA 在 Naïve T cell 上表現量為 +++，而在 Effector T cell 上表現量為 +。其他選項：CD44 和 CD45R0 在 Effector T cell 和 Memory T cell 上表現量都較高；CD62L 和 CCR7 在 Naïve T cell 和 Memory T cell 上表現量較高，但在 Effector T cell 上表現量較低。"
+  },
+  {
+    "question": "下列關於 CD45R0 和 CD45RA 的敘述，何者**正確**？",
+    "options": {
+      "A": "CD45R0 和 CD45RA 是同一種蛋白質的不同 glycosylation 形式。",
+      "B": "CD45R0 主要調控 B 細胞受體訊號傳遞，CD45RA 主要調控 T 細胞受體訊號傳遞。",
+      "C": "CD45R0 在 memory T cells 上表現量高，CD45RA 在 naïve T cells 上表現量高。",
+      "D": "CD45R0 的表達是 naïve T cells 活化的必要條件，CD45RA 的表達則抑制 T 細胞活化。",
+      "E": "CD45R0 和 CD45RA 的表達量在所有 T 細胞亞群中都相同。"
+    },
+    "answer": "C",
+    "explanation": "(C) CD45R0 和 CD45RA 是 CD45 基因的不同 splice isoforms。CD45R0 在 memory T cells 和 activated T cells 上表現量高，CD45RA 在 naïve T cells 上表現量高。它們都調控 T 細胞受體訊號傳遞，但 isoform 差異可能影響訊號強度和下游反應。(A) 它們是 splice isoforms，而非 glycosylation 形式。(B) 兩者都調控 T 細胞受體訊號。(D) CD45R0 的表達與 T 細胞活化相關，但不是必要條件；CD45RA 的表達量高在 naïve T cells。(E) 表達量在不同 T 細胞亞群中不同。"
+  },
+  {
+    "question": "關於 Bcl-2 蛋白質，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "Bcl-2 是一種促進細胞存活的蛋白質。",
+      "B": "Bcl-2 在 Naïve T cell 和 Memory T cell 上表現量都較高。",
+      "C": "Bcl-2 在 Effector T cell 上表現量極低或不表現。",
+      "D": "Bcl-2 的功能與細胞凋亡 (apoptosis) 調控有關。",
+      "E": "Bcl-2 的高表現量有助於維持 Memory T cell 的長期存活。"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據表格，Bcl-2 在 Effector T cell 上表現量為 +/-，並非極低或不表現。Bcl-2 是一種抗凋亡蛋白質，在 Naïve T cell 和 Memory T cell 上高表達，促進細胞存活，特別是對於 Memory T cell 的長期存活至關重要。"
+  },
+  {
+    "question": "Interferon-γ (IFN-γ) 作為 effector cytokine (效應細胞激素)，在免疫反應中扮演重要角色。根據表格，下列關於 IFN-γ 的敘述何者**正確**？",
+    "options": {
+      "A": "IFN-γ mRNA 只在 Effector T cell 中存在，蛋白質則在活化後才產生。",
+      "B": "IFN-γ mRNA 和蛋白質在 Naïve T cell 中都大量存在。",
+      "C": "IFN-γ 主要由 Memory T cell 分泌，而非 Effector T cell。",
+      "D": "IFN-γ 的主要功能是抑制病毒複製，因此在病毒感染初期大量分泌。",
+      "E": "IFN-γ 的產生與 T 細胞的早期活化無關。"
+    },
+    "answer": "A",
+    "explanation": "(A) 表格中註明 Effector cytokine; mRNA present and protein made on activation，表示 IFN-γ 的 mRNA 在 Effector T cell 中存在，但蛋白質需要在細胞活化後才合成產生。 (B) Naïve T cell 中 IFN-γ mRNA 和蛋白質表現量低。(C) IFN-γ 主要由 Effector T cell 和活化的 Memory T cell 分泌。(D) IFN-γ 的功能不只抑制病毒複製，也參與巨噬細胞活化和免疫調節。(E) IFN-γ 的產生與 T 細胞活化密切相關，是 effector 功能的體現。"
+  },
+  {
+    "question": "關於 Effector memory T cells (TEM)，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "TEM 缺乏 CCR7 和 CD62L 的表達。",
+      "B": "TEM 主要在次級淋巴器官 (SLO) 中循環。",
+      "C": "TEM 具有快速產生 effector 功能的能力。",
+      "D": "TEM 類似免疫系統的巡邏兵，可在全身血液循環。",
+      "E": "TEM 在淋巴系統外組織受到抗原刺激時能快速反應。"
+    },
+    "answer": "B",
+    "explanation": "(B) TEM 缺乏 CCR7 和 CD62L，因此主要在全身血液循環和非淋巴組織中巡邏，而非主要在次級淋巴器官 (SLO) 中循環。Central memory T cells (TCM) 才主要在次級淋巴器官中循環。(A, C, D, E) 都是 TEM 的正確描述。"
+  },
+  {
+    "question": "Central memory T cells (TCM) 與 Effector memory T cells (TEM) 的主要區別在於何者？",
+    "options": {
+      "A": "TCM 主要負責立即清除病原，TEM 主要負責建立長期免疫記憶。",
+      "B": "TCM 具有 CCR7 和 CD62L 的表達，TEM 則缺乏。",
+      "C": "TCM 主要在血液循環，TEM 主要在次級淋巴器官 (SLO) 循環。",
+      "D": "TCM 的壽命較 TEM 短。",
+      "E": "TCM 只能產生 CD4+ T 細胞，TEM 只能產生 CD8+ T 細胞。"
+    },
+    "answer": "B",
+    "explanation": "(B) TCM 的主要特徵是表達 CCR7 和 CD62L，使其能歸巢並循環於次級淋巴器官 (SLO)；TEM 則缺乏 CCR7 和 CD62L，主要在血液和非淋巴組織循環。(A) TEM 和 TCM 都參與免疫記憶，TEM 更偏向快速 effector 功能，TCM 更偏向長期記憶和再活化。(C) TCM 主要在 SLO，TEM 主要在血液循環。(D) TCM 壽命通常較 TEM 長。(E) TCM 和 TEM 都可以是 CD4+ 或 CD8+ T 細胞。"
+  },
+  {
+    "question": "關於 Tissue-resident memory T cell (TRM)，下列敘述何者**正確**？",
+    "options": {
+      "A": "TRM 表達 CCR7，因此可以循環於血液和次級淋巴器官。",
+      "B": "TRM 在受到抗原刺激後會遷移到次級淋巴器官活化 Effector T 細胞。",
+      "C": "TRM 主要分布在血液和淋巴液中，負責全身巡邏。",
+      "D": "TRM 缺乏 CCR7，但可能表達其他 chemokine receptors，如 CXCR3、CCR9。",
+      "E": "TRM 的主要功能是快速活化初始 T 細胞，啟動免疫反應。"
+    },
+    "answer": "D",
+    "explanation": "(D) TRM 的特徵是缺乏 CCR7，使其無法有效循環於血液和次級淋巴器官，但它們會表達其他 chemokine receptors (如 CXCR3、CCR9)，使其能留在組織中。 (A) TRM 缺乏 CCR7。(B) TRM 主要在組織中發揮局部免疫功能，而非遷移到次級淋巴器官。(C) TRM 主要在組織中，而非血液和淋巴液。(E) TRM 主要在組織局部提供快速免疫反應，而非活化初始 T 細胞。"
+  },
+  {
+    "question": "根據圖示，下列哪種記憶 T 細胞類型被描述為**類似巡邏兵**的概念？",
+    "options": {
+      "A": "Naïve T cell",
+      "B": "Central memory T cell (TCM)",
+      "C": "Effector memory T cell (TEM)",
+      "D": "Tissue-resident memory T cell (TRM)",
+      "E": "Activated T cell"
+    },
+    "answer": "C",
+    "explanation": "(C) 圖示和文字描述 Effector memory T cells (TEM) 在全身血液循環，類似巡邏兵的概念，在組織外圍巡邏，隨時準備應對抗原入侵。"
+  },
+  {
+    "question": "根據圖示，下列哪種記憶 T 細胞類型被描述為**類似駐紮在城堡的士兵**的概念？",
+    "options": {
+      "A": "Naïve T cell",
+      "B": "Central memory T cell (TCM)",
+      "C": "Effector memory T cell (TEM)",
+      "D": "Tissue-resident memory T cell (TRM)",
+      "E": "Activated T cell"
+    },
+    "answer": "B",
+    "explanation": "(B) 圖示和文字描述 Central memory T cells (TCM) 只在次級淋巴器官和血液循環，類似駐紮在城堡的士兵，主要在淋巴系統內待命，準備在次級淋巴器官中被抗原活化。"
+  },
+  {
+    "question": "在皮膚組織中，Tissue-resident memory T cells (TRM) 的滯留 (retention) 與下列哪些分子**最直接相關**？",
+    "options": {
+      "A": "CCR7 和 CD62L",
+      "B": "S1PR1 和 CXCL10",
+      "C": "CD69 和 TGF-β",
+      "D": "CD44 和 CD69",
+      "E": "KLF2 和 S1P₁"
+    },
+    "answer": "C",
+    "explanation": "(C) 圖示中 CD69 induction reduces S1PR1 expression and retains TRM cells in dermis 以及 αEβ7 is induced on TRM cells by TGF-β for retention in epidermis 說明，CD69 和 TGF-β 誘導 αEβ7 的表達，並降低 S1PR1 的表達，共同促進 TRM 在皮膚組織的滯留。CD69 降低 S1PR1 介導的離開組織的訊號，TGF-β 誘導 αEβ7 增加組織滯留能力。"
+  },
+  {
+    "question": "關於 S1PR1 (Sphingosine-1-phosphate receptor 1)，下列敘述何者**正確**？",
+    "options": {
+      "A": "S1PR1 的高表達促進 T 細胞在組織中的滯留。",
+      "B": "CD69 的誘導會增加 S1PR1 的表達量。",
+      "C": "S1PR1 介導 T 細胞離開組織進入血液或淋巴液。",
+      "D": "TRM 細胞需要高表達 S1PR1 才能在皮膚組織中存活。",
+      "E": "S1PR1 的配體 (ligand) 是 CXCL10。"
+    },
+    "answer": "C",
+    "explanation": "(C) S1PR1 (Sphingosine-1-phosphate receptor 1) 是一種 lipid chemoattractant receptor，其配體 S1P 在血液和淋巴液中濃度較高，組織中濃度較低。S1PR1 的表達促進 T 細胞離開組織，進入 S1P 濃度較高的血液或淋巴液。(A) S1PR1 高表達促進 T 細胞離開組織。(B) CD69 誘導會降低 S1PR1 表達量。(D) TRM 細胞需要低表達 S1PR1 以便滯留在組織中。(E) S1PR1 的配體是 Sphingosine-1-phosphate (S1P)，而非 CXCL10。"
+  },
+  {
+    "question": "關於 CD69，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "CD69 是一種早期活化抗原，在 T 細胞活化後快速表達。",
+      "B": "CD69 的誘導可以減少 S1PR1 的表達。",
+      "C": "CD69 的表達有助於 Tissue-resident memory T cells (TRM) 滯留在組織中。",
+      "D": "CD69 主要功能是促進 T 細胞遷移到發炎組織。",
+      "E": "CD69 在 Naïve T cell 上不表達，在 Effector T cell 和 Memory T cell 上表達量較高。"
+    },
+    "answer": "D",
+    "explanation": "(D) CD69 的主要功能是通過減少 S1PR1 的表達，抑制淋巴細胞離開組織，促進其在組織中的滯留，而非直接促進遷移到發炎組織。雖然 CD69 表達在活化 T 細胞上，並與組織滯留有關，但其主要機制是抑制離開，而非促進趨向發炎訊號。(A, B, C, E) 都是 CD69 的正確描述。"
+  },
+  {
+    "question": "αEβ7 integrin 在 Tissue-resident memory T cells (TRM) 的組織滯留中也扮演重要角色。根據圖示，αEβ7 的表達受到下列哪個 cytokine (細胞激素) 的誘導？",
+    "options": {
+      "A": "IL-15Rβ",
+      "B": "IL-7Rα",
+      "C": "TGF-β",
+      "D": "CXCL10",
+      "E": "S1P₁"
+    },
+    "answer": "C",
+    "explanation": "(C) 圖示中 αEβ7 is induced on TRM cells by TGF-β for retention in epidermis 明確指出，TGF-β (Transforming Growth Factor-beta) 誘導 αEβ7 integrin 在 TRM 細胞上的表達，促進其在表皮組織的滯留。"
+  },
+  {
+    "question": "根據 Marker 表格，下列哪種 Marker 在 Effector T cell (E) 和 Effector memory T cell (TEM) 上都呈現 **+++** 高表達？",
+    "options": {
+      "A": "CCR7",
+      "B": "CD62L",
+      "C": "CD45RA",
+      "D": "CD44",
+      "E": "L-selectin"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據 Marker 表格，CD44 在 Effector T cell (E) 和 Effector memory T cell (TEM) 上都呈現 +++ 高表達。其他選項：CCR7 和 CD62L 在 Effector T cell 和 TEM 上表達量都低；CD45RA 在 Effector T cell 上表達量低，在 TEM 上不適用；L-selectin 與 CD62L 是同義詞，表達模式相同。"
+  },
+  {
+    "question": "根據 Marker 表格，下列哪種 Marker 在 Naïve T cell (N) 和 Central memory T cell (TCM) 上都呈現 **++** 或 **+++** 高表達，而在 Effector T cell (E) 和 Effector memory T cell (TEM) 上表達量 **較低** 或 **不適用**？",
+    "options": {
+      "A": "Granzyme B",
+      "B": "Eomes",
+      "C": "Ly6C",
+      "D": "CD44",
+      "E": "L-selectin"
+    },
+    "answer": "E",
+    "explanation": "(E) 根據 Marker 表格，L-selectin (與 CD62L 同義) 在 Naïve T cell (N) 和 Central memory T cell (TCM) 上都呈現 ++ 或 +++ 高表達，而在 Effector T cell (E) 和 Effector memory T cell (TEM) 上表達量較低或不適用。其他選項：Granzyme B, Eomes, Ly6C, CD44 在 Effector T cell 和 Effector memory T cell 上表達量都較高。"
+  },
+  {
+    "question": "關於 KLF2 (Kruppel-like factor 2)，根據 Marker 表格，下列敘述何者**錯誤**？",
+    "options": {
+      "A": "KLF2 在 Naïve T cell (N) 和 Central memory T cell (TCM) 上都呈現 ++ 高表達。",
+      "B": "KLF2 在 Effector T cell (E) 和 Effector memory T cell (TEM) 上也呈現 ++ 高表達。",
+      "C": "KLF2 在 Tissue-resident memory T cell (TRM) 上呈現 - (不適用) 表達。",
+      "D": "KLF2 是一種轉錄因子 (transcription factor)。",
+      "E": "KLF2 的表達可能與淋巴細胞的歸巢和循環有關。"
+    },
+    "answer": "B",
+    "explanation": "(B) 根據 Marker 表格，KLF2 在 Effector memory T cell (TEM) 上呈現 ++ 高表達，但在 Effector T cell (E) 上呈現 - (不適用) 表達，而非 ++ 高表達。KLF2 是一種轉錄因子，參與調控 L-selectin (CD62L) 和 CCR7 等基因的表達，與淋巴細胞的歸巢和循環有關。Naïve T cell 和 Central memory T cell 需要 KLF2 來維持 L-selectin 和 CCR7 的表達，使其能進入淋巴結。"
+  },
+  {
+    "question": "根據 Marker 表格，下列哪種 Cytokine receptor (細胞激素受體) 在 Tissue-resident memory T cell (TRM) 上呈現 **++** 高表達？",
+    "options": {
+      "A": "IL-15Rβ",
+      "B": "IL-7Rα",
+      "C": "CCR7",
+      "D": "S1P₁",
+      "E": "CD69"
+    },
+    "answer": "B",
+    "explanation": "(B) 根據 Marker 表格，IL-7Rα 在 Tissue-resident memory T cell (TRM) 上呈現 ++ 高表達。IL-7Rα (IL-7 receptor alpha chain) 是 IL-7 受體的組成部分，IL-7 對於 T 細胞的存活和維持 homeostasis (恆定) 非常重要，特別是對於 memory T cell 的長期存活。"
+  },
+  {
+    "question": "關於 IL-15Rβ (IL-15 receptor beta chain)，根據 Marker 表格，下列敘述何者**正確**？",
+    "options": {
+      "A": "IL-15Rβ 在所有 T 細胞亞群中都呈現 ++ 或 +++ 高表達。",
+      "B": "IL-15Rβ 在 Naïve T cell (N) 和 Central memory T cell (TCM) 上呈現 ++ 或 +++ 高表達，但在 Effector T cell (E) 和 Effector memory T cell (TEM) 上表達量較低。",
+      "C": "IL-15Rβ 在 Effector T cell (E) 上呈現 +++ 高表達，在其他 T 細胞亞群上表達量較低。",
+      "D": "IL-15Rβ 在 Tissue-resident memory T cell (TRM) 上呈現 +++ 高表達，在其他 T 細胞亞群上表達量較低。",
+      "E": "IL-15Rβ 在 Effector memory T cell (TEM) 上呈現 +++ 高表達，在其他 T 細胞亞群上表達量較低。"
+    },
+    "answer": "A",
+    "explanation": "(A) 根據 Marker 表格，IL-15Rβ 在 Naïve T cell (N)、Effector T cell (E)、Central memory T cell (TCM)、Effector memory T cell (TEM) 和 Tissue-resident memory T cell (TRM) 上都呈現 ++ 或 +++ 高表達，顯示 IL-15/IL-15R 訊號通路在不同 T 細胞亞群中都可能發揮重要作用，可能與細胞存活、增殖或功能維持有關。"
+  },
+  {
+    "question": "根據 Location 表格，下列哪種 T 細胞類型主要分布在 **SLO, blood, lymph** (次級淋巴器官、血液、淋巴液)？",
+    "options": {
+      "A": "Naïve T cell (N)",
+      "B": "Effector T cell (E)",
+      "C": "Central memory T cell (TCM)",
+      "D": "Effector memory T cell (TEM)",
+      "E": "Tissue-resident memory T cell (TRM)"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據 Location 表格，Central memory T cell (TCM) 主要分布在 SLO, blood, lymph (次級淋巴器官、血液、淋巴液)，與其表達 CCR7 和 CD62L 的特性相符，使其能循環於淋巴系統中。"
+  },
+  {
+    "question": "根據 Location 表格，下列哪種 T 細胞類型主要分布在 **SLO, blood, non-lymphoid tissues** (次級淋巴器官、血液、非淋巴組織)？",
+    "options": {
+      "A": "Naïve T cell (N)",
+      "B": "Effector T cell (E)",
+      "C": "Central memory T cell (TCM)",
+      "D": "Effector memory T cell (TEM)",
+      "E": "Tissue-resident memory T cell (TRM)"
+    },
+    "answer": "B",
+    "explanation": "(B) 根據 Location 表格，Effector T cell (E) 主要分布在 SLO, blood, non-lymphoid tissues (次級淋巴器官、血液、非淋巴組織)，反映 Effector T cell 在淋巴系統和發炎組織中發揮作用的特性。"
+  },
+  {
+    "question": "根據 Location 表格，下列哪種 T 細胞類型主要分布在 **Blood, spleen, red pulp, some nonlymphoid tissues** (血液、脾臟、紅髓、部分非淋巴組織)？",
+    "options": {
+      "A": "Naïve T cell (N)",
+      "B": "Effector T cell (E)",
+      "C": "Central memory T cell (TCM)",
+      "D": "Effector memory T cell (TEM)",
+      "E": "Tissue-resident memory T cell (TRM)"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據 Location 表格，Effector memory T cell (TEM) 主要分布在 Blood, spleen, red pulp, some nonlymphoid tissues (血液、脾臟、紅髓、部分非淋巴組織)，與其作為巡邏兵在血液循環和進入非淋巴組織的特性相符。"
+  },
+  {
+    "question": "根據 Location 表格，下列哪種 T 細胞類型主要分布在 **Barrier tissues** (屏障組織)？",
+    "options": {
+      "A": "Naïve T cell (N)",
+      "B": "Effector T cell (E)",
+      "C": "Central memory T cell (TCM)",
+      "D": "Effector memory T cell (TEM)",
+      "E": "Tissue-resident memory T cell (TRM)"
+    },
+    "answer": "E",
+    "explanation": "(E) 根據 Location 表格，Tissue-resident memory T cell (TRM) 主要分布在 Barrier tissues (屏障組織)，如皮膚、黏膜等，與其在組織局部提供第一線防禦的特性相符。"
+  },
+  {
+    "question": "根據免疫反應階段表，Immediate (0-4 hours) 階段的免疫反應主要屬於下列哪種類型？",
+    "options": {
+      "A": "Nonspecific + specific, Inducible, No memory",
+      "B": "Nonspecific, Innate, No memory",
+      "C": "Specific, Inducible, Memory",
+      "D": "Nonspecific, Inducible, Memory",
+      "E": "Specific, Innate, No memory"
+    },
+    "answer": "B",
+    "explanation": "(B) 根據免疫反應階段表，Immediate (0-4 hours) 階段的免疫反應特徵是 Nonspecific (非特異性), Innate (先天性), No memory (無記憶性)。這代表此階段主要由先天免疫系統啟動，反應快速但不具特異性和記憶性。"
+  },
+  {
+    "question": "根據免疫反應階段表，Early (4-96 hours) 階段的免疫反應主要**不包含**下列哪項特徵？",
+    "options": {
+      "A": "Nonspecific + specific",
+      "B": "Inducible",
+      "C": "No memory",
+      "D": "No specific T cells",
+      "E": "Memory"
+    },
+    "answer": "E",
+    "explanation": "(E) 根據免疫反應階段表，Early (4-96 hours) 階段的免疫反應特徵包括 Nonspecific + specific, Inducible, No memory, No specific T cells。此階段開始出現適應性免疫反應的成分，但仍不具備免疫記憶。(E) Memory (記憶性) 是 Late (96-100 hours) 階段的特徵，而非 Early 階段。"
+  },
+  {
+    "question": "根據免疫反應階段表，Late (96-100 hours) 階段的免疫反應主要特徵是下列哪些？",
+    "options": {
+      "A": "Nonspecific, Innate, No memory",
+      "B": "Nonspecific + specific, Inducible, No memory",
+      "C": "Specific, Inducible, Memory",
+      "D": "Nonspecific, Inducible, Memory",
+      "E": "Specific, Innate, No memory"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據免疫反應階段表，Late (96-100 hours) 階段的免疫反應特徵是 Specific (特異性), Inducible (可誘導), Memory (記憶性)。這代表此階段主要由適應性免疫系統主導，反應特異性高且具有免疫記憶。"
+  },
+  {
+    "question": "在 Response to extracellular pathogens (細胞外病原體反應) 中，Immediate (0-4 hours) 階段主要的 Barrier functions (屏障功能) **不包含**下列哪項？",
+    "options": {
+      "A": "Skin (皮膚)",
+      "B": "Epithelia (上皮)",
+      "C": "Mucins (黏蛋白)",
+      "D": "Antibody (抗體)",
+      "E": "Acid (酸性環境)"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據免疫反應階段表，Immediate (0-4 hours) 階段的 Barrier functions (屏障功能) 包括 Skin, epithelia, mucins, acid。Antibody (抗體) 主要在 Late (96-100 hours) 階段的適應性免疫反應中產生。(A, B, C, E) 都是 Immediate 階段的屏障功能。"
+  },
+  {
+    "question": "在 Response to extracellular pathogens (細胞外病原體反應) 中，Early (4-96 hours) 階段主要的 effector mechanisms (效應機制) **不包含**下列哪項？",
+    "options": {
+      "A": "Phagocytes (吞噬細胞)",
+      "B": "Alternative and MBL complement pathway (替代途徑和 MBL 凝集素途徑補體)",
+      "C": "Lysozyme (溶菌酶)",
+      "D": "Lactoferrin (乳鐵蛋白)",
+      "E": "IgG antibody (IgG 抗體)"
+    },
+    "answer": "E",
+    "explanation": "(E) 根據免疫反應階段表，Early (4-96 hours) 階段 Response to extracellular pathogens 的 effector mechanisms 包括 Phagocytes, Alternative and MBL complement pathway, Lysozyme, Lactoferrin, Peroxidase, Defensins。IgG antibody (IgG 抗體) 主要在 Late (96-100 hours) 階段的適應性免疫反應中產生。(A, B, C, D) 都是 Early 階段的效應機制。"
+  },
+  {
+    "question": "在 Response to extracellular pathogens (細胞外病原體反應) 中，Late (96-100 hours) 階段主要的 effector mechanisms (效應機制) **包含**下列哪些？",
+    "options": {
+      "A": "Mannan-binding lectin, C-reactive protein",
+      "B": "T-independent B-cell antibody, Complement",
+      "C": "IgA antibody in luminal spaces, IgE antibody on mast cells",
+      "D": "IgG antibody and Fc receptor-bearing cells, Local inflammation",
+      "E": "Lysozyme, Lactoferrin, Peroxidase, Defensins"
+    },
+    "answer": ["C", "D"],
+    "explanation": "(C) 和 (D) 根據免疫反應階段表，Late (96-100 hours) 階段 Response to extracellular pathogens 的 effector mechanisms 包括 IgA antibody in luminal spaces, IgE antibody on mast cells, Local inflammation, IgG antibody and Fc receptor-bearing cells, IgG, IgM antibody + classical complement pathway。(A) 和 (B) 描述的是 Early 階段的機制。(E) 描述的是 Early 階段的抗菌物質。"
+  },
+  {
+    "question": "在 Response to intracellular bacteria (細胞內細菌反應) 中，Early (4-96 hours) 階段主要的 effector mechanisms (效應機制) 是下列哪項？",
+    "options": {
+      "A": "Phagocytes",
+      "B": "Macrophages",
+      "C": "Natural killer (NK) cells",
+      "D": "T-cell activation of macrophages by IFN-γ",
+      "E": "Cytotoxic T cells"
+    },
+    "answer": "B",
+    "explanation": "(B) 根據免疫反應階段表，Early (4-96 hours) 階段 Response to intracellular bacteria 的 effector mechanism 是 Macrophages (巨噬細胞)。(A) Phagocytes 是 Response to extracellular pathogens 的 Early 階段機制。(C) Natural killer (NK) cells 是 Response to virus-infected cells 的 Early 階段機制。(D) 和 (E) 是 Response to intracellular bacteria 的 Late 階段機制。"
+  },
+  {
+    "question": "在 Response to intracellular bacteria (細胞內細菌反應) 中，Late (96-100 hours) 階段主要的 effector mechanisms (效應機制) 是下列哪項？",
+    "options": {
+      "A": "Phagocytes",
+      "B": "Macrophages",
+      "C": "Natural killer (NK) cells",
+      "D": "T-cell activation of macrophages by IFN-γ",
+      "E": "Activated NK-dependent macrophage activation"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據免疫反應階段表，Late (96-100 hours) 階段 Response to intracellular bacteria 的 effector mechanism 是 T-cell activation of macrophages by IFN-γ (T 細胞活化巨噬細胞，通過 IFN-γ)。(A) Phagocytes 是 Response to extracellular pathogens 的 Early 階段機制。(B) Macrophages 是 Response to intracellular bacteria 的 Early 階段機制。(C) Natural killer (NK) cells 是 Response to virus-infected cells 的 Early 階段機制。(E) Activated NK-dependent macrophage activation 是 Response to intracellular bacteria 的 Early 階段機制。"
+  },
+  {
+    "question": "在 Response to virus-infected cells (病毒感染細胞反應) 中，Early (4-96 hours) 階段主要的 effector cells (效應細胞) 是下列哪種？",
+    "options": {
+      "A": "Macrophages",
+      "B": "Natural killer (NK) cells",
+      "C": "Cytotoxic T cells",
+      "D": "B cells",
+      "E": "Plasma cells"
+    },
+    "answer": "B",
+    "explanation": "(B) 根據免疫反應階段表，Early (4-96 hours) 階段 Response to virus-infected cells 的 effector cells 是 Natural killer (NK) cells (自然殺手細胞)。(A) Macrophages 是 Response to intracellular bacteria 的 Early 階段效應細胞。(C) Cytotoxic T cells 是 Response to virus-infected cells 的 Late 階段效應細胞。(D) B cells 和 (E) Plasma cells 主要參與抗體反應，在 Late 階段更重要。"
+  },
+  {
+    "question": "在 Response to virus-infected cells (病毒感染細胞反應) 中，Late (96-100 hours) 階段主要的 effector cells (效應細胞) 是下列哪種？",
+    "options": {
+      "A": "Macrophages",
+      "B": "Natural killer (NK) cells",
+      "C": "Cytotoxic T cells",
+      "D": "B cells",
+      "E": "Plasma cells"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據免疫反應階段表，Late (96-100 hours) 階段 Response to virus-infected cells 的 effector cells 是 Cytotoxic T cells (胞毒性 T 細胞)。(A) Macrophages 是 Response to intracellular bacteria 的 Early 階段效應細胞。(B) Natural killer (NK) cells 是 Response to virus-infected cells 的 Early 階段效應細胞。(D) B cells 和 (E) Plasma cells 主要參與抗體反應，在 Late 階段更重要，但 Cytotoxic T cells 是針對病毒感染細胞的主要細胞毒殺力量。"
+  },
+  {
+    "question": "下列哪種 Cytokine (細胞激素) 在 Response to intracellular bacteria (細胞內細菌反應) 的 Late (96-100 hours) 階段中，由 T 細胞分泌以活化巨噬細胞？",
+    "options": {
+      "A": "TNF-α",
+      "B": "IL-12",
+      "C": "IFN-γ",
+      "D": "IL-6",
+      "E": "IL-1β"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據免疫反應階段表，在 Response to intracellular bacteria 的 Late (96-100 hours) 階段，T-cell activation of macrophages by IFN-γ 說明，IFN-γ (Interferon-gamma) 是由 T 細胞分泌，用於活化巨噬細胞，增強其殺菌能力，是細胞免疫的重要機制。"
+  },
+  {
+    "question": "下列哪些 Cytokines (細胞激素) 在 Response to intracellular bacteria (細胞內細菌反應) 的 Early (4-96 hours) 階段中，參與 Activated NK-dependent macrophage activation (活化 NK 細胞依賴的巨噬細胞活化)？",
+    "options": {
+      "A": "IFN-α and IFN-β",
+      "B": "IL-1 and IL-6",
+      "C": "TNF-α and IL-12",
+      "D": "IL-1, IL-6, TNF-α, IL-12",
+      "E": "IFN-γ"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據免疫反應階段表，在 Response to intracellular bacteria 的 Early (4-96 hours) 階段，Activated NK-dependent macrophage activation 的相關 Cytokines 包括 IL-1, IL-6, TNF-α, IL-12。這些細胞激素參與炎症反應，並促進巨噬細胞的活化。"
+  },
+  {
+    "question": "下列哪些 Cytokines (細胞激素) 在 Response to virus-infected cells (病毒感染細胞反應) 的 Early (4-96 hours) 階段中，由 Natural killer (NK) cells 分泌？",
+    "options": {
+      "A": "IFN-α and IFN-β",
+      "B": "IL-1 and IL-6",
+      "C": "TNF-α and IL-12",
+      "D": "IL-1, IL-6, TNF-α, IL-12",
+      "E": "IFN-γ"
+    },
+    "answer": "A",
+    "explanation": "(A) 根據免疫反應階段表，在 Response to virus-infected cells 的 Early (4-96 hours) 階段，Natural killer (NK) cells 分泌 IFN-α and IFN-β (Interferon alpha and beta)。這些 Type I Interferons 是抗病毒免疫反應的重要成分，能抑制病毒複製並活化免疫細胞。"
+  },
+  {
+    "question": "下列哪種 Cytokine (細胞激素) 在 Response to virus-infected cells (病毒感染細胞反應) 的 Late (96-100 hours) 階段中，由 Cytotoxic T cells 分泌，直接介導細胞毒殺作用？",
+    "options": {
+      "A": "TNF-α",
+      "B": "IL-12",
+      "C": "IFN-γ",
+      "D": "IL-6",
+      "E": "IL-1β"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據免疫反應階段表，在 Response to virus-infected cells 的 Late (96-100 hours) 階段，Cytotoxic T cells 分泌 IFN-γ (Interferon-gamma)。雖然 Cytotoxic T cells 的主要毒殺機制是通過 perforin 和 granzyme，但 IFN-γ 也由 CTL 分泌，參與免疫調節和增強巨噬細胞活性，但 *表格中 IFN-γ 列在 Cytotoxic T cells 下，可能在此處指 CTL 分泌 IFN-γ 的功能，而非直接細胞毒殺*。更精確來說，CTL 的直接毒殺作用不 *直接* 由 IFN-γ 介導，而是 perforin 和 granzyme，但 *根據表格的呈現方式和選項*，(C) IFN-γ 最符合表格的描述。"
+  },
+  {
+    "question": "根據免疫反應階段表，Local inflammation (局部發炎反應) 出現在下列哪些免疫反應階段？",
+    "options": {
+      "A": "Immediate (0-4 hours) only",
+      "B": "Early (4-96 hours) only",
+      "C": "Late (96-100 hours) only",
+      "D": "Early (4-96 hours) and Late (96-100 hours)",
+      "E": "Immediate (0-4 hours) and Early (4-96 hours)"
+    },
+    "answer": "D",
+    "explanation": "(D) 根據免疫反應階段表，Local inflammation (局部發炎反應) 出現在 Early (4-96 hours) 和 Late (96-100 hours) 兩個階段。在 Early 階段，Local inflammation (C5a) 和 Local TNF-α 被列為效應機制；在 Late 階段，Local inflammation 也被列為 Response to extracellular pathogens 的效應機制之一，以及 IgE antibody on mast cells 介導的局部發炎反應。"
+  },
+  {
+    "question": "根據免疫反應階段表，補體系統 (Complement) 參與下列哪些免疫反應階段和類型？",
+    "options": {
+      "A": "Response to extracellular pathogens, Immediate (0-4 hours) phase",
+      "B": "Response to extracellular pathogens, Early (4-96 hours) phase",
+      "C": "Response to extracellular pathogens, Late (96-100 hours) phase",
+      "D": "Response to intracellular bacteria, Early (4-96 hours) phase",
+      "E": "Response to virus-infected cells, Late (96-100 hours) phase"
+    },
+    "answer": ["B", "C"],
+    "explanation": "(B) 和 (C) 根據免疫反應階段表，補體系統 (Complement) 參與 Response to extracellular pathogens 的 Early (4-96 hours) phase (Alternative and MBL complement pathway) 和 Late (96-100 hours) phase (IgG, IgM antibody + classical complement pathway)。補體系統主要在細胞外病原體的免疫反應中發揮作用。"
+  },
+  {
+    "question": "根據免疫反應階段表，IgG 抗體 (IgG antibody) 主要在下列哪個免疫反應階段和類型中發揮作用？",
+    "options": {
+      "A": "Response to extracellular pathogens, Immediate (0-4 hours) phase",
+      "B": "Response to extracellular pathogens, Early (4-96 hours) phase",
+      "C": "Response to extracellular pathogens, Late (96-100 hours) phase",
+      "D": "Response to intracellular bacteria, Early (4-96 hours) phase",
+      "E": "Response to virus-infected cells, Late (96-100 hours) phase"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據免疫反應階段表，IgG antibody (IgG 抗體) 主要在 Response to extracellular pathogens 的 Late (96-100 hours) phase 中發揮作用，特別是 IgG antibody and Fc receptor-bearing cells 和 IgG, IgM antibody + classical complement pathway 相關的機制。IgG 抗體是適應性免疫反應中針對細胞外病原體的重要 effector 分子。"
+  },
+  {
+    "question": "根據免疫反應階段表，IgA 抗體 (IgA antibody) 主要在下列哪個免疫反應階段和類型中發揮作用？",
+    "options": {
+      "A": "Response to extracellular pathogens, Immediate (0-4 hours) phase",
+      "B": "Response to extracellular pathogens, Early (4-96 hours) phase",
+      "C": "Response to extracellular pathogens, Late (96-100 hours) phase",
+      "D": "Response to intracellular bacteria, Early (4-96 hours) phase",
+      "E": "Response to virus-infected cells, Late (96-100 hours) phase"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據免疫反應階段表，IgA antibody (IgA 抗體) 主要在 Response to extracellular pathogens 的 Late (96-100 hours) phase 中發揮作用，特別是 IgA antibody in luminal spaces (管腔空間中的 IgA 抗體)。IgA 抗體主要在黏膜表面提供保護，阻止病原體黏附和入侵。"
+  },
+  {
+    "question": "根據免疫反應階段表，IgE 抗體 (IgE antibody) 主要在下列哪個免疫反應階段和類型中發揮作用？",
+    "options": {
+      "A": "Response to extracellular pathogens, Immediate (0-4 hours) phase",
+      "B": "Response to extracellular pathogens, Early (4-96 hours) phase",
+      "C": "Response to extracellular pathogens, Late (96-100 hours) phase",
+      "D": "Response to intracellular bacteria, Early (4-96 hours) phase",
+      "E": "Response to virus-infected cells, Late (96-100 hours) phase"
+    },
+    "answer": "C",
+    "explanation": "(C) 根據免疫反應階段表，IgE antibody (IgE 抗體) 主要在 Response to extracellular pathogens 的 Late (96-100 hours) phase 中發揮作用，特別是 IgE antibody on mast cells (肥大細胞上的 IgE 抗體)。IgE 抗體主要參與過敏反應和抗寄生蟲免疫。"
+  },
+  {
+    "question": "關於免疫系統反應階段的總結，下列敘述何者**最符合**文章的結語？",
+    "options": {
+      "A": "免疫反應各階段是獨立進行的，彼此之間沒有關聯。",
+      "B": "免疫細胞在下游訊號足夠時才會進行分化，確保免疫反應的階梯式進行。",
+      "C": "免疫反應前期階段的成功與否，不影響後期階段的啟動。",
+      "D": "免疫反應主要是為了產生記憶性 T 細胞，以應對未來感染。",
+      "E": "人體面對任何感染情形，免疫反應的機制都是相同的。"
+    },
+    "answer": "B",
+    "explanation": "(B) 文章結語強調 *免疫細胞往往在上游訊號如細胞介素的分泌量足夠時才進行分化，以利下一階段免疫反應的進行*，體現了免疫反應的階梯式和依序性。如果前期反應足以應對病原，則不會啟動後期步驟。(A) 各階段有關聯，是階梯式進行。(C) 前期反應的成功與否影響後期是否啟動。(D) 免疫反應目的不只產生記憶 T 細胞，也包含清除當前病原。(E) 人體面對不同感染情形，免疫反應機制不同，文章目的是要了解不同感染情
