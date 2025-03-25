@@ -1,507 +1,603 @@
 [
-    {
-        "question": "無解",
-        "options": {
-            "A": "相反。ITAM (activation) 可促進免疫反應，ITIM (inhibition) 可抑制免疫反應。",
-            "B": "PD1 有 ITIM，因此 anti-PD-1 可防止 ITIM 抑制 T cell，促進 T cell 殺死癌細胞。",
-            "C": "TCR 本身並沒有 ITAM。TCR complex 的 ITAM 來自 ζ 鏈的 6 個，加上兩組 CD3 各自帶的 2 個 ITAM，總共 10 個 ITAM。",
-            "D": "Lck 為 tyrosine kinase。Lck 本為磷酸化 (去活化) 狀態。TCR 接觸抗原時，CD45 會將 Lck 上的 pTyr 去磷酸化，活化 Lck。"
-        },
-        "answer": "無解",
-        "explanation": "無解 [From Exam Archaeology Q1]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "正確。",
-            "B": "不是擋住抗原呈現細胞，是擋住免疫細胞 (T cell) 的抑制訊號受體，讓 T cell 不會被抑制。",
-            "C": "CAR-T 目前僅針對 leukemia 或其他血液腫瘤治療，尚未能應用至固體腫瘤治療。",
-            "D": "Anti-CTLA-4 與 Anti-PD-1 的作用機轉不完全相同。Anti-CTLA-4 是針對 T cell 接受抗原呈現時，擋住 CTLA-4 受器，使抗原呈現細胞的 B7 結合 T cell 的 CD28，活化 T cell。Anti-CD-1 則是針對 T cell 接觸癌細胞時，擋住 T cell 的 PD-1 受器，使其不會被癌細胞的 PD-L1 抑制。兩種藥一起使用可能可以增強效果，但也更可能有自體免疫的副作用。"
-        },
-        "answer": "A",
-        "explanation": "[From Exam Archaeology Q2]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "AMPs 由上皮組織與吞噬細胞製造。如：皮膚中的 stratum spinosum、腸上皮中的 Paneth cell."
-        },
-        "answer": "A",
-        "explanation": "[From Exam Archaeology Q3]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "C1r 和 C1s 與 MASP1、MASP2 結構相近。MBL 則是結構與 C1q 相近。",
-            "B": "正確。",
-            "C": "C3b 不是 inhibitor。Inhibitor (調節蛋白) 是 CR1、H，只有一般細胞上有。",
-            "D": "C3a、C5a 能促進吞噬細胞移動到感染、發炎區域。"
-        },
-        "answer": "B",
-        "explanation": "[From Exam Archaeology Q4]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "Correct.",
-            "B": "IL-6 triggers acute phase responses through binding to hepatocytes (liver).",
-            "C": "IFN-Is (IFN-α and IFN-β) are primarily induced by TLR-3 and TLR-7 signaling pathways and trigger antiviral response. IFN-γ (Type II IFN) is induced by TLR-4 signaling pathway triggered by the LPS of Gram-negative bacteria.",
-            "D": "Correct."
-        },
-        "answer": [
-            "A",
-            "D"
-        ],
-        "explanation": "[From Exam Archaeology Q5]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "TLRs are only expressed on plasma membrane and endosome.",
-            "B": "Except for TLR3, all other TLRs signal through MyD88.",
-            "C": "Correct.",
-            "D": "TLR3 which binds dsRNA is located in endosome."
-        },
-        "answer": "C",
-        "explanation": "[From Exam Archaeology Q6]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "Both produce Lysozyme which digests cell walls of some Gram-positive bacteria.",
-            "B": "Neutrophil can produce lactoferrin which competes $\text{Fe}^\text{2+}$.",
-            "C": "NETs contain elastase, myelo-peroxidase, cathepsin G and lactoferrin which degrade or block pathogens.",
-            "D": "Correct."
-        },
-        "answer": "D",
-        "explanation": "[From Exam Archaeology Q7]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "Self-reactive T lymphocytes are deleted in the thymus.",
-            "B": "The success of tissue transplantation depends on factors beyond CST, such as histocompatibility and immune suppression.",
-            "C": "Correct.",
-            "D": "CST was first proposed by Dr. Macfarlane Burnet (who later jointly received the Nobel Prize with Dr. Peter Medawar for the discovery of acquired immunological tolerance)."
-        },
-        "answer": "C",
-        "explanation": "[From Exam Archaeology Q8]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "應為 PROMOTE light chain gene rearrangement.",
-            "B": "應為 STOP heavy chain gene rearrangement.",
-            "C": "替代性輕鏈 (SLC) 僅作穩定使用，與基因重組無關。",
-            "D": "正確，pre-B cell 訊號將可促成下游 B cell 的成熟與分化。"
-        },
-        "answer": "D",
-        "explanation": "(參閱 B10 共筆 vol.1 第 74 頁下方 Fig. 8.5) [From Exam Archaeology Q9]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "不會是一模一樣，是因兩種病毒關係相近，表面具有相似抗原，故對牛痘產生的抗體也能有效對抗天花。",
-            "B": "因是天然未減毒的病毒株接種，所以引起免疫的效率確實比較好。",
-            "C": "牛痘疫苗在 1796 年由 Dr. Jenner 發明，但天花一直到 1979 年才由 WHO 宣布根除，所以大概過了 183 年。",
-            "D": "人痘接種 (variolation) 之風險來自於天然未減毒的病毒株直接接種，而非接種方式引起。"
-        },
-        "answer": "B",
-        "explanation": "(參閱 B11 共筆 vol.1 第 6 頁上方) [From Exam Archaeology Q10]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "在 rearrangement of antigen receptor genes 階段，兩者各自位在 generative organ (骨髓 / 胸腺)。(B11 vol.1 第 76 頁)",
-            "B": "Pre-BCR 之替代輕鏈與 pre-TCR 之替代 alpha 鏈演化上相似。",
-            "C": "接受過自體抗原受體檢查後，前驅 B 細胞才能發育為未成熟 B 細胞。題目有點繞口，直到未成熟階段前都不會開始 = 成熟階段前才開始。",
-            "D": "是三道檢查點 (必考，忘了請複習 B11 vol.1 第 77 頁)。"
-        },
-        "answer": "C",
-        "explanation": "[From Exam Archaeology Q11]"
-    },
-    {
-        "question": "",
-        "options": {
-            "A": "正確。(詳細可看 B11 vol.1 第 86 頁)",
-            "B": "在小 pre B 細胞階段時，輕鏈的 V-J 重排已完成，因而能做接下來的自體抗原測試。",
-            "C": "IgM 並未消失，而是多了 IgD 表現。",
-            "D": "並非所有未通過自體抗原測試的 B cell 都會被凋亡，可透過挽救機制：receptor editing 重新基因重組。(詳細可看 B11 vol.1 第 87 頁，自體反應 B 細胞的 4 種命運)。"
-        },
-        "answer": "A",
-        "explanation": "[From Exam Archaeology Q12]"
-    },
-    {
-        "question": "淋巴球離開主要淋巴組織 (central lymphoid organs) 後，進入血液循環並進入周圍淋巴組織 (peripheral lymphoid organs)，包括下列哪些組織？",
-        "options": {
-            "A": "胸腺",
-            "B": "淋巴結、脾臟、腸淋巴組織等次級淋巴組織。",
-            "C": "骨髓",
-           "D": "以上皆是"
-
-        },
-        "answer": "B",
-        "explanation": "Dendritic cells 會在感染之處遇見病原體、抗原，將其吞噬形成抗原呈現細胞，而周邊淋巴組織 (主要為淋巴結) 為 B cell 被抗原活化之處，B cell、antibodies 最後透過血液或淋巴循環抵達感染的地方與清除病原體，如下圖。 [From Exam Archaeology Q(林)1]"
-    },
-     {
-        "question": "ILCs 與對應的 T 細胞有類似的功能 (overlapping cytokines)。",
-        "options": {
-            "T": "True",
-            "F": "False"
-        },
-        "answer": "T",
-        "explanation": "(A) ILCs 是先天淋巴細胞 (innate)，與其它淋巴細胞一樣在骨髓生成 (lymphoid lineage)，並分佈於淋巴結與具有表皮組織的器官。(B) 非 T 細胞亦非 B 細胞 (沒有 TCR，也沒有 BCR)，沒有抗原專一。(C) ILCs 與對應的 T 細胞有類似的功能 (overlapping cytokines)。(D) 第三類免疫反應 (type 3 response) 針對胞外細菌及真菌，ILC3 可製造 IL-17 and IL-22 吸引與激活嗜中性球。 [From Exam Archaeology Q(林)2]"
-    },
   {
-        "question": "",
-        "options": {
-           "A": "$\text{T}_\text{H1}$主要對付生長在巨噬細胞中的細菌, $\text{T}_\text{H1}$細胞辨認病原後被活化，分泌細胞介素IFN-γ傳遞訊號。訊傳入巨噬細胞後會促使溶酶體（lysosome）和吞噬小體（phagosome）結合，形成吞噬溶酶體（phagolysosome), 活化巨噬細胞消滅外來病原。",
-           "B": "$\text{T}_\text{H2}$對付胞外寄生蟲感染(helminth：蠕蟲)，並分泌IL-4、IL-13,活化M2巨噬細胞，幫助組織修復。"
-
-        },
-        "answer": "C",
-        "explanation": " [From Exam Archaeology Q(林)3]"
+    "question": "Concerning of the roles of ITAM and ITIM in regulating immune response, which statement is true?",
+    "options": {
+      "A": "ITAMs and ITIMs, negatively and positively, respectively regulate immune response.",
+      "B": "PD-1 has ITAMs, so anti-PD-1 can activate T-cell, allowing the killing of tumor cells and serving as immune therapeutic treatment.",
+      "C": "An TCR has 6 ITAMs on its inter membrane side.",
+      "D": "Lck, a serine kinase family member, requires CD45."
     },
+    "answer": "D",
+    "explanation": "Contrary. ITAM (activation) can promote immune response, and ITIM (inhibition) can inhibit immune response.\n(B) PD1 has ITIM, so anti-PD-1 can prevent ITIM from inhibiting T cells, promoting T cell killing of cancer cells.\n(C) TCR itself does not have ITAM. The ITAMs of the TCR complex come from 6 on the ζ chain, plus 2 ITAMs on each of the two sets of CD3, totaling 10 ITAMs.\n(D) Lck is a tyrosine kinase. Lck is initially in a phosphorylated (deactivated) state. When TCR contacts the antigen, CD45 dephosphorylates pTyr on Lck, activating Lck. [From Exam Archaeology Q1]"
+  },
+  {
+    "question": "CAR-T and immune checkpoint blockade are two breakthroughs in recent years. Which of the statements concerning two approaches is correct?",
+    "options": {
+      "A": "CAR-T approach bypasses the requirement of the recognition of MHC peptide and 2 signals to activate antigen-presenting-T cell.",
+      "B": "Immune checkpoint blockade is to block the molecules that transduce inhibiting signals in antigen presenting cells.",
+      "C": "CAR-T and immune checkpoint blockade both work for solid tumor and leukemia efficiently.",
+      "D": "The mechanism for anti-CTLA-4 and anti-PD-1 immune checkpoint blockade is the same; therefore, there is no increased therapeutic activity when doing combined treatment."
+    },
+    "answer": "A",
+    "explanation": "(A) Correct.\n(B) It does not block the antigen-presenting cells, but blocks the inhibitory signal receptors of immune cells (T cells), so that T cells are not inhibited.\n(C) CAR-T is currently only effective against leukemia or other blood tumors, and has not yet been applied to solid tumor treatment.\n(D) The mechanisms of action of Anti-CTLA-4 and Anti-PD-1 are not completely the same. Anti-CTLA-4 targets when T cells receive antigen presentation, blocking the CTLA-4 receptor, so that the B7 of the antigen-presenting cell binds to CD28 of the T cell, activating the T cell. Anti-CD-1 targets when T cells contact cancer cells, blocking the PD-1 receptor of the T cell, so that it will not be inhibited by the PD-L1 of the cancer cell. Using the two drugs together may enhance the effect, but it may also have more autoimmune side effects. [From Exam Archaeology Q2]"
+  },
     {
-    "question": "",
-        "options":{
-        "T": "True",
-        "F": "False"
-        },
-        "answer": "F",
-        "explanation":"免疫反應進程中的latent infection(潛伏感染)：病原體並未在個體呈現出明顯病理反應及相關病原分泌物，但若免疫力降低時便會產生病理反應。[From Exam Archaeology Q(林)4]"
-
+    "question": "AMPs belong to a component of innate immune system. Which statement concerning AMPs is CORRECT?",
+    "options": {
+      "A": "AMPs are produced by non-immune cells in skins, lungs and guts where the host is exposed directly to the outside environment and by some innate cells.",
+      "B": "AMPs are produced in an active form and can kill bacteria immediately.",
+      "C": "AMPs are peptides with a hydrophobic end and a hydrophilic end, which will kill the cell wall of bacteria.",
+      "D": "AMPs have selective killing ability toward bacteria but not host cell."
     },
-     {
-    "question": "減敏治療 (desensitization) : 暴露低劑量的過敏原，並逐步增加劑量，讓免疫系統慢慢忍受過敏原，減少誘發 IgE 產生。",
-        "options":{
-        "T": "True",
-        "F": "False"
-        },
-        "answer": "T",
-        "explanation":" [From Exam Archaeology Q(林)5]"
-
-    },
-     {
-    "question": "過敏反應在進步國家的發生率較發展中國家高。",
-        "options":{
-        "T": "True",
-        "F": "False"
-        },
-        "answer": "T",
-        "explanation":" [From Exam Archaeology Q(林)6]"
-
-    },
+    "answer": "A",
+    "explanation": "(A) AMPs are produced by epithelial tissues and phagocytes. Such as: stratum spinosum in the skin, Paneth cells in the intestinal epithelium.\n(B) AMPs are usually in an inactive state (Pro-AMP) when produced and need to be cleaved by proteases to become active after the pro-region, called proteolysis.\n(C) AMPs are amphipathic peptides that can penetrate the cell membrane and form pores, not the cell wall.\n(D) AMPs are not specific. When bacteria appear, Pro-AMP will be cleaved and activated, so it will not kill host cells. Another saying is that the structure of bacterial cell membranes is more likely to attract AMPs than host cells. [From Exam Archaeology Q3]"
+  },
       {
-    "question": "當後天免疫系統對於「無害抗原」起不適當的反應時，就會導致過敏，包含過敏症和自體免疫，而過敏案例通常複雜，可能結合多種機轉類型。",
-        "options":{
-        "T": "True",
-        "F": "False"
-        },
-        "answer": "F",
-        "explanation":"(B10 共筆 Vol.4 p.14)[From Exam Archaeology Q(林)二、1]"
-
+    "question": "The complement system is crucial for the host to defend against bacterial infection. Which of the following concerning activation and function of complement is correct?",
+    "options": {
+      "A": "The classical pathway and lectin pathway both generate C3 convertase C4b2a. The structure of the C1r and C1s are similar to the MBL.",
+      "B": "MBL and ficolins, which are the components of lectin pathway, are produced in the liver in response to the infection.",
+      "C": "The complement inhibitor, such as C3b, is only produced in the host cell but no in the bacteria, which is why the complement selectively kills the microbes.",
+      "D": "The C3b not only acts as opsonin, but is also chemo-attractive which attract leukocytes to the site of infection."
     },
-      {
-    "question": "發炎是免疫反應的重要組成部分，有助於保護身體免受感染和損傷，有助於清除有害刺激，啟動治癒過程、對抗病原體。然而過度或持續的發炎確實可能是有害的，並導致各種疾病。",
-        "options":{
-        "T": "True",
-        "F": "False"
-        },
-        "answer": "F",
-        "explanation":"[From Exam Archaeology Q(林)二、2]"
-
+    "answer": "B",
+    "explanation": "(A) C1r and C1s are structurally similar to MASP1 and MASP2. MBL is structurally similar to C1q.\n(B) Correct.\n(C) C3b is not an inhibitor. Inhibitors (regulatory proteins) are CR1 and H, which are only present on normal cells.\n(D) C3a and C5a can promote the movement of phagocytes to the infected and inflamed areas. [From Exam Archaeology Q4]"
+  },
+  {
+    "question": "Which of the following is correct?",
+    "options": {
+      "A": "$text{TNF-α}$ is a proinflammatory cytokine that acts on endothelial cells, skeleton muscle, and the heart to trigger different effects, which is the pleiotropic effect of cytokines.",
+      "B": "IL-6 can trigger acute phase response through binding to kidney.",
+      "C": "IFN-Is, including $text{IFN-α}$, $text{IFN-β}$, $text{IFN-γ}$, induced by TLR-3 and TLR-7 signaling pathway are critical to triggering antiviral response.",
+      "D": "LPS-induced overproduction of IL-6 during systemic bacterial infection can trigger disseminated intravascular coagulation and multiorgan failure, which is called endotoxic shock."
     },
-{
-    "question": "Type 1 hypersensitivity reaction is caused by an IgE-mediated immune response whose main physiological role is to defend against parasite infection.在組織中，IgE 與肥大細胞 (mast cell) 的 FcεRI 結合並活化之造成過敏；在血液中則結合嗜鹼性球 (basophil) 的 FcεRI。",
-        "options":{
-        "T": "True",
-        "F": "False"
-        },
-        "answer": "F",
-        "explanation":"(B10 共筆 Vol.4 p.14) [From Exam Archaeology Q(林)二、3]"
-
+    "answer": "D",
+    "explanation": "(A) Correct.\n(B) IL-6 triggers acute phase responses through binding to hepatocytes (liver).\n(C) IFN-Is ($text{IFN-α}$ and $text{IFN-β}$) are primarily induced by TLR-3 and TLR-7 signaling pathways and trigger antiviral response. $text{IFN-γ}$ (Type II IFN) is induced by TLR-4 signaling pathway triggered by the LPS of Gram-negative bacteria.\n(D) Correct. [From Exam Archaeology Q5]"
+  },
+  {
+    "question": "Which statement concerning TLR is correct?",
+    "options": {
+      "A": "TLRs are expressed on plasma membrane, endosome and cytosol, to recognize PAMPs and trigger acute responses.",
+      "B": "Except for TLR4, all other TLRs signal through MyD88, an adaptor molecule.",
+      "C": "TLRs are single-pass transmembrane protein with leucine-rich repeat that recognize PAMPS.",
+      "D": "TLR3 recognizes dsRNA, which is a PAMP of the virus genome, in cytosol."
     },
-    {
-        "question": "Effector memory T cells ($\text{T}_\text{EM}$)",
-        "options": {
-            "A": "缺乏 CCR7，在全身循環，類似巡邏兵的概念。",
-            "B": "本身就有攻擊的能力，在淋巴系統外的組織受到抗原刺激時會快速分化。"
-        },
-        "answer": [
-         "A", "B"
-        ],
-        "explanation": " [From Exam Archaeology Q(林)三、1]"
-    },
-       {
-        "question": "Central memory T cells ($\text{T}_\text{CM}$)",
-        "options": {
-            "A": "表現 CCR7，只在次級淋巴器官和血液循環。",
-            "B": "在次級淋巴器官中受到抗原刺激時，會快速成熟成 Effector T 細胞。"
-        },
-        "answer": [
-         "A", "B"
-        ],
-        "explanation": " [From Exam Archaeology Q(林)三、1]"
-    },
-
-      {
-        "question": "Tissue-resident memory T cell ($\text{T}_\text{RM}$)",
-        "options": {
-            "A": "缺乏 CCR7 但有其他 chemokine receptors (e.g. CXCR3、CCR9)。",
-            "B": "會從此留在表皮組織中，不再進入血液循環。",
-            "C": "可以在第一線防禦病菌。"
-        },
-        "answer": [
-         "A", "B", "C"
-        ],
-        "explanation": " [From Exam Archaeology Q(林)三、1]"
-    },
-        {
-        "question": "RNA 病毒若發生兩病毒的基因重組，為抗原移型 (antigenic shift)，容易造成大流行；RNA 病毒若發生病毒基因序列突變，為抗原微變 (antigenic drift)，通常只造成小流行。",
-        "options":{
-        "T": "True",
-        "F": "False"
-        },
-        "answer": "T",
-        "explanation":"【出處】Failure of Host Defense Mechanisms [From Exam Archaeology Q(林)三、2]"
-
-    },
-     {
-        "question": "身體會藉由中樞耐受性 (central tolerance) 和周圍耐受性 (peripheral tolerance) 避免自體免疫的發生。",
-           "options":{
-               "A": "中樞耐受性 (central tolerance)：B 細胞和 T 細胞在中樞淋巴器官發育時，藉由負選擇去除大多數會攻擊身體的細胞，少數進到周邊區域。",
-               "B": "周圍耐受性 (peripheral tolerance)：在淋巴球成熟後進入次級淋巴器官時進行。對於少數仍有自體免疫的淋巴細胞，藉由細胞失能 (anergy)、$\text{T}_\text{reg}$ 細胞調節 (抑制或分化成 $\text{T}_\text{reg}$)、細胞凋亡 (apoptosis)，或利用免疫豁免位置 (immunologically privileged site) 使其不能接觸到自身抗原等方式，避免自體免疫。"
-        },
-        "answer": "D",
-        "explanation":" [From Exam Archaeology Q(陳)1]"
-
-    },
-        {
-        "question": "抗排斥藥物 (immunosuppressive drug) : 以抑制 T 細胞活化為主。",
-           "options":{
-               "A":"沒有 CD28 這些 signal 存在時，T cell 沒辦法產生足夠的 IL-2"
-        },
-        "answer": "D",
-        "explanation":"[From Exam Archaeology Q(陳)2]"
-
-    },
-      {
-        "question": "目前所知自體免疫疾病發生的兩大因素",
-           "options":{
-               "A": "體質特異性：某些免疫機制天生就有問題而導致自體免疫疾病，如 $\text{T}_\text{reg}$ 細胞受抑制，使免疫抑制功能不全；與自體耐受性調控有關的基因缺陷，容易造成自體免疫疾病的發生，如 AIRE 的 knockout (減少自體抗原在胸腺的呈現，影響負選擇)、Ipr/Ipr gld/gld (屬於 FAS 或 FAS ligand，與 apoptosis 有關) 突變。",
-               "B": "外來環境刺激：主要是感染，外來物質可以破壞細胞或組織間的障礙，使一些隱藏抗原被顯露出來，破壞自體耐受性，如病原體入侵使原本失能的免疫細胞重獲活性，攻擊自身細胞。"
-        },
-        "answer": "T",
-        "explanation":"調節 T 細胞 ($\text{T}_\text{reg}$, regulator T cell) 會控制體內會辨認自體抗原的 T 細胞，並抑制其作用，避免自體免疫。因此 effector cells 與 regulatory cell imbalance 時，將產生自體免疫疾病。 [From Exam Archaeology Q(陳)二、1]"
-
-    },
-      {
-        "question":"舉例來說，腫瘤細胞表面表現的 PD-L1 可與 T cell 上的 PD-1 結合，抑制 T cell 的活化。",
-           "options":{
-               "A":"Beta 鏈重組發生在 double negative 的 DN1、DN2 期，DN3、DN4 期則不發生重組。",
-               "B": "Alpha 鏈重組發生在 double positive 期。",
-               "C":"RAG-1 及 RAG-2 重組酶參與 TCR alpha, beta 鏈的基因重組。"
-        },
-        "answer": "E",
-        "explanation":"[From Exam Archaeology Q(柯)1]"
-
-    },
-      {
-        "question": "發育中的 T cell 若與自身抗原受體產生高強度結合 (high avidity) 反應，則進行淘汰。",
-                  "options": {
-            "A": "負選擇在 thymocyte 位於胸腺皮質時即開始，在胸腺皮質和髓質都會發生，但整體而言先做正選擇再做負選擇。",
-            "B": "負選擇和多種能進行抗原呈現的細胞有關，包含胸腺的皮質上皮細胞 (cortical epithelial cell)、髓質上皮細胞 (medullary epithelial cell) 或源於骨髓的抗原呈現細胞 (bone marrow derived APCs) 如髓質樹突細胞、巨噬細胞等以上三種細胞。",
-            "C": "Negative choice 的意義在於排除 auto immune。"
-        },
-        "answer": "D",
-        "explanation":"[From Exam Archaeology Q(柯)3]"
-
-    },
-
-    {
-        "question": "無法辨識自身 MHC 抗原的 T cell 會死亡。",
-        "options":{
-               "A":"正選擇發生在胸腺皮質上皮細胞(thymic cortical epithelial cell)處，主要由皮質間質細胞(epithelial stroma cell)進行MHC抗原呈現供T cell辨識。",
-               "B": "正選擇同時會決定T cell的後續分化，當T cell與兩種MHC之一的結合度較高，會誘導對應轉錄因子的產生，決定其輔助受體特異性，即transcriptional programming.",
-               "C":"正選擇訊號的產生需要TCR以及CD4, CD8 co-receptor合作產生Positive choice的意義在於MHC restriction。"
-        },
-        "answer": "C",
-        "explanation":"[From Exam Archaeology Q(柯)4]"
-
-    },
-       {
-        "question": "自體免疫調節因子 (AIRE, autoimmune regulator) 在胸腺髓質中表現，誘發一般在周圍組織上才表現的蛋白質之表現，幫助負選擇進行。",
-                  "options": {
-            "T": "True",
-            "F": "False"
-        },
-        "answer": "F",
-        "explanation":"(共筆 vol2 P65) [From Exam Archaeology Q(柯)5]"
-
-    },
-     {
-        "question": "T 細胞辨識的是線性多肽。",
-                  "options": {
-            "T": "True",
-            "F": "False"
-        },
-        "answer": "F",
-        "explanation":"因為只有線性多肽才與 MHC 的 clefts 結合，且與 MHC 結合的多肽在形成時，便已經喪失了蛋白質的構型。(共筆 vol2 P75)[From Exam Archaeology Q(柯)6]"
-
-    },
-        {
-        "question": "",
-          "options": {
-            "A": "為 class I MHC 組裝過程。",
-            "B": "應為 $\text{CD4}^\text{+}$。",
-            "C": "在 lysosome 裡進行結合。",
-            "D": "正確。",
-            "E": "為 class I MHC 組裝過程。"
-        },
-        "answer": "D",
-        "explanation": "(共筆 vol2 P89) [From Exam Archaeology Q(柯)8]"
-    },
-    {
-         "question": "腫瘤的演化分為三階段，其順序為清除(Elimination)、平衡(Equilibrium)、逃脫(Escape),故答案選(C)。以下為此三階段的詳細說明。(1)清除(elimination)：正常細胞癌化成腫瘤細胞時表現出腫瘤特定抗原(TSA, tumor-specific antigen)，被免疫系統辨識並清除(immune surveillance)。(2)平衡(equilibrium)：還未被清除的腫瘤細胞一面突變、生長，一面和免疫系統對抗，增減維持一定平衡。(3)逃脫(escape)：不斷突變的結果，出現能逃過免疫系統辨識的細胞，開始不受控制生長，形成腫瘤。",
-         "options":{},
-         "answer": "C",
-         "explanation": "[From Exam Archaeology Q(柯)9]"
-     },
-       {
-         "question": "Immunological synapse 可以分為兩個部分，核心處為 cSMAC，周圍為 pSMAC",
-         "options":{},
-         "answer": "D",
-         "explanation": "(1) cSMAC: 除了具有 T 細胞上的 TCR complex、CD4 以及 APC 上的 MHC，還分佈有其他 costimulatory molecules，例如在 T 細胞上有 CD28、CD2 可以分別與 APC 上的 B7.1 (又稱 CD80)、B7.2 (又稱 CD86) 與 LFA-3 結合，這些都隸屬 cSMAC 的範圍。(2) pSMA : 在 T 細胞上由 LFA-1, APC 上由 ICAM-1 組成，兩者有交互作用。 [From Exam Archaeology Q(柯)10]"
-     },
-
-    {
-         "question": "(A)(B)(C)(D) 皆為 cold tumor 的特性，而 (E) 選項之描述為 hot tumor 的特性",
-         "options":{},
-         "answer": "E",
-         "explanation": "(詳見 B10 共筆 Vol. 4 p.44)。 [From Exam Archaeology Q(柯)11]"
-     },
-      {
-         "question": "(C)(E)正確，可參見B10共筆 Vol. 3 p.26。(B)應為 Cytotoxic T cells induce target cell apoptosis.",
-         "options":{},
-         "answer": ["C", "E"],
-         "explanation": "[From Exam Archaeology Q(柯)12]"
-     },
-
-        {
-        "question": "重鏈及輕鏈各兩條組成了免疫球蛋白的 Y 字型結構，包含兩條臂 (arm) 及一個主幹 (trunk)。",
-      "options": {
-            "T": "True",
-            "F": "False"
-        },
-        "answer": "D",
-        "explanation": "(共筆 vol2 P10)[From Exam Archaeology Q(黃)1]"
-    },
-     {
-        "question": "木瓜酵素 (papain)：切在兩重鏈之間雙硫鍵的 N 端，產生兩條 Fab 及一條 Fc，同時雙硫鍵仍留在 Fc 上。胃蛋白酶 (pepsin)：切在兩重鏈之間雙硫鍵的 C 端，產生 F (ab') 2 及 Fc 小碎片。",
-       "options": {
-           "T": "True",
-            "F": "False"
-        },
-        "answer": "D",
-        "explanation": "(共筆 vol2 P12) [From Exam Archaeology Q(黃)2]"
-    },
-    {
-        "question":"",
-       "options": {
-            "A": "應為 continuous.",
-            "B": "(共筆 vol2 P15)",
-            "C": "圈環作為互補性決定區 (CDRs)，是辨識抗原的重要區域。六個 HV 圈環共同決定了一個抗原的結合位。(共筆 vol2 P15)"
-        },
-        "answer": "A",
-        "explanation": "可以將 epitope 分為：1. Conformational epitope: 抗原決定位有多個，分布在三維空間中。例如：一條折疊的多肽上有三個不相臨的胺基酸可以被抗體辨識。2. Linear epitope: 抗原決定位位於一連續線型的分子構造中。例如：一條多肽上有一串連續的胺基酸可以被抗體辨識。(共筆 vol2 P19) [From Exam Archaeology Q(黃)4]"
-    },
-     {
-        "question": "Antibody 的 Fc region 並未與 antigen 結合。",
-       "options": {
-            "T": "True",
-            "F": "False"
-        },
-        "answer": "F",
-        "explanation": "[From Exam Archaeology Q(黃)5]"
-    },
- {
-        "question": "(A)(C)(D) 發生在 germinal center 的事件，通稱為 germinal center reaction，如體細胞高度變異 (somatic hypermutation)、抗體類型轉換重組 (class switch recombination)、親和力成熟 (affinity maturation)。",
-       "options": {
-          "T": "True",
-            "F": "False"
-        },
-        "answer": "F",
-        "explanation": "(詳見免疫學 B11 共筆 Vol 2 第 35 頁) [From Exam Archaeology Q(黃)6]"
-    },
-    {
-        "question":"依抗原是否可以和BCR crosslink，分為TI-1和TI-2，TI-1不可以，TI-2可以。",
-        "options": {
-            "A": "是",
-            "B": "否",
-            "C": "不一定",
-            "D": "以上皆是"
-        },
-           "answer": "D",
-        "explanation": "(TI-1 與 TI-2 例子詳見免疫學 B11 共筆第 42 頁表格) [From Exam Archaeology Q(黃)7]"
-    },
-      {
-    "question":"",
-       "options": {
-            "A": "13 價結合型肺炎鏈球菌疫苗，不活化疫苗。",
-            "B": "人類乳突病毒疫苗，不活化疫苗。",
-            "C": "麻疹腮腺炎德國麻疹混合疫苗，減毒疫苗。"
-        },
-        "answer": "C",
-        "explanation": "[From Exam Archaeology Q(黃)8]"
-    },
-
-     {
-    "question":"小兒麻痺病毒疫苗為不活化疫苗 (inactivated polio vaccine )，可以產生對抗病毒的抗體，可以防止小兒麻痺侵入中樞神經以及防止癱瘓。",
-    "options": {},
     "answer": "C",
-     "explanation": "Reference: IPV – GPEI (polioeradication.org) [From Exam Archaeology Q(黃)9]"
+    "explanation": "(A) TLRs are only expressed on plasma membrane and endosome.\n(B) Except for TLR3, all other TLRs signal through MyD88.\n(C) Correct.\n(D) TLR3 which binds dsRNA is located in endosome. [From Exam Archaeology Q6]"
+  },
+  {
+    "question": "Macrophage and neutrophil are phagocytes, which of the followings is correct?",
+    "options": {
+      "A": "Both can produce lysozyme to dissolve LPS of the Gram-negative G (-) bacterial cell wall.",
+      "B": "Macrophage can produce lactoferrin, which competes $text{Fe}^text{2+}$, which is a necessary ion for bacterial replication.",
+      "C": "Upon bacterial infection, neutrophil can undergo NETosis to form extracellular trap (NET), in which releases its nuclear chromatin, trapping but not kill pathogens.",
+      "D": "Neutrophils tracks down bacteria with G-protein coupled receptors that sense fMLF which is a peptide specific to bacteria."
     },
+    "answer": "D",
+    "explanation": "(A) Both produce Lysozyme which digests cell walls of some Gram-positive bacteria.\n(B) Neutrophil can produce lactoferrin which competes $text{Fe}^text{2+}$.\n(C) NETs contain elastase, myelo-peroxidase, cathepsin G and lactoferrin which degrade or block pathogens.\n(D) Correct. [From Exam Archaeology Q7]"
+  },
+  {
+    "question": "Clonal Selection Theory (CST) is the foundation of adaptive immunity. Which statement concerning CST is correct?",
+    "options": {
+      "A": "CST explains self-tolerance because self-reactive T and B lymphocytes are deleted in the bone marrow.",
+      "B": "Based on CST, tissues can be successfully transplanted into foreign recipients when recipient's immune system is mature.",
+      "C": "CST explains antigen specificity because each lymphocyte expresses a distinct antigen receptor, and only lymphocytes that react with a given antigen can undergo expansion.",
+      "D": "Dr. Peter Medawar first hypothesized CST and received the Nobel Prize later."
+    },
+    "answer": "C",
+    "explanation": "(A) Self-reactive T lymphocytes are deleted in the thymus.\n(B) The success of tissue transplantation depends on factors beyond CST, such as histocompatibility and immune suppression.\n(C) Correct.\n(D) CST was first proposed by Dr. Macfarlane Burnet (who later jointly received the Nobel Prize with Dr. Peter Medawar for the discovery of acquired immunological tolerance). [From Exam Archaeology Q8]"
+  },
  {
-         "question": "",
-         "options":{
-            "A": "不在名單中。",
-            "B": "alum 為鉀鋁硫酸 (Potassium Aluminum Sulfate)，鋁鹽為常見的佐劑，廣泛用於許多疫苗中——數量太多族繁不及備載，故不一一列出。鋁鹽的功能目前眾說紛紜，較為人接受的解釋為鋁鹽可以協助吸附、逐步釋放抗原，而近期也有研究指出鋁鹽可以刺激免疫細胞 (包括巨噬細胞、樹突細胞)，可以調節免疫功能。",
-            "C": "此類佐劑為透過調節疫苗傳送系統的釋放效果增進疫苗的效力。大致上為使疫苗被油脂包裹住，使其能夠被油脂保護住直到被吞噬細胞吞噬。這種配方被稱為 MF59，是透過角鯊烯與水形成乳液懸滴，使其能夠被吞噬細胞有效吞噬。",
-            "D": "此類佐劑為增進免疫誘導力，透過 TLR-9 與 CpG 的結合，誘導吞噬細胞吞入疫苗以促進疫苗的效力。"
-         },
+    "question": "Presentation of pre-B receptor is an important checkpoint in B cell development. Which statement concerning signal from pre-B receptor is CORRECT?",
+    "options": {
+      "A": "Will inhibit light chain gene rearrangement.",
+      "B": "Will promote heavy chain gene rearrangement.",
+      "C": "Will promote surrogate light gene rearrangement.",
+      "D": "Will enhance pre-B cell proliferation."
+    },
+    "answer": "D",
+    "explanation": "(A) Should be PROMOTE light chain gene rearrangement.\n(B) Should be STOP heavy chain gene rearrangement.\n(C) The surrogate light chain (SLC) is only used for stabilization and is not related to gene rearrangement.\n(D) Correct, pre-B cell signals will promote the maturation and differentiation of downstream B cells. (See B10 Notes vol.1, p.74, Fig. 8.5) [From Exam Archaeology Q9]"
+  },
+  {
+    "question": "The vaccination method invented by Dr. Jenner and the variolation method by Chinese doctor both induce immunity against smallpox. Which is correct?",
+    "options": {
+      "A": "The reason vaccination works is because the virus that cause cowpox is the same as smallpox.",
+      "B": "Theoretically, the efficiency of the immunity cause by variolation is better than vaccination.",
+      "C": "Because of the invention of vaccination, smallpox was eradicated within 50 years after its invention.",
+      "D": "The side effect of variolation could have been avoided if the inoculation had been via the subcutaneous route like vaccination instead of nasal route."
+    },
+    "answer": "B",
+    "explanation": "(A) It's not exactly the same, but because the two viruses are related and have similar antigens on their surfaces, the antibodies produced against cowpox can also effectively fight smallpox.\n(B) Because it is the inoculation of natural, unattenuated virus strains, the efficiency of inducing immunity is indeed better.\n(C) The cowpox vaccine was invented by Dr. Jenner in 1796, but smallpox was not eradicated until 1979, declared by WHO, so it took about 183 years.\n(D) The risk of variolation comes from the direct inoculation of natural, unattenuated virus strains, not from the route of inoculation. (See B11 Notes vol.1, top of p.6) [From Exam Archaeology Q10]"
+  },
+  {
+    "question": "The development of T and B lymphocytes share some common features. Which statement concerning lymphocyte development is correct?",
+    "options": {
+      "A": "The anatomic site of rearrangement of antigen receptor genes of both T and B lymphocyte is located in the bone marrow.",
+      "B": "The heavy chain genes of BCR are an evolutionary resemblance to the alpha chain of TCR.",
+      "C": "The selection process for self antigen recognition of both T and B lymphocytes does not occur until it reaches the immature lymphocyte stage.",
+      "D": "There are two checkpoints to ensure the rearrangement of antigen receptor genes of both lymphocytes is successful and non-self-reactive."
+    },
+    "answer": "C",
+    "explanation": "(A) In the rearrangement of antigen receptor genes stage, both are located in the generative organ (bone marrow/thymus). (B11 vol.1 p.76)\n(B) The surrogate light chain of Pre-BCR is evolutionarily similar to the surrogate alpha chain of pre-TCR.\n(C) After receiving the self-antigen receptor check, the precursor B cells can develop into immature B cells. The question is a bit roundabout, it doesn't start until the immature stage = it starts before the mature stage.\n(D) There are three checkpoints (must-know, if you forgot, please review B11 vol.1 p.77). [From Exam Archaeology Q11]"
+  },
+{
+    "question": "Which statement about B cell development is correct?",
+    "options": {
+        "A": "BCR starts to rearrange DH and JH at pro-B stage in two chromosomes.",
+        "B": "BCR rearranges VH to DJH at pre-B, but doesn't express antigen receptor because light chain hasn't arranged.",
+        "C": "Mature B class switch from IgM to IgD.",
+        "D": "After selection, all B that express over affinity to self-antigens are rendered to apoptotic."
+    },
+    "answer": "A",
+    "explanation": " (A) Correct. (See details in B11 vol.1 p.86)\n(B) At the small pre B cell stage, the V-J rearrangement of the light chain has been completed, so it can do the subsequent self-antigen test.\n(C) IgM has not disappeared, but there is more IgD expression.\n(D) Not all B cells that fail the self-antigen test will undergo apoptosis, they can be rescued through: receptor editing to rearrange genes. (See details in B11 vol.1 p.87, 4 fates of self-reactive B cells). [From Exam Archaeology Q12]"
+},
+{
+"question": "During an infection, antigen-presenting cells, such as dendritic cells, pick up antigens at ___, activate adaptive immunity at ___. Then the activated T cells, B cells and antibodies eliminate pathogens at ___?",
+    "options":{
+        "A": "the site of infection; secondary lymphoid organs; secondary lymphoid organs",
+        "B": "the site of infection; secondary lymphoid organs; the site of infection",
+        "C": "the site of infection; the site of infection; the site of infection",
+        "D": "secondary lymphoid organs; the site of infection; the site of infection",
+        "E": "secondary lymphoid organs; secondary lymphoid organs; the site of infection"
+    },
+"answer": "B",
+"explanation": "After lymphocytes leave the central lymphoid organs, they enter the blood circulation and enter the peripheral lymphoid organs, including lymph nodes, spleen, intestinal lymphoid tissues, and other secondary lymphoid tissues.\nDendritic cells encounter pathogens and antigens at the site of infection, phagocytose them to form antigen-presenting cells, and the peripheral lymphoid tissues (mainly lymph nodes) are where B cells are activated by antigens. B cells and antibodies finally reach the site of infection through blood or lymph circulation and eliminate pathogens. [From Exam Archaeology Q13]"
+},
+{
+"question": "Which of the following statement regarding ILCs is not correct?",
+"options": {
+"A": "ILCs are innate cells and are derived from CLP in bone marrow.",
+"B": "ILCs don't present T cell receptor or B cell receptor.",
+"C": "ILCs produce cytokines overlapping with CD4 T cells or CD8 T cell.",
+"D": "ILC2 produce $text{IFN-γ}$ to eliminate extracellular bacteria and fungi.",
+"E": "ILC3 produce IL-17 and IL-22 to recruit and activate neutrophil."
+},
+"answer": "D",
+"explanation":
+"(A) ILCs are innate lymphoid cells, like other lymphoid cells, they are produced in the bone marrow (lymphoid lineage) and are distributed in lymph nodes and organs with epidermal tissue.\n(B) Neither T cells nor B cells (no TCR, no BCR), no antigen specificity.\n(C) ILCs have similar functions to the corresponding T cells (overlapping cytokines).\n(D) Type 3 immune response targets extracellular bacteria and fungi, ILC3 can produce IL-17 and IL-22 to attract and activate neutrophils.\n(E) Same as (D). [From Exam Archaeology Q14]"
+},
+{
+"question": "Which of the following about T cell is NOT correct?",
+    "options": {
+      "A": "$text{T}_text{H1}$: intracellular pathogen: activate macrophage",
+      "B": "$text{T}_text{H2}$: helminth: tissue repair",
+      "C": "$text{T}_text{FH}$: extracellular bacteria and fungi: $text{TNF-α}$",
+      "D": "$text{T}_text{reg}$: inhibit T cell function: IL-10 and $text{TGF-β}$",
+      "E": "Cytotoxic T cell: virus-infected cell: perforin and granzyme"
+    },
+    "answer": "C",
+    "explanation": "(A) $text{T}_text{H1}$ mainly fights against bacteria growing in macrophages. $text{T}_text{H1}$ cells are activated after recognizing pathogens and secrete cytokine $text{IFN-γ}$ to transmit signals. After the signal enters the macrophage, it will promote the fusion of lysosomes and phagosomes to form phagolysosomes, activating macrophages to eliminate foreign pathogens.\n(B) $text{T}_text{H2}$ fights against extracellular parasitic infections (helminth: worms) and secretes IL-4 and IL-13 to activate M2 macrophages and help tissue repair.\n(C) $text{T}_text{FH}$ is located in B cell follicles and is mainly responsible for helping the maturation of B cells in the germinal center (GC). Extracellular bacteria and fungi are type 3 responses, and the immune effector module includes group 3 ILCs, $text{T}_text{H17}$ $text{CD4}^text{+}$ T cell, IgG1, IgG2, and neutrophils. $text{TNF-α}$ is produced by activated macrophages by $text{T}_text{H1}$. Neither is dominated by $text{T}_text{FH}$.\n(D) $text{T}_text{reg}$ can secrete inhibitory cytokines (IL-10, $text{TGF-β}$) to inhibit the immune system.\n(E) Cytotoxic T cells can eliminate cells infected by viruses, secrete perforin to make cells perforate, and secrete granzyme to make intracellular substances decompose, thus causing cell apoptosis. [From Exam Archaeology Q15]"
+},
+{
+"question": "Which one of the following statements is NOT correct?",
+"options":{
+"A": "During latency, viruses persist in the host and can be reactivate when the host's immune system is compromised.",
+"B": "Antibody against one serotype of Streptococcus pneumoniae can protect against another serotype.",
+"C": "Inherited genetic defect in T cell development can result in defects in other components of the immune system.",
+"D": "Some intracellular infection like Mycobacterium tuberculosis cannot be completely removed.",
+"E": "X-linked SCID is an immunodeficiency of IL-2RG, causing problem on IL-2R and affect immune system."
+},
+"answer":"B",
+"explanation": "(A) Latent infection in the immune response process: pathogens do not show obvious pathological reactions and related pathogen secretions in the individual, but pathological reactions will occur when immunity is low.\n(B) The antibodies produced by the immune system are serotype-specific, and the polysaccharides that make up the capsule of Streptococcus pneumoniae will form new serotypes as long as they are slightly changed, and cannot be recognized by memory cells infected in the past.\n(C) Immune responses can influence each other, so defects in one part of the immune system may also cause abnormalities in other immune functions. T cell deficiency often causes persistent fungal infections, viral infections, or intracellular bacterial infections.\n(D) Some intracellular bacteria are phagocytosed by macrophages and can use various methods to prevent the fusion of phagosomes and lysosomes to decompose bacteria. For example, Mycobacterium tuberculosis will treat macrophages as Trojan horses, hiding in them, treating macrophages as UBER, avoiding the immune system, so they can only be temporarily surrounded. If the time is long, they still have a chance to break through the blockade and cause disease recurrence.\n(E) X-linked SCID is the most common SCID, which is caused by the mutation of the IL2RG gene, leading to the disappearance of the response of B cells and T cells, resulting in severe acquired immune deficiency, but innate immunity is still retained. [From Exam Archaeology Q16]"
+},
+{
+"question": "Which of the following statement is NOT correct?",
+"options":{
+"A": "Desensitization is the therapy that to restore tolerance to the allergen by reducing its tendency to induce IgE production.",
+"B": "Delayed-type hypersensitivity (DTH) is mediated by B cells.",
+"C": "Anaphylactic shock is caused by IgE secreted by mast cells systematically.",
+"D": "Celiac disease is a type of hypersensitivity caused by gluten in the food.",
+"E": "The response caused by antigens in immunology can be either immediate or delayed."
+},
+"answer": "B",
+"explanation": "(A) Desensitization: exposing to low doses of allergens and gradually increasing the dose, allowing the immune system to slowly tolerate allergens and reduce the induction of IgE production.\n(B) Allergies can be divided into 2 types according to the reaction time: immediate type and delayed type (DTH). DTH is regulated by T cells, and allergic reactions appear two or three days after contact with allergens.\n(C) In type I hypersensitivity reactions, mast cells are activated to cause histamine and other mediators to spread throughout the body, increasing blood flow and vascular permeability, causing fluid to flow out into the tissue fluid and lowering blood pressure. Mild cases may cause urticaria, and severe cases may cause anaphylactic shock.\n(D) Gluten-sensitive enteropathy/celiac disease: ingestion of wheat gluten or similar proteins of other grains induces T cells to attack intestinal cells, causing damage to epithelial cells.\n(E) Same as (B). [From Exam Archaeology Q17]"
+},
+{
+"question": "All of the following are tenets of the hygiene hypothesis except",
+ "options":{
+    "A": "a decrease in allergic disease in developed countries compared to developing countries.",
+    "B": "widespread use of antibiotics interferes with the use and education of the immune system.",
+    "C": "widespread immunization practices compromise the development of a fully functional immune response.",
+    "D": "childhood exposure to microorganisms is reduced.",
+    "E": "antibiotic-driven selection of super bacteria perturbs the immune system."
+ },
+ "answer": "A",
+ "explanation": "(A) The incidence of allergic reactions in developed countries is higher than that in developing countries.\n(B) Correct.\n(C) Correct.\n(D) Correct.\n(E) Correct. [From Exam Archaeology Q18]"
+},
+{
+ "question": "Allergy and autoimmunity are caused by abnormal immune responses that are against appropriate antigens.",
+    "options":{
+        "T": "True",
+        "F": "False"
+    },
+ "answer": "F",
+ "explanation": "When the acquired immune system has an inappropriate response to \"harmless antigens\", it will cause allergies, including allergies and autoimmunity, and allergy cases are usually complex and may combine multiple types of mechanisms. [From Exam Archaeology Q19]"
+},
+{
+"question": "Inflammation is harmful so it needs to be avoided in all stages of immunity.",
+"options": {
+"T": "True",
+"F": "False"
+},
+"answer": "F",
+"explanation": "Inflammation is an important part of the immune response. It helps protect the body from infection and injury, helps clear harmful stimuli, initiates the healing process, and fights pathogens. However, excessive or persistent inflammation can indeed be harmful and lead to various diseases. [From Exam Archaeology Q20]"
+},
+{
+"question": "Type 1 hypersensitivity reaction is caused by an IgG-mediated immune response whose main physiological role is to defend against parasite infection.",
+"options":{
+    "T": "True",
+    "F": "False"
+},
+"answer": "F",
+"explanation": "Type 1 hypersensitivity reaction is caused by an IgE-mediated immune response whose main physiological role is to defend against parasite infection.\nIn tissues, IgE binds to $text{FcεRI}$ of mast cells and activates them to cause allergies; in the blood, it binds to $text{FcεRI}$ of basophils. [From Exam Archaeology Q21]"
+},
+{
+    "question": "Fill in the blanks: fill in antigenic shift and antigenic drift.",
+    "options":{
+        "A": "Antigenic Drift",
+        "B": "Antigenic Shift"
+    },
+    "answer": {
+      "A": "Antigenic Drift",
+      "B": "Antigenic Shift"
+    },
+    "explanation": "If two viruses of RNA undergo gene recombination, it is antigenic shift, which is easy to cause a pandemic; if the gene sequence of RNA virus mutates, it is antigenic drift, which usually only causes a small epidemic. [From Exam Archaeology Q23]"
+  },
+  {
+  "question": "Which one is wrong about the mechanisms of T cell immune tolerance?",
+    "options": {
+    "A": "central tolerance",
+    "B": "anergy",
+    "C": "presence of regulatory T cell",
+    "D": "receptor editing"
+  },
+  "answer": "D",
+  "explanation": "The body will avoid autoimmune diseases through central tolerance and peripheral tolerance.\nCentral tolerance: When B cells and T cells develop in the central lymphoid organs, negative selection is used to remove most of the cells that will attack the body, and a few enter the peripheral areas.\nPeripheral tolerance: It is carried out after lymphocytes mature and enter the secondary lymphoid organs. For the few lymphocytes that are still autoimmune, methods such as cell anergy, $text{T}_text{reg}$ cell regulation (inhibition or differentiation into $text{T}_text{reg}$), apoptosis, or the use of immunologically privileged sites to prevent them from contacting self-antigens are used to avoid autoimmunity.[From Exam Archaeology Q24]"
+  },
+   {
+    "question": "Regarding the therapeutic targets of solid organ transplantation, which of the following is correct for inhibiting T cell activation?",
+    "options": {
+      "A": "cyclosporine and tacrolimus mainly inhibit calcineurin, thereby inhibiting the signal transduction of T cell activation, and further hindering the production of IL-2.",
+      "B": "rapamycin inhibits mTOR molecules, thereby inhibiting T cell activation and proliferation.",
+      "C": "Basiliximab monoclonal antibody directly binds to the IL-2 receptor on the surface of T cells, inhibiting T cell activation.",
+      "D": "All of the above."
+    },
+    "answer": "D",
+    "explanation": "Immunosuppressive drugs: mainly to inhibit T cell activation. [From Exam Archaeology Q25]"
+  },
+  {
+    "question": "The factors that trigger autoimmunity include genetic deposition and environmental triggers. When auto-reactive effector cells and regulatory cell imbalance, autoimmune diseases will occur.",
+    "options": {
+        "T": "True",
+        "F": "False"
+    },
+    "answer": "T",
+    "explanation": "Two known factors that cause autoimmune diseases.\n(1) Genetic specificity: some immune mechanisms are inherently problematic, leading to autoimmune diseases, such as $text{T}_text{reg}$ cells are inhibited, making immune suppression dysfunctional; genetic defects related to the regulation of self-tolerance are prone to cause autoimmune diseases, such as knockout of AIRE (reducing the presentation of self-antigens in the thymus, affecting negative selection), Ipr/Ipr gld/gld (belonging to FAS or FAS ligand, related to apoptosis) mutations.\n(2) External environmental stimuli: mainly infection, foreign substances can destroy the barriers of cells or tissues, so that some hidden antigens are exposed, destroying self-tolerance, such as pathogens invading, causing originally disabled immune cells to regain activity and attack self-cells.\nRegulatory T cells ($text{T}_text{reg}$, regulator T cell) will control the T cells in the body that can recognize self-antigens and inhibit their effects to avoid autoimmunity. Therefore, when effector cells and regulatory cell imbalance, autoimmune diseases will occur. [From Exam Archaeology Q26]"
 
-         "answer": "A",
-         "explanation": "[From Exam Archaeology Q(黃)10]"
+  },
+    {
+    "question": "Immunity signal ligand to inhibit CD8 T cell?",
+    "options": {
+      "A": "MHC I",
+      "B": "MHC II",
+      "C": "PD-1",
+      "D": "CD28",
+      "E": "PD-L1"
+    },
+    "answer": "E",
+    "explanation": "For example, PD-L1 expressed on the surface of tumor cells can bind to PD-1 on T cells, inhibiting the activation of T cells. [From Exam Archaeology Q27]"
+  },
+  {
+   "question": "Which is the best description for the rearrangement of T cell receptor alpha chain during the T cell development?",
+    "options": {
+      "A": "In the mature T cell.",
+      "B": "After binding to self-antigen.",
+      "C": "Before $text{CD3}^text{+}$ T cell.",
+      "D": "In the double negative stage.",
+      "E": "In the double positive stage."
+    },
+    "answer": "E",
+    "explanation": "Beta chain recombination occurs in the double negative DN1 and DN2 stages, and no recombination occurs in the DN3 and DN4 stages.\nAlpha chain recombination occurs in the double positive stage.\nRAG-1 and RAG-2 recombinase participate in the gene recombination of TCR alpha and beta chains. [From Exam Archaeology Q28]"
+  },
+   {
+    "question": "Which of the following is not associated with negative choice?",
+    "options": {
+      "A": "Self tolerance",
+      "B": "Thymic medullary epithelial cell",
+      "C": "Recognition of self antigen",
+      "D": "Recognition of foreign antigen",
+      "E": "Apoptosis"
+    },
+    "answer": "D",
+    "explanation": "If the developing T cell has a high avidity reaction with the self-antigen receptor, it will be eliminated.\nNegative selection begins when thymocytes are located in the thymic cortex. It occurs in both the thymic cortex and medulla, but in general, positive selection is done first and then negative selection.\nNegative selection is related to a variety of cells that can present antigens, including cortical epithelial cells, medullary epithelial cells, or bone marrow-derived APCs such as medullary dendritic cells and macrophages.\nThe meaning of Negative choice is to eliminate auto immune. [From Exam Archaeology Q29]"
+  },
+  {
+ "question": "Which of the following is not associated with positive choice?",
+    "options": {
+      "A": "決定發育成 CD4 or CD8",
+      "B": "對自體抗原產生辨識可存活。",
+      "C": "對自體抗原辨識太過強烈則會發生細胞凋亡。"
+    },
+    "answer": "C",
+    "explanation": "T cells that cannot recognize self MHC antigens will die.\nPositive selection occurs in the thymic cortical epithelial cells, mainly by epithelial stroma cells to present MHC antigens for T cell recognition.\nPositive selection will also determine the subsequent differentiation of T cells. When the binding degree of T cells to one of the two MHCs is higher, it will induce the production of corresponding transcription factors and determine its co-receptor specificity, that is, transcriptional programming.\nThe generation of positive selection signals requires the cooperation of TCR and CD4, CD8 co-receptors. The meaning of Positive choice is MHC restriction. [From Exam Archaeology Q30]"
+  },
+   {
+      "question": "下列那個分子在胸腺表現周邊組織的抗原以進行負選擇?",
+    "options": {
+      "A": "TdT",
+      "B": "AIRE",
+      "C": "ID2",
+      "D": "IL2",
+      "E": "TECK"
+    },
+    "answer": "B",
+    "explanation": "Autoimmune regulator (AIRE) is expressed in the thymic medulla, inducing the expression of proteins that are generally expressed in peripheral tissues to help negative selection. [From Exam Archaeology Q31]"
+  },
+   {
+    "question": "Which of the following is not the antigens recognized by T cells?",
+    "options": {
+      "A": "Most T cells recognize peptides and no other molecules.",
+      "B": "T cells recognize conformational determinants of protein antigen.",
+      "C": "$text{CD4}^text{+}$ and $text{CD8}^text{+}$ T cells preferentially recognize antigens from extracellular environment into vesicles and antigens in cytosol, respectively.",
+      "D": "T cells ...",
+      "E": "T cell receptors recognize only one determinant from antigens."
+    },
+    "answer": "B",
+    "explanation": "T cells recognize linear peptides. Because only linear peptides can bind to the clefts of MHC, and the peptides bound to MHC have already lost the conformation of the protein when they are formed. [From Exam Archaeology Q32]"
+  },
+  {
+"question": "During V(D)J recombination of lymphocytes, recombination signal sequences are recognized by which of the following?",
+"options": {
+"A": "Receptor tyrosine kinase",
+"B": "Constant region",
+"C": "Leading region",
+"D": "RAG-1 / RAG-2 enzymes",
+"E": "Diversity region"
+},
+"answer": "D",
+"explanation": "RAG-1 (Recombination-activating gene - 1) /RAG-2 complex will bind to and cleave the recombination signal sequence (RSS). To perform RAG- dependent V(D)J rearrangement. [From Exam Archaeology Q33]"
+},
+{
+    "question": "Which one of following features is the characteristic of class II MHC pathway of antigen processing and presentation?",
+    "options": {
+      "A": "$text{β1}$, $text{β2}$ and $text{β5}$ subunits of proteasomes are responsible for protein degradation.",
+      "B": "$text{CD8}^text{+}$ T cells are responsive T cells.",
+      "C": "Endoplasmic reticulum (ER) is the site of peptide loading to MHC.",
+      "D": "Late endosomes and lysosomes are the site of antigen degradation.",
+      "E": "TAP1/2 molecules are involved in peptide transport and loading."
+    },
+    "answer": "D",
+    "explanation": "(A) is the class I MHC assembly process.\n(B) Should be $text{CD4}^text{+}$.\n(C) It is bound in the lysosome.\n(D) Correct.\n(E) is the class I MHC assembly process. [From Exam Archaeology Q34]"
+  },
+  {
+    "question": "Which of the following statements regarding the sequence of cancer cell editing is correct?",
+    "options": {
+      "A": "Escape, Elimination, Equilibrium",
+      "B": "Equilibrium, Elimination, Escape",
+      "C": "Elimination, Equilibrium, Escape",
+      "D": "Elimination, Escape, Equilibrium",
+      "E": "Equilibrium, Escape, Elimination"
+    },
+    "answer": "C",
+    "explanation": "The evolution of tumors is divided into three stages, and the order is Elimination, Equilibrium, and Escape, so the answer is (C).\nThe following is a detailed description of these three stages. (1) Elimination: When normal cells become cancerous cells, they express tumor-specific antigens (TSA, tumor-specific antigen), which are recognized and eliminated by the immune system (immune surveillance). (2) Equilibrium: Tumor cells that have not yet been eliminated mutate and grow on the one hand, and fight against the immune system on the other hand, maintaining a certain balance. (3) Escape: As a result of continuous mutations, cells that can escape the recognition of the immune system appear and begin to grow uncontrollably, forming tumors. [From Exam Archaeology Q35]"
+  },
+  {
+    "question": "Which of the following is NOT a component of immunological synapse?",
+    "options": {
+      "A": "LFA-1",
+      "B": "B7",
+      "C": "MHC",
+      "D": "TLR",
+      "E": "TCR"
+    },
+    "answer": "D",
+    "explanation": "Immunological synapse can be divided into two parts, the core is cSMAC, and the periphery is pSMAC. (1) cSMAC: In addition to TCR complex, CD4 on T cells and MHC on APC, it also distributes other costimulatory molecules, such as CD28 and CD2 on T cells, which can bind to B7.1 (also known as CD80) and B7.2 (also known as CD86) on APC, respectively. LFA-3, these belong to the scope of cSMAC. (2) pSMA: LFA-1 on T cells and ICAM-1 on APC, both of which interact. [From Exam Archaeology Q36]"
+  },
+  {
+    "question": "Which of the following is NOT a characteristic of cold tumor?",
+    "options": {
+      "A": "Exclusion of $text{CD8}^text{+}$ T cells and NK cells from the tumor.",
+      "B": "Low antigen presentation.",
+      "C": "Immunosuppressive immune cells in tumor (ex. Tregs, MDSC).",
+      "D": "Poor prognosis and response to immunotherapy.",
+      "E": "Elevated effector cytokine, such as Granzyme B."
+    },
+    "answer": "E",
+    "explanation": "(A)(B)(C)(D) are all characteristics of cold tumors, and (E) is a characteristic of hot tumors (See B10 Notes Vol. 4 p.44). [From Exam Archaeology Q37]"
+  },
+  {
+    "question": "Which of the following statements regarding T cell-mediated cytotoxicity is correct?",
+    "options": {
+      "A": "Cytotoxic T cells induce the senescence of target cells.",
+      "B": "Cytotoxic T cells induce cytotoxic T cell apoptosis.",
+      "C": "Cytotoxic T cells 透過 FAS/FAS-L 的 interaction 使 target cell 死亡。",
+      "D": "Cytotoxic T cells induce shed of membrane-bound vesicle and shrink of target cell.",
+      "E": "Cytotoxic T cells release granzymes and perforin."
+    },
+    "answer": "E",
+    "explanation": "(C)(E) are correct, see B10 Notes Vol. 3 p.26. (B) should be Cytotoxic T cells induce target cell apoptosis. [From Exam Archaeology Q38]"
+  },
+  {
+    "question": "$text{T}_text{H1}$, $text{T}_text{H2}$, $text{T}_text{H17}$ 的 signal 3 和 master regulator 對應。",
+    "options": {
+      "Cell": ["$text{T}_text{H1}$", "$text{T}_text{H2}$", "$text{T}_text{H17}$"],
+      "Signal 3": {
+        "(A)": "$text{IFN-γ}$",
+        "(B)": "IL-4",
+        "(C)": "IL-12",
+        "(D)": "$text{IL-1β}$",
+        "(E)": "IL-6",
+        "(F)": "IL-23"
+      },
+      "Master regulator": {
+        "(G)": "Bcl-6",
+        "(H)": "Tbet",
+        "(I)": "$text{RORγt}$",
+        "(J)": "GATA3",
+        "(K)": "FoxP3"
+      }
+    },
+    "answer": {
+      "$text{T}_text{H1}$": [
+        "(C)",
+        "(H)"
+      ],
+      "$text{T}_text{H2}$": [
+        "(B)",
+        "(J)"
+      ],
+      "$text{T}_text{H17}$": [
+        "(E)",
+        "(F)",
+        "(I)"
+      ]
+    },
+    "explanation": "(See details in B10 Notes vol3. p21) [From Exam Archaeology Q39]"
+  },
+  {
+    "question": "How many polypeptide chain(s) is(are) in an IgG antibody?",
+    "options": {
+      "A": "one",
+      "B": "two",
+      "C": "three",
+      "D": "four"
+    },
+    "answer": "D",
+    "explanation": "Two heavy chains and two light chains form the Y-shaped structure of immunoglobulin, including two arms and one trunk. (Notes vol2 P10) [From Exam Archaeology Q40]"
+  },
+  {
+    "question": "Which of the following enzyme can cleave an antibody into two Fab fragments and one Fc fragment?",
+    "options": {
+      "A": "Pepsin",
+      "B": "C3 convertase",
+      "C": "Trypsin",
+      "D": "Papain"
+    },
+    "answer": "D",
+    "explanation": "Papain: cleaves at the N-terminus of the disulfide bond between the two heavy chains, producing two Fab and one Fc, and the disulfide bond remains on the Fc.\nPepsin: cleaves at the C-terminus of the disulfide bond between the two heavy chains, producing F(ab') 2 and Fc fragments. (Notes vol2 P12) [From Exam Archaeology Q41]"
+  },
+  {
+    "question": "Which one is NOT involved in IgG transfer across the placenta?",
+    "options": {
+      "A": "Neonatal of Fc receptor",
+      "B": "Fc Portion of IgG",
+      "C": "MHC class I molecule",
+      "D": "Endosome"
+    },
+    "answer": "C",
+      "explanation": "MHC class I molecules present endogenous antigens to CD8+ T Cells, IgG transport is not related. [From Exam Archaeology Q42]"
+  },
+  {
+    "question": "Which statement is not correct?",
+    "options": {
+      "A": "Antibody can recognize discontinuous peptide chain, which also called linear epitope.",
+      "B": "Hyper variable region is determined by both V regions of heavy chain and light chain.",
+      "C": "Hyper variable region is also called complementary determining region.",
+      "D": "Antibody usually recognize small part of a large molecule, which can be polysaccharide or proteins."
+    },
+    "answer": "A",
+    "explanation": "(A) Should be continuous.\nEpitopes can be divided into:\n1. Conformational epitope: There are multiple antigen determinants, distributed in three-dimensional space. For example: three non-adjacent amino acids on a folded polypeptide can be recognized by antibodies.\n2. Linear epitope: The antigen determinant is located in a continuous linear molecular structure. For example: a series of continuous amino acids on a polypeptide can be recognized by antibodies. (Notes vol2 P19)\n(B) (Notes vol2 P15)\n(C) The loop serves as the complementary determining region (CDRs), which is an important region for recognizing antigens. Six HV loops together determine the binding site of an antigen. (Notes vol2 P15) [From Exam Archaeology Q43]"
+  },
+  {
+    "question": "Which one does not involve in the structure -based analysis of antigen-antibody complex?",
+    "options": {
+      "A": "monoclonal antibody",
+      "B": "Fc region antibody",
+      "C": "X-ray crystallography",
+      "D": "Epitope"
+    },
+    "answer": "D",
+      "explanation": "Epitope is part of an antigen that is recognized by antibodies, and is not used in structure-based analysis of the antigen-antibody complex. [From Exam Archaeology Q44]"
+  },
+  {
+    "question": "Which does not happen in the B cell germinal center?",
+    "options": {
+      "A": "Somatic hypermutation",
+      "B": "Pre-B rearrangement",
+      "C": "Affinity maturation",
+      "D": "Isotype switch"
+    },
+    "answer": "B",
+    "explanation": "(A)(C)(D) events that occur in the germinal center, collectively known as the germinal center reaction, such as somatic hypermutation, class switch recombination, and affinity maturation. (See details in Immunology B11 Notes Vol 2, page 35) [From Exam Archaeology Q45]"
+  },
+   {
+    "question": "下列何者為 TI-1?",
+    "options": {
+      "A": "virus HA",
+      "B": "bacterial polysaccharide",
+      "C": "diphtheria toxin",
+      "D": "bacterial lipopolysaccharide"
+    },
+    "answer": "B",
+    "explanation": "According to whether the antigen can crosslink with BCR, it is divided into TI-1 and TI-2, TI-1 cannot, TI-2 can. (Examples of TI-1 and TI-2 are detailed in Immunology B11 Notes, page 42) [From Exam Archaeology Q46]"
+  },
+  {
+"question": "Which of the following vaccines administrated in Taiwan is live-attenuated vaccine?",
+"options":{
+"A": "pneumococcal conjugate vaccine",
+"B": "human papilloma virus vaccine",
+"C": "measles, mumps, and rubella vaccine",
+"D": "seasonal influenza vaccine"
+},
+"answer": "C",
+"explanation":
+"(A) 13-valent pneumococcal conjugate vaccine, inactivated vaccine.\n(B) Human papillomavirus vaccine, inactivated vaccine.\n(C) Measles, mumps, and rubella vaccine, attenuated vaccine. [From Exam Archaeology Q47]"
+},
+  {
+      "question": "Which following about vaccines are not correct?",
+    "options":{
+        "A": "There are still infections for which there is no effective vaccines available yet.",
+        "B": "Most vaccines generate antibodies that prevent damages from toxins or that neutralize pathogens and stop infection.",
+        "C": "Polio vaccines usually induce protective T cell rather than antibodies.",
+        "D": "Live-attenuated vaccines are theoretically more potent than killed vaccines."
+    },
+      "answer": "C",
+      "explanation": "Polio vaccine is an inactivated polio vaccine (inactivated polio vaccine), which can produce antibodies against the virus, can prevent polio from invading the central nervous system and prevent paralysis. [From Exam Archaeology Q48]"
+
+  },
+   {
+       "question": "下列何者不是 FDA approved adjuvant?",
+    "options":{
+      "A": "Flagellin",
+      "B": "Alum",
+      "C": "Squalene and water emulsion",
+      "D": "cpg1018"
+    },
+    "answer": "A",
+     "explanation": "(A) Not on the list.\n(B) alum is Potassium Aluminum Sulfate, aluminum salt is a common adjuvant, widely used in many vaccines——too many to list. The function of aluminum salt is currently controversial. The more accepted explanation is that aluminum salt can help absorb and gradually release antigens, and recent studies have also pointed out that aluminum salt can stimulate immune cells (including macrophages and dendritic cells) and can regulate immune function.\n(C) This type of adjuvant is to enhance the effectiveness of the vaccine by regulating the release effect of the vaccine delivery system. Basically, the vaccine is wrapped in oil so that it can be protected by the oil until it is phagocytosed by phagocytes. This formulation is called MF59, which is to form emulsion droplets through squalene and water, so that it can be effectively phagocytosed by phagocytes.\n(D) This type of adjuvant is to enhance immune induction, through the binding of TLR-9 and CpG, inducing phagocytes to engulf the vaccine to enhance the effectiveness of the vaccine. [From Exam Archaeology Q49]"
+   },
+   {
+    "question": "下列何者錯誤?",
+     "options":{
+    "A": "Th17 分泌 IL-17, IL-22",
+    "B": "Th2 分泌 $text{IFN-γ}$ 刺激發炎反應",
+    "C": "亡佚",
+    "D": "亡佚"
      },
-       {
-         "question": "$\text{T}_\text{H2}$ 為特化的 effector T cell，是用以對抗寄生蟲 (parasites)、蠕蟲 (helminths) 的手段，會透過分泌 IL-4、IL-13 進而誘導嗜酸性球、嗜鹼性球、肥大細胞作用。",
-         "options":{
-            "T":"是",
-            "F": "否"
-         },
+     "answer": "B",
+   "explanation": "Th2 is a specialized effector T cell used to fight against parasites and helminths. It will secrete IL-4 and IL-13 to induce eosinophils, basophils, and mast cells. [From Exam Archaeology Q50]"
+   },
+    {
+    "question": "Which one of the following does not involve in the production of CAR-T(CART-19)",
+    "options":{
+      "A": "retrovirus",
+      "B": "CD16",
+      "C": "4-1BB",
+      "D": "$text{CD3ζ}$"
+    },
+        "answer": "B",
+        "explanation": "CAR-T relies on genetic engineering, using Lentivirus (a kind of retrovirus) to make the expression of chimeric antigen receptor——can guide the genetically modified T cells to find cancer cells——and then send it back into the body.\nThe engineered chimeric antigen receptor includes Costimulatory domain, such as CD28, 4-1BB, and signal domain, such as $text{CD3ζ}$. [From Exam Archaeology Q51]"
 
-         "answer": "F",
-         "explanation": "[From Exam Archaeology Q(黃)11]"
-     },
-      {
-         "question": "CAR-T 仰賴基因工程，利用 Lentivirus (一種反轉錄病毒) 使表現謙和抗原受體——可引導基因編輯後的 T 細胞找到癌細胞——後在送回體內。而編輯後的嵌合抗原受體包刮 Costimulatory domain，如 CD28、4-1BB，以及 signal domain，如 $\text{CD3}^\text{ζ}$。",
-         "options":{
-            "T":"是",
-            "F": "否"
-         },
-
-         "answer": "F",
-         "explanation": "[From Exam Archaeology Q(黃)12]"
-     },
-     {
-         "question": "正確的說法應該是，活性減毒疫苗通常是通過減毒過程製造的，這個過程中，病原體會被削弱，但它仍然是活著的。這種減毒可以通過各種方法來實現，例如 serial passage 或特定基因突變。DNA recombinant 技術通常用於製 subunit vaccines or DNA vaccines，而不是 live attenuated 疫苗。",
-         "options":{
-            "T":"是",
-            "F": "否"
-         },
-
-         "answer": "F",
-         "explanation": "(來源: 網路資料，因未在共筆中找到此資訊) [From Exam Archaeology Q(黃)13]"
-     }
+    },
+    {
+      "question": "Which statement is not correct?",
+      "options":{
+        "A": "peptide-based vaccine 是一種策略用以辨識 B cell 的 peptide 以促進免疫反應",
+        "B": "live attenuated 可以透過 DNA recombinant 來達成",
+        "C": "conjugated vaccine 的進展有助於流感防治",
+        "D": "亡佚"
+      },
+      "answer": "B",
+      "explanation": "The correct statement should be that live attenuated vaccines are usually produced through an attenuation process. In this process, the pathogen will be weakened, but it is still alive.\nThis attenuation can be achieved through various methods, such as serial passage or specific gene mutations.\nDNA recombinant technology is usually used to make subunit vaccines or DNA vaccines, not live attenuated vaccines.\n(Source: online information, because this information was not found in the notes) [From Exam Archaeology Q52]"
+    }
 ]
