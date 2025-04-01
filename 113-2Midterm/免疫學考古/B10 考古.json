@@ -46,13 +46,13 @@
   {
     "question": "Which of the following is correct?",
     "options": {
-      "A": "$\text{TNF-α}$ is a proinflammatory cytokine that acts on endothelial cells, skeleton muscle, and the heart to trigger different effects, which is the pleiotropic effect of cytokines.",
+      "A": "$\\text{TNF-α}$ is a proinflammatory cytokine that acts on endothelial cells, skeleton muscle, and the heart to trigger different effects, which is the pleiotropic effect of cytokines.",
       "B": "IL-6 can trigger acute phase response through binding to kidney.",
-      "C": "IFN-Is, including $\text{IFN-α}$, $\text{IFN-β}$, $\text{IFN-γ}$, induced by TLR-3 and TLR-7 signaling pathway are critical to triggering antiviral response.",
+      "C": "IFN-Is, including $\\text{IFN-α}$, $\\text{IFN-β}$, $\\text{IFN-γ}$, induced by TLR-3 and TLR-7 signaling pathway are critical to triggering antiviral response.",
       "D": "LPS-induced overproduction of IL-6 during systemic bacterial infection can trigger disseminated intravascular coagulation and multiorgan failure, which is called endotoxic shock."
     },
     "answer": "D",
-    "explanation": "(A) Correct.\n(B) IL-6 triggers acute phase responses through binding to hepatocytes (liver).\n(C) IFN-Is ($\text{IFN-α}$ and $\text{IFN-β}$) are primarily induced by TLR-3 and TLR-7 signaling pathways and trigger antiviral response. $\text{IFN-γ}$ (Type II IFN) is induced by TLR-4 signaling pathway triggered by the LPS of Gram-negative bacteria.\n(D) Correct. [From Exam Archaeology Q5]"
+    "explanation": "(A) Correct.\n(B) IL-6 triggers acute phase responses through binding to hepatocytes (liver).\n(C) IFN-Is ($\\text{IFN-α}$ and $\\text{IFN-β}$) are primarily induced by TLR-3 and TLR-7 signaling pathways and trigger antiviral response. $\\text{IFN-γ}$ (Type II IFN) is induced by TLR-4 signaling pathway triggered by the LPS of Gram-negative bacteria.\n(D) Correct. [From Exam Archaeology Q5]"
   },
   {
     "question": "Which statement concerning TLR is correct?",
@@ -69,12 +69,12 @@
     "question": "Macrophage and neutrophil are phagocytes, which of the followings is correct?",
     "options": {
       "A": "Both can produce lysozyme to dissolve LPS of the Gram-negative G (-) bacterial cell wall.",
-      "B": "Macrophage can produce lactoferrin, which competes $\text{Fe}^\text{2+}$, which is a necessary ion for bacterial replication.",
+      "B": "Macrophage can produce lactoferrin, which competes $\\text{Fe}^\\text{2+}$, which is a necessary ion for bacterial replication.",
       "C": "Upon bacterial infection, neutrophil can undergo NETosis to form extracellular trap (NET), in which releases its nuclear chromatin, trapping but not kill pathogens.",
       "D": "Neutrophils tracks down bacteria with G-protein coupled receptors that sense fMLF which is a peptide specific to bacteria."
     },
     "answer": "D",
-    "explanation": "(A) Both produce Lysozyme which digests cell walls of some Gram-positive bacteria.\n(B) Neutrophil can produce lactoferrin which competes $\text{Fe}^\text{2+}$.\n(C) NETs contain elastase, myelo-peroxidase, cathepsin G and lactoferrin which degrade or block pathogens.\n(D) Correct. [From Exam Archaeology Q7]"
+    "explanation": "(A) Both produce Lysozyme which digests cell walls of some Gram-positive bacteria.\n(B) Neutrophil can produce lactoferrin which competes $\\text{Fe}^\\text{2+}$.\n(C) NETs contain elastase, myelo-peroxidase, cathepsin G and lactoferrin which degrade or block pathogens.\n(D) Correct. [From Exam Archaeology Q7]"
   },
   {
     "question": "Clonal Selection Theory (CST) is the foundation of adaptive immunity. Which statement concerning CST is correct?",
@@ -149,7 +149,7 @@
 "A": "ILCs are innate cells and are derived from CLP in bone marrow.",
 "B": "ILCs don't present T cell receptor or B cell receptor.",
 "C": "ILCs produce cytokines overlapping with CD4 T cells or CD8 T cell.",
-"D": "ILC2 produce $\text{IFN-γ}$ to eliminate extracellular bacteria and fungi.",
+"D": "ILC2 produce $\\text{IFN-γ}$ to eliminate extracellular bacteria and fungi.",
 "E": "ILC3 produce IL-17 and IL-22 to recruit and activate neutrophil."
 },
 "answer": "D",
@@ -159,14 +159,14 @@
 {
 "question": "Which of the following about T cell is NOT correct?",
     "options": {
-      "A": "$\text{T}_\text{H1}$: intracellular pathogen: activate macrophage",
-      "B": "$\text{T}_\text{H2}$: helminth: tissue repair",
-      "C": "$\text{T}_\text{FH}$: extracellular bacteria and fungi: $\text{TNF-α}$",
-      "D": "$\text{T}_\text{reg}$: inhibit T cell function: IL-10 and $\text{TGF-β}$",
+      "A": "$\\text{T}_\\text{H1}$: intracellular pathogen: activate macrophage",
+      "B": "$\\text{T}_\\text{H2}$: helminth: tissue repair",
+      "C": "$\\text{T}_\\text{FH}$: extracellular bacteria and fungi: $\\text{TNF-α}$",
+      "D": "$\\text{T}_\\text{reg}$: inhibit T cell function: IL-10 and $\\text{TGF-β}$",
       "E": "Cytotoxic T cell: virus-infected cell: perforin and granzyme"
     },
     "answer": "C",
-    "explanation": "(A) $\text{T}_\text{H1}$ mainly fights against bacteria growing in macrophages. $\text{T}_\text{H1}$ cells are activated after recognizing pathogens and secrete cytokine $\text{IFN-γ}$ to transmit signals. After the signal enters the macrophage, it will promote the fusion of lysosomes and phagosomes to form phagolysosomes, activating macrophages to eliminate foreign pathogens.\n(B) $\text{T}_\text{H2}$ fights against extracellular parasitic infections (helminth: worms) and secretes IL-4 and IL-13 to activate M2 macrophages and help tissue repair.\n(C) $\text{T}_\text{FH}$ is located in B cell follicles and is mainly responsible for helping the maturation of B cells in the germinal center (GC). Extracellular bacteria and fungi are type 3 responses, and the immune effector module includes group 3 ILCs, $\text{T}_\text{H17}$ $\text{CD4}^\text{+}$ T cell, IgG1, IgG2, and neutrophils. $\text{TNF-α}$ is produced by activated macrophages by $\text{T}_\text{H1}$. Neither is dominated by $\text{T}_\text{FH}$.\n(D) $\text{T}_\text{reg}$ can secrete inhibitory cytokines (IL-10, $\text{TGF-β}$) to inhibit the immune system.\n(E) Cytotoxic T cells can eliminate cells infected by viruses, secrete perforin to make cells perforate, and secrete granzyme to make intracellular substances decompose, thus causing cell apoptosis. [From Exam Archaeology Q15]"
+    "explanation": "(A) $\\text{T}_\\text{H1}$ mainly fights against bacteria growing in macrophages. $\\text{T}_\\text{H1}$ cells are activated after recognizing pathogens and secrete cytokine $\\text{IFN-γ}$ to transmit signals. After the signal enters the macrophage, it will promote the fusion of lysosomes and phagosomes to form phagolysosomes, activating macrophages to eliminate foreign pathogens.\n(B) $\\text{T}_\\text{H2}$ fights against extracellular parasitic infections (helminth: worms) and secretes IL-4 and IL-13 to activate M2 macrophages and help tissue repair.\n(C) $\\text{T}_\\text{FH}$ is located in B cell follicles and is mainly responsible for helping the maturation of B cells in the germinal center (GC). Extracellular bacteria and fungi are type 3 responses, and the immune effector module includes group 3 ILCs, $\\text{T}_\\text{H17}$ $\\text{CD4}^\\text{+}$ T cell, IgG1, IgG2, and neutrophils. $\\text{TNF-α}$ is produced by activated macrophages by $\\text{T}_\\text{H1}$. Neither is dominated by $\\text{T}_\\text{FH}$.\n(D) $\\text{T}_\\text{reg}$ can secrete inhibitory cytokines (IL-10, $\\text{TGF-β}$) to inhibit the immune system.\n(E) Cytotoxic T cells can eliminate cells infected by viruses, secrete perforin to make cells perforate, and secrete granzyme to make intracellular substances decompose, thus causing cell apoptosis. [From Exam Archaeology Q15]"
 },
 {
 "question": "Which one of the following statements is NOT correct?",
@@ -229,7 +229,7 @@
     "F": "False"
 },
 "answer": "F",
-"explanation": "Type 1 hypersensitivity reaction is caused by an IgE-mediated immune response whose main physiological role is to defend against parasite infection.\nIn tissues, IgE binds to $\text{FcεRI}$ of mast cells and activates them to cause allergies; in the blood, it binds to $\text{FcεRI}$ of basophils. [From Exam Archaeology Q21]"
+"explanation": "Type 1 hypersensitivity reaction is caused by an IgE-mediated immune response whose main physiological role is to defend against parasite infection.\nIn tissues, IgE binds to $\\text{FcεRI}$ of mast cells and activates them to cause allergies; in the blood, it binds to $\\text{FcεRI}$ of basophils. [From Exam Archaeology Q21]"
 },
 {
     "question": "Fill in the blanks: fill in antigenic shift and antigenic drift.",
@@ -252,7 +252,7 @@
     "D": "receptor editing"
   },
   "answer": "D",
-  "explanation": "The body will avoid autoimmune diseases through central tolerance and peripheral tolerance.\nCentral tolerance: When B cells and T cells develop in the central lymphoid organs, negative selection is used to remove most of the cells that will attack the body, and a few enter the peripheral areas.\nPeripheral tolerance: It is carried out after lymphocytes mature and enter the secondary lymphoid organs. For the few lymphocytes that are still autoimmune, methods such as cell anergy, $\text{T}_\text{reg}$ cell regulation (inhibition or differentiation into $\text{T}_\text{reg}$), apoptosis, or the use of immunologically privileged sites to prevent them from contacting self-antigens are used to avoid autoimmunity.[From Exam Archaeology Q24]"
+  "explanation": "The body will avoid autoimmune diseases through central tolerance and peripheral tolerance.\nCentral tolerance: When B cells and T cells develop in the central lymphoid organs, negative selection is used to remove most of the cells that will attack the body, and a few enter the peripheral areas.\nPeripheral tolerance: It is carried out after lymphocytes mature and enter the secondary lymphoid organs. For the few lymphocytes that are still autoimmune, methods such as cell anergy, $\\text{T}_\\text{reg}$ cell regulation (inhibition or differentiation into $\\text{T}_\\text{reg}$), apoptosis, or the use of immunologically privileged sites to prevent them from contacting self-antigens are used to avoid autoimmunity.[From Exam Archaeology Q24]"
   },
    {
     "question": "Regarding the therapeutic targets of solid organ transplantation, which of the following is correct for inhibiting T cell activation?",
@@ -272,7 +272,7 @@
         "F": "False"
     },
     "answer": "T",
-    "explanation": "Two known factors that cause autoimmune diseases.\n(1) Genetic specificity: some immune mechanisms are inherently problematic, leading to autoimmune diseases, such as $\text{T}_\text{reg}$ cells are inhibited, making immune suppression dysfunctional; genetic defects related to the regulation of self-tolerance are prone to cause autoimmune diseases, such as knockout of AIRE (reducing the presentation of self-antigens in the thymus, affecting negative selection), Ipr/Ipr gld/gld (belonging to FAS or FAS ligand, related to apoptosis) mutations.\n(2) External environmental stimuli: mainly infection, foreign substances can destroy the barriers of cells or tissues, so that some hidden antigens are exposed, destroying self-tolerance, such as pathogens invading, causing originally disabled immune cells to regain activity and attack self-cells.\nRegulatory T cells ($\text{T}_\text{reg}$, regulator T cell) will control the T cells in the body that can recognize self-antigens and inhibit their effects to avoid autoimmunity. Therefore, when effector cells and regulatory cell imbalance, autoimmune diseases will occur. [From Exam Archaeology Q26]"
+    "explanation": "Two known factors that cause autoimmune diseases.\n(1) Genetic specificity: some immune mechanisms are inherently problematic, leading to autoimmune diseases, such as $\\text{T}_\\text{reg}$ cells are inhibited, making immune suppression dysfunctional; genetic defects related to the regulation of self-tolerance are prone to cause autoimmune diseases, such as knockout of AIRE (reducing the presentation of self-antigens in the thymus, affecting negative selection), Ipr/Ipr gld/gld (belonging to FAS or FAS ligand, related to apoptosis) mutations.\n(2) External environmental stimuli: mainly infection, foreign substances can destroy the barriers of cells or tissues, so that some hidden antigens are exposed, destroying self-tolerance, such as pathogens invading, causing originally disabled immune cells to regain activity and attack self-cells.\nRegulatory T cells ($\\text{T}_\\text{reg}$, regulator T cell) will control the T cells in the body that can recognize self-antigens and inhibit their effects to avoid autoimmunity. Therefore, when effector cells and regulatory cell imbalance, autoimmune diseases will occur. [From Exam Archaeology Q26]"
 
   },
     {
@@ -292,7 +292,7 @@
     "options": {
       "A": "In the mature T cell.",
       "B": "After binding to self-antigen.",
-      "C": "Before $\text{CD3}^\text{+}$ T cell.",
+      "C": "Before $\\text{CD3}^\\text{+}$ T cell.",
       "D": "In the double negative stage.",
       "E": "In the double positive stage."
     },
@@ -338,7 +338,7 @@
     "options": {
       "A": "Most T cells recognize peptides and no other molecules.",
       "B": "T cells recognize conformational determinants of protein antigen.",
-      "C": "$\text{CD4}^\text{+}$ and $\text{CD8}^\text{+}$ T cells preferentially recognize antigens from extracellular environment into vesicles and antigens in cytosol, respectively.",
+      "C": "$\\text{CD4}^\\text{+}$ and $\\text{CD8}^\\text{+}$ T cells preferentially recognize antigens from extracellular environment into vesicles and antigens in cytosol, respectively.",
       "D": "T cells ...",
       "E": "T cell receptors recognize only one determinant from antigens."
     },
@@ -360,14 +360,14 @@
 {
     "question": "Which one of following features is the characteristic of class II MHC pathway of antigen processing and presentation?",
     "options": {
-      "A": "$\text{β1}$, $\text{β2}$ and $\text{β5}$ subunits of proteasomes are responsible for protein degradation.",
-      "B": "$\text{CD8}^\text{+}$ T cells are responsive T cells.",
+      "A": "$\\text{β1}$, $\\text{β2}$ and $\\text{β5}$ subunits of proteasomes are responsible for protein degradation.",
+      "B": "$\\text{CD8}^\\text{+}$ T cells are responsive T cells.",
       "C": "Endoplasmic reticulum (ER) is the site of peptide loading to MHC.",
       "D": "Late endosomes and lysosomes are the site of antigen degradation.",
       "E": "TAP1/2 molecules are involved in peptide transport and loading."
     },
     "answer": "D",
-    "explanation": "(A) is the class I MHC assembly process.\n(B) Should be $\text{CD4}^\text{+}$.\n(C) It is bound in the lysosome.\n(D) Correct.\n(E) is the class I MHC assembly process. [From Exam Archaeology Q34]"
+    "explanation": "(A) is the class I MHC assembly process.\n(B) Should be $\\text{CD4}^\\text{+}$.\n(C) It is bound in the lysosome.\n(D) Correct.\n(E) is the class I MHC assembly process. [From Exam Archaeology Q34]"
   },
   {
     "question": "Which of the following statements regarding the sequence of cancer cell editing is correct?",
@@ -396,7 +396,7 @@
   {
     "question": "Which of the following is NOT a characteristic of cold tumor?",
     "options": {
-      "A": "Exclusion of $\text{CD8}^\text{+}$ T cells and NK cells from the tumor.",
+      "A": "Exclusion of $\\text{CD8}^\\text{+}$ T cells and NK cells from the tumor.",
       "B": "Low antigen presentation.",
       "C": "Immunosuppressive immune cells in tumor (ex. Tregs, MDSC).",
       "D": "Poor prognosis and response to immunotherapy.",
@@ -418,35 +418,35 @@
     "explanation": "(C)(E) are correct, see B10 Notes Vol. 3 p.26. (B) should be Cytotoxic T cells induce target cell apoptosis. [From Exam Archaeology Q38]"
   },
   {
-    "question": "$\text{T}_\text{H1}$, $\text{T}_\text{H2}$, $\text{T}_\text{H17}$ 的 signal 3 和 master regulator 對應。",
+    "question": "$\\text{T}_\\text{H1}$, $\\text{T}_\\text{H2}$, $\\text{T}_\\text{H17}$ 的 signal 3 和 master regulator 對應。",
     "options": {
-      "Cell": ["$\text{T}_\text{H1}$", "$\text{T}_\text{H2}$", "$\text{T}_\text{H17}$"],
+      "Cell": ["$\\text{T}_\\text{H1}$", "$\\text{T}_\\text{H2}$", "$\\text{T}_\\text{H17}$"],
       "Signal 3": {
-        "(A)": "$\text{IFN-γ}$",
+        "(A)": "$\\text{IFN-γ}$",
         "(B)": "IL-4",
         "(C)": "IL-12",
-        "(D)": "$\text{IL-1β}$",
+        "(D)": "$\\text{IL-1β}$",
         "(E)": "IL-6",
         "(F)": "IL-23"
       },
       "Master regulator": {
         "(G)": "Bcl-6",
         "(H)": "Tbet",
-        "(I)": "$\text{RORγt}$",
+        "(I)": "$\\text{RORγt}$",
         "(J)": "GATA3",
         "(K)": "FoxP3"
       }
     },
     "answer": {
-      "$\text{T}_\text{H1}$": [
+      "$\\text{T}_\\text{H1}$": [
         "(C)",
         "(H)"
       ],
-      "$\text{T}_\text{H2}$": [
+      "$\\text{T}_\\text{H2}$": [
         "(B)",
         "(J)"
       ],
-      "$\text{T}_\text{H17}$": [
+      "$\\text{T}_\\text{H17}$": [
         "(E)",
         "(F)",
         "(I)"
@@ -570,7 +570,7 @@
     "question": "下列何者錯誤?",
      "options":{
     "A": "Th17 分泌 IL-17, IL-22",
-    "B": "Th2 分泌 $\text{IFN-γ}$ 刺激發炎反應",
+    "B": "Th2 分泌 $\\text{IFN-γ}$ 刺激發炎反應",
     "C": "亡佚",
     "D": "亡佚"
      },
@@ -583,10 +583,10 @@
       "A": "retrovirus",
       "B": "CD16",
       "C": "4-1BB",
-      "D": "$\text{CD3ζ}$"
+      "D": "$\\text{CD3ζ}$"
     },
         "answer": "B",
-        "explanation": "CAR-T relies on genetic engineering, using Lentivirus (a kind of retrovirus) to make the expression of chimeric antigen receptor——can guide the genetically modified T cells to find cancer cells——and then send it back into the body.\nThe engineered chimeric antigen receptor includes Costimulatory domain, such as CD28, 4-1BB, and signal domain, such as $\text{CD3ζ}$. [From Exam Archaeology Q51]"
+        "explanation": "CAR-T relies on genetic engineering, using Lentivirus (a kind of retrovirus) to make the expression of chimeric antigen receptor——can guide the genetically modified T cells to find cancer cells——and then send it back into the body.\nThe engineered chimeric antigen receptor includes Costimulatory domain, such as CD28, 4-1BB, and signal domain, such as $\\text{CD3ζ}$. [From Exam Archaeology Q51]"
 
     },
     {
