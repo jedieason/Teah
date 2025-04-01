@@ -92,7 +92,7 @@
       "E": "ILC3 cells can produce IL-17 and IL-22 to recruit and activate neutrophils"
     },
     "answer": "E",
-    "explanation": "(A) 先天性淋巴細胞（ Innate Lymphoid Cells, ILCs ）來自共同淋巴前驅細胞（ Common Lymphoid Progenitor, CLP ），而非髓系前驅細胞（ myeloid progenitor ）。\n(B) ILCs 不表達 T 細胞受體（ TCR ），與 T 細胞不同，但功能類似（尤其是 $\text{CD4}^\text{+}$ T cell ）。\n(C) ILCs 產生的細胞激素與作用的細胞和 NK 、 $\text{CD4}^\text{+}$ T cell （ $\text{T}_\text{H1}$, $\text{T}_\text{H2}$, $\text{T}_\text{H17}$ ）與 $\text{CD8}^\text{+}$ T cell 的功能類似\n(D) ILC2 主要產生 IL-5 、 IL-13 ，與過敏反應和對抗寄生蟲感染相關，而不是 IFN-γ （ IFN-γ 主要由 ILC1 產生）。\n(E) ILC3 產生 IL-17 和 IL-22 ，活化嗜中性球（ neutrophils ），以對抗細菌和真菌感染。\n參考資料：林志萱老師 Host defense against infection 簡報 p.9 、 11 [From Exam Archaeology Q3]"
+    "explanation": "(A) 先天性淋巴細胞（ Innate Lymphoid Cells, ILCs ）來自共同淋巴前驅細胞（ Common Lymphoid Progenitor, CLP ），而非髓系前驅細胞（ myeloid progenitor ）。\n(B) ILCs 不表達 T 細胞受體（ TCR ），與 T 細胞不同，但功能類似（尤其是 $\\text{CD4}^\\text{+}$ T cell ）。\n(C) ILCs 產生的細胞激素與作用的細胞和 NK 、 $\\text{CD4}^\\text{+}$ T cell （ $\\text{T}_\\text{H1}$, $\\text{T}_\\text{H2}$, $\\text{T}_\\text{H17}$ ）與 $\\text{CD8}^\\text{+}$ T cell 的功能類似\n(D) ILC2 主要產生 IL-5 、 IL-13 ，與過敏反應和對抗寄生蟲感染相關，而不是 IFN-γ （ IFN-γ 主要由 ILC1 產生）。\n(E) ILC3 產生 IL-17 和 IL-22 ，活化嗜中性球（ neutrophils ），以對抗細菌和真菌感染。\n參考資料：林志萱老師 Host defense against infection 簡報 p.9 、 11 [From Exam Archaeology Q3]"
   },
   {
     "question": "Identify the mismatched pair.",
@@ -104,7 +104,7 @@
       "E": "Cytotoxic T cell: virus infection: perforin and granzyme"
     },
     "answer": "C",
-    "explanation": "(A) $\text{T}_\text{H1}$ cell 主要針對細胞內病原體，分泌 IFNγ 來活化巨噬細胞（ M1 macrophage ），協助清除病原體。\n(B) $\text{T}_\text{H2}$ cell 對抗蠕蟲、寄生蟲感染，會分泌 IL-4 、 IL-5 、 IL-13 ，促進 B 細胞產生 IgE 、活化 M2 macrophage 與嗜酸性球，並促進組織修復。\n(C) 濾泡幫助型 T 細胞（ $\text{T}_\text{FH}$, T follicular helper cells ）透過 IL-21 、 IL-4 來協助 B 細胞類型轉換與親和力成熟。\n(D) 調節性 T 細胞（ Treg ）透過 IL-10 和 TGF-β 抑制免疫反應，防止過度發炎和自身免疫反應。\n(E) 細胞毒性 T 細胞（ Cytotoxic T cell, CTL, $\text{CD8}^\text{+}$ T cell ）負責毒殺被細胞內病原體感染的細胞（主要針對病毒感染），釋放穿孔素（ perforin ）和顆粒酶（ granzyme ）來誘導目標細胞凋亡。\n參考資料：林志萱老師 Host defense against infection 簡報 p.18 、 22 、 24 、 25 、 29 、 30 、 33 [From Exam Archaeology Q4]"
+    "explanation": "(A) $\\text{T}_\\text{H1}$ cell 主要針對細胞內病原體，分泌 IFNγ 來活化巨噬細胞（ M1 macrophage ），協助清除病原體。\n(B) $\\text{T}_\\text{H2}$ cell 對抗蠕蟲、寄生蟲感染，會分泌 IL-4 、 IL-5 、 IL-13 ，促進 B 細胞產生 IgE 、活化 M2 macrophage 與嗜酸性球，並促進組織修復。\n(C) 濾泡幫助型 T 細胞（ $\\text{T}_\\text{FH}$, T follicular helper cells ）透過 IL-21 、 IL-4 來協助 B 細胞類型轉換與親和力成熟。\n(D) 調節性 T 細胞（ Treg ）透過 IL-10 和 TGF-β 抑制免疫反應，防止過度發炎和自身免疫反應。\n(E) 細胞毒性 T 細胞（ Cytotoxic T cell, CTL, $\\text{CD8}^\\text{+}$ T cell ）負責毒殺被細胞內病原體感染的細胞（主要針對病毒感染），釋放穿孔素（ perforin ）和顆粒酶（ granzyme ）來誘導目標細胞凋亡。\n參考資料：林志萱老師 Host defense against infection 簡報 p.18 、 22 、 24 、 25 、 29 、 30 、 33 [From Exam Archaeology Q4]"
   },
   {
     "question": "During an infection, antigen-presenting cells, such as dendritic cells, pick up antigens at ________, activate adaptive immunity at ________. Then the activated T cells, B cells and antibodies eliminate pathogens at ________?",
@@ -116,7 +116,7 @@
       "E": "secondary lymphoid organs; secondary lymphoid organs; the site of infection"
     },
     "answer": "B",
-    "explanation": "抗原呈現細胞（ APCs ，如樹突細胞）在感染部位捕捉抗原，然後移動到次級淋巴器官（如淋巴結、脾臟）。樹突細胞將抗原呈現給 T 細胞，啟動適應性免疫反應（ adaptive immunity ）。最後 T effector cell （如 $\text{T}_\text{H1}$ 、 $\text{T}_\text{H2}$ 、 CTLs ）和 B 細胞分泌的抗體會循環回到感染部位，清除病原體。 [From Exam Archaeology Q5]"
+    "explanation": "抗原呈現細胞（ APCs ，如樹突細胞）在感染部位捕捉抗原，然後移動到次級淋巴器官（如淋巴結、脾臟）。樹突細胞將抗原呈現給 T 細胞，啟動適應性免疫反應（ adaptive immunity ）。最後 T effector cell （如 $\\text{T}_\\text{H1}$ 、 $\\text{T}_\\text{H2}$ 、 CTLs ）和 B 細胞分泌的抗體會循環回到感染部位，清除病原體。 [From Exam Archaeology Q5]"
   },
   {
     "question": "Which one of the following statements is NOT correct?",
@@ -317,7 +317,7 @@
             "E": "upregulation of costimulatory molecules such as CD28\""
         },
         "answer":["A","B","C","D"],
-        "explanation":"詳解:\n(A) 正確。以癌症患者為例，腫瘤細胞上的 PD-L1 會與 T 細胞上的 PD-1 結合，降低 $CD8^+$ T 細胞的毒殺功能，阻止免疫系統攻擊腫瘤細胞； PD-1/PD-L1 抑制劑則可以防止腫瘤細胞以此發生免疫逃脫。 APC 及 tumor cell 皆會表達 $\text{PD-L1}^\text{。}$\n(B) 正確。\n當 TCR 與 CTLA-4 共同結合 B7.1/CD80 或 B7.2/CD86 時，會導致細胞週期停滯(Cell-cycle arrest)，並終止 T 細胞活化。但 B7 主要由 APC 表達， tumor cell 較少表現出 B7 。\n(C) 正確，如 TGF-β, IL-6, IL-10, VEGF 等。 [From Exam Archaeology Q15]"
+        "explanation":"詳解:\n(A) 正確。以癌症患者為例，腫瘤細胞上的 PD-L1 會與 T 細胞上的 PD-1 結合，降低 $CD8^+$ T 細胞的毒殺功能，阻止免疫系統攻擊腫瘤細胞； PD-1/PD-L1 抑制劑則可以防止腫瘤細胞以此發生免疫逃脫。 APC 及 tumor cell 皆會表達 $\\text{PD-L1}^\\text{。}$\n(B) 正確。\n當 TCR 與 CTLA-4 共同結合 B7.1/CD80 或 B7.2/CD86 時，會導致細胞週期停滯(Cell-cycle arrest)，並終止 T 細胞活化。但 B7 主要由 APC 表達， tumor cell 較少表現出 B7 。\n(C) 正確，如 TGF-β, IL-6, IL-10, VEGF 等。 [From Exam Archaeology Q15]"
 
     },
       {
@@ -481,7 +481,7 @@
             "D":"CD3ζ chain\""
         },
         "answer":"B",
-        "explanation":"CAR-T 的概念: 用生物技術把能辨識 tumor cell 表面 CD19 antigen 的 CAR 基因插到從病人提取的 T cell 上，改造成 CAR-T 來對付癌症，像在 T-cell 上面裝上了個辨識癌細胞的 GPS ，當 CAR-T 遇到 tumor cell 的時候，就會辨識鎖定 tumor cell ，然後 T-cell 就會啟動毒殺 tumor cell 的反應，並沒有包含 CD16 。\n4-1BB 及 CD28 會共同組成第二訊號提供區，能直接提供 T 細胞活化所需的第二訊號。\n$\text{CD3ζ}$ 和其餘傳訊片段則會共同組成訊號傳遞區\nRetrovirus 則用來把 CAR 基因轉到 T cell 上。 [From Exam Archaeology Q14]"
+        "explanation":"CAR-T 的概念: 用生物技術把能辨識 tumor cell 表面 CD19 antigen 的 CAR 基因插到從病人提取的 T cell 上，改造成 CAR-T 來對付癌症，像在 T-cell 上面裝上了個辨識癌細胞的 GPS ，當 CAR-T 遇到 tumor cell 的時候，就會辨識鎖定 tumor cell ，然後 T-cell 就會啟動毒殺 tumor cell 的反應，並沒有包含 CD16 。\n4-1BB 及 CD28 會共同組成第二訊號提供區，能直接提供 T 細胞活化所需的第二訊號。\n$\\text{CD3ζ}$ 和其餘傳訊片段則會共同組成訊號傳遞區\nRetrovirus 則用來把 CAR 基因轉到 T cell 上。 [From Exam Archaeology Q14]"
     },
      {
         "question":"自體免疫的因子主要是 genetic disposition 和 environmental triggers; 當自體反應性的(autoreactive) T effector cell 和 T regulatory cell 不平衡，則自體免疫持續，產生自體免疫疾病。",
