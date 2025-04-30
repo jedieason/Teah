@@ -1,0 +1,22 @@
+[
+  {
+    "question": "柯霍式原理（Koch’s postulate）之一",
+    "answer": [ "能從病體罹病部位找到該微生物的存在"],
+    "explanation": "能從病體罹病部位找到該微生物的存在。"
+  },
+  {
+    "question": "柯霍式原理（Koch’s postulate）之二",
+    "answer": ["該微生物能從宿主中分離", "並能在培養基中培養得到單一菌種"],
+    "explanation": "該微生物能從宿主中分離，並能在培養基中培養得到單一菌種。"
+  },
+  {
+    "question": "柯霍式原理（Koch’s postulate）之三",
+    "answer": ["將此培養之菌種接種至易感染的健康宿主上", "能引發同一種疾病"],
+    "explanation": "將此培養之菌種接種至易感染的健康宿主上，能引發同一種疾病。"
+  },
+  {
+    "question": "柯霍式原理（Koch’s postulate）之四",
+    "answer": ["能從新的宿主體內分離出同種微生物"],
+    "explanation": "能從新的宿主體內分離出同種微生物。"
+  }
+]
