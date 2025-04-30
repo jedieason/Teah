@@ -332,11 +332,13 @@ function confirmAnswer() {
 function updateCorrect() {
     correct += 1;
     document.getElementById('correct').innerText = correct;
+    updateProgressBar();
 }
 
 function updateWrong() {
     wrong += 1;
     document.getElementById('wrong').innerText = wrong;
+    updateProgressBar();
 }
 
 function showEndScreen() {
@@ -767,9 +769,13 @@ function saveProgress() {
 }
 
 function updateProgressBar() {
-    const answered = correct + wrong;
-    const percent = initialQuestionCount > 0 ? (answered / initialQuestionCount) * 100 : 0;
-    document.getElementById('progress-bar').style.width = percent + '%';
+  if (initialQuestionCount > 0) {
+    document.getElementById('correctBar').style.width = (correct / initialQuestionCount * 100) + '%';
+    document.getElementById('wrongBar').style.width = (wrong / initialQuestionCount * 100) + '%';
+  } else {
+    document.getElementById('correctBar').style.width = '0%';
+    document.getElementById('wrongBar').style.width = '0%';
+  }
 }
 
 function restoreProgress() {

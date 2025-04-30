@@ -56,18 +56,22 @@
                 </div>
             </div>
         </div>
-        <div class="progress">
-            <div class="progress-item orange-bg" id="wrongArea">
-                <span class="progress-number-orange" id="wrong">0</span>
-                <span class="progress-text">錯誤</span>
+        <!-- Progress Display -->
+        <div class="progress-container">
+          <div class="progress-counts">
+            <div class="progress-count">
+              <span class="count-text">答對</span>
+              <span class="count-number" id="correct">0</span>
             </div>
-            <div class="progress-item green-bg" id="correctArea">
-                <span class="progress-text">正確</span>
-                <span class="progress-number-green" id="correct">0</span>
+            <div class="progress-count">
+              <span class="count-number" id="wrong">0</span>
+              <span class="count-text">答錯</span>
             </div>
-        </div>
-        <div id="progress-bar-wrapper">
-            <div id="progress-bar"></div>
+          </div>
+          <div class="progress-bars">
+            <div id="correctBar" class="progress-bar correct-bar"></div>
+            <div id="wrongBar" class="progress-bar wrong-bar"></div>
+          </div>
         </div>
         <div class="question-content" id="question"></div>
         <div class="options" id="options"></div>

@@ -1,3 +1,44 @@
+
+/* New Progress Display Styles */
+.progress-container {
+  margin-bottom: 20px;
+}
+.progress-counts {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.progress-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1rem;
+}
+.count-number {
+  font-weight: bold;
+}
+.progress-bars {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition: width 0.3s ease;
+}
+.correct-bar {
+  background-color: #28C76F80;
+  left: 0;
+}
+.wrong-bar {
+  background-color: #EA545580;
+  right: 0;
+}
 /* Import Google Fonts for a premium look */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap');
 
