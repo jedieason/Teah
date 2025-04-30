@@ -769,12 +769,13 @@ function saveProgress() {
 }
 
 function updateProgressBar() {
-  if (initialQuestionCount > 0) {
-    document.getElementById('correctBar').style.width = (correct / initialQuestionCount * 100) + '%';
-    document.getElementById('wrongBar').style.width = (wrong / initialQuestionCount * 100) + '%';
+  const answered = correct + wrong;
+  if (answered > 0) {
+    document.getElementById('correctBar').style.width = (correct / answered * 100) + '%';
+    document.getElementById('wrongBar').style.width   = (wrong   / answered * 100) + '%';
   } else {
     document.getElementById('correctBar').style.width = '0%';
-    document.getElementById('wrongBar').style.width = '0%';
+    document.getElementById('wrongBar').style.width   = '0%';
   }
 }
 
