@@ -1,7 +1,793 @@
 [
-{
-  "question": "簡述 Clostridium botulinum 感染引起遲緩性麻痺之機制？",
-  "answer": ["Clostridium botulinum", "botulinum toxin", "A-B toxin", "acetylcholine", "motor neuron", "inhibit release", "flaccid paralysis"],
-  "explanation": "(1) 受到 Clostridium botulinum 汙染(2) 肉毒桿菌毒素（Botulinum toxin），是一種 A-B toxin 作用在運動神經元，輕鏈（A）在細胞中釋放時破壞乙醯膽鹼（Acetylcholine）的釋放機制，抑制乙醯膽鹼的釋放，造成肌肉軟癱。"
-}
+  {
+    "question": "下列敘述，何者正確？",
+    "options": {
+      "A": "所有的細菌都有胜肽聚醣(Peptidoglycan)的構造",
+      "B": "所有細菌的染色體上都沒有組蛋白(Histone)與它結合",
+      "C": "細菌核醣體(Ribosome)的大小為跟真核生物一樣均為80S",
+      "D": "黴漿菌(Mycoplasma)的細胞膜不含固醇。"
+    },
+    "answer": "B",
+    "explanation": "(A) 黴漿菌沒有細胞壁，故也沒有 Peptidoglycan。\n(C) 細菌核醣體大小為 70S。\n(D) 黴漿菌(Mycoplasma)的細胞膜含固醇。\n[出自考古第1題]"
+  },
+  {
+    "question": "下列有關革蘭氏陽性菌的敘述何者正確？",
+    "options": {
+      "A": "具有胞壁酸(Teichoic Acid)",
+      "B": "具有外膜",
+      "C": "調控細菌毒力或是對抗生素感受性之基因均位於細菌之染色體上",
+      "D": "對 Penicillin 之抗性較革蘭氏陰性菌為高。"
+    },
+    "answer": "A",
+    "explanation": "(B) 格蘭氏陰性菌才具有外膜。\n(C) 可能位於質體(Plasmid)上。\n(D) Penicillin 為針對細胞壁肽聚糖的抗生素，故更容易對具有外膜的格蘭氏陰性菌失效。\n[出自考古第2題]"
+  },
+  {
+    "question": "下列敘述，何者錯誤？",
+    "options": {
+      "A": "產生內孢子(Endospore)的細菌以革蘭氏陰性菌為主",
+      "B": "在指數期(Log phase)時，細菌的生長速率最快",
+      "C": "感染人體的細菌大多是 Mesophile (嗜中性菌)",
+      "D": "致病菌大多是 Chemoheterotroph(化學異營性生物)"
+    },
+    "answer": "A",
+    "explanation": "產生內孢子(Endospore)的細菌以革蘭氏陽性菌為主。\n[出自考古第3題]"
+  },
+  {
+    "question": "下列哪一種細菌無法生存在大氣濃度的氧含量中？",
+    "options": {
+      "A": "耐氧厭氧菌(Aerotolerant anaerobe)",
+      "B": "絕對需氧菌(Obligate aerobe)",
+      "C": "微需氧菌(Microaerophile)",
+      "D": "兼性厭氧菌(Facultative anaerobe)"
+    },
+    "answer": "C",
+    "explanation": "微需氧菌(Microaerophile)的生長環境氧含量一般為 2~10%，遠低於大氣中的氧含量，無法良好生存。\n[出自考古第4題]"
+  },
+  {
+    "question": "下列敘述，何者正確？",
+    "options": {
+      "A": "細菌核醣體的大小為跟真核生物一樣均為80S",
+      "B": "黴漿菌的細胞膜具有固醇",
+      "C": "格蘭氏陰性菌外膜上的酯多醣主要由 Lipid A 與 O antigen 所構成，且Lipid A 為誘發免疫細胞強烈的發炎反應的主要成分",
+      "D": "細菌可以藉由產生內孢子來進行增殖。"
+    },
+    "answer": ["B", "C"],
+    "explanation": "(A) 細菌核醣體大小為 70S。\n(D) 內孢子為細菌對抗逆境之構造，非繁殖構造。\n[出自考古第1題]"
+  },
+  {
+    "question": "下列敘述，何者錯誤？",
+    "options": {
+      "A": "進行發酵作用的細菌，多具有觸媒、超氧化物歧化酶等酵素，以代謝其產能過程所生的含氧自由基",
+      "B": "行光合作用的細菌以太陽光源作能量來源，因此通常不進行電子傳遞反應",
+      "C": "行無氧呼吸的細菌，還是可以利用 TCA 循環與電子傳遞鏈來產生 ATP",
+      "D": "細菌可以利用其粒線體上的電子傳遞鏈來產生 ATP。"
+    },
+    "answer": ["A", "B", "D"],
+    "explanation": "(A) 行有氧呼吸的細菌在代謝過程中會產生含氧自由基。\n(B) 光合自營菌可以在細胞膜上進行電子傳遞鏈，產生 ATP。\n(D) 同(B)，細菌無粒線體，電子傳遞鏈在細胞膜上。\n[出自考古第2題]"
+  },
+  {
+    "question": "`__________` 為細菌產生核酸五碳醣的重要途徑。",
+    "answer": ["Pentose phosphate pathway", "五碳糖磷酸途徑", "PPP"],
+    "explanation": "五碳糖磷酸途徑(Pentose phosphate pathway, PPP)是細菌產生核酸所需五碳醣（如核糖）的重要代謝途徑。\n[出自考古第1題]"
+  },
+  {
+    "question": "細菌行無氧呼吸(Anaerobic respiration)時利用 `__________` 做電子最後接受者；行有氧呼吸(Aerobic respiration)時則是利用 `__________` 作電子最後接受者。",
+    "answer": ["無機化合物", "NO3-", "SO42-", "氧氣"],
+    "explanation": "無氧呼吸的最終電子接受者是氧以外的無機化合物，例如硝酸根(NO₃⁻)或硫酸根(SO₄²⁻)；有氧呼吸的最終電子接受者是氧氣(O₂)。\n[出自考古第2題]"
+  },
+  {
+    "question": "細菌細胞壁中胜肽聚醣的醣骨架是由 `__________` 與 `__________` 交錯連接而成。",
+    "answer": ["N-acetylglucosamine", "N-乙醯葡萄糖胺", "N-acetylmuramic acid", "N-乙醯胞壁酸"],
+    "explanation": "胜肽聚醣(Peptidoglycan)的醣骨架是由 N-乙醯葡萄糖胺(N-acetylglucosamine, NAG)和 N-乙醯胞壁酸(N-acetylmuramic acid, NAM)兩種醣類衍生物交替連接形成的長鏈。\n[出自考古第3題]"
+  },
+  {
+    "question": "Bacteria chromosome DNA usually is a single, linear molecule",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "F",
+    "explanation": "原核細胞（細菌）的染色體 DNA 通常是單一、環狀(circular)分子，而非線狀(linear)。\n[出自考古第1題]"
+  },
+  {
+    "question": "Plasmids are extrachromosomal DNA elements carrying",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "T",
+    "explanation": "質體(Plasmid)是與細菌基本生存無關的染色體外(extrachromosomal)環狀 DNA 元件，通常攜帶額外的基因（如抗藥性基因），能自行複製。\n[出自考古第2題]"
+  },
+  {
+    "question": "Regulation of the bacterial genes is mediated by a system called “operon.”",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "T",
+    "explanation": "操作組(Operon)是細菌基因調控的一個單位，包含一組功能相關的結構基因以及調控它們表現的啟動子(promoter)和操作子(operator)等元件。\n[出自考古第3題]"
+  },
+  {
+    "question": "Generalized transduction is carried out by virulent phages carrying whole host DNA.",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "F",
+    "explanation": "普遍性轉導(Generalized transduction)是由（通常是）毒性噬菌體在複製過程中，錯誤地將宿主細菌染色體的 DNA 片段(fragments)包裝進新的噬菌體顆粒中，而非完整的宿主 DNA。\n[出自考古第4題]"
+  },
+  {
+    "question": "An F⁺ cell:",
+    "options": {
+      "A": "transfers F plasmid to a F⁻ recipient, often resulting in the conversion of F⁻ to F⁺.",
+      "C": "has a chromosomally integrated F factor.",
+      "D": "contains a prophage for conjugation.",
+      "E": "cannot conjugate with an F⁻ recombinant.",
+      "F": "has a free F factor in the cytoplasm."
+    },
+    "answer": "F",
+    "explanation": "(A) F⁺ 細胞能將 F 質體轉移給 F⁻ 細胞，使後者變為 F⁺。(C) 描述的是 Hfr 細胞。(D) 噬菌體的前噬菌體(prophage)與溶原性有關，F 因子與接合(conjugation)有關。(E) F⁺ 細胞可以與 F⁻ 細胞接合。(F) F⁺ 細胞的定義就是在細胞質中具有游離的 F 因子（F 質體）。\n[出自考古第1題]"
+  },
+  {
+    "question": "During Griffith's transformation experiments",
+    "options": {
+      "A": "Live S strain bacteria mixed with dead R strain bacteria caused animal death.",
+      "B": "Live S strain bacteria mixed with dead R strain bacteria failed to kill the animals.",
+      "C": "Dead S strain bacteria mixed with live R strain bacteria failed to kill the animals.",
+      "D": "Dead S strain bacteria mixed with live R strain bacteria caused animal death."
+    },
+    "answer": "D",
+    "explanation": "Griffith 的實驗證明，加熱殺死的 S 型肺炎鏈球菌中的遺傳物質（後來證明是 DNA）可以被活的 R 型肺炎鏈球菌吸收，使 R 型菌轉化(transform)為具有致病性的 S 型菌，導致小鼠死亡。\n[出自考古第2題]"
+  },
+  {
+    "question": "配合題：\nPrevents DNA replication by inhibiting gyrase",
+    "options": {
+      "1": "Penicillins",
+      "2": "Trimethoprim",
+      "3": "Quinolones",
+      "4": "Tetracyclines"
+    },
+    "answer": "3",
+    "explanation": "喹諾酮類(Quinolone)藥物的作用對象是 DNA gyrase（細菌特有的拓撲異構酶），抑制其功能，阻止 DNA 複製，導致細菌死亡。\n[出自考古題 a]"
+  },
+  {
+    "question": "配合題：\nCell wall synthesis inhibitor",
+    "options": {
+      "1": "Penicillins",
+      "2": "Trimethoprim",
+      "3": "Quinolones",
+      "4": "Tetracyclines"
+    },
+    "answer": "1",
+    "explanation": "青黴素(Penicillin)屬於 β-內醯胺類抗生素，能抑制轉胜肽酶(Transpeptidase)的活性，干擾細菌細胞壁中肽聚醣的合成，導致細菌細胞壁缺陷而死亡。\n[出自考古題 b]"
+  },
+  {
+    "question": "配合題：\nProtein synthesis inhibitor",
+    "options": {
+      "1": "Penicillins",
+      "2": "Trimethoprim",
+      "3": "Quinolones",
+      "4": "Tetracyclines"
+    },
+    "answer": "4",
+    "explanation": "四環黴素(Tetracycline)能與細菌核糖體的 30S 次單元結合，阻止胺醯-tRNA 進入核糖體的 A 位，從而抑制蛋白質合成。\n[出自考古題 c]"
+  },
+  {
+    "question": "配合題：\nDihydrofolate reductase inhibitor, in combination with sulfonamides to achieve synergistic effect",
+    "options": {
+      "1": "Penicillins",
+      "2": "Trimethoprim",
+      "3": "Quinolones",
+      "4": "Tetracyclines"
+    },
+    "answer": "2",
+    "explanation": "甲氧芐啶(Trimethoprim)能抑制二氫葉酸還原酶(Dihydrofolate reductase)，阻止二氫葉酸轉化為四氫葉酸。常與磺胺類藥物（抑制葉酸合成早期步驟）合併使用，達到協同抗菌效果。\n[出自考古題 d]"
+  },
+  {
+    "question": "以下何種不是 Staphylococcus aureus 的特徵",
+    "options": {
+      "A": "Oxidase production",
+      "B": "CAMP reaction with Group B Streptococcus spp.",
+      "C": "Coagulase production",
+      "D": "Growth in 10% NaCl"
+    },
+    "answer": "A",
+    "explanation": "(A) 金黃色葡萄球菌(S. aureus)具有 Catalase（過氧化氫酶）但不產生 Oxidase（氧化酶）。(B) S. aureus 可產生 CAMP 因子，與 B 群鏈球菌產生協同溶血反應（CAMP test）。(C) 產生凝固酶(Coagulase)是 S. aureus 的重要特徵。(D) S. aureus 耐鹽，可在含 10% NaCl 的培養基中生長。\n[出自考古第1題]"
+  },
+  {
+    "question": "下列何者為 A spreading factor？",
+    "options": {
+      "A": "Lipase",
+      "B": "Capsule",
+      "C": "M-like proteins",
+      "D": "F protein"
+    },
+    "answer": "A",
+    "explanation": "擴散因子(spreading factor)是指能分解組織成分，幫助病原菌擴散的物質。(A) 脂肪酶(Lipase)能分解脂肪，幫助葡萄球菌在皮下組織擴散。(B) 莢膜(Capsule)主要功能是抗吞噬。(C) M 蛋白是鏈球菌的毒力因子，與抗吞噬和附著有關。(D) F 蛋白與附著有關。\n[出自考古第2題]"
+  },
+  {
+    "question": "下列有關 Mycobacterium tuberculosis 之敘述，何者為非？",
+    "options": {
+      "A": "大部分(>80%)感染此菌之病患會於2年內發病，快速傳播，因此造成全世界 1/3 人口感染此菌",
+      "B": "常經由吃入受此菌汙染的食物，造成免疫力低下病患之嚴重感染",
+      "C": "細胞壁脂質成分高且生長快速，因此易產生基因體突變成為多重抗藥菌株(MDR-TB)",
+      "D": "治療結核病患者通常需要進行長時間多重藥物合併治療，以防止抗藥菌株之產生。"
+    },
+    "answer": ["A", "B", "C"],
+    "explanation": "(A) 感染結核桿菌者多數為潛伏性感染(Latent TB)，只有約 5-10% 的感染者在一生中會發病。全球約 1/4 人口感染此菌，而非 1/3。(B) 結核病主要經由飛沫傳染，而非食入。(C) 結核桿菌細胞壁脂質含量高，但生長緩慢，倍增時間長達 15-20 小時。\n[出自考古第1題]"
+  },
+  {
+    "question": "下列何者為非？",
+    "options": {
+      "A": "Bacillus cereus 常經由食用未適當低溫保存之米飯而感染，引發腹瀉症狀",
+      "B": "Clostridium perfringens 所引起之 Myonecrosis 會有劇烈疼痛引發 Gas gangrene 之病症，致死率高",
+      "C": "吸入 Bacillus anthracis 的孢子所引起之 Inhalation anthrax 潛伏期很短，常於吸入後五天內即產生嚴重之腦膜炎重症",
+      "D": "小於一歲之嬰兒常經由誤食受 Clostridium botulinum 孢子污染之蜂蜜感染，造成新生兒破傷風病症。"
+    },
+    "answer": ["A", "C", "D"],
+    "explanation": "(A) *Bacillus cereus* 食物中毒有兩種主要類型：嘔吐型（常與米飯相關）和腹瀉型（常與肉類、蔬菜相關）。題目敘述將米飯與腹瀉症狀連結，不完全正確。(C) 吸入性炭疽(*Inhalation anthrax*) 的潛伏期可以從幾天到數週不等，並非都很短，且早期症狀類似流感，晚期才可能發展成嚴重病症如出血性縱膈炎和腦膜炎。(D) 嬰兒食用受 *Clostridium botulinum* 孢子污染的蜂蜜可能導致嬰兒肉毒桿菌症(*Infant botulism*)，而非新生兒破傷風（由 *Clostridium tetani* 引起）。\n[出自考古第2題]"
+  },
+  {
+    "question": "配合題：\nCapsule",
+    "options": {
+      "A": "Defenses of body surface",
+      "B": "Defenses of tissue and blood",
+      "C": "Factors promote colonization",
+      "D": "Factors damage host"
+    },
+    "answer": "C",
+    "explanation": "莢膜(Capsule)通常由多醣體構成，能幫助細菌抵抗宿主的吞噬作用，並有助於黏附和生物膜形成，因此促進定植(colonization)。雖然它也是一種防禦機制，但歸類為促進定植更符合其在毒力中的多重角色。\n[出自考古題 1]"
+  },
+  {
+    "question": "配合題：\nIgG",
+    "options": {
+      "A": "Defenses of body surface",
+      "B": "Defenses of tissue and blood",
+      "C": "Factors promote colonization",
+      "D": "Factors damage host"
+    },
+    "answer": "B",
+    "explanation": "IgG 是血液和組織中最主要的抗體，參與多種體液免疫防禦機制，如中和毒素、調理吞噬作用、活化補體等，屬於組織和血液的防禦因子。\n[出自考古題 2]"
+  },
+  {
+    "question": "配合題：\nLipopolysaccharide (LPS)",
+    "options": {
+      "A": "Defenses of body surface",
+      "B": "Defenses of tissue and blood",
+      "C": "Factors promote colonization",
+      "D": "Factors damage host"
+    },
+    "answer": "D",
+    "explanation": "脂多醣(LPS)是革蘭氏陰性菌外膜的主要成分，其 Lipid A 部分是內毒素，能引發強烈的免疫反應，導致發燒、休克等，屬於損傷宿主的因子。\n[出自考古題 3]"
+  },
+  {
+    "question": "配合題：\nMucin",
+    "options": {
+      "A": "Defenses of body surface",
+      "B": "Defenses of tissue and blood",
+      "C": "Factors promote colonization",
+      "D": "Factors damage host"
+    },
+    "answer": "A",
+    "explanation": "黏蛋白(Mucin)是黏液層的主要成分，覆蓋在體表（如呼吸道、消化道）的上皮細胞表面，能捕捉病原體，阻止其附著，是一種物理屏障，屬於體表防禦因子。\n[出自考古題 4]"
+  },
+  {
+    "question": "配合題：\nEnteric fever",
+    "options": {
+      "A": "Escherichia coli",
+      "B": "Burkholderia pseudomallei",
+      "C": "Helicobacter pylori",
+      "D": "Vibrio vulnificus",
+      "E": "Klebsiella pneumoniae",
+      "F": "Salmonella typhi",
+      "G": "Yersinia enterocolitica",
+      "H": "Campylobacter jejuni"
+    },
+    "answer": "F",
+    "explanation": "腸熱病(Enteric fever)，主要指傷寒(Typhoid fever)和副傷寒(Paratyphoid fever)，是由傷寒沙門氏菌(Salmonella typhi)或副傷寒沙門氏菌引起的全身性感染。\n[出自考古題 1]"
+  },
+  {
+    "question": "配合題：\nGastric cancer",
+    "options": {
+      "A": "Escherichia coli",
+      "B": "Burkholderia pseudomallei",
+      "C": "Helicobacter pylori",
+      "D": "Vibrio vulnificus",
+      "E": "Klebsiella pneumoniae",
+      "F": "Salmonella typhi",
+      "G": "Yersinia enterocolitica",
+      "H": "Campylobacter jejuni"
+    },
+    "answer": "C",
+    "explanation": "胃癌(Gastric cancer)的發生與幽門螺旋桿菌(Helicobacter pylori)的長期慢性感染密切相關，H. pylori 被世界衛生組織列為第一類致癌物。\n[出自考古題 2]"
+  },
+  {
+    "question": "配合題：\nMost common cause of hemolytic uremic syndrome (B03)",
+    "options": {
+      "A": "Escherichia coli",
+      "B": "Burkholderia pseudomallei",
+      "C": "Helicobacter pylori",
+      "D": "Vibrio vulnificus",
+      "E": "Klebsiella pneumoniae",
+      "F": "Salmonella typhi",
+      "G": "Yersinia enterocolitica",
+      "H": "Campylobacter jejuni"
+    },
+    "answer": "A",
+    "explanation": "溶血性尿毒症候群(Hemolytic uremic syndrome, HUS)最常見的原因是感染了產生志賀毒素(Shiga toxin)的細菌，特別是腸道出血性大腸桿菌(Enterohemorrhagic E. coli, EHEC)，如 O157:H7 血清型。\n[出自考古題 3]"
+  },
+  {
+    "question": "配合題：\nMost common cause of community acquired pyogenic liver abscess in Taiwan",
+    "options": {
+      "A": "Escherichia coli",
+      "B": "Burkholderia pseudomallei",
+      "C": "Helicobacter pylori",
+      "D": "Vibrio vulnificus",
+      "E": "Klebsiella pneumoniae",
+      "F": "Salmonella typhi",
+      "G": "Yersinia enterocolitica",
+      "H": "Campylobacter jejuni"
+    },
+    "answer": "E",
+    "explanation": "在台灣以及亞洲其他地區，社區型化膿性肝膿瘍(Community-acquired pyogenic liver abscess, PLA)最常見的致病菌是克雷伯氏肺炎桿菌(Klebsiella pneumoniae)，特別是具有高毒力莢膜血清型 K1/K2 的菌株。\n[出自考古題 4]"
+  },
+  {
+    "question": "配合題：\nMost common cause of community acquired urinary tract infection",
+    "options": {
+      "A": "Escherichia coli",
+      "B": "Burkholderia pseudomallei",
+      "C": "Helicobacter pylori",
+      "D": "Vibrio vulnificus",
+      "E": "Klebsiella pneumoniae",
+      "F": "Salmonella typhi",
+      "G": "Yersinia enterocolitica",
+      "H": "Campylobacter jejuni"
+    },
+    "answer": "A",
+    "explanation": "社區型泌尿道感染(Community-acquired urinary tract infection, UTI)最常見的致病菌是大腸桿菌(Escherichia coli)，特別是尿路致病性大腸桿菌(Uropathogenic E. coli, UPEC)。\n[出自考古題 5]"
+  },
+  {
+    "question": "Which one of the following is NOT in the non-fermenting Gram-negative bacilli (NFGNB) group?",
+    "options": {
+      "A": "Acinetobacter baumannii",
+      "B": "Helicobacter pylori",
+      "C": "Pseudomonas aeruginosa",
+      "D": "Flavobacterium",
+      "E": "Chryseobacterium"
+    },
+    "answer": "B",
+    "explanation": "非發酵性革蘭氏陰性桿菌(NFGNB)的定義是不能發酵葡萄糖。幽門螺旋桿菌(Helicobacter pylori)雖然是革蘭氏陰性桿菌，但它是一種微需氧菌，可以代謝葡萄糖（儘管不是典型的發酵），且其分類和生化特性與典型的 NFGNB（如 Pseudomonas, Acinetobacter）不同。\n[出自考古第1題]"
+  },
+  {
+    "question": "Which one of the following is the most common non-fermenting Gram-negative bacilli (NFGNB) isolated from patients?",
+    "options": {
+      "A": "Pseudomonas aeruginosa",
+      "B": "Acinetobacter baumannii",
+      "C": "Burkholderia pseudomallei",
+      "D": "Flavobacterium",
+      "E": "Chryseobacterium"
+    },
+    "answer": "A",
+    "explanation": "在臨床分離的非發酵性革蘭氏陰性桿菌(NFGNB)中，綠膿桿菌(Pseudomonas aeruginosa)是最常見的菌種，也是重要的院內感染病原菌。\n[出自考古第2題]"
+  },
+  {
+    "question": "Which one of the following is NOT a characteristic of Burkholderia pseudomallei?",
+    "options": {
+      "A": "Melioidosis",
+      "B": "Iraqibacter",
+      "C": "Great Mimicker",
+      "D": "Found in soil, water and vegetation"
+    },
+    "answer": "B",
+    "explanation": "(A) *Burkholderia pseudomallei* 會引起類鼻疽(Melioidosis)。(B) \"Iraqibacter\" 是 *Acinetobacter baumannii* 的一個綽號，源於其在伊拉克戰爭期間美軍士兵中引起感染。(C) 類鼻疽的臨床表現多樣，易與其他疾病混淆，因此 *B. pseudomallei* 被稱為 \"Great Mimicker\"。(D) *B. pseudomallei* 是一種腐生菌，廣泛存在於土壤和水中，特別是在熱帶地區。\n[出自考古第3題]"
+  },
+  {
+    "question": "Which one/ones of the following is/are the virulence factor(s) of Vibrio cholerae?",
+    "options": {
+      "A": "Cytolethal distending toxin",
+      "B": "Toxin-coregulated pilus",
+      "C": "Cholera toxin",
+      "D": "Pyocyanin",
+      "E": "Pyoverdine"
+    },
+    "answer": "C",
+    "explanation": "霍亂弧菌(*Vibrio cholerae*) 最主要的毒力因子是霍亂毒素(Cholera toxin, CT)，它能導致腸道細胞大量分泌水分和電解質，引起嚴重腹瀉。(B) 毒素協同調節菌毛(Toxin-coregulated pilus, TCP)也是重要的毒力因子，主要負責細菌在腸道的定植。(A) 細胞致死性腫脹毒素(CDT)主要由某些腸桿菌科細菌和彎曲桿菌產生。(D) 綠膿素(Pyocyanin)和(E) 螢光素(Pyoverdine)是綠膿桿菌的色素和鐵載體。在此單選題中，霍亂毒素(C)是最核心的毒力因子。\n[出自考古第4題]"
+  },
+  {
+    "question": "Which of the following is NOT a characteristic of Campylobacter jejuni?",
+    "options": {
+      "A": "Guillain-Barre syndrome",
+      "B": "Reactive arthritis",
+      "C": "Oxidize/ferment carbohydrate",
+      "D": "Require low oxygen for optimal growth",
+      "E": "Person to person spread is unusual"
+    },
+    "answer": "C",
+    "explanation": "(A) 空腸彎曲桿菌感染是格林-巴利症候群(Guillain-Barre syndrome)最常見的前驅感染。(B) 也可能引發反應性關節炎(Reactive arthritis)。(C) 空腸彎曲桿菌不能發酵或氧化碳水化合物。(D) 它是微需氧菌，需要低氧環境生長。(E) 主要通過污染的食物或水傳播，人傳人較少見。\n[出自考古第5題]"
+  },
+  {
+    "question": "Which ones of the following are characteristics of Helicobacter pylori?(多選)",
+    "options": {
+      "A": "Curved bacteria",
+      "B": "Urease production to raise pH in the stomach",
+      "C": "Combination of proton pump inhibitor and antibiotics for treatment",
+      "D": "Vaccines are available",
+      "E": "A coadaptation and coevolutionary history with humans"
+    },
+    "answer": ["A", "B", "C", "E"],
+    "explanation": "(A) 幽門螺旋桿菌是彎曲狀的革蘭氏陰性菌。(B) 產生大量的尿素酶(Urease)，分解尿素產生氨，中和胃酸，幫助其在胃內生存。(C) 標準治療方案包括質子泵抑制劑(PPI)和多種抗生素的聯合用藥。(D) 目前尚無有效的幽門螺旋桿菌疫苗上市。(E) 人類是幽門螺旋桿菌的主要宿主，兩者之間存在長期的共同演化歷史。\n[出自考古第6題]"
+  },
+  {
+    "question": "配合題：\n必須利用含 Iron salts 與 L-cysteine 之複合培養基方可進行有效培養之病菌",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "4",
+    "explanation": "嗜肺性退伍軍人桿菌(Legionella pneumophila)營養要求苛刻，不能在普通培養基上生長，需要在含有 L-半胱氨酸(L-cysteine)和鐵鹽(Iron salts)的特殊培養基，如 BCYEα agar (Buffered Charcoal Yeast Extract agar with α-ketoglutarate)上培養。\n[出自考古題 1]"
+  },
+  {
+    "question": "配合題：\n可藉由節肢動物之叮咬感染，引發兔熱病之病菌",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "2",
+    "explanation": "土倫病法蘭西斯氏菌(Francisella tularensis)可引起兔熱病(Tularemia)，其傳播途徑多樣，包括被受感染的節肢動物（如蜱、鹿蠅）叮咬。\n[出自考古題 2]"
+  },
+  {
+    "question": "配合題：\n與 Staphylococcus aureus 共同培養時會於其周圍產生 Satellite 狀之小菌落之菌種",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "1",
+    "explanation": "流感嗜血桿菌(Haemophilus influenzae)生長需要 X 因子（血紅素）和 V 因子（NAD）。血瓊脂只提供 X 因子。金黃色葡萄球菌能分泌 V 因子，因此流感嗜血桿菌只能在金黃色葡萄球菌菌落周圍生長，形成衛星現象(Satellite phenomenon)。\n[出自考古題 3]"
+  },
+  {
+    "question": "配合題：\n人類可藉由接種疫苗預防那些病菌感染造成傷害(多選)",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": ["1", "6"],
+    "explanation": "目前有針對 b 型流感嗜血桿菌(Haemophilus influenzae type b, Hib)的結合疫苗，以及包含百日咳桿菌(Bordetella pertussis)抗原的百日咳疫苗（常與白喉、破傷風混合為 DTaP 或 Tdap 疫苗），可有效預防相應的感染。\n[出自考古題 4]"
+  },
+  {
+    "question": "配合題：\n感染後會出現陣發性咳嗽之症狀",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "6",
+    "explanation": "百日咳(Pertussis)是由百日咳桿菌(Bordetella pertussis)引起的急性呼吸道傳染病，其典型臨床表現之一是陣發性、痙攣性咳嗽(paroxysmal cough)，咳嗽終末伴有雞鳴樣吸氣吼聲(whoop)。\n[出自考古題 5]"
+  },
+  {
+    "question": "配合題：\n人類常因誤食未適當消毒之乳類製品遭受感染之病菌",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "3",
+    "explanation": "布氏桿菌病(Brucellosis)是一種人畜共患病，人類常因食用未經巴氏消毒的受污染乳製品（如牛奶、奶酪）或接觸受感染動物而感染布氏桿菌(Brucella spp.)，其中馬爾他布氏桿菌(*Brucella melitensis*)是常見的致病種。\n[出自考古題 6]"
+  },
+  {
+    "question": "配合題：\n由 Legionella 感染造成的疾病，無肺炎症狀，可自行痊癒",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "9",
+    "explanation": "退伍軍人桿菌(Legionella spp.)可引起兩種主要臨床表現：退伍軍人病(Legionnaires' disease)，是一種嚴重的肺炎；以及龐提亞克熱(Pontiac fever)，是一種較輕微、自限性的流感樣疾病，無肺炎症狀。\n[出自考古題 7]"
+  },
+  {
+    "question": "配合題：\n培養 Haemophilus influenzae 所使用之培養基",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "10",
+    "explanation": "流感嗜血桿菌(Haemophilus influenzae)生長需要 X 因子和 V 因子。巧克力瓊脂(Chocolate agar)是加熱處理過的血瓊脂，紅細胞已溶解並釋放出 X 和 V 因子，適合流感嗜血桿菌生長。\n[出自考古題 8]"
+  },
+  {
+    "question": "配合題：\nLegionella pneumophila 主要致病的 Serotype，可採取尿液進行 Urinary antigen test",
+    "options": {
+      "1": "Haemophilus influenzae",
+      "2": "Francisella tularensis",
+      "3": "Brucella melitensis",
+      "4": "Legionella pneumophila",
+      "5": "Serotype b",
+      "6": "Bordetella pertussis",
+      "7": "Legionnaires' disease",
+      "8": "Serotype 1",
+      "9": "Pontiac fever",
+      "10": "Chocolate agar",
+      "11": "BCYEα agar",
+      "12": "Blood agar"
+    },
+    "answer": "8",
+    "explanation": "嗜肺性退伍軍人桿菌(Legionella pneumophila)血清型 1 (Serogroup 1)是最常見的致病血清型，約佔退伍軍人病的 80% 左右。針對此血清型的尿液抗原檢測(Urinary antigen test)是快速診斷退伍軍人病的常用方法。\n[出自考古題 9]"
+  },
+  {
+    "question": "Which syndrome is a feature of tertiary syphilis?(多選)",
+    "options": {
+      "A": "Red rash on skin and palms",
+      "B": "Hard chancre",
+      "C": "Hutchinson's teeth",
+      "D": "Argyll-Robertson pupil",
+      "E": "Gumma"
+    },
+    "answer": ["D", "E"],
+    "explanation": "三期梅毒(Tertiary syphilis)的特徵包括：(D) 阿蓋爾-羅伯遜瞳孔(Argyll-Robertson pupil)，表現為光反射消失但調節反射存在；(E) 梅毒腫(Gumma)，是一種肉芽腫性病變，可發生在皮膚、骨骼、內臟等。(A) 皮膚和手掌紅疹是二期梅毒的特徵。(B) 硬下疳(Hard chancre)是一期梅毒的特徵。(C) 哈欽森齒(Hutchinson's teeth)是先天性梅毒的特徵。\n[出自考古第1題]"
+  },
+  {
+    "question": "Weil's disease, is characterized by liver damage (causing jaundice), kidney failure, and bleeding, which could happen in infection by?",
+    "options": {
+      "A": "Leptospira",
+      "B": "Borellia",
+      "C": "Treponema",
+      "D": "Mycoplasma",
+      "E": "None of the above"
+    },
+    "answer": "A",
+    "explanation": "韋氏病(Weil's disease)是鉤端螺旋體病(Leptospirosis)的一種嚴重形式，由鉤端螺旋體(Leptospira)感染引起，臨床特徵包括黃疸（肝損傷）、腎衰竭和出血傾向。\n[出自考古第2題]"
+  },
+  {
+    "question": "Which reagents are included in the RPR/VDRL antigen solution for the flocculation test? (多選)",
+    "options": {
+      "A": "Cardiolipin",
+      "B": "Lecithin",
+      "C": "Cholesterol",
+      "D": "Dead treponema",
+      "E": "Antigen coated RBC"
+    },
+    "answer": ["A", "B", "C"],
+    "explanation": "快速血漿反應素試驗(RPR)和性病研究實驗室試驗(VDRL)都是非梅毒螺旋體抗原血清試驗，用於檢測梅毒反應素（抗心磷脂抗體）。其抗原溶液主要成分是心磷脂(Cardiolipin)、卵磷脂(Lecithin)和膽固醇(Cholesterol)的混合物。\n[出自考古第3題]"
+  },
+  {
+    "question": "Which descriptions about Mycoplasmas are correct?(多選)",
+    "options": {
+      "A": "Smallest free-living bacteria",
+      "B": "Containing cell wall with thin peptidoglycan layer and LPS",
+      "C": "Forming fried-egg shape colonies on plates",
+      "D": "Cell membrane containing no cholesterol",
+      "E": "A pathogen not strict human"
+    },
+    "answer": ["A", "C"],
+    "explanation": "(A) 黴漿菌(Mycoplasma)是已知最小的能獨立生活的原核生物。(B) 黴漿菌缺乏細胞壁，因此沒有肽聚醣和 LPS。(C) 在固體培養基上常形成典型的 \"煎蛋狀\" (fried-egg) 菌落。(D) 黴漿菌細胞膜含有膽固醇，這在原核生物中是獨特的。(E) 大多數致病的黴漿菌是嚴格的人類病原體。\n[出自考古第4題]"
+  },
+  {
+    "question": "Erythema migrans is often seen in the early stage of __________",
+    "options": {
+      "A": "Epidemic relapsing fever",
+      "B": "Endemic relapsing fever",
+      "C": "Lyme borreliosis",
+      "D": "Leptospirosis",
+      "E": "Venereal syphilis"
+    },
+    "answer": "C",
+    "explanation": "游走性紅斑(Erythema migrans)是萊姆病(Lyme borreliosis)早期（第一期）最特徵性的臨床表現，通常在蜱叮咬部位出現，並逐漸向外擴大形成環狀紅斑（靶心斑，Bull's eye）。\n[出自考古第5題]"
+  },
+  {
+    "question": "Rocky Mountain spotted fever (RMSF) is an illness caused by infection with the bacterium __________, which is transmitted by a bite from infected ticks.",
+    "options": {
+      "A": "Rickettsia rickettsii",
+      "B": "Rickettsia akari",
+      "C": "Rickettsia prowazekii",
+      "D": "Rickettsia typhi",
+      "E": "Orientia tsutsugamushi"
+    },
+    "answer": "A",
+    "explanation": "落磯山斑點熱(Rocky Mountain spotted fever, RMSF)是由立氏立克次體(Rickettsia rickettsii)感染引起的，主要通過受感染的硬蜱（如美洲狗蜱、落磯山木蜱）叮咬傳播。\n[出自考古第6題]"
+  },
+  {
+    "question": "Which disease is caused by Chlamydia psittaci?",
+    "options": {
+      "A": "Trachoma",
+      "B": "Adult inclusion conjunctivitis",
+      "C": "Pulmonary infection occurs in newborns",
+      "D": "Lymphogranuloma",
+      "E": "Ornithosis"
+    },
+    "answer": "E",
+    "explanation": "鸚鵡熱披衣菌(*Chlamydia psittaci*，現更名為 *Chlamydophila psittaci*)主要引起鸚鵡熱(Psittacosis)或稱鳥疫(Ornithosis)，是一種人畜共患病，人類通常通過接觸受感染的鳥類（尤其是鸚鵡）或其排泄物而感染。(A)(B)(D) 主要由沙眼披衣菌(*Chlamydia trachomatis*)的不同血清型引起。(C) 新生兒肺炎可由沙眼披衣菌引起。\n[出自考古第7題]"
+  },
+  {
+    "question": "The first choice of medicine to treat Syphilis is __________.",
+    "answer": ["Penicillin"],
+    "explanation": "治療梅毒(Syphilis)的首選藥物是青黴素(Penicillin)，特別是長效青黴素 G（苄星青黴素）。\n[出自考古第1題]"
+  },
+  {
+    "question": "Parrot fever can be prevented through the control of infections in domestic and imported pet birds (by treating birds with chlortetracyclin hydrochloride for __________ days).",
+    "answer": ["45"],
+    "explanation": "預防鸚鵡熱(Parrot fever)的措施之一是控制禽類的感染，例如對進口或飼養的寵物鳥使用添加了鹽酸金黴素(chlortetracycline hydrochloride)的飼料進行治療，通常建議持續 45 天。\n[出自考古第2題]"
+  },
+  {
+    "question": "Based on their morphology, fungi can be grouped into two forms. They are __________ and __________. Which does contain hyphae? __________",
+    "answer": ["Yeast", "酵母", "Mold", "黴"],
+    "explanation": "根據形態學，真菌主要分為兩種基本形式：單細胞的酵母(Yeast)和多細胞絲狀的黴菌(Mold)。含有菌絲(hyphae)的是黴菌(Mold)。有些真菌具有雙相性，可在不同環境下呈現酵母或黴菌形態。\n[出自考古第1題]"
+  },
+  {
+    "question": "配合題：\nThrombosis of lungs",
+    "options": {
+      "1": "Candida albicans",
+      "2": "Malassezia furfur",
+      "3": "Histoplasma capsulatum",
+      "4": "Blastomyces dermatitidis",
+      "5": "Piedraia hortae",
+      "6": "Trichosporon beigelii",
+      "7": "Cryptococcus neoformans",
+      "8": "Microsporum spp.",
+      "9": "Aspergillus fumigatus"
+    },
+    "answer": "9",
+    "explanation": "煙麴黴(*Aspergillus fumigatus*)是一種常見的機會致病性黴菌，在免疫功能低下患者中可引起侵襲性麴黴病，其菌絲可能侵入肺部血管，導致血管栓塞(Thrombosis)和組織壞死。\n[出自考古題 a]"
+  },
+  {
+    "question": "配合題：\nMeningitis",
+    "options": {
+      "1": "Candida albicans",
+      "2": "Malassezia furfur",
+      "3": "Histoplasma capsulatum",
+      "4": "Blastomyces dermatitidis",
+      "5": "Piedraia hortae",
+      "6": "Trichosporon beigelii",
+      "7": "Cryptococcus neoformans",
+      "8": "Microsporum spp.",
+      "9": "Aspergillus fumigatus"
+    },
+    "answer": "7",
+    "explanation": "新型隱球菌(*Cryptococcus neoformans*)是一種具有厚莢膜的酵母菌，是引起真菌性腦膜炎(Meningitis)最常見的病原體，尤其是在免疫功能低下（如 AIDS）患者中。\n[出自考古題 b]"
+  },
+  {
+    "question": "配合題：\nThrush",
+    "options": {
+      "1": "Candida albicans",
+      "2": "Malassezia furfur",
+      "3": "Histoplasma capsulatum",
+      "4": "Blastomyces dermatitidis",
+      "5": "Piedraia hortae",
+      "6": "Trichosporon beigelii",
+      "7": "Cryptococcus neoformans",
+      "8": "Microsporum spp.",
+      "9": "Aspergillus fumigatus"
+    },
+    "answer": "1",
+    "explanation": "鵝口瘡(Thrush)，也稱口腔念珠菌病，是由念珠菌屬(Candida spp.)，最主要是白色念珠菌(*Candida albicans*)在口腔黏膜過度生長引起的感染，表現為黏膜上的白色斑塊。\n[出自考古題 c]"
+  },
+  {
+    "question": "下列關於病毒特性的敘述，何者為非：",
+    "options": {
+      "A": "病毒屬絕對細胞內寄生，所以無法在宿主細胞外進行複製。",
+      "B": "相對於裸露病毒(naked virus)，具有膜鞘的病毒(enveloped virus)多了一層雙層脂質膜的保護，所以較能對抗物理傷害，如酸與乾燥。",
+      "C": "細菌的複製是利用二分法(Binary division)產生新的子代個體，但病毒的複製則不是。",
+      "D": "負股單股 RNA 病毒(Negative single-stranded RNA virus)的病毒顆粒中必須包含病毒的複製酶才具備感染力。"
+    },
+    "answer": "B",
+    "explanation": "(A) 病毒是絕對細胞內寄生物，只能在活的宿主細胞內複製。(B) 具有膜鞘(envelope)的病毒，其膜鞘（源自宿主細胞膜的脂雙層）對環境因素（如乾燥、酸、膽鹽、清潔劑）較為敏感，因此通常比裸露病毒(naked virus)更脆弱，抵抗力較差。(C) 細菌通過二分裂增殖，病毒則通過複製其組分（核酸和蛋白質）然後組裝成新病毒顆粒的方式複製。(D) 負股 RNA 病毒的基因組不能直接作為 mRNA，必須先由病毒攜帶的 RNA 依賴性 RNA 聚合酶轉錄成正股 RNA，因此病毒顆粒內必須包含此酶。\n[出自考古第1題]"
+  },
+  {
+    "question": "關於病毒感染細胞的生活史可分為幾個步驟 (1) Assembly (2) Replication of nucleic acid (3) Attachment (4) Uncoating (5) Budding，請問上述步驟的先後順序為何(請由先排到後)？",
+    "options": {
+      "A": "12345。",
+      "B": "32415。",
+      "C": "34215。",
+      "D": "43125。"
+    },
+    "answer": "C",
+    "explanation": "病毒感染細胞的基本步驟依次為：(3) 吸附(Attachment)到宿主細胞表面 → 穿入並(4) 脫殼(Uncoating)釋放病毒基因組 → (2) 核酸複製(Replication of nucleic acid)和病毒蛋白合成 → (1) 組裝(Assembly)成新的病毒顆粒 → 釋放（通過裂解細胞或(5) 出芽(Budding)等方式）。因此順序為 3 → 4 → 2 → 1 → 5。\n[出自考古第2題]"
+  },
+  {
+    "question": "目前 International Committee on Taxonomy of Viruses (ICTV) 2009年最新的病毒的分類所根據的病毒特性，下列何者為非？",
+    "options": {
+      "A": "是否具有膜鞘(Envelope)。",
+      "B": "病毒感染的宿主種類。",
+      "C": "病毒基因體是 DNA 或 RNA。",
+      "D": "病毒基因體結構是單股(正股或負股)或雙股。"
+    },
+    "answer": "B",
+    "explanation": "國際病毒分類委員會(ICTV)的病毒分類系統主要基於病毒的內在理化特性，包括：(C) 核酸類型（DNA 或 RNA）、(D) 基因組結構（單股或雙股，線狀或環狀，分段或不分段，正股或負股等）、複製策略、(A) 是否有膜鞘、衣殼對稱性（如螺旋對稱、二十面體對稱）、病毒顆粒大小和形態等。宿主範圍雖然是病毒的重要生物學特性，但不是主要的分類依據。\n[出自考古第3題]"
+  },
+  {
+    "question": "請問下列的檢驗項目，何者能夠偵測病毒的蛋白質？\n(1) 中和試驗(Neutralization assay)\n(2) 血球凝集抑制試驗(Hemagglutination inhibition assay)\n(3) 血球凝集試驗(Hemagglutination assay)\n(4) 聚合酶鏈鎖反應(PCR)\n(5) ELISA。",
+    "options": {
+      "A": "45",
+      "B": "35",
+      "C": "235",
+      "D": "1345"
+    },
+    "answer": "B",
+    "explanation": "(1) 中和試驗檢測能中和病毒感染性的抗體（宿主蛋白質）。(2) 血球凝集抑制試驗檢測能抑制病毒血凝素的抗體。(3) 血球凝集試驗檢測病毒表面的血凝素（病毒蛋白質）與紅細胞結合的能力。(4) PCR 檢測病毒的核酸。(5) ELISA（酶聯免疫吸附試驗）可以設計用來檢測病毒抗原（病毒蛋白質）或抗體。因此，能直接偵測病毒蛋白質的是 (3) 和 (5)。\n[出自考古第4題]"
+  },
+  {
+    "question": "病毒致病性(Viral pathogenesis)取決於病毒與宿主的因素，下列何者不會影響病毒的致病性？",
+    "options": {
+      "A": "病毒在宿主體內的感染部位。",
+      "B": "病毒的細胞毒殺能力。",
+      "C": "病毒是否具有鞘膜。",
+      "D": "宿主的免疫反應。"
+    },
+    "answer": "C",
+    "explanation": "病毒的致病性受多種因素影響，包括：(A) 病毒的感染部位和組織嗜性；(B) 病毒直接造成的細胞損傷（細胞毒殺能力）；(D) 宿主對病毒感染的免疫反應（有時免疫反應本身會造成組織損傷，即免疫病理）。病毒是否有膜鞘(C)主要影響病毒的穩定性、傳播途徑以及進入和釋放細胞的方式，雖然間接影響感染過程，但相較於其他選項，它本身不直接決定致病性的強弱或類型。\n[出自考古第5題]"
+  }
 ]
