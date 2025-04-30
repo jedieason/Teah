@@ -304,6 +304,8 @@ function confirmAnswer() {
         }
         // 回答後禁止再修改
         fillblankInput.disabled = true;
+        // 禁止再次確認，Enter 進入下一題
+        acceptingAnswers = false;
         // 顯示詳解
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
         renderMathInElement(document.getElementById('explanation-text'), {
