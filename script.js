@@ -7,6 +7,9 @@ let selectedOptions = [];  // 多選題使用
 let correct = 0;
 let wrong = 0;
 let selectedJson = null; // 初始為 null
+// Fill-in-the-blank elements
+const fillblankContainer = document.querySelector('.fillblank-container');
+const fillblankInput = document.getElementById('fillblank-input');
 let isTestCompleted = false; // Flag to track test completion
 
 // 新增：歷史紀錄陣列
@@ -103,6 +106,18 @@ function loadNewQuestion() {
     shuffle(questions);
     currentQuestion = questions.pop(); // 取出一題
 
+    // 判斷填空題（無 options 屬性）
+    if (!currentQuestion.options) {
+        currentQuestion.isFillBlank = true;
+        document.getElementById('options').style.display = 'none';
+        fillblankContainer.style.display = 'flex';
+        fillblankInput.value = '';
+    } else {
+        currentQuestion.isFillBlank = false;
+        document.getElementById('options').style.display = 'flex';
+        fillblankContainer.style.display = 'none';
+    }
+
     // 判斷是否為多選題（答案為陣列且長度超過1）
     if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.length > 1) {
         currentQuestion.isMultiSelect = true;
@@ -126,78 +141,80 @@ function loadNewQuestion() {
         ]
     });
 
-    // 檢查題型
-    const optionKeys = Object.keys(currentQuestion.options);
-    let optionLabels = [];
-    let shouldShuffle = true;
+    if (!currentQuestion.isFillBlank) {
+        // 檢查題型
+        const optionKeys = Object.keys(currentQuestion.options);
+        let optionLabels = [];
+        let shouldShuffle = true;
 
-    if (optionKeys.length === 2 && optionKeys.includes('T') && optionKeys.includes('F')) {
-        // 是是非題
-        optionLabels = ['T', 'F'];
-        shouldShuffle = false;
-    } else {
-        // 單選題（或多選題）都用這組標籤
-        optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-        shouldShuffle = true;
-    }
-
-    // 獲取選項條目
-    let optionEntries = Object.entries(currentQuestion.options);
-
-    // 如果需要洗牌，則洗牌選項
-    if (shouldShuffle) {
-        shuffle(optionEntries);
-    }
-
-    // 正確構建 labelMapping
-    let labelMapping = {};
-    for (let i = 0; i < optionEntries.length; i++) {
-        const [originalLabel, _] = optionEntries[i];
-        labelMapping[originalLabel] = optionLabels[i];
-    }
-
-    // 更新選項
-    const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
-    let newOptions = {};
-    let newAnswer = currentQuestion.isMultiSelect ? [] : '';
-    for (let i = 0; i < optionEntries.length; i++) {
-        const [label, text] = optionEntries[i];
-        const newLabel = optionLabels[i];
-        newOptions[newLabel] = text;
-
-        const button = document.createElement('button');
-        button.classList.add('option-button');
-        button.dataset.option = newLabel;
-        button.innerHTML = marked.parse(`${newLabel}: ${text}`);
-        button.addEventListener('click', selectOption);
-        optionsContainer.appendChild(button);
-
-        // 對於單選題，若原答案與 label 相符則更新；多選題則假設 currentQuestion.answer 為原有正確答案陣列
-        if (currentQuestion.isMultiSelect) {
-            if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.includes(label)) {
-                newAnswer.push(newLabel);
-            }
+        if (optionKeys.length === 2 && optionKeys.includes('T') && optionKeys.includes('F')) {
+            // 是是非題
+            optionLabels = ['T', 'F'];
+            shouldShuffle = false;
         } else {
-            if (label === currentQuestion.answer) {
-                newAnswer = newLabel;
+            // 單選題（或多選題）都用這組標籤
+            optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+            shouldShuffle = true;
+        }
+
+        // 獲取選項條目
+        let optionEntries = Object.entries(currentQuestion.options);
+
+        // 如果需要洗牌，則洗牌選項
+        if (shouldShuffle) {
+            shuffle(optionEntries);
+        }
+
+        // 正確構建 labelMapping
+        let labelMapping = {};
+        for (let i = 0; i < optionEntries.length; i++) {
+            const [originalLabel, _] = optionEntries[i];
+            labelMapping[originalLabel] = optionLabels[i];
+        }
+
+        // 更新選項
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+        let newOptions = {};
+        let newAnswer = currentQuestion.isMultiSelect ? [] : '';
+        for (let i = 0; i < optionEntries.length; i++) {
+            const [label, text] = optionEntries[i];
+            const newLabel = optionLabels[i];
+            newOptions[newLabel] = text;
+
+            const button = document.createElement('button');
+            button.classList.add('option-button');
+            button.dataset.option = newLabel;
+            button.innerHTML = marked.parse(`${newLabel}: ${text}`);
+            button.addEventListener('click', selectOption);
+            optionsContainer.appendChild(button);
+
+            // 對於單選題，若原答案與 label 相符則更新；多選題則假設 currentQuestion.answer 為原有正確答案陣列
+            if (currentQuestion.isMultiSelect) {
+                if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.includes(label)) {
+                    newAnswer.push(newLabel);
+                }
+            } else {
+                if (label === currentQuestion.answer) {
+                    newAnswer = newLabel;
+                }
             }
         }
+
+        // 更新題目的選項和答案
+        currentQuestion.options = newOptions;
+        currentQuestion.answer = newAnswer;
+
+        // 更新詳解中的選項標籤
+        currentQuestion.explanation = updateExplanationOptions(currentQuestion.explanation, labelMapping);
+
+        // 更新模態窗口的內容
+        document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
+        const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
+        document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
+        document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
+        document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
     }
-
-    // 更新題目的選項和答案
-    currentQuestion.options = newOptions;
-    currentQuestion.answer = newAnswer;
-
-    // 更新詳解中的選項標籤
-    currentQuestion.explanation = updateExplanationOptions(currentQuestion.explanation, labelMapping);
-
-    // 更新模態窗口的內容
-    document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
-    const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
-    document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
-    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
-    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
     saveProgress();
     updateProgressBar();
 }
@@ -264,69 +281,102 @@ modalConfirmBtn.addEventListener('click', () => {
 
 // 修改確認按鈕函數
 function confirmAnswer() {
-    if (currentQuestion.isMultiSelect) {
-        if (selectedOptions.length === 0) {
-            showCustomAlert('選點啥吧，用猜的也好！');
+    // 處理填空題邏輯
+    if (currentQuestion.isFillBlank) {
+        const userInput = fillblankInput.value.trim();
+        if (!userInput) {
+            showCustomAlert('請輸入您的答案！');
             return;
         }
-        acceptingAnswers = false;
-        document.getElementById('confirm-btn').disabled = true;
-        // 檢查所有選項
-        document.querySelectorAll('.option-button').forEach(btn => {
-            const option = btn.dataset.option;
-            if (currentQuestion.answer.includes(option)) {
-                // 正確答案
-                if (selectedOptions.includes(option)) {
-                    btn.classList.add('correct');
-                } else {
-                    // 正確但未選取：標示缺漏
-                    btn.classList.add('missing');
-                }
-            } else {
-                if (selectedOptions.includes(option)) {
-                    btn.classList.add('incorrect');
-                }
-            }
+        // 直接作為句子驗證關鍵字
+        const sentence = userInput.toLowerCase();
+        const required = Array.isArray(currentQuestion.answer) ? currentQuestion.answer : [currentQuestion.answer];
+        // 檢查是否包含所有關鍵字
+        const allMatch = required.every(keyword => sentence.includes(keyword.toLowerCase()));
+        if (allMatch) {
+            updateCorrect();
+        } else {
+            updateWrong();
+        }
+        // 顯示詳解
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+        renderMathInElement(document.getElementById('explanation-text'), {
+            delimiters: [
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "$$", right: "$$", display: true },
+                { left: "\\[", right: "\\]", display: true }
+            ]
         });
-        // 判斷是否全對
-        let isCompletelyCorrect = (selectedOptions.length === currentQuestion.answer.length) &&
-                                  currentQuestion.answer.every(opt => selectedOptions.includes(opt));
-        if (isCompletelyCorrect) {
-            updateCorrect();
-        } else {
-            updateWrong();
-        }
+        document.getElementById('explanation').style.display = 'block';
+        document.getElementById('confirm-btn').style.display = 'none';
+        saveProgress();
+        return;
     } else {
-        if (!selectedOption) {
-            showCustomAlert('選點啥吧，用猜的也好！');
-            return;
-        }
-        acceptingAnswers = false;
-        document.getElementById('confirm-btn').disabled = true;
-        const selectedBtn = document.querySelector(`.option-button[data-option='${selectedOption}']`);
-        if (selectedOption === currentQuestion.answer) {
-            selectedBtn.classList.add('correct');
-            updateCorrect();
+        if (currentQuestion.isMultiSelect) {
+            if (selectedOptions.length === 0) {
+                showCustomAlert('選點啥吧，用猜的也好！');
+                return;
+            }
+            acceptingAnswers = false;
+            document.getElementById('confirm-btn').disabled = true;
+            // 檢查所有選項
+            document.querySelectorAll('.option-button').forEach(btn => {
+                const option = btn.dataset.option;
+                if (currentQuestion.answer.includes(option)) {
+                    // 正確答案
+                    if (selectedOptions.includes(option)) {
+                        btn.classList.add('correct');
+                    } else {
+                        // 正確但未選取：標示缺漏
+                        btn.classList.add('missing');
+                    }
+                } else {
+                    if (selectedOptions.includes(option)) {
+                        btn.classList.add('incorrect');
+                    }
+                }
+            });
+            // 判斷是否全對
+            let isCompletelyCorrect = (selectedOptions.length === currentQuestion.answer.length) &&
+                                      currentQuestion.answer.every(opt => selectedOptions.includes(opt));
+            if (isCompletelyCorrect) {
+                updateCorrect();
+            } else {
+                updateWrong();
+            }
         } else {
-            selectedBtn.classList.add('incorrect');
-            const correctBtn = document.querySelector(`.option-button[data-option='${currentQuestion.answer}']`);
-            correctBtn.classList.add('correct');
-            updateWrong();
+            if (!selectedOption) {
+                showCustomAlert('選點啥吧，用猜的也好！');
+                return;
+            }
+            acceptingAnswers = false;
+            document.getElementById('confirm-btn').disabled = true;
+            const selectedBtn = document.querySelector(`.option-button[data-option='${selectedOption}']`);
+            if (selectedOption === currentQuestion.answer) {
+                selectedBtn.classList.add('correct');
+                updateCorrect();
+            } else {
+                selectedBtn.classList.add('incorrect');
+                const correctBtn = document.querySelector(`.option-button[data-option='${currentQuestion.answer}']`);
+                correctBtn.classList.add('correct');
+                updateWrong();
+            }
         }
+        // 顯示詳解
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+        renderMathInElement(document.getElementById('explanation-text'), {
+            delimiters: [
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "$$", right: "$$", display: true },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });
+        document.getElementById('explanation').style.display = 'block';
+        document.getElementById('confirm-btn').style.display = 'none';
+        saveProgress();
     }
-    // 顯示詳解
-    document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-    renderMathInElement(document.getElementById('explanation-text'), {
-        delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "$$", right: "$$", display: true },
-            { left: "\\[", right: "\\]", display: true }
-        ]
-    });
-    document.getElementById('explanation').style.display = 'block';
-    document.getElementById('confirm-btn').style.display = 'none';
-    saveProgress();
 }
 
 function updateCorrect() {
