@@ -9,33 +9,13 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'NotoSerifTC';
-    src: url('fonts/NotoSerifTC.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'NotoSerifCJKtc';
-    src: url('fonts/NotoSerifCJKtc.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* Base Styles */
 body {
-    font-family: "source-han-serif-tc", "Noto Serif TC", "NotoSerifCJKtc", "Songti TC", "Poppins", "PMingLiU", "NotoSerifTC", "SimSun", serif;
     color: #2D3436;
     margin: 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     background-color: white;
-}
-
-button, select, option, input {
-    font-family: inherit; /* 或者明確指定字體 */
 }
 
 p {
@@ -90,7 +70,7 @@ p {
             font-size: 1rem;
             background-color: #ffffff50;
             color: #4A5568;  /* Deep slate blue */
-            border: 2px solid #62597A;  /* Vibrant blue-purple */
+            border: 2px solid #000;  /* Vibrant blue-purple */
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -118,7 +98,7 @@ p {
         }
 
         .select-button:hover, .select-button.selected {
-            background-color: #62597A;  /* Vibrant blue-purple */
+            background-color: #000;  /* Vibrant blue-purple */
             color: #FFFFFF;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(107, 92, 212, 0.2);
@@ -127,7 +107,7 @@ p {
         .start-button {
             padding: 14px 30px;
             font-size: 1.2rem;
-            background-color: #62597A;  /* Deep blue-purple */
+            background-color: #000;  /* Deep blue-purple */
             color: #FFFFFF;
             border: none;
             border-radius: 30px;
@@ -156,7 +136,7 @@ p {
         }
 
         .start-button:hover {
-            background-color: #564e6a;  /* Slightly darker blue-purple */
+            background-color: #111;  /* Slightly darker blue-purple */
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(58, 42, 206, 0.25);
         }
@@ -266,19 +246,19 @@ body.dark-mode .start-title {
 body.dark-mode .select-button {
     background-color: transparent;
     color: #ffffff;
-    border: 2px solid #62597A;
+    border: 2px solid #000;
 }
 
 body.dark-mode .select-button:hover,
 body.dark-mode .select-button.selected {
-    background-color: #62597A;
+    background-color: #000;
     color: #ffffff;
 }
 
 body.dark-mode .start-button {
     background-color: #1e1e1e;
     color: #ffffff;
-    border: 2px solid #62597A;
+    border: 2px solid #000;
 }
 
 body.dark-mode .restoreBtn_C3D4 {
@@ -353,11 +333,11 @@ body.dark-mode .option-button.incorrect {
 body.dark-mode .confirm-button {
     background-color: #1e1e1e;
     color: #ffffff;
-    border: 2px solid #6d687e;
+    border: 2px solid #000;
 }
 
 body.dark-mode .confirm-button:hover {
-    background-color: #6d687e;
+    background-color: #000;
     color: #ffffff;
 }
 
@@ -434,9 +414,9 @@ body.dark-mode .copyright a {
             margin-top: 20px;
             padding: 8px 18px;
             font-size: 18px;
-            background-color: #6d687e;
+            background-color: #000;
             color: white;
-            border: solid 2px #6d687e;
+            border: solid 2px #000;
             border-radius: 15px;
             cursor: pointer;
             align-self: flex-end;
@@ -470,8 +450,8 @@ body.dark-mode .copyright a {
 
         .confirm-button:hover {
             background-color: white;
-            color: #6d687e;
-            border: solid 2px #6d687e;
+            color: #000;
+            border: solid 2px #000;
             transform: translateY(-2px);
         }
 
@@ -591,7 +571,7 @@ body.dark-mode .copyright a {
     margin-top: 20px;
     padding: 10px 25px;
     font-size: 1rem;
-    background-color: #62597A;
+    background-color: #000;
     color: #ffffff;
     border: none;
     border-radius: 15px;
@@ -601,7 +581,7 @@ body.dark-mode .copyright a {
 }
 
 .modal-confirm-button:hover {
-    background-color: #564E6A;
+    background-color: #111;
     transform: scale(1.05);
 }
 
@@ -616,7 +596,7 @@ body.dark-mode .modal-confirm-button {
 }
 
 body.dark-mode .modal-confirm-button:hover {
-    background-color: #62597A;
+    background-color: #000;
     color: #ffffff;
 }
 
@@ -628,11 +608,11 @@ body.dark-mode .modal-content {
 body.dark-mode .modal-confirm-button {
     background-color: #1e1e1e;
     color: #ffffff;
-    border: 2px solid #62597A;
+    border: 2px solid #000;
 }
 
 body.dark-mode .modal-confirm-button:hover {
-    background-color: #62597A;
+    background-color: #000;
     color: #ffffff;
 }
 
