@@ -16,6 +16,13 @@
     border-color: #007BFF;
 }
 
+.fillblank-input.correct {
+    border-color: #28C76F;
+}
+.fillblank-input.incorrect {
+    border-color: #EA5455;
+}
+
 /* New Progress Display Styles */
 .progress-container {
     margin-bottom: 20px;

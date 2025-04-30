@@ -112,6 +112,8 @@ function loadNewQuestion() {
         document.getElementById('options').style.display = 'none';
         fillblankContainer.style.display = 'flex';
         fillblankInput.value = '';
+        // 確保填空題不被標示為多選題
+        currentQuestion.isMultiSelect = false;
     } else {
         currentQuestion.isFillBlank = false;
         document.getElementById('options').style.display = 'flex';
@@ -295,9 +297,13 @@ function confirmAnswer() {
         const allMatch = required.every(keyword => sentence.includes(keyword.toLowerCase()));
         if (allMatch) {
             updateCorrect();
+            fillblankInput.classList.add('correct');
         } else {
             updateWrong();
+            fillblankInput.classList.add('incorrect');
         }
+        // 回答後禁止再修改
+        fillblankInput.disabled = true;
         // 顯示詳解
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
         renderMathInElement(document.getElementById('explanation-text'), {
