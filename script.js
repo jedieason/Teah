@@ -112,6 +112,9 @@ function loadNewQuestion() {
         document.getElementById('options').style.display = 'none';
         fillblankContainer.style.display = 'flex';
         fillblankInput.value = '';
+        // 重置填空題輸入框狀態
+        fillblankInput.disabled = false;
+        fillblankInput.classList.remove('correct', 'incorrect');
         // 確保填空題不被標示為多選題
         currentQuestion.isMultiSelect = false;
     } else {

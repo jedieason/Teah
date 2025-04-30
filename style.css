@@ -17,10 +17,10 @@
 }
 
 .fillblank-input.correct {
-    border-color: #28C76F;
+    border-color: #18AE79;
 }
 .fillblank-input.incorrect {
-    border-color: #EA5455;
+    border-color: #cc4e00;
 }
 
 /* New Progress Display Styles */
