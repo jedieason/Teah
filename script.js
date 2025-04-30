@@ -1,4 +1,5 @@
 let questions = [];
+let initialQuestionCount = 0;
 let currentQuestion = {};
 let acceptingAnswers = true;
 let selectedOption = null; // 單選題使用
@@ -34,6 +35,7 @@ async function initQuiz() {
     localStorage.removeItem('quizProgress');
     
     await loadQuestions();
+    initialQuestionCount = questions.length;
     document.querySelector('.start-screen').style.display = 'none';
     document.querySelector('.quiz-container').style.display = 'flex';
     
@@ -197,6 +199,7 @@ function loadNewQuestion() {
     document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
     document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
     saveProgress();
+    updateProgressBar();
 }
 
 // 更新詳解中的選項標籤
@@ -761,6 +764,12 @@ function saveProgress() {
         selectedJson: selectedJson
     };
     localStorage.setItem('quizProgress', JSON.stringify(progress));
+}
+
+function updateProgressBar() {
+    const answered = correct + wrong;
+    const percent = initialQuestionCount > 0 ? (answered / initialQuestionCount) * 100 : 0;
+    document.getElementById('progress-bar').style.width = percent + '%';
 }
 
 function restoreProgress() {

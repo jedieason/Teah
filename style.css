@@ -69,7 +69,7 @@ p {
             padding: 12px 24px;
             font-size: 1rem;
             background-color: #ffffff50;
-            color: #4A5568;  /* Deep slate blue */
+            color: #000;  /* Deep slate blue */
             border: 2px solid #000;  /* Vibrant blue-purple */
             border-radius: 12px;
             cursor: pointer;
@@ -180,6 +180,22 @@ p {
     font-weight: bold;
     color: #28C76F;
     margin-left: 5px;
+}
+
+/* Quiz progress bar */
+#progress-bar-wrapper {
+    width: 100%;
+    background-color: rgba(235, 235, 235, 0.4);
+    height: 8px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #ededed;
+    transition: width 0.3s ease;
 }
 
 /* Question Content Styling */
@@ -395,7 +411,7 @@ body.dark-mode .copyright a {
     display: flex;
     justify-content: space-between; /* Distributes space between items */
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .header-right {
