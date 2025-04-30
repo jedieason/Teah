@@ -1,0 +1,344 @@
+[
+  {
+    "question": "下列關於病毒的敘述，何者為非？",
+    "options": {
+      "A": "病毒複製完成離開宿主細胞時，不一定會殺死宿主細胞",
+      "B": "病毒的基因體可以是 DNA 或 RNA，或兩者兼具",
+      "C": "具有膜鞘（Envelope）的病毒，相對於裸露病毒（Naked virus），雖然多了一層雙層脂質膜，但其對抗胃酸的能力反而下降",
+      "D": "病毒與宿主細胞受器間具有專一性，這會決定病毒感染的細胞種類"
+    },
+    "answer": "B",
+    "explanation": "(A) Enveloped virus 可透過 Lysis（會殺死細胞）或 Budding（不會殺死細胞）二種方式脫離宿主。General properties of animal viruses (I), p.11 (B) DNA 或 RNA 二擇一，不得兼具 General properties of animal viruses (I), p.5 (C) 由於脂質與蛋白質結構上差異，套膜對酸、清潔劑、乾、熱等因素敏感 General properties of animal viruses (I), p.11 (D) 病毒上的外套膜、棘蛋白等可作為 Ligand 與細胞上特定受器結合，該步驟稱為 Recognition General properties of animal viruses (I), p.13, 21 [出自考古第1題]"
+  },
+  {
+    "question": "下列關於 RNA 病毒的敘述，何者為非？",
+    "options": {
+      "A": "大部分的 RNA 病毒，都是在細胞質內進行複製",
+      "B": "所有正股 RNA 病毒顆粒中都不會帶有病毒的複製酶",
+      "C": "RNA 病毒的突變率較 DNA 病毒來得高",
+      "D": "大多數的正股 RNA 病毒，其基因體（Genome）可做為 Messenger RNA（mRNA）進行轉譯出病毒蛋白質"
+    },
+    "answer": "B",
+    "explanation": "(A) General properties of animal viruses (I), p.27 (B) 此選項據語意可能會有不同解釋。Retroviridae（反轉錄病毒科）帶有正單股 RNA，但需要反轉錄為 DNA 後才進行轉錄、轉譯。然而在分類上，Retroviridae (Baltimore classification VI) 與常用的正單股 RNA 病毒 (Baltimore classification IV) 並不相同。在此認為選項所指正股 RNA 是指攜帶正股，因此包含此二子集 General properties of animal viruses (I), p.20 Baltimore D. (1971). Expression of animal virus genomes. Bacteriological reviews, 35(3), 235–241. https://doi.org/10.1128/br.35.3.235-241.1971 (C) General properties of animal viruses (I), p.27 (D) 大部分正股 RNA（即上述 Baltimore classification IV）可以直接作為 mRNA 參與轉錄 General properties of animal viruses (I), p.24 [出自考古第2題]"
+  },
+  {
+    "question": "依據國際病毒分類委員會（International Committee on Taxonomy of Virus）的分類方法，主要根據四項特性。下列何者為非？",
+    "options": {
+      "A": "病毒的複製方式",
+      "B": "病毒蛋白鞘的對稱性（Symmetry of caspid）",
+      "C": "病毒是否有外套膜鞘（Envelope）",
+      "D": "病毒基因體為 DNA 或 RNA"
+    },
+    "answer": "A",
+    "explanation": "ICTV 所提出之分類方式包含：核酸種類、衣殼（Capsid，或稱殼體）對稱性、是否具外套膜、基因體結構 General properties of animal viruses (I), p.16 [出自考古第3題]"
+  },
+  {
+    "question": "關於病毒感染細胞的生活史，從進入細胞中到離開細胞，請依照發生之先後順序進行排序（請由先排到後）\nUncoating\nAttachment\nAssembly\nBudding or release\nReplication of nucleic acid",
+    "options": {
+      "A": "25134",
+      "B": "12354",
+      "C": "23154",
+      "D": "21534"
+    },
+    "answer": "D",
+    "explanation": "General properties of animal viruses (I), p.21 (Correct order: 2 Attachment -> 1 Uncoating -> 5 Replication -> 3 Assembly -> 4 Budding/Release) [出自考古第4題]"
+  },
+  {
+    "question": "當兩隻不同的 A 型流感病毒共同感染一宿主細胞時，複製時可能會從這兩種不同的複製時可能會從此兩種不同來源的 A 型流感病毒基因體，隨機選取組成新的八段病毒基因體，已形成新型流感病毒。此種突變方式稱為：",
+    "options": {
+      "A": "Recombination",
+      "B": "Point mutation",
+      "C": "Reassortment",
+      "D": "Transcapsidation",
+      "E": "Marker rescue"
+    },
+    "answer": "C",
+    "explanation": "(A) Recombination：分子內的基因交換，發生於兩條不同但有相似序列的病毒 RNA/DNA 複製過程 (B) Point mutation：由於病毒（尤其是 RNA 病毒）聚合酶易出錯，常導致核苷酸的點突變、刪除（Deletion）或插入（Insertion） (C) Reassortment：即題幹所述之機轉，是 Antigenic shift 之主要機轉。具有分段基因組（Segmented genome）的病毒在同時感染同一個宿主時可能會發生。 (D) Transcapsidation：一隻病毒具有基因上缺陷，無法產生衣殼。後透過另一隻病毒產生的衣殼而得以恢復致病性。在此情況的病毒稱為 Pseudotypes（指不同種病毒。實務上雖然也可是同種病毒的衣殼，但並非研究上討論之重點） (E) Marker rescue：當病毒基因中突變產生致死基因，若有 wt/人為加入可執行的片段，便可繼續存活 General properties of animal viruses (II), p.19 [出自考古第5題]"
+  },
+  {
+    "question": "下列關於疫苗（Vaccine）的敘述，何者為非？",
+    "options": {
+      "A": "流感疫苗因為突變快速，所以需要每年施打才能有效預防",
+      "B": "活性減毒疫苗（Live attenuated vaccine）的安全性通常較去活性疫苗（Inactivated vaccine）來得高",
+      "C": "C 型肝炎病毒，目前仍無有效之疫苗",
+      "D": "施打疫苗，是控制病毒的最有效方式之一"
+    },
+    "answer": "B",
+    "explanation": "(A) 流感疫苗的 Antigenic drift 會使部分抗原性改變，因此每年流行的流感可能有所差異 (B) 活性減毒疫苗仍具複製能力，去活性疫苗則無。前者的效力較強，但安全性較低 (C) 截至今（2025）年尚未有 C 肝疫苗 (D) 藉由免疫記憶性及群體免疫可有效預防病毒傳播 B12 免疫學共筆 Vol. 4 p.31、Vol. 5 p.42-55 https://www.who.int/news-room/fact-sheets/detail/hepatitis-c [出自考古第6題]"
+  },
+  {
+    "question": "何種細菌無法在大氣氧含量中存活？",
+    "options": {
+      "A": "絕對需氧",
+      "B": "微需氧",
+      "C": "兼性厭氧",
+      "D": "耐氧厭氧"
+    },
+    "answer": "B",
+    "explanation": "微需氧菌（Microaerophile）的生長環境氧含量一般為 2-10%，遠低於大氣中的氧含量，無法良好生存 [出自考古第1題]"
+  },
+  {
+    "question": "下列敘述何者正確？",
+    "options": {
+      "A": "細菌核醣體（Ribosome）的大小為跟真核生物一樣均為 80S。",
+      "B": "所有細菌的染色體上都沒有組蛋白（Histone）與它結合。",
+      "C": "黴漿菌（Mycoplasma）的細胞膜不含固醇。",
+      "D": "所有的細菌都有胜肽聚醣（Peptidoglycan）的構造。"
+    },
+    "answer": "B",
+    "explanation": "(A) 細菌核醣體為 70S，真核生物為 80S。(C) 黴漿菌（Mycoplasma）的細胞膜*含*固醇。(D) 黴漿菌（Mycoplasma）等細菌*沒有*胜肽聚醣。 [出自考古第2題]"
+  },
+  {
+    "question": "下列關於革蘭氏陽性菌的敘述何者為非？（多選）",
+    "options": {
+      "A": "具有胞壁酸",
+      "B": "具有外膜",
+      "C": "細菌的趨向性是利用線毛的運動來完成",
+      "D": "對溶菌酶之抗性較革蘭氏陰性菌高"
+    },
+    "answer": [
+      "B",
+      "C",
+      "D"
+    ],
+    "explanation": "(B) 革蘭氏陰性菌才具有外膜。 (C) 細菌的趨向性主要利用鞭毛的運動來完成。 (D) 溶菌酶針對的 Target 是細胞壁的肽聚醣，故對革蘭氏陽性菌有效。 [出自考古第3題]"
+  },
+  {
+    "question": "下列敘述何者正確？",
+    "options": {
+      "A": "細菌的鞭毛（Flagella）可以幫助細菌運動以獲取所需的養分",
+      "B": "青黴素（Penicillin）可抑制細菌蛋白質合成來殺菌",
+      "C": "細菌可藉由產生芽孢（Endospore）來進行增殖",
+      "D": "格蘭氏陰性菌的脂多醣（Lipopolysaccharides）的 O antigen 可誘發免疫系統產生發炎反應"
+    },
+    "answer": "B",
+    "explanation": "(B) Penicillin 為針對細胞壁肽聚糖的抗生素 (A) 內孢子為細菌用於抵抗逆境（e.g. 飢餓、高溫、消毒劑、低能輻射、乾燥等）的一種方式，並非用於增殖。 (D) 誘發免疫反應的應為 Lipid A [出自考古第4題]"
+  },
+  {
+    "question": "Generalized transduction is carried out by virulent phages carrying the whole host DNA.",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "F",
+    "explanation": "一般型轉導作用中，噬菌體攜帶的基因全部來自宿主，但是僅為片段的宿主基因 [出自考古第1題]"
+  },
+  {
+    "question": "Regulation of the bacterial genes is mediated by a system called “operon”.",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "T",
+    "explanation": "細菌的基因體較真核生物小，轉錄調控機制較為單純，僅以操作組的方式調控 [出自考古第2題]"
+  },
+  {
+    "question": "Bacterial chromosome DNA is usually a single, linear molecule.",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "F",
+    "explanation": "細菌的 DNA 為環狀的 [出自考古第3題]"
+  },
+  {
+    "question": "Plasmids are extrachromosomal DNA elements essential to bacteria.",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "F",
+    "explanation": "質體 DNA 攜帶的多為非必須基因 [出自考古第4題]"
+  },
+  {
+    "question": "A F⁺ cell: （多選）",
+    "options": {
+      "A": "has a free F factor in the cytoplasm.",
+      "B": "has a chromosomally integrated F factor.",
+      "C": "contains a prophage for conjugation.",
+      "D": "can conjugate with an F⁻ recombinant.",
+      "E": "transfers F plasmid to a F⁻ recipient, often resulting in the conversion of F⁺ to F⁻ recombinant."
+    },
+    "answer": [
+      "A",
+      "D"
+    ],
+    "explanation": "(A) F⁺細菌表示具有 F factor，多半位於質體上，故在細胞質中而非細菌的染色體 (B) 同(A) (C) 與噬菌體無關 (D) F⁺細菌可以和 F⁻的細菌接合 (E) 前半敘述正確，但是後半段相反，應為將 F⁻轉變成 F⁺ [出自考古第1題]"
+  },
+  {
+    "question": "During Griffith's transformation experiments, ______.",
+    "options": {
+      "A": "live S strain bacteria mixed with dead R strain bacteria caused animal death",
+      "B": "live S strain bacteria mixed with dead R strain bacteria failed to kill the animals",
+      "C": "dead S strain bacteria mixed with live R strain bacteria caused animal death",
+      "D": "dead S strain bacteria mixed with live R strain bacteria failed to kill the animals"
+    },
+    "answer": "C",
+    "explanation": "如同高中生物，S 代表該菌落有莢膜故多為 Smooth、有致病力；而 R 代表無莢膜故多為 Rough，無致病力。而格里夫茲的實驗中用了（C）的操作後，老鼠死了。證明了轉型作用 [出自考古第2題]"
+  },
+  {
+    "question": "葡萄球菌（Staphylococcus spp.）在血液培養基上呈現 α-type 溶血會是呈現什麼顏色？",
+    "options": {
+      "A": "紅色",
+      "B": "草綠色",
+      "C": "紫色",
+      "D": "黃色"
+    },
+    "answer": "B",
+    "explanation": "溶血方式 1. α 型：不完全溶血。血球的色素被細菌分泌的氧化物質氧化而呈現草綠色。 2. β 型：完全溶血。血完全被細菌溶解而呈培養基原先的黃色（實際似橘色）。 3. γ 型：完全不溶血。呈血液培養基之紅色。 [出自考古第1題]"
+  },
+  {
+    "question": "Staphylococcus aureus 和其他 Staphylococcus spp.差別在哪？",
+    "options": {
+      "A": "Coagulase",
+      "B": "Fibrinolysin",
+      "C": "Endospore",
+      "D": "Catalase"
+    },
+    "answer": "A",
+    "explanation": "(A) 可以用凝固酶（Coagulase）作為 Staphylococcus aureus 和其他 Staphylococcus spp.的鑑別診斷依據。 (B) 纖維溶解素（Fibrinolysin）為 C. perfingers 之特色。 (C) Staphylococcus spp.屬革蘭氏陽性菌，不會產生內胞子（Endospore）。（主要是芽孢桿菌屬 Bacillus spp.與梭菌屬 Clostridium spp.會有） (D) 過氧化氫酶（Catalase）只能用來和鏈球菌屬 Streptococcus spp.區分。 [出自考古第2題]"
+  },
+  {
+    "question": "脫皮毒素有酵素功能嗎？如果有，是什麼酵素？",
+    "options": {
+      "A": "無，無",
+      "B": "有，Protease",
+      "C": "有，Lipase",
+      "D": "有，Amidase"
+    },
+    "answer": "B",
+    "explanation": "脫皮毒素（Exfoliative toxin）：ETA、ETB 像桌子貼皮的膠水被破壞時，桌子會變得不平整（有氣泡在裡面）。體內的「膠水」多為蛋白質，而脫皮毒素屬於絲胺酸蛋白酶（Serine protease），會在表皮下絲胺酸（Serine）的位置切斷蛋白質。蛋白質斷裂後產生的空隙滲入空氣，加上組織液滲透進來而形成水泡，水泡破掉後則造成脫皮症狀。 [出自考古第3題]"
+  },
+  {
+    "question": "哪一種藥物適合治療 S. pneumoniae 和 S. aureus？",
+    "options": {
+      "A": "Penicillin",
+      "B": "Vancomycin",
+      "C": "Vaccine",
+      "D": "Camptothecin"
+    },
+    "answer": "B",
+    "explanation": "(A) S. pneumoniae 幾乎沒有抗藥性，但因 S. aureus 對 Penicillin 有抗藥性，故不可用 Penicillin。 (B) 可用 Vancomycin。 (C) 他是疫苗…。 (D) 寫手在共筆裡沒有找到，查網路資料是抗癌藥物。 [出自考古第4題]"
+  },
+  {
+    "question": "下列何者為非？（多選）",
+    "options": {
+      "A": "Clostridium tetani 生長快速，在無氧環境下培養，只需 24 小時即可觀察",
+      "B": "Bacillus anthracis 主要感染草食動物，可以造成羊毛工人症",
+      "C": "Clostridium difficile 可經由食入不當保存的米飯感染，造成腹瀉症狀",
+      "D": "Clostridium perfringens 會造成 Myonecrosis，出現 Gas gangrene，致死率高"
+    },
+    "answer": [
+      "A",
+      "C"
+    ],
+    "explanation": "(A) 生長緩慢，24 小時難以觀察 (C) 食入不當保存的米飯感染嘔吐型 Bacillus cereus，Clostridium difficile 主要為腸道菌叢失衡或吸入環境孢子等院內感染。 [出自考古第1題]"
+  },
+  {
+    "question": "下列有關 Mycobacterium tuberculosis 何者敘述為非？",
+    "options": {
+      "A": "大部分（>80%）感染此菌之病患會於 2 年內發病，快速傳播，因此造成全世界 1/3 人口感染此菌。",
+      "B": "除飛沫感染外，亦可經傷口感染，造成免疫力低下病患產生肺外結核感染",
+      "C": "細胞壁脂質成分高且生長快速，因此易產生基因體突變成為多重抗藥菌株（MDR-TB）。",
+      "D": "治療結核病患者通常需要進行長時間多重藥物合併治療，以防止抗藥菌株之產生。"
+    },
+    "answer": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": "(A) 感染 TB 者多為 Latent TB，而其中僅有不到一成感染者會發病。 (B) 未看到傷口感染一說 (C) Mycobacteria tuberculosis 細胞壁含大量脂質，生長緩慢。 [出自考古第2題]"
+  },
+  {
+    "question": "Which one of the following is NOT in the non-fermenting Gram-negative bacilli (NFGNB) group?（多選）",
+    "options": {
+      "A": "Pseudomonas aeruginosa",
+      "B": "Helicobacter pylori",
+      "C": "Campylobacter jejuni",
+      "D": "Acinetobacter baumannii",
+      "E": "Chryseobacterium"
+    },
+    "answer": [
+      "B",
+      "C"
+    ],
+    "explanation": "(B) Helicobacter pylori is a gram-negative, flagellated, helical bacterium. (C) Campylobacter jejuni is a gram-negative and non-fermenting bacterium, but it is also helical-shaped (rather than a bacillus). [出自考古第1題]"
+  },
+  {
+    "question": "Which one of the following is the most common non-fermenting Gram-negative bacilli (NFGNB) isolated from patients?",
+    "options": {
+      "A": "Pseudomonas aeruginosa",
+      "B": "Helicobacter pylori",
+      "C": "Campylobacter jejuni",
+      "D": "Acinetobacter baumannii",
+      "E": "Chryseobacterium"
+    },
+    "answer": "A",
+    "explanation": "Pseudomonas aeruginosa is the most common NFGNB isolated from clinical specimens and it is associated with pulmonary infections, wound infections and bacteremia. [出自考古第2題]"
+  },
+  {
+    "question": "Which of the following is NOT a characteristic of Campylobacter jejuni?",
+    "options": {
+      "A": "Oxidize/ferment carbohydrates",
+      "B": "Guillain-Barre syndrome",
+      "C": "Reactive arthritis",
+      "D": "Require low oxygen for optimal growth",
+      "E": "Person-to-person spread is unusual"
+    },
+    "answer": "A",
+    "explanation": "(A) Incorrect. Campylobacter are unable to oxidize or ferment carbohydrates. (B) Correct. Campylobacter jejuni can cause Guillain-Barre syndrome, resulting in symmetrical weakness of proximal limbs. (C) Correct. Campylobacter jejuni can cause reactive arthritis, resulting in swelling and pain of hands, ankles and knees. (D) Correct. Campylobacter are microaerophilic. (E) Correct. Most Campylobacter infections are self-limited but can persist for a week or more. [出自考古第3題]"
+  },
+  {
+    "question": "Which one of the following is NOT a characteristic of Pseudomonas aeruginosa?",
+    "options": {
+      "A": "Colonization is seen in patients with cystic fibrosis",
+      "B": "Mucoid strains are caused by mutations in the negative regulator porP",
+      "C": "Most common NFGNB isolated from clinical specimens",
+      "D": "Secretes exotoxin A to cause disease",
+      "E": "Pyocyanin and Pyoverdin are critical virulence factors"
+    },
+    "answer": "B",
+    "explanation": "Mucoid strains are caused by mutations in the negative regulator mucA. [出自考古第4題]"
+  },
+  {
+    "question": "Which one of the following is NOT a characteristic of Burkholderia pseudomallei?",
+    "options": {
+      "A": "Melioidosis",
+      "B": "Iraqibacter",
+      "C": "Great mimicker",
+      "D": "Found in soil, water, and vegetation",
+      "E": "Triggering of actin rearrangement within infected cell leading to the formation of actin tails and membrane protrusions"
+    },
+    "answer": "B",
+    "explanation": "(A) Melioidosis 為 Burkholderia pseudomallei 所造成，死亡率在已開發國家可達 20%，在未開發國家可達 50%，又稱類鼻疽症（Glanders-like disease） (B) Iraqibacter 是由 Acinetobacter baumannii 所造成，其原因係美國於 2003 年攻打伊拉克（Iraq War, or Second Persian Gulf War）時，Acinetobacter baumannii 感染許多美軍士兵，為美軍軍醫時常必須處理的麻煩。 (C) Burkholderia pseudomallei is known as a great mimicker. (D) Burkholderia pseudomallei is found in soil and water. (E) Burkholderia pseudomallei can trigger actin rearrangement. [出自考古第5題]"
+  },
+  {
+    "question": "Which one/ones of the following is/are the virulence factor(s) of Vibrio cholerae?",
+    "options": {
+      "A": "Cytolethal distending toxin",
+      "B": "Toxin-coregulated pilus",
+      "C": "Cholera toxin",
+      "D": "Pyocyanin",
+      "E": "Pyoverdine"
+    },
+    "answer": "C",
+    "explanation": "(A) 為部分血清型的 E. coli 和 Shigella spp.的毒力因子（Virulence factor）。 (B) Toxin-coregulated pilus 是 Vibrio cholerae 的構造，但不直接造成毒力，不算是毒力因子。（Note: TCP is essential for colonization and CTX phage receptor, hence a key virulence factor). (C) 霍亂毒素（Cholera toxin）是 Vibrio cholerae 最主要的致病因子，它可刺激腸道上皮細胞分泌大量的電解質和水分，引起腸道液體大量排出，進而導致嚴重的腹瀉和脫水。 (D) 為 Pseudomonas aeruginosa 的毒力因子 (E) 同(D) [出自考古第6題]"
+  },
+  {
+    "question": "Which ones of the following are characteristics of Helicobacter pylori?（多選）",
+    "options": {
+      "A": "Curved bacteria",
+      "B": "Urease production to raise pH in the stomach",
+      "C": "Combination of proton pump inhibitor and antibiotics for treatment",
+      "D": "Vaccines are available",
+      "E": "A coadaptation and coevolutionary history with humans"
+    },
+    "answer": [
+      "A",
+      "B",
+      "C",
+      "E"
+    ],
+    "explanation": "(D) 目前沒有有效針對幽門螺旋桿菌的疫苗。 [出自考古第7題]"
+  }
+]
