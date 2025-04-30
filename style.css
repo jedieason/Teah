@@ -47,6 +47,7 @@
     top: 0;
     bottom: 0;
     transition: width 0.3s ease;
+    border-radius: 3px;
   }
   .correct-bar {
     background-color: #18AE79;
