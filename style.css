@@ -32,11 +32,11 @@
   transition: width 0.3s ease;
 }
 .correct-bar {
-  background-color: #28C76F80;
+  background-color: #28C76F;
   left: 0;
 }
 .wrong-bar {
-  background-color: #EA545580;
+  background-color: #FFA500;
   right: 0;
 }
 /* Import Google Fonts for a premium look */
