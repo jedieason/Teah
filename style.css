@@ -170,7 +170,7 @@ p {
 .quiz-title {
     font-family: "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
     color: #1A1A1A;
-    font-size: 2.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
 }
 
@@ -844,10 +844,6 @@ body.dark-mode .logout-button:hover {
 @media (max-width: 768px) {
     .start-title {
         font-size: 3rem;
-    }
-    
-    .quiz-title {
-        font-size: 1.6rem;
     }
     
     .select-button {
