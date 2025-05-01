@@ -5,28 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="Images/logo.png" type="image/png">
     <title>題矣</title>
+</head>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="debug.css">
     <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    <!-- Firebase v11.6.1 inline initialization -->
 </head>
 <body>
     <!-- 開始畫面 -->
     <div class="start-screen">
+        <button id="addQuizBtn" class="add-button">+</button>
+        <input type="file" id="uploadJson" accept=".json" style="display:none;">
+        <button id="signInBtn" class="sign-in-button">Google 登入</button>
         <div class="start-title">題矣</div>
         <div class="header-right-homepage">
-            <button id="modeToggle-header" class="toggle-button">
-                <img src="Images/moon.svg" alt="Switch to dark mode" width="15" height="15">
-            </button>
-            <button class="login-button">登入</button>
-            <div class="user-info button-container" style="display: none;">
-                <img class="user-button-homepage user-profile" src="" alt="User Profile" style="display: none;">
-                <img class="user-button-homepage user-profile" src="" alt="User Profile" style="display: none;" id="userProfileHomeBtn">
-                <div class="expandable-frame">
-                    <button class="signOutButton logout-button">登出</button>
-                </div>
-            </div>
         </div>
         <!-- 新增一個空的按鈕容器 -->
         <div id="button-row" class="button-row"></div>
@@ -47,13 +41,6 @@
             <div class="quiz-title">題矣</div>
             <div class="header-right">
                 <img id="reverseButton" src="Images/reverse.svg" alt="Reverse" width="23" height="23" style="cursor: pointer;">
-<!--                 <button class="login-button">Login</button> -->
-                <div class="user-info button-container" style="display: none;">
-                    <img class="user-button user-profile" src="" alt="User Profile" style="display: none;" id="userProfileBtn">
-                    <div class="expandable-frame">
-                        <button class="signOutButton logout-button">登出</button>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- Progress Display -->
@@ -122,9 +109,20 @@
         </div>
         <button id="sendButton">抓到蟲子了</button>
     </div>
+</body>
+    <!-- Upload Quiz Modal -->
+    <div id="uploadModal" class="modal">
+      <div class="modal-content">
+        <h3>新增題庫</h3>
+        <input type="text" id="uploadNameInput" placeholder="輸入題庫名稱">
+        <div class="upload-buttons">
+          <button id="uploadCancelBtn" class="modal-cancel-button">取消</button>
+          <button id="uploadConfirmBtn" class="modal-confirm-button">確定</button>
+        </div>
+      </div>
+    </div>
     <script src="debug.js"></script>
-    <script type="module" src="login.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

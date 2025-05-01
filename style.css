@@ -1,3 +1,15 @@
+#uploadNameInput {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.upload-buttons {
+  display: flex;
+  justify-content: space-between;
+}
 .fillblank-container {
     margin: 20px 0;
     width: 100%;
@@ -650,7 +662,7 @@
   }
   
   .modal-confirm-button {
-      margin-top: 20px;
+    margin-top: 20px;
       padding: 10px 25px;
       font-size: 1rem;
       background-color: #000;
@@ -666,6 +678,22 @@
       background-color: #111;
       transform: scale(1.05);
   }
+
+.modal-cancel-button {
+    margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 1rem;
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.modal-cancel-button:hover {
+  background-color: #b52a3d;
+  transform: scale(1.05);
+}
   
   /* 深色模式下的模態窗口 */
   body.dark-mode .modal-content {
@@ -741,143 +769,12 @@
   .separator {
       color: #cecece;
   }
-  
-  /* Toggle Button */
-  .toggle-button {
-      display: flex;
-      align-items: center;
-      background-color: transparent;
-      border: none;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      cursor: pointer;
-  }
-  
-  .login-button {
-      font-size: 16px;
-      background-color: transparent;
-      color: lightgray;
-      border: 2px solid lightgray;
-      border-radius: 10px;
-      cursor: pointer;
-      padding: 4px 6px;
-      transition: all 0.3s ease;
-  }
-  
-  .login-button:hover {
-      color: white;
-      transform: scale(1.05);
-      border: 2px solid #cecece;
-      background-color: #cecece;
-  }
-  
-  body.dark-mode .login-button:hover{
-      color: black;
-      transform: scale(1.05);
-      border: 2px solid #cecece;
-      background-color: #cecece;
-  }
-  
-  .user-profile {
-      background-color: transparent;
-      width: 30px;
-      height: 30px;
-      border: none;
-      transition: all 0.3s ease;
-      border-radius: 10px;
-      cursor: pointer;
-      z-index: 1000;
-      position: relative;
-  }
-  
-  .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px; /* Optional: adds space between the button and the image */
-  }
-  
-  .header-right-homepage {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: absolute;
-      top: 27px;
-      right: 30px;
-  }
+
   
   .button-container {
       position: relative;
       width: 30px;
       height: 30px;
-  }
-  
-  .expandable-frame {
-      position: absolute;
-      top: 0;
-      right: 50%;
-      width: 0;
-      height: 0;
-      background-color: #cecece;
-      border-radius: 15px;
-      transition: all 0.3s ease;
-      display: flex;
-      justify-content: center; /* 水平居中 */
-      align-items: center; /* 垂直居中 */
-      overflow: hidden;
-      z-index: 1;
-  }
-  
-  .expanded {
-      width: 30px;
-      height: 45px;
-      top: 2px;
-      right: 0;
-      border: none;
-      background-color: #cecece;
-      border-radius: 20px;
-  }
-  
-  .open-expansion {
-      width: 30px;
-      height: 40px;
-      top: 30px;
-      right: 0;
-      border: none;
-      background-color: #cecece;
-      border-radius: 20px;
-  }
-  
-  .till-button-expanded {
-      width: 62px;
-      height: 27px;
-      border-radius: 10px;
-      top: 40px;
-      background-color: transparent;
-      border: 2px solid #cecece;
-      transform: translateX(50%); /* 使用 transform 來居中 */
-      right: 50%; /* 配合 transform 使用 */
-  }
-  
-  .logout-button {
-      background-color: hsla(0, 0%, 100%, 0.9);
-      width: 100%; /* 使用 100% 寬度 */
-      height: 100%; /* 使用 100% 高度 */
-      border: none;
-      cursor: pointer;
-      color: #cecece;
-      opacity: 0;
-      font-size: 16px;
-      transition: opacity 0.3s ease;
-      text-align: center; /* 確保文字居中 */
-      padding: 0; /* 移除內邊距 */
-  }
-  
-  .logout-button:hover {
-      color: #fff;
-      background-color: #cecece;
-  }
-  
-  .show-logout {
-      opacity: 1;
   }
   
   /* Dark mode adjustments */
@@ -1036,7 +933,7 @@
     .restoreBtn_C3D4::after {
       content: '⟵';
       position: absolute;
-      top: -7px;
+      top: -3px;
       font-size: 24px;
       font-weight: bold;
       color: #ffffff;
@@ -1098,3 +995,46 @@
       background: linear-gradient(to right, transparent, rgba(249, 249, 249 ,0.7), transparent);
       animation: moveLight 2s linear infinite;
   }
+
+/* Add-Quiz Button */
+.add-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
+.add-button:hover {
+  background-color: #333;
+}
+
+/* Google Sign-In Button (restyled to match select-button) */
+.sign-in-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 4px 6px;
+    font-size: 1rem;
+    background-color: #FFFFFF;
+    color: #2D3436;
+    border: 2px solid #2D3436;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+}
+.sign-in-button:hover, .sign-in-button.selected {
+    background-color: #2D3436;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}

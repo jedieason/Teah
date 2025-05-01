@@ -1,3 +1,41 @@
+// Firebase SDK imports and initialization (v11.6.1)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
+    authDomain: "stock-market-ntumed.firebaseapp.com",
+    databaseURL: "https://stock-market-ntumed-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "stock-market-ntumed",
+    storageBucket: "stock-market-ntumed.firebasestorage.app",
+    messagingSenderId: "1032461117274",
+    appId: "1:1032461117274:web:33b51256202657864ff563",
+    measurementId: "G-5ZZWMMLEKK"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
+// Firebase Auth for Google Sign-In
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+// Google 登入按鈕監聽
+const signInBtn = document.getElementById('signInBtn');
+signInBtn.addEventListener('click', async () => {
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        console.log('登入成功：', user.displayName, user.email);
+        signInBtn.innerText = `您好，${user.displayName}`;
+        signInBtn.disabled = true;
+    } catch (error) {
+        console.error('登入失敗：', error);
+        alert('Google 登入失敗，請稍後再試');
+    }
+});
+
 let questions = [];
 let initialQuestionCount = 0;
 let currentQuestion = {};
@@ -49,13 +87,18 @@ async function initQuiz() {
     loadNewQuestion();
 }
 
-// 加載題目
+// 加載題目 (Firebase)
 async function loadQuestions() {
     try {
-        const response = await fetch(selectedJson);
-        questions = await response.json();
+        const snapshot = await get(ref(database, selectedJson));
+        if (snapshot.exists()) {
+            questions = snapshot.val();
+        } else {
+            console.error('No questions found at path:', selectedJson);
+            questions = [];
+        }
     } catch (error) {
-        console.error('Failed to load the question.', error);
+        console.error('Failed to load questions from Firebase:', error);
     }
 }
 
@@ -133,7 +176,9 @@ function loadNewQuestion() {
     // 更新題目文本，若為多選題則加上標籤
     const questionDiv = document.getElementById('question');
     if (currentQuestion.isMultiSelect) {
-        questionDiv.innerHTML = '<div class="multi-label">多</div>' + marked.parse(currentQuestion.question);
+        // For multi-answer fill-in-the-blank questions, use "句" instead of "多"
+        const labelText = currentQuestion.isFillBlank ? '句' : '多';
+        questionDiv.innerHTML = `<div class="multi-label">${labelText}</div>` + marked.parse(currentQuestion.question);
     } else {
         questionDiv.innerHTML = marked.parse(currentQuestion.question);
     }
@@ -556,52 +601,6 @@ document.getElementById('button-row').addEventListener('click', function(event) 
     }
 });
 
-const modeToggleHeader = document.getElementById('modeToggle-header');
-modeToggleHeader.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const img = modeToggleHeader.querySelector('img');
-    if (document.body.classList.contains('dark-mode')) {
-        img.src = 'Images/sun.svg';
-    } else {
-        img.src = 'Images/moon.svg';
-    }
-});
-
-document.getElementById('userProfileHomeBtn').addEventListener('click', toggleExpand);
-document.getElementById('userProfileBtn').addEventListener('click', toggleExpand);
-
-function toggleExpand(event) {
-    const frame = event.currentTarget.nextElementSibling;
-    const logoutButton = frame.querySelector('.logout-button');
-    if (!frame.classList.contains('expanded') && !frame.classList.contains('till-button-expanded')) {
-        frame.classList.add('open-expansion');
-        setTimeout(() => {
-            frame.classList.remove('open-expansion');
-            frame.classList.add('till-button-expanded');
-            logoutButton.classList.add('show-logout');
-        }, 300);
-        clearTimeout(expandTimeout);
-        expandTimeout = setTimeout(() => {
-            closeExpand(frame, logoutButton);
-        }, 10000);
-    } else {
-        closeExpand(frame, logoutButton);
-    }
-}
-
-function closeExpand(frame, logoutButton) {
-    if (frame.classList.contains('till-button-expanded')) {
-        frame.classList.remove('till-button-expanded');
-        frame.classList.add('expanded');
-        logoutButton.classList.remove('show-logout');
-        setTimeout(() => {
-            frame.classList.remove('expanded');
-        }, 300);
-    } else {
-        frame.classList.remove('expanded');
-        logoutButton.classList.remove('show-logout');
-    }
-}
 
 function gatherEditedContent() {
     const currentDate = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
@@ -659,91 +658,87 @@ window.addEventListener("beforeunload", function (event) {
     event.returnValue = '';
 });
 
-// 修改後的 fetchJsonFiles()：讀取 113-2 目錄，判斷檔案或資料夾
-async function fetchJsonFiles() {
-    const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FOLDER_PATH}`;
+// 從 Firebase 讀取可用的題庫清單並建立按鈕
+async function fetchQuizList() {
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`GitHub API error: ${response.status}`);
-        }
-        const data = await response.json();
+        const listRef = ref(database, '/');  // 根目錄或指定清單路徑
+        const snapshot = await get(listRef);
         const buttonContainer = document.getElementById('button-row');
-        buttonContainer.innerHTML = '';  // 清空原有按鈕
-        data.forEach(item => {
-            if (item.type === 'dir') {
-                // 若是資料夾，建立一個可展開的按鈕
-                const folderButton = document.createElement('button');
-                folderButton.classList.add('select-button');
-                folderButton.dataset.dir = item.path;
-                folderButton.innerText = item.name;
-                folderButton.addEventListener('click', () => {
-                    fetchFolderFiles(item.path);
+        buttonContainer.innerHTML = '';
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            Object.keys(data).forEach(key => {
+                const btn = document.createElement('button');
+                btn.classList.add('select-button');
+                btn.dataset.json = key;  // 使用 key 作為路徑
+                btn.innerText = key;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.select-button').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedJson = key;
                 });
-                buttonContainer.appendChild(folderButton);
-            } else if (item.type === 'file' && item.name.endsWith('.json')) {
-                // 若資料夾內也直接放檔案，就直接顯示
-                const fileButton = document.createElement('button');
-                fileButton.classList.add('select-button');
-                fileButton.dataset.json = item.path;
-                fileButton.innerText = item.name.replace('.json', '');
-                fileButton.addEventListener('click', () => {
-                    const allButtons = document.querySelectorAll('.select-button');
-                    allButtons.forEach(btn => btn.classList.remove('selected'));
-                    fileButton.classList.add('selected');
-                    selectedJson = fileButton.dataset.json;
-                });
-                buttonContainer.appendChild(fileButton);
-            }
-        });
+                buttonContainer.appendChild(btn);
+            });
+        } else {
+            console.warn('Firebase 上沒有題庫列表');
+        }
     } catch (error) {
-        console.error('Error fetching JSON files from GitHub:', error);
-        showCustomAlert('載不出來欸，咋辦？');
+        console.error('從 Firebase 載入題庫清單失敗：', error);
+        showCustomAlert('載入題庫清單失敗，請稍後再試');
     }
 }
 
-// 新增：讀取指定資料夾內的 JSON 檔案
-async function fetchFolderFiles(folderPath) {
-    const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folderPath}`;
-    try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`GitHub API error: ${response.status}`);
-        }
-        const data = await response.json();
-        const buttonContainer = document.getElementById('button-row');
-        buttonContainer.innerHTML = '';  // 清空按鈕容器
+window.addEventListener('DOMContentLoaded', fetchQuizList);
 
-        // 新增返回上一層的按鈕
-        data.forEach(item => {
-            if (item.type === 'file' && item.name.endsWith('.json')) {
-                const fileButton = document.createElement('button');
-                fileButton.classList.add('select-button');
-                fileButton.dataset.json = item.path;
-                fileButton.innerText = item.name.replace('.json', '');
-                fileButton.addEventListener('click', () => {
-                    const allButtons = document.querySelectorAll('.select-button');
-                    allButtons.forEach(btn => btn.classList.remove('selected'));
-                    fileButton.classList.add('selected');
-                    selectedJson = fileButton.dataset.json;
-                });
-                buttonContainer.appendChild(fileButton);
-            }
-        });
-        const backButton = document.createElement('button');
-        backButton.classList.add('back-button');
-        backButton.innerText = '← 返回';
-        backButton.addEventListener('click', fetchJsonFiles);
-        buttonContainer.appendChild(backButton);
+// Quiz upload handling (modal-based)
+const uploadModal = document.getElementById('uploadModal');
+const uploadNameInput = document.getElementById('uploadNameInput');
+const uploadConfirmBtn = document.getElementById('uploadConfirmBtn');
+const uploadCancelBtn = document.getElementById('uploadCancelBtn');
+let pendingQuizData = null;
 
-    } catch (error) {
-        console.error('Error fetching folder files from GitHub:', error);
-        showCustomAlert('資料夾內容載不出來欸，咋辦？');
-    }
-}
+const addBtn = document.getElementById('addQuizBtn');
+const uploadInput = document.getElementById('uploadJson');
+addBtn.addEventListener('click', () => uploadInput.click());
+uploadInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    pendingQuizData = JSON.parse(text);
+  } catch {
+    showCustomAlert('JSON 格式錯誤，請檢查檔案');
+    return;
+  }
+  uploadNameInput.value = '';
+  uploadModal.style.display = 'flex';
+});
 
-// 初始讀取時改為執行 fetchJsonFiles()
-window.addEventListener('DOMContentLoaded', fetchJsonFiles);
+uploadConfirmBtn.addEventListener('click', async () => {
+  const quizName = uploadNameInput.value.trim();
+  if (!quizName) {
+    showCustomAlert('請輸入題庫名稱');
+    return;
+  }
+  const updates = {};
+  updates[quizName] = pendingQuizData;
+  try {
+    await update(ref(database, '/'), updates);
+    showCustomAlert('題庫已新增：' + quizName);
+    fetchQuizList();
+  } catch (err) {
+    console.error(err);
+    showCustomAlert('新增題庫失敗');
+  }
+  pendingQuizData = null;
+  uploadModal.style.display = 'none';
+  uploadInput.value = '';
+});
+uploadCancelBtn.addEventListener('click', () => {
+  pendingQuizData = null;
+  uploadModal.style.display = 'none';
+  uploadInput.value = '';
+});
 
 
 // WeeGPT相關程式碼
