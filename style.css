@@ -4,7 +4,7 @@
   font-size: 1rem;
   padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 .upload-buttons {
   display: flex;
