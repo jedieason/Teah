@@ -3,7 +3,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
@@ -847,6 +846,9 @@ function restoreProgress() {
         document.querySelector('.quiz-title').innerText = `${selectedJson.split('/').pop().replace('.json', '')} 題矣`;
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
+        // Recalculate total questions for progress bar
+        initialQuestionCount = questions.length + correct + wrong;
+        updateProgressBar();
         loadQuestionFromState();
         showCustomAlert('進度已成功恢復！');
     }).catch(error => {
@@ -854,13 +856,7 @@ function restoreProgress() {
         showCustomAlert('恢復進度時發生錯誤，請重試。');
     });
 }
-// Firebase auth state listener (auto-restore progress on login)
-onAuthStateChanged(auth, user => {
-    if (user) {
-        signInBtn.innerText = `您好，${user.email || user.displayName}`;
-        signInBtn.disabled = true;
-    }
-});
+
 
 // Login Modal Elements
 const loginModal = document.getElementById('loginModal');
