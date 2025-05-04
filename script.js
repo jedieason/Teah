@@ -2,7 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
@@ -18,23 +19,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const database = getDatabase(app);
-// Firebase Auth for Google Sign-In
+// Firebase Auth
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-// Google 登入按鈕監聽
 const signInBtn = document.getElementById('signInBtn');
-signInBtn.addEventListener('click', async () => {
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        console.log('登入成功：', user.displayName, user.email);
-        signInBtn.innerText = `您好，${user.displayName}`;
-        signInBtn.disabled = true;
-    } catch (error) {
-        console.error('登入失敗：', error);
-        alert('Google 登入失敗，請稍後再試');
-    }
-});
 
 let questions = [];
 let initialQuestionCount = 0;
@@ -694,7 +681,7 @@ window.addEventListener('DOMContentLoaded', fetchQuizList);
 const uploadModal = document.getElementById('uploadModal');
 const uploadNameInput = document.getElementById('uploadNameInput');
 const uploadConfirmBtn = document.getElementById('uploadConfirmBtn');
-const uploadCancelBtn = document.getElementById('uploadCancelBtn');
+// const uploadCancelBtn = document.getElementById('uploadCancelBtn');
 let pendingQuizData = null;
 
 const addBtn = document.getElementById('addQuizBtn');
@@ -734,11 +721,7 @@ uploadConfirmBtn.addEventListener('click', async () => {
   uploadModal.style.display = 'none';
   uploadInput.value = '';
 });
-uploadCancelBtn.addEventListener('click', () => {
-  pendingQuizData = null;
-  uploadModal.style.display = 'none';
-  uploadInput.value = '';
-});
+
 
 
 // WeeGPT相關程式碼
@@ -813,15 +796,17 @@ userQuestionInput.addEventListener('keydown', function(event) {
 });
 
 function saveProgress() {
+    if (!auth.currentUser) return;
     const progress = {
-        questions: questions,
-        currentQuestion: currentQuestion,
-        correct: correct,
-        wrong: wrong,
-        questionHistory: questionHistory,
-        selectedJson: selectedJson
+        questions,
+        currentQuestion,
+        correct,
+        wrong,
+        questionHistory,
+        selectedJson
     };
-    localStorage.setItem('quizProgress', JSON.stringify(progress));
+    update(ref(database, `progress/${auth.currentUser.uid}`), { progress })
+      .catch(error => console.error('保存進度到 Firebase 失敗：', error));
 }
 
 function updateProgressBar() {
@@ -835,31 +820,106 @@ function updateProgressBar() {
 }
 
 function restoreProgress() {
-    const savedProgress = localStorage.getItem('quizProgress');
-    if (!savedProgress) {
-        showCustomAlert('沒有找到已保存的進度！');
+    if (!auth.currentUser) {
+        showCustomAlert('請先登入才能恢復進度！');
         return;
     }
-    try {
-        const progress = JSON.parse(savedProgress);
-        questions = progress.questions;
-        currentQuestion = progress.currentQuestion;
-        correct = progress.correct;
-        wrong = progress.wrong;
-        questionHistory = progress.questionHistory;
-        selectedJson = progress.selectedJson;
+    get(ref(database, `progress/${auth.currentUser.uid}/progress`)).then(snapshot => {
+        if (!snapshot.exists()) {
+            showCustomAlert('沒有找到已保存的進度！');
+            return;
+        }
+        const p = snapshot.val();
+        questions = p.questions;
+        currentQuestion = p.currentQuestion;
+        correct = p.correct;
+        wrong = p.wrong;
+        questionHistory = p.questionHistory;
+        selectedJson = p.selectedJson;
         document.querySelector('.start-screen').style.display = 'none';
         document.querySelector('.quiz-container').style.display = 'flex';
         document.querySelector('.quiz-title').innerText = `${selectedJson.split('/').pop().replace('.json', '')} 題矣`;
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
         loadQuestionFromState();
-        showCustomAlert('進度已成功恢復！');
-    } catch (error) {
-        console.error('恢復進度時出錯：', error);
-        showCustomAlert('恢復進度時出錯，請重試。');
-    }
+        showCustomAlert('進度已成功從 Firebase 恢復！');
+    }).catch(error => {
+        console.error('從 Firebase 恢復進度失敗：', error);
+        showCustomAlert('恢復進度時發生錯誤，請重試。');
+    });
 }
+// Firebase auth state listener (auto-restore progress on login)
+onAuthStateChanged(auth, user => {
+    if (user) {
+        signInBtn.innerText = `您好，${user.email || user.displayName}`;
+        signInBtn.disabled = true;
+        // Try auto-restore progress on login
+        restoreProgress();
+    } else {
+        // No user signed in
+    }
+});
+
+// Login Modal Elements
+const loginModal = document.getElementById('loginModal');
+const loginBtn = document.getElementById('loginBtn');
+const signupBtn = document.getElementById('signupBtn');
+// const loginCancelBtn = document.getElementById('loginCancelBtn');
+const loginError = document.getElementById('loginError');
+const loginEmail = document.getElementById('loginEmail');
+const loginPassword = document.getElementById('loginPassword');
+let isRegisterMode = false;
+
+// Open login modal
+signInBtn.innerText = '登入';
+signInBtn.addEventListener('click', () => {
+  loginError.innerText = '';
+  loginEmail.value = '';
+  loginPassword.value = '';
+  loginModal.style.display = 'flex';
+});
+
+// Login/Register handler
+loginBtn.addEventListener('click', async () => {
+  const email = loginEmail.value.trim();
+  const password = loginPassword.value.trim();
+  loginError.innerText = '';
+  try {
+    let userCredential;
+    if (isRegisterMode) {
+      userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    } else {
+      userCredential = await signInWithEmailAndPassword(auth, email, password);
+    }
+    const user = userCredential.user;
+    loginModal.style.display = 'none';
+    signInBtn.innerText = `您好，${user.email}`;
+    signInBtn.disabled = true;
+  } catch (error) {
+    loginError.innerText = error.message;
+  }
+});
+
+const toggleAuthText = document.getElementById('toggleAuthText');
+toggleAuthText.addEventListener('click', () => {
+  isRegisterMode = !isRegisterMode;
+  loginBtn.innerText = isRegisterMode ? '註冊' : '登入';
+  toggleAuthText.innerText = isRegisterMode ? '已經有帳號？登入' : '還沒有帳號？註冊';
+});
+
+
+// Delegate click to close any modal when '×' is clicked
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal-close')) {
+    console.log('modal-close clicked on', e.target);
+    const modal = e.target.closest('.modal');
+    console.log('Found modal:', modal);
+    if (modal) {
+      modal.style.display = 'none';
+      console.log('Modal display set to none');
+    }
+  }
+});
 
 function loadQuestionFromState() {
     if (!currentQuestion || !currentQuestion.question) {
