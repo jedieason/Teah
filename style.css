@@ -108,7 +108,7 @@
       align-items: center;
       height: 100vh;
       background: white;
-      gap: 28px;
+      gap: 12px;
       position: relative;
       transition: all 0.4s ease;
   }
@@ -119,7 +119,7 @@
       font-size: 4rem;
       letter-spacing: 3px;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       background: linear-gradient(135deg, #2D3436 0%, #1A1A1A 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -189,7 +189,8 @@
               color: #FFFFFF;
               border: none;
               border-radius: 30px;
-              letter-spacing: 3px
+              letter-spacing: 3px;
+              margin-top: 20px;
               cursor: pointer;
               transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
               font-weight: 500;
@@ -921,6 +922,7 @@
       cursor: pointer;
       overflow: hidden;
       transition: background-color 0.6s ease, color 0.6s ease;
+      margin-top: 10px;
     }
   
     /* Text Styling */
@@ -1108,4 +1110,111 @@
 }
 .modal-close:hover {
   color: #333;
+}
+
+/* Debug Modal Styles */
+#popupWindow {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+#popupWindow .content {
+    background-color: #ffffff;
+    color: #2D3436;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+#popupWindow #closeButton {
+    position: absolute;
+    top: 12px; right: 16px;
+    font-size: 1.5rem;
+    color: #888888;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+#popupWindow #closeButton:hover {
+    color: #333333;
+}
+#popupWindow .content .non-editable {
+    font-weight: 600;
+    margin-top: 12px;
+    color: #262b34;
+}
+#popupWindow .content .editable {
+    width: 100%;
+    min-height: 40px;
+    margin: 6px 0 12px 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+#popupWindow .content .editable:focus {
+    outline: none;
+    border-color: #007BFF;
+    background-color: #f0f7ff;
+}
+#popupWindow #sendButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(74,58,222,0.15);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 12px;
+    font-weight: 500;
+}
+#popupWindow #sendButton:hover {
+    background-color: #111111;
+    transform: translateY(-2px);
+}
+
+/* End Screen Layout */
+.end-message {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    color: #2D3436;
+    font-weight: 500;
+}
+.end-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+.end-buttons .select-button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto !important;
+    min-width: 150px;
+    max-width: 200px;
+    padding: 12px 0;
+}
+
+/* Center end screen vertically and horizontally */
+.quiz-container.end-screen {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

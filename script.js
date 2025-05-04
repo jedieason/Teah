@@ -38,6 +38,7 @@ let isTestCompleted = false; // Flag to track test completion
 
 // 新增：歷史紀錄陣列
 let questionHistory = [];
+let wrongQuestions = [];
 
 // GitHub API相關資訊
 const GITHUB_USER = 'jedieason'; // 替換為您的GitHub用戶名
@@ -428,6 +429,7 @@ function updateCorrect() {
 }
 
 function updateWrong() {
+    wrongQuestions.push(currentQuestion);
     wrong += 1;
     document.getElementById('wrong').innerText = wrong;
     updateProgressBar();
@@ -435,7 +437,50 @@ function updateWrong() {
 
 function showEndScreen() {
     isTestCompleted = true;
-    showCustomAlert(`測驗完成！\n答對 ${correct} 題；答錯 ${wrong} 題。`);
+    // Clear quiz UI
+    const container = document.querySelector('.quiz-container');
+    container.classList.add('end-screen');
+    container.innerHTML = '';
+    
+    // Show completion message
+    const message = document.createElement('div');
+    message.innerText = `測驗完成！答對 ${correct} 題；答錯 ${wrong} 題。`;
+    message.style.margin = '20px';
+    container.appendChild(message);
+    
+    // "Redo Wrong" and "Reselect Quiz" buttons (in a flex row, no marginRight inline style)
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = 'end-buttons';
+
+    const redoBtn = document.createElement('button');
+    redoBtn.innerText = '重做錯題';
+    redoBtn.classList.add('select-button');
+    redoBtn.addEventListener('click', () => {
+        if (wrongQuestions.length === 0) {
+            alert('沒有錯題可重做！');
+            return;
+        }
+        // Reset state for wrong questions
+        questions = wrongQuestions.slice();
+        wrongQuestions = [];
+        correct = 0;
+        wrong = 0;
+        document.getElementById('correct').innerText = correct;
+        document.getElementById('wrong').innerText = wrong;
+        container.innerHTML = '';
+        loadNewQuestion();
+    });
+    buttonsDiv.appendChild(redoBtn);
+
+    const resetBtn = document.createElement('button');
+    resetBtn.innerText = '重新選題庫';
+    resetBtn.classList.add('select-button');
+    resetBtn.addEventListener('click', () => {
+        location.reload();
+    });
+    buttonsDiv.appendChild(resetBtn);
+
+    container.appendChild(buttonsDiv);
 }
 
 function copyQuestion() {
@@ -643,6 +688,36 @@ function sendToGoogleDocs(content) {
 }
 
 document.getElementById('sendButton').addEventListener('click', gatherEditedContent);
+
+// Debug icon click handler
+const debugIcon = document.getElementById('deBug');
+const popupWindow = document.getElementById('popupWindow');
+const closeButton = document.getElementById('closeButton');
+
+debugIcon.addEventListener('click', () => {
+    // Populate current question and details
+    document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
+    const optionsText = Object.entries(currentQuestion.options || {}).map(
+      ([key, value]) => `${key}: ${value}`
+    ).join('\n');
+    document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
+    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
+    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '';
+    // Show debug modal
+    popupWindow.style.display = 'flex';
+});
+
+closeButton.addEventListener('click', () => {
+    popupWindow.style.display = 'none';
+});
+
+// Prevent clicks inside content closing the modal
+popupWindow.querySelector('.content').addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+popupWindow.addEventListener('click', () => {
+    popupWindow.style.display = 'none';
+});
 
 window.addEventListener("beforeunload", function (event) {
     event.preventDefault();
