@@ -795,7 +795,7 @@ uploadConfirmBtn.addEventListener('click', async () => {
     fetchQuizList();
   } catch (err) {
     console.error(err);
-    showCustomAlert('新增題庫失敗');
+    showCustomAlert('請跟管理員取得權限，或是檔案格式錯誤');
   }
   pendingQuizData = null;
   uploadModal.style.display = 'none';
