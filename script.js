@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -481,8 +481,13 @@ document.getElementById('startGame').addEventListener('click', () => {
 document.getElementById('confirm-btn').addEventListener('click', confirmAnswer);
 document.getElementById('next-btn').addEventListener('click', loadNewQuestion);
 document.getElementById('copy-btn').addEventListener('click', copyQuestion);
-document.getElementById('restore').addEventListener('click', restoreProgress);
-
+document.getElementById('restore').addEventListener('click', () => {
+        if (!auth.currentUser) {
+            showCustomAlert('請先登入才能恢復進度！');
+            return;
+        }
+        restoreProgress();
+    });
 document.getElementById('reverseButton').addEventListener('click', reverseQuestion);
 
 function reverseQuestion() {
@@ -655,6 +660,7 @@ async function fetchQuizList() {
         if (snapshot.exists()) {
             const data = snapshot.val();
             Object.keys(data).forEach(key => {
+                if (key === 'progress') return;
                 const btn = document.createElement('button');
                 btn.classList.add('select-button');
                 btn.dataset.json = key;  // 使用 key 作為路徑
@@ -842,9 +848,9 @@ function restoreProgress() {
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
         loadQuestionFromState();
-        showCustomAlert('進度已成功從 Firebase 恢復！');
+        showCustomAlert('進度已成功恢復！');
     }).catch(error => {
-        console.error('從 Firebase 恢復進度失敗：', error);
+        console.error('恢復進度失敗：', error);
         showCustomAlert('恢復進度時發生錯誤，請重試。');
     });
 }
@@ -853,10 +859,6 @@ onAuthStateChanged(auth, user => {
     if (user) {
         signInBtn.innerText = `您好，${user.email || user.displayName}`;
         signInBtn.disabled = true;
-        // Try auto-restore progress on login
-        restoreProgress();
-    } else {
-        // No user signed in
     }
 });
 
@@ -896,7 +898,33 @@ loginBtn.addEventListener('click', async () => {
     signInBtn.innerText = `您好，${user.email}`;
     signInBtn.disabled = true;
   } catch (error) {
-    loginError.innerText = error.message;
+    // Remove any “Firebase:” prefix from the error message before displaying
+    const displayMsg = error.message.replace(/^Firebase:\s*/, '');
+    loginError.innerText = displayMsg;
+    // Show "忘記密碼？" link to allow password reset
+    const resetLink = document.createElement('a');
+    resetLink.innerText = '忘記密碼？';
+    resetLink.href = '#';
+    resetLink.style.marginLeft = '8px';
+    resetLink.style.color = '#000';
+    resetLink.style.cursor = 'pointer';
+    resetLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (!loginEmail.value.trim()) {
+        showCustomAlert('請先輸入您的 Email 以重設密碼。');
+        return;
+      }
+      try {
+        await sendPasswordResetEmail(auth, loginEmail.value.trim());
+        showCustomAlert('重設密碼郵件已發送，請檢查您的信箱。');
+      } catch (resetError) {
+        showCustomAlert('無法發送重設郵件：' + resetError.message.replace(/^Firebase:\s*/, ''));
+      }
+    });
+    // Remove existing reset link if present, then append
+    const existingLink = loginError.querySelector('a');
+    if (existingLink) existingLink.remove();
+    loginError.appendChild(resetLink);
   }
 });
 
