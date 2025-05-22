@@ -16,7 +16,7 @@
     <!-- 開始畫面 -->
     <div class="start-screen">
         <button id="addQuizBtn" class="add-button">+</button>
-        <input type="file" id="uploadJson" accept=".json" style="display:none;">
+        <!-- <input type="file" id="uploadJson" accept=".json" style="display:none;"> -->
         <button id="signInBtn" class="sign-in-button">Google 登入</button>
         <div class="start-title">題矣</div>
         <div class="header-right-homepage">
@@ -129,7 +129,23 @@
       <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h3>新增題庫</h3>
+                <div style="margin: 16px 0;">
+          <!-- Upload mode radios -->
+          <label>
+            <input type="radio" name="upload-mode" value="paste" checked>
+            貼上 JSON
+          </label>
+          <label>
+            <input type="radio" name="upload-mode" value="file">
+            上傳檔案
+          </label>
+        </div>
         <input type="text" id="uploadNameInput" placeholder="輸入題庫名稱">
+        <textarea id="pasteJson" placeholder="請貼上 JSON 內容" style="width:100%;height:110px;resize:vertical;box-sizing:border-box;"></textarea>
+        <div id="fileDropZone" class="file-drop-zone" style="display:none;">
+          <span id="dropZoneLabel">拖放 JSON 檔案至此，或點擊選擇檔案</span>
+          <input type="file" id="uploadJson" accept=".json" style="display:none;">
+        </div>
         <div class="upload-buttons">
           <button id="uploadConfirmBtn" class="modal-confirm-button">確定</button>
         </div>

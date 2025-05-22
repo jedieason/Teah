@@ -761,12 +761,74 @@ window.addEventListener('DOMContentLoaded', fetchQuizList);
 const uploadModal = document.getElementById('uploadModal');
 const uploadNameInput = document.getElementById('uploadNameInput');
 const uploadConfirmBtn = document.getElementById('uploadConfirmBtn');
-// const uploadCancelBtn = document.getElementById('uploadCancelBtn');
 let pendingQuizData = null;
-
 const addBtn = document.getElementById('addQuizBtn');
 const uploadInput = document.getElementById('uploadJson');
-addBtn.addEventListener('click', () => uploadInput.click());
+const pasteJson = document.getElementById('pasteJson');
+const fileDropZone = document.getElementById('fileDropZone');
+const dropZoneLabel = document.getElementById('dropZoneLabel');
+const uploadModeRadios = uploadModal.querySelectorAll('input[name="upload-mode"]');
+
+// Add button always opens modal in paste mode
+addBtn.addEventListener('click', () => {
+  // Set mode to paste on open
+  uploadModal.style.display = 'flex';
+  uploadModeRadios.forEach(r => r.checked = r.value === 'paste');
+  pasteJson.style.display = 'block';
+  fileDropZone.style.display = 'none';
+  pasteJson.value = '';
+  uploadNameInput.value = '';
+  pendingQuizData = null;
+});
+
+// Upload mode switching logic
+uploadModeRadios.forEach(radio => {
+  radio.addEventListener('change', e => {
+    if (e.target.value === 'file') {
+      pasteJson.style.display = 'none';
+      fileDropZone.style.display = 'block';
+    } else {
+      pasteJson.style.display = 'block';
+      fileDropZone.style.display = 'none';
+    }
+  });
+});
+
+// Click to open file selector
+fileDropZone.addEventListener('click', () => uploadInput.click());
+// Prevent default for drag events
+['dragenter','dragover','dragleave','drop'].forEach(evt => {
+  fileDropZone.addEventListener(evt, e => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+});
+// Highlight on dragover
+fileDropZone.addEventListener('dragover', () => fileDropZone.classList.add('dragover'));
+fileDropZone.addEventListener('dragleave', () => fileDropZone.classList.remove('dragover'));
+// Handle drop
+fileDropZone.addEventListener('drop', async e => {
+  fileDropZone.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith('.json')) {
+    try {
+      const text = await file.text();
+      pendingQuizData = JSON.parse(text);
+      uploadNameInput.value = '';
+      uploadModeRadios.forEach(r => r.checked = r.value === 'file');
+      pasteJson.style.display = 'none';
+      fileDropZone.style.display = 'block';
+      dropZoneLabel.innerText = file.name;
+      uploadModal.style.display = 'flex';
+    } catch {
+      showCustomAlert('JSON 格式錯誤，請檢查檔案');
+    }
+  } else {
+    showCustomAlert('請提供 JSON 檔案');
+  }
+});
+
+// When a file is selected, parse it and show modal
 uploadInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -778,17 +840,40 @@ uploadInput.addEventListener('change', async (e) => {
     return;
   }
   uploadNameInput.value = '';
+  // If modal not open, open it and set mode to file
   uploadModal.style.display = 'flex';
+  uploadModeRadios.forEach(r => r.checked = r.value === 'file');
+  pasteJson.style.display = 'none';
+  fileDropZone.style.display = 'block';
+  dropZoneLabel.innerText = file.name;
 });
 
+// Confirm upload: handle according to mode
 uploadConfirmBtn.addEventListener('click', async () => {
   const quizName = uploadNameInput.value.trim();
   if (!quizName) {
     showCustomAlert('請輸入題庫名稱');
     return;
   }
+  // Determine mode
+  const mode = Array.from(uploadModeRadios).find(r => r.checked)?.value || 'paste';
+  let quizData = null;
+  if (mode === 'paste') {
+    try {
+      quizData = JSON.parse(pasteJson.value);
+    } catch {
+      showCustomAlert('請貼上正確的 JSON 內容');
+      return;
+    }
+  } else {
+    if (!pendingQuizData) {
+      showCustomAlert('請選擇 JSON 檔案');
+      return;
+    }
+    quizData = pendingQuizData;
+  }
   const updates = {};
-  updates[quizName] = pendingQuizData;
+  updates[quizName] = quizData;
   try {
     await update(ref(database, '/'), updates);
     showCustomAlert('題庫已新增：' + quizName);
@@ -800,6 +885,13 @@ uploadConfirmBtn.addEventListener('click', async () => {
   pendingQuizData = null;
   uploadModal.style.display = 'none';
   uploadInput.value = '';
+  pasteJson.value = '';
+});
+
+// On page load: default to paste mode
+window.addEventListener('DOMContentLoaded', () => {
+  pasteJson.style.display = 'block';
+  fileDropZone.style.display = 'none';
 });
 
 

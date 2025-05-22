@@ -1,3 +1,17 @@
+ .file-drop-zone {
+   border: 2px dashed #ccc;
+   border-radius: 8px;
+   padding: 20px;
+   text-align: center;
+   font-size: 1rem;
+   color: #666;
+   cursor: pointer;
+   transition: border-color 0.3s ease, background-color 0.3s ease;
+ }
+ .file-drop-zone.dragover {
+   border-color: #007BFF;
+   background-color: #f0f8ff;
+ }
 #uploadNameInput {
   width: 100%;
   box-sizing: border-box;
@@ -5,6 +19,7 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 .upload-buttons {
   display: flex;
