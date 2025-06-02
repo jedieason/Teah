@@ -926,7 +926,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     const options = currentQuestion.options;
     currentQuestion.explanation = '<span class="typing-effect">Guru Grogu 正在運功...</span>';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-    const API_KEY = 'YOUR_REAL_API_KEY_HERE_AIzaSy...'; 
+    const API_KEY = 'AIzaSyA8TDPt2KJbDoTbEPRyoQHDsA1v54pOXXA'; 
     const MODEL_NAME = 'gemini-2.5-flash-preview-05-20';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
 
@@ -941,8 +941,7 @@ sendQuestionBtn.addEventListener('click', async () => {
 題目：「${question}」
 選項有：${optionsText} // <<< 改用處理過的 optionsText
 他們說正確答案是：「${defaultAnswer}」
-我${userQuestion === defaultAnswer ? '很屌的' : '他媽的'}猜：「${userQuestion}」
-好啦，Guru Grogu 大仙，針對我猜的這個「${userQuestion}」，隨便唬爛幾句，解釋一下我猜的到底是對是錯，或者講點有的沒的。越廢越好，講點幹話也行。😂`;
+但我想問說「${userQuestion}」，`;
 
     const requestBody = {
         contents: [{
