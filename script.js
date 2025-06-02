@@ -1117,7 +1117,7 @@ loginBtn.addEventListener('click', async () => {
     signInBtn.innerText = `您好，${user.email}`;
     signInBtn.disabled = true;
   } catch (error) {
-    // Remove any “Firebase:” prefix from the error message before displaying
+    // Remove any "Firebase:" prefix from the error message before displaying
     const displayMsg = error.message.replace(/^Firebase:\s*/, '');
     loginError.innerText = displayMsg;
     // Show "忘記密碼？" link to allow password reset
@@ -1145,6 +1145,19 @@ loginBtn.addEventListener('click', async () => {
     if (existingLink) existingLink.remove();
     loginError.appendChild(resetLink);
   }
+});
+
+[loginEmail, loginPassword].forEach(input => {
+    input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const isComposing = event.isComposing || event.target.getAttribute('aria-composing') === 'true';
+            if (isComposing) {
+                return;
+            }
+            event.preventDefault();
+            loginBtn.click();
+        }
+    });
 });
 
 const toggleAuthText = document.getElementById('toggleAuthText');
