@@ -99,11 +99,16 @@ function shuffle(array) {
 
 function loadNewQuestion() {
     // 如果有當前問題，將其推入歷史紀錄
-    if (currentQuestion.question) {
+    if (currentQuestion && currentQuestion.question) {
         questionHistory.push({
-            question: currentQuestion,
-            correctCount: correct,
-            wrongCount: wrong
+            questionState: JSON.parse(JSON.stringify(currentQuestion)), // Deep copy of the question state
+            userSelection: currentQuestion.isFillBlank ? fillblankInput.value : (currentQuestion.isMultiSelect ? [...selectedOptions] : selectedOption),
+            isConfirmed: !acceptingAnswers, // Was the answer confirmed?
+            correctCount: correct, // Score *after* this question was processed
+            wrongCount: wrong,   // Score *after* this question was processed
+            fillBlankValueRestore: currentQuestion.isFillBlank ? fillblankInput.value : null,
+            fillBlankDisabledRestore: currentQuestion.isFillBlank ? fillblankInput.disabled : null,
+            fillBlankClassesRestore: currentQuestion.isFillBlank ? Array.from(fillblankInput.classList) : null
         });
     }
 
@@ -539,17 +544,34 @@ function reverseQuestion() {
         showCustomAlert('沒有上一題了！');
         return;
     }
-    if (currentQuestion.question) {
+
+    // Push the current question (that we are navigating away from) back to the main questions array
+    if (currentQuestion && currentQuestion.question) {
         questions.push(currentQuestion);
+        // We don't shuffle 'questions' here to maintain a more predictable forward path if user goes "next" again.
     }
-    const previous = questionHistory.pop();
-    currentQuestion = previous.question;
-    correct = previous.correctCount;
-    wrong = previous.wrongCount;
+
+    const previousState = questionHistory.pop();
+
+    // Restore the question object and scores
+    currentQuestion = previousState.questionState;
+    correct = previousState.correctCount;
+    wrong = previousState.wrongCount;
+
+    // Update score display
     document.getElementById('correct').innerText = correct;
     document.getElementById('wrong').innerText = wrong;
-    document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
-    renderMathInElement(document.getElementById('question'), {
+    updateProgressBar();
+
+    // Display question text, replicating logic from loadNewQuestion for labels
+    const questionDiv = document.getElementById('question');
+    if (currentQuestion.isMultiSelect) {
+        const labelText = currentQuestion.isFillBlank ? '句' : '多';
+        questionDiv.innerHTML = `<div class="multi-label">${labelText}</div>` + marked.parse(currentQuestion.question);
+    } else {
+        questionDiv.innerHTML = marked.parse(currentQuestion.question);
+    }
+    renderMathInElement(questionDiv, {
         delimiters: [
             { left: "$", right: "$", display: false },
             { left: "\\(", right: "\\)", display: false },
@@ -557,34 +579,126 @@ function reverseQuestion() {
             { left: "\\[", right: "\\]", display: true }
         ]
     });
-    const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
-    for (let [key, value] of Object.entries(currentQuestion.options)) {
-        const button = document.createElement('button');
-        button.classList.add('option-button');
-        button.dataset.option = key;
-        button.innerHTML = marked.parse(`${key}: ${value}`);
-        button.addEventListener('click', selectOption);
-        optionsContainer.appendChild(button);
-    }
-    acceptingAnswers = true;
-    if (currentQuestion.isMultiSelect) {
-        selectedOptions = [];
+
+    // Handle fill-in-the-blank or options
+    if (currentQuestion.isFillBlank) {
+        document.getElementById('options').style.display = 'none';
+        fillblankContainer.style.display = 'flex';
+        fillblankInput.value = previousState.fillBlankValueRestore || '';
+        
+        if (previousState.fillBlankClassesRestore) {
+            fillblankInput.className = 'fillblank-input'; // Reset to base class
+            previousState.fillBlankClassesRestore.forEach(cls => {
+                if (cls !== 'fillblank-input') fillblankInput.classList.add(cls);
+            });
+        } else {
+            fillblankInput.className = 'fillblank-input'; // Ensure it's reset if no classes were stored
+        }
+        fillblankInput.disabled = previousState.fillBlankDisabledRestore === true;
+        
+        acceptingAnswers = !previousState.isConfirmed;
+
+    } else { // Multiple choice or True/False
+        document.getElementById('options').style.display = 'flex';
+        fillblankContainer.style.display = 'none';
+
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = ''; // Clear previous options
+
+        const userSelection = previousState.userSelection;
+
+        for (let [key, value] of Object.entries(currentQuestion.options)) {
+            const button = document.createElement('button');
+            button.classList.add('option-button');
+            button.dataset.option = key;
+            button.innerHTML = marked.parse(`${key}: ${value}`);
+            
+            if (previousState.isConfirmed) {
+                // Apply selection and correctness styling
+                if (currentQuestion.isMultiSelect) {
+                    if (Array.isArray(userSelection) && userSelection.includes(key)) {
+                        button.classList.add('selected');
+                    }
+                    if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.includes(key)) {
+                        if (Array.isArray(userSelection) && userSelection.includes(key)) {
+                            button.classList.add('correct');
     } else {
-        selectedOption = null;
+                            button.classList.add('missing');
     }
-    document.getElementById('explanation').style.display = 'none';
-    document.getElementById('confirm-btn').disabled = false;
-    document.getElementById('confirm-btn').style.display = 'block';
-    document.querySelectorAll('.option-button').forEach(btn => {
-        btn.classList.remove('selected', 'correct', 'incorrect', 'missing');
+  } else {
+                        if (Array.isArray(userSelection) && userSelection.includes(key)) {
+                            button.classList.add('incorrect');
+                        }
+                    }
+                } else { // Single select
+                    if (userSelection === key) {
+                        button.classList.add('selected');
+                    }
+                    if (key === currentQuestion.answer) {
+                        button.classList.add('correct');
+                    } else if (userSelection === key) {
+                        button.classList.add('incorrect');
+                    }
+                }
+            } else { // Not confirmed, set up for interaction
+                 button.addEventListener('click', selectOption);
+                 if (currentQuestion.isMultiSelect) {
+                    if (Array.isArray(userSelection) && userSelection.includes(key)) {
+                        button.classList.add('selected');
+                    }
+  } else {
+                    if (userSelection === key) {
+                         button.classList.add('selected');
+                    }
+                 }
+            }
+            optionsContainer.appendChild(button);
+        }
+        acceptingAnswers = !previousState.isConfirmed;
+
+        // Restore global selectedOption/selectedOptions
+        if (currentQuestion.isMultiSelect) {
+            selectedOptions = Array.isArray(userSelection) ? [...userSelection] : [];
+            selectedOption = null;
+    } else {
+            selectedOption = userSelection;
+            selectedOptions = [];
+        }
+    }
+
+    // Explanation and confirm button visibility
+    const explanationElement = document.getElementById('explanation');
+    const confirmBtnElement = document.getElementById('confirm-btn');
+
+    if (previousState.isConfirmed) {
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！');
+        renderMathInElement(document.getElementById('explanation-text'), {
+        delimiters: [
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "$$", right: "$$", display: true },
+            { left: "\\[", right: "\\]", display: true }
+        ]
     });
-    currentQuestion.explanation = updateExplanationOptions(currentQuestion.explanation, {});
+        explanationElement.style.display = 'block';
+        confirmBtnElement.style.display = 'none';
+        confirmBtnElement.disabled = true;
+    } else {
+        explanationElement.style.display = 'none';
+        confirmBtnElement.style.display = 'block';
+        confirmBtnElement.disabled = false;
+    }
+    
+    document.getElementById('WeeGPTInputSection').style.display = 'none';
+
+    // Update popup window content (Debug modal)
     document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
-    const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
+    const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
     document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
-    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
+    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
     document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+
+    saveProgress(); // Save the restored state
 }
 
 document.addEventListener('keydown', function(event) {
@@ -741,7 +855,7 @@ async function fetchQuizList() {
         if (snapshot.exists()) {
             const data = snapshot.val();
             Object.keys(data).forEach(key => {
-                if (key === 'progress') return;
+                if (key === 'progress' || key === 'API_KEY') return;
                 const btn = document.createElement('button');
                 btn.classList.add('select-button');
                 btn.dataset.json = key;  // 使用 key 作為路徑
@@ -933,20 +1047,42 @@ sendQuestionBtn.addEventListener('click', async () => {
     const options = currentQuestion.options;
     currentQuestion.explanation = '<span class="typing-effect">Guru Grogu 正在運功...</span>';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-    const API_KEY = 'AIzaSyA8TDPt2KJbDoTbEPRyoQHDsA1v54pOXXA'; 
+
+    let fetchedApiKey;
+    try {
+        const apiKeySnapshot = await get(ref(database, 'API_KEY'));
+        if (!apiKeySnapshot.exists() || typeof apiKeySnapshot.val() !== 'string' || apiKeySnapshot.val().trim() === '') {
+            showCustomAlert('錯誤：無法從資料庫獲取有效的 API 金鑰。請洽管理員設定。');
+            currentQuestion.explanation = '無法取得 API 金鑰，請聯繫管理員。';
+            document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+            userQuestionInput.value = ''; // Clear input
+            return; 
+        }
+        fetchedApiKey = apiKeySnapshot.val();
+    } catch (dbError) {
+        console.error('從 Firebase 讀取 API Key 失敗:', dbError);
+        showCustomAlert('讀取 API 金鑰時發生錯誤，請檢查網路連線或洽管理員。');
+        currentQuestion.explanation = '讀取 API 金鑰時發生錯誤，請稍後再試。';
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+        userQuestionInput.value = ''; // Clear input
+        return;
+    }
+    
     const MODEL_NAME = 'gemini-2.5-flash-preview-05-20';
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${fetchedApiKey}`;
 
     const systemInstructionText = "你是Guru Grogu，由Jedieason訓練的助理。使用正體中文（臺灣）或英文回答。回答我的提問，我的提問內容會是基於我提問後面所附的題目，但那個題目並非你主要要回答的內容。請不要上網搜尋。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.";
 
-    // 👇 主要修改在這裡啦，幹！看清楚！ 👇
     const optionsText = Array.isArray(options) && options.length > 0
         ? options.map(opt => `「${opt}」`).join('、')
-        : '（媽的，這題根本沒給選項是三小！）'; // 如果 options 不是陣列或空陣列，就顯示這個
+        : Object.keys(options || {}).length > 0 // Check if options is an object with keys
+            ? Object.entries(options).map(([key, value]) => `${key}: 「${value}」`).join('；')
+            : '（這題沒有提供選項）';
+
 
     const prompt = `好啦，這有個鳥問題：
 題目：「${question}」
-選項有：${optionsText} // <<< 改用處理過的 optionsText
+選項有：${optionsText}
 他們說正確答案是：「${defaultAnswer}」
 但我想問說「${userQuestion}」，`;
 
