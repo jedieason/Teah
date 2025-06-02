@@ -928,7 +928,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
 
     // 幹，下面這行 API_KEY 你要換成你自己的，而且記住我上面的警告！
-    const API_KEY = 'AIzaSyCvsgpyxxPWVkvTqF3FLVWRzVAdifrL_mY'; // 🚨 他媽的不要把這個推到公開地方！
+    const API_KEY = 'AIzaSyA8TDPt2KJbDoTbEPRyoQHDsA1v54pOXXA'; // 🚨 他媽的不要把這個推到公開地方！
     // 模型名稱改成你指定的預覽版，這東西可能不太穩定或隨時會改，自己注意點
     const MODEL_NAME = 'gemini-2.5-flash-preview-05-20';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
