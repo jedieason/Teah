@@ -918,28 +918,28 @@ weeGPTButton.addEventListener('click', () => {
 sendQuestionBtn.addEventListener('click', async () => {
     const userQuestion = userQuestionInput.value.trim();
     if (!userQuestion) {
-        return; // 沒輸入問題就滾啦
+        return;
     }
     inputSection.style.display = 'none';
     const defaultAnswer = currentQuestion.answer;
     const question = currentQuestion.question;
     const options = currentQuestion.options;
-    currentQuestion.explanation = '<span class="typing-effect">Guru Grogu 正在運功... 等等，這次好像比較久...</span>';
+    currentQuestion.explanation = '<span class="typing-effect">Guru Grogu 正在運功...</span>';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-
-    // 幹，下面這行 API_KEY 你要換成你自己的，而且記住我上面的警告！
-    const API_KEY = 'AIzaSyA8TDPt2KJbDoTbEPRyoQHDsA1v54pOXXA'; // 🚨 他媽的不要把這個推到公開地方！
-    // 模型名稱改成你指定的預覽版，這東西可能不太穩定或隨時會改，自己注意點
+    const API_KEY = 'YOUR_REAL_API_KEY_HERE_AIzaSy...'; 
     const MODEL_NAME = 'gemini-2.5-flash-preview-05-20';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
 
-    // 你提供的 system instruction
     const systemInstructionText = "你是Guru Grogu，由Jedieason訓練的助理。使用正體中文（臺灣）或英文回答。回答我的提問，我的提問內容會是基於我提問後面所附的題目，但那個題目並非你主要要回答的內容。請不要上網搜尋。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.";
 
-    // 組成要丟給 Gemini 的咒語 (prompt) - 這個照舊，因為 system instruction 是另外設定的
+    // 👇 主要修改在這裡啦，幹！看清楚！ 👇
+    const optionsText = Array.isArray(options) && options.length > 0
+        ? options.map(opt => `「${opt}」`).join('、')
+        : '（媽的，這題根本沒給選項是三小！）'; // 如果 options 不是陣列或空陣列，就顯示這個
+
     const prompt = `好啦，這有個鳥問題：
 題目：「${question}」
-選項有：${options.map(opt => `「${opt}」`).join('、')}
+選項有：${optionsText} // <<< 改用處理過的 optionsText
 他們說正確答案是：「${defaultAnswer}」
 我${userQuestion === defaultAnswer ? '很屌的' : '他媽的'}猜：「${userQuestion}」
 好啦，Guru Grogu 大仙，針對我猜的這個「${userQuestion}」，隨便唬爛幾句，解釋一下我猜的到底是對是錯，或者講點有的沒的。越廢越好，講點幹話也行。😂`;
@@ -950,25 +950,17 @@ sendQuestionBtn.addEventListener('click', async () => {
                 text: prompt
             }]
         }],
-        // 系統指令 (System Instruction) - 注意 JSON 欄位名稱是 system_instruction
         system_instruction: {
             parts: [{
                 text: systemInstructionText
             }]
         },
-        // 安全設定 (Safety Settings) - 讓他媽的 Gemini 閉嘴不要亂擋
-        // 警告：設成 BLOCK_NONE 表示你可能會收到一些比較刺激或不適當的內容，你要自己負責過濾或處理喔！
-        // 而且，有些極端有害的內容，Gemini 還是可能會擋掉，不是設了就真的百無禁忌。
         safety_settings: [
             { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
             { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
             { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
             { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
         ],
-        // 你也可以在這裡加一些 generationConfig 參數來調整模型的回應
-        // generationConfig: {
-        //   temperature: 0.8,
-        // }
     };
 
     try {
@@ -977,7 +969,7 @@ sendQuestionBtn.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(requestBody) // 把上面那一整坨 requestBody 轉成 JSON 字串
+            body: JSON.stringify(requestBody)
         });
 
         if (!response.ok) {
@@ -991,7 +983,7 @@ sendQuestionBtn.addEventListener('click', async () => {
         }
 
         const result = await response.json();
-        let explanation = '幹，Gemini 好像又罷工了，預覽版模型是不是不穩啊... 🙄';
+        let explanation = '幹，Gemini 好像又罷工了... 🙄';
 
         if (result.candidates && result.candidates.length > 0 &&
             result.candidates[0].content && result.candidates[0].content.parts &&
@@ -1003,15 +995,13 @@ sendQuestionBtn.addEventListener('click', async () => {
                 explanation += ` 安全評分：${JSON.stringify(result.promptFeedback.safetyRatings)}`;
             }
         } else if (result.candidates && result.candidates.length > 0 && result.candidates[0].finishReason === "SAFETY") {
-            // 有時候就算沒 blockReason，finishReason 也會是 SAFETY
             explanation = `幹！Gemini 因為安全理由拒絕回答，就算我叫他不要篩也一樣！媽的！ 安全評分：${JSON.stringify(result.candidates[0].safetyRatings)} 🖕`;
         }
-
 
         currentQuestion.explanation = explanation;
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
         userQuestionInput.value = '';
-        console.log('Gemini (預覽版模型) 回應更新成功啦！爽喔！🚀');
+        console.log('Gemini 回應更新成功啦！爽喔！🚀');
 
     } catch (error) {
         console.error('呼叫 Gemini API 的時候又他媽的炸裂了:', error);
