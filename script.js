@@ -705,7 +705,6 @@ document.addEventListener('keydown', function(event) {
     if (document.querySelector('.start-screen').style.display !== 'none') {
         if (event.key === 'Enter') {
             if (!selectedJson) {
-                showCustomAlert('你不選題目你是要玩什麼！');
                 return;
             }
             document.getElementById('startGame').click();
