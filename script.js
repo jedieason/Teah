@@ -619,6 +619,13 @@ document.addEventListener('keydown', function(event) {
             optionButton.click();
         }
     } else if (event.key === 'Enter') {
+        const activeEl = document.activeElement;
+        // If an input/textarea is focused and the Enter event is part of IME composition,
+        // let the IME handle Enter to finalize composition.
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA') && event.isComposing) {
+            return;
+        }
+
         if (acceptingAnswers) {
             confirmAnswer();
         } else {
