@@ -261,15 +261,24 @@ function loadNewQuestion() {
     updateProgressBar();
 }
 
-// 更新詳解中的選項標籤
 function updateExplanationOptions(explanation, labelMapping) {
-    if (!explanation) {
-        return '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
-    }
-    return explanation.replace(/\((A|B|C|D|E|F|G|H|I|J|K|L)\)/g, function(match, label) {
-        let newLabel = labelMapping[label] || label;
-        return `(${newLabel})`;
-    });
+    if (!explanation) {
+        return '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+    }
+    // Regex to match (A), ( B ), （Ｃ）, （ D ）, (Ｅ), （F）, etc.
+    // It allows for optional spaces between the parentheses (half-width or full-width)
+    // and the letter (half-width or full-width A-L).
+    return explanation.replace(/(?:\(|\uFF08)\s*([A-L\uFF21-\uFF2C])\s*(?:\)|\uFF09)/g, function(match, capturedLetter) {
+        let standardLabel = capturedLetter;
+        // Convert full-width letter to half-width if necessary
+        const charCode = capturedLetter.charCodeAt(0);
+        if (charCode >= 0xFF21 && charCode <= 0xFF2C) { // Check if it's a full-width Latin capital letter A-L
+            standardLabel = String.fromCharCode(charCode - 0xFEE0); // Convert to half-width
+        }
+        // Now standardLabel is guaranteed to be a half-width character like 'A', 'B', etc.
+        let newLabel = labelMapping[standardLabel] || standardLabel; // Use the standardized (half-width) label for lookup
+        return `(${newLabel})`; // Always return with half-width parentheses for consistency in the output
+    });
 }
 
 // 選擇選項
