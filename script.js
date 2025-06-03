@@ -36,6 +36,9 @@ const fillblankContainer = document.querySelector('.fillblank-container');
 const fillblankInput = document.getElementById('fillblank-input');
 let isTestCompleted = false; // Flag to track test completion
 
+// 新增：洗牌偏好設定
+let shouldShuffleQuiz = true; // true: 隨機順序, false: 固定順序 (JSON 順序)
+
 // 新增：歷史紀錄陣列
 let questionHistory = [];
 let wrongQuestions = [];
@@ -137,9 +140,13 @@ function loadNewQuestion() {
         return;
     }
 
-    // 獲取隨機題目
-    shuffle(questions);
-    currentQuestion = questions.pop(); // 取出一題
+    // 獲取題目
+    if (shouldShuffleQuiz) {
+        shuffle(questions); // 如果設定為隨機，則洗牌題庫
+        currentQuestion = questions.pop(); // 從尾端取出一題
+    } else {
+        currentQuestion = questions.shift(); // 如果設定為固定順序，則從前端取出一題
+    }
 
     // 判斷填空題（無 options 屬性）
     if (!currentQuestion.options) {
@@ -187,23 +194,23 @@ function loadNewQuestion() {
         // 檢查題型
         const optionKeys = Object.keys(currentQuestion.options);
         let optionLabels = [];
-        let shouldShuffle = true;
+        let shouldShuffleOptionContent = true; // 控制選項內容是否洗牌
 
         if (optionKeys.length === 2 && optionKeys.includes('T') && optionKeys.includes('F')) {
             // 是是非題
             optionLabels = ['T', 'F'];
-            shouldShuffle = false;
+            shouldShuffleOptionContent = false; // 是非題的選項標籤固定，不洗牌選項內容順序
         } else {
             // 單選題（或多選題）都用這組標籤
             optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-            shouldShuffle = true;
+            shouldShuffleOptionContent = shouldShuffleQuiz; // 選項內容是否洗牌取決於全域設定
         }
 
         // 獲取選項條目
         let optionEntries = Object.entries(currentQuestion.options);
 
-        // 如果需要洗牌，則洗牌選項
-        if (shouldShuffle) {
+        // 如果需要洗牌選項內容，則洗牌
+        if (shouldShuffleOptionContent) {
             shuffle(optionEntries);
         }
 
@@ -262,13 +269,13 @@ function loadNewQuestion() {
 }
 
 function updateExplanationOptions(explanation, labelMapping) {
-    if (!explanation) {
-        return '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
-    }
+    if (!explanation) {
+        return '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+    }
     // Regex to match (A), ( B ), （Ｃ）, （ D ）, (Ｅ), （F）, etc.
     // It allows for optional spaces between the parentheses (half-width or full-width)
     // and the letter (half-width or full-width A-L).
-    return explanation.replace(/(?:\(|\uFF08)\s*([A-L\uFF21-\uFF2C])\s*(?:\)|\uFF09)/g, function(match, capturedLetter) {
+    return explanation.replace(/(?:\(|\uFF08)\s*([A-L\uFF21-\uFF2C])\s*(?:\)|\uFF09)/g, function(match, capturedLetter) {
         let standardLabel = capturedLetter;
         // Convert full-width letter to half-width if necessary
         const charCode = capturedLetter.charCodeAt(0);
@@ -276,9 +283,9 @@ function updateExplanationOptions(explanation, labelMapping) {
             standardLabel = String.fromCharCode(charCode - 0xFEE0); // Convert to half-width
         }
         // Now standardLabel is guaranteed to be a half-width character like 'A', 'B', etc.
-        let newLabel = labelMapping[standardLabel] || standardLabel; // Use the standardized (half-width) label for lookup
-        return `(${newLabel})`; // Always return with half-width parentheses for consistency in the output
-    });
+        let newLabel = labelMapping[standardLabel] || standardLabel; // Use the standardized (half-width) label for lookup
+        return `(${newLabel})`; // Always return with half-width parentheses for consistency in the output
+    });
 }
 
 // 選擇選項
@@ -614,9 +621,27 @@ function reverseQuestion() {
         const optionsContainer = document.getElementById('options');
         optionsContainer.innerHTML = ''; // Clear previous options
 
+        let optionEntriesToDisplay = Object.entries(currentQuestion.options || {});
+        const isTrueFalse = optionEntriesToDisplay.length === 2 &&
+                            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
+
+        if (shouldShuffleQuiz && !isTrueFalse) {
+            shuffle(optionEntriesToDisplay); // Shuffle display order of A,B,C... buttons
+        } else {
+            // Ensure fixed order (A,B,C... or T,F)
+            optionEntriesToDisplay.sort((a, b) => {
+                if (isTrueFalse) { // Specific T,F order
+                    if (a[0] === 'T' && b[0] === 'F') return -1; // T before F
+                    if (a[0] === 'F' && b[0] === 'T') return 1;  // F after T
+                    return 0;
+                }
+                return a[0].localeCompare(b[0]); // Alphabetical for A,B,C...
+            });
+        }
+
         const userSelection = previousState.userSelection;
 
-        for (let [key, value] of Object.entries(currentQuestion.options)) {
+        optionEntriesToDisplay.forEach(([key, value]) => {
             const button = document.createElement('button');
             button.classList.add('option-button');
             button.dataset.option = key;
@@ -631,12 +656,8 @@ function reverseQuestion() {
                     if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.includes(key)) {
                         if (Array.isArray(userSelection) && userSelection.includes(key)) {
                             button.classList.add('correct');
-    } else {
+                        } else {
                             button.classList.add('missing');
-    }
-  } else {
-                        if (Array.isArray(userSelection) && userSelection.includes(key)) {
-                            button.classList.add('incorrect');
                         }
                     }
                 } else { // Single select
@@ -655,21 +676,21 @@ function reverseQuestion() {
                     if (Array.isArray(userSelection) && userSelection.includes(key)) {
                         button.classList.add('selected');
                     }
-  } else {
+                 } else {
                     if (userSelection === key) {
                          button.classList.add('selected');
                     }
                  }
             }
             optionsContainer.appendChild(button);
-        }
+        });
         acceptingAnswers = !previousState.isConfirmed;
 
         // Restore global selectedOption/selectedOptions
         if (currentQuestion.isMultiSelect) {
             selectedOptions = Array.isArray(userSelection) ? [...userSelection] : [];
             selectedOption = null;
-    } else {
+        } else {
             selectedOption = userSelection;
             selectedOptions = [];
         }
@@ -759,13 +780,33 @@ document.addEventListener('keydown', function(event) {
 document.getElementById('button-row').addEventListener('click', function(event) {
     if (event.target && event.target.matches('button.select-button')) {
         const selectedButton = event.target;
-        const allButtons = document.querySelectorAll('.select-button');
-        allButtons.forEach(btn => btn.classList.remove('selected'));
-        selectedButton.classList.add('selected');
-        selectedJson = selectedButton.dataset.json;
+        // Do not deselect shuffle button if it's the one being clicked
+        if (!selectedButton.id || selectedButton.id !== 'shuffleToggleBtn') {
+            const allButtons = document.querySelectorAll('#button-row .select-button');
+            allButtons.forEach(btn => btn.classList.remove('selected'));
+            selectedButton.classList.add('selected');
+        }
+        // Only update selectedJson if it's a quiz selection button
+        if (selectedButton.dataset.json) {
+            selectedJson = selectedButton.dataset.json;
+        }
     }
 });
 
+const shuffleToggle = document.getElementById('shuffleToggle');
+if (shuffleToggle) {
+    shuffleToggle.addEventListener('click', () => {
+        shouldShuffleQuiz = !shouldShuffleQuiz;
+        shuffleToggle.classList.toggle('active');
+        if (shouldShuffleQuiz) {
+            shuffleToggle.title = '順序：隨機';
+        } else {
+            shuffleToggle.title = '順序：固定';
+        }
+    });
+    // Set initial state tooltip
+    shuffleToggle.title = '順序：隨機'; // Default state is random
+}
 
 function gatherEditedContent() {
     const currentDate = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
@@ -1346,55 +1387,55 @@ function loadQuestionFromState() {
             { left: "\\[", right: "\\]", display: true }
         ]
     });
-    const optionKeys = Object.keys(currentQuestion.options);
-    let optionLabels = [];
-    let shouldShuffle = true;
-    if (optionKeys.length === 2 && optionKeys.includes('T') && optionKeys.includes('F')) {
-        optionLabels = ['T', 'F'];
-        shouldShuffle = false;
-    } else {
-        optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-        shouldShuffle = true;
-    }
-    let optionEntries = Object.entries(currentQuestion.options);
-    if (shouldShuffle) {
-        shuffle(optionEntries);
-    }
-    let labelMapping = {};
-    for (let i = 0; i < optionEntries.length; i++) {
-        const [originalLabel, _] = optionEntries[i];
-        labelMapping[originalLabel] = optionLabels[i];
-    }
-    const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
-    let newOptions = {};
-    let newAnswer = currentQuestion.isMultiSelect ? [] : '';
-    for (let i = 0; i < optionEntries.length; i++) {
-        const [label, text] = optionEntries[i];
-        const newLabel = optionLabels[i];
-        newOptions[newLabel] = text;
-        const button = document.createElement('button');
-        button.classList.add('option-button');
-        button.dataset.option = newLabel;
-        button.innerHTML = marked.parse(`${newLabel}: ${text}`);
-        button.addEventListener('click', selectOption);
-        optionsContainer.appendChild(button);
-        if (currentQuestion.isMultiSelect) {
-            if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.includes(label)) {
-                newAnswer.push(newLabel);
-            }
+
+    if (currentQuestion.isFillBlank) {
+        document.getElementById('options').style.display = 'none';
+        fillblankContainer.style.display = 'flex';
+        fillblankInput.value = ''; // Reset or restore if needed
+        fillblankInput.disabled = false;
+        fillblankInput.classList.remove('correct', 'incorrect');
+    } else if (currentQuestion.options && Object.keys(currentQuestion.options).length > 0) {
+        document.getElementById('options').style.display = 'flex';
+        fillblankContainer.style.display = 'none';
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+
+        let optionEntriesToDisplay = Object.entries(currentQuestion.options);
+        
+        const isTrueFalse = optionEntriesToDisplay.length === 2 &&
+                            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
+
+        if (shouldShuffleQuiz && !isTrueFalse) {
+            shuffle(optionEntriesToDisplay); // Shuffle display order of A,B,C... buttons
         } else {
-            if (label === currentQuestion.answer) {
-                newAnswer = newLabel;
-            }
+            // Ensure fixed order (A,B,C... or T,F)
+            optionEntriesToDisplay.sort((a, b) => {
+                if (isTrueFalse) { // Specific T,F order
+                    if (a[0] === 'T' && b[0] === 'F') return -1; // T before F
+                    if (a[0] === 'F' && b[0] === 'T') return 1;  // F after T
+                    return 0;
+                }
+                return a[0].localeCompare(b[0]); // Alphabetical for A,B,C...
+            });
         }
+
+        optionEntriesToDisplay.forEach(([key, value]) => {
+            const button = document.createElement('button');
+            button.classList.add('option-button');
+            button.dataset.option = key;
+            button.innerHTML = marked.parse(`${key}: ${value}`);
+            button.addEventListener('click', selectOption);
+            optionsContainer.appendChild(button);
+        });
+    } else {
+        document.getElementById('options').style.display = 'none';
+        fillblankContainer.style.display = 'none';
     }
-    currentQuestion.options = newOptions;
-    currentQuestion.answer = newAnswer;
-    currentQuestion.explanation = updateExplanationOptions(currentQuestion.explanation, labelMapping);
+    
+    // Update popup window content (Debug modal)
     document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
-    const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
+    const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
     document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
-    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
+    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
     document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
 }

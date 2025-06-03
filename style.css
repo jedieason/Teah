@@ -1014,26 +1014,114 @@
       animation: moveLight 2s linear infinite;
   }
 
-/* Add-Quiz Button */
+/* Top Left Controls Container */
+.top-left-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between add button and shuffle toggle */
+    z-index: 1001; /* Ensure it's above other elements if necessary */
+}
+
+/* Add-Quiz Button - remove absolute positioning if it's now controlled by flex container */
 .add-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
+  /* position: absolute; */ /* Removed as it's now in a flex container */
+  /* top: 20px; */ /* Removed */
+  /* left: 20px; */ /* Removed */
   width: 32px;
   height: 32px;
   font-size: 24px;
-  line-height: 28px;
+  line-height: 28px; /* Adjust for vertical centering if needed */
   text-align: center;
   background-color: #000;
   color: #fff;
   border: none;
-  border-radius: 16px;
+  border-radius: 16px; /* Circular */
   cursor: pointer;
-  z-index: 1000;
+  /* z-index: 1000; */ /* z-index now on parent .top-left-controls */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .add-button:hover {
   background-color: #333;
 }
+
+/* Remove old Shuffle Toggle Button styles if they exist */
+/* .shuffle-toggle-button { ... } */
+/* .shuffle-toggle-button:hover { ... } */
+/* .shuffle-toggle-button.active { ... } */
+
+/* Shuffle Slider Styles */
+.shuffle-slider-track {
+    width: 44px; 
+    height: 24px; 
+    background-color: #ccc;
+    border-radius: 12px; 
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center; 
+    box-sizing: border-box; /* Ensure padding doesn't add to width/height */
+}
+
+.slider-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px; /* Adjust icon size as needed */
+    line-height: 1;
+    color: white; /* Icon color, contrasts with both track states */
+    z-index: 0; /* Behind the knob */
+    transition: left 0.3s ease, right 0.3s ease, opacity 0.3s ease; /* For smooth transition if needed */
+}
+
+.slider-icon::before {
+    /* Content will be set based on parent's .active state */
+}
+
+.shuffle-slider-knob {
+    width: 20px; 
+    height: 20px; 
+    background-color: white;
+    border-radius: 50%; 
+    position: absolute;
+    top: 2px; 
+    left: 2px; 
+    transition: transform 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    z-index: 1; /* Knob is above the icon span */
+}
+
+/* Default state: Random (Shuffle icon ⇄ on the right, knob on the left) */
+.shuffle-slider-track .slider-icon {
+    right: 5px; /* Position icon in the right part of the track */
+    left: auto;
+}
+.shuffle-slider-track .slider-icon::before {
+    content: '⇄'; /* Shuffle icon */
+}
+
+.shuffle-slider-track.active {
+    background-color: #007BFF; /* Color when active (Fixed Order) */
+}
+
+/* Active state: Fixed (Arrow icon → on the left, knob on the right) */
+.shuffle-slider-track.active .slider-icon {
+    left: 5px; /* Position icon in the left part of the track */
+    right: auto;
+}
+.shuffle-slider-track.active .slider-icon::before {
+    content: '→'; /* Arrow icon */
+}
+
+.shuffle-slider-track.active .shuffle-slider-knob {
+    transform: translateX(20px); 
+}
+
 
 /* Google Sign-In Button (restyled to match select-button) */
 .sign-in-button {
