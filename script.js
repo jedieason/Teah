@@ -73,7 +73,7 @@ async function initQuiz() {
     // Update the quiz title with the current file name
     const fileName = selectedJson.split('/').pop().replace('.json', '');
     document.querySelector('.quiz-title').innerText = `${fileName}`;
-    document.title = `題矣 - ${fileName}`;
+    document.title = `${fileName} - 題矣`;
 
     loadNewQuestion();
 }
@@ -1261,7 +1261,7 @@ function restoreProgress() {
         document.querySelector('.quiz-container').style.display = 'flex';
         const fileName = selectedJson.split('/').pop().replace('.json', '');
         document.querySelector('.quiz-title').innerText = `${fileName}`;
-        document.title = `題矣 - ${fileName}`;
+        document.title = `${fileName} - 題矣`;
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
         // Recalculate total questions for progress bar
