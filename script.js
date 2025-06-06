@@ -213,6 +213,12 @@ function loadNewQuestion() {
         // 如果需要洗牌選項內容，則洗牌
         if (shouldShuffleOptionContent) {
             shuffle(optionEntries);
+        } else if (optionLabels.length === 2 && optionLabels[0] === 'T' && optionLabels[1] === 'F') {
+            // 是非題且不洗牌時，確保 T 在 F 之前
+            optionEntries.sort((a, b) => {
+                const order = { 'T': 0, 'F': 1 };
+                return order[a[0]] - order[b[0]];
+            });
         }
 
         // 正確構建 labelMapping
