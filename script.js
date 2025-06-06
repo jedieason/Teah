@@ -1,7 +1,7 @@
 // Firebase SDK imports and initialization (v11.6.1)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getDatabase, ref, get, update, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -267,6 +267,7 @@ function loadNewQuestion() {
     }
     saveProgress();
     updateProgressBar();
+    updateStarIcon();
 }
 
 function updateExplanationOptions(explanation, labelMapping) {
@@ -1074,6 +1075,10 @@ const sendQuestionBtn = document.getElementById('sendQuestionBtn');
 const explanationDiv = document.getElementById('explanation');
 const explanationText = document.getElementById('explanation-text');
 const confirmBtn = document.getElementById('confirm-btn');
+const starBtn = document.getElementById('starQuestion');
+const showStarredBtn = document.getElementById('showStarredBtn');
+const starredModal = document.getElementById('starredModal');
+const starredListDiv = document.getElementById('starredList');
 
 weeGPTButton.addEventListener('click', () => {
     if (!currentQuestion.question || !currentQuestion.options) {
@@ -1381,6 +1386,7 @@ function loadQuestionFromState() {
         showEndScreen();
         return;
     }
+    updateStarIcon();
     document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
     renderMathInElement(document.getElementById('question'), {
         delimiters: [
@@ -1442,3 +1448,79 @@ function loadQuestionFromState() {
     document.querySelector('#popupWindow .editable:nth-child(5)').innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
     document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
 }
+
+async function updateStarIcon() {
+    if (!starBtn) return;
+    if (!auth.currentUser) {
+        starBtn.src = 'Images/star-empty.svg';
+        return;
+    }
+    try {
+        const snap = await get(ref(database, `progress/${auth.currentUser.uid}/starred`));
+        const starred = snap.val() || [];
+        const isStarred = starred.some(q => q.question === currentQuestion.question);
+        starBtn.src = isStarred ? 'Images/star-filled.svg' : 'Images/star-empty.svg';
+    } catch (e) {
+        console.error('讀取收藏題目失敗', e);
+    }
+}
+
+async function toggleStarCurrentQuestion() {
+    if (!auth.currentUser) {
+        showCustomAlert('請先登入才能收藏題目！');
+        return;
+    }
+    const starredRef = ref(database, `progress/${auth.currentUser.uid}/starred`);
+    const snap = await get(starredRef);
+    let starred = snap.val() || [];
+    const index = starred.findIndex(q => q.question === currentQuestion.question);
+    if (index >= 0) {
+        starred.splice(index, 1);
+        starBtn.src = 'Images/star-empty.svg';
+    } else {
+        starred.push(currentQuestion);
+        starBtn.src = 'Images/star-filled.svg';
+    }
+    await set(starredRef, starred);
+}
+
+async function openStarredModal() {
+    if (!auth.currentUser) {
+        showCustomAlert('請先登入才能查看收藏！');
+        return;
+    }
+    starredListDiv.innerHTML = '';
+    try {
+        const snap = await get(ref(database, `progress/${auth.currentUser.uid}/starred`));
+        const starred = snap.val() || [];
+        if (starred.length === 0) {
+            starredListDiv.innerHTML = '<p>尚未收藏任何題目</p>';
+        } else {
+            starred.forEach((q, idx) => {
+                const item = document.createElement('div');
+                item.classList.add('starred-item');
+                item.innerHTML = marked.parse(q.question);
+                const delBtn = document.createElement('button');
+                delBtn.textContent = '刪除';
+                delBtn.addEventListener('click', async () => {
+                    const newList = starred.filter((_, i) => i !== idx);
+                    await set(ref(database, `progress/${auth.currentUser.uid}/starred`), newList);
+                    openStarredModal();
+                });
+                item.appendChild(delBtn);
+                starredListDiv.appendChild(item);
+            });
+        }
+    } catch (e) {
+        console.error('讀取收藏題目失敗', e);
+        starredListDiv.innerHTML = '<p>無法載入收藏</p>';
+    }
+    starredModal.style.display = 'flex';
+}
+
+if (starBtn) starBtn.addEventListener('click', toggleStarCurrentQuestion);
+if (showStarredBtn) showStarredBtn.addEventListener('click', openStarredModal);
+if (starredModal) starredModal.addEventListener('click', (e) => {
+    if (e.target === starredModal) starredModal.style.display = 'none';
+});
+
