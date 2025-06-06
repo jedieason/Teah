@@ -1351,3 +1351,83 @@
 .starred-item button {
     margin-top: 4px;
 }
+
+.starred-question {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.starred-source {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.starred-options div {
+    padding-left: 8px;
+    margin-bottom: 2px;
+}
+
+.starred-explanation {
+    background-color: #f9f9f9;
+    border-left: 4px solid #000;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 4px;
+}
+
+.starred-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.toggle-explanation-button,
+.starred-delete-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.toggle-explanation-button {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.toggle-explanation-button:hover {
+    background-color: #ccc;
+}
+
+.starred-delete-button {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.starred-delete-button:hover {
+    background-color: #c9302c;
+}
+
+body.dark-mode .starred-explanation {
+    background-color: #2e2e2e;
+    border-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .toggle-explanation-button {
+    background-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .toggle-explanation-button:hover {
+    background-color: #555;
+}
+
+body.dark-mode .starred-delete-button {
+    background-color: #a33;
+}
+
+body.dark-mode .starred-delete-button:hover {
+    background-color: #922;
+}
