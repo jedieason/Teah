@@ -1326,3 +1326,28 @@
 #customAlert {
     z-index: 1100 !important;
 }
+
+/* Star buttons */
+#starQuestion,
+#showStarredBtn {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+/* Starred modal styling */
+.starred-modal-content {
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.starred-item {
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+}
+.starred-item button {
+    margin-top: 4px;
+}

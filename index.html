@@ -21,6 +21,7 @@
                 <span class="slider-icon"></span>
                 <div class="shuffle-slider-knob"></div>
             </div>
+            <img id="showStarredBtn" src="Images/star-filled.svg" alt="Starred" width="24" height="24" style="cursor: pointer;">
         </div>
         <!-- <input type="file" id="uploadJson" accept=".json" style="display:none;"> -->
         <button id="signInBtn" class="sign-in-button">Google 登入</button>
@@ -83,6 +84,7 @@
                     <img id="copy-btn" src="Images/copy.svg" alt="Copy" width="30" height="30" style="cursor: pointer;">
                     <img id="deBug" src="Images/debug.svg" alt="Debug" width="30" height="30" style="cursor: pointer;">
                     <img id="WeeGPT" src="Images/WeeGPT.svg" alt="WeeGPT" width="24" height="24" style="cursor: pointer;">
+                    <img id="starQuestion" src="Images/star-empty.svg" alt="Star" width="24" height="24" style="cursor: pointer;">
                 </div>
                 <button id="next-btn" class="next-button">下一題</button>
             </div>
@@ -128,6 +130,15 @@
             <div class="editable" contenteditable="true"></div>
         </div>
         <button id="sendButton">抓到蟲子了</button>
+    </div>
+
+    <!-- Starred Questions Modal -->
+    <div id="starredModal" class="modal">
+      <div class="modal-content starred-modal-content">
+        <span class="modal-close">&times;</span>
+        <h3>已收藏的題目</h3>
+        <div id="starredList"></div>
+      </div>
     </div>
 </body>
     <!-- Upload Quiz Modal -->
