@@ -1484,7 +1484,8 @@ async function toggleStarCurrentQuestion() {
         starred.splice(index, 1);
         starBtn.src = 'Images/star-empty.svg';
     } else {
-        starred.push(currentQuestion);
+        const sourceName = (selectedJson || '').split('/').pop().replace('.json', '');
+        starred.push({ ...currentQuestion, source: sourceName });
         starBtn.src = 'Images/star-filled.svg';
     }
     await set(starredRef, starred);
@@ -1502,19 +1503,67 @@ async function openStarredModal() {
         if (starred.length === 0) {
             starredListDiv.innerHTML = '<p>尚未收藏任何題目</p>';
         } else {
+            starred.sort((a, b) => (a.source || '').localeCompare(b.source || ''));
             starred.forEach((q, idx) => {
                 const item = document.createElement('div');
                 item.classList.add('starred-item');
-                item.innerHTML = marked.parse(q.question);
+
+                const sourceDiv = document.createElement('div');
+                sourceDiv.classList.add('starred-source');
+                sourceDiv.textContent = `來源：${q.source || '未知題庫'}`;
+                item.appendChild(sourceDiv);
+
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('starred-question');
+                questionDiv.innerHTML = marked.parse(q.question);
+                item.appendChild(questionDiv);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('starred-options');
+                optionsDiv.innerHTML = Object.entries(q.options || {}).map(([k, v]) => `<div>${k}: ${v}</div>`).join('');
+                item.appendChild(optionsDiv);
+
+                const explanationDiv = document.createElement('div');
+                explanationDiv.classList.add('starred-explanation');
+                explanationDiv.style.display = 'none';
+                explanationDiv.innerHTML = marked.parse(q.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！');
+                item.appendChild(explanationDiv);
+
+                const controlsDiv = document.createElement('div');
+                controlsDiv.classList.add('starred-controls');
+
+                const toggleBtn = document.createElement('button');
+                toggleBtn.classList.add('toggle-explanation-button');
+                toggleBtn.textContent = '顯示詳解';
+                toggleBtn.addEventListener('click', () => {
+                    const showing = explanationDiv.style.display !== 'none';
+                    explanationDiv.style.display = showing ? 'none' : 'block';
+                    toggleBtn.textContent = showing ? '顯示詳解' : '隱藏詳解';
+                });
+                controlsDiv.appendChild(toggleBtn);
+
                 const delBtn = document.createElement('button');
+                delBtn.classList.add('starred-delete-button');
                 delBtn.textContent = '刪除';
                 delBtn.addEventListener('click', async () => {
                     const newList = starred.filter((_, i) => i !== idx);
                     await set(ref(database, `progress/${auth.currentUser.uid}/starred`), newList);
                     openStarredModal();
                 });
-                item.appendChild(delBtn);
+                controlsDiv.appendChild(delBtn);
+
+                item.appendChild(controlsDiv);
+
                 starredListDiv.appendChild(item);
+
+                renderMathInElement(item, {
+                    delimiters: [
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "$$", right: "$$", display: true },
+                        { left: "\\[", right: "\\]", display: true }
+                    ]
+                });
             });
         }
     } catch (e) {
