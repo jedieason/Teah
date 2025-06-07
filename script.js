@@ -1508,15 +1508,15 @@ async function openStarredModal() {
                 const item = document.createElement('div');
                 item.classList.add('starred-item');
 
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('starred-question');
-                questionDiv.innerHTML = marked.parse(q.question);
-                item.appendChild(questionDiv);
-
                 const sourceDiv = document.createElement('div');
                 sourceDiv.classList.add('starred-source');
                 sourceDiv.textContent = `來源：${q.source || '未知題庫'}`;
                 item.appendChild(sourceDiv);
+
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('starred-question');
+                questionDiv.innerHTML = marked.parse(q.question);
+                item.appendChild(questionDiv);
 
                 const optionsDiv = document.createElement('div');
                 optionsDiv.classList.add('starred-options');
