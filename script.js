@@ -36,6 +36,11 @@ const fillblankContainer = document.querySelector('.fillblank-container');
 const fillblankInput = document.getElementById('fillblank-input');
 let isTestCompleted = false; // Flag to track test completion
 
+// Quiz container reference for restoring UI on redo
+const quizContainer = document.querySelector('.quiz-container');
+const originalQuizDisplay = quizContainer.style.display || 'flex';
+let endScreenDiv = null;
+
 // 新增：洗牌偏好設定
 let shouldShuffleQuiz = true; // true: 隨機順序, false: 固定順序 (JSON 順序)
 
@@ -466,18 +471,23 @@ function updateWrong() {
 
 function showEndScreen() {
     isTestCompleted = true;
-    // Clear quiz UI
-    const container = document.querySelector('.quiz-container');
-    container.classList.add('end-screen');
-    container.innerHTML = '';
-    
+    // Hide quiz UI and show a separate end screen overlay
+    quizContainer.style.display = 'none';
+
+    endScreenDiv = document.createElement('div');
+    endScreenDiv.className = 'end-screen-container';
+    endScreenDiv.style.display = 'flex';
+    endScreenDiv.style.flexDirection = 'column';
+    endScreenDiv.style.justifyContent = 'center';
+    endScreenDiv.style.alignItems = 'center';
+
     // Show completion message
     const message = document.createElement('div');
     message.innerText = `測驗完成！答對 ${correct} 題；答錯 ${wrong} 題。`;
     message.style.margin = '20px';
-    container.appendChild(message);
-    
-    // "Redo Wrong" and "Reselect Quiz" buttons (in a flex row, no marginRight inline style)
+    endScreenDiv.appendChild(message);
+
+    // "Redo Wrong" and "Reselect Quiz" buttons
     const buttonsDiv = document.createElement('div');
     buttonsDiv.className = 'end-buttons';
 
@@ -496,7 +506,8 @@ function showEndScreen() {
         wrong = 0;
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
-        container.innerHTML = '';
+        if (endScreenDiv) endScreenDiv.remove();
+        quizContainer.style.display = originalQuizDisplay;
         loadNewQuestion();
     });
     buttonsDiv.appendChild(redoBtn);
@@ -509,7 +520,8 @@ function showEndScreen() {
     });
     buttonsDiv.appendChild(resetBtn);
 
-    container.appendChild(buttonsDiv);
+    endScreenDiv.appendChild(buttonsDiv);
+    quizContainer.parentNode.appendChild(endScreenDiv);
 }
 
 function copyQuestion() {
@@ -1534,11 +1546,12 @@ async function openStarredModal() {
 
                 const toggleBtn = document.createElement('button');
                 toggleBtn.classList.add('toggle-explanation-button');
-                toggleBtn.textContent = '顯示詳解';
+                toggleBtn.innerHTML = '<span class="button-text">顯示詳解</span><span class="arrow">▾</span>';
                 toggleBtn.addEventListener('click', () => {
                     const showing = explanationDiv.style.display !== 'none';
                     explanationDiv.style.display = showing ? 'none' : 'block';
-                    toggleBtn.textContent = showing ? '顯示詳解' : '隱藏詳解';
+                    toggleBtn.querySelector('.button-text').textContent = showing ? '顯示詳解' : '隱藏詳解';
+                    toggleBtn.querySelector('.arrow').textContent = showing ? '▾' : '▴';
                 });
                 controlsDiv.appendChild(toggleBtn);
 

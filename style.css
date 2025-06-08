@@ -1322,6 +1322,14 @@
     align-items: center;
 }
 
+/* Overlay for end screen when restarting quiz */
+.end-screen-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Ensure custom alert appears above login modal */
 #customAlert {
     z-index: 1100 !important;
@@ -1391,9 +1399,16 @@
 }
 
 .toggle-explanation-button {
+    display: inline-flex;
+    align-items: center;
     background-color: #fff;
     border: 1px solid #ccc;
     color: #333;
+}
+
+.toggle-explanation-button .arrow {
+    margin-left: 4px;
+    font-size: 1rem;
 }
 
 .toggle-explanation-button:hover {
