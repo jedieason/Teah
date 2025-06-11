@@ -652,7 +652,7 @@
   .modal {
       display: none; /* 預設隱藏 */
       position: fixed; 
-      z-index: 1000; /* 確保在最上層 */
+      z-index: 2000; /* 確保在最上層，超過頂部按鈕 */
       left: 0;
       top: 0;
       width: 100%; 
@@ -1150,7 +1150,7 @@
 .login-modal {
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: 2000;
   left: 0; top: 0;
   width: 100%; height: 100%;
   backdrop-filter: blur(5px);
