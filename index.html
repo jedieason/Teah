@@ -16,7 +16,7 @@
     <!-- 開始畫面 -->
     <div class="start-screen liquid-glass">
         <div class="top-left-controls">
-            <button id="addQuizBtn" class="add-button glass-button liquid-ripple">+</button>
+            <button id="addQuizBtn" class="add-button">+</button>
             <div id="shuffleToggle" class="shuffle-slider-track" title="順序：隨機">
                 <span class="slider-icon"></span>
                 <div class="shuffle-slider-knob"></div>
@@ -24,20 +24,20 @@
             <img id="showStarredBtn" src="Images/star-empty.svg" alt="Starred" width="24" height="24" style="cursor: pointer;">
         </div>
         <!-- <input type="file" id="uploadJson" accept=".json" style="display:none;"> -->
-        <button id="signInBtn" class="sign-in-button glass-button liquid-ripple">Google 登入</button>
+        <button id="signInBtn" class="sign-in-button">Google 登入</button>
         <div class="start-title">題矣</div>
         <div class="header-right-homepage">
         </div>
         <!-- 新增一個空的按鈕容器 -->
         <div id="button-row" class="button-row"></div>
         
-        <button id="startGame" class="start-button glass-button liquid-ripple">開始</button>
+        <button id="startGame" class="start-button liquid-ripple">開始</button>
         <!-- Restore -->
-        <button class="restoreBtn_C3D4 glass-button liquid-ripple" id="restore">
+        <button class="restoreBtn_C3D4" id="restore">
             <span class="btnText_E5F6">我到哪了</span>
         </button>
         <div class="language">
-            <button class="language-button glass-button liquid-ripple">本站使用正體字</button>
+            <button class="language-button">本站使用正體字</button>
         </div>
     </div>
     
@@ -71,13 +71,13 @@
             <input type="text" id="fillblank-input" class="fillblank-input" placeholder="請輸入完整句子，系統將自動驗證關鍵字">
         </div>
         <div class="options" id="options"></div>
-        <button id="confirm-btn" class="confirm-button glass-button liquid-ripple">確認</button>
+        <button id="confirm-btn" class="confirm-button">確認</button>
 
         <div class="explanation" id="explanation">
             <div class="explanation-text" id="explanation-text"></div>
             <div id="WeeGPTInputSection" style="display: none;">
                 <input id="userQuestion" placeholder="詢問 Guru Grogu..."></input>
-                <button id="sendQuestionBtn" class="glass-button liquid-ripple">傳送</button>
+                <button id="sendQuestionBtn">傳送</button>
             </div>
             <div class="explanation-buttons">
                 <div class="header-right">
@@ -86,7 +86,7 @@
                     <img id="WeeGPT" src="Images/WeeGPT.svg" alt="WeeGPT" width="24" height="24" style="cursor: pointer;">
                     <img id="starQuestion" src="Images/star-empty.svg" alt="Star" width="24" height="24" style="cursor: pointer;">
                 </div>
-                <button id="next-btn" class="next-button glass-button liquid-ripple">下一題</button>
+                <button id="next-btn" class="next-button">下一題</button>
             </div>
         </div>
         <div class="copyright">
@@ -96,21 +96,21 @@
 
     <!-- 自訂模態窗口 -->
     <div id="customAlert" class="modal">
-        <div class="modal-content glass-panel">
+        <div class="modal-content">
             <p id="modal-message">選點啥吧</p>
-            <button id="modalConfirmBtn" class="modal-confirm-button glass-button liquid-ripple">知道了</button>
+            <button id="modalConfirmBtn" class="modal-confirm-button">知道了</button>
         </div>
     </div>
 
     <!-- Login Modal -->
     <div id="loginModal" class="login-modal modal">
-      <div class="login-modal-content glass-panel">
+      <div class="login-modal-content">
         <span class="modal-close">&times;</span>
         <h3>使用 Email 登入</h3>
         <input type="email" id="loginEmail" class="login-input" placeholder="Email">
         <input type="password" id="loginPassword" class="login-input" placeholder="密碼">
         <div id="loginError" class="login-error"></div>
-          <button id="loginBtn" class="login-button glass-button liquid-ripple">登入</button>
+        <button id="loginBtn" class="login-button">登入</button>
         <div id="toggleAuthText" style="color: #888; margin-top: 10px; cursor: pointer; font-size: 0.9rem; text-align: center;">
           還沒有帳號？註冊
         </div>
@@ -120,7 +120,7 @@
     <!-- deBug回報窗口 -->
     <div id="popupWindow">
         <div id="closeButton">&times;</div>
-        <div class="content glass-panel">
+        <div class="content">
             <div class="non-editable">題目：</div>
             <div class="editable" contenteditable="true"></div>
             <div class="editable" contenteditable="true"></div>
@@ -129,12 +129,12 @@
             <div class="non-editable">詳解：</div>
             <div class="editable" contenteditable="true"></div>
         </div>
-        <button id="sendButton" class="glass-button liquid-ripple">抓到蟲子了</button>
+        <button id="sendButton">抓到蟲子了</button>
     </div>
 
     <!-- Starred Questions Modal -->
     <div id="starredModal" class="modal">
-      <div class="modal-content glass-panel starred-modal-content">
+      <div class="modal-content starred-modal-content">
         <span class="modal-close">&times;</span>
         <h3>已收藏的題目</h3>
         <div id="starredList"></div>
@@ -143,7 +143,7 @@
 </body>
     <!-- Upload Quiz Modal -->
     <div id="uploadModal" class="modal">
-      <div class="modal-content glass-panel">
+      <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h3>新增題庫</h3>
                 <div style="margin: 16px 0;">
@@ -164,7 +164,7 @@
           <input type="file" id="uploadJson" accept=".json" style="display:none;">
         </div>
         <div class="upload-buttons">
-          <button id="uploadConfirmBtn" class="modal-confirm-button glass-button liquid-ripple">確定</button>
+          <button id="uploadConfirmBtn" class="modal-confirm-button">確定</button>
         </div>
       </div>
     </div>
