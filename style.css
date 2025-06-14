@@ -46,59 +46,6 @@ body.dark-mode .liquid-glass {
   --glass-blur: 20px;
   --glass-border: rgba(255,255,255,0.6);
   --glass-highlight: rgba(255,255,255,0.4);
-  --glass-panel-bg: rgba(255,255,255,0.35);
-  --glass-panel-bg-dark: rgba(30,30,30,0.6);
-}
-
-/* Generic glass panel for modals */
-.glass-panel {
-  background: var(--glass-panel-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  border: 1px solid rgba(255,255,255,0.5);
-  box-shadow: 0 0 20px rgba(255,255,255,0.4) inset, 0 2px 8px rgba(0,0,0,0.1);
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-}
-body.dark-mode .glass-panel {
-  background: var(--glass-panel-bg-dark);
-  border-color: rgba(255,255,255,0.3);
-  box-shadow: 0 0 20px rgba(0,0,0,0.6) inset, 0 2px 8px rgba(0,0,0,0.3);
-}
-.glass-panel::before {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 70%);
-  opacity: 0.6;
-}
-
-/* Buttons using liquid glass look */
-.glass-button {
-  background: var(--glass-panel-bg);
-  border: 1px solid rgba(255,255,255,0.5);
-  color: #000;
-  backdrop-filter: blur(calc(var(--glass-blur)/2)) saturate(160%);
-  border-radius: 12px;
-  padding: 10px 20px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  font-weight: 500;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-.glass-button:hover {
-  background: rgba(255,255,255,0.5);
-}
-.glass-button:active {
-  background: rgba(255,255,255,0.4);
-}
-body.dark-mode .glass-button {
-  background: rgba(50,50,50,0.6);
-  border-color: rgba(255,255,255,0.3);
-  color: #fff;
 }
 
 .file-drop-zone {
@@ -264,11 +211,15 @@ body.dark-mode .glass-button {
           .select-button {
               padding: 12px 24px;
               font-size: 1rem;
+              background-color: #ffffff50;
+              color: #000;  /* Deep slate blue */
+              border: 2px solid #000;  /* Vibrant blue-purple */
               border-radius: 12px;
               cursor: pointer;
               transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
               min-width: 120px;
               text-align: center;
+              box-shadow: 0 2px 4px rgba(0,0,0,0.03);
               font-weight: 500;
               position: relative;
               overflow: hidden;
@@ -290,18 +241,25 @@ body.dark-mode .glass-button {
           }
   
           .select-button:hover, .select-button.selected {
+              background-color: #000;  /* Vibrant blue-purple */
+              color: #FFFFFF;
               transform: translateY(-2px);
+              box-shadow: 0 4px 12px rgba(107, 92, 212, 0.2);
           }
   
           .start-button {
               padding: 14px 30px;
               font-size: 1.2rem;
+              background-color: #000;  /* Deep blue-purple */
+              color: #FFFFFF;
+              border: none;
               border-radius: 30px;
               letter-spacing: 3px;
               margin-top: 20px;
               cursor: pointer;
               transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
               font-weight: 500;
+              box-shadow: 0 4px 12px rgba(74, 58, 222, 0.15);
               position: relative;
               overflow: hidden;
           }
@@ -322,7 +280,9 @@ body.dark-mode .glass-button {
           }
   
           .start-button:hover {
+              background-color: #111;  /* Slightly darker blue-purple */
               transform: translateY(-2px);
+              box-shadow: 0 6px 16px rgba(58, 42, 206, 0.25);
           }
   
           /* Subtle active/focus states */
@@ -614,6 +574,9 @@ body.dark-mode .glass-button {
               margin-top: 20px;
               padding: 8px 18px;
               font-size: 18px;
+              background-color: #000;
+              color: white;
+              border: solid 2px #000;
               border-radius: 15px;
               cursor: pointer;
               align-self: flex-end;
@@ -646,6 +609,9 @@ body.dark-mode .glass-button {
           }
   
           .confirm-button:hover {
+              background-color: white;
+              color: #000;
+              border: solid 2px #000;
               transform: translateY(-2px);
           }
   
@@ -674,6 +640,9 @@ body.dark-mode .glass-button {
               display: block;
               padding: 10px 20px;
               font-size: 18px;
+              background-color: #f9f9f9;
+              color: #fc9d38;
+              border: solid 2px #fc9d38;
               border-radius: 15px;
               cursor: pointer;
               align-self: flex-start;
@@ -684,6 +653,8 @@ body.dark-mode .glass-button {
               letter-spacing: 0.5px;
           }
           .next-button:hover {
+              background-color: #fc9d38;
+              color: white;
               transform: translateY(-2px);
           }
           .next-button::before {
@@ -730,14 +701,14 @@ body.dark-mode .glass-button {
   /* 自訂模態窗口樣式 */
   .modal {
       display: none; /* 預設隱藏 */
-      position: fixed;
+      position: fixed; 
       z-index: 2000; /* 確保在最上層，超過頂部按鈕 */
       left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      backdrop-filter: blur(var(--glass-blur));
+      width: 100%; 
+      height: 100%; 
+      overflow: auto; 
+      backdrop-filter: blur(5px);
       background-color: rgba(0, 0, 0, 0.4); /* 半透明背景 */
       justify-content: center;
       align-items: center;
@@ -745,12 +716,14 @@ body.dark-mode .glass-button {
   }
   
 .modal-content {
+    background-color: #ffffff;
     padding: 25px 30px;
-    border-radius: 16px;
+    border-radius: 12px;
     text-align: center;
     max-width: 400px;
     width: 75%;
     font-size: 1.1rem;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     transition: background-color 0.3s ease, color 0.3s ease;
     position: relative;
 }
@@ -759,6 +732,9 @@ body.dark-mode .glass-button {
     margin-top: 20px;
       padding: 10px 25px;
       font-size: 1rem;
+      background-color: #000;
+      color: #ffffff;
+      border: none;
       border-radius: 15px;
       cursor: pointer;
       font-size: 1.1rem;
@@ -771,29 +747,47 @@ body.dark-mode .glass-button {
   }
 
 .modal-cancel-button {
-  margin-top: 20px;
+    margin-top: 20px;
   padding: 10px 25px;
   font-size: 1rem;
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
   border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 .modal-cancel-button:hover {
+  background-color: #b52a3d;
   transform: scale(1.05);
 }
   
-  /* Dark mode adjustments */
+  /* 深色模式下的模態窗口 */
   body.dark-mode .modal-content {
-      background-color: transparent;
-      color: inherit;
+      background-color: #2C2C2C;
+      color: #e0e0e0;
   }
-
+  
+  body.dark-mode .modal-confirm-button {
+      background-color: #4B2C2C;
+  }
+  
+  body.dark-mode .modal-confirm-button:hover {
+      background-color: #000;
+      color: #ffffff;
+  }
+  
+  body.dark-mode .modal-content {
+      background-color: rgba(30,30,30,0.8);
+      color: #ffffff;
+  }
+  
   body.dark-mode .modal-confirm-button {
       background-color: #1e1e1e;
       color: #ffffff;
       border: 2px solid #000;
   }
-
+  
   body.dark-mode .modal-confirm-button:hover {
       background-color: #000;
       color: #ffffff;
@@ -986,6 +980,9 @@ body.dark-mode .glass-button {
       justify-content: center;
       padding: 5px 20px;
       font-size: 14px;
+      color: #3b3c56;
+      background-color: #ffffff50;
+      border: 2px solid #3b3c56;
       border-radius: 50px;
       cursor: pointer;
       overflow: hidden;
@@ -1015,7 +1012,8 @@ body.dark-mode .glass-button {
   
     /* Hover Effects */
     .restoreBtn_C3D4:hover {
-      transform: translateY(-2px);
+      background-color: #3b3c56;
+      color: #ffffff;
     }
   
     .restoreBtn_C3D4:hover .btnText_E5F6 {
@@ -1087,7 +1085,9 @@ body.dark-mode .glass-button {
   font-size: 24px;
   line-height: 28px; /* Adjust for vertical centering if needed */
   text-align: center;
+  background-color: #000;
   color: #fff;
+  border: none;
   border-radius: 16px; /* Circular */
   cursor: pointer;
   /* z-index: 1000; */ /* z-index now on parent .top-left-controls */
@@ -1096,7 +1096,7 @@ body.dark-mode .glass-button {
   align-items: center;
 }
 .add-button:hover {
-  transform: translateY(-2px);
+  background-color: #333;
 }
 
 /* Remove old Shuffle Toggle Button styles if they exist */
@@ -1180,12 +1180,18 @@ body.dark-mode .glass-button {
     right: 20px;
     padding: 4px 6px;
     font-size: 1rem;
+    background-color: #FFFFFF;
+    color: #2D3436;
+    border: 2px solid #2D3436;
     border-radius: 12px;
     cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     font-family: 'Poppins', sans-serif;
 }
 .sign-in-button:hover, .sign-in-button.selected {
+    background-color: #2D3436;
+    color: #FFFFFF;
     transform: translateY(-2px);
 }
 
@@ -1202,9 +1208,11 @@ body.dark-mode .glass-button {
   justify-content: center; align-items: center;
 }
 .login-modal-content {
+  background-color: #ffffff;
   padding: 25px 30px;
-  border-radius: 16px;
+  border-radius: 12px;
   max-width: 400px; width: 90%;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   font-family: 'Poppins', sans-serif;
   position: relative;
 }
@@ -1226,12 +1234,16 @@ body.dark-mode .glass-button {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-bottom: 10px;
 }
 .login-button:hover {
+  background-color: #111;
   transform: translateY(-1px);
 }
 .login-error {
@@ -1266,10 +1278,13 @@ body.dark-mode .glass-button {
     align-items: center;
 }
 #popupWindow .content {
+    background-color: #ffffff;
+    color: #2D3436;
     padding: 30px;
     border-radius: 12px;
     max-width: 500px;
     width: 90%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     transition: background-color 0.3s ease, color 0.3s ease;
     font-family: 'Poppins', sans-serif;
     position: relative;
@@ -1308,6 +1323,9 @@ body.dark-mode .glass-button {
 #popupWindow #sendButton {
     padding: 10px 20px;
     font-size: 1rem;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
     border-radius: 12px;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(74,58,222,0.15);
@@ -1316,6 +1334,7 @@ body.dark-mode .glass-button {
     font-weight: 500;
 }
 #popupWindow #sendButton:hover {
+    background-color: #111111;
     transform: translateY(-2px);
 }
 
