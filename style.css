@@ -1,4 +1,54 @@
- .file-drop-zone {
+.liquid-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 0 20px var(--glass-highlight) inset;
+  position: relative;
+}
+
+body.dark-mode .liquid-glass {
+  background: var(--glass-bg-dark);
+  border-color: rgba(255,255,255,0.3);
+  box-shadow: 0 0 20px rgba(0,0,0,0.6) inset;
+}
+
+.liquid-glass::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent);
+  opacity: 0.7;
+}
+
+@keyframes ripple {
+  from { transform: scale(0); opacity: 0.7; }
+  to { transform: scale(4); opacity: 0; }
+}
+
+.liquid-ripple:active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 0.6s linear;
+}
+
+:root {
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-bg-dark: rgba(30,30,30,0.45);
+  --glass-blur: 20px;
+  --glass-border: rgba(255,255,255,0.6);
+  --glass-highlight: rgba(255,255,255,0.4);
+}
+
+.file-drop-zone {
    border: 2px dashed #ccc;
    border-radius: 8px;
    padding: 20px;
@@ -108,7 +158,7 @@
       color: #2D3436;
       margin: 0;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      background-color: white;
+      background: linear-gradient(135deg, #e8eef9 0%, #cdd2dd 100%);
   }
   
   p {
@@ -122,7 +172,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: white;
+      background: transparent;
       gap: 12px;
       position: relative;
       transition: all 0.4s ease;
@@ -339,12 +389,12 @@
   
   /* Dark Mode Styles */
   body.dark-mode {
-      background-color: #121212;
+      background: linear-gradient(135deg, #0d0d0d 0%, #222 100%);
       color: #E4E6EF;
   }
   
   body.dark-mode .start-screen {
-      background: linear-gradient(135deg, #000 0%, #2B2B3B 100%);
+      background: transparent;
   }
   
   body.dark-mode .start-title {
@@ -382,7 +432,7 @@
   }
   
   body.dark-mode .quiz-container {
-      background-color: #121212;
+      background-color: transparent;
   }
   
   body.dark-mode .quiz-title {
@@ -497,7 +547,7 @@
       padding: 20px;
       box-sizing: border-box;
       min-height: 100vh;
-      background-color: white; /* 預設淺色模式 */
+      background-color: transparent; /* 使用 Liquid Glass */
       transition: background-color 0.3s ease, color 0.3s ease;
   }
   
