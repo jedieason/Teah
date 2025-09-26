@@ -1141,7 +1141,7 @@ sendQuestionBtn.addEventListener('click', async () => {
         return;
     }
     
-    const MODEL_NAME = 'gemini-2.5-flash-preview-05-20';
+    const MODEL_NAME = 'gemini-2.5-flash-lite';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${fetchedApiKey}`;
 
     const systemInstructionText = "你是Guru Grogu，由Jedieason訓練的助理。使用正體中文（臺灣）或英文回答。回答我的提問，我的提問內容會是基於我提問後面所附的題目，但那個題目並非你主要要回答的內容。回應請使用Markdown格式排版，所有Markdown語法都可以使用。請不要上網搜尋。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.";
