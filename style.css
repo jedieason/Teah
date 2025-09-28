@@ -71,25 +71,84 @@
   .progress-bars {
     position: relative;
     width: 100%;
-    height: 2px;
+    height: 4px;
     background-color: #f4f4f4;
     border-radius: 4px;
     overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
   }
   .progress-bar {
     position: absolute;
     top: 0;
     bottom: 0;
-    transition: width 0.3s ease;
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* More dynamic easing */
     border-radius: 3px;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    background-size: 200% 100%; /* For shimmer */
+    animation: shimmer 3s linear infinite; /* Continuous subtle challenge shimmer */
   }
-  .correct-bar {
-    background-color: #18AE79;
+
+  .progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
     left: 0;
-  }
-  .wrong-bar {
-    background-color: #cc4e00;
     right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .progress-bar.animating {
+    animation: pulse 0.6s ease-out, shimmer 1s linear infinite;
+  }
+
+  .progress-bar.correct-animating {
+    animation: correctPulse 0.8s ease-out, glow 1s ease-out, bounce 0.8s ease-out;
+  }
+
+  .progress-bar.wrong-animating {
+    animation: wrongPulse 0.8s ease-out, shake 0.5s ease-in-out;
+  }
+
+  .correct-bar {
+    background: linear-gradient(90deg, #18AE79 0%, #4CAF50 25%, #66BB6A 50%, #4CAF50 75%, #18AE79 100%);
+    background-size: 300% 100%;
+    animation: lavaFlow 6s ease-in-out infinite;
+    left: 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .correct-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
+  }
+
+  .wrong-bar {
+    background: linear-gradient(90deg, #cc4e00 0%, #ff5722 25%, #ff8a65 50%, #ff5722 75%, #cc4e00 100%);
+    background-size: 300% 100%;
+    animation: lavaFlow 6s ease-in-out infinite;
+    right: 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .wrong-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
   }
   /* Import Google Fonts for a premium look */
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap');
@@ -136,6 +195,7 @@
       font-weight: 600;
       margin-bottom: 8px;
       background: linear-gradient(135deg, #2D3436 0%, #1A1A1A 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
@@ -337,144 +397,164 @@
       border-color: #EA5455;
   }
   
-  /* Dark Mode Styles */
+  /* Redesigned Dark Mode Styles */
   body.dark-mode {
-      background-color: #121212;
-      color: #E4E6EF;
+      background-color: #313131;
+      color: #f0f6fc;
   }
-  
+
   body.dark-mode .start-screen {
-      background: linear-gradient(135deg, #000 0%, #2B2B3B 100%);
+      background: #313131;
   }
-  
+
   body.dark-mode .start-title {
-      background: linear-gradient(135deg, #E4E6EF 0%, #ffffff 100%);
+      background: linear-gradient(135deg, #58a6ff 0%, #f0f6fc 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
-  
+
   body.dark-mode .select-button {
-      background-color: transparent;
-      color: #ffffff;
-      border: 2px solid #000;
+      background-color: #404040;
+      color: #f0f6fc;
+      border: 2px solid #505050;
   }
-  
+
   body.dark-mode .select-button:hover,
   body.dark-mode .select-button.selected {
-      background-color: #000;
-      color: #ffffff;
+      background-color: #505050;
+      color: #f0f6fc;
+      border-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
   }
-  
+
+  body.dark-mode .back-button {
+      color: #8b949e;
+  }
+
+  body.dark-mode .back-button:hover, .back-button.selected {
+      color: #f0f6fc;
+  }
+
   body.dark-mode .start-button {
-      background-color: #1e1e1e;
-      color: #ffffff;
-      border: 2px solid #000;
+      background-color: #404040;
+      color: #f0f6fc;
+      border: none;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
   }
-  
-  body.dark-mode .restoreBtn_C3D4 {
-      color: lightgray;
-      background-color: transparent;
-  }
-  
+
   body.dark-mode .start-button:hover {
+      background-color: #505050;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25);
+  }
+
+  body.dark-mode .restoreBtn_C3D4 {
+      color: #8b949e;
       background-color: transparent;
-      color: #ffffff;
   }
-  
+
   body.dark-mode .quiz-container {
-      background-color: #121212;
+      background-color: #313131;
   }
-  
+
   body.dark-mode .quiz-title {
-      color: #ffffff;
+      color: #f0f6fc;
   }
-  
+
   body.dark-mode .progress-item {
-      background-color: #1e1e1e;
+      background-color: #3a3a3a;
   }
-  
+
   body.dark-mode .progress-number-orange {
-      color: #FFA500;
+      color: #f69f25;
   }
-  
+
   body.dark-mode .progress-number-green {
-      color: #4CAF50;
+      color: #238636;
   }
-  
+
   body.dark-mode .orange-bg {
-      background-color: #3a3a3a;
+      background-color: #161b22;
   }
-  
+
   body.dark-mode .green-bg {
-      background-color: #3a3a3a;
+      background-color: #161b22;
   }
-  
+
   body.dark-mode .question-content {
-      color: #ffffff;
+      color: #f0f6fc;
   }
-  
+
   body.dark-mode .option-button {
-      background-color: #1e1e1e;
-      color: #ffffff;
+      background-color: #404040;
+      color: #f0f6fc;
+      border-color: #505050;
   }
-  
+
   body.dark-mode .option-button:hover {
-      background-color: #1b1b1b;
-      border-color: #004896;
+      background-color: #505050;
+      border-color: #ffffff;
+      transform: translateX(4px);
   }
-  
+
   body.dark-mode .option-button.selected {
-      background-color: #2e2e2e;
-      border-color: #007BFF;
+      background-color: #505050;
+      border-color: #ffffff;
   }
-  
+
   body.dark-mode .option-button.correct {
-      background-color: rgba(72, 187, 120, 0.2);
-      border-color: #48BB78;
-      color: #ffffff;
+      background-color: rgba(35, 134, 54, 0.2);
+      border-color: #238636;
+      color: #f0f6fc;
   }
-  
+
   body.dark-mode .option-button.incorrect {
-      background-color: rgba(245, 101, 101, 0.2);
-      border-color: #F56565;
-      color: #ffffff;
+      background-color: rgba(248, 81, 73, 0.2);
+      border-color: #f85149;
+      color: #f0f6fc;
   }
-  
+
   body.dark-mode .confirm-button {
-      background-color: #1e1e1e;
-      color: #ffffff;
-      border: 2px solid #000;
+      background-color: #404040;
+      color: #f0f6fc;
+      border: 2px solid #505050;
   }
-  
+
   body.dark-mode .confirm-button:hover {
-      background-color: #000;
-      color: #ffffff;
+      background-color: #313131;
+      color: #f0f6fc;
+      border-color: #ffffff;
   }
-  
+
   body.dark-mode .explanation {
-      background-color: #1e1e1e;
-      color: #ffffff;
+      background-color: #313131;
+      color: #f0f6fc;
   }
-  
+
   body.dark-mode .next-button {
-      background-color: #1e1e1e;
-      color: #ffffff;
-      border: 2px solid #fc9d38;
+      background-color: #313131;
+      color: #f69f25;
+      border: 2px solid #f69f25;
   }
-  
+
   body.dark-mode .next-button:hover {
-      background-color: #fc9d38;
+      background-color: #f69f25;
+      color: #313131;
+  }
+
+  body.dark-mode .copyright {
+      color: #8b949e;
+  }
+
+  body.dark-mode .copyright a {
+      color: #8b949e;
+  }
+
+  body.dark-mode .copyright a:hover {
       color: #ffffff;
   }
-  
-  body.dark-mode .copyright {
-      color: #888888;
-  }
-  
-  body.dark-mode .copyright a {
-      color: #888888;
-  }
-  
+
   /* Original CSS Elements Not Renewed */
   
   /* 新增按鈕容器 */
@@ -714,12 +794,13 @@
   
   /* 深色模式下的模態窗口 */
   body.dark-mode .modal-content {
-      background-color: #2C2C2C;
-      color: #e0e0e0;
+      background-color: #313131;
+      color: #f0f6fc;
   }
   
   body.dark-mode .modal-confirm-button {
-      background-color: #4B2C2C;
+      background-color: #404040;
+      color: #ffffff;
   }
   
   body.dark-mode .modal-confirm-button:hover {
@@ -733,9 +814,9 @@
   }
   
   body.dark-mode .modal-confirm-button {
-      background-color: #1e1e1e;
+      background-color: #2d2d2d;
       color: #ffffff;
-      border: 2px solid #000;
+      border: 2px solid #404040;
   }
   
   body.dark-mode .modal-confirm-button:hover {
@@ -796,8 +877,8 @@
   
   /* Dark mode adjustments */
   body.dark-mode .expandable-frame {
-      background-color: #1e1e1e;
-      border-color: #cecece;
+      background-color: #2a2a2a;
+      border-color: #404040;
   }
   
   body.dark-mode .logout-button {
@@ -805,7 +886,7 @@
   }
   
   body.dark-mode .logout-button:hover {
-      color: #1e1e1e;
+      color: #121212;
       background-color: #cecece;
   }
   
@@ -1079,9 +1160,6 @@
     transition: left 0.3s ease, right 0.3s ease, opacity 0.3s ease; /* For smooth transition if needed */
 }
 
-.slider-icon::before {
-    /* Content will be set based on parent's .active state */
-}
 
 .shuffle-slider-knob {
     width: 20px; 
@@ -1143,6 +1221,237 @@
     background-color: #2D3436;
     color: #FFFFFF;
     transform: translateY(-2px);
+}
+
+/* Modern Theme Toggle Button */
+.theme-toggle-button {
+    position: absolute;
+    top: 20px;
+    right: 80px;
+    width: 60px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    padding: 0;
+    overflow: visible;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #E0F6FF 0%, #B3E5FC 100%);
+    border-radius: 16px;
+    border: 2px solid rgba(135, 206, 235, 0.4);
+    box-shadow:
+        0 4px 12px rgba(135, 206, 235, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.theme-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Already has all, but specify left if needed */
+    z-index: 2;
+    transform-origin: center;
+}
+
+.theme-icon {
+    width: 16px;
+    height: 16px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    transform-origin: center;
+}
+
+.theme-toggle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+/* Sun Rays Animation */
+.sun-rays {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 12px;
+    height: 12px;
+    opacity: 0.8;
+    background: radial-gradient(circle, #FFD700 0%, #FFA500 50%, transparent 100%);
+    border-radius: 50%;
+    animation: sunGlow 3s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.sun-rays::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, transparent 30%, rgba(255, 215, 0, 0.3) 70%);
+    animation: sunRays 4s linear infinite;
+}
+
+/* Moon with Stars */
+.moon-craters {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+    background: radial-gradient(circle at 30% 30%, #F5F5F5 0%, #E8E8E8 40%, #D3D3D3 70%, transparent 100%);
+    border-radius: 50%;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 6px rgba(245, 245, 245, 0.8);
+}
+
+.moon-craters::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.9) 1px, transparent 2px),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.8) 1px, transparent 2px),
+        radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.7) 1px, transparent 2px);
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+/* Hover Effects */
+.theme-toggle-button:hover .theme-toggle-track {
+    box-shadow:
+        0 6px 20px rgba(135, 206, 235, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: scale(1.03);
+}
+
+.theme-toggle-button:hover .theme-toggle-thumb {
+    transform: scale(1.15);
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.25),
+        0 2px 4px rgba(0,0,0,0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.theme-toggle-button:active .theme-toggle-track {
+    transform: scale(0.97);
+}
+
+/* Dark Mode State */
+.theme-toggle-button.dark-mode-active .theme-toggle-track {
+    background: linear-gradient(135deg, #3a3a3a 0%, #313131 100%);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle-button.dark-mode-active .theme-toggle-thumb {
+    left: 34px; /* Adjusted for exact right positioning: 60px track - 24px thumb - 2px padding */
+    background: linear-gradient(135deg, #505050 0%, #404040 100%);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease; /* Ensure smooth slide */
+}
+
+.theme-toggle-button.dark-mode-active .sun-rays {
+    opacity: 0;
+    animation: none;
+}
+
+.theme-toggle-button.dark-mode-active .moon-craters {
+    opacity: 0.9;
+}
+
+.theme-toggle-button.dark-mode-active .theme-icon {
+    filter: brightness(1.3) drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+    transform: rotate(180deg) scale(1.1);
+}
+
+.theme-toggle-button:not(.dark-mode-active) .theme-icon {
+    transform: rotate(0deg) scale(1);
+}
+
+/* Transition Effects */
+.theme-toggle-button.dark-mode-active:hover .theme-toggle-thumb {
+    transform: scale(1.15);
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.7),
+        0 2px 4px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Accessibility */
+.theme-toggle-button:focus-visible {
+    outline: 2px solid #87CEEB;
+    outline-offset: 3px;
+}
+
+/* Advanced Animation Keyframes */
+@keyframes sunGlow {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+        box-shadow: 0 0 16px rgba(255, 215, 0, 0.9), 0 0 24px rgba(255, 215, 0, 0.4);
+    }
+}
+
+@keyframes sunRays {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    25% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(0.9);
+    }
+    75% {
+        opacity: 0.9;
+        transform: scale(1.1);
+    }
 }
 
 
@@ -1425,25 +1734,467 @@
 }
 
 body.dark-mode .starred-explanation {
-    background-color: #2e2e2e;
-    border-color: #444;
-    color: #fff;
+    background-color: #3a3a3a;
+    border-left-color: #ffffff;
+    color: #f0f6fc;
 }
 
 body.dark-mode .toggle-explanation-button {
-    background-color: #444;
-    border: 1px solid #666;
-    color: #fff;
+    background-color: #404040;
+    border-color: #505050;
+    color: #f0f6fc;
 }
 
 body.dark-mode .toggle-explanation-button:hover {
-    background-color: #555;
+    background-color: #505050;
 }
 
 body.dark-mode .starred-delete-button {
-    background-color: #a33;
+    background-color: #f85149;
+    color: #f0f6fc;
 }
 
 body.dark-mode .starred-delete-button:hover {
-    background-color: #922;
+    background-color: #da3633;
+}
+
+/* Progress Bar Challenge Animations */
+@keyframes pulse {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(1.5); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes correctPulse {
+  0% { transform: scaleY(1); box-shadow: 0 0 0 0 rgba(24, 174, 121, 0.7); }
+  50% { transform: scaleY(1.8); box-shadow: 0 0 0 4px rgba(24, 174, 121, 0); }
+  100% { transform: scaleY(1); box-shadow: 0 0 0 0 rgba(24, 174, 121, 0); }
+}
+
+@keyframes wrongPulse {
+  0% { transform: scaleY(1); box-shadow: 0 0 0 0 rgba(204, 78, 0, 0.8); }
+  50% { transform: scaleY(1.3); box-shadow: 0 0 0 3px rgba(204, 78, 0, 0); }
+  100% { transform: scaleY(1); box-shadow: 0 0 0 0 rgba(204, 78, 0, 0); }
+}
+
+@keyframes glow {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+  100% { filter: brightness(1); }
+}
+
+/* New challenging animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px) scaleY(1.1); }
+  20%, 40%, 60%, 80% { transform: translateX(3px) scaleY(1.1); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0) scaleY(1); }
+  40% { transform: translateY(-5px) scaleY(1.2); }
+  60% { transform: translateY(-2px) scaleY(1.1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* More dynamic easing */
+  border-radius: 3px;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  background-size: 200% 100%; /* For shimmer */
+  animation: shimmer 3s linear infinite; /* Continuous subtle challenge shimmer */
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.progress-bar.animating {
+  animation: pulse 0.6s ease-out, shimmer 1s linear infinite;
+}
+
+.progress-bar.correct-animating {
+  animation: correctPulse 0.8s ease-out, glow 1s ease-out, bounce 0.8s ease-out;
+}
+
+.progress-bar.wrong-animating {
+  animation: wrongPulse 0.8s ease-out, shake 0.5s ease-in-out;
+}
+
+.correct-bar {
+  background: linear-gradient(90deg, #18AE79 0%, #4CAF50 25%, #66BB6A 50%, #4CAF50 75%, #18AE79 100%);
+  background-size: 300% 100%;
+  animation: lavaFlow 6s ease-in-out infinite;
+  left: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.correct-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+.wrong-bar {
+  background: linear-gradient(90deg, #cc4e00 0%, #ff5722 25%, #ff8a65 50%, #ff5722 75%, #cc4e00 100%);
+  background-size: 300% 100%;
+  animation: lavaFlow 6s ease-in-out infinite;
+  right: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.wrong-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+/* Dark mode progress bar animations */
+body.dark-mode .progress-bar {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .correct-bar {
+  background: linear-gradient(90deg, #238636 0%, #2ea043 25%, #39d353 50%, #2ea043 75%, #238636 100%);
+  background-size: 300% 100%;
+  animation: lavaFlow 6s ease-in-out infinite;
+}
+
+body.dark-mode .wrong-bar {
+  background: linear-gradient(90deg, #f85149 0%, #fa8c89 25%, #ffacb1 50%, #fa8c89 75%, #f85149 100%);
+  background-size: 300% 100%;
+  animation: lavaFlow 6s ease-in-out infinite;
+}
+
+body.dark-mode .progress-bars {
+  background-color: #3a3a3a;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+}
+
+body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-track {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-color: rgba(88, 166, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-thumb {
+    background: linear-gradient(135deg, #475569 0%, #334155 100%);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .file-drop-zone {
+    border-color: #505050;
+    color: #f0f6fc;
+    background-color: #3a3a3a;
+}
+body.dark-mode .file-drop-zone.dragover {
+    border-color: #ffffff;
+    background-color: #404040;
+}
+
+/* Dark Mode - Fillblank Elements */
+body.dark-mode .fillblank-input {
+    background-color: #404040;
+    border-color: #505050;
+    color: #f0f6fc;
+}
+body.dark-mode .fillblank-input:focus {
+    border-color: #ffffff;
+    background-color: #313131;
+}
+body.dark-mode .fillblank-input.correct {
+    border-color: #238636;
+    background-color: rgba(35, 134, 54, 0.1);
+}
+body.dark-mode .fillblank-input.incorrect {
+    border-color: #f85149;
+    background-color: rgba(248, 81, 73, 0.1);
+}
+
+/* Dark Mode - Progress Container */
+body.dark-mode .progress-container {
+    color: #ffffff;
+}
+body.dark-mode .progress-counts {
+    color: #f0f6fc;
+}
+body.dark-mode .progress-bars {
+    background-color: #3a3a3a;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+}
+body.dark-mode .count-text,
+body.dark-mode .count-number {
+    color: #f0f6fc;
+}
+
+/* Dark Mode - Top Left Controls */
+body.dark-mode .top-left-controls {
+    color: #ffffff;
+}
+
+/* Dark Mode - Add Button */
+body.dark-mode .add-button {
+    background-color: #404040;
+    color: #f0f6fc;
+}
+body.dark-mode .add-button:hover {
+    background-color: #ffffff;
+    color: #313131;
+}
+
+/* Dark Mode - Shuffle Slider */
+body.dark-mode .shuffle-slider-track {
+    background-color: #505050;
+}
+body.dark-mode .shuffle-slider-track.active {
+    background-color: #ffffff;
+}
+body.dark-mode .shuffle-slider-knob {
+    background-color: #f0f6fc;
+}
+
+/* Dark Mode - Sign In Button */
+body.dark-mode .sign-in-button {
+    background-color: #404040;
+    color: #f0f6fc;
+    border: 2px solid #505050;
+}
+body.dark-mode .sign-in-button:hover,
+body.dark-mode .sign-in-button.selected {
+    background-color: #505050;
+    color: #f0f6fc;
+    border-color: #ffffff;
+}
+
+/* Dark Mode - Login Modal */
+body.dark-mode .login-modal-content {
+    background-color: #313131;
+    color: #f0f6fc;
+}
+body.dark-mode .login-modal-content h3 {
+    color: #f0f6fc;
+}
+body.dark-mode .login-input {
+    background-color: #404040;
+    border-color: #505050;
+    color: #f0f6fc;
+}
+body.dark-mode .login-input:focus {
+    border-color: #ffffff;
+    background-color: #313131;
+}
+body.dark-mode .login-button {
+    background-color: #404040;
+    color: #f0f6fc;
+}
+body.dark-mode .login-button:hover {
+    background-color: #505050;
+    color: #f0f6fc;
+}
+body.dark-mode .login-error {
+    color: #f85149;
+}
+body.dark-mode .modal-close {
+    color: #8b949e;
+}
+body.dark-mode .modal-close:hover {
+    color: #f0f6fc;
+}
+
+body.dark-mode #WeeGPTInputSection {
+    background-color: #404040;
+    border-color: #505050;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+body.dark-mode #WeeGPTInputSection:focus-within {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+body.dark-mode #WeeGPTInputSection input {
+    color: #f0f6fc;
+}
+body.dark-mode #WeeGPTInputSection textarea::placeholder,
+body.dark-mode #WeeGPTInputSection input::placeholder {
+    color: #8b949e;
+}
+body.dark-mode #WeeGPTInputSection textarea:focus::placeholder,
+body.dark-mode #WeeGPTInputSection input:focus::placeholder {
+    color: #dddddd;
+}
+
+body.dark-mode #WeeGPTInputSection button {
+    background: linear-gradient(156deg, #1e40af, #dc2626);
+    box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+}
+
+body.dark-mode #WeeGPTInputSection button:hover {
+    box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
+}
+
+body.dark-mode .restoreBtn_C3D4 {
+    color: #8b949e;
+    border: 2px solid #8b949e;
+    background-color: rgba(139, 148, 158, 0.1);
+}
+
+body.dark-mode .restoreBtn_C3D4:hover {
+    color: #f0f6fc;
+    border-color: #f0f6fc;
+    background-color: rgba(240, 246, 252, 0.1);
+}
+
+body.dark-mode #popupWindow {
+    background-color: rgba(13, 17, 23, 0.8);
+}
+
+body.dark-mode #popupWindow .content {
+    background-color: #313131;
+    color: #f0f6fc;
+}
+
+body.dark-mode #popupWindow #closeButton {
+    color: #8b949e;
+}
+
+body.dark-mode #popupWindow #closeButton:hover {
+    color: #f0f6fc;
+}
+
+body.dark-mode #popupWindow .content .non-editable {
+    color: #f0f6fc;
+}
+
+body.dark-mode #popupWindow .content .editable {
+    background-color: #404040;
+    border-color: #505050;
+    color: #f0f6fc;
+}
+
+body.dark-mode #popupWindow .content .editable:focus {
+    border-color: #ffffff;
+    background-color: #313131;
+}
+
+body.dark-mode #popupWindow #sendButton {
+    background-color: #404040;
+    color: #f0f6fc;
+    border: none;
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15);
+}
+
+body.dark-mode #popupWindow #sendButton:hover {
+    background-color: #505050;
+    color: #f0f6fc;
+}
+
+body.dark-mode .end-message {
+    color: #f0f6fc;
+}
+
+body.dark-mode .end-buttons .select-button {
+    background-color: #404040;
+    color: #f0f6fc;
+    border-color: #505050;
+}
+
+body.dark-mode .end-buttons .select-button:hover, .select-button.selected {
+    background-color: #505050;
+    color: #f0f6fc;
+    border-color: #ffffff;
+}
+
+body.dark-mode .starred-modal-content {
+    background-color: #313131;
+    color: #f0f6fc;
+}
+
+body.dark-mode .starred-item {
+    border-bottom-color: #505050;
+}
+
+body.dark-mode .starred-source {
+    color: #8b949e;
+}
+
+body.dark-mode .starred-explanation {
+    background-color: #3a3a3a;
+    border-left-color: #ffffff;
+    color: #f0f6fc;
+}
+
+body.dark-mode .starred-controls {
+    /* unchanged */
+}
+
+body.dark-mode .toggle-explanation-button {
+    background-color: #404040;
+    border-color: #505050;
+    color: #f0f6fc;
+}
+
+body.dark-mode .toggle-explanation-button:hover {
+    background-color: #505050;
+}
+
+body.dark-mode .starred-delete-button {
+    background-color: #f85149;
+    color: #f0f6fc;
+}
+
+body.dark-mode .starred-delete-button:hover {
+    background-color: #da3633;
+}
+
+body.dark-mode .progress-bar {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .correct-bar {
+    background: linear-gradient(90deg, #238636 0%, #2ea043 25%, #39d353 50%, #2ea043 75%, #238636 100%);
+    background-size: 300% 100%;
+    animation: lavaFlow 6s ease-in-out infinite;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .wrong-bar {
+    background: linear-gradient(90deg, #f85149 0%, #fa8c89 25%, #ffacb1 50%, #fa8c89 75%, #f85149 100%);
+    background-size: 300% 100%;
+    animation: lavaFlow 6s ease-in-out infinite;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .progress-bars {
+    background-color: #3a3a3a;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+}
+
+@keyframes lavaFlow {
+  0% { background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
 }

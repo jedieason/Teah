@@ -81,6 +81,7 @@ async function initQuiz() {
     document.title = `${fileName} - 題矣`;
 
     loadNewQuestion();
+    updateProgressBar(); // Initialize progress bar when quiz starts
 }
 
 // 加載題目 (Firebase)
@@ -459,14 +460,14 @@ function confirmAnswer() {
 function updateCorrect() {
     correct += 1;
     document.getElementById('correct').innerText = correct;
-    updateProgressBar();
+    updateProgressBar(true);
 }
 
 function updateWrong() {
     wrongQuestions.push(currentQuestion);
     wrong += 1;
     document.getElementById('wrong').innerText = wrong;
-    updateProgressBar();
+    updateProgressBar(false);
 }
 
 function showEndScreen() {
@@ -1253,14 +1254,38 @@ function saveProgress() {
       .catch(error => console.error('保存進度到 Firebase 失敗：', error));
 }
 
-function updateProgressBar() {
+function updateProgressBar(isCorrect = null) {
+  const correctBar = document.getElementById('correctBar');
+  const wrongBar = document.getElementById('wrongBar');
+
   if (initialQuestionCount > 0) {
-    document.getElementById('correctBar').style.width = (correct / initialQuestionCount * 100) + '%';
-    document.getElementById('wrongBar').style.width   = (wrong   / initialQuestionCount * 100) + '%';
+    correctBar.style.width = (correct / initialQuestionCount * 100) + '%';
+    wrongBar.style.width = (wrong / initialQuestionCount * 100) + '%';
   } else {
-    document.getElementById('correctBar').style.width = '0%';
-    document.getElementById('wrongBar').style.width   = '0%';
+    correctBar.style.width = '0%';
+    wrongBar.style.width = '0%';
   }
+
+  // Add challenge animations
+  if (isCorrect === true) {
+    correctBar.classList.add('correct-animating');
+    setTimeout(() => {
+      correctBar.classList.remove('correct-animating');
+    }, 800);
+  } else if (isCorrect === false) {
+    wrongBar.classList.add('wrong-animating');
+    setTimeout(() => {
+      wrongBar.classList.remove('wrong-animating');
+    }, 800);
+  }
+
+  // Add general animation for both bars
+  correctBar.classList.add('animating');
+  wrongBar.classList.add('animating');
+  setTimeout(() => {
+    correctBar.classList.remove('animating');
+    wrongBar.classList.remove('animating');
+  }, 600);
 }
 
 function restoreProgress() {
@@ -1591,4 +1616,79 @@ if (showStarredBtn) showStarredBtn.addEventListener('click', openStarredModal);
 if (starredModal) starredModal.addEventListener('click', (e) => {
     if (e.target === starredModal) starredModal.style.display = 'none';
 });
+
+// ========== 深色模式功能 ==========
+
+// 深色模式相關變數
+let isDarkMode = false;
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const themeIcon = document.getElementById('themeIcon');
+
+// 檢查系統深色模式偏好
+function getSystemThemePreference() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+// 從 localStorage 加載主題設定
+function loadThemePreference() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        isDarkMode = savedTheme === 'dark';
+    } else {
+        // 如果沒有儲存的設定，使用系統偏好
+        isDarkMode = getSystemThemePreference();
+    }
+    applyTheme();
+}
+
+// 應用主題
+function applyTheme() {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        themeIcon.src = 'Images/moon.svg';
+        themeToggleBtn.classList.add('dark-mode-active');
+    } else {
+        document.body.classList.remove('dark-mode');
+        themeIcon.src = 'Images/sun.svg';
+        themeToggleBtn.classList.remove('dark-mode-active');
+    }
+    // 儲存主題設定到 localStorage
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+}
+
+// 切換主題
+function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    applyTheme();
+}
+
+// 監聽系統主題變化
+function watchSystemTheme() {
+    if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+            // 只有在沒有手動設定主題時才跟隨系統
+            if (!localStorage.getItem('theme')) {
+                isDarkMode = e.matches;
+                applyTheme();
+            }
+        });
+    }
+}
+
+// 初始化主題功能
+function initTheme() {
+    loadThemePreference();
+    watchSystemTheme();
+
+    // 綁定切換按鈕事件
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', toggleTheme);
+    }
+}
+
+// 頁面載入完成後初始化主題
+document.addEventListener('DOMContentLoaded', initTheme);
 
