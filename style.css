@@ -159,6 +159,7 @@
       font-weight: 900;
       font-style: normal;
       font-display: swap;
+      unicode-range: U+4E00-9FFF, U+3400-4DBF, U+20000-2A6DF, U+2A700-2B73F, U+2B740-2B81F, U+2B820-2CEAF, U+2CEB0-2EBEF, U+2F800-2FA1F;
   }
   
   
@@ -188,7 +189,7 @@
   }
   
   .start-title {
-      font-family: "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
+      font-family: "Playfair Display", "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
       color: #1A1A1A;
       font-size: 4rem;
       letter-spacing: 3px;
@@ -302,7 +303,7 @@
   
   
   .quiz-title {
-      font-family: "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
+      font-family: "Playfair Display", "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
       color: #1A1A1A;
       font-size: 1.6rem;
       font-weight: 600;
@@ -412,6 +413,8 @@
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      /* Ensure font-family inherits or redeclare if needed */
+      font-family: "Playfair Display", "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
   }
 
   body.dark-mode .select-button {
@@ -460,6 +463,8 @@
 
   body.dark-mode .quiz-title {
       color: #f0f6fc;
+      /* Ensure font-family inherits or redeclare if needed */
+      font-family: "Playfair Display", "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
   }
 
   body.dark-mode .progress-item {
@@ -2158,7 +2163,7 @@ body.dark-mode .starred-explanation {
 }
 
 body.dark-mode .starred-controls {
-    /* unchanged */
+    /* If this is empty, remove the entire rule */
 }
 
 body.dark-mode .toggle-explanation-button {
