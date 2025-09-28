@@ -399,12 +399,12 @@
   
   /* Redesigned Dark Mode Styles */
   body.dark-mode {
-      background-color: #313131;
+      background-color: #0d1117;
       color: #f0f6fc;
   }
 
   body.dark-mode .start-screen {
-      background: #313131;
+      background: #0d1117;
   }
 
   body.dark-mode .start-title {
@@ -415,17 +415,18 @@
   }
 
   body.dark-mode .select-button {
-      background-color: #404040;
+  
+      background-color: #161b22;
       color: #f0f6fc;
-      border: 2px solid #505050;
+      border: 2px solid #30363d;
   }
 
   body.dark-mode .select-button:hover,
   body.dark-mode .select-button.selected {
-      background-color: #505050;
+      background-color: #21262d;
       color: #f0f6fc;
-      border-color: #ffffff;
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+      border-color: #8b949e;
+      box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
   }
 
   body.dark-mode .back-button {
@@ -437,16 +438,16 @@
   }
 
   body.dark-mode .start-button {
-      background-color: #404040;
-      color: #f0f6fc;
+      background-color: #58a6ff;
+      color: #0d1117;
       border: none;
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15);
   }
 
   body.dark-mode .start-button:hover {
-      background-color: #505050;
+      background-color: #1e40af;
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 16px rgba(30, 64, 175, 0.25);
   }
 
   body.dark-mode .restoreBtn_C3D4 {
@@ -455,7 +456,7 @@
   }
 
   body.dark-mode .quiz-container {
-      background-color: #313131;
+      background-color: #0d1117;
   }
 
   body.dark-mode .quiz-title {
@@ -463,7 +464,7 @@
   }
 
   body.dark-mode .progress-item {
-      background-color: #3a3a3a;
+      background-color: #161b22;
   }
 
   body.dark-mode .progress-number-orange {
@@ -487,20 +488,20 @@
   }
 
   body.dark-mode .option-button {
-      background-color: #404040;
+      background-color: #161b22;
       color: #f0f6fc;
-      border-color: #505050;
+      border-color: #30363d;
   }
 
   body.dark-mode .option-button:hover {
-      background-color: #505050;
-      border-color: #ffffff;
+      background-color: #21262d;
+      border-color: #58a6ff;
       transform: translateX(4px);
   }
 
   body.dark-mode .option-button.selected {
-      background-color: #505050;
-      border-color: #ffffff;
+      background-color: #21262d;
+      border-color: #58a6ff;
   }
 
   body.dark-mode .option-button.correct {
@@ -516,31 +517,31 @@
   }
 
   body.dark-mode .confirm-button {
-      background-color: #404040;
+      background-color: #161b22;
       color: #f0f6fc;
-      border: 2px solid #505050;
+      border: 2px solid #30363d;
   }
 
   body.dark-mode .confirm-button:hover {
-      background-color: #313131;
+      background-color: #0d1117;
       color: #f0f6fc;
-      border-color: #ffffff;
+      border-color: #58a6ff;
   }
 
   body.dark-mode .explanation {
-      background-color: #313131;
+      background-color: #0d1117;
       color: #f0f6fc;
   }
 
   body.dark-mode .next-button {
-      background-color: #313131;
+      background-color: #0d1117;
       color: #f69f25;
       border: 2px solid #f69f25;
   }
 
   body.dark-mode .next-button:hover {
       background-color: #f69f25;
-      color: #313131;
+      color: #0d1117;
   }
 
   body.dark-mode .copyright {
@@ -552,7 +553,7 @@
   }
 
   body.dark-mode .copyright a:hover {
-      color: #ffffff;
+      color: #58a6ff;
   }
 
   /* Original CSS Elements Not Renewed */
@@ -794,8 +795,8 @@
   
   /* 深色模式下的模態窗口 */
   body.dark-mode .modal-content {
-      background-color: #313131;
-      color: #f0f6fc;
+      background-color: #2a2a2a;
+      color: #e0e0e0;
   }
   
   body.dark-mode .modal-confirm-button {
@@ -1268,8 +1269,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Already has all, but specify left if needed */
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.2),
+        0 1px 2px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 2;
     transform-origin: center;
 }
@@ -1367,16 +1371,20 @@
 
 /* Dark Mode State */
 .theme-toggle-button.dark-mode-active .theme-toggle-track {
-    background: linear-gradient(135deg, #3a3a3a 0%, #313131 100%);
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
     border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .theme-toggle-button.dark-mode-active .theme-toggle-thumb {
-    left: 34px; /* Adjusted for exact right positioning: 60px track - 24px thumb - 2px padding */
-    background: linear-gradient(135deg, #505050 0%, #404040 100%);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease; /* Ensure smooth slide */
+    left: 30px;
+    background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.6),
+        0 1px 2px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .theme-toggle-button.dark-mode-active .sun-rays {
@@ -1734,28 +1742,27 @@
 }
 
 body.dark-mode .starred-explanation {
-    background-color: #3a3a3a;
-    border-left-color: #ffffff;
+    background-color: #0d1117;
+    border-left-color: #58a6ff;
     color: #f0f6fc;
 }
 
 body.dark-mode .toggle-explanation-button {
-    background-color: #404040;
-    border-color: #505050;
+    background-color: #21262d;
+    border-color: #30363d;
     color: #f0f6fc;
 }
 
 body.dark-mode .toggle-explanation-button:hover {
-    background-color: #505050;
+    background-color: #30363d;
 }
 
 body.dark-mode .starred-delete-button {
-    background-color: #f85149;
-    color: #f0f6fc;
+    background-color: #a33;
 }
 
 body.dark-mode .starred-delete-button:hover {
-    background-color: #da3633;
+    background-color: #922;
 }
 
 /* Progress Bar Challenge Animations */
@@ -1893,7 +1900,7 @@ body.dark-mode .wrong-bar {
 }
 
 body.dark-mode .progress-bars {
-  background-color: #3a3a3a;
+  background-color: #21262d;
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
 }
 
@@ -1909,24 +1916,24 @@ body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-thumb {
 }
 
 body.dark-mode .file-drop-zone {
-    border-color: #505050;
+    border-color: #30363d;
     color: #f0f6fc;
-    background-color: #3a3a3a;
+    background-color: #161b22;
 }
 body.dark-mode .file-drop-zone.dragover {
-    border-color: #ffffff;
-    background-color: #404040;
+    border-color: #58a6ff;
+    background-color: #1e3a8a;
 }
 
 /* Dark Mode - Fillblank Elements */
 body.dark-mode .fillblank-input {
-    background-color: #404040;
-    border-color: #505050;
+    background-color: #161b22;
+    border-color: #30363d;
     color: #f0f6fc;
 }
 body.dark-mode .fillblank-input:focus {
-    border-color: #ffffff;
-    background-color: #313131;
+    border-color: #58a6ff;
+    background-color: #0d1117;
 }
 body.dark-mode .fillblank-input.correct {
     border-color: #238636;
@@ -1945,7 +1952,7 @@ body.dark-mode .progress-counts {
     color: #f0f6fc;
 }
 body.dark-mode .progress-bars {
-    background-color: #3a3a3a;
+    background-color: #21262d;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
 }
 body.dark-mode .count-text,
@@ -1960,20 +1967,20 @@ body.dark-mode .top-left-controls {
 
 /* Dark Mode - Add Button */
 body.dark-mode .add-button {
-    background-color: #404040;
+    background-color: #21262d;
     color: #f0f6fc;
 }
 body.dark-mode .add-button:hover {
-    background-color: #ffffff;
-    color: #313131;
+    background-color: #58a6ff;
+    color: #0d1117;
 }
 
 /* Dark Mode - Shuffle Slider */
 body.dark-mode .shuffle-slider-track {
-    background-color: #505050;
+    background-color: #30363d;
 }
 body.dark-mode .shuffle-slider-track.active {
-    background-color: #ffffff;
+    background-color: #58a6ff;
 }
 body.dark-mode .shuffle-slider-knob {
     background-color: #f0f6fc;
@@ -1981,41 +1988,41 @@ body.dark-mode .shuffle-slider-knob {
 
 /* Dark Mode - Sign In Button */
 body.dark-mode .sign-in-button {
-    background-color: #404040;
+    background-color: #161b22;
     color: #f0f6fc;
-    border: 2px solid #505050;
+    border: 2px solid #30363d;
 }
 body.dark-mode .sign-in-button:hover,
 body.dark-mode .sign-in-button.selected {
-    background-color: #505050;
+    background-color: #21262d;
     color: #f0f6fc;
-    border-color: #ffffff;
+    border-color: #58a6ff;
 }
 
 /* Dark Mode - Login Modal */
 body.dark-mode .login-modal-content {
-    background-color: #313131;
+    background-color: #161b22;
     color: #f0f6fc;
 }
 body.dark-mode .login-modal-content h3 {
     color: #f0f6fc;
 }
 body.dark-mode .login-input {
-    background-color: #404040;
-    border-color: #505050;
+    background-color: #21262d;
+    border-color: #30363d;
     color: #f0f6fc;
 }
 body.dark-mode .login-input:focus {
-    border-color: #ffffff;
-    background-color: #313131;
+    border-color: #58a6ff;
+    background-color: #0d1117;
 }
 body.dark-mode .login-button {
-    background-color: #404040;
+    background-color: #21262d;
     color: #f0f6fc;
 }
 body.dark-mode .login-button:hover {
-    background-color: #505050;
-    color: #f0f6fc;
+    background-color: #58a6ff;
+    color: #0d1117;
 }
 body.dark-mode .login-error {
     color: #f85149;
@@ -2028,8 +2035,8 @@ body.dark-mode .modal-close:hover {
 }
 
 body.dark-mode #WeeGPTInputSection {
-    background-color: #404040;
-    border-color: #505050;
+    background-color: #161b22;
+    border-color: #30363d;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 body.dark-mode #WeeGPTInputSection:focus-within {
@@ -2073,7 +2080,7 @@ body.dark-mode #popupWindow {
 }
 
 body.dark-mode #popupWindow .content {
-    background-color: #313131;
+    background-color: #161b22;
     color: #f0f6fc;
 }
 
@@ -2090,26 +2097,26 @@ body.dark-mode #popupWindow .content .non-editable {
 }
 
 body.dark-mode #popupWindow .content .editable {
-    background-color: #404040;
-    border-color: #505050;
+    background-color: #21262d;
+    border-color: #30363d;
     color: #f0f6fc;
 }
 
 body.dark-mode #popupWindow .content .editable:focus {
-    border-color: #ffffff;
-    background-color: #313131;
+    border-color: #58a6ff;
+    background-color: #0d1117;
 }
 
 body.dark-mode #popupWindow #sendButton {
-    background-color: #404040;
+    background-color: #21262d;
     color: #f0f6fc;
     border: none;
     box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15);
 }
 
 body.dark-mode #popupWindow #sendButton:hover {
-    background-color: #505050;
-    color: #f0f6fc;
+    background-color: #58a6ff;
+    color: #0d1117;
 }
 
 body.dark-mode .end-message {
@@ -2117,24 +2124,24 @@ body.dark-mode .end-message {
 }
 
 body.dark-mode .end-buttons .select-button {
-    background-color: #404040;
+    background-color: #161b22;
     color: #f0f6fc;
-    border-color: #505050;
+    border-color: #30363d;
 }
 
 body.dark-mode .end-buttons .select-button:hover, .select-button.selected {
-    background-color: #505050;
+    background-color: #21262d;
     color: #f0f6fc;
-    border-color: #ffffff;
+    border-color: #58a6ff;
 }
 
 body.dark-mode .starred-modal-content {
-    background-color: #313131;
+    background-color: #161b22;
     color: #f0f6fc;
 }
 
 body.dark-mode .starred-item {
-    border-bottom-color: #505050;
+    border-bottom-color: #30363d;
 }
 
 body.dark-mode .starred-source {
@@ -2142,8 +2149,8 @@ body.dark-mode .starred-source {
 }
 
 body.dark-mode .starred-explanation {
-    background-color: #3a3a3a;
-    border-left-color: #ffffff;
+    background-color: #0d1117;
+    border-left-color: #58a6ff;
     color: #f0f6fc;
 }
 
@@ -2152,13 +2159,13 @@ body.dark-mode .starred-controls {
 }
 
 body.dark-mode .toggle-explanation-button {
-    background-color: #404040;
-    border-color: #505050;
+    background-color: #21262d;
+    border-color: #30363d;
     color: #f0f6fc;
 }
 
 body.dark-mode .toggle-explanation-button:hover {
-    background-color: #505050;
+    background-color: #30363d;
 }
 
 body.dark-mode .starred-delete-button {
@@ -2189,7 +2196,7 @@ body.dark-mode .wrong-bar {
 }
 
 body.dark-mode .progress-bars {
-    background-color: #3a3a3a;
+    background-color: #21262d;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
 }
 

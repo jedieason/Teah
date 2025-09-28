@@ -42,7 +42,7 @@ const originalQuizDisplay = quizContainer.style.display || 'flex';
 let endScreenDiv = null;
 
 // 新增：洗牌偏好設定
-let shouldShuffleQuiz = true; // true: 隨機順序, false: 固定順序 (JSON 順序)
+let shouldShuffleQuiz = false; // false: 固定順序 (JSON 順序), true: 隨機順序
 
 // 新增：歷史紀錄陣列
 let questionHistory = [];
@@ -582,10 +582,14 @@ function reverseQuestion() {
         return;
     }
 
-    // Push the current question (that we are navigating away from) back to the main questions array
+    // Push the current question back to the main questions array, maintaining order in non-shuffle mode
     if (currentQuestion && currentQuestion.question) {
-        questions.push(currentQuestion);
-        // We don't shuffle 'questions' here to maintain a more predictable forward path if user goes "next" again.
+        if (shouldShuffleQuiz) {
+            questions.push(currentQuestion);
+        } else {
+            questions.unshift(currentQuestion);
+        }
+        // Maintain order for forward navigation
     }
 
     const previousState = questionHistory.pop();
@@ -826,7 +830,7 @@ if (shuffleToggle) {
         }
     });
     // Set initial state tooltip
-    shuffleToggle.title = '順序：隨機'; // Default state is random
+    shuffleToggle.title = '順序：固定'; // Default state is ordered
 }
 
 function gatherEditedContent() {
