@@ -383,6 +383,13 @@ function confirmAnswer() {
         });
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
+        const originDisplay = document.getElementById('origin-display');
+        if (currentQuestion.origin) {
+            originDisplay.textContent = currentQuestion.origin;
+            originDisplay.style.display = 'block';
+        } else {
+            originDisplay.style.display = 'none';
+        }
         saveProgress();
         return;
     } else {
@@ -448,6 +455,13 @@ function confirmAnswer() {
         });
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
+        const originDisplay = document.getElementById('origin-display');
+        if (currentQuestion.origin) {
+            originDisplay.textContent = currentQuestion.origin;
+            originDisplay.style.display = 'block';
+        } else {
+            originDisplay.style.display = 'none';
+        }
         saveProgress();
     }
 }
@@ -733,8 +747,16 @@ function reverseQuestion() {
         explanationElement.style.display = 'block';
         confirmBtnElement.style.display = 'none';
         confirmBtnElement.disabled = true;
+        const originDisplay = document.getElementById('origin-display');
+        if (currentQuestion.origin) {
+            originDisplay.textContent = currentQuestion.origin;
+            originDisplay.style.display = 'block';
+        } else {
+            originDisplay.style.display = 'none';
+        }
     } else {
         explanationElement.style.display = 'none';
+        document.getElementById('origin-display').style.display = 'none';
         confirmBtnElement.style.display = 'block';
         confirmBtnElement.disabled = false;
     }
@@ -1489,6 +1511,20 @@ function loadQuestionFromState() {
     document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
     document.querySelector('#popupWindow .editable:nth-child(5)').innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
     document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+
+    if (currentQuestion.explanation) {
+        document.getElementById('explanation').style.display = 'block';
+        const originDisplay = document.getElementById('origin-display');
+        if (currentQuestion.origin) {
+            originDisplay.textContent = currentQuestion.origin;
+            originDisplay.style.display = 'block';
+        } else {
+            originDisplay.style.display = 'none';
+        }
+    } else {
+        document.getElementById('explanation').style.display = 'none';
+        document.getElementById('origin-display').style.display = 'none';
+    }
 }
 
 async function updateStarIcon() {

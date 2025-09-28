@@ -2329,3 +2329,16 @@ body.dark-mode #WeeGPTInputSection button::before {
     background: linear-gradient(120deg, transparent, rgba(44, 44, 58, 0.3), transparent);
     transition: all 0.5s ease;
 }
+
+.origin-display {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 8px 0;
+    padding: 4px 0;
+    text-align: left;
+    font-style: italic;
+}
+
+body.dark-mode .origin-display {
+    color: #8b949e;
+}
