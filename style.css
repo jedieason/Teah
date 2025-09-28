@@ -399,12 +399,12 @@
   
   /* Redesigned Dark Mode Styles */
   body.dark-mode {
-      background-color: #0d1117;
+      background-color: #313131;
       color: #f0f6fc;
   }
 
   body.dark-mode .start-screen {
-      background: #0d1117;
+      background: #313131;
   }
 
   body.dark-mode .start-title {
@@ -415,17 +415,16 @@
   }
 
   body.dark-mode .select-button {
-  
-      background-color: #161b22;
+      background-color: #2a2a2a;
       color: #f0f6fc;
-      border: 2px solid #30363d;
+      border: 2px solid #404040;
   }
 
   body.dark-mode .select-button:hover,
   body.dark-mode .select-button.selected {
-      background-color: #21262d;
+      background-color: #363636;
       color: #f0f6fc;
-      border-color: #8b949e;
+      border-color: #58a6ff;
       box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
   }
 
@@ -439,7 +438,7 @@
 
   body.dark-mode .start-button {
       background-color: #58a6ff;
-      color: #0d1117;
+      color: #313131;
       border: none;
       box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15);
   }
@@ -456,7 +455,7 @@
   }
 
   body.dark-mode .quiz-container {
-      background-color: #0d1117;
+      background-color: #313131;
   }
 
   body.dark-mode .quiz-title {
@@ -464,7 +463,7 @@
   }
 
   body.dark-mode .progress-item {
-      background-color: #161b22;
+      background-color: #2a2a2a;
   }
 
   body.dark-mode .progress-number-orange {
@@ -476,11 +475,11 @@
   }
 
   body.dark-mode .orange-bg {
-      background-color: #161b22;
+      background-color: #2a2a2a;
   }
 
   body.dark-mode .green-bg {
-      background-color: #161b22;
+      background-color: #2a2a2a;
   }
 
   body.dark-mode .question-content {
@@ -488,19 +487,19 @@
   }
 
   body.dark-mode .option-button {
-      background-color: #161b22;
+      background-color: #2a2a2a;
       color: #f0f6fc;
-      border-color: #30363d;
+      border-color: #404040;
   }
 
   body.dark-mode .option-button:hover {
-      background-color: #21262d;
+      background-color: #363636;
       border-color: #58a6ff;
       transform: translateX(4px);
   }
 
   body.dark-mode .option-button.selected {
-      background-color: #21262d;
+      background-color: #363636;
       border-color: #58a6ff;
   }
 
@@ -517,31 +516,31 @@
   }
 
   body.dark-mode .confirm-button {
-      background-color: #161b22;
+      background-color: #2a2a2a;
       color: #f0f6fc;
-      border: 2px solid #30363d;
+      border: 2px solid #404040;
   }
 
   body.dark-mode .confirm-button:hover {
-      background-color: #0d1117;
+      background-color: #313131;
       color: #f0f6fc;
       border-color: #58a6ff;
   }
 
   body.dark-mode .explanation {
-      background-color: #0d1117;
+      background-color: #2d2d2d;
       color: #f0f6fc;
   }
 
   body.dark-mode .next-button {
-      background-color: #0d1117;
+      background-color: #313131;
       color: #f69f25;
       border: 2px solid #f69f25;
   }
 
   body.dark-mode .next-button:hover {
       background-color: #f69f25;
-      color: #0d1117;
+      color: #313131;
   }
 
   body.dark-mode .copyright {
@@ -805,7 +804,7 @@
   }
   
   body.dark-mode .modal-confirm-button:hover {
-      background-color: #000;
+      background-color: #313131;
       color: #ffffff;
   }
   
@@ -1175,26 +1174,26 @@
     z-index: 1; /* Knob is above the icon span */
 }
 
-/* Default state: Random (Shuffle icon ⇄ on the right, knob on the left) */
+/* Default state: Ordered (Arrow icon → on the right, knob on the left) */
 .shuffle-slider-track .slider-icon {
     right: 5px; /* Position icon in the right part of the track */
     left: auto;
 }
 .shuffle-slider-track .slider-icon::before {
-    content: '⇄'; /* Shuffle icon */
+    content: '→'; /* Arrow icon */
 }
 
 .shuffle-slider-track.active {
     background-color: #007BFF; /* Color when active (Fixed Order) */
 }
 
-/* Active state: Fixed (Arrow icon → on the left, knob on the right) */
+/* Active state: Random (Shuffle icon ⇄ on the left, knob on the right) */
 .shuffle-slider-track.active .slider-icon {
     left: 5px; /* Position icon in the left part of the track */
     right: auto;
 }
 .shuffle-slider-track.active .slider-icon::before {
-    content: '→'; /* Arrow icon */
+    content: '⇄'; /* Shuffle icon */
 }
 
 .shuffle-slider-track.active .shuffle-slider-knob {
@@ -1916,9 +1915,9 @@ body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-thumb {
 }
 
 body.dark-mode .file-drop-zone {
-    border-color: #30363d;
+    border-color: #404040;
     color: #f0f6fc;
-    background-color: #161b22;
+    background-color: #2a2a2a;
 }
 body.dark-mode .file-drop-zone.dragover {
     border-color: #58a6ff;
@@ -1927,13 +1926,13 @@ body.dark-mode .file-drop-zone.dragover {
 
 /* Dark Mode - Fillblank Elements */
 body.dark-mode .fillblank-input {
-    background-color: #161b22;
-    border-color: #30363d;
+    background-color: #2a2a2a;
+    border-color: #404040;
     color: #f0f6fc;
 }
 body.dark-mode .fillblank-input:focus {
     border-color: #58a6ff;
-    background-color: #0d1117;
+    background-color: #313131;
 }
 body.dark-mode .fillblank-input.correct {
     border-color: #238636;
@@ -1967,17 +1966,17 @@ body.dark-mode .top-left-controls {
 
 /* Dark Mode - Add Button */
 body.dark-mode .add-button {
-    background-color: #21262d;
+    background-color: #363636;
     color: #f0f6fc;
 }
 body.dark-mode .add-button:hover {
     background-color: #58a6ff;
-    color: #0d1117;
+    color: #313131;
 }
 
 /* Dark Mode - Shuffle Slider */
 body.dark-mode .shuffle-slider-track {
-    background-color: #30363d;
+    background-color: #404040;
 }
 body.dark-mode .shuffle-slider-track.active {
     background-color: #58a6ff;
@@ -1988,41 +1987,41 @@ body.dark-mode .shuffle-slider-knob {
 
 /* Dark Mode - Sign In Button */
 body.dark-mode .sign-in-button {
-    background-color: #161b22;
+    background-color: #2a2a2a;
     color: #f0f6fc;
-    border: 2px solid #30363d;
+    border: 2px solid #404040;
 }
 body.dark-mode .sign-in-button:hover,
 body.dark-mode .sign-in-button.selected {
-    background-color: #21262d;
+    background-color: #363636;
     color: #f0f6fc;
     border-color: #58a6ff;
 }
 
 /* Dark Mode - Login Modal */
 body.dark-mode .login-modal-content {
-    background-color: #161b22;
+    background-color: #2a2a2a;
     color: #f0f6fc;
 }
 body.dark-mode .login-modal-content h3 {
     color: #f0f6fc;
 }
 body.dark-mode .login-input {
-    background-color: #21262d;
-    border-color: #30363d;
+    background-color: #363636;
+    border-color: #404040;
     color: #f0f6fc;
 }
 body.dark-mode .login-input:focus {
     border-color: #58a6ff;
-    background-color: #0d1117;
+    background-color: #313131;
 }
 body.dark-mode .login-button {
-    background-color: #21262d;
+    background-color: #363636;
     color: #f0f6fc;
 }
 body.dark-mode .login-button:hover {
     background-color: #58a6ff;
-    color: #0d1117;
+    color: #313131;
 }
 body.dark-mode .login-error {
     color: #f85149;
@@ -2035,8 +2034,8 @@ body.dark-mode .modal-close:hover {
 }
 
 body.dark-mode #WeeGPTInputSection {
-    background-color: #161b22;
-    border-color: #30363d;
+    background-color: #2a2a2a;
+    border-color: #404040;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 body.dark-mode #WeeGPTInputSection:focus-within {
@@ -2076,11 +2075,11 @@ body.dark-mode .restoreBtn_C3D4:hover {
 }
 
 body.dark-mode #popupWindow {
-    background-color: rgba(13, 17, 23, 0.8);
+    background-color: rgba(49, 49, 49, 0.8);
 }
 
 body.dark-mode #popupWindow .content {
-    background-color: #161b22;
+    background-color: #2a2a2a;
     color: #f0f6fc;
 }
 
@@ -2097,18 +2096,18 @@ body.dark-mode #popupWindow .content .non-editable {
 }
 
 body.dark-mode #popupWindow .content .editable {
-    background-color: #21262d;
-    border-color: #30363d;
+    background-color: #363636;
+    border-color: #404040;
     color: #f0f6fc;
 }
 
 body.dark-mode #popupWindow .content .editable:focus {
     border-color: #58a6ff;
-    background-color: #0d1117;
+    background-color: #313131;
 }
 
 body.dark-mode #popupWindow #sendButton {
-    background-color: #21262d;
+    background-color: #363636;
     color: #f0f6fc;
     border: none;
     box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15);
@@ -2116,7 +2115,7 @@ body.dark-mode #popupWindow #sendButton {
 
 body.dark-mode #popupWindow #sendButton:hover {
     background-color: #58a6ff;
-    color: #0d1117;
+    color: #313131;
 }
 
 body.dark-mode .end-message {
@@ -2124,24 +2123,24 @@ body.dark-mode .end-message {
 }
 
 body.dark-mode .end-buttons .select-button {
-    background-color: #161b22;
+    background-color: #2a2a2a;
     color: #f0f6fc;
-    border-color: #30363d;
+    border-color: #404040;
 }
 
 body.dark-mode .end-buttons .select-button:hover, .select-button.selected {
-    background-color: #21262d;
+    background-color: #363636;
     color: #f0f6fc;
     border-color: #58a6ff;
 }
 
 body.dark-mode .starred-modal-content {
-    background-color: #161b22;
+    background-color: #2a2a2a;
     color: #f0f6fc;
 }
 
 body.dark-mode .starred-item {
-    border-bottom-color: #30363d;
+    border-bottom-color: #404040;
 }
 
 body.dark-mode .starred-source {
@@ -2149,7 +2148,7 @@ body.dark-mode .starred-source {
 }
 
 body.dark-mode .starred-explanation {
-    background-color: #0d1117;
+    background-color: #313131;
     border-left-color: #58a6ff;
     color: #f0f6fc;
 }
@@ -2159,13 +2158,13 @@ body.dark-mode .starred-controls {
 }
 
 body.dark-mode .toggle-explanation-button {
-    background-color: #21262d;
-    border-color: #30363d;
+    background-color: #363636;
+    border-color: #404040;
     color: #f0f6fc;
 }
 
 body.dark-mode .toggle-explanation-button:hover {
-    background-color: #30363d;
+    background-color: #404040;
 }
 
 body.dark-mode .starred-delete-button {
@@ -2177,8 +2176,9 @@ body.dark-mode .starred-delete-button:hover {
     background-color: #da3633;
 }
 
-body.dark-mode .progress-bar {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+body.dark-mode .progress-bars {
+    background-color: #363636;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
 }
 
 body.dark-mode .correct-bar {
@@ -2195,13 +2195,101 @@ body.dark-mode .wrong-bar {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode .progress-bars {
-    background-color: #21262d;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+body.dark-mode .progress-bar {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
-@keyframes lavaFlow {
-  0% { background-position: 0% 0; }
-  50% { background-position: 100% 0; }
-  100% { background-position: 0% 0; }
+body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-track {
+    background: linear-gradient(135deg, #2a2a2a 0%, #313131 100%);
+    border-color: rgba(88, 166, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-thumb {
+    background: linear-gradient(135deg, #404040 0%, #363636 100%);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .file-drop-zone {
+    border-color: #404040;
+    color: #f0f6fc;
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .file-drop-zone.dragover {
+    border-color: #58a6ff;
+    background-color: #1e3a8a;
+}
+
+body.dark-mode .fillblank-input {
+    background-color: #2a2a2a;
+    border-color: #404040;
+    color: #f0f6fc;
+}
+
+body.dark-mode .fillblank-input:focus {
+    border-color: #58a6ff;
+    background-color: #313131;
+}
+
+body.dark-mode .fillblank-input.correct {
+    border-color: #238636;
+    background-color: rgba(35, 134, 54, 0.1);
+}
+
+body.dark-mode .fillblank-input.incorrect {
+    border-color: #f85149;
+    background-color: rgba(248, 81, 73, 0.1);
+}
+
+body.dark-mode .progress-container {
+    color: #ffffff;
+}
+
+body.dark-mode .progress-counts {
+    color: #f0f6fc;
+}
+
+body.dark-mode .count-text,
+body.dark-mode .count-number {
+    color: #f0f6fc;
+}
+
+body.dark-mode .top-left-controls {
+    color: #ffffff;
+}
+
+body.dark-mode .add-button {
+    background-color: #363636;
+    color: #f0f6fc;
+}
+
+body.dark-mode .add-button:hover {
+    background-color: #58a6ff;
+    color: #313131;
+}
+
+body.dark-mode .shuffle-slider-track {
+    background-color: #404040;
+}
+
+body.dark-mode .shuffle-slider-track.active {
+    background-color: #58a6ff;
+}
+
+body.dark-mode .shuffle-slider-knob {
+    background-color: #f0f6fc;
+}
+
+body.dark-mode .sign-in-button {
+    background-color: #2a2a2a;
+    color: #f0f6fc;
+    border: 2px solid #404040;
+}
+
+body.dark-mode .sign-in-button:hover,
+body.dark-mode .sign-in-button.selected {
+    background-color: #363636;
+    color: #f0f6fc;
+    border-color: #58a6ff;
 }

@@ -48,11 +48,6 @@ let shouldShuffleQuiz = false; // false: 固定順序 (JSON 順序), true: 隨�
 let questionHistory = [];
 let wrongQuestions = [];
 
-// GitHub API相關資訊
-const GITHUB_USER = 'jedieason'; // 替換為您的GitHub用戶名
-const GITHUB_REPO = 'Teah'; // 替換為您的存儲庫名稱
-const GITHUB_FOLDER_PATH = '113-2Midterm'; // JSON檔案所在的目錄
-
 const userQuestionInput = document.getElementById('userQuestion');
 
 let expandTimeout;
