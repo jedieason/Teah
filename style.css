@@ -1213,6 +1213,7 @@
 /* Google Sign-In Button (restyled to match select-button) */
 .sign-in-button {
     position: absolute;
+    height: 35px;
     top: 20px;
     right: 20px;
     padding: 4px 6px;
