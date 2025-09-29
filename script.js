@@ -176,12 +176,17 @@ function loadNewQuestion() {
 
     // 更新題目文本，若為多選題則加上標籤
     const questionDiv = document.getElementById('question');
+    const questionHtml = marked.parse(currentQuestion.question);
     if (currentQuestion.isMultiSelect) {
-        // For multi-answer fill-in-the-blank questions, use "句" instead of "多"
         const labelText = currentQuestion.isFillBlank ? '句' : '多';
-        questionDiv.innerHTML = `<div class="multi-label">${labelText}</div>` + marked.parse(currentQuestion.question);
+        questionDiv.innerHTML = `
+<div class="question-wrapper">
+    <div class="multi-label">${labelText}</div>
+    <div class="question-text">${questionHtml}</div>
+</div>
+        `;
     } else {
-        questionDiv.innerHTML = marked.parse(currentQuestion.question);
+        questionDiv.innerHTML = `<div class="question-text">${questionHtml}</div>`;
     }
     renderMathInElement(questionDiv, {
         delimiters: [

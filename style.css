@@ -2340,3 +2340,40 @@ body.dark-mode #WeeGPTInputSection button::before {
 body.dark-mode .origin-display {
     color: #8b949e;
 }
+
+.multi-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #ffa500;
+    background-color: #ffa50047;
+    border-radius: 8px;
+    padding: 0px 4px;
+    width: 9px;
+    height: 16px;
+}
+
+@keyframes moveLight {
+    from { left: -50%; }
+    to { left: 100%; }
+}
+
+.question-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.question-text {
+    flex: 1;
+    display: block;
+}
+
+body.dark-mode .multi-label {
+    color: #ffaa00;
+    background-color: rgba(255, 170, 0, 0.3);
+}
+
+body.dark-mode .question-wrapper {
+    gap: 8px;
+}
