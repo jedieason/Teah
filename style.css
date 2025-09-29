@@ -1226,10 +1226,32 @@
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     font-family: 'Poppins', sans-serif;
 }
+.sign-in-button.profile-mode {
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+}
+.sign-in-button .profile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
 .sign-in-button:hover, .sign-in-button.selected {
     background-color: #2D3436;
     color: #FFFFFF;
     transform: translateY(-2px);
+}
+
+.sign-in-button.profile-mode:hover {
+    background-color: transparent;
+    transform: none;
 }
 
 /* Modern Theme Toggle Button */
@@ -1471,75 +1493,6 @@
 }
 
 
-/* Login Modal Styles */
-.login-modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  backdrop-filter: blur(5px);
-  background-color: rgba(0,0,0,0.4);
-  justify-content: center; align-items: center;
-}
-.login-modal-content {
-  background-color: #ffffff;
-  padding: 25px 30px;
-  border-radius: 12px;
-  max-width: 400px; width: 90%;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  font-family: 'Poppins', sans-serif;
-  position: relative;
-}
-.login-modal-content h3 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #2D3436;
-}
-.login-input {
-  width: 100%;
-  padding: 10px 15px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  box-sizing: border-box;
-}
-.login-button {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 10px;
-}
-.login-button:hover {
-  background-color: #111;
-  transform: translateY(-1px);
-}
-.login-error {
-  color: #cc4e00;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-}
-.modal-close {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 1.5rem;
-  color: #888;
-  cursor: pointer;
-  z-index: 1001;
-  transition: color 0.2s ease;
-}
-.modal-close:hover {
-  color: #333;
-}
-
 /* Debug Modal Styles */
 #popupWindow {
     display: none;
@@ -1655,7 +1608,7 @@
     align-items: center;
 }
 
-/* Ensure custom alert appears above login modal */
+/* Ensure custom alert appears above overlays */
 #customAlert {
     z-index: 1100 !important;
 }
@@ -2007,39 +1960,10 @@ body.dark-mode .sign-in-button.selected {
     border-color: #58a6ff;
 }
 
-/* Dark Mode - Login Modal */
-body.dark-mode .login-modal-content {
-    background-color: #2a2a2a;
-    color: #f0f6fc;
-}
-body.dark-mode .login-modal-content h3 {
-    color: #f0f6fc;
-}
-body.dark-mode .login-input {
-    background-color: #363636;
-    border-color: #404040;
-    color: #f0f6fc;
-}
-body.dark-mode .login-input:focus {
-    border-color: #58a6ff;
-    background-color: #313131;
-}
-body.dark-mode .login-button {
-    background-color: #363636;
-    color: #f0f6fc;
-}
-body.dark-mode .login-button:hover {
-    background-color: #58a6ff;
-    color: #313131;
-}
-body.dark-mode .login-error {
-    color: #f85149;
-}
-body.dark-mode .modal-close {
-    color: #8b949e;
-}
-body.dark-mode .modal-close:hover {
-    color: #f0f6fc;
+body.dark-mode .sign-in-button.profile-mode {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 body.dark-mode #WeeGPTInputSection {
