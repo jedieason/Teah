@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 import { getDatabase, ref, get, update, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
@@ -20,6 +20,7 @@ const analytics = getAnalytics(app);
 const database = getDatabase(app);
 // Firebase Auth
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 const signInBtn = document.getElementById('signInBtn');
 
 let questions = [];
@@ -1350,91 +1351,69 @@ function restoreProgress() {
 }
 
 
-// Login Modal Elements
-const loginModal = document.getElementById('loginModal');
-const loginBtn = document.getElementById('loginBtn');
-const signupBtn = document.getElementById('signupBtn');
-// const loginCancelBtn = document.getElementById('loginCancelBtn');
-const loginError = document.getElementById('loginError');
-const loginEmail = document.getElementById('loginEmail');
-const loginPassword = document.getElementById('loginPassword');
-let isRegisterMode = false;
+const defaultSignInLabel = 'Google 登入';
 
-// Open login modal
-signInBtn.innerText = '登入';
-signInBtn.addEventListener('click', () => {
-  loginError.innerText = '';
-  loginEmail.value = '';
-  loginPassword.value = '';
-  loginModal.style.display = 'flex';
-});
+function updateSignInButton(user) {
+    if (!signInBtn) return;
 
-// Login/Register handler
-loginBtn.addEventListener('click', async () => {
-  const email = loginEmail.value.trim();
-  const password = loginPassword.value.trim();
-  loginError.innerText = '';
-  try {
-    let userCredential;
-    if (isRegisterMode) {
-      userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    if (user) {
+        const avatarUrl = user.photoURL || '';
+        const displayName = user.displayName || user.email || 'Google 帳號';
+        if (avatarUrl) {
+            signInBtn.innerHTML = '';
+            const avatarImg = document.createElement('img');
+            avatarImg.src = avatarUrl;
+            avatarImg.alt = displayName;
+            avatarImg.className = 'profile-avatar';
+            signInBtn.appendChild(avatarImg);
+            signInBtn.classList.add('profile-mode');
+        } else {
+            signInBtn.textContent = displayName;
+            signInBtn.classList.remove('profile-mode');
+        }
+        signInBtn.setAttribute('title', displayName);
+        signInBtn.setAttribute('aria-label', `${displayName}（點擊以登出）`);
     } else {
-      userCredential = await signInWithEmailAndPassword(auth, email, password);
+        signInBtn.textContent = defaultSignInLabel;
+        signInBtn.classList.remove('profile-mode');
+        signInBtn.removeAttribute('title');
+        signInBtn.setAttribute('aria-label', '使用 Google 登入');
     }
-    const user = userCredential.user;
-    loginModal.style.display = 'none';
-    signInBtn.innerText = `您好，${user.email}`;
-    signInBtn.disabled = true;
-  } catch (error) {
-    // Remove any "Firebase:" prefix from the error message before displaying
-    const displayMsg = error.message.replace(/^Firebase:\s*/, '');
-    loginError.innerText = displayMsg;
-    // Show "忘記密碼？" link to allow password reset
-    const resetLink = document.createElement('a');
-    resetLink.innerText = '忘記密碼？';
-    resetLink.href = '#';
-    resetLink.style.marginLeft = '8px';
-    resetLink.style.color = '#000';
-    resetLink.style.cursor = 'pointer';
-    resetLink.addEventListener('click', async (e) => {
-      e.preventDefault();
-      if (!loginEmail.value.trim()) {
-        showCustomAlert('請先輸入您的 Email 以重設密碼。');
-        return;
-      }
-      try {
-        await sendPasswordResetEmail(auth, loginEmail.value.trim());
-        showCustomAlert('重設密碼郵件已發送，請檢查您的信箱。');
-      } catch (resetError) {
-        showCustomAlert('無法發送重設郵件：' + resetError.message.replace(/^Firebase:\s*/, ''));
-      }
-    });
-    // Remove existing reset link if present, then append
-    const existingLink = loginError.querySelector('a');
-    if (existingLink) existingLink.remove();
-    loginError.appendChild(resetLink);
-  }
+}
+
+onAuthStateChanged(auth, (user) => {
+    updateSignInButton(user);
 });
 
-[loginEmail, loginPassword].forEach(input => {
-    input.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            const isComposing = event.isComposing || event.target.getAttribute('aria-composing') === 'true';
-            if (isComposing) {
+updateSignInButton(auth.currentUser);
+
+if (signInBtn) {
+    signInBtn.addEventListener('click', async () => {
+        if (auth.currentUser) {
+            const shouldSignOut = confirm('要登出 Google 帳號嗎？');
+            if (!shouldSignOut) {
                 return;
             }
-            event.preventDefault();
-            loginBtn.click();
+            try {
+                await signOut(auth);
+                showCustomAlert('已登出 Google 帳號。');
+            } catch (error) {
+                console.error('Sign-out failed:', error);
+                showCustomAlert('登出失敗，請稍後再試。');
+            }
+            return;
+        }
+
+        try {
+            await signInWithPopup(auth, googleProvider);
+        } catch (error) {
+            console.error('Google sign-in failed:', error);
+            if (error.code !== 'auth/popup-closed-by-user') {
+                showCustomAlert('登入失敗，請稍後再試。');
+            }
         }
     });
-});
-
-const toggleAuthText = document.getElementById('toggleAuthText');
-toggleAuthText.addEventListener('click', () => {
-  isRegisterMode = !isRegisterMode;
-  loginBtn.innerText = isRegisterMode ? '註冊' : '登入';
-  toggleAuthText.innerText = isRegisterMode ? '已經有帳號？登入' : '還沒有帳號？註冊';
-});
+}
 
 
 // Delegate click to close any modal when '×' is clicked
