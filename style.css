@@ -2334,7 +2334,6 @@ body.dark-mode #WeeGPTInputSection button::before {
     font-size: 0.8rem;
     color: #888;
     margin: 8px 0;
-    padding: 4px 0;
     text-align: left;
 }
 
