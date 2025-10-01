@@ -1550,7 +1550,7 @@ body.dark-mode .modal-close:hover {
     font-size: 1rem;
     background-color: #FFFFFF;
     color: #2D3436;
-    border: 2px solid #2D3436;
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 12px;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -1574,11 +1574,6 @@ body.dark-mode .modal-close:hover {
     border-radius: 50%;
     object-fit: cover;
     display: block;
-}
-.sign-in-button:hover, .sign-in-button.selected {
-    background-color: #2D3436;
-    color: #FFFFFF;
-    transform: translateY(-2px);
 }
 
 .sign-in-button.profile-mode:hover {

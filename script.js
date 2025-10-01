@@ -1533,6 +1533,17 @@ if (controlsMenuBtn && controlsMenu) {
 // Sync user info into controls menu when auth state changes
 function syncControlsUser(user) {
     if (!controlsAvatar || !menuAvatar || !menuDisplayName || !menuEmail) return;
+    const isLoggedIn = !!user;
+    // Show only Google sign-in button before login; hide controls menu button
+    if (typeof controlsMenuBtn !== 'undefined' && controlsMenuBtn) {
+        controlsMenuBtn.style.display = isLoggedIn ? 'inline-flex' : 'none';
+    }
+    // Ensure the menu is closed when logged out
+    if (!isLoggedIn && typeof controlsMenu !== 'undefined' && controlsMenu) {
+        controlsMenu.classList.remove('open');
+        controlsMenu.setAttribute('aria-hidden', 'true');
+        if (controlsMenuBtn) controlsMenuBtn.setAttribute('aria-expanded', 'false');
+    }
     if (user) {
         controlsAvatar.src = user.photoURL || 'Images/logo.png';
         menuAvatar.src = user.photoURL || 'Images/logo.png';
