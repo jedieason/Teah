@@ -15,27 +15,29 @@
 <body>
     <!-- 開始畫面 -->
     <div class="start-screen">
-        <div class="top-left-controls">
-            <button id="addQuizBtn" class="add-button">+</button>
-            <div id="shuffleToggle" class="shuffle-slider-track" title="順序：隨機">
-                <span class="slider-icon"></span>
-                <div class="shuffle-slider-knob"></div>
+        <div class="top-right-controls">
+            <button id="controlsMenuBtn" class="avatar-button" aria-haspopup="true" aria-expanded="false">
+                <img id="controlsAvatar" src="Images/logo.png" alt="Profile" width="36" height="36">
+            </button>
+            <div id="controlsMenu" class="controls-menu" role="menu" aria-hidden="true">
+                <div class="controls-menu-header">
+                    <img id="menuAvatar" class="menu-avatar" src="Images/logo.png" alt="Avatar" width="48" height="48">
+                    <div class="menu-user">
+                        <div id="menuDisplayName" class="menu-name">尚未登入</div>
+                        <div id="menuEmail" class="menu-email"></div>
+                    </div>
+                </div>
+                <div class="controls-separator"></div>
+                <button class="controls-item" id="menuStarred" role="menuitem">已收藏</button>
+                <button class="controls-item" id="menuShuffle" role="menuitem">隨機順序</button>
+                <button class="controls-item" id="menuTheme" role="menuitem">深色模式</button>
+                <button class="controls-item" id="menuAddQuiz" role="menuitem">新增題庫</button>
+                <div class="controls-separator"></div>
+                <button class="controls-item" id="menuLogout" role="menuitem">登出</button>
             </div>
-            <img id="showStarredBtn" src="Images/star-empty.svg" alt="Starred" width="24" height="24" style="cursor: pointer;">
         </div>
         <!-- <input type="file" id="uploadJson" accept=".json" style="display:none;"> -->
         <button id="signInBtn" class="sign-in-button">Google 登入</button>
-        <button id="themeToggleBtn" class="theme-toggle-button" title="切換深色/淺色模式" aria-label="Toggle theme">
-            <div class="theme-toggle-track">
-                <div class="theme-toggle-thumb">
-                    <img id="themeIcon" src="Images/sun.svg" alt="Theme" class="theme-icon">
-                </div>
-                <div class="theme-toggle-background">
-                    <div class="sun-rays"></div>
-                    <div class="moon-craters"></div>
-                </div>
-            </div>
-        </button>
         <div class="start-title">題矣</div>
         <div class="header-right-homepage">
         </div>

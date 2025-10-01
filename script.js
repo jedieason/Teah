@@ -841,19 +841,22 @@ document.getElementById('button-row').addEventListener('click', function(event) 
     }
 });
 
+function updateShuffleUI() {
+    const st = document.getElementById('shuffleToggle');
+    if (st) st.title = shouldShuffleQuiz ? '順序：隨機' : '順序：固定';
+    const menuShuffleEl = document.getElementById('menuShuffle');
+    if (menuShuffleEl) menuShuffleEl.textContent = '隨機順序（' + (shouldShuffleQuiz ? '亂序' : '照順序') + '）';
+}
+
 const shuffleToggle = document.getElementById('shuffleToggle');
 if (shuffleToggle) {
     shuffleToggle.addEventListener('click', () => {
         shouldShuffleQuiz = !shouldShuffleQuiz;
         shuffleToggle.classList.toggle('active');
-        if (shouldShuffleQuiz) {
-            shuffleToggle.title = '順序：隨機';
-        } else {
-            shuffleToggle.title = '順序：固定';
-        }
+        updateShuffleUI();
     });
     // Set initial state tooltip
-    shuffleToggle.title = '順序：固定'; // Default state is ordered
+    updateShuffleUI();
 }
 
 function gatherEditedContent() {
@@ -951,19 +954,70 @@ async function fetchQuizList() {
         buttonContainer.innerHTML = '';
         if (snapshot.exists()) {
             const data = snapshot.val();
-            Object.keys(data).forEach(key => {
-                if (key === 'progress' || key === 'API_KEY') return;
-                const btn = document.createElement('button');
-                btn.classList.add('select-button');
-                btn.dataset.json = key;  // 使用 key 作為路徑
-                btn.innerText = key;
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.select-button').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    selectedJson = key;
-                });
-                buttonContainer.appendChild(btn);
+            const allKeys = Object.keys(data || {});
+            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY');
+
+            // 依據檔名中第一個「學」之前（含「學」）的前綴分組；若無「學」則歸入「其他」
+            const groups = {};
+            quizKeys.forEach(k => {
+                const idx = k.indexOf('學');
+                const groupName = idx !== -1 ? k.slice(0, idx + 1) : '其他';
+                if (!groups[groupName]) groups[groupName] = [];
+                groups[groupName].push(k);
             });
+
+            const sortGroups = (names) => names.sort((a, b) => {
+                if (a === '其他' && b !== '其他') return 1;
+                if (b === '其他' && a !== '其他') return -1;
+                return a.localeCompare(b, 'zh-Hant');
+            });
+
+            const renderFolderTiles = () => {
+                buttonContainer.classList.remove('folder-view');
+                buttonContainer.innerHTML = '';
+                sortGroups(Object.keys(groups)).forEach(groupName => {
+                    const tile = document.createElement('button');
+                    tile.className = 'folder-tile';
+                    tile.textContent = groupName;
+                    tile.addEventListener('click', () => renderFolderView(groupName));
+                    buttonContainer.appendChild(tile);
+                });
+            };
+
+            const renderFolderView = (groupName) => {
+                buttonContainer.classList.add('folder-view');
+                buttonContainer.innerHTML = '';
+                const header = document.createElement('div');
+                header.className = 'folder-header';
+                const backBtn = document.createElement('button');
+                backBtn.className = 'folder-back';
+                backBtn.textContent = '← 返回';
+                backBtn.addEventListener('click', renderFolderTiles);
+                const title = document.createElement('div');
+                title.className = 'folder-title';
+                title.textContent = groupName;
+                header.appendChild(backBtn);
+                header.appendChild(title);
+                buttonContainer.appendChild(header);
+
+                const grid = document.createElement('div');
+                grid.className = 'group-grid';
+                (groups[groupName] || []).sort((a, b) => a.localeCompare(b, 'zh-Hant')).forEach(key => {
+                    const btn = document.createElement('button');
+                    btn.classList.add('select-button');
+                    btn.dataset.json = key;
+                    btn.innerText = key;
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.select-button').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        selectedJson = key;
+                    });
+                    grid.appendChild(btn);
+                });
+                buttonContainer.appendChild(grid);
+            };
+
+            renderFolderTiles();
         } else {
             console.warn('Firebase 上沒有題庫列表');
         }
@@ -980,24 +1034,30 @@ const uploadModal = document.getElementById('uploadModal');
 const uploadNameInput = document.getElementById('uploadNameInput');
 const uploadConfirmBtn = document.getElementById('uploadConfirmBtn');
 let pendingQuizData = null;
-const addBtn = document.getElementById('addQuizBtn');
+// Removed standalone addQuizBtn logic; use controls menu item instead
 const uploadInput = document.getElementById('uploadJson');
 const pasteJson = document.getElementById('pasteJson');
 const fileDropZone = document.getElementById('fileDropZone');
 const dropZoneLabel = document.getElementById('dropZoneLabel');
 const uploadModeRadios = uploadModal.querySelectorAll('input[name="upload-mode"]');
 
-// Add button always opens modal in paste mode
-addBtn.addEventListener('click', () => {
-  // Set mode to paste on open
+function openUploadModal(defaultMode = 'paste') {
+  if (!uploadModal || !pasteJson || !fileDropZone || !uploadNameInput) return;
   uploadModal.style.display = 'flex';
-  uploadModeRadios.forEach(r => r.checked = r.value === 'paste');
-  pasteJson.style.display = 'block';
-  fileDropZone.style.display = 'none';
+  uploadModeRadios.forEach(r => r.checked = r.value === defaultMode);
+  if (defaultMode === 'file') {
+    pasteJson.style.display = 'none';
+    fileDropZone.style.display = 'block';
+  } else {
+    pasteJson.style.display = 'block';
+    fileDropZone.style.display = 'none';
+  }
   pasteJson.value = '';
   uploadNameInput.value = '';
   pendingQuizData = null;
-});
+}
+
+// The upload modal is opened via controls menu item (menuAddQuiz)
 
 // Upload mode switching logic
 uploadModeRadios.forEach(radio => {
@@ -1352,6 +1412,7 @@ function restoreProgress() {
 
 
 const defaultSignInLabel = 'Google 登入';
+const googleLogoSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="18" height="18" aria-hidden="true" focusable="false" style="margin-right:8px"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12 s5.373-12,12-12c3.059,0,5.842,1.155,7.961,3.039l5.657-5.657C33.756,6.053,29.143,4,24,4C12.955,4,4,12.955,4,24 s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,16.087,18.961,14,24,14c3.059,0,5.842,1.155,7.961,3.039l5.657-5.657 C33.756,6.053,29.143,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.812-1.977,13.287-5.186l-6.142-5.195C29.104,35.091,26.715,36,24,36 c-5.202,0-9.62-3.317-11.283-7.946l-6.5,5.017C9.51,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.117,5.629l0.003-0.002l6.142,5.195 C36.951,39.018,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>';
 
 function updateSignInButton(user) {
     if (!signInBtn) return;
@@ -1374,18 +1435,15 @@ function updateSignInButton(user) {
         signInBtn.setAttribute('title', displayName);
         signInBtn.setAttribute('aria-label', `${displayName}（點擊以登出）`);
     } else {
-        signInBtn.textContent = defaultSignInLabel;
+        // Minimal button with Google logo + text
+        signInBtn.innerHTML = googleLogoSvg + '<span>Google 登入</span>';
         signInBtn.classList.remove('profile-mode');
         signInBtn.removeAttribute('title');
         signInBtn.setAttribute('aria-label', '使用 Google 登入');
     }
 }
 
-onAuthStateChanged(auth, (user) => {
-    updateSignInButton(user);
-});
-
-updateSignInButton(auth.currentUser);
+// Auth UI sync will be wired after controls menu elements are initialized
 
 if (signInBtn) {
     signInBtn.addEventListener('click', async () => {
@@ -1428,6 +1486,111 @@ document.addEventListener('click', (e) => {
     }
   }
 });
+
+// Controls dropdown (top-right)
+const controlsMenuBtn = document.getElementById('controlsMenuBtn');
+const controlsMenu = document.getElementById('controlsMenu');
+const controlsAvatar = document.getElementById('controlsAvatar');
+const menuAvatar = document.getElementById('menuAvatar');
+const menuDisplayName = document.getElementById('menuDisplayName');
+const menuEmail = document.getElementById('menuEmail');
+const menuStarred = document.getElementById('menuStarred');
+const menuShuffle = document.getElementById('menuShuffle');
+const menuTheme = document.getElementById('menuTheme');
+const menuLogout = document.getElementById('menuLogout');
+const menuAddQuiz = document.getElementById('menuAddQuiz');
+
+if (controlsMenuBtn && controlsMenu) {
+    controlsMenuBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        // If not logged in, this button acts as the sign-in trigger
+        if (!auth.currentUser) {
+            try {
+                await signInWithPopup(auth, googleProvider);
+            } catch (error) {
+                console.error('Google sign-in failed:', error);
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    showCustomAlert('登入失敗，請稍後再試。');
+                }
+            }
+            return;
+        }
+        const open = controlsMenu.classList.toggle('open');
+        controlsMenuBtn.setAttribute('aria-expanded', String(open));
+        controlsMenu.setAttribute('aria-hidden', String(!open));
+    });
+    document.addEventListener('click', (e) => {
+        if (!controlsMenu.contains(e.target) && e.target !== controlsMenuBtn) {
+            if (controlsMenu.classList.contains('open')) {
+                controlsMenu.classList.remove('open');
+                controlsMenuBtn.setAttribute('aria-expanded', 'false');
+                controlsMenu.setAttribute('aria-hidden', 'true');
+            }
+        }
+    });
+}
+
+// Sync user info into controls menu when auth state changes
+function syncControlsUser(user) {
+    if (!controlsAvatar || !menuAvatar || !menuDisplayName || !menuEmail) return;
+    if (user) {
+        controlsAvatar.src = user.photoURL || 'Images/logo.png';
+        menuAvatar.src = user.photoURL || 'Images/logo.png';
+        menuDisplayName.textContent = user.displayName || user.email || 'Google 帳號';
+        menuEmail.textContent = user.email || '';
+        controlsMenuBtn.setAttribute('title', menuDisplayName.textContent);
+    } else {
+        controlsAvatar.src = 'Images/logo.png';
+        menuAvatar.src = 'Images/logo.png';
+        menuDisplayName.textContent = '尚未登入';
+        menuEmail.textContent = '';
+        controlsMenuBtn.setAttribute('title', 'Google 登入');
+    }
+}
+
+// Now that controls elements exist, hook auth state listeners and initial sync
+onAuthStateChanged(auth, (user) => {
+    updateSignInButton(user);
+    syncControlsUser(user);
+});
+
+updateSignInButton(auth.currentUser);
+syncControlsUser(auth.currentUser);
+
+// Controls item actions (text-only click)
+if (menuStarred) menuStarred.addEventListener('click', () => {
+    controlsMenu.classList.remove('open');
+    if (showStarredBtn) openStarredModal();
+});
+if (menuShuffle) menuShuffle.addEventListener('click', () => {
+    // toggle shuffle state same as clicking the slider
+    shouldShuffleQuiz = !shouldShuffleQuiz;
+    const st = document.getElementById('shuffleToggle');
+    if (st) st.classList.toggle('active');
+    updateShuffleUI();
+});
+if (menuTheme) menuTheme.addEventListener('click', () => {
+    toggleTheme();
+});
+if (menuLogout) menuLogout.addEventListener('click', async () => {
+    if (!auth.currentUser) return;
+    try {
+        await signOut(auth);
+        showCustomAlert('已登出 Google 帳號。');
+    } catch (error) {
+        console.error('Sign-out failed:', error);
+        showCustomAlert('登出失敗，請稍後再試。');
+    }
+});
+
+// Open upload modal from controls menu
+if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
+    if (controlsMenu) controlsMenu.classList.remove('open');
+    openUploadModal('paste');
+});
+
+// Initialize shuffle state label in menu on load
+updateShuffleUI();
 
 function loadQuestionFromState() {
     if (!currentQuestion || !currentQuestion.question) {
@@ -1661,6 +1824,12 @@ function loadThemePreference() {
 }
 
 // 應用主題
+function updateMenuThemeLabel() {
+    if (typeof menuTheme !== 'undefined' && menuTheme) {
+        menuTheme.textContent = isDarkMode ? '淺色模式' : '深色模式';
+    }
+}
+
 function applyTheme() {
     const themeToggleBtn = document.getElementById('themeToggleBtn');
 
@@ -1675,6 +1844,7 @@ function applyTheme() {
     }
     // 儲存主題設定到 localStorage
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    updateMenuThemeLabel();
 }
 
 // 切換主題
