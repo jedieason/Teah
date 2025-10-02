@@ -378,8 +378,6 @@ body.dark-mode #pasteJson:focus {
           .select-button:hover, .select-button.selected {
               background-color: #000;  /* Vibrant blue-purple */
               color: #FFFFFF;
-              transform: translateY(-2px);
-              box-shadow: 0 4px 12px rgba(107, 92, 212, 0.2);
           }
   
           .start-button {
@@ -722,7 +720,7 @@ body.dark-mode .start-screen { background: #313131; }
       text-align: left;
       transition: box-shadow .15s ease, transform .15s ease, background .15s ease;
   }
-  .folder-tile:hover { background: #f8fafc; box-shadow: 0 6px 16px rgba(0,0,0,0.10); transform: translateY(-1px); }
+  .folder-tile:hover { background: #f8fafc; transform: translateY(-1px); }
 
   .button-row.folder-view { display: block; max-width: 1100px; }
   .folder-header { display: flex; align-items: center; gap: 10px; margin: 4px 2px 12px 2px; }
@@ -768,20 +766,25 @@ body.dark-mode .start-button:hover { background: #000000; }
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      height: 40px;
+      height: 46px;
       padding: 0 16px;
-      border-radius: 10px;
-      background: transparent;
+      border-radius: 12px;
+      background: #ffffff;
       color: #111111;
-      border: 1px solid rgba(0,0,0,0.18);
+      border: 1px solid rgba(0,0,0,0.12);
       box-shadow: none;
-      transition: background .15s ease, border-color .15s ease;
+      gap: 8px;
+      position: relative;
+      transition: background .15s ease, border-color .15s ease, transform .10s ease;
   }
-  .restoreBtn_C3D4:hover { background: rgba(0,0,0,0.04); }
-.restoreBtn_C3D4:focus-visible { outline: 2px solid #6b7280; outline-offset: 2px; }
-  .restoreBtn_C3D4 .btnText_E5F6 { font-weight: 600; }
-  body.dark-mode .restoreBtn_C3D4 { color: #f0f6fc; border-color: rgba(255,255,255,0.22); }
-  body.dark-mode .restoreBtn_C3D4:hover { background: rgba(255,255,255,0.06); }
+  .restoreBtn_C3D4:hover { background: #f8fafc; border-color: rgba(0,0,0,0.18); transform: translateY(-1px); }
+ .restoreBtn_C3D4:focus-visible { outline: 2px solid #6b7280; outline-offset: 2px; }
+  .restoreBtn_C3D4 .btnText_E5F6 { font-weight: 600; display: inline-flex; align-items: baseline; }
+  .restoreBtn_C3D4 .btnText_E5F6 #restoreSubtitle { font-weight: 500; font-size: .9em; }
+  .restoreBtn_C3D4 .restoreProgress { position: absolute; left: 10px; right: 10px; bottom: 6px; height: 3px; background: #f1f1f1; border-radius: 999px; overflow: hidden; }
+  .restoreBtn_C3D4 .restoreProgressBar { width: 0%; height: 100%; background: #0ea5e9; transition: width .3s ease; }
+  body.dark-mode .restoreBtn_C3D4 { background: #161b22; color: #f0f6fc; border-color: #30363d; }
+  body.dark-mode .restoreBtn_C3D4:hover { background: #1f242c; border-color: #3d444d; }
 
   /* Select buttons (quiz tiles) */
   .select-button {
@@ -801,10 +804,10 @@ body.dark-mode .start-button:hover { background: #000000; }
   }
   .select-button::before { display: none !important; }
   .select-button:hover { background: #f8fafc; border-color: rgba(0,0,0,0.18); transform: translateY(-1px); }
-  .select-button.selected { background: #111111; color: #ffffff; border-color: #111111; }
+  .select-button.selected {border-color: #111111; }
 .select-button:focus-visible { outline: 2px solid #6b7280; outline-offset: 2px; }
-  body.dark-mode .select-button { background: #161b22; color: #c9d1d9; border-color: #30363d; }
-  body.dark-mode .select-button:hover { background: #1f242c; border-color: #3d444d; }
+  body.dark-mode .select-button {color: #c9d1d9; border-color: #30363d; }
+  body.dark-mode .select-button:hover { border-color: #3d444d; }
 
   .quiz-group {
       display: flex;
@@ -1184,26 +1187,7 @@ body.dark-mode .modal-close:hover {
   body.dark-mode .copy-text {
       color: #888888;
   }
-  
-  .language-button {
-      color: #cecece;
-      border: none;
-      /* padding: 10px 20px;
-      margin: 5px; */
-      background-color: transparent;
-      cursor: pointer;
-      transition: color 0.3s;
-  }
-  
-  .language-button:hover {
-      color: #adadad;
-  }
-  
-  .separator {
-      color: #cecece;
-  }
 
-  
   .button-container {
       position: relative;
       width: 30px;
@@ -1336,61 +1320,7 @@ body.dark-mode .modal-close:hover {
   
   
   
-  /* Restore */
-  
-    /* Restore Button Styling */
-    .restoreBtn_C3D4 {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5px 20px;
-      font-size: 14px;
-      color: #3b3c56;
-      background-color: #ffffff50;
-      border: 2px solid #3b3c56;
-      border-radius: 50px;
-      cursor: pointer;
-      overflow: hidden;
-      transition: background-color 0.6s ease, color 0.6s ease;
-      margin-top: 10px;
-    }
-  
-    /* Text Styling */
-    .restoreBtn_C3D4 .btnText_E5F6 {
-      position: relative;
-      z-index: 2;
-      transition: transform 0.6s ease, opacity 0.6s ease;
-    }
-  
-    /* Long Thin Arrow Styling */
-    .restoreBtn_C3D4::after {
-      content: '⟵';
-      position: absolute;
-      top: -3px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-      opacity: 0;
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      transform: translateX(-20px);
-    }
-  
-    /* Hover Effects */
-    .restoreBtn_C3D4:hover {
-      background-color: #3b3c56;
-      color: #ffffff;
-    }
-  
-    .restoreBtn_C3D4:hover .btnText_E5F6 {
-      transform: translateX(-50px);
-      opacity: 0;
-    }
-  
-    .restoreBtn_C3D4:hover::after {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  /* Restore: remove legacy rounded pill/arrow hover to use minimalist design */
   
     .option-button.missing {
       border-color: #FFA500;
@@ -1553,7 +1483,6 @@ body.dark-mode .modal-close:hover {
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     font-family: 'Poppins', sans-serif;
     display: inline-flex;
@@ -2625,4 +2554,24 @@ body.dark-mode .multi-label {
 
 body.dark-mode .question-wrapper {
     gap: 8px;
+}
+
+/* Override: keep select-button background unchanged when selected */
+.select-button.selected {
+    background: #ffffff;
+    color: #111111;
+    border-color: rgba(0,0,0,0.18);
+}
+.select-button.selected:hover {
+    background: #f8fafc;
+    color: #111111;
+}
+body.dark-mode .select-button.selected {
+    background: #161b22;
+    color: #c9d1d9;
+    border-color: #3d444d;
+}
+body.dark-mode .select-button.selected:hover {
+    background: #1f242c;
+    color: #c9d1d9;
 }

@@ -22,6 +22,53 @@ const database = getDatabase(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const signInBtn = document.getElementById('signInBtn');
+// Restore preview elements
+const restoreBtn = document.getElementById('restore');
+const restoreTitleEl = document.getElementById('restoreTitle');
+const restoreSubtitleEl = document.getElementById('restoreSubtitle');
+const restoreProgressBarEl = document.getElementById('restoreProgressBar');
+if (restoreBtn) restoreBtn.style.display = 'none';
+
+async function updateRestorePreview(user) {
+    try {
+        if (!user) {
+            if (restoreBtn) restoreBtn.style.display = 'none';
+            if (restoreTitleEl) restoreTitleEl.textContent = '我到哪了';
+            if (restoreSubtitleEl) restoreSubtitleEl.textContent = '';
+            if (restoreProgressBarEl) restoreProgressBarEl.style.width = '0%';
+            return;
+        }
+        const snap = await get(ref(database, `progress/${user.uid}/progress`));
+        if (!snap.exists()) {
+            if (restoreBtn) restoreBtn.style.display = 'none';
+            if (restoreTitleEl) restoreTitleEl.textContent = '我到哪了';
+            if (restoreSubtitleEl) restoreSubtitleEl.textContent = '尚無進度';
+            if (restoreProgressBarEl) restoreProgressBarEl.style.width = '0%';
+            return;
+        }
+        const p = snap.val();
+        const fileName = (p.selectedJson || '').split('/').pop().replace('.json', '') || '最近的單元';
+        const total = (p.questions?.length || 0) + (p.correct || 0) + (p.wrong || 0);
+        const done = (p.correct || 0) + (p.wrong || 0);
+        const percent = total > 0 ? Math.round(done / total * 100) : 0;
+        if (!percent || percent <= 0) {
+            if (restoreBtn) restoreBtn.style.display = 'none';
+            if (restoreTitleEl) restoreTitleEl.textContent = '我到哪了';
+            if (restoreSubtitleEl) restoreSubtitleEl.textContent = '';
+            if (restoreProgressBarEl) restoreProgressBarEl.style.width = '0%';
+            return;
+        }
+        if (restoreBtn) restoreBtn.style.display = 'inline-flex';
+        if (restoreTitleEl) restoreTitleEl.textContent = `繼續 ${fileName}`;
+        if (restoreSubtitleEl) restoreSubtitleEl.textContent = `${percent}%`;
+        if (restoreProgressBarEl) restoreProgressBarEl.style.width = percent + '%';
+    } catch (e) {
+        if (restoreBtn) restoreBtn.style.display = 'none';
+        if (restoreTitleEl) restoreTitleEl.textContent = '我到哪了';
+        if (restoreSubtitleEl) restoreSubtitleEl.textContent = '';
+        if (restoreProgressBarEl) restoreProgressBarEl.style.width = '0%';
+    }
+}
 
 let questions = [];
 let initialQuestionCount = 0;
@@ -1563,10 +1610,12 @@ function syncControlsUser(user) {
 onAuthStateChanged(auth, (user) => {
     updateSignInButton(user);
     syncControlsUser(user);
+    updateRestorePreview(user);
 });
 
 updateSignInButton(auth.currentUser);
 syncControlsUser(auth.currentUser);
+updateRestorePreview(auth.currentUser);
 
 // Controls item actions (text-only click)
 if (menuStarred) menuStarred.addEventListener('click', () => {

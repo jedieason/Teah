@@ -46,12 +46,15 @@
         
         <button id="startGame" class="start-button">開始</button>
         <!-- Restore -->
-        <button class="restoreBtn_C3D4" id="restore">
-            <span class="btnText_E5F6">我到哪了</span>
+        <button class="restoreBtn_C3D4" id="restore" style="display:none;">
+            <span class="btnText_E5F6">
+                <span id="restoreTitle">讓我到哪了</span>
+                <span id="restoreSubtitle" style="margin-left:6px; opacity:.8;"></span>
+            </span>
+            <div class="restoreProgress">
+              <div class="restoreProgressBar" id="restoreProgressBar"></div>
+            </div>
         </button>
-        <div class="language">
-            <button class="language-button">本站使用正體字</button>
-        </div>
     </div>
     
     <!-- 測驗內容 -->
