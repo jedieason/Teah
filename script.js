@@ -845,6 +845,10 @@ document.addEventListener('keydown', function(event) {
     if (event.target === userQuestionInput) {
         return;
     }
+    // Ignore shortcuts while typing in topic search
+    if (event.target && event.target.id === 'topicSearch') {
+        return;
+    }
     if (event.key.toLowerCase() === 'q') {
         event.preventDefault();
         weeGPTButton.click();
@@ -1025,7 +1029,8 @@ async function fetchQuizList() {
                 sortGroups(Object.keys(groups)).forEach(groupName => {
                     const tile = document.createElement('button');
                     tile.className = 'folder-tile';
-                    tile.textContent = groupName;
+                    const count = (groups[groupName] || []).length;
+                    tile.textContent = `${groupName} (${count})`;
                     tile.addEventListener('click', () => renderFolderView(groupName));
                     buttonContainer.appendChild(tile);
                 });
@@ -1063,6 +1068,41 @@ async function fetchQuizList() {
                 });
                 buttonContainer.appendChild(grid);
             };
+
+            // Search wiring (flat results)
+            const searchInput = document.getElementById('topicSearch');
+            const allQuizList = quizKeys.slice().sort((a, b) => a.localeCompare(b, 'zh-Hant'));
+
+            const renderFlatList = (items) => {
+                buttonContainer.classList.remove('folder-view');
+                buttonContainer.innerHTML = '';
+                items.forEach(key => {
+                    const btn = document.createElement('button');
+                    btn.classList.add('select-button');
+                    btn.dataset.json = key;
+                    btn.innerText = key;
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.select-button').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        selectedJson = key;
+                    });
+                    buttonContainer.appendChild(btn);
+                });
+            };
+
+            if (searchInput && !searchInput.dataset.wired) {
+                searchInput.dataset.wired = '1';
+                searchInput.addEventListener('input', (e) => {
+                    const q = (e.target.value || '').trim();
+                    if (!q) {
+                        renderFolderTiles();
+                        return;
+                    }
+                    const lower = q.toLowerCase();
+                    const matched = allQuizList.filter(name => name.toLowerCase().includes(lower));
+                    renderFlatList(matched);
+                });
+            }
 
             renderFolderTiles();
         } else {
