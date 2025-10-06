@@ -735,26 +735,12 @@ body.dark-mode .start-screen { background: #313131; }
       gap: 15px;                    /* 設定按鈕之間的間距 */
       justify-content: center;      /* 將按鈕集中對齊 */
       max-width: 80%;               /* 容器最大寬度為90% */
-      margin: 0 auto;               /* 使容器在水平居中 */
+      margin: 0 auto;   
   }
 
-  /* Folder-like groups */
-  /* Folder tiles layout */
-  .button-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      align-items: stretch;
-      max-width: 1100px;
-      margin-left: auto;
-      margin-right: auto;
-      justify-content: center;      /* 水平置中整個網格 */
-      justify-items: center;        /* 置中每個格子的內容 */
-  }
-
-  /* Minimal folder tiles */
   .folder-tile {
       display: block;
+      font-size: 1rem;
       padding: 10px 12px;
       border-radius: 10px;
       border: 1px solid rgba(0,0,0,0.08);
@@ -767,12 +753,12 @@ body.dark-mode .start-screen { background: #313131; }
   }
   .folder-tile:hover { background: #f8fafc; transform: translateY(-1px); }
 
-  .button-row.folder-view { display: block; max-width: 1100px; }
+  .button-row.folder-view { display: block; max-width: 700px; }
   .folder-header { display: flex; align-items: center; gap: 10px; margin: 4px 2px 12px 2px; }
   .folder-back { background: transparent; border: none; color: inherit; cursor: pointer; padding: 8px 10px; border-radius: 8px; }
   .folder-title { font-weight: 700; }
   .group-grid { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; justify-content: center; }
-  .group-grid .select-button { flex: 1 1 200px; text-align: center; padding: 8px 12px; font-size: .95rem; -webkit-text-fill-color: currentColor; }
+  .group-grid .select-button {text-align: center; padding: 8px 12px; font-size: .95rem; -webkit-text-fill-color: currentColor; }
   .group-grid .select-button:hover { color: #111111 !important; -webkit-text-fill-color: currentColor !important; }
   body.dark-mode .group-grid .select-button:hover { color: #f0f6fc !important; }
 
