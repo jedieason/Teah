@@ -378,14 +378,16 @@ function selectOption(event) {
 const customAlert = document.getElementById('customAlert');
 const modalConfirmBtn = document.getElementById('modalConfirmBtn');
 const modalMessage = document.getElementById('modal-message');
+let customAlertConfirmCallback = null;
 
 function setModalMessage(message) {
     modalMessage.innerText = message;
 }
 
-function showCustomAlert(message) {
+function showCustomAlert(message, onConfirm) {
     setModalMessage(message);
     customAlert.style.display = 'flex';
+    customAlertConfirmCallback = typeof onConfirm === 'function' ? onConfirm : null;
 }
 
 function hideCustomAlert() {
@@ -396,6 +398,12 @@ modalConfirmBtn.addEventListener('click', () => {
     hideCustomAlert();
     if (isTestCompleted) {
         location.reload();
+        return;
+    }
+    if (typeof customAlertConfirmCallback === 'function') {
+        const cb = customAlertConfirmCallback;
+        customAlertConfirmCallback = null;
+        try { cb(); } catch (e) { console.error(e); }
     }
 });
 
@@ -487,12 +495,19 @@ function confirmAnswer() {
             document.getElementById('confirm-btn').disabled = true;
             const selectedBtn = document.querySelector(`.option-button[data-option='${selectedOption}']`);
             if (selectedOption === currentQuestion.answer) {
-                selectedBtn.classList.add('correct');
+                if (selectedBtn) selectedBtn.classList.add('correct');
                 updateCorrect();
             } else {
-                selectedBtn.classList.add('incorrect');
+                if (selectedBtn) selectedBtn.classList.add('incorrect');
                 const correctBtn = document.querySelector(`.option-button[data-option='${currentQuestion.answer}']`);
-                correctBtn.classList.add('correct');
+                if (correctBtn) {
+                    correctBtn.classList.add('correct');
+                } else {
+                    // 找不到正確選項的按鈕，提示並提供跳至下一題
+                    showCustomAlert('遇到問題，是否先前往下一題？', () => {
+                        loadNewQuestion();
+                    });
+                }
                 updateWrong();
             }
         }
