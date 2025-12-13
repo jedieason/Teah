@@ -1,179 +1,184 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="Images/logo.png" type="image/png">
-    <title>題矣</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="Images/logo.png" type="image/png">
+  <title>題矣</title>
 </head>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-    <!-- Firebase v11.6.1 inline initialization -->
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<!-- Firebase v11.6.1 inline initialization -->
 </head>
+
 <body>
-    <!-- 開始畫面 -->
-    <div class="start-screen">
-        <div class="top-right-controls">
-            <button id="controlsMenuBtn" class="avatar-button" aria-haspopup="true" aria-expanded="false">
-                <img id="controlsAvatar" src="Images/logo.png" alt="Profile" width="36" height="36">
-            </button>
-            <div id="controlsMenu" class="controls-menu" role="menu" aria-hidden="true">
-                <div class="controls-menu-header">
-                    <img id="menuAvatar" class="menu-avatar" src="Images/logo.png" alt="Avatar" width="48" height="48">
-                    <div class="menu-user">
-                        <div id="menuDisplayName" class="menu-name">尚未登入</div>
-                        <div id="menuEmail" class="menu-email"></div>
-                    </div>
-                </div>
-                <div class="controls-separator"></div>
-                <button class="controls-item" id="menuStarred" role="menuitem">已收藏</button>
-                <button class="controls-item" id="menuShuffle" role="menuitem">隨機順序</button>
-                <button class="controls-item" id="menuTheme" role="menuitem">深色模式</button>
-                <button class="controls-item" id="menuAddQuiz" role="menuitem">新增題庫</button>
-                <div class="controls-separator"></div>
-                <button class="controls-item" id="menuLogout" role="menuitem">登出</button>
-            </div>
-        </div>
-        <!-- <input type="file" id="uploadJson" accept=".json" style="display:none;"> -->
-        <button id="signInBtn" class="sign-in-button">Google 登入</button>
-        <div class="start-title">題矣</div>
-        <div class="header-right-homepage">
-        </div>
-        <div class="topics-toolbar" id="topicsToolbar">
-            <input id="topicSearch" type="text" placeholder="搜尋題庫…" aria-label="搜尋題庫">
-        </div>
-        <!-- 新增一個空的按鈕容器 -->
-        <div id="button-row" class="button-row"></div>
-        
-        <button id="startGame" class="start-button">開始</button>
-        <!-- Restore -->
-        <button class="restoreBtn_C3D4" id="restore" style="display:none;">
-            <span class="btnText_E5F6">
-                <span id="restoreTitle">讓我到哪了</span>
-                <span id="restoreSubtitle" style="margin-left:6px; opacity:.8;"></span>
-            </span>
-            <div class="restoreProgress">
-              <div class="restoreProgressBar" id="restoreProgressBar"></div>
-            </div>
-        </button>
-    </div>
-    
-    <!-- 測驗內容 -->
-    <div class="quiz-container">
-        <div class="header">
-            <div class="quiz-title">題矣</div>
-            <div class="header-right">
-                <img id="reverseButton" src="Images/reverse.svg" alt="Reverse" width="23" height="23" style="cursor: pointer;">
-            </div>
-        </div>
-        <!-- Progress Display -->
-        <div class="progress-container">
-          <div class="progress-counts">
-            <div class="progress-count">
-              <span class="count-text">答對</span>
-              <span class="count-number" id="correct">0</span>
-            </div>
-            <div class="progress-count">
-              <span class="count-number" id="wrong">0</span>
-              <span class="count-text">答錯</span>
-            </div>
-          </div>
-          <div class="progress-bars">
-            <div id="correctBar" class="progress-bar correct-bar"></div>
-            <div id="wrongBar" class="progress-bar wrong-bar"></div>
+  <!-- 開始畫面 -->
+  <div class="start-screen">
+    <div class="top-right-controls">
+      <button id="controlsMenuBtn" class="avatar-button" aria-haspopup="true" aria-expanded="false">
+        <img id="controlsAvatar" src="Images/logo.png" alt="Profile" width="36" height="36">
+      </button>
+      <div id="controlsMenu" class="controls-menu" role="menu" aria-hidden="true">
+        <div class="controls-menu-header">
+          <img id="menuAvatar" class="menu-avatar" src="Images/logo.png" alt="Avatar" width="48" height="48">
+          <div class="menu-user">
+            <div id="menuDisplayName" class="menu-name">尚未登入</div>
+            <div id="menuEmail" class="menu-email"></div>
           </div>
         </div>
-        <div class="question-content" id="question"></div>
-        <div class="fillblank-container" style="display: none;">
-            <input type="text" id="fillblank-input" class="fillblank-input" placeholder="請輸入完整句子，系統將自動驗證關鍵字">
-        </div>
-        <div class="options" id="options"></div>
-        <button id="confirm-btn" class="confirm-button">確認</button>
-
-        <div class="explanation" id="explanation">
-            <div class="explanation-text" id="explanation-text"></div>
-            <div id="origin-display" class="origin-display"></div>
-            <div id="WeeGPTInputSection" style="display: none;">
-                <input id="userQuestion" placeholder="詢問 Guru Grogu..."></input>
-                <button id="sendQuestionBtn">傳送</button>
-            </div>
-            <div class="explanation-buttons">
-                <div class="header-right">
-                    <img id="copy-btn" src="Images/copy.svg" alt="Copy" width="30" height="30" style="cursor: pointer;">
-                    <img id="deBug" src="Images/debug.svg" alt="Debug" width="30" height="30" style="cursor: pointer;">
-                    <img id="WeeGPT" src="Images/WeeGPT.svg" alt="WeeGPT" width="24" height="24" style="cursor: pointer;">
-                    <img id="starQuestion" src="Images/star-empty.svg" alt="Star" width="24" height="24" style="cursor: pointer;">
-                </div>
-                <button id="next-btn" class="next-button">下一題</button>
-            </div>
-        </div>
-        <div class="copyright">
-            © 2025 <a href="https://instagram.com/jedieason" target="_blank">Jedieason</a> 版權所有
-        </div>
-    </div>
-
-    <!-- 自訂模態窗口 -->
-    <div id="customAlert" class="modal">
-        <div class="modal-content">
-            <p id="modal-message">選點啥吧</p>
-            <button id="modalConfirmBtn" class="modal-confirm-button">知道了</button>
-        </div>
-    </div>
-
-    <!-- deBug回報窗口 -->
-    <div id="popupWindow">
-        <div id="closeButton">&times;</div>
-        <div class="content">
-            <div class="non-editable">題目：</div>
-            <div class="editable" contenteditable="true"></div>
-            <div class="editable" contenteditable="true"></div>
-            <div class="non-editable">選項：</div>
-            <div class="editable" contenteditable="true"></div>
-            <div class="non-editable">詳解：</div>
-            <div class="editable" contenteditable="true"></div>
-        </div>
-        <button id="sendButton">抓到蟲子了</button>
-    </div>
-
-    <!-- Starred Questions Modal -->
-    <div id="starredModal" class="modal">
-      <div class="modal-content starred-modal-content">
-        <span class="modal-close">&times;</span>
-        <h3>已收藏的題目</h3>
-        <div id="starredList"></div>
+        <div class="controls-separator"></div>
+        <button class="controls-item" id="menuStarred" role="menuitem">已收藏</button>
+        <button class="controls-item" id="menuShuffle" role="menuitem">隨機順序</button>
+        <button class="controls-item" id="menuTheme" role="menuitem">深色模式</button>
+        <button class="controls-item" id="menuAddQuiz" role="menuitem">新增題庫</button>
+        <button class="controls-item" id="menuEditQuizName" role="menuitem">編輯題庫名稱</button>
+        <div class="controls-separator"></div>
+        <button class="controls-item" id="menuLogout" role="menuitem">登出</button>
       </div>
     </div>
-</body>
-    <!-- Upload Quiz Modal -->
-    <div id="uploadModal" class="modal">
-      <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h3>新增題庫</h3>
-                <div style="margin: 16px 0;">
-          <!-- Upload mode radios -->
-          <label>
-            <input type="radio" name="upload-mode" value="paste" checked>
-            貼上 JSON
-          </label>
-          <label>
-            <input type="radio" name="upload-mode" value="file">
-            上傳檔案
-          </label>
-        </div>
-        <input type="text" id="uploadNameInput" placeholder="輸入題庫名稱">
-        <textarea id="pasteJson" placeholder="請貼上 JSON 內容" style="width:100%;height:110px;resize:vertical;box-sizing:border-box;"></textarea>
-        <div id="fileDropZone" class="file-drop-zone" style="display:none;">
-          <span id="dropZoneLabel">拖放 JSON 檔案至此，或點擊選擇檔案</span>
-          <input type="file" id="uploadJson" accept=".json" style="display:none;">
-        </div>
-        <div class="upload-buttons">
-          <button id="uploadConfirmBtn" class="modal-confirm-button">確定</button>
-        </div>
+    <!-- <input type="file" id="uploadJson" accept=".json" style="display:none;"> -->
+    <button id="signInBtn" class="sign-in-button">Google 登入</button>
+    <div class="start-title">題矣</div>
+    <div class="header-right-homepage">
+    </div>
+    <div class="topics-toolbar" id="topicsToolbar">
+      <input id="topicSearch" type="text" placeholder="搜尋題庫…" aria-label="搜尋題庫">
+    </div>
+    <!-- 新增一個空的按鈕容器 -->
+    <div id="button-row" class="button-row"></div>
+
+    <button id="startGame" class="start-button">開始</button>
+    <!-- Restore -->
+    <button class="restoreBtn_C3D4" id="restore" style="display:none;">
+      <span class="btnText_E5F6">
+        <span id="restoreTitle">讓我到哪了</span>
+        <span id="restoreSubtitle" style="margin-left:6px; opacity:.8;"></span>
+      </span>
+      <div class="restoreProgress">
+        <div class="restoreProgressBar" id="restoreProgressBar"></div>
+      </div>
+    </button>
+  </div>
+
+  <!-- 測驗內容 -->
+  <div class="quiz-container">
+    <div class="header">
+      <div class="quiz-title">題矣</div>
+      <div class="header-right">
+        <img id="reverseButton" src="Images/reverse.svg" alt="Reverse" width="23" height="23" style="cursor: pointer;">
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script type="module" src="script.js"></script>
+    <!-- Progress Display -->
+    <div class="progress-container">
+      <div class="progress-counts">
+        <div class="progress-count">
+          <span class="count-text">答對</span>
+          <span class="count-number" id="correct">0</span>
+        </div>
+        <div class="progress-count">
+          <span class="count-number" id="wrong">0</span>
+          <span class="count-text">答錯</span>
+        </div>
+      </div>
+      <div class="progress-bars">
+        <div id="correctBar" class="progress-bar correct-bar"></div>
+        <div id="wrongBar" class="progress-bar wrong-bar"></div>
+      </div>
+    </div>
+    <div class="question-content" id="question"></div>
+    <div class="fillblank-container" style="display: none;">
+      <input type="text" id="fillblank-input" class="fillblank-input" placeholder="請輸入完整句子，系統將自動驗證關鍵字">
+    </div>
+    <div class="options" id="options"></div>
+    <button id="confirm-btn" class="confirm-button">確認</button>
+
+    <div class="explanation" id="explanation">
+      <div class="explanation-text" id="explanation-text"></div>
+      <div id="origin-display" class="origin-display"></div>
+      <div id="WeeGPTInputSection" style="display: none;">
+        <input id="userQuestion" placeholder="詢問 Guru Grogu..."></input>
+        <button id="sendQuestionBtn">傳送</button>
+      </div>
+      <div class="explanation-buttons">
+        <div class="header-right">
+          <img id="copy-btn" src="Images/copy.svg" alt="Copy" width="30" height="30" style="cursor: pointer;">
+          <img id="deBug" src="Images/debug.svg" alt="Debug" width="30" height="30" style="cursor: pointer;">
+          <img id="WeeGPT" src="Images/WeeGPT.svg" alt="WeeGPT" width="24" height="24" style="cursor: pointer;">
+          <img id="starQuestion" src="Images/star-empty.svg" alt="Star" width="24" height="24" style="cursor: pointer;">
+        </div>
+        <button id="next-btn" class="next-button">下一題</button>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2025 <a href="https://instagram.com/jedieason" target="_blank">Jedieason</a> 版權所有
+    </div>
+  </div>
+
+  <!-- 自訂模態窗口 -->
+  <div id="customAlert" class="modal">
+    <div class="modal-content">
+      <p id="modal-message">選點啥吧</p>
+      <button id="modalConfirmBtn" class="modal-confirm-button">知道了</button>
+    </div>
+  </div>
+
+  <!-- deBug回報窗口 -->
+  <div id="popupWindow">
+    <div id="closeButton">&times;</div>
+    <div class="content">
+      <div class="non-editable">題目：</div>
+      <div class="editable" contenteditable="true"></div>
+      <div class="editable" contenteditable="true"></div>
+      <div class="non-editable">選項：</div>
+      <div class="editable" contenteditable="true"></div>
+      <div class="non-editable">詳解：</div>
+      <div class="editable" contenteditable="true"></div>
+    </div>
+    <button id="sendButton">抓到蟲子了</button>
+  </div>
+
+  <!-- Starred Questions Modal -->
+  <div id="starredModal" class="modal">
+    <div class="modal-content starred-modal-content">
+      <span class="modal-close">&times;</span>
+      <h3>已收藏的題目</h3>
+      <div id="starredList"></div>
+    </div>
+  </div>
 </body>
+<!-- Upload Quiz Modal -->
+<div id="uploadModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h3>新增題庫</h3>
+    <div style="margin: 16px 0;">
+      <!-- Upload mode radios -->
+      <label>
+        <input type="radio" name="upload-mode" value="paste" checked>
+        貼上 JSON
+      </label>
+      <label>
+        <input type="radio" name="upload-mode" value="file">
+        上傳檔案
+      </label>
+    </div>
+    <input type="text" id="uploadNameInput" placeholder="輸入題庫名稱">
+    <textarea id="pasteJson" placeholder="請貼上 JSON 內容"
+      style="width:100%;height:110px;resize:vertical;box-sizing:border-box;"></textarea>
+    <div id="fileDropZone" class="file-drop-zone" style="display:none;">
+      <span id="dropZoneLabel">拖放 JSON 檔案至此，或點擊選擇檔案</span>
+      <input type="file" id="uploadJson" accept=".json" style="display:none;">
+    </div>
+    <div class="upload-buttons">
+      <button id="uploadConfirmBtn" class="modal-confirm-button">確定</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="module" src="script.js"></script>
+</body>
+
 </html>

@@ -1,7 +1,7 @@
 // Firebase SDK imports and initialization (v11.6.1)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-import { getDatabase, ref, get, update, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getDatabase, ref, get, update, set, remove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -95,6 +95,9 @@ let shouldShuffleQuiz = false; // false: 固定順序 (JSON 順序), true: 隨�
 // 新增：歷史紀錄陣列
 let questionHistory = [];
 let wrongQuestions = [];
+
+// 新增：編輯題庫名稱模式
+let isEditNameMode = false;
 
 const userQuestionInput = document.getElementById('userQuestion');
 
@@ -1011,6 +1014,69 @@ window.addEventListener("beforeunload", function (event) {
     event.returnValue = '';
 });
 
+// Rename Quiz Function
+function startRenamingQuiz(oldName, btnElement) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = oldName;
+    input.className = 'rename-input';
+
+    // Replace button content
+    btnElement.innerHTML = '';
+    btnElement.appendChild(input);
+    input.focus();
+
+    let isCommitting = false;
+    const commit = async () => {
+        if (isCommitting) return;
+        isCommitting = true;
+        const newName = input.value.trim();
+        if (!newName || newName === oldName) {
+            btnElement.textContent = oldName;
+            isCommitting = false;
+            return;
+        }
+
+        try {
+            // Check existence
+            const newRef = ref(database, newName);
+            const snap = await get(newRef);
+            if (snap.exists()) {
+                alert('該名稱已存在！');
+                btnElement.textContent = oldName;
+                isCommitting = false;
+                return;
+            }
+
+            // Move data
+            const oldRef = ref(database, oldName);
+            const oldSnap = await get(oldRef);
+            if (oldSnap.exists()) {
+                const data = oldSnap.val();
+                await set(newRef, data);
+                await remove(oldRef);
+                if (selectedJson === oldName) {
+                    selectedJson = newName;
+                }
+                fetchQuizList();
+            }
+        } catch (e) {
+            console.error(e);
+            alert('更名失敗: ' + e.message);
+            btnElement.textContent = oldName;
+        }
+        isCommitting = false;
+    };
+
+    input.addEventListener('blur', commit);
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            input.blur();
+        }
+    });
+    input.addEventListener('click', (e) => e.stopPropagation());
+}
+
 // 從 Firebase 讀取可用的題庫清單並建立按鈕
 async function fetchQuizList() {
     try {
@@ -1079,6 +1145,12 @@ async function fetchQuizList() {
                         btn.classList.add('selected');
                         selectedJson = key;
                     });
+                    btn.addEventListener('dblclick', (e) => {
+                        if (isEditNameMode) {
+                            e.stopPropagation();
+                            startRenamingQuiz(key, btn);
+                        }
+                    });
                     grid.appendChild(btn);
                 });
                 buttonContainer.appendChild(grid);
@@ -1100,6 +1172,12 @@ async function fetchQuizList() {
                         document.querySelectorAll('.select-button').forEach(b => b.classList.remove('selected'));
                         btn.classList.add('selected');
                         selectedJson = key;
+                    });
+                    btn.addEventListener('dblclick', (e) => {
+                        if (isEditNameMode) {
+                            e.stopPropagation();
+                            startRenamingQuiz(key, btn);
+                        }
                     });
                     buttonContainer.appendChild(btn);
                 });
@@ -1695,6 +1773,20 @@ if (menuLogout) menuLogout.addEventListener('click', async () => {
     } catch (error) {
         console.error('Sign-out failed:', error);
         showCustomAlert('登出失敗，請稍後再試。');
+    }
+});
+
+// Edit Quiz Name from controls menu
+const menuEditQuizName = document.getElementById('menuEditQuizName');
+if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
+    isEditNameMode = !isEditNameMode;
+    if (controlsMenu) controlsMenu.classList.remove('open');
+    if (isEditNameMode) {
+        showCustomAlert('現在可以在題庫上點兩下以編輯名稱。再次點擊選單按鈕可取消。');
+        menuEditQuizName.textContent = '停止編輯名稱';
+    } else {
+        showCustomAlert('已退出編輯模式。');
+        menuEditQuizName.textContent = '編輯題庫名稱';
     }
 });
 
