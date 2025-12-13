@@ -112,12 +112,12 @@ window.MathJax = {
 // 初始化測驗
 async function initQuiz() {
     localStorage.removeItem('quizProgress');
-    
+
     await loadQuestions();
     initialQuestionCount = questions.length;
     document.querySelector('.start-screen').style.display = 'none';
     document.querySelector('.quiz-container').style.display = 'flex';
-    
+
     // Update the quiz title with the current file name
     const fileName = selectedJson.split('/').pop().replace('.json', '');
     document.querySelector('.quiz-title').innerText = `${fileName}`;
@@ -144,8 +144,8 @@ async function loadQuestions() {
 
 // 洗牌函數
 function shuffle(array) {
-    for (let i = array.length -1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i +1));
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
@@ -337,7 +337,7 @@ function updateExplanationOptions(explanation, labelMapping) {
     // Regex to match (A), ( B ), （Ｃ）, （ D ）, (Ｅ), （F）, etc.
     // It allows for optional spaces between the parentheses (half-width or full-width)
     // and the letter (half-width or full-width A-L).
-    return explanation.replace(/(?:\(|\uFF08)\s*([A-L\uFF21-\uFF2C])\s*(?:\)|\uFF09)/g, function(match, capturedLetter) {
+    return explanation.replace(/(?:\(|\uFF08)\s*([A-L\uFF21-\uFF2C])\s*(?:\)|\uFF09)/g, function (match, capturedLetter) {
         let standardLabel = capturedLetter;
         // Convert full-width letter to half-width if necessary
         const charCode = capturedLetter.charCodeAt(0);
@@ -480,7 +480,7 @@ function confirmAnswer() {
             });
             // 判斷是否全對
             let isCompletelyCorrect = (selectedOptions.length === currentQuestion.answer.length) &&
-                                      currentQuestion.answer.every(opt => selectedOptions.includes(opt));
+                currentQuestion.answer.every(opt => selectedOptions.includes(opt));
             if (isCompletelyCorrect) {
                 updateCorrect();
             } else {
@@ -625,9 +625,9 @@ function copyQuestion() {
         }
     }
     textToCopy += '\nExplanation:\n' + (currentQuestion.explanation || 'No explanation provided.');
-    navigator.clipboard.writeText(textToCopy).then(function() {
+    navigator.clipboard.writeText(textToCopy).then(function () {
         showCustomAlert('題目已複製！');
-    }, function(err) {
+    }, function (err) {
         alert('Could not copy text: ' + err);
     });
 }
@@ -645,12 +645,12 @@ document.getElementById('confirm-btn').addEventListener('click', confirmAnswer);
 document.getElementById('next-btn').addEventListener('click', loadNewQuestion);
 document.getElementById('copy-btn').addEventListener('click', copyQuestion);
 document.getElementById('restore').addEventListener('click', () => {
-        if (!auth.currentUser) {
-            showCustomAlert('請先登入才能恢復進度！');
-            return;
-        }
-        restoreProgress();
-    });
+    if (!auth.currentUser) {
+        showCustomAlert('請先登入才能恢復進度！');
+        return;
+    }
+    restoreProgress();
+});
 document.getElementById('reverseButton').addEventListener('click', reverseQuestion);
 
 function reverseQuestion() {
@@ -703,7 +703,7 @@ function reverseQuestion() {
         document.getElementById('options').style.display = 'none';
         fillblankContainer.style.display = 'flex';
         fillblankInput.value = previousState.fillBlankValueRestore || '';
-        
+
         if (previousState.fillBlankClassesRestore) {
             fillblankInput.className = 'fillblank-input'; // Reset to base class
             previousState.fillBlankClassesRestore.forEach(cls => {
@@ -713,7 +713,7 @@ function reverseQuestion() {
             fillblankInput.className = 'fillblank-input'; // Ensure it's reset if no classes were stored
         }
         fillblankInput.disabled = previousState.fillBlankDisabledRestore === true;
-        
+
         acceptingAnswers = !previousState.isConfirmed;
 
     } else { // Multiple choice or True/False
@@ -725,7 +725,7 @@ function reverseQuestion() {
 
         let optionEntriesToDisplay = Object.entries(currentQuestion.options || {});
         const isTrueFalse = optionEntriesToDisplay.length === 2 &&
-                            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
+            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
 
         if (shouldShuffleQuiz && !isTrueFalse) {
             shuffle(optionEntriesToDisplay); // Shuffle display order of A,B,C... buttons
@@ -748,7 +748,7 @@ function reverseQuestion() {
             button.classList.add('option-button');
             button.dataset.option = key;
             button.innerHTML = marked.parse(`${key}: ${value}`);
-            
+
             if (previousState.isConfirmed) {
                 // Apply selection and correctness styling
                 if (currentQuestion.isMultiSelect) {
@@ -773,16 +773,16 @@ function reverseQuestion() {
                     }
                 }
             } else { // Not confirmed, set up for interaction
-                 button.addEventListener('click', selectOption);
-                 if (currentQuestion.isMultiSelect) {
+                button.addEventListener('click', selectOption);
+                if (currentQuestion.isMultiSelect) {
                     if (Array.isArray(userSelection) && userSelection.includes(key)) {
                         button.classList.add('selected');
                     }
-                 } else {
+                } else {
                     if (userSelection === key) {
-                         button.classList.add('selected');
+                        button.classList.add('selected');
                     }
-                 }
+                }
             }
             optionsContainer.appendChild(button);
         });
@@ -805,13 +805,13 @@ function reverseQuestion() {
     if (previousState.isConfirmed) {
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！');
         renderMathInElement(document.getElementById('explanation-text'), {
-        delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "$$", right: "$$", display: true },
-            { left: "\\[", right: "\\]", display: true }
-        ]
-    });
+            delimiters: [
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "$$", right: "$$", display: true },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });
         explanationElement.style.display = 'block';
         confirmBtnElement.style.display = 'none';
         confirmBtnElement.disabled = true;
@@ -828,7 +828,7 @@ function reverseQuestion() {
         confirmBtnElement.style.display = 'block';
         confirmBtnElement.disabled = false;
     }
-    
+
     document.getElementById('WeeGPTInputSection').style.display = 'none';
 
     // Update popup window content (Debug modal)
@@ -841,7 +841,7 @@ function reverseQuestion() {
     saveProgress(); // Save the restored state
 }
 
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     if (document.querySelector('.start-screen').style.display !== 'none') {
         if (event.key === 'Enter') {
             if (!selectedJson) {
@@ -891,7 +891,7 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-document.getElementById('button-row').addEventListener('click', function(event) {
+document.getElementById('button-row').addEventListener('click', function (event) {
     if (event.target && event.target.matches('button.select-button')) {
         const selectedButton = event.target;
         // Do not deselect shuffle button if it's the one being clicked
@@ -964,14 +964,14 @@ function sendToGoogleDocs(content) {
         },
         body: new URLSearchParams({ content: content })
     })
-    .then(response => response.text())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showCustomAlert('Failed to send content to Google Docs.');
-    });
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showCustomAlert('Failed to send content to Google Docs.');
+        });
 }
 
 document.getElementById('sendButton').addEventListener('click', gatherEditedContent);
@@ -985,7 +985,7 @@ debugIcon.addEventListener('click', () => {
     // Populate current question and details
     document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
     const optionsText = Object.entries(currentQuestion.options || {}).map(
-      ([key, value]) => `${key}: ${value}`
+        ([key, value]) => `${key}: ${value}`
     ).join('\n');
     document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
     document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
@@ -1144,134 +1144,134 @@ const dropZoneLabel = document.getElementById('dropZoneLabel');
 const uploadModeRadios = uploadModal.querySelectorAll('input[name="upload-mode"]');
 
 function openUploadModal(defaultMode = 'paste') {
-  if (!uploadModal || !pasteJson || !fileDropZone || !uploadNameInput) return;
-  uploadModal.style.display = 'flex';
-  uploadModeRadios.forEach(r => r.checked = r.value === defaultMode);
-  if (defaultMode === 'file') {
-    pasteJson.style.display = 'none';
-    fileDropZone.style.display = 'block';
-  } else {
-    pasteJson.style.display = 'block';
-    fileDropZone.style.display = 'none';
-  }
-  pasteJson.value = '';
-  uploadNameInput.value = '';
-  pendingQuizData = null;
+    if (!uploadModal || !pasteJson || !fileDropZone || !uploadNameInput) return;
+    uploadModal.style.display = 'flex';
+    uploadModeRadios.forEach(r => r.checked = r.value === defaultMode);
+    if (defaultMode === 'file') {
+        pasteJson.style.display = 'none';
+        fileDropZone.style.display = 'block';
+    } else {
+        pasteJson.style.display = 'block';
+        fileDropZone.style.display = 'none';
+    }
+    pasteJson.value = '';
+    uploadNameInput.value = '';
+    pendingQuizData = null;
 }
 
 // The upload modal is opened via controls menu item (menuAddQuiz)
 
 // Upload mode switching logic
 uploadModeRadios.forEach(radio => {
-  radio.addEventListener('change', e => {
-    if (e.target.value === 'file') {
-      pasteJson.style.display = 'none';
-      fileDropZone.style.display = 'block';
-    } else {
-      pasteJson.style.display = 'block';
-      fileDropZone.style.display = 'none';
-    }
-  });
+    radio.addEventListener('change', e => {
+        if (e.target.value === 'file') {
+            pasteJson.style.display = 'none';
+            fileDropZone.style.display = 'block';
+        } else {
+            pasteJson.style.display = 'block';
+            fileDropZone.style.display = 'none';
+        }
+    });
 });
 
 // Click to open file selector
 fileDropZone.addEventListener('click', () => uploadInput.click());
 // Prevent default for drag events
-['dragenter','dragover','dragleave','drop'].forEach(evt => {
-  fileDropZone.addEventListener(evt, e => {
-    e.preventDefault();
-    e.stopPropagation();
-  });
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt => {
+    fileDropZone.addEventListener(evt, e => {
+        e.preventDefault();
+        e.stopPropagation();
+    });
 });
 // Highlight on dragover
 fileDropZone.addEventListener('dragover', () => fileDropZone.classList.add('dragover'));
 fileDropZone.addEventListener('dragleave', () => fileDropZone.classList.remove('dragover'));
 // Handle drop
 fileDropZone.addEventListener('drop', async e => {
-  fileDropZone.classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if (file && file.name.endsWith('.json')) {
-    try {
-      const text = await file.text();
-      pendingQuizData = JSON.parse(text);
-      uploadNameInput.value = '';
-      uploadModeRadios.forEach(r => r.checked = r.value === 'file');
-      pasteJson.style.display = 'none';
-      fileDropZone.style.display = 'block';
-      dropZoneLabel.innerText = file.name;
-      uploadModal.style.display = 'flex';
-    } catch {
-      showCustomAlert('JSON 格式錯誤，請檢查檔案');
+    fileDropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.name.endsWith('.json')) {
+        try {
+            const text = await file.text();
+            pendingQuizData = JSON.parse(text);
+            uploadNameInput.value = '';
+            uploadModeRadios.forEach(r => r.checked = r.value === 'file');
+            pasteJson.style.display = 'none';
+            fileDropZone.style.display = 'block';
+            dropZoneLabel.innerText = file.name;
+            uploadModal.style.display = 'flex';
+        } catch {
+            showCustomAlert('JSON 格式錯誤，請檢查檔案');
+        }
+    } else {
+        showCustomAlert('請提供 JSON 檔案');
     }
-  } else {
-    showCustomAlert('請提供 JSON 檔案');
-  }
 });
 
 // When a file is selected, parse it and show modal
 uploadInput.addEventListener('change', async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  try {
-    const text = await file.text();
-    pendingQuizData = JSON.parse(text);
-  } catch {
-    showCustomAlert('JSON 格式錯誤，請檢查檔案');
-    return;
-  }
-  uploadNameInput.value = '';
-  // If modal not open, open it and set mode to file
-  uploadModal.style.display = 'flex';
-  uploadModeRadios.forEach(r => r.checked = r.value === 'file');
-  pasteJson.style.display = 'none';
-  fileDropZone.style.display = 'block';
-  dropZoneLabel.innerText = file.name;
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+        const text = await file.text();
+        pendingQuizData = JSON.parse(text);
+    } catch {
+        showCustomAlert('JSON 格式錯誤，請檢查檔案');
+        return;
+    }
+    uploadNameInput.value = '';
+    // If modal not open, open it and set mode to file
+    uploadModal.style.display = 'flex';
+    uploadModeRadios.forEach(r => r.checked = r.value === 'file');
+    pasteJson.style.display = 'none';
+    fileDropZone.style.display = 'block';
+    dropZoneLabel.innerText = file.name;
 });
 
 // Confirm upload: handle according to mode
 uploadConfirmBtn.addEventListener('click', async () => {
-  const quizName = uploadNameInput.value.trim();
-  if (!quizName) {
-    showCustomAlert('請輸入題庫名稱');
-    return;
-  }
-  // Determine mode
-  const mode = Array.from(uploadModeRadios).find(r => r.checked)?.value || 'paste';
-  let quizData = null;
-  if (mode === 'paste') {
+    const quizName = uploadNameInput.value.trim();
+    if (!quizName) {
+        showCustomAlert('請輸入題庫名稱');
+        return;
+    }
+    // Determine mode
+    const mode = Array.from(uploadModeRadios).find(r => r.checked)?.value || 'paste';
+    let quizData = null;
+    if (mode === 'paste') {
+        try {
+            quizData = JSON.parse(pasteJson.value);
+        } catch {
+            showCustomAlert('請貼上正確的 JSON 內容');
+            return;
+        }
+    } else {
+        if (!pendingQuizData) {
+            showCustomAlert('請選擇 JSON 檔案');
+            return;
+        }
+        quizData = pendingQuizData;
+    }
+    const updates = {};
+    updates[quizName] = quizData;
     try {
-      quizData = JSON.parse(pasteJson.value);
-    } catch {
-      showCustomAlert('請貼上正確的 JSON 內容');
-      return;
+        await update(ref(database, '/'), updates);
+        showCustomAlert('題庫已新增：' + quizName);
+        fetchQuizList();
+    } catch (err) {
+        console.error(err);
+        showCustomAlert('請跟管理員取得權限，或是檔案格式錯誤');
     }
-  } else {
-    if (!pendingQuizData) {
-      showCustomAlert('請選擇 JSON 檔案');
-      return;
-    }
-    quizData = pendingQuizData;
-  }
-  const updates = {};
-  updates[quizName] = quizData;
-  try {
-    await update(ref(database, '/'), updates);
-    showCustomAlert('題庫已新增：' + quizName);
-    fetchQuizList();
-  } catch (err) {
-    console.error(err);
-    showCustomAlert('請跟管理員取得權限，或是檔案格式錯誤');
-  }
-  pendingQuizData = null;
-  uploadModal.style.display = 'none';
-  uploadInput.value = '';
-  pasteJson.value = '';
+    pendingQuizData = null;
+    uploadModal.style.display = 'none';
+    uploadInput.value = '';
+    pasteJson.value = '';
 });
 
 // On page load: default to paste mode
 window.addEventListener('DOMContentLoaded', () => {
-  pasteJson.style.display = 'block';
-  fileDropZone.style.display = 'none';
+    pasteJson.style.display = 'block';
+    fileDropZone.style.display = 'none';
 });
 
 
@@ -1319,7 +1319,7 @@ sendQuestionBtn.addEventListener('click', async () => {
             currentQuestion.explanation = '無法取得 API 金鑰，請聯繫管理員。';
             document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
             userQuestionInput.value = ''; // Clear input
-            return; 
+            return;
         }
         fetchedApiKey = apiKeySnapshot.val();
     } catch (dbError) {
@@ -1330,8 +1330,8 @@ sendQuestionBtn.addEventListener('click', async () => {
         userQuestionInput.value = ''; // Clear input
         return;
     }
-    
-    const MODEL_NAME = 'gemini-2.5-flash-lite';
+
+    const MODEL_NAME = 'gemini-flash-lite-latest';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${fetchedApiKey}`;
 
     const systemInstructionText = "你是Guru Grogu，由Jedieason訓練的助理。使用正體中文（臺灣）或英文回答。回答我的提問，我的提問內容會是基於我提問後面所附的題目，但那個題目並非你主要要回答的內容。回應請使用Markdown格式排版，所有Markdown語法都可以使用。請不要上網搜尋。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.";
@@ -1418,7 +1418,7 @@ sendQuestionBtn.addEventListener('click', async () => {
 });
 
 
-userQuestionInput.addEventListener('keydown', function(event) {
+userQuestionInput.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
         const isComposing = event.isComposing || event.target.getAttribute('aria-composing') === 'true';
         if (isComposing) {
@@ -1440,41 +1440,41 @@ function saveProgress() {
         selectedJson
     };
     update(ref(database, `progress/${auth.currentUser.uid}`), { progress })
-      .catch(error => console.error('保存進度到 Firebase 失敗：', error));
+        .catch(error => console.error('保存進度到 Firebase 失敗：', error));
 }
 
 function updateProgressBar(isCorrect = null) {
-  const correctBar = document.getElementById('correctBar');
-  const wrongBar = document.getElementById('wrongBar');
+    const correctBar = document.getElementById('correctBar');
+    const wrongBar = document.getElementById('wrongBar');
 
-  if (initialQuestionCount > 0) {
-    correctBar.style.width = (correct / initialQuestionCount * 100) + '%';
-    wrongBar.style.width = (wrong / initialQuestionCount * 100) + '%';
-  } else {
-    correctBar.style.width = '0%';
-    wrongBar.style.width = '0%';
-  }
+    if (initialQuestionCount > 0) {
+        correctBar.style.width = (correct / initialQuestionCount * 100) + '%';
+        wrongBar.style.width = (wrong / initialQuestionCount * 100) + '%';
+    } else {
+        correctBar.style.width = '0%';
+        wrongBar.style.width = '0%';
+    }
 
-  // Add challenge animations
-  if (isCorrect === true) {
-    correctBar.classList.add('correct-animating');
+    // Add challenge animations
+    if (isCorrect === true) {
+        correctBar.classList.add('correct-animating');
+        setTimeout(() => {
+            correctBar.classList.remove('correct-animating');
+        }, 800);
+    } else if (isCorrect === false) {
+        wrongBar.classList.add('wrong-animating');
+        setTimeout(() => {
+            wrongBar.classList.remove('wrong-animating');
+        }, 800);
+    }
+
+    // Add general animation for both bars
+    correctBar.classList.add('animating');
+    wrongBar.classList.add('animating');
     setTimeout(() => {
-      correctBar.classList.remove('correct-animating');
-    }, 800);
-  } else if (isCorrect === false) {
-    wrongBar.classList.add('wrong-animating');
-    setTimeout(() => {
-      wrongBar.classList.remove('wrong-animating');
-    }, 800);
-  }
-
-  // Add general animation for both bars
-  correctBar.classList.add('animating');
-  wrongBar.classList.add('animating');
-  setTimeout(() => {
-    correctBar.classList.remove('animating');
-    wrongBar.classList.remove('animating');
-  }, 600);
+        correctBar.classList.remove('animating');
+        wrongBar.classList.remove('animating');
+    }, 600);
 }
 
 function restoreProgress() {
@@ -1578,15 +1578,15 @@ if (signInBtn) {
 
 // Delegate click to close any modal when '×' is clicked
 document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('modal-close')) {
-    console.log('modal-close clicked on', e.target);
-    const modal = e.target.closest('.modal');
-    console.log('Found modal:', modal);
-    if (modal) {
-      modal.style.display = 'none';
-      console.log('Modal display set to none');
+    if (e.target.classList.contains('modal-close')) {
+        console.log('modal-close clicked on', e.target);
+        const modal = e.target.closest('.modal');
+        console.log('Found modal:', modal);
+        if (modal) {
+            modal.style.display = 'none';
+            console.log('Modal display set to none');
+        }
     }
-  }
 });
 
 // Controls dropdown (top-right)
@@ -1736,9 +1736,9 @@ function loadQuestionFromState() {
         optionsContainer.innerHTML = '';
 
         let optionEntriesToDisplay = Object.entries(currentQuestion.options);
-        
+
         const isTrueFalse = optionEntriesToDisplay.length === 2 &&
-                            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
+            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
 
         if (shouldShuffleQuiz && !isTrueFalse) {
             shuffle(optionEntriesToDisplay); // Shuffle display order of A,B,C... buttons
@@ -1766,7 +1766,7 @@ function loadQuestionFromState() {
         document.getElementById('options').style.display = 'none';
         fillblankContainer.style.display = 'none';
     }
-    
+
     // Update popup window content (Debug modal)
     document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
     const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
