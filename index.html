@@ -56,23 +56,42 @@
     <div class="header-right-homepage">
     </div>
 
-    <!-- Folder Header Container -->
-    <div id="folder-toolbar" class="folder-toolbar"></div>
-
-    <!-- 新增一個空的按鈕容器 -->
-    <div id="button-row" class="button-row"></div>
-
-    <button id="startGame" class="start-button">開始</button>
-    <!-- Restore -->
-    <button class="restoreBtn_C3D4" id="restore" style="display:none;">
-      <span class="btnText_E5F6">
-        <span id="restoreTitle">讓我到哪了</span>
-        <span id="restoreSubtitle" style="margin-left:6px; opacity:.8;"></span>
-      </span>
-      <div class="restoreProgress">
-        <div class="restoreProgressBar" id="restoreProgressBar"></div>
+    <!-- Main Content Area -->
+    <div class="home-content">
+      <div id="continue-section" style="display:none;">
+        <div class="section-header">
+          <h2 class="section-title">繼續</h2>
+        </div>
+        <div id="continue-card" class="continue-card">
+          <div class="continue-details">
+            <h3 id="continue-title-text" class="continue-title-text">Unit Name</h3>
+            <div class="continue-progress-track">
+              <div id="continue-progress-fill" class="continue-progress-fill"></div>
+            </div>
+            <p id="continue-stats-text" class="continue-stats-text">0/0 cards reviewed</p>
+            <button id="continue-btn-action" class="continue-btn-action">Continue</button>
+          </div>
+          <div class="continue-graphic">
+            <!-- Placeholder/Accessory for visual balance -->
+            <div class="graphic-placeholder"></div>
+          </div>
+        </div>
       </div>
-    </button>
+
+      <div class="section-header">
+        <h2 class="section-title">單元</h2>
+      </div>
+
+      <!-- Folder/Unit Navigation logic will render here -->
+      <div id="folder-breadcrumb" class="folder-breadcrumb"></div> <!-- Replaces folder-toolbar -->
+      <div id="units-grid" class="units-grid"></div> <!-- Replaces button-row -->
+    </div>
+
+    <!-- Hidden legacy elements if needed for script compatibility before full refactor -->
+    <div id="folder-toolbar" style="display:none;"></div>
+    <div id="button-row" style="display:none;"></div>
+    <button id="startGame" style="display:none;">Start</button>
+    <button id="restore" style="display:none;"></button>
   </div>
 
   <!-- 測驗內容 -->
@@ -80,6 +99,7 @@
     <div class="header">
       <div class="quiz-title">題矣</div>
       <div class="header-right">
+        <div id="quizTimer" class="timer-display" style="display:none;">15</div>
         <img id="reverseButton" src="Images/reverse.svg" alt="Reverse" width="23" height="23" style="cursor: pointer;">
       </div>
     </div>

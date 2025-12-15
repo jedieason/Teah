@@ -245,12 +245,16 @@ p {
 .start-screen {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    /* Changed from center to allow scrolling flow */
     align-items: center;
     min-height: 100svh;
     background: white;
     position: relative;
     transition: all 0.4s ease;
+    padding-top: 80px;
+    /* Space for top fixed controls if any, or just spacing */
+    box-sizing: border-box;
 }
 
 /* Top-right controls */
@@ -319,6 +323,258 @@ p {
     padding: 12px;
     display: none;
 }
+
+/* --- Modern Home Dashboard Styles --- */
+
+.home-content {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-header {
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-family: 'Noto Sans TC', sans-serif;
+    /* Clean sans-serif for UI headers */
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2D3436;
+    margin: 0;
+}
+
+/* Continue Hero Card */
+.continue-card {
+    background: #fff;
+    border: 1px solid #E0E0E0;
+    border-radius: 20px;
+    padding: 0;
+    /* Layout handled by flex children */
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    min-height: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.continue-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.continue-details {
+    flex: 1;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.continue-title-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #2d3436;
+    margin: 0 0 16px 0;
+}
+
+.continue-progress-track {
+    width: 100%;
+    max-width: 300px;
+    height: 12px;
+    background: #F0F2F5;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.continue-progress-fill {
+    height: 100%;
+    background: #4CC9F0;
+    /* Cyan/Blue gradient base */
+    border-radius: 6px;
+    width: 0%;
+    transition: width 0.6s ease;
+}
+
+.continue-stats-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #636e72;
+    margin-bottom: 24px;
+}
+
+.continue-btn-action {
+    background: #4854e0;
+    /* Deep Blue from reference */
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.continue-btn-action:hover {
+    background: #3a45c0;
+}
+
+.continue-graphic {
+    flex: 1;
+    background: #F0F6FF;
+    /* Light blue background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Graphic placeholder or SVG background */
+    background-image: radial-gradient(circle at center, #E6F0FF 0%, #F0F6FF 100%);
+}
+
+.graphic-placeholder {
+    width: 60%;
+    height: 60%;
+    background-color: #DDE7FF;
+    border-radius: 12px;
+    position: relative;
+}
+
+/* Simulate card stack effect */
+.graphic-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -20px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(221, 231, 255, 0.6);
+    border-radius: 12px;
+    z-index: -1;
+    transform: rotate(-5deg);
+}
+
+/* Units Grid */
+.units-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.unit-card {
+    background: #fff;
+    border: 1px solid transparent;
+    /* No border for cleaner look, or subtle */
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.unit-card:hover {
+    background: #F8F9FA;
+}
+
+.unit-icon-box {
+    width: 50px;
+    height: 50px;
+    background: #E0F7FA;
+    /* Light Cyan */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00BCD4;
+    flex-shrink: 0;
+}
+
+.unit-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.unit-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2D3436;
+    margin-bottom: 4px;
+}
+
+.unit-subtitle {
+    font-size: 0.85rem;
+    color: #B2BEC3;
+}
+
+/* Dark Mode Adjustments */
+body.dark-mode .start-screen,
+body.dark-mode .home-content {
+    background: #1a1a1a;
+}
+
+body.dark-mode .section-title {
+    color: #fff;
+}
+
+body.dark-mode .continue-card,
+body.dark-mode .unit-card {
+    background: #2a2a2a;
+    border-color: #333;
+}
+
+body.dark-mode .continue-title-text {
+    color: #fff;
+}
+
+body.dark-mode .continue-stats-text {
+    color: #aaa;
+}
+
+body.dark-mode .continue-graphic {
+    background: #20232b;
+}
+
+body.dark-mode .graphic-placeholder {
+    background-color: #333;
+}
+
+body.dark-mode .unit-title {
+    color: #f0f6fc;
+}
+
+body.dark-mode .unit-card:hover {
+    background: #333;
+}
+
+body.dark-mode .unit-icon-box {
+    background: #37474F;
+    color: #80DEEA;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .continue-card {
+        flex-direction: column;
+    }
+
+    .continue-graphic {
+        height: 150px;
+        /* shorter graphic area on mobile */
+    }
+}
+
 
 .controls-menu.open {
     display: block;
@@ -1311,6 +1567,21 @@ body.dark-mode .quiz-group-title .folder-icon::after {
 .header-right {
     display: flex;
     align-items: center;
+}
+
+.timer-display {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.2rem;
+    color: #333;
+    margin-right: 15px;
+    /* Space between timer and back button */
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+
+body.dark-mode .timer-display {
+    color: #e0e0e0;
 }
 
 /* Enlarge icon tap area */
@@ -3133,6 +3404,18 @@ body.dark-mode .origin-display {
     display: block;
 }
 
+@keyframes fadeInk {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 body.dark-mode .multi-label {
     color: #ffaa00;
     background-color: rgba(255, 170, 0, 0.3);
@@ -3258,8 +3541,8 @@ body.dark-mode .search-container.expanded #topicSearch {
     left: 50%;
     transform: translateX(-50%) translateY(-200%);
     /* Start hidden above */
-    width: auto;
-    min-width: 280px;
+    width: fit-content;
+    min-width: auto;
     max-width: 90%;
     background-color: #EA5455;
     /* Alert Red */
