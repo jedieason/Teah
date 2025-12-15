@@ -1139,11 +1139,24 @@ function startTimer() {
             timerDisplay.classList.remove('critical');
             // Warning if not answered
             if (acceptingAnswers) {
-                // Pass 'critical' type to showCustomAlert if we modify it, or just use it here.
-                // Since showCustomAlert is simple, let's modify it to accept a class or handle it manually here.
-                // Actually, let's just modify showCustomAlert to take an optional className
-                showCustomAlert('時間到！請趕快作答！', 'critical-alert');
-                if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 400]);
+                // Full Screen Time Up Overlay
+                const overlay = document.getElementById('timeUpOverlay');
+                if (overlay) {
+                    overlay.classList.add('active');
+                    // Vibrate vigorously
+                    if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 500]);
+
+                    // Click to dismiss
+                    overlay.onclick = () => {
+                        overlay.classList.remove('active');
+                    };
+
+                    // Auto dismiss after 4 seconds if ignored? (Optional, maybe keeps it annoying)
+                    // setTimeout(() => overlay.classList.remove('active'), 4000);
+                } else {
+                    // Fallback
+                    showCustomAlert('時間到！請趕快作答！', 'critical-alert');
+                }
             }
         }
     }, 1000);

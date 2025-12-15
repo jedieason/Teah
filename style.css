@@ -3820,6 +3820,62 @@ body.dark-mode .folder-back {
     display: flex;
 }
 
+/* Time Up Overlay - Full Screen Red Flash */
+.time-up-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    /* Highest */
+    display: none;
+    /* Hidden by default */
+    pointer-events: auto;
+    /* Block interaction */
+    background: radial-gradient(circle, transparent 30%, rgba(255, 0, 0, 0.4) 70%, rgba(255, 0, 0, 0.9) 100%);
+    /* Red edges */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: flashScreen 0.8s infinite alternate;
+}
+
+@keyframes flashScreen {
+    from {
+        box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.5);
+    }
+
+    to {
+        box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.9);
+        background: radial-gradient(circle, transparent 20%, rgba(255, 0, 0, 0.5) 60%, rgba(255, 0, 0, 1) 100%);
+    }
+}
+
+.time-up-content {
+    text-align: center;
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+.time-up-text {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 40px #ff0000;
+    margin-bottom: 10px;
+}
+
+.time-up-subtext {
+    font-size: 2rem;
+    color: #ffd1d1;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.time-up-overlay.active {
+    display: flex;
+}
+
 /* Updated Search position: Top Left */
 .search-container {
     position: absolute;
