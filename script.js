@@ -396,10 +396,21 @@ function setModalMessage(message) {
 
 let alertTimeout = null;
 
-function showCustomAlert(message, onConfirm) {
+function showCustomAlert(message, arg2) {
     setModalMessage(message);
+
+    // Reset classes (keep base class 'notification-bar')
+    customAlert.className = 'notification-bar';
+
+    let onConfirm = null;
+    if (typeof arg2 === 'function') {
+        onConfirm = arg2;
+    } else if (typeof arg2 === 'string') {
+        customAlert.classList.add(arg2);
+    }
+
     customAlert.classList.add('show');
-    customAlertConfirmCallback = typeof onConfirm === 'function' ? onConfirm : null;
+    customAlertConfirmCallback = onConfirm;
 
     // Clear any existing timeout (in case an alert is already shown)
     if (alertTimeout) {
@@ -1116,13 +1127,23 @@ function startTimer() {
         timeLeft--;
         timerDisplay.innerText = timeLeft;
         if (timeLeft <= 5) {
-            timerDisplay.style.color = '#d32f2f'; // Warning red
+            timerDisplay.classList.add('critical');
+            // Haptic feedback if supported (mobile)
+            if (navigator.vibrate) navigator.vibrate(200);
+        } else {
+            timerDisplay.classList.remove('critical');
         }
+
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
+            timerDisplay.classList.remove('critical');
             // Warning if not answered
             if (acceptingAnswers) {
-                showCustomAlert('時間到！請趕快作答！');
+                // Pass 'critical' type to showCustomAlert if we modify it, or just use it here.
+                // Since showCustomAlert is simple, let's modify it to accept a class or handle it manually here.
+                // Actually, let's just modify showCustomAlert to take an optional className
+                showCustomAlert('時間到！請趕快作答！', 'critical-alert');
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 400]);
             }
         }
     }, 1000);
