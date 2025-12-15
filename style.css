@@ -3822,6 +3822,7 @@ body.dark-mode .folder-back {
 
 /* Time Up Overlay - Full Screen Red Flash */
 /* Time Up Overlay - Full Screen Red Flash */
+/* Time Up Overlay - Full Screen Red Flash */
 .time-up-overlay {
     position: fixed;
     top: 0;
@@ -3834,25 +3835,25 @@ body.dark-mode .folder-back {
     /* Hidden by default */
     pointer-events: auto;
     /* Block interaction */
-    background: radial-gradient(circle, transparent 60%, rgba(255, 0, 0, 0.4) 85%, rgba(255, 0, 0, 0.9) 100%);
-    /* Red edges only */
+    background: radial-gradient(circle, transparent 90%, rgba(255, 0, 0, 0.5) 98%, rgba(255, 0, 0, 0.9) 100%);
+    /* Very minimal red edges */
     justify-content: flex-start;
     /* Align top */
     align-items: center;
     flex-direction: column;
-    padding-top: 80px;
-    /* Space from top */
+    padding-top: 40px;
+    /* Higher up */
     animation: flashScreen 1s infinite alternate;
 }
 
 @keyframes flashScreen {
     from {
-        box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.3);
+        box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
     }
 
     to {
-        box-shadow: inset 0 0 60px rgba(255, 0, 0, 0.8);
-        background: radial-gradient(circle, transparent 55%, rgba(255, 0, 0, 0.5) 80%, rgba(255, 0, 0, 1) 100%);
+        box-shadow: inset 0 0 40px rgba(255, 0, 0, 0.8);
+        background: radial-gradient(circle, transparent 85%, rgba(255, 0, 0, 0.5) 95%, rgba(255, 0, 0, 1) 100%);
     }
 }
 
@@ -3862,16 +3863,16 @@ body.dark-mode .folder-back {
 }
 
 .time-up-text {
-    font-size: 3.5rem;
-    /* Slightly smaller to fit top */
+    font-size: 2.5rem;
+    /* Much smaller */
     font-weight: 900;
     color: #fff;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px #ff0000;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 .time-up-subtext {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #ffd1d1;
     font-weight: 700;
     text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
