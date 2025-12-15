@@ -387,14 +387,30 @@ function setModalMessage(message) {
     modalMessage.innerText = message;
 }
 
+let alertTimeout = null;
+
 function showCustomAlert(message, onConfirm) {
     setModalMessage(message);
-    customAlert.style.display = 'flex';
+    customAlert.classList.add('show');
     customAlertConfirmCallback = typeof onConfirm === 'function' ? onConfirm : null;
+
+    // Clear any existing timeout (in case an alert is already shown)
+    if (alertTimeout) {
+        clearTimeout(alertTimeout);
+    }
+
+    // Auto-hide after 5 seconds
+    alertTimeout = setTimeout(() => {
+        hideCustomAlert();
+    }, 5000);
 }
 
 function hideCustomAlert() {
-    customAlert.style.display = 'none';
+    customAlert.classList.remove('show');
+    if (alertTimeout) {
+        clearTimeout(alertTimeout);
+        alertTimeout = null;
+    }
 }
 
 modalConfirmBtn.addEventListener('click', () => {
@@ -854,7 +870,7 @@ document.addEventListener('keydown', function (event) {
             return;
         }
     }
-    if (customAlert.style.display === 'flex') {
+    if (customAlert.classList.contains('show')) {
         if (event.key === 'Enter') {
             modalConfirmBtn.click();
             return;
@@ -895,11 +911,11 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.getElementById('button-row').addEventListener('click', function (event) {
-    if (event.target && event.target.matches('button.select-button')) {
+    if (event.target && (event.target.matches('button.select-button') || event.target.matches('button.quiz-list-item'))) {
         const selectedButton = event.target;
         // Do not deselect shuffle button if it's the one being clicked
         if (!selectedButton.id || selectedButton.id !== 'shuffleToggleBtn') {
-            const allButtons = document.querySelectorAll('#button-row .select-button');
+            const allButtons = document.querySelectorAll('#button-row .select-button, #button-row .quiz-list-item');
             allButtons.forEach(btn => btn.classList.remove('selected'));
             selectedButton.classList.add('selected');
         }
@@ -1115,11 +1131,17 @@ async function fetchQuizList() {
                     tile.addEventListener('click', () => renderFolderView(groupName));
                     buttonContainer.appendChild(tile);
                 });
+                document.getElementById('folder-toolbar').innerHTML = ''; // Clear header in tile view
             };
 
             const renderFolderView = (groupName) => {
                 buttonContainer.classList.add('folder-view');
                 buttonContainer.innerHTML = '';
+
+                // Render header into dedicated toolbar
+                const toolbar = document.getElementById('folder-toolbar');
+                toolbar.innerHTML = '';
+
                 const header = document.createElement('div');
                 header.className = 'folder-header';
                 const backBtn = document.createElement('button');
@@ -1131,17 +1153,24 @@ async function fetchQuizList() {
                 title.textContent = groupName;
                 header.appendChild(backBtn);
                 header.appendChild(title);
-                buttonContainer.appendChild(header);
+                toolbar.appendChild(header);
 
                 const grid = document.createElement('div');
-                grid.className = 'group-grid';
+                grid.className = 'quiz-list-container'; // Changed from group-grid to a simple container or just append to buttonContainer
+                // Actually we can just append buttons directly to buttonContainer if we want a vertical list
+                // user wanted list like controlsMenu
+
                 (groups[groupName] || []).sort((a, b) => a.localeCompare(b, 'zh-Hant')).forEach(key => {
                     const btn = document.createElement('button');
-                    btn.classList.add('select-button');
+                    btn.classList.add('quiz-list-item'); // Changed class
                     btn.dataset.json = key;
                     btn.innerText = key;
+
+                    // Add SVG arrow or icon if desired to match controls-item but controls-item is text left.
+                    // Let's keep it simple text for now.
+
                     btn.addEventListener('click', () => {
-                        document.querySelectorAll('.select-button').forEach(b => b.classList.remove('selected'));
+                        document.querySelectorAll('.quiz-list-item').forEach(b => b.classList.remove('selected'));
                         btn.classList.add('selected');
                         selectedJson = key;
                     });
@@ -1151,9 +1180,9 @@ async function fetchQuizList() {
                             startRenamingQuiz(key, btn);
                         }
                     });
-                    grid.appendChild(btn);
+                    buttonContainer.appendChild(btn); // Append directly to row for list view
                 });
-                buttonContainer.appendChild(grid);
+                // buttonContainer.appendChild(grid); // Removed grid wrapper for flat list look
             };
 
             // Search wiring (flat results)
@@ -1165,11 +1194,11 @@ async function fetchQuizList() {
                 buttonContainer.innerHTML = '';
                 items.forEach(key => {
                     const btn = document.createElement('button');
-                    btn.classList.add('select-button');
+                    btn.classList.add('quiz-list-item'); // Changed class
                     btn.dataset.json = key;
                     btn.innerText = key;
                     btn.addEventListener('click', () => {
-                        document.querySelectorAll('.select-button').forEach(b => b.classList.remove('selected'));
+                        document.querySelectorAll('.quiz-list-item').forEach(b => b.classList.remove('selected'));
                         btn.classList.add('selected');
                         selectedJson = key;
                     });
@@ -1185,6 +1214,26 @@ async function fetchQuizList() {
 
             if (searchInput && !searchInput.dataset.wired) {
                 searchInput.dataset.wired = '1';
+
+                // Add search expansion logic here
+                const searchIconBtn = document.getElementById('searchIconBtn');
+                const searchContainer = document.querySelector('.search-container');
+
+                if (searchIconBtn && searchContainer) {
+                    searchIconBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        searchContainer.classList.add('expanded');
+                        searchInput.focus();
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        // Collapse if clicking outside and input is empty
+                        if (!searchContainer.contains(e.target) && !searchInput.value) {
+                            searchContainer.classList.remove('expanded');
+                        }
+                    });
+                }
+
                 searchInput.addEventListener('input', (e) => {
                     const q = (e.target.value || '').trim();
                     if (!q) {

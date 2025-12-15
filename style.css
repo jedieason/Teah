@@ -249,7 +249,6 @@ p {
     align-items: center;
     min-height: 100svh;
     background: white;
-    gap: 12px;
     position: relative;
     transition: all 0.4s ease;
 }
@@ -3187,4 +3186,355 @@ body.dark-mode .rename-input {
     background-color: #2a2a2a;
     color: #f0f6fc;
     border-color: #6b7280;
+}
+
+/* --- New Search Bar (Top Right) --- */
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 8px;
+}
+
+.search-icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.search-icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#topicSearch {
+    width: 0;
+    /* Hidden by default */
+    opacity: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    overflow: hidden;
+    height: 40px;
+}
+
+/* Expanded state class */
+.search-container.expanded #topicSearch {
+    width: 200px;
+    opacity: 1;
+    padding: 0 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-radius: 20px;
+    margin-left: 8px;
+}
+
+/* Dark mode search */
+body.dark-mode .search-icon-btn {
+    color: #c9d1d9;
+}
+
+body.dark-mode .search-icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .search-container.expanded #topicSearch {
+    background: #2a2a2a;
+    color: #f0f6fc;
+    border-color: #404040;
+}
+
+
+/* --- New Custom Alert (Small Red Floating Bubble) --- */
+.notification-bar {
+    position: fixed;
+    top: 20px;
+    /* Floats from top */
+    left: 50%;
+    transform: translateX(-50%) translateY(-200%);
+    /* Start hidden above */
+    width: auto;
+    min-width: 280px;
+    max-width: 90%;
+    background-color: #EA5455;
+    /* Alert Red */
+    color: #fff;
+    padding: 12px 60px;
+    /* Symmetric padding to ensure text is centered in the bubble */
+    box-sizing: border-box;
+    z-index: 9999;
+    border-radius: 50px;
+    /* Pill shape/rounded corners */
+    display: flex;
+    justify-content: center;
+    /* Center content */
+    align-items: center;
+    box-shadow: 0 8px 24px rgba(234, 84, 85, 0.3);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bouncy drop effect */
+    position: fixed;
+    /* Ensure context for absolute child if not already */
+}
+
+.notification-bar.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.notification-content {
+    font-size: 0.95rem;
+    font-weight: 500;
+    flex-grow: 1;
+    text-align: center;
+    padding-right: 0;
+    /* No extra padding needed */
+}
+
+.notification-close {
+    position: absolute;
+    right: 24px;
+    /* Moved more inwards (left) */
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.2s;
+    margin-left: 0;
+}
+
+.notification-close:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+body.dark-mode .notification-bar {
+    background-color: #EA5455;
+    /* Keep red in dark mode for visibility or slightly darker */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+
+/* --- Quiz List Styling (Scrollable & Like Controls) --- */
+#button-row {
+    width: 100%;
+    max-width: 400px;
+    /* Narrower like a menu */
+    margin: 0 auto;
+    max-height: 50vh;
+    /* Max height limit */
+    overflow-y: auto;
+    /* Scrollable */
+    padding: 10px;
+    box-sizing: border-box;
+    /* Scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    border-radius: 12px;
+    border: none !important;
+    /* Explicitly remove border */
+}
+
+/* Optional: Add a subtle background to the list container */
+#button-row.folder-view {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+#button-row::-webkit-scrollbar {
+    width: 6px;
+}
+
+#button-row::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#button-row::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+/* Quiz List Item - Mimicking .controls-item */
+.quiz-list-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    margin-bottom: 4px;
+    /* Tight spacing like menu */
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.quiz-list-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.quiz-list-item.selected {
+    background: #000;
+    color: #fff;
+}
+
+.quiz-list-item.selected:hover {
+    background: #333;
+}
+
+/* Folder Tiles - Also list style */
+.folder-tile {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    margin-bottom: 6px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    /* Keep subtle item border if user wants, but container border gone */
+    /* Subtle border */
+    border-radius: 10px;
+    font-weight: 600;
+    color: #2D3436;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.folder-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Add an arrow for folder tiles */
+.folder-tile::after {
+    content: '›';
+    font-size: 1.2rem;
+    color: #999;
+}
+
+/* Dark mode for list items */
+body.dark-mode .quiz-list-item {
+    color: #c9d1d9;
+}
+
+body.dark-mode .quiz-list-item:hover {
+    background: rgba(88, 166, 255, 0.12);
+}
+
+body.dark-mode .quiz-list-item.selected {
+    background: #f0f6fc;
+    color: #0d1117;
+}
+
+body.dark-mode .folder-tile {
+    background: #21262d;
+    border-color: #30363d;
+    color: #c9d1d9;
+}
+
+body.dark-mode .folder-tile:hover {
+    background: #2c333a;
+}
+
+/* Folder Header Styling (Updated) */
+.folder-toolbar {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    /* No sticky needed if it is outside the scroll container */
+}
+
+.folder-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin-bottom: 0;
+    /* Align closely with list */
+    background-color: transparent;
+    /* removed sticky/backdrop-filter as it's outside scroll area */
+}
+
+.folder-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.folder-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+body.dark-mode .folder-back {
+    color: #c9d1d9;
+}
+
+/* Ensure controls don't overlap */
+.top-right-controls {
+    align-items: center;
+    top: 20px;
+    right: 20px;
+    position: absolute;
+    z-index: 20;
+    display: flex;
+}
+
+/* Updated Search position: Top Left */
+.search-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 25;
+    flex-shrink: 0;
+}
+
+/* Ensure search expands correctly (to the right) */
+.search-container.expanded #topicSearch {
+    width: 200px;
+    opacity: 1;
+    padding: 0 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-radius: 20px;
+    margin-left: 8px;
+    /* Gap between icon and input */
+}
+
+/* Dark mode search input */
+body.dark-mode .search-container.expanded #topicSearch {
+    background: #2a2a2a;
+    color: #f0f6fc;
+    border-color: #404040;
+}
+
+.avatar-button {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 26;
 }
