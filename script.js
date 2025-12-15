@@ -326,7 +326,7 @@ function loadNewQuestion() {
         const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
         document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
         document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
-        document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+        document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
     }
     saveProgress();
     updateProgressBar();
@@ -335,7 +335,7 @@ function loadNewQuestion() {
 
 function updateExplanationOptions(explanation, labelMapping) {
     if (!explanation) {
-        return '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+        return '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
     }
     // Regex to match (A), ( B ), （Ｃ）, （ D ）, (Ｅ), （F）, etc.
     // It allows for optional spaces between the parentheses (half-width or full-width)
@@ -822,7 +822,7 @@ function reverseQuestion() {
     const confirmBtnElement = document.getElementById('confirm-btn');
 
     if (previousState.isConfirmed) {
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！');
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！');
         renderMathInElement(document.getElementById('explanation-text'), {
             delimiters: [
                 { left: "$", right: "$", display: false },
@@ -855,7 +855,7 @@ function reverseQuestion() {
     const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
     document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
     document.querySelector('#popupWindow .editable:nth-child(5)').innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
-    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
 
     saveProgress(); // Save the restored state
 }
@@ -1435,14 +1435,14 @@ sendQuestionBtn.addEventListener('click', async () => {
     const defaultAnswer = currentQuestion.answer;
     const question = currentQuestion.question;
     const options = currentQuestion.options;
-    currentQuestion.explanation = '<span class="typing-effect">Guru Grogu 正在運功...</span>';
+    currentQuestion.explanation = '<span class="typing-effect">正在等待 Gemini 回應...</span>';
     document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
 
     let fetchedApiKey;
     try {
         const apiKeySnapshot = await get(ref(database, 'API_KEY'));
         if (!apiKeySnapshot.exists() || typeof apiKeySnapshot.val() !== 'string' || apiKeySnapshot.val().trim() === '') {
-            showCustomAlert('錯誤：無法從資料庫獲取有效的 API 金鑰。請洽管理員設定。');
+            showCustomAlert('錯誤：無法獲取有效的 API 金鑰。請洽管理員設定。');
             currentQuestion.explanation = '無法取得 API 金鑰，請聯繫管理員。';
             document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
             userQuestionInput.value = ''; // Clear input
@@ -1461,7 +1461,7 @@ sendQuestionBtn.addEventListener('click', async () => {
     const MODEL_NAME = 'gemini-flash-lite-latest';
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${fetchedApiKey}`;
 
-    const systemInstructionText = "你是Guru Grogu，由Jedieason訓練的助理。使用正體中文（臺灣）或英文回答。回答我的提問，我的提問內容會是基於我提問後面所附的題目，但那個題目並非你主要要回答的內容。回應請使用Markdown格式排版，所有Markdown語法都可以使用。請不要上網搜尋。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.";
+    const systemInstructionText = "使用正體中文（臺灣）或英文回答。回答我的提問，我的提問內容會是基於我提問後面所附的題目，但那個題目並非你主要要回答的內容。回應請使用Markdown格式排版，所有Markdown語法都可以使用。請不要上網搜尋。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.";
 
     const optionsText = Array.isArray(options) && options.length > 0
         ? options.map(opt => `「${opt}」`).join('、')
@@ -1913,7 +1913,7 @@ function loadQuestionFromState() {
     const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
     document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
     document.querySelector('#popupWindow .editable:nth-child(5)').innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
-    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！';
+    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
 
     if (currentQuestion.explanation) {
         document.getElementById('explanation').style.display = 'block';
@@ -2001,7 +2001,7 @@ async function openStarredModal() {
                 const explanationDiv = document.createElement('div');
                 explanationDiv.classList.add('starred-explanation');
                 explanationDiv.style.display = 'none';
-                explanationDiv.innerHTML = marked.parse(q.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Guru Grogu！');
+                explanationDiv.innerHTML = marked.parse(q.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！');
                 item.appendChild(explanationDiv);
 
                 const controlsDiv = document.createElement('div');
