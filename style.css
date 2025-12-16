@@ -3540,7 +3540,16 @@ body.dark-mode .rename-input {
 }
 
 /* Expanded state class */
-.search-container.expanded #topicSearch {
+#topicSearch {
+    width: 200px;
+    opacity: 1;
+    padding: 0 12px;
+    background: #fff;
+    border-radius: 20px;
+    margin-left: 8px;
+}
+
+.search-container.expanded {
     width: 200px;
     opacity: 1;
     padding: 0 12px;
