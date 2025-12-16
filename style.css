@@ -824,10 +824,13 @@ body.dark-mode .topics-toolbar input::placeholder {
 
 
 .quiz-title {
-    font-family: "Playfair Display", "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
-    color: #1A1A1A;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    color: #202124;
+    font-size: 1.375rem;
+    /* 22px */
+    font-weight: 400;
+    /* Regular */
+    line-height: 1.75rem;
 }
 
 /* Progress Bar Styling */
@@ -3444,15 +3447,7 @@ body.dark-mode .origin-display {
 
 
 
-.notification-bar.critical-alert {
-    background-color: #ff3b3b;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 20px 50px;
-    box-shadow: 0 10px 40px rgba(255, 59, 59, 0.6);
-    animation: shake 0.5s ease-in-out;
-}
+/* Legacy critical-alert removed */
 
 body.dark-mode .multi-label {
     color: #ffaa00;
@@ -3577,14 +3572,16 @@ body.dark-mode .search-container.expanded #topicSearch {
     position: fixed;
     bottom: 24px;
     left: 50%;
-    transform: translate(-50%, 150%);
-    /* Hidden below */
+    transform: translate(-50%, 200%) scale(0.9);
+    opacity: 0;
+    visibility: hidden;
+    /* Ensure it doesn't block clicks or appear stuck */
     z-index: 10000;
 
     /* Snackbar Style (Default) */
     background-color: #323232;
     color: #f1f3f4;
-    padding: 10px 20px;
+    padding: 8px 16px;
     /* More compact */
     border-radius: 8px;
     box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
@@ -3595,19 +3592,21 @@ body.dark-mode .search-container.expanded #topicSearch {
     gap: 12px;
 
     width: fit-content;
-    min-width: 200px;
-    /* Reduced min-width */
+    min-width: auto;
+    /* Allow it to be as narrow as content */
     max-width: 90%;
     font-family: 'Roboto', sans-serif;
     font-size: 0.875rem;
     letter-spacing: 0.01em;
 
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s linear, visibility 0.2s;
 }
 
 /* Show State */
 .notification-bar.show {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Critical State (Red Snackbar) */
@@ -3617,18 +3616,8 @@ body.dark-mode .search-container.expanded #topicSearch {
     color: #ffffff;
 }
 
-/* Ensure show transform matches standard snackbar */
-.notification-bar.critical-alert.show {
-    transform: translate(-50%, 0);
-}
-
 .notification-content {
     flex-grow: 1;
-}
-
-.notification-bar.critical-alert .notification-content {
-    font-size: 1rem;
-    font-weight: 500;
 }
 
 /* Close/Action Button */
@@ -3641,14 +3630,13 @@ body.dark-mode .search-container.expanded #topicSearch {
     /* Inverse Primary */
     cursor: pointer;
     font-weight: 500;
-    font-size: 1.25rem;
-    /* Larger X */
+    font-size: 1.1rem;
     padding: 4px;
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: -8px;
+    margin-right: -10px;
     /* Pull to right edge */
 }
 
@@ -3681,13 +3669,8 @@ body.dark-mode .notification-bar.critical-alert .notification-close {
     color: #ffffff;
 }
 
-align-items: center;
-justify-content: center;
-line-height: 1;
-padding: 0;
-transition: background 0.2s;
-margin-left: 0;
-}
+
+
 
 .notification-close:hover {
     background: rgba(255, 255, 255, 0.4);
