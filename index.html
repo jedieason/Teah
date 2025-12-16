@@ -95,8 +95,12 @@
     <div class="header">
       <div class="quiz-title">題矣</div>
       <div class="header-right">
-        <div id="quizTimer" class="timer-display" style="display:none;">15</div>
-        <img id="reverseButton" src="Images/reverse.svg" alt="Reverse" width="23" height="23" style="cursor: pointer;">
+        <button id="reverseButton" class="header-icon-btn" aria-label="上一題">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+          </svg>
+        </button>
+        <div id="quizTimer" class="timer-display" style="display:none;"></div>
       </div>
     </div>
     <!-- Progress Display -->
@@ -133,7 +137,7 @@
       <div class="explanation-buttons">
         <div class="header-right">
           <img id="copy-btn" src="Images/copy.svg" alt="Copy" width="30" height="30" style="cursor: pointer;">
-          <img id="deBug" src="Images/debug.svg" alt="Debug" width="30" height="30" style="cursor: pointer;">
+
           <img id="WeeGPT" src="Images/WeeGPT.svg" alt="WeeGPT" width="24" height="24" style="cursor: pointer;">
           <img id="starQuestion" src="Images/star-empty.svg" alt="Star" width="24" height="24" style="cursor: pointer;">
         </div>
@@ -151,21 +155,6 @@
       <span id="modal-message">選點啥吧</span>
     </div>
     <button id="modalConfirmBtn" class="notification-close" aria-label="Close">&times;</button>
-  </div>
-
-  <!-- deBug回報窗口 -->
-  <div id="popupWindow">
-    <div id="closeButton">&times;</div>
-    <div class="content">
-      <div class="non-editable">題目：</div>
-      <div class="editable" contenteditable="true"></div>
-      <div class="editable" contenteditable="true"></div>
-      <div class="non-editable">選項：</div>
-      <div class="editable" contenteditable="true"></div>
-      <div class="non-editable">詳解：</div>
-      <div class="editable" contenteditable="true"></div>
-    </div>
-    <button id="sendButton">抓到蟲子了</button>
   </div>
 
   <!-- Starred Questions Modal -->
@@ -205,13 +194,7 @@
     </div>
   </div>
 </div>
-<!-- Time Up Full Screen Overlay -->
-<div id="timeUpOverlay" class="time-up-overlay">
-  <div class="time-up-content">
-    <div class="time-up-text">時間到！</div>
-    <div class="time-up-subtext">請趕快作答</div>
-  </div>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script type="module" src="script.js"></script>

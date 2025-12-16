@@ -102,7 +102,7 @@ let wrongQuestions = [];
 let isEditNameMode = false;
 
 const userQuestionInput = document.getElementById('userQuestion');
-let timerInterval = null;
+let timerFrameId = null;
 const timerDisplay = document.getElementById('quizTimer');
 let expandTimeout;
 
@@ -445,8 +445,8 @@ modalConfirmBtn.addEventListener('click', () => {
 });
 
 // 修改確認按鈕函數
+// 修改確認按鈕函數
 function confirmAnswer() {
-    stopTimer(); // Stop timer when user confirms answer
     // 處理填空題邏輯
     if (currentQuestion.isFillBlank) {
         const userInput = fillblankInput.value.trim();
@@ -454,6 +454,8 @@ function confirmAnswer() {
             showCustomAlert('請輸入您的答案！');
             return;
         }
+        stopTimer(); // Valid input, stop timer
+
         // 直接作為句子驗證關鍵字
         const sentence = userInput.toLowerCase();
         const required = Array.isArray(currentQuestion.answer) ? currentQuestion.answer : [currentQuestion.answer];
@@ -497,6 +499,7 @@ function confirmAnswer() {
                 showCustomAlert('選點啥吧，用猜的也好！');
                 return;
             }
+            stopTimer(); // Valid selection, stop timer
             acceptingAnswers = false;
             document.getElementById('confirm-btn').disabled = true;
             // 檢查所有選項
@@ -529,6 +532,7 @@ function confirmAnswer() {
                 showCustomAlert('選點啥吧，用猜的也好！');
                 return;
             }
+            stopTimer(); // Valid selection, stop timer
             acceptingAnswers = false;
             document.getElementById('confirm-btn').disabled = true;
             const selectedBtn = document.querySelector(`.option-button[data-option='${selectedOption}']`);
@@ -870,13 +874,6 @@ function reverseQuestion() {
 
     document.getElementById('WeeGPTInputSection').style.display = 'none';
 
-    // Update popup window content (Debug modal)
-    document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
-    const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
-    document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
-    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
-    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
-
     saveProgress(); // Save the restored state
 }
 
@@ -964,86 +961,8 @@ if (shuffleToggle) {
     updateShuffleUI();
 }
 
-function gatherEditedContent() {
-    const currentDate = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
-    const jsonFileName = selectedJson || 'default.json';
-    const question = document.querySelector('#popupWindow .editable:nth-child(2)').innerText;
-    const optionsText = document.querySelector('#popupWindow .editable:nth-child(3)').innerText;
-    const answer = document.querySelector('#popupWindow .editable:nth-child(5)').innerText;
-    const explanation = document.querySelector('#popupWindow .editable:nth-child(7)').innerText;
-    let options = {};
-    const optionRegex = /([A-E]):\s*([^A-E:]*)/g;
-    let match;
-    while ((match = optionRegex.exec(optionsText)) !== null) {
-        const label = match[1];
-        const text = match[2].trim();
-        options[label] = text;
-    }
-    if (Object.keys(options).length === 0) {
-        options = optionsText.split('\n').reduce((acc, option) => {
-            const [key, value] = option.split(': ');
-            if (key && value) acc[key.trim()] = value.trim();
-            return acc;
-        }, {});
-    }
-    if (Object.keys(options).length < 2) {
-        showCustomAlert('請確保每個選項都以 A、B、C、D、E 開頭並分行。');
-        return;
-    }
-    const formattedContent = `${currentDate}\n${jsonFileName}\n{\n"question": "${question}",\n"options": ${JSON.stringify(options, null, 2)},\n"answer": "${answer}",\n"explanation": "${explanation}"\n}`;
-    sendToGoogleDocs(formattedContent);
-}
 
-function sendToGoogleDocs(content) {
-    const url = 'https://script.google.com/macros/s/AKfycbxte_ckNlaaEKZJDTBO4I0rWiHvvvfoO1NpmLh8BttISEWuD6A7PmqM63AYDAzPwB-x/exec';
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({ content: content })
-    })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showCustomAlert('Failed to send content to Google Docs.');
-        });
-}
 
-document.getElementById('sendButton').addEventListener('click', gatherEditedContent);
-
-// Debug icon click handler
-const debugIcon = document.getElementById('deBug');
-const popupWindow = document.getElementById('popupWindow');
-const closeButton = document.getElementById('closeButton');
-
-debugIcon.addEventListener('click', () => {
-    // Populate current question and details
-    document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
-    const optionsText = Object.entries(currentQuestion.options || {}).map(
-        ([key, value]) => `${key}: ${value}`
-    ).join('\n');
-    document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
-    document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
-    document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '';
-    // Show debug modal
-    popupWindow.style.display = 'flex';
-});
-
-closeButton.addEventListener('click', () => {
-    popupWindow.style.display = 'none';
-});
-
-// Prevent clicks inside content closing the modal
-popupWindow.querySelector('.content').addEventListener('click', (e) => {
-    e.stopPropagation();
-});
-popupWindow.addEventListener('click', () => {
-    popupWindow.style.display = 'none';
-});
 
 window.addEventListener("beforeunload", function (event) {
     event.preventDefault();
@@ -1116,55 +1035,57 @@ function startRenamingQuiz(oldName, btnElement) {
 /*
  * Timer Logic
  */
+/*
+ * Timer Logic
+ */
+/*
+ * Timer Logic (Smooth Pie Chart)
+ */
 function startTimer() {
-    if (timerInterval) clearInterval(timerInterval);
-    let timeLeft = 15;
-    timerDisplay.innerText = timeLeft;
-    timerDisplay.style.color = ''; // Reset color
-    timerDisplay.style.display = 'block';
+    if (timerFrameId) cancelAnimationFrame(timerFrameId);
 
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        timerDisplay.innerText = timeLeft;
-        if (timeLeft <= 5) {
+    const duration = 15000; // 15 seconds
+    const endTime = Date.now() + duration;
+
+    timerDisplay.innerHTML = ''; // Ensure no text
+    timerDisplay.style.color = '';
+    timerDisplay.style.display = 'flex';
+
+    function loop() {
+        const now = Date.now();
+        let remaining = endTime - now;
+
+        if (remaining < 0) remaining = 0;
+
+        // Update Pie Chart Visual
+        const pct = (remaining / duration) * 100;
+        timerDisplay.style.setProperty('--progress', `${pct}%`);
+
+        // Critical State Check
+        if (remaining <= 5000) {
             timerDisplay.classList.add('critical');
-            // Haptic feedback if supported (mobile)
-            if (navigator.vibrate) navigator.vibrate(200);
         } else {
             timerDisplay.classList.remove('critical');
         }
 
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
+        if (remaining > 0) {
+            timerFrameId = requestAnimationFrame(loop);
+        } else {
+            // Time Up
             timerDisplay.classList.remove('critical');
-            // Warning if not answered
             if (acceptingAnswers) {
-                // Full Screen Time Up Overlay
-                const overlay = document.getElementById('timeUpOverlay');
-                if (overlay) {
-                    overlay.classList.add('active');
-                    // Vibrate vigorously
-                    if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 500]);
-
-                    // Click to dismiss
-                    overlay.onclick = () => {
-                        overlay.classList.remove('active');
-                    };
-
-                    // Auto dismiss after 4 seconds if ignored? (Optional, maybe keeps it annoying)
-                    // setTimeout(() => overlay.classList.remove('active'), 4000);
-                } else {
-                    // Fallback
-                    showCustomAlert('時間到！請趕快作答！', 'critical-alert');
-                }
+                showCustomAlert('時間到！', 'critical-alert');
+                // No vibration
             }
         }
-    }, 1000);
+    }
+
+    loop();
 }
 
 function stopTimer() {
-    if (timerInterval) clearInterval(timerInterval);
-    timerDisplay.style.display = 'none';
+    if (timerFrameId) cancelAnimationFrame(timerFrameId);
+    // Do not hide, keeps usage visible
 }
 
 // 從 Firebase 讀取可用的題庫清單並建立按鈕
