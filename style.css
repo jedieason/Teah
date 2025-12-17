@@ -3618,6 +3618,7 @@ body.dark-mode .rename-input {
 
 
 /* Star Pop Animation */
+/* Star Pop Animation */
 @keyframes starPop {
     0% {
         transform: scale(1);
@@ -3632,24 +3633,39 @@ body.dark-mode .rename-input {
     }
 }
 
+/* Base Star SVG Size - Slightly Larger */
+.action-icon-btn.star-btn svg {
+    width: 28px;
+    height: 28px;
+    stroke: #5f6368;
+    /* Google Grey */
+    stroke-width: 2px;
+    /* Distinct outline */
+    stroke-linejoin: miter;
+    /* Sharp corners */
+    fill: transparent;
+    /* Hollow by default */
+    transition: fill 0.2s, stroke 0.2s;
+}
+
+/* Active (Filled) State */
 .action-icon-btn.star-btn.active svg {
     animation: starPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     fill: #fbbc04;
     /* Google Yellow */
     stroke: none;
-    /* Ensure no outline stroke on filled state if path differs */
+    /* No outline when filled */
 }
 
-/* Default Star State (Outline) */
-.action-icon-btn.star-btn svg {
-    stroke: #5f6368;
-    stroke-width: 0.1px;
-    stroke-linejoin: round;
-    /* Smoother corners */
+/* Dark Mode Adjustments */
+body.dark-mode .action-icon-btn.star-btn svg {
+    stroke: #c9d1d9;
+    /* Lighter grey for dark mode outline */
 }
 
-/* When active (filled), remove stroke if the path handles shape fully */
-.action-icon-btn.star-btn.active svg {
+body.dark-mode .action-icon-btn.star-btn.active svg {
+    fill: #fbbc04;
+    /* Yellow remains same */
     stroke: none;
 }
 
@@ -4543,6 +4559,15 @@ body.dark-mode .mistake-badge.high-mistake {
     color: #202124;
 }
 
+/* Origin Check Style */
+.mistake-origin-row {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #70757a;
+    text-align: right;
+    font-family: 'Roboto', sans-serif;
+}
+
 /* Dark Mode Overrides */
 body.dark-mode .mistake-modal-content {
     background-color: #2d2d2d;
@@ -4617,6 +4642,8 @@ body.dark-mode .mistake-explanation-row strong {
     height: 64px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    /* Space out Title (Left) and Close (Right) */
     padding: 0 16px;
     /* Material specifies 16px horizontal padding */
     gap: 24px;
@@ -4627,9 +4654,11 @@ body.dark-mode .mistake-explanation-row strong {
 }
 
 .view-title {
-    font-size: 1.375rem;
-    /* Google 22px */
+    font-size: 1.1rem;
+    /* User requested 1.1rem */
     font-weight: 400;
+    font-family: 'XiaoZuan', sans-serif;
+    /* User requested XiaoZuan */
     color: #1f1f1f;
     margin: 0;
 }
