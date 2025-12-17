@@ -575,6 +575,7 @@ function updateWrong() {
     wrong += 1;
     document.getElementById('wrong').innerText = wrong;
     updateProgressBar(false);
+    recordMistake();
 }
 
 function showEndScreen() {
@@ -2242,3 +2243,93 @@ function initTheme() {
 // 頁面載入完成後初始化主題
 document.addEventListener('DOMContentLoaded', initTheme);
 
+
+/* Mistake Tracking Logic */
+const mistakeButton = document.getElementById('mistakeButton');
+const mistakeModal = document.getElementById('mistakeModal');
+const mistakeList = document.getElementById('mistakeList');
+
+if (mistakeButton) {
+    mistakeButton.addEventListener('click', () => {
+        if (!auth.currentUser) {
+            showCustomAlert('請先登入才能查看錯題紀錄！');
+            return;
+        }
+        openMistakeModal();
+    });
+}
+
+if (mistakeModal) {
+    mistakeModal.addEventListener('click', (e) => {
+        if (e.target === mistakeModal) {
+            mistakeModal.style.display = 'none';
+        }
+    });
+}
+
+function recordMistake() {
+    if (!auth.currentUser || !currentQuestion || !selectedJson) return;
+    try {
+        const quizName = selectedJson.split('/').pop().replace('.json', '');
+        const qKey = btoa(unescape(encodeURIComponent(currentQuestion.question)));
+        const userMistakeRef = ref(database, `mistakes/${auth.currentUser.uid}/${quizName}/${qKey}`);
+
+        get(userMistakeRef).then((snapshot) => {
+            let currentData = snapshot.val() || { count: 0, question: currentQuestion.question };
+            if (!currentData.question) currentData.question = currentQuestion.question;
+
+            currentData.count = (currentData.count || 0) + 1;
+            currentData.lastMistake = Date.now();
+
+            update(userMistakeRef, currentData);
+        }).catch(err => console.error('Error recording mistake:', err));
+    } catch (e) {
+        console.error('Encoding error or other:', e);
+    }
+}
+
+async function openMistakeModal() {
+    if (!auth.currentUser || !selectedJson) return;
+    if (mistakeList) mistakeList.innerHTML = '<p>載入中...</p>';
+    if (mistakeModal) mistakeModal.style.display = 'flex';
+
+    try {
+        const quizName = selectedJson.split('/').pop().replace('.json', '');
+        const snapshot = await get(ref(database, `mistakes/${auth.currentUser.uid}/${quizName}`));
+
+        if (!snapshot.exists()) {
+            if (mistakeList) mistakeList.innerHTML = '<p>本單元目前沒有錯題紀錄。</p>';
+            return;
+        }
+
+        const data = snapshot.val();
+        const mistakes = Object.values(data);
+
+        mistakes.sort((a, b) => b.count - a.count);
+
+        if (mistakeList) {
+            mistakeList.innerHTML = '';
+            mistakes.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'mistake-item';
+
+                const info = document.createElement('div');
+                info.className = 'mistake-info';
+                info.innerHTML = marked.parse(m.question);
+                renderLatex(info);
+
+                const badge = document.createElement('div');
+                badge.className = 'mistake-count-badge';
+                badge.textContent = `${m.count} 次錯誤`;
+
+                div.appendChild(info);
+                div.appendChild(badge);
+                mistakeList.appendChild(div);
+            });
+        }
+
+    } catch (err) {
+        console.error('Error fetching mistakes:', err);
+        if (mistakeList) mistakeList.innerHTML = '<p>載入失敗，請稍後再試。</p>';
+    }
+}

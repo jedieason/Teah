@@ -1655,17 +1655,20 @@ body.dark-mode .quiz-group-title .folder-icon::after {
 .timer-display {
     display: inline-flex;
     align-items: center;
-    gap: 0;
-    /* No text, so gap 0 */
+    justify-content: flex-end;
+    width: 35px;
+    height: 40px;
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
     background-color: transparent;
-    /* Clean look */
     color: #202124;
     font-family: 'Roboto', 'Segoe UI', sans-serif;
     font-weight: 500;
     font-size: 1.1rem;
     font-variant-numeric: tabular-nums;
+    border-radius: 50%;
+    /* Optional: ensuring round shape logic if hover added later */
 }
 
 /* Pie Chart using Conic Gradient */
@@ -1694,37 +1697,47 @@ body.dark-mode .quiz-group-title .folder-icon::after {
 }
 
 /* Back Button (Previous) - Material Icon Button */
-#reverseButton {
-    padding: 8px;
+/* Header & Action Icon Buttons - Shared Google Style */
+.header-icon-btn,
+.action-icon-btn {
     border-radius: 50%;
     background: transparent;
     border: none;
-    /* Reset button border */
-    transition: background-color 0.2s;
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     width: 40px;
     height: 40px;
     display: inline-flex;
-    /* Center SVG */
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: #5f6368;
-    /* Icon Color */
+    position: relative;
+    padding: 0;
 }
 
-#reverseButton:hover {
+.header-icon-btn:hover,
+.action-icon-btn:hover {
     background-color: rgba(60, 64, 67, 0.08);
+    color: #202124;
+}
+
+.header-icon-btn:active,
+.action-icon-btn:active {
+    background-color: rgba(60, 64, 67, 0.12);
 }
 
 /* Dark Mode Icon Color */
-body.dark-mode #reverseButton {
+/* Dark Mode Icon Color */
+body.dark-mode .header-icon-btn,
+body.dark-mode .action-icon-btn {
     color: #e8eaed;
-    filter: none;
-    /* SQL logic removed filter invert */
 }
 
-body.dark-mode #reverseButton:hover {
+body.dark-mode .header-icon-btn:hover,
+body.dark-mode .action-icon-btn:hover {
     background-color: rgba(255, 255, 255, 0.08);
+    color: #e8eaed;
+    /* Keep text/icon color consistent on hover */
 }
 
 /* Enlarge icon tap area */
@@ -3591,29 +3604,9 @@ body.dark-mode .rename-input {
 }
 
 /* --- Action Icon Buttons (Copy, Star, Gemini) --- */
-.action-icon-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #5f6368;
-    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-left: 8px;
-}
+/* Base styles moved to shared block with .header-icon-btn */
 
-.action-icon-btn:hover {
-    background-color: rgba(60, 64, 67, 0.08);
-    color: #202124;
-}
-
-.action-icon-btn:active {
-    background-color: rgba(60, 64, 67, 0.12);
-}
+/* Specific colors for actions */
 
 /* Specific colors for actions */
 .action-icon-btn.active svg {
@@ -4334,4 +4327,172 @@ body.dark-mode .material-icon-btn:hover {
         padding: 10px;
         font-size: 1rem;
     }
+}
+
+/* Mistake List Styles */
+#mistakeList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Scrollbar for mistake list */
+#mistakeList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#mistakeList::-webkit-scrollbar-thumb {
+    background-color: #dadce0;
+    border-radius: 3px;
+}
+
+body.dark-mode #mistakeList::-webkit-scrollbar-thumb {
+    background-color: #5f6368;
+}
+
+.mistake-item {
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.mistake-item:hover {
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
+}
+
+.mistake-badge {
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 16px;
+    background: #f1f3f4;
+    color: #5f6368;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.mistake-badge::before {
+    content: '•';
+    font-size: 1.2em;
+    line-height: 0;
+}
+
+.mistake-badge.high-mistake {
+    background: #fce8e6;
+    color: #c5221f;
+}
+
+.mistake-content {
+    font-size: 1rem;
+    color: #202124;
+    line-height: 1.6;
+    margin-top: 4px;
+}
+
+.mistake-content p {
+    margin: 0;
+}
+
+/* Dark Mode */
+body.dark-mode .mistake-item {
+    background: #2a2a2a;
+    border-color: #5f6368;
+}
+
+body.dark-mode .mistake-content {
+    color: #e8eaed;
+}
+
+body.dark-mode .mistake-badge {
+    background: #3c4043;
+    color: #bdc1c6;
+}
+
+body.dark-mode .mistake-badge.high-mistake {
+    background: #663333;
+    /* Darker red bg for dark mode */
+    color: #f28b82;
+    /* Lighter red text for dark mode */
+}
+
+/* Mistake Modal Specifics */
+.mistake-modal-content {
+    max-width: 600px;
+    border-radius: 20px;
+    /* Google Material 3 */
+    padding: 24px;
+}
+
+#mistakeList {
+    max-height: 60vh;
+    overflow-y: auto;
+    margin-top: 16px;
+}
+
+.mistake-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+.mistake-item:last-child {
+    border-bottom: none;
+}
+
+.mistake-item:hover {
+    background-color: #f9f9f9;
+}
+
+.mistake-info {
+    flex: 1;
+    margin-right: 16px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.mistake-count-badge {
+    background-color: #fce8e6;
+    /* Light Red */
+    color: #c5221f;
+    /* Dark Red */
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Dark Mode */
+body.dark-mode .mistake-item {
+    border-bottom-color: #444;
+}
+
+body.dark-mode .mistake-item:hover {
+    background-color: #333;
+}
+
+body.dark-mode .mistake-info {
+    color: #f0f6fc;
+}
+
+body.dark-mode .mistake-count-badge {
+    background-color: #5c1e1d;
+    color: #f2b8b5;
 }
