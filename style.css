@@ -1805,7 +1805,7 @@ body.dark-mode .action-icon-btn:hover {
 }
 
 .explanation-text {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 10px 0;
     line-height: 1.6;
 }
@@ -2100,7 +2100,7 @@ body.dark-mode .logout-button:hover {
     background-color: #f1f3f4;
     /* Google Grey 100 */
     border-radius: 24px;
-    padding: 2px 8px 2px 16px;
+    padding: 2px 8px 2px 20px;
     /* Right padding handled by button margin */
     transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
@@ -3633,10 +3633,10 @@ body.dark-mode .rename-input {
     }
 }
 
-/* Base Star SVG Size - Slightly Larger */
+/* Base Star SVG Size */
 .action-icon-btn.star-btn svg {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     stroke: #5f6368;
     /* Google Grey */
     stroke-width: 2px;
@@ -3650,7 +3650,6 @@ body.dark-mode .rename-input {
 
 /* Active (Filled) State */
 .action-icon-btn.star-btn.active svg {
-    animation: starPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     fill: #fbbc04;
     /* Google Yellow */
     stroke: none;

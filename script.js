@@ -98,8 +98,7 @@ let shouldShuffleQuiz = false; // false: 固定順序 (JSON 順序), true: 隨�
 let questionHistory = [];
 let wrongQuestions = [];
 
-// 新增：編輯題庫名稱模式
-let isEditNameMode = false;
+
 
 const userQuestionInput = document.getElementById('userQuestion');
 let timerFrameId = null;
@@ -1920,16 +1919,12 @@ if (menuLogout) menuLogout.addEventListener('click', async () => {
 
 // Edit Quiz Name from controls menu
 const menuEditQuizName = document.getElementById('menuEditQuizName');
+let isEditMode = false;
+
 if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
-    isEditNameMode = !isEditNameMode;
-    if (controlsMenu) controlsMenu.classList.remove('open');
-    if (isEditNameMode) {
-        showCustomAlert('現在可以在題庫上點兩下以編輯名稱。再次點擊選單按鈕可取消。');
-        menuEditQuizName.textContent = '停止編輯名稱';
-    } else {
-        showCustomAlert('已退出編輯模式。');
-        menuEditQuizName.textContent = '編輯題庫名稱';
-    }
+    isEditMode = !isEditMode;
+    toggleEditModeUI();
+    if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
 });
 
 // Open upload modal from controls menu
@@ -1938,39 +1933,15 @@ if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
     openUploadModal('paste');
 });
 
-
-/* --- Rename Logic --- */
-let isEditMode = false;
-
-// Inject Rename Menu Item
-const editMenuItem = document.createElement('button');
-editMenuItem.id = 'menuEditNames';
-editMenuItem.className = 'controls-menu-item';
-editMenuItem.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>編輯題庫名稱</span>`;
-
-if (typeof controlsMenu !== 'undefined' && controlsMenu && typeof menuLogout !== 'undefined' && menuLogout) {
-    controlsMenu.insertBefore(editMenuItem, menuLogout);
-}
-
-// Check toggle functionality
-editMenuItem.addEventListener('click', () => {
-    isEditMode = !isEditMode;
-    toggleEditModeUI();
-    // Close menu
-    if (controlsMenu) controlsMenu.classList.remove('open');
-});
-
 function toggleEditModeUI() {
     const grid = document.getElementById('units-grid');
-    if (grid) {
+    if (grid && menuEditQuizName) {
         if (isEditMode) {
             grid.classList.add('edit-mode');
-            editMenuItem.classList.add('active-menu-item'); // Optional styling
-            editMenuItem.querySelector('span').textContent = '結束編輯';
+            menuEditQuizName.textContent = '停止編輯名稱';
         } else {
             grid.classList.remove('edit-mode');
-            editMenuItem.classList.remove('active-menu-item');
-            editMenuItem.querySelector('span').textContent = '編輯題庫名稱';
+            menuEditQuizName.textContent = '編輯題庫名稱';
         }
     }
 }
