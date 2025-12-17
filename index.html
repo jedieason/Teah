@@ -228,35 +228,67 @@
     </div>
   </div>
 </body>
-<!-- Upload Quiz Modal -->
-<div id="uploadModal" class="modal">
-  <div class="modal-content">
-    <span class="modal-close">&times;</span>
-    <h3>新增題庫</h3>
-    <div style="margin: 16px 0;">
-      <!-- Upload mode radios -->
-      <label>
-        <input type="radio" name="upload-mode" value="paste" checked>
-        貼上 JSON
-      </label>
-      <label>
-        <input type="radio" name="upload-mode" value="file">
-        上傳檔案
-      </label>
+<!-- Upload Quiz Modal (Material 3) -->
+<div id="uploadModal" class="md3-modal-overlay">
+  <div class="md3-dialog">
+    <div class="md3-dialog-header">
+      <h3 class="md3-dialog-title">新增題庫</h3>
+      <button class="md3-icon-btn modal-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </button>
     </div>
-    <input type="text" id="uploadNameInput" placeholder="輸入題庫名稱">
-    <textarea id="pasteJson" placeholder="請貼上 JSON 內容"
-      style="width:100%;height:110px;resize:vertical;box-sizing:border-box;"></textarea>
-    <div id="fileDropZone" class="file-drop-zone" style="display:none;">
-      <span id="dropZoneLabel">拖放 JSON 檔案至此，或點擊選擇檔案</span>
-      <input type="file" id="uploadJson" accept=".json" style="display:none;">
+
+    <div class="md3-dialog-body">
+      <!-- Segmented Button for Mode Switch -->
+      <div class="md3-segmented-btn-group">
+        <label class="md3-segmented-btn">
+          <input type="radio" name="upload-mode" value="paste" checked>
+          <span>貼上 JSON</span>
+        </label>
+        <label class="md3-segmented-btn">
+          <input type="radio" name="upload-mode" value="file">
+          <span>上傳檔案</span>
+        </label>
+      </div>
+
+      <!-- Helper Text or Instructions can go here -->
+
+      <!-- Name Input -->
+      <div class="md3-input-wrapper">
+        <input type="text" id="uploadNameInput" class="md3-input" placeholder=" " required>
+        <label for="uploadNameInput" class="md3-floating-label">題庫名稱</label>
+      </div>
+
+      <!-- Paste Area -->
+      <div id="pasteSection" class="input-section">
+        <div class="md3-input-wrapper textarea-wrapper">
+          <textarea id="pasteJson" class="md3-textarea" placeholder=" "></textarea>
+          <label for="pasteJson" class="md3-floating-label">JSON 內容</label>
+        </div>
+      </div>
+
+      <!-- Drop Zone -->
+      <div id="fileDropZone" class="file-drop-zone" style="display:none;">
+        <input type="file" id="uploadJson" accept=".json" hidden>
+        <div class="drop-zone-content">
+          <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 0 24 24" width="48"
+            fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+          <p id="dropZoneLabel">點擊或拖曳 JSON 檔案至此</p>
+        </div>
+      </div>
     </div>
-    <div class="upload-buttons">
-      <button id="uploadConfirmBtn" class="modal-confirm-button">確定</button>
+
+    <div class="md3-dialog-actions">
+      <button class="md3-text-btn modal-close">取消</button>
+      <button id="uploadConfirmBtn" class="md3-filled-btn">建立</button>
     </div>
   </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script type="module" src="script.js"></script>

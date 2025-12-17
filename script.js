@@ -1095,7 +1095,7 @@ async function fetchQuizList() {
         if (snapshot.exists()) {
             const data = snapshot.val();
             const allKeys = Object.keys(data || {});
-            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY');
+            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY' && k !== 'mistakes');
 
             // 依據檔名中第一個「學」之前（含「學」）的前綴分組；若無「學」則歸入「其他」
             const groups = {};
@@ -1194,6 +1194,17 @@ async function fetchQuizList() {
                     const iconBox = document.createElement('div');
                     iconBox.className = 'unit-icon-box';
                     iconBox.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm320-520v-200H240v640h480v-440H560ZM240-800v200-200 640-640Z"/></svg>';
+
+                    // Edit Icon (Pen) Logic
+                    const editIcon = document.createElement('button');
+                    editIcon.className = 'quiz-edit-btn';
+                    editIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
+                    editIcon.title = '重新命名';
+                    editIcon.onclick = (e) => {
+                        e.stopPropagation(); // Prevent opening quiz
+                        handleRenameQuiz(key);
+                    };
+                    card.appendChild(editIcon);
 
                     const infoDiv = document.createElement('div');
                     infoDiv.className = 'unit-info';
@@ -1342,10 +1353,10 @@ function openUploadModal(defaultMode = 'paste') {
 uploadModeRadios.forEach(radio => {
     radio.addEventListener('change', e => {
         if (e.target.value === 'file') {
-            pasteJson.style.display = 'none';
+            document.getElementById('pasteSection').style.display = 'none';
             fileDropZone.style.display = 'block';
         } else {
-            pasteJson.style.display = 'block';
+            document.getElementById('pasteSection').style.display = 'block';
             fileDropZone.style.display = 'none';
         }
     });
@@ -1400,7 +1411,7 @@ uploadInput.addEventListener('change', async (e) => {
     // If modal not open, open it and set mode to file
     uploadModal.style.display = 'flex';
     uploadModeRadios.forEach(r => r.checked = r.value === 'file');
-    pasteJson.style.display = 'none';
+    document.getElementById('pasteSection').style.display = 'none';
     fileDropZone.style.display = 'block';
     dropZoneLabel.innerText = file.name;
 });
@@ -1447,9 +1458,78 @@ uploadConfirmBtn.addEventListener('click', async () => {
 
 // On page load: default to paste mode
 window.addEventListener('DOMContentLoaded', () => {
-    pasteJson.style.display = 'block';
-    fileDropZone.style.display = 'none';
+    // Check elements exist
+    if (document.getElementById('pasteSection')) {
+        document.getElementById('pasteSection').style.display = 'block';
+        fileDropZone.style.display = 'none';
+    }
 });
+
+/* --- Rename Logic --- */
+let isEditMode = false;
+const menuEditNames = document.getElementById('menuEditNames'); // Assuming added to HTML or create dynamically if not
+
+// Since we didn't add the menu item in HTML yet, let's inject it into controls or assume existence.
+// For now, let's hook it up if 'menuEditNames' exists, or add it dynamically.
+// Actually, I should probably add it to the menu in HTML first or insert it via JS.
+// Let's insert it into the controls menu list via JS to be safe.
+
+const editMenuItem = document.createElement('button');
+editMenuItem.id = 'menuEditNames';
+editMenuItem.className = 'controls-menu-item';
+editMenuItem.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>編輯題庫名稱</span>`;
+// Insert before logout
+if (controlsMenu && menuLogout) {
+    controlsMenu.insertBefore(editMenuItem, menuLogout);
+}
+
+// Check toggle functionality
+editMenuItem.addEventListener('click', () => {
+    isEditMode = !isEditMode;
+    toggleEditModeUI();
+    // Close menu? Maybe keep open or close. Let's close.
+    // controlsMenu.classList.remove('open');
+});
+
+function toggleEditModeUI() {
+    const grid = document.getElementById('units-grid');
+    if (grid) {
+        if (isEditMode) {
+            grid.classList.add('edit-mode');
+            editMenuItem.classList.add('active-menu-item'); // Optional styling
+            editMenuItem.querySelector('span').textContent = '結束編輯';
+        } else {
+            grid.classList.remove('edit-mode');
+            editMenuItem.classList.remove('active-menu-item');
+            editMenuItem.querySelector('span').textContent = '編輯題庫名稱';
+        }
+    }
+}
+
+async function handleRenameQuiz(oldName) {
+    const newName = prompt(`請輸入「${oldName}」的新名稱:`, oldName);
+    if (newName && newName.trim() !== '' && newName !== oldName) {
+        try {
+            // Get old data
+            const snapshot = await get(ref(database, oldName));
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const updates = {};
+                updates[oldName] = null; // Delete old
+                updates[newName.trim()] = data; // Set new
+
+                await update(ref(database), updates);
+                showCustomAlert('已重新命名！');
+                fetchQuizList(); // Refresh list
+            } else {
+                showCustomAlert('找不到原題庫資料');
+            }
+        } catch (e) {
+            console.error('Rename failed:', e);
+            showCustomAlert('重新命名失敗，權限不足？');
+        }
+    }
+}
 
 
 // Helper function to render LaTeX in an element
