@@ -1131,11 +1131,11 @@ async function fetchQuizList() {
                     infoDiv.className = 'unit-info';
 
                     const title = document.createElement('div');
-                    title.className = 'unit-subtitle';
+                    title.className = 'unit-title';
                     title.textContent = groupName;
 
                     const subtitle = document.createElement('div');
-                    subtitle.className = 'unit-title';
+                    subtitle.className = 'unit-subtitle';
                     subtitle.textContent = `${count} 份習題`;
 
                     infoDiv.appendChild(title);
