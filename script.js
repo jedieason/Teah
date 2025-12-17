@@ -56,7 +56,7 @@ async function updateRestorePreview(user) {
         // Populate and show section
         if (continueSection) continueSection.style.display = 'block';
         if (titleText) titleText.textContent = fileName;
-        if (statsText) statsText.textContent = `${done}/${total} cards reviewed`;
+        if (statsText) statsText.textContent = `進度：${done}/${total}`;
         if (progressFill) progressFill.style.width = `${percent}%`;
 
         // Attach click handler if not already (or overwrite)
@@ -1128,7 +1128,7 @@ async function fetchQuizList() {
 
                     const subtitle = document.createElement('div');
                     title.className = 'unit-subtitle';
-                    subtitle.textContent = `${count} decks`;
+                    subtitle.textContent = `${count} 份習題`;
 
                     infoDiv.appendChild(title);
                     infoDiv.appendChild(subtitle);
