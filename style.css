@@ -4429,70 +4429,227 @@ body.dark-mode .mistake-badge.high-mistake {
     /* Lighter red text for dark mode */
 }
 
-/* Mistake Modal Specifics */
+
+/* Mistake Modal Revamp (Google Material Design 3) */
+
+/* Modal Container Logic */
 .mistake-modal-content {
-    max-width: 600px;
-    border-radius: 20px;
-    /* Google Material 3 */
+    /* Limit height relative to viewport to allow internal scrolling */
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
     padding: 24px;
+    width: 90%;
+    max-width: 680px;
+    /* Slightly wider */
+    box-sizing: border-box;
+    text-align: left;
+    /* Default alignment left */
+}
+
+.mistake-modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    color: #1f1f1f;
+    flex-shrink: 0;
+    /* Keep header from shrinking */
 }
 
 #mistakeList {
-    max-height: 60vh;
+    flex: 1;
+    /* Grow to fill available space */
     overflow-y: auto;
-    margin-top: 16px;
+    /* Enable vertical scrolling */
+    margin-top: 0;
+    padding-right: 4px;
+    /* Space for scrollbar */
 }
 
+/* Scrollbar styling for internal list */
+#mistakeList::-webkit-scrollbar {
+    width: 8px;
+}
+
+#mistakeList::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+#mistakeList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Item Card */
 .mistake-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid #eee;
-    transition: background 0.2s;
+    flex-direction: column;
+    /* Vertical stack */
+    padding: 16px;
+    margin-bottom: 12px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    /* Material shapes */
+    transition: background-color 0.2s, box-shadow 0.2s;
+    height: auto;
+    /* Content drives height */
+    gap: 12px;
 }
 
 .mistake-item:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid #e0e0e0;
+    /* consistent border */
+    margin-bottom: 0;
 }
 
 .mistake-item:hover {
-    background-color: #f9f9f9;
+    background-color: #f8f9fa;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    border-color: transparent;
+    z-index: 1;
+    /* Pop above neighbors */
+}
+
+/* Header Row */
+.mistake-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
 }
 
 .mistake-info {
     flex: 1;
-    margin-right: 16px;
-    font-size: 1rem;
-    color: #333;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #3c4043;
+    /* Google Grey 800 */
+    line-height: 1.5;
 }
 
+.mistake-info p {
+    margin: 0;
+}
+
+/* Badge */
 .mistake-count-badge {
     background-color: #fce8e6;
-    /* Light Red */
     color: #c5221f;
-    /* Dark Red */
     padding: 4px 10px;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 0.9rem;
+    border-radius: 99px;
+    /* Pill */
+    font-weight: 600;
+    font-size: 0.8rem;
     white-space: nowrap;
+    align-self: flex-start;
 }
 
-/* Dark Mode */
+/* Options */
+.mistake-options {
+    background-color: #f1f3f4;
+    /* Google Grey 100 */
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #4b4b4b;
+}
+
+.mistake-options ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mistake-options li {
+    margin-bottom: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.mistake-options li:last-child {
+    margin-bottom: 0;
+}
+
+.mistake-options .correct-option {
+    background-color: rgba(26, 115, 232, 0.1);
+    color: #1a73e8;
+    /* Google Blue */
+    font-weight: 600;
+}
+
+/* Details: Answer & Explanation */
+.mistake-details {
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px dashed #e0e0e0;
+    font-size: 0.95rem;
+    color: #5f6368;
+    line-height: 1.6;
+}
+
+.mistake-answer-row {
+    margin-bottom: 8px;
+    color: #1a73e8;
+    /* Highlight answer row */
+}
+
+.mistake-explanation-row strong {
+    color: #202124;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode .mistake-modal-content {
+    background-color: #2d2d2d;
+}
+
+body.dark-mode .mistake-modal-content h3 {
+    color: #e8eaed;
+}
+
+body.dark-mode #mistakeList::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
 body.dark-mode .mistake-item {
-    border-bottom-color: #444;
+    background-color: #353535;
+    border-color: #454545;
 }
 
 body.dark-mode .mistake-item:hover {
-    background-color: #333;
+    background-color: #404040;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-mode .mistake-info {
-    color: #f0f6fc;
+    color: #e8eaed;
 }
 
 body.dark-mode .mistake-count-badge {
     background-color: #5c1e1d;
     color: #f2b8b5;
+}
+
+body.dark-mode .mistake-options {
+    background-color: #2a2a2a;
+    color: #c9d1d9;
+}
+
+body.dark-mode .mistake-options .correct-option {
+    background-color: rgba(138, 180, 248, 0.15);
+    color: #8ab4f8;
+    /* Light Blue */
+}
+
+body.dark-mode .mistake-details {
+    border-top-color: #454545;
+    color: #9aa0a6;
+}
+
+body.dark-mode .mistake-answer-row {
+    color: #8ab4f8;
+}
+
+body.dark-mode .mistake-explanation-row strong {
+    color: #e8eaed;
 }
