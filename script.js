@@ -1178,7 +1178,7 @@ async function fetchQuizList() {
 
                     const backBtn = document.createElement('button');
                     backBtn.className = 'folder-back';
-                    backBtn.textContent = '← Back';
+                    backBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>';
                     backBtn.style.writingMode = 'horizontal-tb';
                     backBtn.onclick = () => renderFolderTiles();
 
@@ -1267,23 +1267,31 @@ async function fetchQuizList() {
 
             // Search Expansion Logic
             const searchIconBtn = document.getElementById('searchIconBtn');
+            const searchCloseBtn = document.getElementById('searchCloseBtn');
             const searchContainer = document.querySelector('.search-container');
 
             if (searchIconBtn && searchContainer) {
-                // Remove potential duplicate listeners if any (though this runs once usually)
-                // simpler to just add.
                 searchIconBtn.onclick = (e) => {
-                    e.stopPropagation(); // prevent document click from closing it immediately
+                    e.stopPropagation();
                     const isExpanded = searchContainer.classList.contains('expanded');
                     if (isExpanded) {
-                        // Optional: submit search or focus?
-                        // If already expanded, maybe focus input
                         searchInput.focus();
                     } else {
                         searchContainer.classList.add('expanded');
                         searchInput.focus();
                     }
                 };
+
+                // Close Button Logic
+                if (searchCloseBtn) {
+                    searchCloseBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        searchInput.value = '';
+                        // Trigger input event to reset list
+                        searchInput.dispatchEvent(new Event('input'));
+                        searchContainer.classList.remove('expanded');
+                    };
+                }
 
                 // Close when clicking outside
                 document.addEventListener('click', (e) => {
@@ -1995,17 +2003,58 @@ function loadQuestionFromState() {
     }
 }
 
+const STAR_FILLED_PATH = '<path d="M12 17.27l4.15 2.51c.76.46 1.69-.22 1.49-1.08l-1.1-4.72 3.67-3.18c.67-.58.31-1.68-.57-1.75l-4.83-.41-1.89-4.46c-.34-.81-1.5-.81-1.84 0L9.19 8.63l-4.83.41c-.88.07-1.24 1.17-.57 1.75l3.67 3.18-1.1 4.72c-.2.86.73 1.54 1.49 1.08l4.15-2.51z"/>';
+// Outline path acts as the stroke path now, or we can use a stroke-based path. 
+// However, specific Material Symbol Outlined path is cleaner without reliance on CSS stroke for complex shapes. 
+// But commonly, simple stars use CSS stroke on the same path, OR a specific cutout path.
+// Let's use the actual Material Symbol Rounded "Grade" (Star) outline path to be safe and crisp.
+const STAR_OUTLINE_PATH = '<path d="M22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.01 4.38.38-3.32 2.88 1 4.28L12 15.4z" stroke="none"/>';
+// Actually, sticking to the rounded filled path for BOTH and using CSS stroke transparent/fill transparent is the modernized way? 
+// No, explicit paths are safer for "Outline" vs "Filled" visually.
+// Let's use the rounded outline path specifically.
+const STAR_ROUNDED_OUTLINE_PATH = '<path d="M19.65 9.04l-4.84-.42-1.89-4.45c-.34-.81-1.5-.81-1.84 0L9.19 8.63l-4.83.41c-.88.07-1.24 1.17-.57 1.75l3.67 3.18-1.1 4.72c-.2.86.73 1.54 1.49 1.08l4.15-2.51 4.15 2.51c.76.46 1.69-.22 1.49-1.08l-1.1-4.73 3.67-3.18c.67-.58.32-1.68-.56-1.75zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.01 4.38.38-3.32 2.88 1 4.28L12 15.4z"/>';
+
+function setStarState(isFilled) {
+    if (!starBtn) return;
+    const svg = starBtn.querySelector('svg');
+    if (svg) {
+        svg.setAttribute('viewBox', '0 0 24 24');
+        // If filled, use Filled Path and ensure CSS knows it's active (removing stroke).
+        // If outline, use Outline Path and ensure CSS adds stroke? 
+        // Actually, better to have the SVG path itself define the shape, and CSS just colors it.
+        // For outline: Use a path that IS the outline shape (compound path) OR use the filled shape and `fill: none; stroke: currentColor`.
+        // Google's Material Symbols often use `font-variation-settings: 'FILL' 0 or 1`.
+        // Since we are using raw SVG paths:
+
+        if (isFilled) {
+            svg.innerHTML = STAR_FILLED_PATH;
+            // Class 'active' handles fill: yellow, stroke: none
+        } else {
+            // For the outline state, we can use the SAME path but style it `fill: transparent; stroke: grey` 
+            // This is the cleanest verification of shape.
+            svg.innerHTML = STAR_FILLED_PATH;
+            // Class (not active) handles fill: transparent, stroke: grey
+        }
+    }
+
+    if (isFilled) {
+        starBtn.classList.add('active');
+    } else {
+        starBtn.classList.remove('active');
+    }
+}
+
 async function updateStarIcon() {
     if (!starBtn) return;
     if (!auth.currentUser) {
-        starBtn.src = 'Images/star-empty.svg';
+        setStarState(false);
         return;
     }
     try {
         const snap = await get(ref(database, `progress/${auth.currentUser.uid}/starred`));
         const starred = snap.val() || [];
         const isStarred = starred.some(q => q.question === currentQuestion.question);
-        starBtn.src = isStarred ? 'Images/star-filled.svg' : 'Images/star-empty.svg';
+        setStarState(isStarred);
     } catch (e) {
         console.error('讀取收藏題目失敗', e);
     }
@@ -2020,13 +2069,16 @@ async function toggleStarCurrentQuestion() {
     const snap = await get(starredRef);
     let starred = snap.val() || [];
     const index = starred.findIndex(q => q.question === currentQuestion.question);
+
+    // Optimistic UI update
+    const isNowStarred = index < 0; // If not found, it will be starred
+    setStarState(isNowStarred);
+
     if (index >= 0) {
         starred.splice(index, 1);
-        starBtn.src = 'Images/star-empty.svg';
     } else {
         const sourceName = (selectedJson || '').split('/').pop().replace('.json', '');
         starred.push({ ...currentQuestion, source: sourceName });
-        starBtn.src = 'Images/star-filled.svg';
     }
     await set(starredRef, starred);
 }

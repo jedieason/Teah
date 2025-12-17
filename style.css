@@ -234,6 +234,13 @@ body.dark-mode #pasteJson:focus {
     unicode-range: U+4E00-9FFF, U+3400-4DBF, U+20000-2A6DF, U+2A700-2B73F, U+2B740-2B81F, U+2B820-2CEAF, U+2CEB0-2EBEF, U+2F800-2FA1F;
 }
 
+@font-face {
+    font-family: 'XiaoZuan';
+    src: url('fonts/chongxi_seal.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* Base Styles */
 body {
@@ -824,13 +831,11 @@ body.dark-mode .topics-toolbar input::placeholder {
 
 
 .quiz-title {
-    font-family: 'Google Sans', 'Roboto', sans-serif;
+    font-family: 'XiaoZuan', 'Google Sans', 'Roboto', sans-serif;
     color: #202124;
-    font-size: 1.1rem;
-    /* 22px */
+    font-size: 1.4rem;
     font-weight: 400;
-    /* Regular */
-    line-height: 1.75rem;
+    letter-spacing: 0;
 }
 
 /* Progress Bar Styling */
@@ -1195,10 +1200,21 @@ body.dark-mode .copyright a:hover {
 .folder-back {
     background: transparent;
     border: none;
-    color: inherit;
+    color: #5f6368;
     cursor: pointer;
-    padding: 8px 10px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-right: 4px;
+}
+
+.folder-back:hover {
+    background-color: rgba(60, 64, 67, 0.08);
 }
 
 .folder-title {
@@ -1631,7 +1647,7 @@ body.dark-mode .quiz-group-title .folder-icon::after {
 .header-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 5px;
     /* Spacing between Previous Button and Timer */
 }
 
@@ -2056,86 +2072,82 @@ body.dark-mode .logout-button:hover {
 }
 
 
+/* Google Material Design 3 Chat Input */
 #WeeGPTInputSection {
+    margin-top: 16px;
+    margin-bottom: 20px;
+    display: none;
+    /* Toggled by JS */
+    width: 100%;
+}
+
+.chat-input-wrapper {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    background-color: #f9f9fc;
+    background-color: #f1f3f4;
+    /* Google Grey 100 */
     border-radius: 24px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    border: 1px solid #e6e6eb;
-    transition: all 0.3s ease;
-}
-
-#WeeGPTInputSection:focus-within {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    transform: translateY(-3px);
-}
-
-#WeeGPTInputSection input {
-    flex-grow: 1;
-    padding: 15px 10px 15px 20px;
-    z-index: 2;
-    border: none;
-    font-size: 16px;
-    color: #2c2c3a;
-    outline: none;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-    width: 0;
-}
-
-#WeeGPTInputSection textarea::placeholder {
-    color: #a0a0b3;
-    transition: color 0.3s ease;
-}
-
-#WeeGPTInputSection textarea:focus::placeholder {
-    color: #c0c0d0;
-}
-
-#WeeGPTInputSection button {
-    width: 75px;
-    height: 40px;
-    background: linear-gradient(156deg, #006dff, #ff0909);
-    ;
-    color: white;
-    border: none;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-    margin-right: 8px;
-    border-radius: 16px;
-    letter-spacing: 0.5px;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0, 130, 200, 0.3);
-}
-
-#WeeGPTInputSection button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
+    padding: 2px 8px 2px 16px;
+    /* Right padding handled by button margin */
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: all 0.5s ease;
+    /* Ensure full width */
+    box-sizing: border-box;
+    /* Include padding in width */
 }
 
-#WeeGPTInputSection button:hover::before {
-    left: 100%;
+.chat-input-wrapper:focus-within {
+    background-color: #ffffff;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    border-color: rgba(0, 0, 0, 0.05);
 }
 
-#WeeGPTInputSection button:hover {
-    transform: scale(1.1) rotate(3deg);
-    box-shadow: 0 6px 20px rgba(0, 130, 200, 0.4);
+#userQuestion {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    height: 48px;
+    font-size: 1rem;
+    color: #202124;
+    outline: none;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    padding: 0;
 }
 
-#WeeGPTInputSection button:active {
-    transform: scale(0.95);
-    box-shadow: 0 2px 10px rgba(0, 130, 200, 0.2);
+#userQuestion::placeholder {
+    color: #5f6368;
+}
+
+.chat-send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #0b57d0;
+    /* Google Blue */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s linear;
+    flex-shrink: 0;
+    margin-left: 4px;
+}
+
+.chat-send-btn:hover {
+    background-color: rgba(11, 87, 208, 0.08);
+    /* Blue tint */
+}
+
+.chat-send-btn:disabled {
+    color: #dadce0;
+    cursor: default;
+}
+
+.chat-send-btn:disabled:hover {
+    background-color: transparent;
 }
 
 
@@ -2320,21 +2332,29 @@ body.dark-mode .typing-effect::before {
 /* Google Sign-In Button (restyled to match select-button) */
 .sign-in-button {
     position: absolute;
-    height: 35px;
+    height: 40px;
     top: 20px;
     right: 20px;
-    padding: 4px 6px;
-    font-size: 1rem;
+    padding: 0 16px 0 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
     background-color: #FFFFFF;
-    color: #2D3436;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Google Sans', 'Roboto', sans-serif;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    letter-spacing: 0.25px;
+}
+
+.sign-in-button:hover {
+    background-color: #f7f8f8;
+    border-color: #d2e3fc;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 
 .sign-in-button.profile-mode {
@@ -2659,7 +2679,6 @@ body.dark-mode .typing-effect::before {
 }
 
 /* Star buttons */
-#starQuestion,
 #showStarredBtn {
     cursor: pointer;
     width: 24px;
@@ -3099,37 +3118,34 @@ body.dark-mode .sign-in-button.profile-mode {
     box-shadow: none;
 }
 
-body.dark-mode #WeeGPTInputSection {
-    background-color: #2a2a2a;
-    border-color: #404040;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+/* Dark Mode Chat Input */
+body.dark-mode #WeeGPTInputSection .chat-input-wrapper {
+    background-color: #303134;
+    /* Google Dark Surface */
+    border-color: rgba(255, 255, 255, 0.05);
 }
 
-body.dark-mode #WeeGPTInputSection:focus-within {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+body.dark-mode #WeeGPTInputSection .chat-input-wrapper:focus-within {
+    background-color: #303134;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+    border-color: transparent;
 }
 
-body.dark-mode #WeeGPTInputSection input {
-    color: #f0f6fc;
+body.dark-mode #userQuestion {
+    color: #e8eaed;
 }
 
-body.dark-mode #WeeGPTInputSection textarea::placeholder,
-body.dark-mode #WeeGPTInputSection input::placeholder {
-    color: #8b949e;
+body.dark-mode #userQuestion::placeholder {
+    color: #9aa0a6;
 }
 
-body.dark-mode #WeeGPTInputSection textarea:focus::placeholder,
-body.dark-mode #WeeGPTInputSection input:focus::placeholder {
-    color: #dddddd;
+body.dark-mode .chat-send-btn {
+    color: #8ab4f8;
+    /* Google Blue Light */
 }
 
-body.dark-mode #WeeGPTInputSection button {
-    background: #333333;
-    box-shadow: none;
-}
-
-body.dark-mode #WeeGPTInputSection button:hover {
-    box-shadow: none;
+body.dark-mode .chat-send-btn:hover {
+    background-color: rgba(138, 180, 248, 0.08);
 }
 
 body.dark-mode .restoreBtn_C3D4 {
@@ -3321,30 +3337,7 @@ body.dark-mode .sign-in-button.selected {
     border-color: #6b7280;
 }
 
-body.dark-mode #WeeGPTInputSection button:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg,
-            transparent,
-            rgba(44, 44, 58, 0.3),
-            transparent);
-    transition: all 0.5s ease;
-}
 
-body.dark-mode #WeeGPTInputSection button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(44, 44, 58, 0.3), transparent);
-    transition: all 0.5s ease;
-}
 
 .origin-display {
     font-size: 0.8rem;
@@ -3503,61 +3496,172 @@ body.dark-mode .rename-input {
 }
 
 /* --- New Search Bar (Top Right) --- */
+/* --- Material Expanding Search --- */
 .search-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 25;
     display: flex;
     align-items: center;
-    position: relative;
-    margin-right: 8px;
+    background: #fff;
+    border-radius: 24px;
+    /* Pill shape */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    height: 48px;
+    width: 48px;
+    /* Collapsed width */
+    overflow: hidden;
+}
+
+.search-container.expanded {
+    width: 320px;
+    /* Expanded width */
+    box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
+    background: #fff;
 }
 
 .search-icon-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    color: inherit;
+    border: none;
+    background: transparent;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #5f6368;
+    flex-shrink: 0;
     transition: background-color 0.2s;
 }
 
 .search-icon-btn:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(60, 64, 67, 0.08);
 }
 
 #topicSearch {
-    width: 0;
-    /* Hidden by default */
-    opacity: 0;
-    padding: 0;
+    flex-grow: 1;
+    width: 100%;
     border: none;
     background: transparent;
-    transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-    overflow: hidden;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: #202124;
+    outline: none;
+    padding: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease 0.1s;
+    /* Delay opacity for smooth expand */
+    pointer-events: none;
+}
+
+.search-container.expanded #topicSearch {
+    opacity: 1;
+    pointer-events: auto;
+    padding-left: 8px;
+}
+
+.search-close-btn {
+    width: 40px;
     height: 40px;
+    margin-right: 4px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5f6368;
+    flex-shrink: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
 }
 
-/* Expanded state class */
-#topicSearch {
-    width: 200px;
+.search-container.expanded .search-close-btn {
     opacity: 1;
-    padding: 0 12px;
-    background: #fff;
-    border-radius: 20px;
+    pointer-events: auto;
+}
+
+.search-close-btn:hover {
+    background-color: rgba(60, 64, 67, 0.08);
+}
+
+/* --- Action Icon Buttons (Copy, Star, Gemini) --- */
+.action-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5f6368;
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     margin-left: 8px;
 }
 
-.search-container.expanded {
-    width: 200px;
-    opacity: 1;
-    padding: 0 12px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: #fff;
-    border-radius: 20px;
-    margin-left: 8px;
+.action-icon-btn:hover {
+    background-color: rgba(60, 64, 67, 0.08);
+    color: #202124;
 }
+
+.action-icon-btn:active {
+    background-color: rgba(60, 64, 67, 0.12);
+}
+
+/* Specific colors for actions */
+.action-icon-btn.active svg {
+    fill: #fbbc04;
+    /* Google Yellow for Star */
+}
+
+/* Ensure Gemini button has no fill override so gradient shows */
+
+
+/* Star Pop Animation */
+@keyframes starPop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.action-icon-btn.star-btn.active svg {
+    animation: starPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    fill: #fbbc04;
+    /* Google Yellow */
+    stroke: none;
+    /* Ensure no outline stroke on filled state if path differs */
+}
+
+/* Default Star State (Outline) */
+.action-icon-btn.star-btn svg {
+    stroke: #5f6368;
+    stroke-width: 0.1px;
+    stroke-linejoin: round;
+    /* Smoother corners */
+}
+
+/* When active (filled), remove stroke if the path handles shape fully */
+.action-icon-btn.star-btn.active svg {
+    stroke: none;
+}
+
+/* Optional: Gemini button background hover could be gradient */
+
 
 /* Dark mode search */
 body.dark-mode .search-icon-btn {
@@ -3874,91 +3978,177 @@ body.dark-mode .folder-back {
 
 /* Updated Search position: Top Left */
 /* Google Material Search Bar */
-.search-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 25;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border-radius: 24px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
 
-.search-container:hover {
-    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
-}
-
-.search-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #5f6368;
-}
-
-.search-btn:hover {
-    background: rgba(0, 0, 0, 0.04);
-}
-
-#topicSearch {
-    width: 0;
-    opacity: 0;
-    padding: 0;
-    border: none;
-    background: transparent;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: 1rem;
-    color: #202124;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Ensure search expands correctly */
-.search-container.expanded {
-    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
-    background: #fff;
-    padding-right: 12px;
-}
-
-.search-container.expanded #topicSearch {
-    width: 240px;
-    opacity: 1;
-    padding: 0 8px;
-    margin-left: 4px;
-    height: 40px;
-    /* Match button height */
-    outline: none;
-}
-
-/* Dark mode search input */
-body.dark-mode .search-container {
-    background: #303134;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-mode .search-container.expanded #topicSearch {
-    background: transparent;
-    color: #e8eaed;
-}
-
-body.dark-mode .search-btn {
-    color: #9aa0a6;
-}
-
-body.dark-mode .search-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
 
 .avatar-button {
     flex-shrink: 0;
     position: relative;
     z-index: 26;
+}
+
+/* Google Material Search Bar */
+.google-search-bar {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    height: 48px;
+    width: 100%;
+    max-width: 584px;
+    /* Typical Google search bar max width */
+    margin: 0 0 20px 0;
+    /* Add some spacing */
+    box-shadow: none;
+    transition: background-color 200ms cubic-bezier(0.4, 0.0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 48px;
+    /* Collapsed width matches height */
+    min-width: 48px;
+    background: transparent;
+    border-color: transparent;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 100;
+    pointer-events: auto;
+    /* Ensure it captures clicks */
+}
+
+.google-search-bar:hover,
+.google-search-bar:focus-within {
+    width: 100%;
+    max-width: 584px;
+    background: #ffffff;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, .28);
+    border-color: #dfe1e5;
+    cursor: text;
+}
+
+.google-search-bar .search-icon {
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9aa0a6;
+}
+
+.google-search-bar input {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, .87);
+    word-wrap: break-word;
+    outline: none;
+    display: flex;
+    -webkit-tap-highlight-color: transparent;
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Roboto', arial, sans-serif;
+    line-height: 34px;
+    width: 100%;
+    opacity: 0;
+    /* Hidden by default */
+    transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.google-search-bar:hover input,
+.google-search-bar:focus-within input {
+    opacity: 1;
+}
+
+body.dark-mode .google-search-bar {
+    background: #303134;
+    border: 1px solid #5f6368;
+}
+
+body.dark-mode .google-search-bar:hover,
+body.dark-mode .google-search-bar:focus-within {
+    background: #303134;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .5);
+    border-color: rgba(223, 225, 229, 0);
+}
+
+body.dark-mode .google-search-bar input {
+    color: #e8eaed;
+}
+
+body.dark-mode .google-search-bar .search-icon svg {
+    fill: #9aa0a6;
+}
+
+/* Material Icon Buttons */
+.material-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    color: #5f6368;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    padding: 8px;
+    /* Ensure 24px icon fits nicely */
+    box-sizing: border-box;
+    box-sizing: border-box;
+    /* Tighter spacing */
+}
+
+/* Specific fix for Star Button padding to make it larger/match others if needed */
+
+
+/* If user meant "touch target" bigger, width/height is 40px fixed. 
+If user meant "icon looks too big", increase padding.
+If user meant "icon looks too small", decrease padding.
+"padding can be bigger" => icon smaller. 
+Let's try 10px for star button specifically if it looks too large compared to others. */
+
+
+.material-icon-btn:hover {
+    background-color: rgba(60, 64, 67, 0.08);
+    /* hover-state-layer-opacity */
+}
+
+.material-icon-btn:active {
+    background-color: rgba(60, 64, 67, 0.12);
+    /* pressed-state-layer-opacity */
+}
+
+.material-icon-btn svg {
+    flex-shrink: 0;
+}
+
+body.dark-mode .material-icon-btn {
+    color: #e8eaed;
+}
+
+body.dark-mode .material-icon-btn:hover {
+    background-color: rgba(232, 234, 237, 0.08);
+}
+
+/* Starred State Logic */
+.material-icon-btn .star-filled {
+    display: none;
+}
+
+/* When starred, show filled, hide empty */
+.material-icon-btn.starred .star-filled {
+    display: block !important;
+    /* Force show */
+}
+
+.material-icon-btn.starred .star-empty {
+    display: none;
+}
+
+/* WeeGPT Glow Effect */
+.material-icon-btn.glow-effect:hover {
+    background: linear-gradient(135deg, rgba(66, 133, 244, 0.1), rgba(219, 68, 55, 0.1), rgba(244, 180, 0, 0.1), rgba(15, 157, 88, 0.1));
 }
