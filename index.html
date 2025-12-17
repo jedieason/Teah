@@ -213,12 +213,19 @@
     </div>
   </div>
 
-  <!-- Mistake List Modal -->
-  <div id="mistakeModal" class="modal">
-    <div class="modal-content mistake-modal-content">
-      <span class="modal-close">&times;</span>
-      <h3>本單元錯題排行</h3>
-      <div id="mistakeList"></div>
+  <!-- Mistake Full Screen View -->
+  <div id="mistakeView" class="full-screen-view">
+    <div class="top-app-bar">
+      <button id="closeMistakeViewBtn" class="action-icon-btn" aria-label="關閉">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </button>
+      <h2 class="view-title">錯題回顧</h2>
+    </div>
+    <div id="mistakeScrollContainer" class="view-body">
+      <div id="mistakeListContent"></div>
     </div>
   </div>
 </body>

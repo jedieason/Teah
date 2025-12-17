@@ -2274,8 +2274,9 @@ document.addEventListener('DOMContentLoaded', initTheme);
 
 /* Mistake Tracking Logic */
 const mistakeButton = document.getElementById('mistakeButton');
-const mistakeModal = document.getElementById('mistakeModal');
-const mistakeList = document.getElementById('mistakeList');
+const mistakeView = document.getElementById('mistakeView');
+const closeMistakeViewBtn = document.getElementById('closeMistakeViewBtn');
+const mistakeListContent = document.getElementById('mistakeListContent');
 
 if (mistakeButton) {
     mistakeButton.addEventListener('click', () => {
@@ -2283,16 +2284,21 @@ if (mistakeButton) {
             showCustomAlert('請先登入才能查看錯題紀錄！');
             return;
         }
-        openMistakeModal();
+        openMistakeView();
     });
 }
 
-if (mistakeModal) {
-    mistakeModal.addEventListener('click', (e) => {
-        if (e.target === mistakeModal) {
-            mistakeModal.style.display = 'none';
-        }
+if (closeMistakeViewBtn) {
+    closeMistakeViewBtn.addEventListener('click', () => {
+        closeMistakeView();
     });
+}
+
+function closeMistakeView() {
+    if (mistakeView) {
+        mistakeView.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+    }
 }
 
 function recordMistake() {
@@ -2323,17 +2329,20 @@ function recordMistake() {
     }
 }
 
-async function openMistakeModal() {
+async function openMistakeView() {
     if (!auth.currentUser || !selectedJson) return;
-    if (mistakeList) mistakeList.innerHTML = '<p>載入中...</p>';
-    if (mistakeModal) mistakeModal.style.display = 'flex';
+    if (mistakeListContent) mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入中...</p>';
+    if (mistakeView) {
+        mistakeView.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Lock background scrolling
+    }
 
     try {
         const quizName = selectedJson.split('/').pop().replace('.json', '');
         const snapshot = await get(ref(database, `mistakes/${auth.currentUser.uid}/${quizName}`));
 
         if (!snapshot.exists()) {
-            if (mistakeList) mistakeList.innerHTML = '<p>本單元目前沒有錯題紀錄。</p>';
+            if (mistakeListContent) mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">本單元目前沒有錯題紀錄。</p>';
             return;
         }
 
@@ -2342,8 +2351,8 @@ async function openMistakeModal() {
 
         mistakes.sort((a, b) => b.count - a.count);
 
-        if (mistakeList) {
-            mistakeList.innerHTML = '';
+        if (mistakeListContent) {
+            mistakeListContent.innerHTML = '';
             mistakes.forEach(m => {
                 const div = document.createElement('div');
                 div.className = 'mistake-item';
@@ -2410,12 +2419,12 @@ async function openMistakeModal() {
                 // Latex render
                 renderLatex(div);
 
-                mistakeList.appendChild(div);
+                mistakeListContent.appendChild(div);
             });
         }
 
     } catch (err) {
         console.error('Error fetching mistakes:', err);
-        if (mistakeList) mistakeList.innerHTML = '<p>載入失敗，請稍後再試。</p>';
+        if (mistakeListContent) mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入失敗，請稍後再試。</p>';
     }
 }

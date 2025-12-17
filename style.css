@@ -4430,56 +4430,6 @@ body.dark-mode .mistake-badge.high-mistake {
 }
 
 
-/* Mistake Modal Revamp (Google Material Design 3) */
-
-/* Modal Container Logic */
-.mistake-modal-content {
-    /* Limit height relative to viewport to allow internal scrolling */
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-    width: 90%;
-    max-width: 680px;
-    /* Slightly wider */
-    box-sizing: border-box;
-    text-align: left;
-    /* Default alignment left */
-}
-
-.mistake-modal-content h3 {
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-size: 1.5rem;
-    color: #1f1f1f;
-    flex-shrink: 0;
-    /* Keep header from shrinking */
-}
-
-#mistakeList {
-    flex: 1;
-    /* Grow to fill available space */
-    overflow-y: auto;
-    /* Enable vertical scrolling */
-    margin-top: 0;
-    padding-right: 4px;
-    /* Space for scrollbar */
-}
-
-/* Scrollbar styling for internal list */
-#mistakeList::-webkit-scrollbar {
-    width: 8px;
-}
-
-#mistakeList::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-}
-
-#mistakeList::-webkit-scrollbar-track {
-    background: transparent;
-}
-
 /* Item Card */
 .mistake-item {
     display: flex;
@@ -4647,5 +4597,64 @@ body.dark-mode .mistake-answer-row {
 }
 
 body.dark-mode .mistake-explanation-row strong {
+    color: #e8eaed;
+}
+
+/* Full Screen View (Material 3) */
+.full-screen-view {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background-color: #ffffff;
+    display: none;
+    /* Hidden by default */
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.top-app-bar {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    /* Material specifies 16px horizontal padding */
+    gap: 24px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    z-index: 2001;
+}
+
+.view-title {
+    font-size: 1.375rem;
+    /* Google 22px */
+    font-weight: 400;
+    color: #1f1f1f;
+    margin: 0;
+}
+
+.view-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 16px;
+    /* Ensure content is centered or constrained if screen is very wide */
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Dark Mode for Full Screen View */
+body.dark-mode .full-screen-view {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode .top-app-bar {
+    background-color: #1a1a1a;
+    border-bottom-color: #444;
+}
+
+body.dark-mode .view-title {
     color: #e8eaed;
 }
