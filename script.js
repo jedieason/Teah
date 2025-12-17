@@ -474,14 +474,8 @@ function confirmAnswer() {
         acceptingAnswers = false;
         // 顯示詳解
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderMathInElement(document.getElementById('explanation-text'), {
-            delimiters: [
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "$$", right: "$$", display: true },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+        renderLatex(document.getElementById('explanation-text'));
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
         const originDisplay = document.getElementById('origin-display');
@@ -555,14 +549,8 @@ function confirmAnswer() {
         }
         // 顯示詳解
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderMathInElement(document.getElementById('explanation-text'), {
-            delimiters: [
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "$$", right: "$$", display: true },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });
+        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+        renderLatex(document.getElementById('explanation-text'));
         document.getElementById('explanation').style.display = 'block';
         document.getElementById('confirm-btn').style.display = 'none';
         const originDisplay = document.getElementById('origin-display');
@@ -791,6 +779,7 @@ function reverseQuestion() {
             button.classList.add('option-button');
             button.dataset.option = key;
             button.innerHTML = marked.parse(`${key}: ${value}`);
+            renderLatex(button); // Render LaTeX in the option button
 
             if (previousState.isConfirmed) {
                 // Apply selection and correctness styling
@@ -847,14 +836,7 @@ function reverseQuestion() {
 
     if (previousState.isConfirmed) {
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！');
-        renderMathInElement(document.getElementById('explanation-text'), {
-            delimiters: [
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "$$", right: "$$", display: true },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });
+        renderLatex(document.getElementById('explanation-text'));
         explanationElement.style.display = 'block';
         confirmBtnElement.style.display = 'none';
         confirmBtnElement.disabled = true;
@@ -1459,6 +1441,20 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// Helper function to render LaTeX in an element
+function renderLatex(element) {
+    if (!element) return;
+    renderMathInElement(element, {
+        delimiters: [
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "$$", right: "$$", display: true },
+            { left: "\\[", right: "\\]", display: true }
+        ]
+    });
+}
+
+
 
 // WeeGPT相關程式碼
 const weeGPTButton = document.getElementById('WeeGPT');
@@ -1589,6 +1585,7 @@ sendQuestionBtn.addEventListener('click', async () => {
 
         currentQuestion.explanation = explanation;
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+        renderLatex(document.getElementById('explanation-text'));
         userQuestionInput.value = '';
         console.log('Gemini 回應更新成功啦！爽喔！🚀');
 
@@ -1596,6 +1593,7 @@ sendQuestionBtn.addEventListener('click', async () => {
         console.error('呼叫 Gemini API 的時候又他媽的炸裂了:', error);
         currentQuestion.explanation = `幹拎老師，呼叫 Gemini API 時噴了個大錯誤：${error.message} 💩。媽的，這預覽版模型是不是有問題啊！`;
         document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
+        renderLatex(document.getElementById('explanation-text'));
     } finally {
         // inputSection.style.display = 'block'; // 看你要不要加回來
     }
@@ -1927,15 +1925,10 @@ function loadQuestionFromState() {
         return;
     }
     updateStarIcon();
-    document.getElementById('question').innerHTML = marked.parse(currentQuestion.question);
-    renderMathInElement(document.getElementById('question'), {
-        delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "$$", right: "$$", display: true },
-            { left: "\\[", right: "\\]", display: true }
-        ]
-    });
+    updateStarIcon();
+    const questionEl = document.getElementById('question');
+    questionEl.innerHTML = marked.parse(currentQuestion.question);
+    renderLatex(questionEl);
 
     if (currentQuestion.isFillBlank) {
         document.getElementById('options').style.display = 'none';
@@ -1973,6 +1966,7 @@ function loadQuestionFromState() {
             button.classList.add('option-button');
             button.dataset.option = key;
             button.innerHTML = marked.parse(`${key}: ${value}`);
+            renderLatex(button); // Render LaTeX in options
             button.addEventListener('click', selectOption);
             optionsContainer.appendChild(button);
         });
