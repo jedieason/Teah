@@ -282,83 +282,95 @@ p {
 }
 
 /* Top-right controls */
-/* Top-right controls */
 .top-right-controls {
     position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
-    gap: 8px;
-    /* Google uses tighter gaps usually (8px or 12px) */
+    gap: 12px;
     align-items: center;
     z-index: 20;
 }
 
 .fab-add {
-    display: none;
-    /* Hide if not used, or style as Material FAB if needed. Keeping it hidden or minimal */
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #000000;
+    color: #fff;
+    font-weight: 800;
+    font-size: 22px;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .12s ease, box-shadow .12s ease;
 }
 
-/* Google Profile Button Style */
+.fab-add:hover {
+    transform: translateY(-1px);
+    box-shadow: none;
+}
+
+.fab-add:active {
+    transform: translateY(0);
+}
+
 .avatar-button {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: none;
-    /* Removed border */
     background: transparent;
-    /* Transparent background */
     padding: 4px;
-    /* Internal padding */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     box-shadow: none;
-    /* Removed shadow */
     transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .avatar-button:hover {
     background-color: rgba(60, 64, 67, 0.08);
-    /* Standard Google Hover */
-}
-
-.avatar-button:focus-visible {
-    background-color: rgba(60, 64, 67, 0.12);
-    outline: 2px solid #5f6368;
-    outline-offset: -2px;
 }
 
 .avatar-button img {
+    border-radius: 50%;
     width: 32px;
     height: 32px;
-    border-radius: 50%;
     object-fit: cover;
 }
 
-/* Dropdown Menu */
 .controls-menu {
     position: absolute;
-    top: 60px;
-    /* Slight offset */
+    top: 48px;
     right: 0;
-    width: 300px;
-    /* Google Account menu is usually around 320-360px, 300px is fine */
-    background: #fff;
+    width: 280px;
+    background: #ffffff;
     border: none;
     border-radius: 8px;
-    /* Slightly smaller radius */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.12);
-    /* Softer shadow */
-    /* Google uses a specific elevation shadow */
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
     padding: 8px 0;
-    /* Vertical padding only */
     display: none;
-    overflow: hidden;
-    z-index: 100;
+    z-index: 1000;
+    transform-origin: top right;
+    animation: menuFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* --- Modern Home Dashboard Styles --- */
@@ -599,25 +611,30 @@ body.dark-mode .unit-icon-box {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px;
+    padding: 0 16px 12px 16px;
 }
 
 .menu-avatar {
     border-radius: 50%;
+    margin-right: 4px;
 }
 
 .menu-name {
-    font-weight: 700;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #3c4043;
 }
 
 .menu-email {
-    font-size: .9rem;
-    opacity: .8;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    color: #5f6368;
 }
 
 .controls-separator {
     height: 1px;
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(0, 0, 0, 0.12);
     margin: 8px 0;
 }
 
@@ -625,18 +642,23 @@ body.dark-mode .unit-icon-box {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 8px;
-    border-radius: 8px;
+    gap: 16px;
+    padding: 0 16px;
+    height: 40px;
     background: transparent;
     border: none;
     cursor: pointer;
-    color: inherit;
+    color: #3c4043;
     text-align: left;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: background-color 0.15s;
+    box-sizing: border-box;
 }
 
 .controls-item:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(60, 64, 67, 0.08);
 }
 
 .controls-item .controls-label {
@@ -644,19 +666,19 @@ body.dark-mode .unit-icon-box {
 }
 
 /* Dark mode: controls */
-body.dark-mode .avatar-button {
-    background: transparent;
-    color: #e8eaed;
+body.dark-mode .avatar-button:hover {
+    background-color: rgba(232, 234, 237, 0.08);
 }
 
-body.dark-mode .avatar-button:hover {
-    background: rgba(232, 234, 237, 0.08);
-    /* White overlay for dark mode */
+body.dark-mode .avatar-button {
+    background: transparent;
+    border-color: transparent;
 }
 
 body.dark-mode .controls-menu {
-    background: #20232b;
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #303134;
+    border-color: transparent;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
 }
 
@@ -665,15 +687,19 @@ body.dark-mode .controls-separator {
 }
 
 body.dark-mode .menu-name {
-    color: #f0f6fc;
+    color: #e8eaed;
 }
 
 body.dark-mode .menu-email {
-    color: #a8b3cf;
+    color: #9aa0a6;
+}
+
+body.dark-mode .controls-item {
+    color: #e8eaed;
 }
 
 body.dark-mode .controls-item:hover {
-    background: rgba(88, 166, 255, 0.12);
+    background-color: rgba(232, 234, 237, 0.08);
 }
 
 .start-title {
