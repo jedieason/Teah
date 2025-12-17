@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 import { getDatabase, ref, get, update, set, remove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
@@ -21,6 +21,22 @@ const database = getDatabase(app);
 // Firebase Auth
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
+
+// Handle Redirect Result
+getRedirectResult(auth)
+    .then((result) => {
+        if (result && result.user) {
+            console.log('Redirect sign-in success:', result.user);
+            // Optionally notification is handled by onAuthStateChanged or we can show one here
+            // showCustomAlert('登入成功！');
+        }
+    })
+    .catch((error) => {
+        console.error('Redirect sign-in error:', error);
+        // We can show custom alert if showCustomAlert is available, but it might not be defined yet if it's further down.
+        // Usually safe to relying on console or simple alert, or wait for DOM. 
+        // Since this runs top-level, functions might be hoisted.
+    });
 const signInBtn = document.getElementById('signInBtn');
 // Restore preview elements
 const restoreBtn = document.getElementById('restore');
@@ -1768,12 +1784,10 @@ if (signInBtn) {
         }
 
         try {
-            await signInWithPopup(auth, googleProvider);
+            await signInWithRedirect(auth, googleProvider);
         } catch (error) {
             console.error('Google sign-in failed:', error);
-            if (error.code !== 'auth/popup-closed-by-user') {
-                showCustomAlert('登入失敗，請稍後再試。');
-            }
+            showCustomAlert('登入請求失敗，請稍後再試。');
         }
     });
 }
@@ -1811,12 +1825,10 @@ if (controlsMenuBtn && controlsMenu) {
         // If not logged in, this button acts as the sign-in trigger
         if (!auth.currentUser) {
             try {
-                await signInWithPopup(auth, googleProvider);
+                await signInWithRedirect(auth, googleProvider);
             } catch (error) {
                 console.error('Google sign-in failed:', error);
-                if (error.code !== 'auth/popup-closed-by-user') {
-                    showCustomAlert('登入失敗，請稍後再試。');
-                }
+                showCustomAlert('登入請求失敗，請稍後再試。');
             }
             return;
         }
@@ -2327,7 +2339,10 @@ function recordMistake() {
     if (!auth.currentUser || !currentQuestion || !selectedJson) return;
     try {
         const quizName = selectedJson.split('/').pop().replace('.json', '');
-        const qKey = btoa(unescape(encodeURIComponent(currentQuestion.question)));
+        // Sanitize key: replacing '/' is critical as it creates sub-paths in Firebase
+        const qKey = btoa(unescape(encodeURIComponent(currentQuestion.question)))
+            .replace(/\//g, '_')
+            .replace(/\+/g, '-');
         const userMistakeRef = ref(database, `mistakes/${auth.currentUser.uid}/${quizName}/${qKey}`);
 
         get(userMistakeRef).then((snapshot) => {
@@ -2370,9 +2385,25 @@ async function openMistakeView() {
         }
 
         const data = snapshot.val();
-        const mistakes = Object.values(data);
 
-        mistakes.sort((a, b) => b.count - a.count);
+        // Recursive helper to extract mistake objects from potentially nested structure (due to old unsanitized keys)
+        const mistakes = [];
+        const extractMistakes = (obj) => {
+            if (!obj || typeof obj !== 'object') return;
+            // Check if this object looks like a mistake record
+            if (obj.question && (typeof obj.count === 'number' || obj.lastMistake)) {
+                mistakes.push(obj);
+                // Don't return here if we want to support nested mistakes inside mistakes (unlikely but safe)
+                // But usually a leaf node mistake won't contain other mistakes.
+                return;
+            }
+            // Otherwise, recurse into children
+            Object.values(obj).forEach(child => extractMistakes(child));
+        };
+
+        extractMistakes(data);
+
+        mistakes.sort((a, b) => (b.count || 0) - (a.count || 0));
 
         if (mistakeListContent) {
             mistakeListContent.innerHTML = '';
