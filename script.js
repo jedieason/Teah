@@ -1125,18 +1125,17 @@ async function fetchQuizList() {
 
                     const iconBox = document.createElement('div');
                     iconBox.className = 'unit-icon-box';
-                    // Material Icon or SVG logic
                     iconBox.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"/></svg>';
 
                     const infoDiv = document.createElement('div');
                     infoDiv.className = 'unit-info';
 
                     const title = document.createElement('div');
-                    title.className = 'unit-title';
+                    title.className = 'unit-subtitle';
                     title.textContent = groupName;
 
                     const subtitle = document.createElement('div');
-                    title.className = 'unit-subtitle';
+                    subtitle.className = 'unit-title';
                     subtitle.textContent = `${count} 份習題`;
 
                     infoDiv.appendChild(title);
@@ -1462,72 +1461,6 @@ window.addEventListener('DOMContentLoaded', () => {
         fileDropZone.style.display = 'none';
     }
 });
-
-/* --- Rename Logic --- */
-let isEditMode = false;
-const menuEditNames = document.getElementById('menuEditNames'); // Assuming added to HTML or create dynamically if not
-
-// Since we didn't add the menu item in HTML yet, let's inject it into controls or assume existence.
-// For now, let's hook it up if 'menuEditNames' exists, or add it dynamically.
-// Actually, I should probably add it to the menu in HTML first or insert it via JS.
-// Let's insert it into the controls menu list via JS to be safe.
-
-const editMenuItem = document.createElement('button');
-editMenuItem.id = 'menuEditNames';
-editMenuItem.className = 'controls-menu-item';
-editMenuItem.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>編輯題庫名稱</span>`;
-// Insert before logout
-if (controlsMenu && menuLogout) {
-    controlsMenu.insertBefore(editMenuItem, menuLogout);
-}
-
-// Check toggle functionality
-editMenuItem.addEventListener('click', () => {
-    isEditMode = !isEditMode;
-    toggleEditModeUI();
-    // Close menu? Maybe keep open or close. Let's close.
-    // controlsMenu.classList.remove('open');
-});
-
-function toggleEditModeUI() {
-    const grid = document.getElementById('units-grid');
-    if (grid) {
-        if (isEditMode) {
-            grid.classList.add('edit-mode');
-            editMenuItem.classList.add('active-menu-item'); // Optional styling
-            editMenuItem.querySelector('span').textContent = '結束編輯';
-        } else {
-            grid.classList.remove('edit-mode');
-            editMenuItem.classList.remove('active-menu-item');
-            editMenuItem.querySelector('span').textContent = '編輯題庫名稱';
-        }
-    }
-}
-
-async function handleRenameQuiz(oldName) {
-    const newName = prompt(`請輸入「${oldName}」的新名稱:`, oldName);
-    if (newName && newName.trim() !== '' && newName !== oldName) {
-        try {
-            // Get old data
-            const snapshot = await get(ref(database, oldName));
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                const updates = {};
-                updates[oldName] = null; // Delete old
-                updates[newName.trim()] = data; // Set new
-
-                await update(ref(database), updates);
-                showCustomAlert('已重新命名！');
-                fetchQuizList(); // Refresh list
-            } else {
-                showCustomAlert('找不到原題庫資料');
-            }
-        } catch (e) {
-            console.error('Rename failed:', e);
-            showCustomAlert('重新命名失敗，權限不足？');
-        }
-    }
-}
 
 
 // Helper function to render LaTeX in an element
@@ -2004,6 +1937,69 @@ if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
     if (controlsMenu) controlsMenu.classList.remove('open');
     openUploadModal('paste');
 });
+
+
+/* --- Rename Logic --- */
+let isEditMode = false;
+
+// Inject Rename Menu Item
+const editMenuItem = document.createElement('button');
+editMenuItem.id = 'menuEditNames';
+editMenuItem.className = 'controls-menu-item';
+editMenuItem.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>編輯題庫名稱</span>`;
+
+if (typeof controlsMenu !== 'undefined' && controlsMenu && typeof menuLogout !== 'undefined' && menuLogout) {
+    controlsMenu.insertBefore(editMenuItem, menuLogout);
+}
+
+// Check toggle functionality
+editMenuItem.addEventListener('click', () => {
+    isEditMode = !isEditMode;
+    toggleEditModeUI();
+    // Close menu
+    if (controlsMenu) controlsMenu.classList.remove('open');
+});
+
+function toggleEditModeUI() {
+    const grid = document.getElementById('units-grid');
+    if (grid) {
+        if (isEditMode) {
+            grid.classList.add('edit-mode');
+            editMenuItem.classList.add('active-menu-item'); // Optional styling
+            editMenuItem.querySelector('span').textContent = '結束編輯';
+        } else {
+            grid.classList.remove('edit-mode');
+            editMenuItem.classList.remove('active-menu-item');
+            editMenuItem.querySelector('span').textContent = '編輯題庫名稱';
+        }
+    }
+}
+
+async function handleRenameQuiz(oldName) {
+    const newName = prompt(`請輸入「${oldName}」的新名稱:`, oldName);
+    if (newName && newName.trim() !== '' && newName !== oldName) {
+        try {
+            // Get old data
+            const snapshot = await get(ref(database, oldName));
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const updates = {};
+                updates[oldName] = null; // Delete old
+                updates[newName.trim()] = data; // Set new
+
+                await update(ref(database), updates);
+                showCustomAlert('已重新命名！');
+                fetchQuizList(); // Refresh list
+            } else {
+                showCustomAlert('找不到原題庫資料');
+            }
+        } catch (e) {
+            console.error('Rename failed:', e);
+            showCustomAlert('重新命名失敗，權限不足？');
+        }
+    }
+}
+
 
 // Initialize shuffle state label in menu on load
 updateShuffleUI();
