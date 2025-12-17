@@ -1095,9 +1095,7 @@ async function fetchQuizList() {
         if (snapshot.exists()) {
             const data = snapshot.val();
             const allKeys = Object.keys(data || {});
-            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY' && k !== 'mistakes');
-
-            // 依據檔名中第一個「學」之前（含「學」）的前綴分組；若無「學」則歸入「其他」
+            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY' && k !== 'mistakes' && k !== 'mistake');
             const groups = {};
             quizKeys.forEach(k => {
                 const idx = k.indexOf('學');
