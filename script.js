@@ -328,12 +328,22 @@ function loadNewQuestion() {
         // 更新詳解中的選項標籤
         currentQuestion.explanation = updateExplanationOptions(currentQuestion.explanation, labelMapping);
 
-        // 更新模態窗口的內容
-        document.querySelector('#popupWindow .editable:nth-child(2)').innerText = currentQuestion.question;
-        const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
-        document.querySelector('#popupWindow .editable:nth-child(3)').innerText = optionsText;
-        document.querySelector('#popupWindow .editable:nth-child(5)').innerText = currentQuestion.answer;
-        document.querySelector('#popupWindow .editable:nth-child(7)').innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
+        // 更新模態窗口的內容 (If exists)
+        const popupWindow = document.getElementById('popupWindow');
+        if (popupWindow) {
+            const qEl = popupWindow.querySelector('.editable:nth-child(2)');
+            const oEl = popupWindow.querySelector('.editable:nth-child(3)');
+            const aEl = popupWindow.querySelector('.editable:nth-child(5)');
+            const eEl = popupWindow.querySelector('.editable:nth-child(7)');
+
+            if (qEl) qEl.innerText = currentQuestion.question;
+            if (oEl) {
+                const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
+                oEl.innerText = optionsText;
+            }
+            if (aEl) aEl.innerText = currentQuestion.answer;
+            if (eEl) eEl.innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
+        }
     }
     saveProgress();
     updateProgressBar();
@@ -2275,8 +2285,15 @@ function recordMistake() {
         const userMistakeRef = ref(database, `mistakes/${auth.currentUser.uid}/${quizName}/${qKey}`);
 
         get(userMistakeRef).then((snapshot) => {
-            let currentData = snapshot.val() || { count: 0, question: currentQuestion.question };
-            if (!currentData.question) currentData.question = currentQuestion.question;
+            let currentData = snapshot.val() || {};
+
+            // Always update/ensure these fields are present and current
+            currentData.question = currentQuestion.question;
+            currentData.options = currentQuestion.options || null;
+            currentData.answer = currentQuestion.answer;
+            currentData.explanation = currentQuestion.explanation;
+            currentData.isMultiSelect = currentQuestion.isMultiSelect || false;
+            currentData.isFillBlank = currentQuestion.isFillBlank || false;
 
             currentData.count = (currentData.count || 0) + 1;
             currentData.lastMistake = Date.now();
@@ -2312,18 +2329,81 @@ async function openMistakeModal() {
             mistakes.forEach(m => {
                 const div = document.createElement('div');
                 div.className = 'mistake-item';
+                div.style.flexDirection = 'column'; // Vertical layout for details
+                div.style.alignItems = 'flex-start';
+
+                // Header: Question + Badge
+                const headerRow = document.createElement('div');
+                headerRow.style.display = 'flex';
+                headerRow.style.justifyContent = 'space-between';
+                headerRow.style.width = '100%';
+                headerRow.style.marginBottom = '8px';
 
                 const info = document.createElement('div');
                 info.className = 'mistake-info';
-                info.innerHTML = marked.parse(m.question);
-                renderLatex(info);
+                // Safe parsing check
+                if (typeof m.question === 'string') {
+                    info.innerHTML = marked.parse(m.question);
+                } else {
+                    info.innerHTML = '<i>(題目載入錯誤)</i>';
+                }
 
                 const badge = document.createElement('div');
                 badge.className = 'mistake-count-badge';
                 badge.textContent = `${m.count} 次錯誤`;
 
-                div.appendChild(info);
-                div.appendChild(badge);
+                headerRow.appendChild(info);
+                headerRow.appendChild(badge);
+                div.appendChild(headerRow);
+
+                // Details: Options (if any)
+                if (m.options && typeof m.options === 'object') {
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'mistake-content';
+                    optionsDiv.style.fontSize = '0.9rem';
+                    optionsDiv.style.color = '#555';
+                    optionsDiv.style.marginBottom = '8px';
+
+                    let optionsHtml = '<ul style="padding-left: 20px; list-style-type: none; margin: 0;">';
+                    Object.entries(m.options).forEach(([key, val]) => {
+                        const isAns = Array.isArray(m.answer)
+                            ? m.answer.includes(key)
+                            : m.answer === key;
+                        const style = isAns ? 'color: #1a73e8; font-weight: bold;' : '';
+                        optionsHtml += `<li style="${style}">${key}: ${val}</li>`;
+                    });
+                    optionsHtml += '</ul>';
+                    optionsDiv.innerHTML = optionsHtml;
+                    div.appendChild(optionsDiv);
+                }
+
+                // Details: Answer & Explanation
+                const ansExpDiv = document.createElement('div');
+                ansExpDiv.className = 'mistake-content';
+                ansExpDiv.style.borderTop = '1px solid #eee';
+                ansExpDiv.style.paddingTop = '8px';
+                ansExpDiv.style.marginTop = '4px';
+                ansExpDiv.style.width = '100%';
+
+                let ansText = Array.isArray(m.answer) ? m.answer.join(', ') : m.answer;
+
+                let explanationHtml = '';
+                if (m.explanation && typeof m.explanation === 'string') {
+                    explanationHtml = marked.parse(m.explanation);
+                } else {
+                    explanationHtml = '<i>暫無詳解</i>';
+                }
+
+                ansExpDiv.innerHTML = `
+                    <div style="margin-bottom: 4px;"><strong>正確答案:</strong> ${ansText}</div>
+                    <div><strong>詳解:</strong> ${explanationHtml}</div>
+                `;
+
+                div.appendChild(ansExpDiv);
+
+                // Latex render
+                renderLatex(div);
+
                 mistakeList.appendChild(div);
             });
         }
