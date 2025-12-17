@@ -4485,30 +4485,25 @@ body.dark-mode .mistake-badge.high-mistake {
     display: flex;
     flex-direction: column;
     /* Vertical stack */
-    padding: 16px;
-    margin-bottom: 12px;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    /* Material shapes */
-    transition: background-color 0.2s, box-shadow 0.2s;
+    padding: 16px 0;
+    /* Vertical padding only, no horizontal */
+    margin-bottom: 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #f1f3f4;
+    /* Subtle divider */
     height: auto;
     /* Content drives height */
     gap: 12px;
 }
 
 .mistake-item:last-child {
-    border-bottom: 1px solid #e0e0e0;
-    /* consistent border */
-    margin-bottom: 0;
+    border-bottom: none;
 }
 
 .mistake-item:hover {
-    background-color: #f8f9fa;
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    border-color: transparent;
-    z-index: 1;
-    /* Pop above neighbors */
+    background-color: transparent;
+    box-shadow: none;
 }
 
 /* Header Row */
@@ -4612,13 +4607,14 @@ body.dark-mode #mistakeList::-webkit-scrollbar-thumb {
 }
 
 body.dark-mode .mistake-item {
-    background-color: #353535;
-    border-color: #454545;
+    background-color: transparent;
+    border-color: transparent;
+    border-bottom-color: #454545;
 }
 
 body.dark-mode .mistake-item:hover {
-    background-color: #404040;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    background-color: transparent;
+    box-shadow: none;
 }
 
 body.dark-mode .mistake-info {
