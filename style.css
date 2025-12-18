@@ -409,8 +409,8 @@ p {
 
 .continue-title-text {
     font-family: 'Google Sans', 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: #202124;
     margin: 0 0 12px 0;
 }
@@ -4888,16 +4888,23 @@ body.dark-mode .view-title {
     border: none;
     background: transparent;
     color: #0b57d0;
-    padding: 10px 24px;
+    /* Primary */
+    padding: 10px 12px;
+    /* Reduced horizontal padding for text buttons */
     border-radius: 20px;
     font-weight: 500;
     font-size: 0.9rem;
+    font-family: inherit;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .md3-text-btn:hover {
     background-color: rgba(11, 87, 208, 0.08);
-    /* State Layer */
+}
+
+.md3-text-btn:active {
+    background-color: rgba(11, 87, 208, 0.12);
 }
 
 .md3-filled-btn {

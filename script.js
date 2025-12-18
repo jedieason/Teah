@@ -1785,12 +1785,9 @@ if (signInBtn) {
 // Delegate click to close any modal when '×' is clicked
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal-close')) {
-        console.log('modal-close clicked on', e.target);
-        const modal = e.target.closest('.modal');
-        console.log('Found modal:', modal);
+        const modal = e.target.closest('.modal') || e.target.closest('.md3-modal-overlay');
         if (modal) {
             modal.style.display = 'none';
-            console.log('Modal display set to none');
         }
     }
 });
@@ -2158,7 +2155,7 @@ async function openStarredModal() {
 
                 const optionsDiv = document.createElement('div');
                 optionsDiv.classList.add('starred-options');
-                optionsDiv.innerHTML = Object.entries(q.options || {}).map(([k, v]) => `<div>${k}: ${v}</div>`).join('');
+                optionsDiv.innerHTML = Object.entries(q.options || {}).map(([k, v]) => `<div>${k}: ${marked.parseInline(String(v)) || v}</div>`).join('');
                 item.appendChild(optionsDiv);
 
                 const explanationDiv = document.createElement('div');
@@ -2413,6 +2410,8 @@ async function openMistakeView() {
                     info.innerHTML = '<i>(題目載入錯誤)</i>';
                 }
 
+                // renderLatex(info); // Removed individual call, handled by container render below
+
                 const badge = document.createElement('div');
                 badge.className = 'mistake-count-badge';
                 badge.textContent = `${m.count} 次錯誤`;
@@ -2432,7 +2431,8 @@ async function openMistakeView() {
                             ? m.answer.includes(key)
                             : m.answer === key;
                         const styleClass = isAns ? 'class="correct-option"' : '';
-                        optionsHtml += `<li ${styleClass}>${key}: ${val}</li>`;
+                        // Use marked.parse to handle markdown/latex in options consistent with Quiz view
+                        optionsHtml += `<li ${styleClass}>${key}: ${marked.parseInline(String(val)) || val}</li>`;
                     });
                     optionsHtml += '</ul>';
                     optionsDiv.innerHTML = optionsHtml;
@@ -2465,10 +2465,8 @@ async function openMistakeView() {
 
                 div.appendChild(ansExpDiv);
 
-                // Latex render
-                renderLatex(div);
-
                 mistakeListContent.appendChild(div);
+                renderLatex(div); // Render Latex after appending to DOM for best compatibility
             });
         }
 
