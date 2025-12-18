@@ -3651,9 +3651,6 @@ body.dark-mode .rename-input {
 /* Active (Filled) State */
 .action-icon-btn.star-btn.active svg {
     fill: #fbbc04;
-    /* Google Yellow */
-    stroke: none;
-    /* No outline when filled */
 }
 
 /* Dark Mode Adjustments */
@@ -4638,7 +4635,7 @@ body.dark-mode .mistake-explanation-row strong {
 }
 
 .top-app-bar {
-    height: 64px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4653,7 +4650,7 @@ body.dark-mode .mistake-explanation-row strong {
 }
 
 .view-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     /* User requested 1.1rem */
     font-weight: 400;
     font-family: 'XiaoZuan', sans-serif;
