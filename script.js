@@ -2424,7 +2424,21 @@ async function openMistakeView() {
                     optionsDiv.className = 'mistake-options';
 
                     let optionsHtml = '<ul>';
-                    Object.entries(m.options).forEach(([key, val]) => {
+                    let entries = Object.entries(m.options);
+
+                    // Check if it's a T/F question
+                    const isTrueFalse = entries.length === 2 &&
+                        entries.every(entry => ['T', 'F'].includes(entry[0]));
+
+                    if (isTrueFalse) {
+                        entries.sort((a, b) => {
+                            if (a[0] === 'T') return -1;
+                            if (b[0] === 'T') return 1;
+                            return 0;
+                        });
+                    }
+
+                    entries.forEach(([key, val]) => {
                         const isAns = Array.isArray(m.answer)
                             ? m.answer.includes(key)
                             : m.answer === key;
