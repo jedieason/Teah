@@ -1739,23 +1739,12 @@ function updateSignInButton(user) {
     if (!signInBtn) return;
 
     if (user) {
-        const avatarUrl = user.photoURL || '';
-        const displayName = user.displayName || user.email || 'Google 帳號';
-        if (avatarUrl) {
-            signInBtn.innerHTML = '';
-            const avatarImg = document.createElement('img');
-            avatarImg.src = avatarUrl;
-            avatarImg.alt = displayName;
-            avatarImg.className = 'profile-avatar';
-            signInBtn.appendChild(avatarImg);
-            signInBtn.classList.add('profile-mode');
-        } else {
-            signInBtn.textContent = displayName;
-            signInBtn.classList.remove('profile-mode');
-        }
-        signInBtn.setAttribute('title', displayName);
-        signInBtn.setAttribute('aria-label', `${displayName}（點擊以登出）`);
+        // Logged in: Hide the sign-in button completely as the top-right controls handle profile
+        signInBtn.style.display = 'none';
+        signInBtn.classList.remove('profile-mode');
     } else {
+        // Not logged in: Show the sign-in button
+        signInBtn.style.display = 'flex';
         // Minimal button with Google logo + text
         signInBtn.innerHTML = googleLogoSvg + '<span>Google 登入</span>';
         signInBtn.classList.remove('profile-mode');
