@@ -5045,3 +5045,206 @@ body.dark-mode .quiz-edit-btn:hover {
     background-color: #454545;
     color: #a8c7fa;
 }
+/* --- End Screen (Google Material 3 Redesign) --- */
+
+.end-screen-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 400px; /* Ensure some height if standalone */
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    text-align: center;
+    padding: 24px;
+    box-sizing: border-box;
+    /* Ensure it overlays correctly if needed, though structure implies flow */
+}
+
+.end-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 40px 32px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 8px 32px rgba(0, 0, 0, 0.08); /* Soft elevation */
+    max-width: 480px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.end-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06), 0 12px 48px rgba(0, 0, 0, 0.1);
+}
+
+.end-icon-badge {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e8f0fe 0%, #d2e3fc 100%); /* Blue tint */
+    color: #1a73e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.end-title {
+    font-size: 2rem;
+    font-weight: 500; /* Google Sans Medium */
+    color: #202124;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.end-subtitle {
+    font-size: 1rem;
+    color: #5f6368;
+    margin-top: -16px; /* Pull closer to title */
+    margin-bottom: 8px;
+}
+
+/* Score Grid */
+.end-score-grid {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    width: 100%;
+    margin: 16px 0;
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.score-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.score-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #5f6368;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.score-item.correct .score-value {
+    color: #34a853; /* Google Green */
+}
+
+.score-item.wrong .score-value {
+    color: #ea4335; /* Google Red */
+}
+
+/* Action Buttons */
+.end-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 16px;
+    flex-wrap: wrap; /* Handle mobile */
+}
+
+.end-btn-filled {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.end-btn-filled:hover {
+    background-color: #1557b0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.end-btn-outlined {
+    background-color: transparent;
+    color: #1a73e8;
+    border: 1px solid #dadce0;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.end-btn-outlined:hover {
+    background-color: #f8f9fa;
+    border-color: #d2e3fc;
+    color: #174ea6;
+}
+
+/* Dark Mode */
+body.dark-mode .end-card {
+    background: #1e1e1e; /* Surface Container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .end-icon-badge {
+    background: #394457;
+    color: #8ab4f8;
+}
+
+body.dark-mode .end-title {
+    color: #e3e3e3;
+}
+
+body.dark-mode .end-subtitle,
+body.dark-mode .score-label {
+    color: #a8a8a8;
+}
+
+body.dark-mode .score-item.correct .score-value {
+    color: #81c995;
+}
+
+body.dark-mode .score-item.wrong .score-value {
+    color: #f28b82;
+}
+
+body.dark-mode .end-btn-filled {
+    background-color: #8ab4f8;
+    color: #202124;
+}
+
+body.dark-mode .end-btn-filled:hover {
+    background-color: #aecbfa;
+}
+
+body.dark-mode .end-btn-outlined {
+    border-color: #5f6368;
+    color: #8ab4f8;
+}
+
+body.dark-mode .end-btn-outlined:hover {
+    background-color: rgba(138, 180, 248, 0.08);
+    border-color: #8ab4f8;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -610,27 +610,65 @@ function showEndScreen() {
 
     endScreenDiv = document.createElement('div');
     endScreenDiv.className = 'end-screen-container';
-    endScreenDiv.style.display = 'flex';
-    endScreenDiv.style.flexDirection = 'column';
-    endScreenDiv.style.justifyContent = 'center';
-    endScreenDiv.style.alignItems = 'center';
 
-    // Show completion message
-    const message = document.createElement('div');
-    message.innerText = `測驗完成！答對 ${correct} 題；答錯 ${wrong} 題。`;
-    message.style.margin = '20px';
-    endScreenDiv.appendChild(message);
+    // Material Card Wrapper
+    const card = document.createElement('div');
+    card.className = 'end-card';
 
-    // "Redo Wrong" and "Reselect Quiz" buttons
+    // Icon Badge (Party Popper or Checkmark)
+    const icon = document.createElement('div');
+    icon.className = 'end-icon-badge';
+    // Use an emoji or we could insert an SVG here
+    icon.innerText = '🎉';
+    card.appendChild(icon);
+
+    // Title
+    const title = document.createElement('h2');
+    title.className = 'end-title';
+    title.innerText = '測驗完成';
+    card.appendChild(title);
+
+    // Subtitle (Quiz Name)
+    const subtitle = document.createElement('p');
+    subtitle.className = 'end-subtitle';
+    const fileName = selectedJson ? selectedJson.split('/').pop().replace('.json', '') : '';
+    subtitle.innerText = fileName;
+    card.appendChild(subtitle);
+
+    // Score Grid
+    const scoreGrid = document.createElement('div');
+    scoreGrid.className = 'end-score-grid';
+
+    // Correct Score Item
+    const scoreCorrect = document.createElement('div');
+    scoreCorrect.className = 'score-item correct';
+    scoreCorrect.innerHTML = `<span class="score-value">${correct}</span><span class="score-label">答對</span>`;
+    scoreGrid.appendChild(scoreCorrect);
+
+    // Wrong Score Item
+    const scoreWrong = document.createElement('div');
+    scoreWrong.className = 'score-item wrong';
+    scoreWrong.innerHTML = `<span class="score-value">${wrong}</span><span class="score-label">答錯</span>`;
+    scoreGrid.appendChild(scoreWrong);
+
+    card.appendChild(scoreGrid);
+
+    // Action Buttons
     const buttonsDiv = document.createElement('div');
     buttonsDiv.className = 'end-buttons';
 
+    // Redo Wrong Button
     const redoBtn = document.createElement('button');
-    redoBtn.innerText = '重做錯題';
-    redoBtn.classList.add('select-button');
+    redoBtn.innerHTML = '<span>重做錯題</span>'; // Span for potential icon
+    redoBtn.className = 'end-btn-filled';
+    if (wrongQuestions.length === 0) {
+        redoBtn.disabled = true;
+        redoBtn.style.opacity = '0.5';
+        redoBtn.style.cursor = 'not-allowed';
+    }
     redoBtn.addEventListener('click', () => {
         if (wrongQuestions.length === 0) {
-            alert('沒有錯題可重做！');
+            showCustomAlert('沒有錯題可重做！');
             return;
         }
         // Reset state for wrong questions
@@ -641,20 +679,23 @@ function showEndScreen() {
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
         if (endScreenDiv) endScreenDiv.remove();
-        quizContainer.style.display = originalQuizDisplay;
+        quizContainer.style.display = 'flex'; // Restore as flex
         loadNewQuestion();
     });
     buttonsDiv.appendChild(redoBtn);
 
+    // Reselect Quiz Button
     const resetBtn = document.createElement('button');
     resetBtn.innerText = '重新選題庫';
-    resetBtn.classList.add('select-button');
+    resetBtn.className = 'end-btn-outlined';
     resetBtn.addEventListener('click', () => {
         location.reload();
     });
     buttonsDiv.appendChild(resetBtn);
 
-    endScreenDiv.appendChild(buttonsDiv);
+    card.appendChild(buttonsDiv);
+    endScreenDiv.appendChild(card);
+
     quizContainer.parentNode.appendChild(endScreenDiv);
 }
 
@@ -2089,8 +2130,11 @@ function setStarState(isFilled) {
 
 async function updateStarIcon() {
     if (!starBtn) return;
+
+    // Always reset first so we don't show the previous question's state while loading
+    setStarState(false);
+
     if (!auth.currentUser) {
-        setStarState(false);
         return;
     }
     try {
