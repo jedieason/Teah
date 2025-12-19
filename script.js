@@ -223,6 +223,11 @@ function loadNewQuestion() {
         currentQuestion = questions.shift(); // 如果設定為固定順序，則從前端取出一題
     }
 
+    // Normalize single-element array answer to string to ensure it's treated as single choice
+    if (currentQuestion && Array.isArray(currentQuestion.answer) && currentQuestion.answer.length === 1) {
+        currentQuestion.answer = currentQuestion.answer[0];
+    }
+
     // 判斷填空題（無 options 屬性）
     if (!currentQuestion.options) {
         currentQuestion.isFillBlank = true;
@@ -2175,67 +2180,157 @@ async function openStarredModal() {
         showCustomAlert('請先登入才能查看收藏！');
         return;
     }
-    starredListDiv.innerHTML = '';
+    starredListDiv.innerHTML = '<p style="text-align:center; padding: 20px;">載入中...</p>';
+    starredModal.style.display = 'flex';
+
     try {
         const snap = await get(ref(database, `progress/${auth.currentUser.uid}/starred`));
-        const starred = snap.val() || [];
+        let starred = snap.val() || [];
+
         if (starred.length === 0) {
-            starredListDiv.innerHTML = '<p>尚未收藏任何題目</p>';
+            starredListDiv.innerHTML = '<p style="text-align:center; padding: 20px;">尚未收藏任何題目</p>';
         } else {
             starred.sort((a, b) => (a.source || '').localeCompare(b.source || ''));
-            starred.forEach((q, idx) => {
+            starredListDiv.innerHTML = ''; // Clear loading
+
+            // Process each starred item to find its mistake count
+            // This might be parallelized but sequential is safer for now or Promise.all
+            const promises = starred.map(async (q, idx) => {
+                let mistakeCount = 0;
+                if (q.source && q.question) {
+                    try {
+                        const qKey = btoa(unescape(encodeURIComponent(q.question)))
+                            .replace(/\//g, '_')
+                            .replace(/\+/g, '-');
+                        const mSnap = await get(ref(database, `mistakes/${auth.currentUser.uid}/${q.source}/${qKey}/count`));
+                        if (mSnap.exists()) {
+                            mistakeCount = mSnap.val();
+                        }
+                    } catch (e) {
+                        // ignore encoding errors
+                    }
+                }
+                return { ...q, mistakeCount, originalIndex: idx };
+            });
+
+            const processedStarred = await Promise.all(promises);
+
+            processedStarred.forEach((q, loopIdx) => {
                 const item = document.createElement('div');
-                item.classList.add('starred-item');
+                item.className = 'mistake-item'; // Reuse mistake-item style for consistency
 
-                const sourceDiv = document.createElement('div');
-                sourceDiv.classList.add('starred-source');
-                sourceDiv.textContent = `來源：${q.source || '未知題庫'}`;
-                item.appendChild(sourceDiv);
+                // --- Header: Question + Badge + Star ---
+                const headerRow = document.createElement('div');
+                headerRow.className = 'mistake-item-header';
 
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('starred-question');
-                questionDiv.innerHTML = marked.parse(q.question);
-                item.appendChild(questionDiv);
+                const info = document.createElement('div');
+                info.className = 'mistake-info';
 
-                const optionsDiv = document.createElement('div');
-                optionsDiv.classList.add('starred-options');
-                optionsDiv.innerHTML = Object.entries(q.options || {}).map(([k, v]) => `<div>${k}: ${v}</div>`).join('');
-                item.appendChild(optionsDiv);
+                // Add Source Label
+                const sourceLabel = document.createElement('div');
+                sourceLabel.style.fontSize = '0.8rem';
+                sourceLabel.style.color = '#1a73e8';
+                sourceLabel.style.marginBottom = '4px';
+                sourceLabel.innerText = q.source || '未知題庫';
+                info.appendChild(sourceLabel);
 
-                const explanationDiv = document.createElement('div');
-                explanationDiv.classList.add('starred-explanation');
-                explanationDiv.style.display = 'none';
-                explanationDiv.innerHTML = marked.parse(q.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！');
-                item.appendChild(explanationDiv);
+                const questionText = document.createElement('div');
+                questionText.innerHTML = marked.parse(q.question);
+                info.appendChild(questionText);
 
-                const controlsDiv = document.createElement('div');
-                controlsDiv.classList.add('starred-controls');
+                // Right Side: Badge + Star Button container
+                const rightSide = document.createElement('div');
+                rightSide.style.display = 'flex';
+                rightSide.style.alignItems = 'center';
+                rightSide.style.gap = '8px';
+                rightSide.style.flexShrink = '0';
 
-                const toggleBtn = document.createElement('button');
-                toggleBtn.classList.add('toggle-explanation-button');
-                toggleBtn.innerHTML = '<span class="button-text">顯示詳解</span><span class="arrow">▾</span>';
-                toggleBtn.addEventListener('click', () => {
-                    const showing = explanationDiv.style.display !== 'none';
-                    explanationDiv.style.display = showing ? 'none' : 'block';
-                    toggleBtn.querySelector('.button-text').textContent = showing ? '顯示詳解' : '隱藏詳解';
-                    toggleBtn.querySelector('.arrow').textContent = showing ? '▾' : '▴';
+                // Mistake Badge
+                if (q.mistakeCount > 0) {
+                    const badge = document.createElement('div');
+                    badge.className = 'mistake-count-badge';
+                    if (q.mistakeCount >= 3) badge.classList.add('high-mistake');
+                    badge.textContent = `${q.mistakeCount} 次錯誤`;
+                    rightSide.appendChild(badge);
+                }
+
+                // Star Button (Toggle)
+                const starBtnLocal = document.createElement('button');
+                starBtnLocal.className = 'material-icon-btn starred'; // Reuse existing class
+                starBtnLocal.style.width = '40px';
+                starBtnLocal.style.height = '40px';
+                starBtnLocal.setAttribute('aria-label', '取消收藏');
+                starBtnLocal.setAttribute('title', '取消收藏');
+                starBtnLocal.innerHTML = `
+<svg class="star-filled" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#fbbc04"><path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/></svg>
+<svg class="star-empty" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m354-247 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-80l65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Zm247-355Z"/></svg>
+                `;
+
+                starBtnLocal.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    // Remove from list
+                    // Use the original list to filter out
+                    // Note: 'starred' variable inside is from closure, but we can re-read or just filter current visual list
+                    // Better to re-read to be safe or filter in memory
+                    try {
+                        const newList = starred.filter(item => item.question !== q.question);
+                        await set(ref(database, `progress/${auth.currentUser.uid}/starred`), newList);
+                        // Remove this item from DOM visually with animation
+                        item.style.opacity = '0';
+                        setTimeout(() => item.remove(), 300);
+
+                        // Update local starred array for subsequent clicks if needed, 
+                        // but easier to just let UI handle it. 
+                        // Also update global star button if looking at this question
+                        if (currentQuestion && currentQuestion.question === q.question) {
+                            setStarState(false);
+                        }
+                    } catch (err) {
+                        console.error('Failed to unstar', err);
+                        showCustomAlert('取消收藏失敗');
+                    }
                 });
-                controlsDiv.appendChild(toggleBtn);
 
-                const delBtn = document.createElement('button');
-                delBtn.classList.add('starred-delete-button');
-                delBtn.textContent = '刪除';
-                delBtn.addEventListener('click', async () => {
-                    const newList = starred.filter((_, i) => i !== idx);
-                    await set(ref(database, `progress/${auth.currentUser.uid}/starred`), newList);
-                    openStarredModal();
-                });
-                controlsDiv.appendChild(delBtn);
+                rightSide.appendChild(starBtnLocal);
 
-                item.appendChild(controlsDiv);
+                headerRow.appendChild(info);
+                headerRow.appendChild(rightSide);
+                item.appendChild(headerRow);
+
+                // --- Details: Options ---
+                if (q.options && Object.keys(q.options).length > 0) {
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'mistake-options';
+                    let optionsHtml = '<ul>';
+                    Object.entries(q.options).forEach(([k, v]) => {
+                        // Check if this option is the answer
+                        const isAns = Array.isArray(q.answer) ? q.answer.includes(k) : q.answer === k;
+                        optionsHtml += `<li ${isAns ? 'class="correct-option"' : ''}>${k}: ${v}</li>`;
+                    });
+                    optionsHtml += '</ul>';
+                    optionsDiv.innerHTML = optionsHtml;
+                    item.appendChild(optionsDiv);
+                }
+
+                // --- Details: Explanation ---
+                const ansExpDiv = document.createElement('div');
+                ansExpDiv.className = 'mistake-details';
+
+                // Answer text
+                let ansText = Array.isArray(q.answer) ? q.answer.join(', ') : q.answer;
+
+                // Explanation text
+                let expText = q.explanation ? marked.parse(q.explanation) : '<i>暫無詳解</i>';
+
+                ansExpDiv.innerHTML = `
+                    <div style="margin-bottom:8px;"><strong>正確答案:</strong> ${ansText}</div>
+                    <div class="mistake-explanation-row"><strong>詳解:</strong> ${expText}</div>
+                `;
+                item.appendChild(ansExpDiv);
 
                 starredListDiv.appendChild(item);
 
+                // Helper to render math
                 renderMathInElement(item, {
                     delimiters: [
                         { left: "$", right: "$", display: false },
@@ -2250,7 +2345,6 @@ async function openStarredModal() {
         console.error('讀取收藏題目失敗', e);
         starredListDiv.innerHTML = '<p>無法載入收藏</p>';
     }
-    starredModal.style.display = 'flex';
 }
 
 if (starBtn) starBtn.addEventListener('click', toggleStarCurrentQuestion);
