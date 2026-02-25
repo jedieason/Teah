@@ -1156,11 +1156,13 @@ async function fetchQuizList() {
         if (snapshot.exists()) {
             const data = snapshot.val();
             const allKeys = Object.keys(data || {});
-            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY' && k !== 'mistakes' && k !== 'mistake');
+            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY' && k !== 'mistakes' && k !== 'mistake' && (viewArchiveMode ? k.startsWith('_Archive_') : !k.startsWith('_Archive_')));
             const groups = {};
             quizKeys.forEach(k => {
-                const idx = k.indexOf('學');
-                const groupName = idx !== -1 ? k.slice(0, idx + 1) : '其他';
+                let cleanKey = k;
+                if (cleanKey.startsWith('_Archive_')) cleanKey = cleanKey.substring(9);
+                const idx = cleanKey.indexOf('｜');
+                const groupName = idx !== -1 ? cleanKey.slice(0, idx) : '其他';
                 if (!groups[groupName]) groups[groupName] = [];
                 groups[groupName].push(k);
             });
@@ -1269,7 +1271,22 @@ async function fetchQuizList() {
 
                     const title = document.createElement('div');
                     title.className = 'unit-title';
-                    title.textContent = key;
+                    let displayTitle = key;
+                    if (displayTitle.startsWith('_Archive_')) displayTitle = displayTitle.substring(9);
+                    title.textContent = displayTitle;
+
+                    // Archive Icon Logic
+                    const archiveIcon = document.createElement('button');
+                    archiveIcon.className = 'quiz-archive-btn';
+                    archiveIcon.innerHTML = viewArchiveMode
+                        ? `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M480-480ZM200-120v-520H80v-120h800v120H760v520H200Zm120-120h320v-400h120L480-840 280-640h120v400Zm160-200Z"/></svg>`
+                        : `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M200-120v-520H80v-120h800v120H760v520H200Zm120-120h320v-400H320v400Zm160-40L600-400l-56-56-104 104v-208h-80v208L256-456l-56 56 200 120Z"/></svg>`;
+                    archiveIcon.title = viewArchiveMode ? '取消典藏' : '典藏題庫';
+                    archiveIcon.onclick = (e) => {
+                        e.stopPropagation();
+                        handleArchiveQuiz(key);
+                    };
+                    card.appendChild(archiveIcon);
 
                     infoDiv.appendChild(title);
 
@@ -1963,12 +1980,21 @@ if (menuLogout) menuLogout.addEventListener('click', async () => {
 
 // Edit Quiz Name from controls menu
 const menuEditQuizName = document.getElementById('menuEditQuizName');
+const menuArchived = document.getElementById('menuArchived');
 let isEditMode = false;
+let viewArchiveMode = false;
 
 if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
     isEditMode = !isEditMode;
     toggleEditModeUI();
     if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
+});
+
+if (menuArchived) menuArchived.addEventListener('click', () => {
+    viewArchiveMode = !viewArchiveMode;
+    menuArchived.textContent = viewArchiveMode ? '返回題庫' : '典藏庫';
+    if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
+    fetchQuizList();
 });
 
 // Open upload modal from controls menu
@@ -1991,8 +2017,14 @@ function toggleEditModeUI() {
 }
 
 async function handleRenameQuiz(oldName) {
-    const newName = prompt(`請輸入「${oldName}」的新名稱:`, oldName);
-    if (newName && newName.trim() !== '' && newName !== oldName) {
+    let cleanOldName = oldName;
+    if (cleanOldName.startsWith('_Archive_')) cleanOldName = cleanOldName.substring(9);
+
+    let newName = prompt(`請輸入「${cleanOldName}」的新名稱:`, cleanOldName);
+    if (newName && newName.trim() !== '' && newName !== cleanOldName) {
+        newName = newName.trim();
+        if (oldName.startsWith('_Archive_')) newName = `_Archive_${newName}`;
+
         try {
             // Get old data
             const snapshot = await get(ref(database, oldName));
@@ -2000,9 +2032,12 @@ async function handleRenameQuiz(oldName) {
                 const data = snapshot.val();
                 const updates = {};
                 updates[oldName] = null; // Delete old
-                updates[newName.trim()] = data; // Set new
+                updates[newName] = data; // Set new
 
                 await update(ref(database), updates);
+                if (selectedJson === oldName) {
+                    selectedJson = newName;
+                }
                 showCustomAlert('已重新命名！');
                 fetchQuizList(); // Refresh list
             } else {
@@ -2011,6 +2046,34 @@ async function handleRenameQuiz(oldName) {
         } catch (e) {
             console.error('Rename failed:', e);
             showCustomAlert('重新命名失敗，權限不足？');
+        }
+    }
+}
+
+async function handleArchiveQuiz(oldName) {
+    const isUnarchiving = oldName.startsWith('_Archive_');
+    const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
+    const actionName = isUnarchiving ? '取消典藏' : '典藏';
+    const displayOldName = isUnarchiving ? oldName.substring(9) : oldName;
+
+    if (confirm(`確定要${actionName}「${displayOldName}」嗎？`)) {
+        try {
+            const snapshot = await get(ref(database, oldName));
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const updates = {};
+                updates[oldName] = null;
+                updates[newName] = data;
+                await update(ref(database), updates);
+                showCustomAlert(`已${actionName}！`);
+                if (selectedJson === oldName) {
+                    selectedJson = newName;
+                }
+                fetchQuizList();
+            }
+        } catch (e) {
+            console.error('Archive failed:', e);
+            showCustomAlert(`${actionName}失敗`);
         }
     }
 }
