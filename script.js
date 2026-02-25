@@ -1176,7 +1176,7 @@ async function fetchQuizList() {
             const renderFolderTiles = () => {
                 if (gridContainer) {
                     gridContainer.innerHTML = '';
-                    gridContainer.className = 'units-grid'; // Reset class
+                    gridContainer.className = 'units-grid' + (isEditMode ? ' edit-mode' : ''); // Reset class but keep edit-mode if active
                 }
 
                 sortGroups(Object.keys(groups)).forEach(groupName => {
@@ -2050,13 +2050,36 @@ async function handleRenameQuiz(oldName) {
     }
 }
 
+let archiveCallback = null;
+const archiveConfirmModal = document.getElementById('archiveConfirmModal');
+const archiveConfirmTitle = document.getElementById('archiveConfirmTitle');
+const archiveConfirmMessage = document.getElementById('archiveConfirmMessage');
+const archiveCancelBtn = document.getElementById('archiveCancelBtn');
+const archiveActionBtn = document.getElementById('archiveActionBtn');
+
+if (archiveCancelBtn) archiveCancelBtn.addEventListener('click', () => {
+    archiveConfirmModal.style.display = 'none';
+    archiveCallback = null;
+});
+
+if (archiveActionBtn) archiveActionBtn.addEventListener('click', async () => {
+    if (archiveCallback) {
+        archiveConfirmModal.style.display = 'none';
+        await archiveCallback();
+    }
+});
+
 async function handleArchiveQuiz(oldName) {
     const isUnarchiving = oldName.startsWith('_Archive_');
     const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
     const actionName = isUnarchiving ? '取消典藏' : '典藏';
     const displayOldName = isUnarchiving ? oldName.substring(9) : oldName;
 
-    if (confirm(`確定要${actionName}「${displayOldName}」嗎？`)) {
+    if (archiveConfirmTitle) archiveConfirmTitle.textContent = isUnarchiving ? '取消典藏' : '典藏題庫';
+    if (archiveConfirmMessage) archiveConfirmMessage.textContent = `確定要${actionName}「${displayOldName}」嗎？`;
+    if (archiveConfirmModal) archiveConfirmModal.style.display = 'flex';
+
+    archiveCallback = async () => {
         try {
             const snapshot = await get(ref(database, oldName));
             if (snapshot.exists()) {
@@ -2075,7 +2098,7 @@ async function handleArchiveQuiz(oldName) {
             console.error('Archive failed:', e);
             showCustomAlert(`${actionName}失敗`);
         }
-    }
+    };
 }
 
 
