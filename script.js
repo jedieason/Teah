@@ -1298,6 +1298,7 @@ async function fetchQuizList() {
                     card.style.opacity = '0'; // Init hidden for keyframe
 
                     card.onclick = () => {
+                        if (isEditMode) return; // Prevent starting quiz if in edit mode
                         selectedJson = key;
                         document.querySelector('.start-screen').style.display = 'none';
                         // initQuiz logic
@@ -2008,10 +2009,10 @@ function toggleEditModeUI() {
     if (grid && menuEditQuizName) {
         if (isEditMode) {
             grid.classList.add('edit-mode');
-            menuEditQuizName.textContent = '停止編輯名稱';
+            menuEditQuizName.textContent = '停止編輯題庫';
         } else {
             grid.classList.remove('edit-mode');
-            menuEditQuizName.textContent = '編輯題庫名稱';
+            menuEditQuizName.textContent = '編輯題庫';
         }
     }
 }

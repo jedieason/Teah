@@ -5049,7 +5049,7 @@ body.dark-mode .quiz-edit-btn:hover {
 .quiz-archive-btn {
     position: absolute;
     top: 8px;
-    right: 44px;
+    right: 48px;
     /* positioned to the left of edit button */
     background: #fff;
     border: 1px solid #e0e0e0;
