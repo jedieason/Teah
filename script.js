@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 import { getDatabase, ref, get, update, set, remove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
@@ -1019,8 +1019,11 @@ if (shuffleToggle) {
 
 
 window.addEventListener("beforeunload", function (event) {
-    event.preventDefault();
-    event.returnValue = '';
+    // 只有在測驗中（有題庫且未完成）才跳出提示
+    if (selectedJson && !isTestCompleted) {
+        event.preventDefault();
+        event.returnValue = '';
+    }
 });
 
 // Rename Quiz Function
@@ -1837,7 +1840,9 @@ if (signInBtn) {
         }
 
         try {
-            await signInWithRedirect(auth, googleProvider);
+            console.log('Starting Google Sign-In with Popup...');
+            const result = await signInWithPopup(auth, googleProvider);
+            console.log('Google Sign-In success, user:', result.user);
         } catch (error) {
             console.error('Google sign-in failed:', error);
             showCustomAlert('登入請求失敗，請稍後再試。');
@@ -1875,7 +1880,9 @@ if (controlsMenuBtn && controlsMenu) {
         // If not logged in, this button acts as the sign-in trigger
         if (!auth.currentUser) {
             try {
-                await signInWithRedirect(auth, googleProvider);
+                console.log('Starting Google Sign-In with Popup (from controls menu)...');
+                const result = await signInWithPopup(auth, googleProvider);
+                console.log('Google Sign-In success (from controls menu), user:', result.user);
             } catch (error) {
                 console.error('Google sign-in failed:', error);
                 showCustomAlert('登入請求失敗，請稍後再試。');
@@ -1944,6 +1951,7 @@ function syncControlsUser(user) {
 
 // Now that controls elements exist, hook auth state listeners and initial sync
 onAuthStateChanged(auth, (user) => {
+    console.log('Auth state changed, user:', user ? user.displayName : 'Logged out');
     updateSignInButton(user);
     syncControlsUser(user);
     updateRestorePreview(user);
