@@ -1210,7 +1210,13 @@ async function fetchQuizList() {
                     card.appendChild(iconBox);
                     card.appendChild(infoDiv);
 
-                    card.onclick = () => renderFolderView(groupName);
+                    card.onclick = () => {
+                        if (!auth.currentUser) {
+                            showCustomAlert('請先登入後再開始測驗！');
+                            return;
+                        }
+                        renderFolderView(groupName);
+                    };
 
                     gridContainer.appendChild(card);
                 });
@@ -1301,6 +1307,10 @@ async function fetchQuizList() {
                     card.style.opacity = '0'; // Init hidden for keyframe
 
                     card.onclick = () => {
+                        if (!auth.currentUser) {
+                            showCustomAlert('請先登入後再開始測驗！');
+                            return;
+                        }
                         if (isEditMode) return; // Prevent starting quiz if in edit mode
                         selectedJson = key;
                         document.querySelector('.start-screen').style.display = 'none';
@@ -1340,6 +1350,10 @@ async function fetchQuizList() {
                         card.className = 'unit-card';
                         card.textContent = key; // Simple text for search
                         card.onclick = () => {
+                            if (!auth.currentUser) {
+                                showCustomAlert('請先登入後再開始測驗！');
+                                return;
+                            }
                             selectedJson = key;
                             initQuiz().then(() => saveProgress());
                         };
