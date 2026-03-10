@@ -266,14 +266,7 @@ function loadNewQuestion() {
     } else {
         questionDiv.innerHTML = `<div class="question-text">${questionHtml}</div>`;
     }
-    renderMathInElement(questionDiv, {
-        delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "$$", right: "$$", display: true },
-            { left: "\\[", right: "\\]", display: true }
-        ]
-    });
+    renderLatex(questionDiv);
 
     if (!currentQuestion.isFillBlank) {
         // 檢查題型
@@ -326,6 +319,7 @@ function loadNewQuestion() {
             button.classList.add('option-button');
             button.dataset.option = newLabel;
             button.innerHTML = marked.parse(`${newLabel}: ${text}`);
+            renderLatex(button);
             button.addEventListener('click', selectOption);
             optionsContainer.appendChild(button);
 
@@ -356,13 +350,14 @@ function loadNewQuestion() {
             const aEl = popupWindow.querySelector('.editable:nth-child(5)');
             const eEl = popupWindow.querySelector('.editable:nth-child(7)');
 
-            if (qEl) qEl.innerText = currentQuestion.question;
+            if (qEl) { qEl.innerHTML = marked.parse(currentQuestion.question); renderLatex(qEl); }
             if (oEl) {
-                const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `${key}: ${value}`).join('\n');
-                oEl.innerText = optionsText;
+                const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `**${key}**: ${value}`).join('\n\n');
+                oEl.innerHTML = marked.parse(optionsText);
+                renderLatex(oEl);
             }
-            if (aEl) aEl.innerText = currentQuestion.answer;
-            if (eEl) eEl.innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
+            if (aEl) { aEl.innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer; }
+            if (eEl) { eEl.innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！'); renderLatex(eEl); }
         }
     }
     saveProgress();
@@ -801,14 +796,7 @@ function reverseQuestion() {
     } else {
         questionDiv.innerHTML = marked.parse(currentQuestion.question);
     }
-    renderMathInElement(questionDiv, {
-        delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "$$", right: "$$", display: true },
-            { left: "\\[", right: "\\]", display: true }
-        ]
-    });
+    renderLatex(questionDiv);
 
     // Handle fill-in-the-blank or options
     if (currentQuestion.isFillBlank) {
@@ -2202,20 +2190,14 @@ function loadQuestionFromState() {
         const aEl = popupWindow.querySelector('.editable:nth-child(5)');
         const eEl = popupWindow.querySelector('.editable:nth-child(7)');
 
-        if (qEl) qEl.innerText = currentQuestion.question;
-
+        if (qEl) { qEl.innerHTML = marked.parse(currentQuestion.question); renderLatex(qEl); }
         if (oEl) {
-            const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
-            oEl.innerText = optionsText;
+            const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `**${k}**: ${v}`).join('\n\n');
+            oEl.innerHTML = marked.parse(optionsText);
+            renderLatex(oEl);
         }
-
-        if (aEl) {
-            aEl.innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer;
-        }
-
-        if (eEl) {
-            eEl.innerText = currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
-        }
+        if (aEl) { aEl.innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer; }
+        if (eEl) { eEl.innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！'); renderLatex(eEl); }
     }
 
     if (currentQuestion.explanation) {
@@ -2423,7 +2405,8 @@ async function openStarredModal() {
                     Object.entries(q.options).forEach(([k, v]) => {
                         // Check if this option is the answer
                         const isAns = Array.isArray(q.answer) ? q.answer.includes(k) : q.answer === k;
-                        optionsHtml += `<li ${isAns ? 'class="correct-option"' : ''}>${k}: ${v}</li>`;
+                        const parsedOpt = marked.parse(`${k}: ${v}`).trim();
+                        optionsHtml += `<li ${isAns ? 'class="correct-option"' : ''}>${parsedOpt}</li>`;
                     });
                     optionsHtml += '</ul>';
                     optionsDiv.innerHTML = optionsHtml;
@@ -2699,7 +2682,8 @@ async function openMistakeView() {
                             ? m.answer.includes(key)
                             : m.answer === key;
                         const styleClass = isAns ? 'class="correct-option"' : '';
-                        optionsHtml += `<li ${styleClass}>${key}: ${val}</li>`;
+                        const parsedOpt = marked.parse(`${key}: ${val}`).trim();
+                        optionsHtml += `<li ${styleClass}>${parsedOpt}</li>`;
                     });
                     optionsHtml += '</ul>';
                     optionsDiv.innerHTML = optionsHtml;
