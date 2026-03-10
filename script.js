@@ -610,96 +610,105 @@ function updateWrong() {
 
 function showEndScreen() {
     isTestCompleted = true;
-    // Hide quiz UI and show a separate end screen overlay
     quizContainer.style.display = 'none';
 
     endScreenDiv = document.createElement('div');
-    endScreenDiv.className = 'end-screen-container';
+    endScreenDiv.className = 'end-screen-overlay';
 
-    // Material Card Wrapper
-    const card = document.createElement('div');
-    card.className = 'end-card';
+    const container = document.createElement('div');
+    container.className = 'results-container';
 
-    // Icon Badge (Party Popper or Checkmark)
-    const icon = document.createElement('div');
-    icon.className = 'end-icon-badge';
-    // Use an emoji or we could insert an SVG here
-    icon.innerText = '🎉';
-    card.appendChild(icon);
+    // Celebration Graphic (SVG instead of emoji)
+    const graphic = document.createElement('div');
+    graphic.className = 'results-graphic';
+    graphic.innerHTML = `
+        <svg class="check-animation" viewBox="0 0 52 52">
+            <circle class="check-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="check-mark" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+    `;
+    container.appendChild(graphic);
 
-    // Title
-    const title = document.createElement('h2');
-    title.className = 'end-title';
-    title.innerText = '測驗完成';
-    card.appendChild(title);
+    const title = document.createElement('h1');
+    title.className = 'results-title';
+    title.innerText = '測驗結幕';
+    container.appendChild(title);
 
-    // Subtitle (Quiz Name)
-    const subtitle = document.createElement('p');
-    subtitle.className = 'end-subtitle';
     const fileName = selectedJson ? selectedJson.split('/').pop().replace('.json', '') : '';
+    const subtitle = document.createElement('p');
+    subtitle.className = 'results-subtitle';
     subtitle.innerText = fileName;
-    card.appendChild(subtitle);
+    container.appendChild(subtitle);
 
-    // Score Grid
-    const scoreGrid = document.createElement('div');
-    scoreGrid.className = 'end-score-grid';
+    // Stats Grid
+    const statsGrid = document.createElement('div');
+    statsGrid.className = 'results-stats-grid';
 
-    // Correct Score Item
-    const scoreCorrect = document.createElement('div');
-    scoreCorrect.className = 'score-item correct';
-    scoreCorrect.innerHTML = `<span class="score-value">${correct}</span><span class="score-label">答對</span>`;
-    scoreGrid.appendChild(scoreCorrect);
+    const totalQuestions = correct + wrong;
+    const accuracy = totalQuestions > 0 ? Math.round((correct / totalQuestions) * 100) : 0;
 
-    // Wrong Score Item
-    const scoreWrong = document.createElement('div');
-    scoreWrong.className = 'score-item wrong';
-    scoreWrong.innerHTML = `<span class="score-value">${wrong}</span><span class="score-label">答錯</span>`;
-    scoreGrid.appendChild(scoreWrong);
-
-    card.appendChild(scoreGrid);
+    statsGrid.innerHTML = `
+        <div class="stat-card accuracy">
+            <div class="stat-value">${accuracy}%</div>
+            <div class="stat-label">正確率</div>
+        </div>
+        <div class="stat-card correct">
+            <div class="stat-value">${correct}</div>
+            <div class="stat-label">答對</div>
+        </div>
+        <div class="stat-card wrong">
+            <div class="stat-value">${wrong}</div>
+            <div class="stat-label">答錯</div>
+        </div>
+    `;
+    container.appendChild(statsGrid);
 
     // Action Buttons
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.className = 'end-buttons';
+    const actionArea = document.createElement('div');
+    actionArea.className = 'results-actions';
 
     // Redo Wrong Button
     const redoBtn = document.createElement('button');
-    redoBtn.innerHTML = '<span>重做錯題</span>'; // Span for potential icon
-    redoBtn.className = 'end-btn-filled';
+    redoBtn.className = 'm3-btn m3-btn-filled';
+    redoBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
+            <path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/>
+        </svg>
+        <span>重做錯題</span>
+    `;
     if (wrongQuestions.length === 0) {
         redoBtn.disabled = true;
-        redoBtn.style.opacity = '0.5';
-        redoBtn.style.cursor = 'not-allowed';
     }
     redoBtn.addEventListener('click', () => {
-        if (wrongQuestions.length === 0) {
-            showCustomAlert('沒有錯題可重做！');
-            return;
-        }
-        // Reset state for wrong questions
+        if (wrongQuestions.length === 0) return;
         questions = wrongQuestions.slice();
         wrongQuestions = [];
         correct = 0;
         wrong = 0;
-        document.getElementById('correct').innerText = correct;
-        document.getElementById('wrong').innerText = wrong;
+        document.getElementById('correct').innerText = 0;
+        document.getElementById('wrong').innerText = 0;
         if (endScreenDiv) endScreenDiv.remove();
-        quizContainer.style.display = 'flex'; // Restore as flex
+        quizContainer.style.display = 'flex';
         loadNewQuestion();
     });
-    buttonsDiv.appendChild(redoBtn);
+    actionArea.appendChild(redoBtn);
 
     // Reselect Quiz Button
     const resetBtn = document.createElement('button');
-    resetBtn.innerText = '重新選題庫';
-    resetBtn.className = 'end-btn-outlined';
+    resetBtn.className = 'm3-btn m3-btn-outlined';
+    resetBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
+            <path d="M240-200h120v-240h240v240h120v-440L480-740 240-640v440Zm-80 80v-600l320-240 320 240v600H520v-240h-80v240H160Zm320-350Z"/>
+        </svg>
+        <span>重新選題庫</span>
+    `;
     resetBtn.addEventListener('click', () => {
         location.reload();
     });
-    buttonsDiv.appendChild(resetBtn);
+    actionArea.appendChild(resetBtn);
 
-    card.appendChild(buttonsDiv);
-    endScreenDiv.appendChild(card);
+    container.appendChild(actionArea);
+    endScreenDiv.appendChild(container);
 
     quizContainer.parentNode.appendChild(endScreenDiv);
 }
