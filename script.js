@@ -998,7 +998,10 @@ function updateShuffleUI() {
     const st = document.getElementById('shuffleToggle');
     if (st) st.title = shouldShuffleQuiz ? '順序：隨機' : '順序：固定';
     const menuShuffleEl = document.getElementById('menuShuffle');
-    if (menuShuffleEl) menuShuffleEl.textContent = '隨機順序（' + (shouldShuffleQuiz ? '亂序' : '照順序') + '）';
+    if (menuShuffleEl) {
+        const label = menuShuffleEl.querySelector('.item-label');
+        if (label) label.textContent = '隨機順序（' + (shouldShuffleQuiz ? '亂序' : '照順序') + '）';
+    }
 }
 
 const shuffleToggle = document.getElementById('shuffleToggle');
@@ -2012,7 +2015,8 @@ if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
 
 if (menuArchived) menuArchived.addEventListener('click', () => {
     viewArchiveMode = !viewArchiveMode;
-    menuArchived.textContent = viewArchiveMode ? '返回題庫' : '典藏庫';
+    const label = menuArchived.querySelector('.item-label');
+    if (label) label.textContent = viewArchiveMode ? '返回題庫' : '典藏庫';
     if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
     fetchQuizList();
 });
@@ -2026,12 +2030,13 @@ if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
 function toggleEditModeUI() {
     const grid = document.getElementById('units-grid');
     if (grid && menuEditQuizName) {
+        const label = menuEditQuizName.querySelector('.item-label');
         if (isEditMode) {
             grid.classList.add('edit-mode');
-            menuEditQuizName.textContent = '停止編輯題庫';
+            if (label) label.textContent = '停止編輯題庫';
         } else {
             grid.classList.remove('edit-mode');
-            menuEditQuizName.textContent = '編輯題庫';
+            if (label) label.textContent = '編輯題庫';
         }
     }
 }
@@ -2481,7 +2486,8 @@ function loadThemePreference() {
 // 應用主題
 function updateMenuThemeLabel() {
     if (typeof menuTheme !== 'undefined' && menuTheme) {
-        menuTheme.textContent = isDarkMode ? '淺色模式' : '深色模式';
+        const label = menuTheme.querySelector('.item-label');
+        if (label) label.textContent = isDarkMode ? '淺色模式' : '深色模式';
     }
 }
 
