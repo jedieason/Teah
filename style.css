@@ -4423,21 +4423,20 @@ body.dark-mode .material-icon-btn:hover {
     }
 
     .explanation-buttons {
-        flex-direction: column-reverse;
-        gap: 12px;
-    }
-
-    .explanation-buttons {
-        justify-content: space-evenly;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
         margin-top: 8px;
+        gap: 12px;
     }
 
     .next-button {
         padding: 14px;
         font-size: 1rem;
-        align-self: flex-end;
     }
+
 
     .copy-btn,
     .gemini-btn,
