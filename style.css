@@ -1412,7 +1412,7 @@ body.dark-mode .folder-tile:hover {
 
     .confirm-button,
     .next-button {
-        align-self: stretch;
+        align-self: flex-end;
     }
 
     .option-button {
@@ -1922,7 +1922,7 @@ body.dark-mode .action-icon-btn:hover {
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    align-self: flex-start;
+    align-self: center;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
@@ -4427,7 +4427,7 @@ body.dark-mode .material-icon-btn:hover {
         gap: 12px;
     }
 
-    .explanation-buttons .header-right {
+    .explanation-buttons {
         justify-content: space-evenly;
         width: 100%;
         margin-top: 8px;
@@ -4436,6 +4436,7 @@ body.dark-mode .material-icon-btn:hover {
     .next-button {
         padding: 14px;
         font-size: 1rem;
+        align-self: flex-end;
     }
 
     .copy-btn,
