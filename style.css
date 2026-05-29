@@ -142,7 +142,6 @@ body.dark-mode #pasteJson:focus {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
-    font-family: 'Roboto', sans-serif;
 }
 
 .progress-count {
@@ -259,7 +258,7 @@ body.dark-mode #pasteJson:focus {
 }
 
 /* Import Google Fonts for a premium look */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Playfair+Display:wght@400;600&display=swap');
 
 @font-face {
     font-family: 'YuWeiShuFaYunMoFanTi';
@@ -279,6 +278,10 @@ body.dark-mode #pasteJson:focus {
 }
 
 /* Base Styles */
+body, button, input, select, textarea {
+    font-family: Georgia, "Playfair Display", "Noto Serif TC", "source-han-serif-tc", "Songti TC", "PMingLiU", serif;
+}
+
 body {
     color: #2D3436;
     margin: 0;
@@ -516,7 +519,6 @@ p {
 }
 
 .section-title {
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     font-size: 1.375rem;
     font-weight: 500;
     color: #202124;
@@ -559,7 +561,6 @@ p {
 }
 
 .continue-title-text {
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     font-size: 1.1rem;
     font-weight: 600;
     color: #202124;
@@ -585,7 +586,6 @@ p {
 }
 
 .continue-stats-text {
-    font-family: 'Roboto', sans-serif;
     font-size: 0.875rem;
     color: #5f6368;
     margin: 0;
@@ -602,7 +602,6 @@ p {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     white-space: nowrap;
     box-shadow: none;
     letter-spacing: 0.25px;
@@ -659,7 +658,6 @@ p {
 }
 
 .unit-title {
-    font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     font-weight: 600;
     color: #2D3436;
@@ -1765,7 +1763,6 @@ body.dark-mode .quiz-group-title .folder-icon::after {
     box-sizing: border-box;
     background-color: transparent;
     color: #202124;
-    font-family: 'Roboto', 'Segoe UI', sans-serif;
     font-weight: 500;
     font-size: 1.1rem;
     font-variant-numeric: tabular-nums;
@@ -2226,7 +2223,6 @@ body.dark-mode .logout-button:hover {
     font-size: 1rem;
     color: #202124;
     outline: none;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     padding: 0;
 }
 
@@ -2459,7 +2455,6 @@ body.dark-mode .typing-effect::before {
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -3661,7 +3656,6 @@ body.dark-mode .rename-input {
     height: 100%;
     border: none;
     background: transparent;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     font-size: 1rem;
     color: #202124;
     outline: none;
@@ -3830,7 +3824,6 @@ body.dark-mode .search-close-btn:hover {
     min-width: auto;
     /* Allow it to be as narrow as content */
     max-width: 90%;
-    font-family: 'Roboto', sans-serif;
     font-size: 0.875rem;
     letter-spacing: 0.01em;
 
@@ -4169,7 +4162,6 @@ body.dark-mode .folder-back {
     -webkit-tap-highlight-color: transparent;
     height: 100%;
     font-size: 16px;
-    font-family: 'Roboto', arial, sans-serif;
     line-height: 34px;
     width: 100%;
     opacity: 0;
@@ -4677,7 +4669,6 @@ body.dark-mode .mistake-badge.high-mistake {
     font-size: 0.85rem;
     color: #70757a;
     text-align: right;
-    font-family: 'Roboto', sans-serif;
 }
 
 /* Dark Mode Overrides */
@@ -5218,7 +5209,6 @@ body.dark-mode #archiveConfirmMessage {
     min-height: 400px;
     /* Ensure some height if standalone */
     animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     text-align: center;
     padding: 24px;
     box-sizing: border-box;
@@ -5310,7 +5300,6 @@ body.dark-mode #archiveConfirmMessage {
 }
 
 .results-title {
-    font-family: 'Google Sans', 'Roboto', sans-serif;
     font-size: 2.25rem;
     font-weight: 400;
     color: #202124;
@@ -5393,7 +5382,6 @@ body.dark-mode #archiveConfirmMessage {
     justify-content: center;
     gap: 8px;
     transition: all 0.2s;
-    font-family: 'Google Sans', 'Roboto', sans-serif;
 }
 
 .m3-btn-filled {
