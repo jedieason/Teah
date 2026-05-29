@@ -910,7 +910,7 @@ body.dark-mode .topics-toolbar input::placeholder {
 
 
 .quiz-title {
-    font-family: 'XiaoZuan', 'Google Sans', 'Roboto', sans-serif;
+    font-family: 'XiaoZuan', Georgia, "Playfair Display", "Noto Serif TC", serif;
     color: #202124;
     font-size: 1.4rem;
     font-weight: 400;
@@ -4760,7 +4760,7 @@ body.dark-mode .mistake-explanation-row strong {
     font-size: 1.2rem;
     /* User requested 1.1rem */
     font-weight: 400;
-    font-family: 'XiaoZuan', sans-serif;
+    font-family: 'XiaoZuan', Georgia, "Playfair Display", "Noto Serif TC", serif;
     /* User requested XiaoZuan */
     color: #1f1f1f;
     margin: 0;
