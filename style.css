@@ -16,18 +16,18 @@
 
 body.dark-mode {
     --bg-color: #0b0c0e;
-    --surface-color: #1a1c1e;
-    --surface-variant: #333537;
-    --surface-container: #202123;
-    --on-surface: #e3e2e6;
-    --on-surface-variant: #c4c7c5;
-    --primary: #d0bcff;
-    --on-primary: #381e72;
-    --outline: #8e918f;
-    --outline-variant: #444746;
-    --primary-container: #4f378b;
-    --on-primary-container: #eaddff;
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --surface-color: #0b0c0e;
+    --surface-variant: #1a1c1e;
+    --surface-container: #0b0c0e;
+    --on-surface: #f0f6fc;
+    --on-surface-variant: #8b949e;
+    --primary: #8ab4f8;
+    --on-primary: #0b57d0;
+    --outline: #444c56;
+    --outline-variant: #30363d;
+    --primary-container: #1f3a60;
+    --on-primary-container: #d3e3fd;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 
     background-color: var(--bg-color);
     color: var(--on-surface);
@@ -278,7 +278,11 @@ body.dark-mode #pasteJson:focus {
 }
 
 /* Base Styles */
-body, button, input, select, textarea {
+body,
+button,
+input,
+select,
+textarea {
     font-family: Georgia, "Playfair Display", "Noto Serif TC", "source-han-serif-tc", "Songti TC", "PMingLiU", serif;
 }
 
@@ -1071,7 +1075,7 @@ body.dark-mode .starred-modal-content {
 }
 
 body.dark-mode .start-title {
-    background: linear-gradient(135deg, var(--on-surface) 0%, var(--primary) 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #e3e2e6 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -3100,13 +3104,13 @@ body.dark-mode .progress-bar {
 }
 
 body.dark-mode .correct-bar {
-    background: linear-gradient(90deg, #238636 0%, #2ea043 25%, #39d353 50%, #2ea043 75%, #238636 100%);
+    background: linear-gradient(90deg, #18AE79 0%, #4CAF50 25%, #66BB6A 50%, #4CAF50 75%, #18AE79 100%);
     background-size: 300% 100%;
     animation: lavaFlow 6s ease-in-out infinite;
 }
 
 body.dark-mode .wrong-bar {
-    background: linear-gradient(90deg, #f85149 0%, #fa8c89 25%, #ffacb1 50%, #fa8c89 75%, #f85149 100%);
+    background: linear-gradient(90deg, #cc4e00 0%, #ff5722 25%, #ff8a65 50%, #ff5722 75%, #cc4e00 100%);
     background-size: 300% 100%;
     animation: lavaFlow 6s ease-in-out infinite;
 }
@@ -3155,7 +3159,6 @@ body.dark-mode .progress-container {
 }
 
 body.dark-mode .progress-counts {
-    background-color: var(--surface-variant);
     color: var(--on-surface-variant);
 }
 
@@ -3329,14 +3332,14 @@ body.dark-mode #progress-bar {
 }
 
 body.dark-mode .correct-bar {
-    background: linear-gradient(90deg, #238636 0%, #2ea043 25%, #39d353 50%, #2ea043 75%, #238636 100%);
+    background: linear-gradient(90deg, #18AE79 0%, #4CAF50 25%, #66BB6A 50%, #4CAF50 75%, #18AE79 100%);
     background-size: 300% 100%;
     animation: lavaFlow 6s ease-in-out infinite;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 body.dark-mode .wrong-bar {
-    background: linear-gradient(90deg, #f85149 0%, #fa8c89 25%, #ffacb1 50%, #fa8c89 75%, #f85149 100%);
+    background: linear-gradient(90deg, #cc4e00 0%, #ff5722 25%, #ff8a65 50%, #ff5722 75%, #cc4e00 100%);
     background-size: 300% 100%;
     animation: lavaFlow 6s ease-in-out infinite;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -5470,4 +5473,324 @@ body.dark-mode .check-mark {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ==========================================================================
+   UNIFIED DARK MODE OVERRIDES (Pure Color Properties Only)
+   ========================================================================== */
+body.dark-mode {
+    /* 1. App background containers */
+    background-color: var(--bg-color) !important;
+}
+
+body.dark-mode .start-screen,
+body.dark-mode .home-content,
+body.dark-mode .quiz-container,
+body.dark-mode .full-screen-view,
+body.dark-mode .end-screen-overlay {
+    background-color: var(--bg-color) !important;
+    color: var(--on-surface) !important;
+}
+
+/* 2. Elevated Surface Components (All cards, dialogs, menus, list items that are white in light mode) */
+body.dark-mode .unit-card,
+body.dark-mode .continue-card,
+body.dark-mode .select-button,
+body.dark-mode .restoreBtn_C3D4,
+body.dark-mode .folder-tile,
+body.dark-mode .controls-menu,
+body.dark-mode .option-button,
+body.dark-mode .md3-dialog,
+body.dark-mode .modal-content,
+body.dark-mode .starred-modal-content,
+body.dark-mode .mistake-item,
+body.dark-mode .search-inner-bar,
+body.dark-mode .google-search-bar,
+body.dark-mode .quiz-edit-btn,
+body.dark-mode .quiz-archive-btn {
+    background-color: var(--surface-color) !important;
+    background: var(--surface-color) !important;
+    color: var(--on-surface) !important;
+    border-color: var(--outline-variant) !important;
+}
+
+/* 3. Hover / Active states for elevated components */
+body.dark-mode .unit-card:hover,
+body.dark-mode .continue-card:hover,
+body.dark-mode .select-button:hover,
+body.dark-mode .restoreBtn_C3D4:hover,
+body.dark-mode .folder-tile:hover,
+body.dark-mode .option-button:hover,
+body.dark-mode .quiz-edit-btn:hover,
+body.dark-mode .quiz-archive-btn:hover {
+    background-color: var(--surface-variant) !important;
+    background: var(--surface-variant) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+}
+
+/* 4. Controls menu header */
+body.dark-mode .controls-menu-header {
+    background-color: var(--surface-variant) !important;
+    border-color: var(--outline-variant) !important;
+}
+
+/* 5. Flat list items / Icon buttons hover (No border color modifications, transparent overlay only) */
+body.dark-mode .controls-item:hover,
+body.dark-mode .action-icon-btn:hover,
+body.dark-mode .header-icon-btn:hover,
+body.dark-mode .material-icon-btn:hover,
+body.dark-mode .search-icon-btn:hover,
+body.dark-mode .search-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--on-surface) !important;
+}
+
+/* 6. Star icon, headers & material icons */
+body.dark-mode .action-icon-btn,
+body.dark-mode .header-icon-btn,
+body.dark-mode .material-icon-btn {
+    color: var(--on-surface-variant) !important;
+}
+
+/* 7. Settings popup user details */
+body.dark-mode .menu-name {
+    color: var(--on-surface) !important;
+}
+
+body.dark-mode .menu-email {
+    color: var(--on-surface-variant) !important;
+}
+
+/* 8. Inputs & Textareas */
+body.dark-mode #uploadNameInput,
+body.dark-mode #pasteJson,
+body.dark-mode #topicSearch,
+body.dark-mode #userQuestion,
+body.dark-mode .fillblank-input,
+body.dark-mode .rename-input,
+body.dark-mode .topics-toolbar input[type="text"] {
+    background-color: var(--surface-color) !important;
+    background: var(--surface-color) !important;
+    border-color: var(--outline-variant) !important;
+    color: var(--on-surface) !important;
+}
+
+body.dark-mode #uploadNameInput:focus,
+body.dark-mode #pasteJson:focus,
+body.dark-mode #topicSearch:focus,
+body.dark-mode #userQuestion:focus,
+body.dark-mode .fillblank-input:focus,
+body.dark-mode .rename-input:focus,
+body.dark-mode .topics-toolbar input[type="text"]:focus {
+    background-color: var(--surface-variant) !important;
+    background: var(--surface-variant) !important;
+    border-color: var(--primary) !important;
+}
+
+body.dark-mode #uploadNameInput::placeholder,
+body.dark-mode #pasteJson::placeholder,
+body.dark-mode #topicSearch::placeholder,
+body.dark-mode #userQuestion::placeholder,
+body.dark-mode .fillblank-input::placeholder,
+body.dark-mode .topics-toolbar input::placeholder {
+    color: var(--on-surface-variant) !important;
+}
+
+/* 9. Floating labels for inputs inside dialogs */
+body.dark-mode .md3-floating-label {
+    background-color: var(--surface-color) !important;
+    background: var(--surface-color) !important;
+    color: var(--on-surface-variant) !important;
+}
+
+/* 10. Dialog Action / Overlay Overrides */
+body.dark-mode .md3-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.dark-mode .modal-close,
+body.dark-mode .md3-icon-btn.modal-close {
+    color: var(--on-surface-variant) !important;
+}
+
+body.dark-mode .modal-close:hover {
+    color: var(--on-surface) !important;
+}
+
+/* 11. Action Buttons */
+body.dark-mode .confirm-button,
+body.dark-mode .next-button {
+    background-color: #0b57d0 !important;
+    background: #0b57d0 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+
+body.dark-mode .confirm-button:hover,
+body.dark-mode .next-button:hover {
+    background-color: #0a4dbe !important;
+    background: #0a4dbe !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+
+body.dark-mode .md3-filled-btn,
+body.dark-mode .start-button,
+body.dark-mode .m3-btn-filled {
+    background-color: var(--primary) !important;
+    background: var(--primary) !important;
+    color: var(--on-primary) !important;
+    border-color: transparent !important;
+}
+
+body.dark-mode .md3-filled-btn:hover,
+body.dark-mode .start-button:hover,
+body.dark-mode .m3-btn-filled:hover {
+    background-color: var(--surface-variant) !important;
+    background: var(--surface-variant) !important;
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+/* 12. Outlined Buttons & Segmented Buttons */
+body.dark-mode .m3-btn-outlined,
+body.dark-mode .md3-text-btn {
+    border-color: var(--outline) !important;
+    color: var(--primary) !important;
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+body.dark-mode .m3-btn-outlined:hover,
+body.dark-mode .md3-text-btn:hover {
+    background-color: var(--surface-variant) !important;
+}
+
+body.dark-mode .md3-segmented-btn-group {
+    border-color: var(--outline-variant) !important;
+}
+
+body.dark-mode .md3-segmented-btn {
+    border-right-color: var(--outline-variant) !important;
+    color: var(--on-surface-variant) !important;
+}
+
+body.dark-mode .md3-segmented-btn input[type="radio"]:checked+span {
+    background-color: var(--primary-container) !important;
+    color: var(--on-primary-container) !important;
+}
+
+/* 13. Folder Groups & Breadcrumbs */
+body.dark-mode .quiz-group {
+    background-color: var(--surface-color) !important;
+    border-color: var(--outline-variant) !important;
+}
+
+body.dark-mode .quiz-group-title {
+    color: var(--on-surface) !important;
+}
+
+body.dark-mode .quiz-group-buttons {
+    border-top-color: var(--outline-variant) !important;
+}
+
+/* 14. Explanation Box & Chat Input Wrapper */
+body.dark-mode .explanation {
+    background-color: var(--surface-color) !important;
+    color: var(--on-surface) !important;
+    border-color: var(--outline-variant) !important;
+}
+
+body.dark-mode .chat-input-wrapper {
+    background-color: var(--surface-variant) !important;
+    border-color: var(--outline-variant) !important;
+}
+
+body.dark-mode .chat-input-wrapper:focus-within {
+    background-color: var(--surface-color) !important;
+    border-color: var(--primary) !important;
+}
+
+/* 15. Selected State for buttons/options */
+body.dark-mode .option-button.selected,
+body.dark-mode .select-button.selected {
+    background-color: var(--primary-container) !important;
+    background: var(--primary-container) !important;
+    border-color: var(--primary) !important;
+    color: var(--on-primary-container) !important;
+}
+
+body.dark-mode .option-button.selected:hover,
+body.dark-mode .select-button.selected:hover {
+    background-color: var(--primary-container) !important;
+    border-color: var(--primary) !important;
+}
+
+/* Option states */
+body.dark-mode .option-button.correct {
+    background-color: rgba(76, 175, 80, 0.15) !important;
+    background: rgba(76, 175, 80, 0.15) !important;
+    border-color: #81c995 !important;
+    color: #e6f4ea !important;
+}
+
+body.dark-mode .option-button.incorrect {
+    background-color: rgba(234, 67, 53, 0.15) !important;
+    background: rgba(234, 67, 53, 0.15) !important;
+    border-color: #f28b82 !important;
+    color: #fce8e6 !important;
+}
+
+body.dark-mode .option-button.missing {
+    background-color: rgba(251, 188, 4, 0.1) !important;
+    background: rgba(251, 188, 4, 0.1) !important;
+    border-color: #fdd663 !important;
+}
+
+/* 16. Progress display, results and states */
+body.dark-mode #progress-bar-wrapper,
+body.dark-mode .progress-bars {
+    background-color: var(--bg-color) !important;
+    background: var(--bg-color) !important;
+}
+
+body.dark-mode .progress-count {
+    color: var(--on-surface-variant) !important;
+    background-color: var(--surface-variant) !important;
+    background: var(--surface-variant) !important;
+}
+
+body.dark-mode .progress-count:first-child {
+    color: #81c995 !important;
+    background-color: rgba(129, 201, 149, 0.15) !important;
+    background: rgba(129, 201, 149, 0.15) !important;
+}
+
+body.dark-mode .progress-count:last-child {
+    color: #f28b82 !important;
+    background-color: rgba(242, 139, 130, 0.15) !important;
+    background: rgba(242, 139, 130, 0.15) !important;
+}
+
+body.dark-mode .stat-card {
+    background-color: var(--surface-color) !important;
+    color: var(--on-surface) !important;
+}
+
+body.dark-mode .stat-card:hover {
+    background-color: var(--surface-variant) !important;
+}
+
+body.dark-mode .stat-value {
+    color: var(--on-surface) !important;
+}
+
+body.dark-mode .stat-label {
+    color: var(--on-surface-variant) !important;
+}
+
+body.dark-mode .correct-option {
+    color: #81c995 !important;
 }
