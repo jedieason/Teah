@@ -2477,8 +2477,8 @@ function loadThemePreference() {
     if (savedTheme) {
         isDarkMode = savedTheme === 'dark';
     } else {
-        // 如果沒有儲存的設定，使用系統偏好
-        isDarkMode = getSystemThemePreference();
+        // 預設為淺色模式，不再自動跟隨系統深色模式偏好
+        isDarkMode = false;
     }
     applyTheme();
 }
@@ -2525,7 +2525,7 @@ function watchSystemTheme() {
 // 初始化主題功能
 function initTheme() {
     loadThemePreference();
-    watchSystemTheme();
+    // 預設不自動跟隨系統深色模式，因此不呼叫 watchSystemTheme()
 
     // 綁定切換按鈕事件
     if (themeToggleBtn) {
