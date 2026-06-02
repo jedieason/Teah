@@ -97,6 +97,32 @@ let selectedOptions = [];  // 多選題使用
 let correct = 0;
 let wrong = 0;
 let selectedJson = null; // 初始為 null
+
+// 獲取唯一的錯題與收藏存儲鍵名（包含科目與習題名稱）
+function getQuizStorageName(path) {
+    if (!path) return 'default';
+    
+    let cleanPath = path.replace('.json', '');
+    
+    // 如果路徑已經包含 '|' 或 '｜'，表示已經有科目名稱
+    if (cleanPath.includes('｜') || cleanPath.includes('|')) {
+        return cleanPath;
+    }
+    
+    // 如果包含 '/'，表示可能是一個帶目錄的路徑，如 "數學/B10期末考第52題.json"
+    if (cleanPath.includes('/')) {
+        const parts = cleanPath.split('/').filter(Boolean);
+        if (parts.length >= 2) {
+            const subject = parts[parts.length - 2];
+            const title = parts[parts.length - 1];
+            return `${subject}｜${title}`;
+        } else if (parts.length === 1) {
+            return parts[0];
+        }
+    }
+    
+    return cleanPath;
+}
 // Fill-in-the-blank elements
 const fillblankContainer = document.querySelector('.fillblank-container');
 const fillblankInput = document.getElementById('fillblank-input');
@@ -2274,7 +2300,7 @@ async function toggleStarCurrentQuestion() {
     if (index >= 0) {
         starred.splice(index, 1);
     } else {
-        const sourceName = (selectedJson || '').split('/').pop().replace('.json', '');
+        const sourceName = getQuizStorageName(selectedJson);
         starred.push({ ...currentQuestion, source: sourceName });
     }
     await set(starredRef, starred);
@@ -2569,7 +2595,7 @@ function closeMistakeView() {
 function recordMistake() {
     if (!auth.currentUser || !currentQuestion || !selectedJson) return;
     try {
-        const quizName = selectedJson.split('/').pop().replace('.json', '');
+        const quizName = getQuizStorageName(selectedJson);
         // Sanitize key: replacing '/' is critical as it creates sub-paths in Firebase
         const qKey = btoa(unescape(encodeURIComponent(currentQuestion.question)))
             .replace(/\//g, '_')
@@ -2607,7 +2633,7 @@ async function openMistakeView() {
     }
 
     try {
-        const quizName = selectedJson.split('/').pop().replace('.json', '');
+        const quizName = getQuizStorageName(selectedJson);
         const snapshot = await get(ref(database, `mistakes/${auth.currentUser.uid}/${quizName}`));
 
         if (!snapshot.exists()) {
@@ -2696,31 +2722,13 @@ async function openMistakeView() {
                     div.appendChild(optionsDiv);
                 }
 
-                // Details: Answer & Explanation
-                const ansExpDiv = document.createElement('div');
-                ansExpDiv.className = 'mistake-details';
-
-                let ansText = Array.isArray(m.answer) ? m.answer.join(', ') : m.answer;
-
-                let explanationHtml = '';
-                if (m.explanation && typeof m.explanation === 'string') {
-                    explanationHtml = marked.parse(m.explanation);
-                } else {
-                    explanationHtml = '<i>暫無詳解</i>';
-                }
-
-                // Origin Tag (if exists)
-                let originHtml = '';
+                // Details: Origin Tag (if exists)
                 if (m.origin) {
-                    originHtml = `<div class="mistake-origin-row">出處：${m.origin}</div>`;
+                    const ansExpDiv = document.createElement('div');
+                    ansExpDiv.className = 'mistake-details';
+                    ansExpDiv.innerHTML = `<div class="mistake-origin-row">出處：${m.origin}</div>`;
+                    div.appendChild(ansExpDiv);
                 }
-
-                ansExpDiv.innerHTML = `
-                    <div class="mistake-explanation-row"><strong>詳解:</strong> ${explanationHtml}</div>
-                    ${originHtml}
-                `;
-
-                div.appendChild(ansExpDiv);
 
                 // Latex render
                 renderLatex(div);

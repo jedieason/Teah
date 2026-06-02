@@ -4615,10 +4615,6 @@ body.dark-mode .mistake-badge.high-mistake {
 
 /* Options */
 .mistake-options {
-    background-color: #f1f3f4;
-    /* Google Grey 100 */
-    padding: 12px;
-    border-radius: 8px;
     font-size: 0.95rem;
     color: #4b4b4b;
 }
@@ -4648,9 +4644,10 @@ body.dark-mode .mistake-badge.high-mistake {
 
 /* Details: Answer & Explanation */
 .mistake-details {
-    margin-top: 4px;
-    padding-top: 12px;
-    border-top: 1px dashed #e0e0e0;
+    background-color: #f1f3f4;
+    /* Google Grey 100 */
+    padding: 12px;
+    border-radius: 8px;
     font-size: 0.95rem;
     color: #5f6368;
     line-height: 1.6;
@@ -4708,7 +4705,6 @@ body.dark-mode .mistake-count-badge {
 }
 
 body.dark-mode .mistake-options {
-    background-color: #2a2a2a;
     color: #c9d1d9;
 }
 
@@ -4719,7 +4715,7 @@ body.dark-mode .mistake-options .correct-option {
 }
 
 body.dark-mode .mistake-details {
-    border-top-color: #454545;
+    background-color: #2a2a2a;
     color: #9aa0a6;
 }
 
