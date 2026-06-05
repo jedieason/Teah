@@ -17,22 +17,7 @@
 <body>
   <!-- 開始畫面 -->
   <div class="start-screen">
-    <!-- Top Left Search -->
-    <div class="search-container">
-      <div class="search-inner-bar">
-        <button id="searchIconBtn" class="search-icon-btn" aria-label="搜尋">
-          <svg class="search-svg" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-            <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
-          </svg>
-        </button>
-        <input id="topicSearch" type="text" placeholder="搜尋題庫…" aria-label="搜尋題庫">
-        <button id="searchCloseBtn" class="search-close-btn" aria-label="關閉搜尋">
-          <svg class="close-svg" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-          </svg>
-        </button>
-      </div>
-    </div>
+    
 
     <div class="top-right-controls">
       <button id="controlsMenuBtn" class="avatar-button" aria-haspopup="true" aria-expanded="false">
@@ -61,6 +46,12 @@
               <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
             </svg>
             <span class="item-label">已收藏</span>
+          </button>
+          <button class="controls-item" id="menuGlobalMistakes" role="menuitem">
+            <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <span class="item-label">錯題本</span>
           </button>
           <button class="controls-item" id="menuShuffle" role="menuitem">
             <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
@@ -157,11 +148,6 @@
     <div class="header">
       <div class="quiz-title">題矣</div>
       <div class="header-right">
-        <button id="reverseButton" class="header-icon-btn" aria-label="上一題">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-          </svg>
-        </button>
         <button id="mistakeButton" class="header-icon-btn" aria-label="錯題列表">
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
             <path
@@ -183,10 +169,7 @@
           <span class="count-text">答錯</span>
         </div>
       </div>
-      <div class="progress-bars">
-        <div id="correctBar" class="progress-bar correct-bar"></div>
-        <div id="wrongBar" class="progress-bar wrong-bar"></div>
-      </div>
+      <div id="progressDots" class="progress-dots"></div>
     </div>
     <div class="question-content" id="question"></div>
     <div class="fillblank-container" style="display: none;">
@@ -194,6 +177,7 @@
     </div>
     <div class="options" id="options"></div>
     <button id="confirm-btn" class="confirm-button">確認</button>
+    <button id="back-progress-btn" class="back-progress-button" style="display: none;">回當前進度</button>
 
     <div class="explanation" id="explanation">
       <div class="explanation-text" id="explanation-text"></div>
@@ -229,6 +213,7 @@
           </button>
         </div>
         <button id="next-btn" class="next-button">下一題</button>
+        <button id="back-progress-btn-expl" class="back-progress-button" style="display: none;">回當前進度</button>
       </div>
     </div>
     <!-- <div class="copyright">
@@ -256,7 +241,12 @@
   <!-- Mistake Full Screen View -->
   <div id="mistakeView" class="full-screen-view">
     <div class="top-app-bar">
-      <h2 class="view-title">錯題回顧</h2>
+      <button id="backMistakeViewBtn" class="action-icon-btn" aria-label="返回" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+          <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
+        </svg>
+      </button>
+      <h2 class="view-title" id="mistakeViewTitle">錯題回顧</h2>
       <button id="closeMistakeViewBtn" class="action-icon-btn" aria-label="關閉">
         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
           <path
@@ -343,6 +333,31 @@
     <div class="md3-dialog-actions" style="margin-top: 24px;">
       <button class="md3-text-btn" id="archiveCancelBtn">取消</button>
       <button class="md3-filled-btn" id="archiveActionBtn">確認</button>
+    </div>
+  </div>
+</div>
+
+<!-- Quiz Action Modal (Material 3) -->
+<div id="quizActionModal" class="md3-modal-overlay" style="display: none;">
+  <div class="md3-dialog" style="max-width: 360px;">
+    <div class="md3-dialog-header">
+      <h3 class="md3-dialog-title" id="quizActionTitle">題庫名稱</h3>
+      <button class="md3-icon-btn modal-close" id="quizActionCloseBtn" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="md3-dialog-body" style="padding-top: 10px;">
+      <p id="quizActionStatus" style="margin: 0 0 16px 0; font-size: 0.95rem; color: var(--on-surface-variant);"></p>
+      <div class="quiz-action-options" style="display: flex; flex-direction: column; gap: 12px;">
+        <button id="quizActionResumeBtn" class="m3-btn m3-btn-filled" style="width: 100%; justify-content: center; margin: 0;">
+          <span>繼續測驗</span>
+        </button>
+        <button id="quizActionRestartBtn" class="m3-btn m3-btn-outlined" style="width: 100%; justify-content: center; margin: 0;">
+          <span>重新開始</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

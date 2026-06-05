@@ -52,34 +52,63 @@ async function updateRestorePreview(user) {
     const progressFill = document.getElementById('continue-progress-fill');
     const continueBtn = document.getElementById('continue-btn-action');
 
-    // Helper to hide section
     const hideSection = () => { if (continueSection) continueSection.style.display = 'none'; };
 
     try {
         if (!user) { hideSection(); return; }
 
-        const snap = await get(ref(database, `progress/${user.uid}/progress`));
-        if (!snap.exists()) { hideSection(); return; }
+        const lastActiveSnap = await get(ref(database, `progress/${user.uid}/lastActive`));
+        let activeQuizName = null;
+        let resolvedSelectedJson = null;
+        
+        if (lastActiveSnap.exists()) {
+            const lastActive = lastActiveSnap.val();
+            activeQuizName = lastActive.quizName;
+            resolvedSelectedJson = lastActive.selectedJson;
+        } else {
+            // Find latest in cache
+            const keys = Object.keys(userProgressCache);
+            if (keys.length === 0) { hideSection(); return; }
+            let maxTime = 0;
+            for (const key of keys) {
+                const p = userProgressCache[key];
+                if (p.lastUpdated && p.lastUpdated > maxTime) {
+                    maxTime = p.lastUpdated;
+                    activeQuizName = key;
+                    resolvedSelectedJson = p.selectedJson;
+                }
+            }
+        }
+        
+        if (!activeQuizName) { hideSection(); return; }
 
-        const p = snap.val();
+        const p = userProgressCache[activeQuizName];
+        if (!p) { hideSection(); return; }
+        
         const fileName = (p.selectedJson || '').split('/').pop().replace('.json', '') || '最近的中斷點';
-        const total = (p.questions?.length || 0) + (p.correct || 0) + (p.wrong || 0);
-        const done = (p.correct || 0) + (p.wrong || 0);
+        
+        let total = 0;
+        let done = 0;
+        if (p.allQuestions) {
+            total = p.allQuestions.length;
+            done = p.currentIndex;
+        } else {
+            total = (p.questions?.length || 0) + (p.correct || 0) + (p.wrong || 0);
+            done = (p.correct || 0) + (p.wrong || 0);
+        }
+        
         const percent = total > 0 ? Math.round(done / total * 100) : 0;
 
-        if (percent <= 0 && done === 0) { hideSection(); return; }
+        if (percent >= 100 || (percent <= 0 && done === 0)) { hideSection(); return; }
 
-        // Populate and show section
         if (continueSection) continueSection.style.display = 'block';
         if (titleText) titleText.textContent = fileName;
         if (statsText) statsText.textContent = `進度：${done}/${total}`;
         if (progressFill) progressFill.style.width = `${percent}%`;
 
-        // Attach click handler if not already (or overwrite)
         if (continueBtn) {
             continueBtn.onclick = () => {
-                // Trigger existing restore logic
-                restoreProgress();
+                restoreProgress(activeQuizName);
             };
         }
     } catch (e) {
@@ -89,6 +118,9 @@ async function updateRestorePreview(user) {
 }
 
 let questions = [];
+let allQuestions = [];
+let currentIndex = 0;
+let viewingIndex = 0;
 let initialQuestionCount = 0;
 let currentQuestion = {};
 let acceptingAnswers = true;
@@ -97,31 +129,36 @@ let selectedOptions = [];  // 多選題使用
 let correct = 0;
 let wrong = 0;
 let selectedJson = null; // 初始為 null
+let userProgressCache = {};
+let userMistakesCache = {};
 
 // 獲取唯一的錯題與收藏存儲鍵名（包含科目與習題名稱）
 function getQuizStorageName(path) {
     if (!path) return 'default';
     
-    let cleanPath = path.replace('.json', '');
+    let cleanPath = path;
+    if (cleanPath.startsWith('_Archive_')) {
+        cleanPath = cleanPath.substring(9);
+    }
+    cleanPath = cleanPath.replace('.json', '');
     
     // 如果路徑已經包含 '|' 或 '｜'，表示已經有科目名稱
     if (cleanPath.includes('｜') || cleanPath.includes('|')) {
-        return cleanPath;
-    }
-    
-    // 如果包含 '/'，表示可能是一個帶目錄的路徑，如 "數學/B10期末考第52題.json"
-    if (cleanPath.includes('/')) {
+        // Continue to sanitization below
+    } else if (cleanPath.includes('/')) {
+        // 如果包含 '/'，表示可能是一個帶目錄的路徑，如 "數學/B10期末考第52題.json"
         const parts = cleanPath.split('/').filter(Boolean);
         if (parts.length >= 2) {
             const subject = parts[parts.length - 2];
             const title = parts[parts.length - 1];
-            return `${subject}｜${title}`;
+            cleanPath = `${subject}｜${title}`;
         } else if (parts.length === 1) {
-            return parts[0];
+            cleanPath = parts[0];
         }
     }
     
-    return cleanPath;
+    // Firebase Database keys must not contain '.', '#', '$', '[', ']', or '/'
+    return cleanPath.replace(/[.$#[\]/]/g, '_');
 }
 // Fill-in-the-blank elements
 const fillblankContainer = document.querySelector('.fillblank-container');
@@ -161,7 +198,94 @@ async function initQuiz() {
     localStorage.removeItem('quizProgress');
 
     await loadQuestions();
-    initialQuestionCount = questions.length;
+    
+    // Process and shuffle allQuestions
+    allQuestions = JSON.parse(JSON.stringify(questions));
+    if (shouldShuffleQuiz) {
+        shuffle(allQuestions);
+    }
+    
+    allQuestions.forEach(q => {
+        // Normalize single-element array answer to string
+        if (Array.isArray(q.answer) && q.answer.length === 1) {
+            q.answer = q.answer[0];
+        }
+        
+        // Determine fill blank
+        if (!q.options) {
+            q.isFillBlank = true;
+            q.isMultiSelect = false;
+        } else {
+            q.isFillBlank = false;
+            q.isMultiSelect = Array.isArray(q.answer) && q.answer.length > 1;
+        }
+        
+        // Shuffle options and map to standard letters if it's multiple choice
+        if (!q.isFillBlank) {
+            const optionKeys = Object.keys(q.options);
+            let optionLabels = [];
+            let shouldShuffleOptionContent = true;
+            if (optionKeys.length === 2 && optionKeys.includes('T') && optionKeys.includes('F')) {
+                optionLabels = ['T', 'F'];
+                shouldShuffleOptionContent = false;
+            } else {
+                optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+                shouldShuffleOptionContent = shouldShuffleQuiz;
+            }
+            
+            let optionEntries = Object.entries(q.options);
+            if (shouldShuffleOptionContent) {
+                shuffle(optionEntries);
+            } else if (optionLabels.length === 2 && optionLabels[0] === 'T' && optionLabels[1] === 'F') {
+                optionEntries.sort((a, b) => {
+                    const order = { 'T': 0, 'F': 1 };
+                    return order[a[0]] - order[b[0]];
+                });
+            }
+            
+            let labelMapping = {};
+            for (let i = 0; i < optionEntries.length; i++) {
+                const [originalLabel, _] = optionEntries[i];
+                labelMapping[originalLabel] = optionLabels[i];
+            }
+            
+            let newOptions = {};
+            let newAnswer = q.isMultiSelect ? [] : '';
+            for (let i = 0; i < optionEntries.length; i++) {
+                const [label, text] = optionEntries[i];
+                const newLabel = optionLabels[i];
+                newOptions[newLabel] = text;
+                
+                if (q.isMultiSelect) {
+                    if (Array.isArray(q.answer) && q.answer.includes(label)) {
+                        newAnswer.push(newLabel);
+                    }
+                } else {
+                    if (label === q.answer) {
+                        newAnswer = newLabel;
+                    }
+                }
+            }
+            
+            q.options = newOptions;
+            q.answer = newAnswer;
+            q.explanation = updateExplanationOptions(q.explanation, labelMapping);
+        }
+        
+        q.isAnswered = false;
+        q.isCorrect = null;
+        q.userSelection = null;
+        q.isConfirmed = false;
+    });
+
+    initialQuestionCount = allQuestions.length;
+    currentIndex = 0;
+    viewingIndex = 0;
+    correct = 0;
+    wrong = 0;
+    document.getElementById('correct').innerText = 0;
+    document.getElementById('wrong').innerText = 0;
+
     document.querySelector('.start-screen').style.display = 'none';
     document.querySelector('.quiz-container').style.display = 'flex';
 
@@ -170,8 +294,9 @@ async function initQuiz() {
     document.querySelector('.quiz-title').innerText = `${fileName}`;
     document.title = `${fileName} - 題矣`;
 
-    loadNewQuestion();
-    updateProgressBar(); // Initialize progress bar when quiz starts
+    createProgressDots();
+    renderQuestion(currentIndex);
+    saveProgress();
 }
 
 // 加載題目 (Firebase)
@@ -198,197 +323,207 @@ function shuffle(array) {
 }
 
 function loadNewQuestion() {
-    // 如果有當前問題，將其推入歷史紀錄
-    if (currentQuestion && currentQuestion.question) {
-        questionHistory.push({
-            questionState: JSON.parse(JSON.stringify(currentQuestion)), // Deep copy of the question state
-            userSelection: currentQuestion.isFillBlank ? fillblankInput.value : (currentQuestion.isMultiSelect ? [...selectedOptions] : selectedOption),
-            isConfirmed: !acceptingAnswers, // Was the answer confirmed?
-            correctCount: correct, // Score *after* this question was processed
-            wrongCount: wrong,   // Score *after* this question was processed
-            fillBlankValueRestore: currentQuestion.isFillBlank ? fillblankInput.value : null,
-            fillBlankDisabledRestore: currentQuestion.isFillBlank ? fillblankInput.disabled : null,
-            fillBlankClassesRestore: currentQuestion.isFillBlank ? Array.from(fillblankInput.classList) : null
-        });
-    }
-
-    document.getElementById('WeeGPTInputSection').style.display = 'none';
-
-    // Start Timer for new question
-    startTimer();
-
-    // 重置狀態
-    acceptingAnswers = true;
-    // 根據題型初始化選取資料
-    if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.length > 1) {
-        currentQuestion.isMultiSelect = true;
-        selectedOptions = [];
-    } else {
-        currentQuestion.isMultiSelect = false;
-        selectedOption = null;
-    }
-    document.getElementById('explanation').style.display = 'none';
-    document.getElementById('confirm-btn').disabled = false;
-    document.getElementById('confirm-btn').style.display = 'block';
-    document.querySelectorAll('.option-button').forEach(btn => {
-        btn.classList.remove('selected', 'correct', 'incorrect', 'missing');
-    });
-
-    if (questions.length === 0) {
-        // 沒有更多題目，結束測驗
+    currentIndex++;
+    if (currentIndex >= allQuestions.length) {
         stopTimer();
         showEndScreen();
         return;
     }
+    viewingIndex = currentIndex;
+    selectedOption = null;
+    selectedOptions = [];
+    renderQuestion(currentIndex);
+    saveProgress();
+}
 
-    // 獲取題目
-    if (shouldShuffleQuiz) {
-        shuffle(questions); // 如果設定為隨機，則洗牌題庫
-        currentQuestion = questions.pop(); // 從尾端取出一題
-    } else {
-        currentQuestion = questions.shift(); // 如果設定為固定順序，則從前端取出一題
-    }
+function createProgressDots() {
+    const container = document.getElementById('progressDots');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    allQuestions.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot';
+        dot.title = `第 ${i + 1} 題`;
+        dot.addEventListener('click', () => {
+            renderQuestion(i);
+        });
+        container.appendChild(dot);
+    });
+    updateDotsUI();
+}
 
-    // Normalize single-element array answer to string to ensure it's treated as single choice
-    if (currentQuestion && Array.isArray(currentQuestion.answer) && currentQuestion.answer.length === 1) {
-        currentQuestion.answer = currentQuestion.answer[0];
-    }
+function updateDotsUI() {
+    const container = document.getElementById('progressDots');
+    if (!container) return;
+    const dots = container.querySelectorAll('.progress-dot');
+    
+    dots.forEach((dot, i) => {
+        const q = allQuestions[i];
+        dot.classList.remove('correct', 'wrong', 'current-progress', 'viewing');
+        
+        if (q.isAnswered) {
+            if (q.isCorrect) {
+                dot.classList.add('correct');
+            } else {
+                dot.classList.add('wrong');
+            }
+        }
+        
+        if (i === currentIndex) {
+            dot.classList.add('current-progress');
+        }
+        
+        if (i === viewingIndex) {
+            dot.classList.add('viewing');
+        }
+    });
+}
 
-    // 判斷填空題（無 options 屬性）
-    if (!currentQuestion.options) {
-        currentQuestion.isFillBlank = true;
-        document.getElementById('options').style.display = 'none';
-        fillblankContainer.style.display = 'flex';
-        fillblankInput.value = '';
-        // 重置填空題輸入框狀態
-        fillblankInput.disabled = false;
-        fillblankInput.classList.remove('correct', 'incorrect');
-        // 確保填空題不被標示為多選題
-        currentQuestion.isMultiSelect = false;
-    } else {
-        currentQuestion.isFillBlank = false;
-        document.getElementById('options').style.display = 'flex';
-        fillblankContainer.style.display = 'none';
-    }
+function renderQuestion(index) {
+    viewingIndex = index;
+    const q = allQuestions[index];
+    if (!q) return;
 
-    // 判斷是否為多選題（答案為陣列且長度超過1）
-    if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.length > 1) {
-        currentQuestion.isMultiSelect = true;
-    } else {
-        currentQuestion.isMultiSelect = false;
-    }
+    currentQuestion = q; // Update currentQuestion globally
 
-    // 更新題目文本，若為多選題則加上標籤
+    const confirmBtn = document.getElementById('confirm-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const backBtn = document.getElementById('back-progress-btn');
+    const backBtnExpl = document.getElementById('back-progress-btn-expl');
+
+    document.getElementById('WeeGPTInputSection').style.display = 'none';
+    updateStarIcon();
+
     const questionDiv = document.getElementById('question');
-    const questionHtml = marked.parse(currentQuestion.question);
-    if (currentQuestion.isMultiSelect) {
-        const labelText = currentQuestion.isFillBlank ? '句' : '多';
+    const questionHtml = marked.parse(q.question);
+    if (q.isMultiSelect) {
+        const labelText = q.isFillBlank ? '句' : '多';
         questionDiv.innerHTML = `
-<div class="question-wrapper">
-    <div class="multi-label">${labelText}</div>
-    <div class="question-text">${questionHtml}</div>
-</div>
+            <div class="question-wrapper">
+                <div class="multi-label">${labelText}</div>
+                <div class="question-text">${questionHtml}</div>
+            </div>
         `;
     } else {
         questionDiv.innerHTML = `<div class="question-text">${questionHtml}</div>`;
     }
     renderLatex(questionDiv);
 
-    if (!currentQuestion.isFillBlank) {
-        // 檢查題型
-        const optionKeys = Object.keys(currentQuestion.options);
-        let optionLabels = [];
-        let shouldShuffleOptionContent = true; // 控制選項內容是否洗牌
+    const optionsContainer = document.getElementById('options');
+    if (q.isFillBlank) {
+        optionsContainer.style.display = 'none';
+        fillblankContainer.style.display = 'flex';
+        fillblankInput.value = q.userSelection || '';
+        fillblankInput.className = 'fillblank-input';
+        fillblankInput.disabled = true;
 
-        if (optionKeys.length === 2 && optionKeys.includes('T') && optionKeys.includes('F')) {
-            // 是是非題
-            optionLabels = ['T', 'F'];
-            shouldShuffleOptionContent = false; // 是非題的選項標籤固定，不洗牌選項內容順序
-        } else {
-            // 單選題（或多選題）都用這組標籤
-            optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-            shouldShuffleOptionContent = shouldShuffleQuiz; // 選項內容是否洗牌取決於全域設定
+        if (q.isConfirmed) {
+            if (q.isCorrect) {
+                fillblankInput.classList.add('correct');
+            } else {
+                fillblankInput.classList.add('incorrect');
+            }
+        } else if (index === currentIndex) {
+            fillblankInput.disabled = false;
         }
-
-        // 獲取選項條目
-        let optionEntries = Object.entries(currentQuestion.options);
-
-        // 如果需要洗牌選項內容，則洗牌
-        if (shouldShuffleOptionContent) {
-            shuffle(optionEntries);
-        } else if (optionLabels.length === 2 && optionLabels[0] === 'T' && optionLabels[1] === 'F') {
-            // 是非題且不洗牌時，確保 T 在 F 之前
-            optionEntries.sort((a, b) => {
-                const order = { 'T': 0, 'F': 1 };
-                return order[a[0]] - order[b[0]];
-            });
-        }
-
-        // 正確構建 labelMapping
-        let labelMapping = {};
-        for (let i = 0; i < optionEntries.length; i++) {
-            const [originalLabel, _] = optionEntries[i];
-            labelMapping[originalLabel] = optionLabels[i];
-        }
-
-        // 更新選項
-        const optionsContainer = document.getElementById('options');
+    } else {
+        optionsContainer.style.display = 'flex';
+        fillblankContainer.style.display = 'none';
         optionsContainer.innerHTML = '';
-        let newOptions = {};
-        let newAnswer = currentQuestion.isMultiSelect ? [] : '';
-        for (let i = 0; i < optionEntries.length; i++) {
-            const [label, text] = optionEntries[i];
-            const newLabel = optionLabels[i];
-            newOptions[newLabel] = text;
 
+        Object.entries(q.options).forEach(([key, value]) => {
             const button = document.createElement('button');
             button.classList.add('option-button');
-            button.dataset.option = newLabel;
-            button.innerHTML = marked.parse(`${newLabel}: ${text}`);
+            button.dataset.option = key;
+            button.innerHTML = marked.parse(`${key}: ${value}`);
             renderLatex(button);
-            button.addEventListener('click', selectOption);
-            optionsContainer.appendChild(button);
 
-            // 對於單選題，若原答案與 label 相符則更新；多選題則假設 currentQuestion.answer 為原有正確答案陣列
-            if (currentQuestion.isMultiSelect) {
-                if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.includes(label)) {
-                    newAnswer.push(newLabel);
+            if (q.isConfirmed) {
+                if (q.isMultiSelect) {
+                    const userSel = q.userSelection || [];
+                    if (userSel.includes(key)) {
+                        button.classList.add('selected');
+                    }
+                    if (Array.isArray(q.answer) && q.answer.includes(key)) {
+                        if (userSel.includes(key)) {
+                            button.classList.add('correct');
+                        } else {
+                            button.classList.add('missing');
+                        }
+                    } else if (userSel.includes(key)) {
+                        button.classList.add('incorrect');
+                    }
+                } else {
+                    if (q.userSelection === key) {
+                        button.classList.add('selected');
+                    }
+                    if (key === q.answer) {
+                        button.classList.add('correct');
+                    } else if (q.userSelection === key) {
+                        button.classList.add('incorrect');
+                    }
                 }
             } else {
-                if (label === currentQuestion.answer) {
-                    newAnswer = newLabel;
+                if (index === currentIndex) {
+                    button.addEventListener('click', selectOption);
+                    if (q.isMultiSelect) {
+                        if (selectedOptions.includes(key)) {
+                            button.classList.add('selected');
+                        }
+                    } else {
+                        if (selectedOption === key) {
+                            button.classList.add('selected');
+                        }
+                    }
                 }
             }
-        }
-
-        // 更新題目的選項和答案
-        currentQuestion.options = newOptions;
-        currentQuestion.answer = newAnswer;
-
-        // 更新詳解中的選項標籤
-        currentQuestion.explanation = updateExplanationOptions(currentQuestion.explanation, labelMapping);
-
-        // 更新模態窗口的內容 (If exists)
-        const popupWindow = document.getElementById('popupWindow');
-        if (popupWindow) {
-            const qEl = popupWindow.querySelector('.editable:nth-child(2)');
-            const oEl = popupWindow.querySelector('.editable:nth-child(3)');
-            const aEl = popupWindow.querySelector('.editable:nth-child(5)');
-            const eEl = popupWindow.querySelector('.editable:nth-child(7)');
-
-            if (qEl) { qEl.innerHTML = marked.parse(currentQuestion.question); renderLatex(qEl); }
-            if (oEl) {
-                const optionsText = Object.entries(currentQuestion.options).map(([key, value]) => `**${key}**: ${value}`).join('\n\n');
-                oEl.innerHTML = marked.parse(optionsText);
-                renderLatex(oEl);
-            }
-            if (aEl) { aEl.innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer; }
-            if (eEl) { eEl.innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！'); renderLatex(eEl); }
-        }
+            optionsContainer.appendChild(button);
+        });
     }
-    saveProgress();
-    updateProgressBar();
-    updateStarIcon();
+
+    const explanationEl = document.getElementById('explanation');
+    const originDisplay = document.getElementById('origin-display');
+    if (q.isConfirmed) {
+        document.getElementById('explanation-text').innerHTML = marked.parse(q.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！');
+        renderLatex(document.getElementById('explanation-text'));
+        explanationEl.style.display = 'block';
+        if (q.origin) {
+            originDisplay.textContent = q.origin;
+            originDisplay.style.display = 'block';
+        } else {
+            originDisplay.style.display = 'none';
+        }
+    } else {
+        explanationEl.style.display = 'none';
+        originDisplay.style.display = 'none';
+    }
+
+    if (index === currentIndex) {
+        backBtn.style.display = 'none';
+        backBtnExpl.style.display = 'none';
+        acceptingAnswers = !q.isConfirmed;
+
+        if (q.isConfirmed) {
+            confirmBtn.style.display = 'none';
+            nextBtn.style.display = 'block';
+            stopTimer();
+        } else {
+            confirmBtn.style.display = 'block';
+            confirmBtn.disabled = false;
+            nextBtn.style.display = 'none';
+            startTimer();
+        }
+    } else {
+        backBtn.style.display = q.isConfirmed ? 'none' : 'block';
+        backBtnExpl.style.display = q.isConfirmed ? 'block' : 'none';
+        confirmBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        acceptingAnswers = false;
+        stopTimer();
+    }
+
+    updateDotsUI();
 }
 
 function updateExplanationOptions(explanation, labelMapping) {
@@ -498,75 +633,51 @@ modalConfirmBtn.addEventListener('click', () => {
 // 修改確認按鈕函數
 // 修改確認按鈕函數
 function confirmAnswer() {
-    // 處理填空題邏輯
-    if (currentQuestion.isFillBlank) {
+    const q = allQuestions[currentIndex];
+    if (!q) return;
+
+    if (q.isFillBlank) {
         const userInput = fillblankInput.value.trim();
         if (!userInput) {
             showCustomAlert('請輸入您的答案！');
             return;
         }
-        stopTimer(); // Valid input, stop timer
+        stopTimer();
 
-        // 直接作為句子驗證關鍵字
         const sentence = userInput.toLowerCase();
-        const required = Array.isArray(currentQuestion.answer) ? currentQuestion.answer : [currentQuestion.answer];
-        // 檢查是否包含所有關鍵字
+        const required = Array.isArray(q.answer) ? q.answer : [q.answer];
         const allMatch = required.every(keyword => sentence.includes(keyword.toLowerCase()));
+        
+        q.isCorrect = allMatch;
+        q.userSelection = userInput;
+        q.isAnswered = true;
+        q.isConfirmed = true;
+
         if (allMatch) {
             updateCorrect();
-            fillblankInput.classList.add('correct');
         } else {
             updateWrong();
-            fillblankInput.classList.add('incorrect');
         }
-        // 回答後禁止再修改
-        fillblankInput.disabled = true;
-        // 禁止再次確認，Enter 進入下一題
-        acceptingAnswers = false;
-        // 顯示詳解
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderLatex(document.getElementById('explanation-text'));
-        document.getElementById('explanation').style.display = 'block';
-        document.getElementById('confirm-btn').style.display = 'none';
-        const originDisplay = document.getElementById('origin-display');
-        if (currentQuestion.origin) {
-            originDisplay.textContent = currentQuestion.origin;
-            originDisplay.style.display = 'block';
-        } else {
-            originDisplay.style.display = 'none';
-        }
+
+        renderQuestion(currentIndex);
         saveProgress();
         return;
     } else {
-        if (currentQuestion.isMultiSelect) {
+        if (q.isMultiSelect) {
             if (selectedOptions.length === 0) {
                 showCustomAlert('選點啥吧，用猜的也好！');
                 return;
             }
-            stopTimer(); // Valid selection, stop timer
-            acceptingAnswers = false;
-            document.getElementById('confirm-btn').disabled = true;
-            // 檢查所有選項
-            document.querySelectorAll('.option-button').forEach(btn => {
-                const option = btn.dataset.option;
-                if (currentQuestion.answer.includes(option)) {
-                    // 正確答案
-                    if (selectedOptions.includes(option)) {
-                        btn.classList.add('correct');
-                    } else {
-                        // 正確但未選取：標示缺漏
-                        btn.classList.add('missing');
-                    }
-                } else {
-                    if (selectedOptions.includes(option)) {
-                        btn.classList.add('incorrect');
-                    }
-                }
-            });
-            // 判斷是否全對
-            let isCompletelyCorrect = (selectedOptions.length === currentQuestion.answer.length) &&
-                currentQuestion.answer.every(opt => selectedOptions.includes(opt));
+            stopTimer();
+
+            let isCompletelyCorrect = (selectedOptions.length === q.answer.length) &&
+                q.answer.every(opt => selectedOptions.includes(opt));
+            
+            q.isCorrect = isCompletelyCorrect;
+            q.userSelection = [...selectedOptions];
+            q.isAnswered = true;
+            q.isConfirmed = true;
+
             if (isCompletelyCorrect) {
                 updateCorrect();
             } else {
@@ -577,40 +688,22 @@ function confirmAnswer() {
                 showCustomAlert('選點啥吧，用猜的也好！');
                 return;
             }
-            stopTimer(); // Valid selection, stop timer
-            acceptingAnswers = false;
-            document.getElementById('confirm-btn').disabled = true;
-            const selectedBtn = document.querySelector(`.option-button[data-option='${selectedOption}']`);
-            if (selectedOption === currentQuestion.answer) {
-                if (selectedBtn) selectedBtn.classList.add('correct');
+            stopTimer();
+
+            const isCorrect = selectedOption === q.answer;
+            q.isCorrect = isCorrect;
+            q.userSelection = selectedOption;
+            q.isAnswered = true;
+            q.isConfirmed = true;
+
+            if (isCorrect) {
                 updateCorrect();
             } else {
-                if (selectedBtn) selectedBtn.classList.add('incorrect');
-                const correctBtn = document.querySelector(`.option-button[data-option='${currentQuestion.answer}']`);
-                if (correctBtn) {
-                    correctBtn.classList.add('correct');
-                } else {
-                    // 找不到正確選項的按鈕，提示並提供跳至下一題
-                    showCustomAlert('遇到問題，是否先前往下一題？', () => {
-                        loadNewQuestion();
-                    });
-                }
                 updateWrong();
             }
         }
-        // 顯示詳解
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderLatex(document.getElementById('explanation-text'));
-        document.getElementById('explanation').style.display = 'block';
-        document.getElementById('confirm-btn').style.display = 'none';
-        const originDisplay = document.getElementById('origin-display');
-        if (currentQuestion.origin) {
-            originDisplay.textContent = currentQuestion.origin;
-            originDisplay.style.display = 'block';
-        } else {
-            originDisplay.style.display = 'none';
-        }
+
+        renderQuestion(currentIndex);
         saveProgress();
     }
 }
@@ -622,7 +715,6 @@ function updateCorrect() {
 }
 
 function updateWrong() {
-    wrongQuestions.push(currentQuestion);
     wrong += 1;
     document.getElementById('wrong').innerText = wrong;
     updateProgressBar(false);
@@ -631,6 +723,13 @@ function updateWrong() {
 
 function showEndScreen() {
     isTestCompleted = true;
+    
+    // Save progress at completed state (currentIndex = allQuestions.length)
+    if (auth.currentUser && selectedJson) {
+        currentIndex = allQuestions.length;
+        saveProgress();
+    }
+    
     quizContainer.style.display = 'none';
 
     endScreenDiv = document.createElement('div');
@@ -697,20 +796,46 @@ function showEndScreen() {
         </svg>
         <span>重做錯題</span>
     `;
-    if (wrongQuestions.length === 0) {
+    const wrongList = allQuestions.filter(q => q.isAnswered && !q.isCorrect);
+    if (wrongList.length === 0) {
         redoBtn.disabled = true;
     }
     redoBtn.addEventListener('click', () => {
-        if (wrongQuestions.length === 0) return;
-        questions = wrongQuestions.slice();
+        const wrongListToRedo = allQuestions.filter(q => q.isAnswered && !q.isCorrect);
+        if (wrongListToRedo.length === 0) return;
+        
+        allQuestions = wrongListToRedo.map(q => {
+            return {
+                question: q.question,
+                options: q.options,
+                answer: q.answer,
+                explanation: q.explanation,
+                origin: q.origin || null,
+                isFillBlank: q.isFillBlank,
+                isMultiSelect: q.isMultiSelect,
+                isAnswered: false,
+                isCorrect: null,
+                userSelection: null,
+                isConfirmed: false
+            };
+        });
+        
         wrongQuestions = [];
         correct = 0;
         wrong = 0;
+        currentIndex = 0;
+        viewingIndex = 0;
+        initialQuestionCount = allQuestions.length;
         document.getElementById('correct').innerText = 0;
         document.getElementById('wrong').innerText = 0;
+        isTestCompleted = false;
+
         if (endScreenDiv) endScreenDiv.remove();
         quizContainer.style.display = 'flex';
-        loadNewQuestion();
+        
+        createProgressDots();
+        renderQuestion(currentIndex);
+        saveProgress();
     });
     actionArea.appendChild(redoBtn);
 
@@ -783,176 +908,12 @@ document.getElementById('restore').addEventListener('click', () => {
     }
     restoreProgress();
 });
-document.getElementById('reverseButton').addEventListener('click', reverseQuestion);
-
-function reverseQuestion() {
-    if (questionHistory.length === 0) {
-        showCustomAlert('沒有上一題了！');
-        return;
-    }
-    stopTimer(); // Stop timer when going back
-
-    // Push the current question back to the main questions array, maintaining order in non-shuffle mode
-    if (currentQuestion && currentQuestion.question) {
-        if (shouldShuffleQuiz) {
-            questions.push(currentQuestion);
-        } else {
-            questions.unshift(currentQuestion);
-        }
-        // Maintain order for forward navigation
-    }
-
-    const previousState = questionHistory.pop();
-
-    // Restore the question object and scores
-    currentQuestion = previousState.questionState;
-    correct = previousState.correctCount;
-    wrong = previousState.wrongCount;
-
-    // Update score display
-    document.getElementById('correct').innerText = correct;
-    document.getElementById('wrong').innerText = wrong;
-    updateProgressBar();
-
-    // Display question text, replicating logic from loadNewQuestion for labels
-    const questionDiv = document.getElementById('question');
-    if (currentQuestion.isMultiSelect) {
-        const labelText = currentQuestion.isFillBlank ? '句' : '多';
-        questionDiv.innerHTML = `<div class="multi-label">${labelText}</div>` + marked.parse(currentQuestion.question);
-    } else {
-        questionDiv.innerHTML = marked.parse(currentQuestion.question);
-    }
-    renderLatex(questionDiv);
-
-    // Handle fill-in-the-blank or options
-    if (currentQuestion.isFillBlank) {
-        document.getElementById('options').style.display = 'none';
-        fillblankContainer.style.display = 'flex';
-        fillblankInput.value = previousState.fillBlankValueRestore || '';
-
-        if (previousState.fillBlankClassesRestore) {
-            fillblankInput.className = 'fillblank-input'; // Reset to base class
-            previousState.fillBlankClassesRestore.forEach(cls => {
-                if (cls !== 'fillblank-input') fillblankInput.classList.add(cls);
-            });
-        } else {
-            fillblankInput.className = 'fillblank-input'; // Ensure it's reset if no classes were stored
-        }
-        fillblankInput.disabled = previousState.fillBlankDisabledRestore === true;
-
-        acceptingAnswers = !previousState.isConfirmed;
-
-    } else { // Multiple choice or True/False
-        document.getElementById('options').style.display = 'flex';
-        fillblankContainer.style.display = 'none';
-
-        const optionsContainer = document.getElementById('options');
-        optionsContainer.innerHTML = ''; // Clear previous options
-
-        let optionEntriesToDisplay = Object.entries(currentQuestion.options || {});
-        const isTrueFalse = optionEntriesToDisplay.length === 2 &&
-            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
-
-        if (shouldShuffleQuiz && !isTrueFalse) {
-            shuffle(optionEntriesToDisplay); // Shuffle display order of A,B,C... buttons
-        } else {
-            // Ensure fixed order (A,B,C... or T,F)
-            optionEntriesToDisplay.sort((a, b) => {
-                if (isTrueFalse) { // Specific T,F order
-                    if (a[0] === 'T' && b[0] === 'F') return -1; // T before F
-                    if (a[0] === 'F' && b[0] === 'T') return 1;  // F after T
-                    return 0;
-                }
-                return a[0].localeCompare(b[0]); // Alphabetical for A,B,C...
-            });
-        }
-
-        const userSelection = previousState.userSelection;
-
-        optionEntriesToDisplay.forEach(([key, value]) => {
-            const button = document.createElement('button');
-            button.classList.add('option-button');
-            button.dataset.option = key;
-            button.innerHTML = marked.parse(`${key}: ${value}`);
-            renderLatex(button); // Render LaTeX in the option button
-
-            if (previousState.isConfirmed) {
-                // Apply selection and correctness styling
-                if (currentQuestion.isMultiSelect) {
-                    if (Array.isArray(userSelection) && userSelection.includes(key)) {
-                        button.classList.add('selected');
-                    }
-                    if (Array.isArray(currentQuestion.answer) && currentQuestion.answer.includes(key)) {
-                        if (Array.isArray(userSelection) && userSelection.includes(key)) {
-                            button.classList.add('correct');
-                        } else {
-                            button.classList.add('missing');
-                        }
-                    }
-                } else { // Single select
-                    if (userSelection === key) {
-                        button.classList.add('selected');
-                    }
-                    if (key === currentQuestion.answer) {
-                        button.classList.add('correct');
-                    } else if (userSelection === key) {
-                        button.classList.add('incorrect');
-                    }
-                }
-            } else { // Not confirmed, set up for interaction
-                button.addEventListener('click', selectOption);
-                if (currentQuestion.isMultiSelect) {
-                    if (Array.isArray(userSelection) && userSelection.includes(key)) {
-                        button.classList.add('selected');
-                    }
-                } else {
-                    if (userSelection === key) {
-                        button.classList.add('selected');
-                    }
-                }
-            }
-            optionsContainer.appendChild(button);
-        });
-        acceptingAnswers = !previousState.isConfirmed;
-
-        // Restore global selectedOption/selectedOptions
-        if (currentQuestion.isMultiSelect) {
-            selectedOptions = Array.isArray(userSelection) ? [...userSelection] : [];
-            selectedOption = null;
-        } else {
-            selectedOption = userSelection;
-            selectedOptions = [];
-        }
-    }
-
-    // Explanation and confirm button visibility
-    const explanationElement = document.getElementById('explanation');
-    const confirmBtnElement = document.getElementById('confirm-btn');
-
-    if (previousState.isConfirmed) {
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！');
-        renderLatex(document.getElementById('explanation-text'));
-        explanationElement.style.display = 'block';
-        confirmBtnElement.style.display = 'none';
-        confirmBtnElement.disabled = true;
-        const originDisplay = document.getElementById('origin-display');
-        if (currentQuestion.origin) {
-            originDisplay.textContent = currentQuestion.origin;
-            originDisplay.style.display = 'block';
-        } else {
-            originDisplay.style.display = 'none';
-        }
-    } else {
-        explanationElement.style.display = 'none';
-        document.getElementById('origin-display').style.display = 'none';
-        confirmBtnElement.style.display = 'block';
-        confirmBtnElement.disabled = false;
-    }
-
-    document.getElementById('WeeGPTInputSection').style.display = 'none';
-
-    saveProgress(); // Save the restored state
-}
+document.getElementById('back-progress-btn').addEventListener('click', () => {
+    renderQuestion(currentIndex);
+});
+document.getElementById('back-progress-btn-expl').addEventListener('click', () => {
+    renderQuestion(currentIndex);
+});
 
 document.addEventListener('keydown', function (event) {
     if (document.querySelector('.start-screen').style.display !== 'none') {
@@ -973,30 +934,39 @@ document.addEventListener('keydown', function (event) {
     if (event.target === userQuestionInput) {
         return;
     }
-    // Ignore shortcuts while typing in topic search
-    if (event.target && event.target.id === 'topicSearch') {
-        return;
-    }
     if (event.key.toLowerCase() === 'q') {
         event.preventDefault();
         weeGPTButton.click();
         return;
     }
-    const validOptions = currentQuestion && currentQuestion.options ? Object.keys(currentQuestion.options) : [];
-    if (acceptingAnswers && validOptions.includes(event.key.toUpperCase())) {
+
+    if (viewingIndex !== currentIndex) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const backBtn = document.getElementById('back-progress-btn');
+            const backBtnExpl = document.getElementById('back-progress-btn-expl');
+            if (backBtn && backBtn.style.display !== 'none') backBtn.click();
+            else if (backBtnExpl && backBtnExpl.style.display !== 'none') backBtnExpl.click();
+        }
+        return;
+    }
+
+    const q = allQuestions[currentIndex];
+    const isConfirmed = q ? q.isConfirmed : false;
+    const validOptions = q && q.options ? Object.keys(q.options) : [];
+
+    if (!isConfirmed && validOptions.includes(event.key.toUpperCase())) {
         const optionButton = document.querySelector(`.option-button[data-option='${event.key.toUpperCase()}']`);
         if (optionButton) {
             optionButton.click();
         }
     } else if (event.key === 'Enter') {
         const activeEl = document.activeElement;
-        // If an input/textarea is focused and the Enter event is part of IME composition,
-        // let the IME handle Enter to finalize composition.
         if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA') && event.isComposing) {
             return;
         }
 
-        if (acceptingAnswers) {
+        if (!isConfirmed) {
             confirmAnswer();
         } else {
             loadNewQuestion();
@@ -1325,6 +1295,54 @@ async function fetchQuizList() {
 
                     infoDiv.appendChild(title);
 
+                    const subtitle = document.createElement('div');
+                    subtitle.className = 'unit-subtitle';
+                    const qCount = data && Array.isArray(data[key]) ? data[key].length : 0;
+                    subtitle.textContent = `共 ${qCount} 題`;
+                    infoDiv.appendChild(subtitle);
+
+                    // Add progress indicator to card if cache has progress
+                    const quizStorageName = getQuizStorageName(key);
+                    const p = userProgressCache[quizStorageName];
+                    let progressText = '';
+                    let isCompleted = false;
+                    let percent = 0;
+                    
+                    if (p) {
+                        const total = p.allQuestions ? p.allQuestions.length : 0;
+                        const done = p.currentIndex;
+                        if (total > 0) {
+                            percent = Math.min(100, Math.round(done / total * 100));
+                            if (done >= total) {
+                                isCompleted = true;
+                                progressText = '已完成';
+                            } else if (done > 0) {
+                                progressText = `進度：${done}/${total}`;
+                            }
+                        }
+                    }
+
+                    const progressContainer = document.createElement('div');
+                    progressContainer.className = 'unit-progress-container';
+                    if (isCompleted) {
+                        progressContainer.innerHTML = `
+                            <span class="unit-progress-text completed">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 -960 960 960" width="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
+                                    <path d="m382-320 338-338-57-57-281 281-123-122-57 57 180 180Z"/>
+                                </svg>已完成
+                            </span>
+                        `;
+                        card.classList.add('completed');
+                    } else if (percent > 0) {
+                        progressContainer.innerHTML = `
+                            <span class="unit-progress-text">${progressText}</span>
+                            <div class="unit-progress-bar">
+                                <div class="unit-progress-fill" style="width: ${percent}%"></div>
+                            </div>
+                        `;
+                    }
+                    infoDiv.appendChild(progressContainer);
+
                     card.appendChild(iconBox);
                     card.appendChild(infoDiv);
 
@@ -1338,12 +1356,15 @@ async function fetchQuizList() {
                             return;
                         }
                         if (isEditMode) return; // Prevent starting quiz if in edit mode
-                        selectedJson = key;
-                        document.querySelector('.start-screen').style.display = 'none';
-                        // initQuiz logic
-                        initQuiz().then(() => {
-                            saveProgress();
-                        });
+                        
+                        const currentQuizName = getQuizStorageName(key);
+                        const currentProgress = userProgressCache[currentQuizName];
+                        
+                        if (currentProgress) {
+                            openQuizActionModal(key, currentProgress);
+                        } else {
+                            startFreshQuiz(key);
+                        }
                     };
 
                     gridContainer.appendChild(card);
@@ -1355,74 +1376,6 @@ async function fetchQuizList() {
                     });
                 });
             };
-
-            // Search Logic Update (simple version for now)
-            const searchInput = document.getElementById('topicSearch');
-            if (searchInput) {
-                searchInput.oninput = (e) => {
-                    const val = e.target.value.toLowerCase();
-                    if (!val) { renderFolderTiles(); return; }
-                    if (breadcrumbContainer) breadcrumbContainer.innerHTML = '';
-
-                    const gridContainer = document.getElementById('units-grid');
-                    gridContainer.innerHTML = '';
-
-                    const allItems = Object.values(groups).flat();
-                    const matches = allItems.filter(k => k.toLowerCase().includes(val));
-
-                    matches.forEach(key => {
-                        // Render matches as cards
-                        const card = document.createElement('div');
-                        card.className = 'unit-card';
-                        card.textContent = key; // Simple text for search
-                        card.onclick = () => {
-                            if (!auth.currentUser) {
-                                showCustomAlert('請先登入後再開始測驗！');
-                                return;
-                            }
-                            selectedJson = key;
-                            initQuiz().then(() => saveProgress());
-                        };
-                        gridContainer.appendChild(card);
-                    });
-                };
-            }
-
-            // Search Expansion Logic
-            const searchIconBtn = document.getElementById('searchIconBtn');
-            const searchCloseBtn = document.getElementById('searchCloseBtn');
-            const searchContainer = document.querySelector('.search-container');
-
-            if (searchIconBtn && searchContainer) {
-                searchIconBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    const isExpanded = searchContainer.classList.contains('expanded');
-                    if (isExpanded) {
-                        searchInput.focus();
-                    } else {
-                        searchContainer.classList.add('expanded');
-                        searchInput.focus();
-                    }
-                };
-
-                // Close Button Logic
-                if (searchCloseBtn) {
-                    searchCloseBtn.onclick = (e) => {
-                        e.stopPropagation();
-                        searchInput.value = '';
-                        // Trigger input event to reset list
-                        searchInput.dispatchEvent(new Event('input'));
-                        searchContainer.classList.remove('expanded');
-                    };
-                }
-
-                // Close when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!searchContainer.contains(e.target) && !searchInput.value) {
-                        searchContainer.classList.remove('expanded');
-                    }
-                });
-            }
 
             // Initial render
             renderFolderTiles();
@@ -1756,81 +1709,153 @@ userQuestionInput.addEventListener('keydown', function (event) {
 });
 
 function saveProgress() {
-    if (!auth.currentUser) return;
+    if (!auth.currentUser || !selectedJson) return;
+    const quizName = getQuizStorageName(selectedJson);
     const progress = {
-        questions,
-        currentQuestion,
-        correct,
-        wrong,
-        questionHistory,
-        selectedJson
+        allQuestions,
+        currentIndex,
+        selectedJson,
+        lastUpdated: Date.now()
     };
-    update(ref(database, `progress/${auth.currentUser.uid}`), { progress })
+    userProgressCache[quizName] = progress;
+    update(ref(database, `progress/${auth.currentUser.uid}/quizzes/${quizName}`), progress)
         .catch(error => console.error('保存進度到 Firebase 失敗：', error));
+
+    update(ref(database, `progress/${auth.currentUser.uid}/lastActive`), {
+        quizName,
+        selectedJson,
+        lastUpdated: Date.now()
+    }).catch(error => console.error('更新最後活動失敗：', error));
 }
 
 function updateProgressBar(isCorrect = null) {
-    const correctBar = document.getElementById('correctBar');
-    const wrongBar = document.getElementById('wrongBar');
-
-    if (initialQuestionCount > 0) {
-        correctBar.style.width = (correct / initialQuestionCount * 100) + '%';
-        wrongBar.style.width = (wrong / initialQuestionCount * 100) + '%';
-    } else {
-        correctBar.style.width = '0%';
-        wrongBar.style.width = '0%';
-    }
-
-    // Add challenge animations
-    if (isCorrect === true) {
-        correctBar.classList.add('correct-animating');
-        setTimeout(() => {
-            correctBar.classList.remove('correct-animating');
-        }, 800);
-    } else if (isCorrect === false) {
-        wrongBar.classList.add('wrong-animating');
-        setTimeout(() => {
-            wrongBar.classList.remove('wrong-animating');
-        }, 800);
-    }
-
-    // Add general animation for both bars
-    correctBar.classList.add('animating');
-    wrongBar.classList.add('animating');
-    setTimeout(() => {
-        correctBar.classList.remove('animating');
-        wrongBar.classList.remove('animating');
-    }, 600);
+    updateDotsUI();
 }
 
-function restoreProgress() {
+function restoreProgress(quizName = null) {
     if (!auth.currentUser) {
         showCustomAlert('請先登入才能恢復進度！');
         return;
     }
-    get(ref(database, `progress/${auth.currentUser.uid}/progress`)).then(snapshot => {
+    
+    let getQuizNamePromise;
+    if (quizName) {
+        getQuizNamePromise = Promise.resolve(quizName);
+    } else {
+        getQuizNamePromise = get(ref(database, `progress/${auth.currentUser.uid}/lastActive`)).then(snapshot => {
+            if (snapshot.exists()) {
+                return snapshot.val().quizName;
+            }
+            const keys = Object.keys(userProgressCache);
+            if (keys.length > 0) {
+                let latestQuiz = null;
+                let maxTime = 0;
+                for (const key of keys) {
+                    const p = userProgressCache[key];
+                    if (p.lastUpdated && p.lastUpdated > maxTime) {
+                        maxTime = p.lastUpdated;
+                        latestQuiz = key;
+                    }
+                }
+                if (latestQuiz) return latestQuiz;
+            }
+            throw new Error('No last active quiz found');
+        });
+    }
+
+    getQuizNamePromise.then(resolvedQuizName => {
+        return get(ref(database, `progress/${auth.currentUser.uid}/quizzes/${resolvedQuizName}`));
+    }).then(snapshot => {
         if (!snapshot.exists()) {
             showCustomAlert('沒有找到已保存的進度！');
             return;
         }
         const p = snapshot.val();
-        questions = p.questions;
-        currentQuestion = p.currentQuestion;
-        correct = p.correct;
-        wrong = p.wrong;
-        questionHistory = p.questionHistory;
-        selectedJson = p.selectedJson;
+        
+        if (p.allQuestions) {
+            allQuestions = p.allQuestions;
+            currentIndex = p.currentIndex;
+            selectedJson = p.selectedJson;
+        } else {
+            allQuestions = [];
+            
+            if (p.questionHistory) {
+                p.questionHistory.forEach(h => {
+                    const q = h.questionState;
+                    q.isAnswered = true;
+                    q.isConfirmed = true;
+                    q.userSelection = h.userSelection;
+                    
+                    if (q.isFillBlank) {
+                        const sentence = (h.userSelection || '').trim().toLowerCase();
+                        const required = Array.isArray(q.answer) ? q.answer : [q.answer];
+                        q.isCorrect = required.every(keyword => sentence.includes(keyword.toLowerCase()));
+                    } else if (q.isMultiSelect) {
+                        q.isCorrect = (h.userSelection.length === q.answer.length) &&
+                            q.answer.every(opt => h.userSelection.includes(opt));
+                    } else {
+                        q.isCorrect = h.userSelection === q.answer;
+                    }
+                    allQuestions.push(q);
+                });
+            }
+            
+            if (p.currentQuestion && p.currentQuestion.question) {
+                const q = p.currentQuestion;
+                if (p.acceptingAnswers === false || (p.questionHistory && p.questionHistory.length > 0 && p.questionHistory[p.questionHistory.length - 1].questionState.question === q.question)) {
+                    // Already in history
+                } else {
+                    q.isAnswered = false;
+                    q.isConfirmed = false;
+                    q.userSelection = null;
+                    q.isCorrect = null;
+                    allQuestions.push(q);
+                }
+            }
+            
+            if (p.questions) {
+                p.questions.forEach(q => {
+                    q.isAnswered = false;
+                    q.isConfirmed = false;
+                    q.userSelection = null;
+                    q.isCorrect = null;
+                    allQuestions.push(q);
+                });
+            }
+            
+            currentIndex = p.questionHistory ? p.questionHistory.length : 0;
+            selectedJson = p.selectedJson;
+        }
+        
+        viewingIndex = currentIndex;
+        
+        if (currentIndex >= allQuestions.length) {
+            viewingIndex = Math.max(0, allQuestions.length - 1);
+        }
+        
         document.querySelector('.start-screen').style.display = 'none';
         document.querySelector('.quiz-container').style.display = 'flex';
         const fileName = selectedJson.split('/').pop().replace('.json', '');
         document.querySelector('.quiz-title').innerText = `${fileName}`;
         document.title = `${fileName} - 題矣`;
+        
+        let cCount = 0;
+        let wCount = 0;
+        allQuestions.forEach(q => {
+            if (q.isAnswered) {
+                if (q.isCorrect) cCount++;
+                else wCount++;
+            }
+        });
+        correct = cCount;
+        wrong = wCount;
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
-        // Recalculate total questions for progress bar
-        initialQuestionCount = questions.length + correct + wrong;
-        updateProgressBar();
-        loadQuestionFromState();
+        
+        initialQuestionCount = allQuestions.length;
+        
+        createProgressDots();
+        renderQuestion(viewingIndex);
         showCustomAlert('進度已成功恢復！');
     }).catch(error => {
         console.error('恢復進度失敗：', error);
@@ -1990,16 +2015,22 @@ function syncControlsUser(user) {
 }
 
 // Now that controls elements exist, hook auth state listeners and initial sync
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     console.log('Auth state changed, user:', user ? user.displayName : 'Logged out');
     updateSignInButton(user);
     syncControlsUser(user);
+    if (user) {
+        await fetchUserProgressAndMistakes(user);
+    } else {
+        userProgressCache = {};
+        userMistakesCache = {};
+    }
     updateRestorePreview(user);
+    fetchQuizList();
 });
 
 updateSignInButton(auth.currentUser);
 syncControlsUser(auth.currentUser);
-updateRestorePreview(auth.currentUser);
 
 // Controls item actions (text-only click)
 if (menuStarred) menuStarred.addEventListener('click', () => {
@@ -2617,6 +2648,12 @@ function recordMistake() {
             currentData.count = (currentData.count || 0) + 1;
             currentData.lastMistake = Date.now();
 
+            // Update local cache
+            if (!userMistakesCache[quizName]) {
+                userMistakesCache[quizName] = {};
+            }
+            userMistakesCache[quizName][qKey] = currentData;
+
             update(userMistakeRef, currentData);
         }).catch(err => console.error('Error recording mistake:', err));
     } catch (e) {
@@ -2624,121 +2661,451 @@ function recordMistake() {
     }
 }
 
-async function openMistakeView() {
-    if (!auth.currentUser || !selectedJson) return;
-    if (mistakeListContent) mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入中...</p>';
+let mistakesViewState = 'folders'; // 'folders' | 'quizzes' | 'items'
+let currentMistakesFolder = null;
+let currentMistakesQuizName = null;
+
+async function openMistakeView(targetQuizName = null) {
+    if (!auth.currentUser) return;
+    
+    const viewTitle = document.getElementById('mistakeViewTitle');
+    const backBtn = document.getElementById('backMistakeViewBtn');
+    
     if (mistakeView) {
         mistakeView.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Lock background scrolling
+        document.body.style.overflow = 'hidden';
     }
+    
+    if (targetQuizName) {
+        // View specific quiz mistakes
+        mistakesViewState = 'items';
+        currentMistakesQuizName = targetQuizName;
+        if (backBtn) backBtn.style.display = 'block';
+        
+        let displayTitle = targetQuizName;
+        const rawKey = Object.keys(userMistakesCache).find(k => getQuizStorageName(k) === targetQuizName) || targetQuizName;
+        
+        let cleanKey = rawKey;
+        if (cleanKey.startsWith('_Archive_')) cleanKey = cleanKey.substring(9);
+        const idx = cleanKey.indexOf('｜');
+        if (idx !== -1) {
+            currentMistakesFolder = cleanKey.slice(0, idx);
+            displayTitle = cleanKey.substring(idx + 1);
+        } else {
+            currentMistakesFolder = '其他';
+            displayTitle = cleanKey;
+        }
+        
+        if (viewTitle) viewTitle.textContent = displayTitle;
+        
+        await renderQuizMistakes(targetQuizName);
+    } else {
+        // View global folders list
+        mistakesViewState = 'folders';
+        currentMistakesFolder = null;
+        currentMistakesQuizName = null;
+        if (backBtn) backBtn.style.display = 'none';
+        if (viewTitle) viewTitle.textContent = '錯題本';
+        
+        renderGlobalMistakesFolders();
+    }
+}
 
+function openMistakesFolder(folderName) {
+    mistakesViewState = 'quizzes';
+    currentMistakesFolder = folderName;
+    const viewTitle = document.getElementById('mistakeViewTitle');
+    const backBtn = document.getElementById('backMistakeViewBtn');
+    
+    if (backBtn) backBtn.style.display = 'block';
+    if (viewTitle) viewTitle.textContent = folderName;
+    
+    renderMistakesQuizzesList(folderName);
+}
+
+function getMistakesGrouped() {
+    const folders = {}; // folderName -> Array of { quizKey, quizName, count }
+    
+    Object.keys(userMistakesCache).forEach(quizKey => {
+        const quizName = getQuizStorageName(quizKey);
+        if (hasMistakesRecorded(quizName)) {
+            const mistakesData = userMistakesCache[quizKey];
+            const mistakes = [];
+            const extractMistakes = (obj) => {
+                if (!obj || typeof obj !== 'object') return;
+                if (obj.question) {
+                    mistakes.push(obj);
+                    return;
+                }
+                Object.values(obj).forEach(extractMistakes);
+            };
+            extractMistakes(mistakesData);
+            
+            if (mistakes.length > 0) {
+                let cleanKey = quizKey;
+                if (cleanKey.startsWith('_Archive_')) cleanKey = cleanKey.substring(9);
+                const idx = cleanKey.indexOf('｜');
+                const folderName = idx !== -1 ? cleanKey.slice(0, idx) : '其他';
+                
+                if (!folders[folderName]) {
+                    folders[folderName] = [];
+                }
+                folders[folderName].push({
+                    quizKey,
+                    quizName,
+                    count: mistakes.length
+                });
+            }
+        }
+    });
+    return folders;
+}
+
+function renderGlobalMistakesFolders() {
+    if (!mistakeListContent) return;
+    mistakeListContent.innerHTML = '';
+    
+    const folders = getMistakesGrouped();
+    const folderNames = Object.keys(folders).sort((a, b) => {
+        if (a === '其他' && b !== '其他') return 1;
+        if (b === '其他' && a !== '其他') return -1;
+        return a.localeCompare(b, 'zh-Hant');
+    });
+    
+    if (folderNames.length === 0) {
+        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--on-surface-variant);">目前沒有任何錯題紀錄！</p>';
+        return;
+    }
+    
+    folderNames.forEach(folderName => {
+        let folderMistakeCount = 0;
+        folders[folderName].forEach(q => {
+            folderMistakeCount += q.count;
+        });
+        const count = folders[folderName].length;
+        
+        const item = document.createElement('div');
+        item.className = 'global-mistake-card';
+        
+        item.innerHTML = `
+            <div class="global-mistake-card-content">
+                <div class="global-mistake-title">${folderName}</div>
+                <div class="global-mistake-count">${count} 份習題 (共 ${folderMistakeCount} 個錯題)</div>
+            </div>
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+            </svg>
+        `;
+        
+        item.onclick = () => {
+            openMistakesFolder(folderName);
+        };
+        
+        mistakeListContent.appendChild(item);
+    });
+}
+
+function renderMistakesQuizzesList(folderName) {
+    if (!mistakeListContent) return;
+    mistakeListContent.innerHTML = '';
+    
+    const folders = getMistakesGrouped();
+    const quizzes = folders[folderName] || [];
+    
+    if (quizzes.length === 0) {
+        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">此單元目前沒有錯題紀錄。</p>';
+        return;
+    }
+    
+    quizzes.sort((a, b) => a.quizKey.localeCompare(b.quizKey, 'zh-Hant'));
+    
+    quizzes.forEach(q => {
+        const item = document.createElement('div');
+        item.className = 'global-mistake-card';
+        
+        let displayTitle = q.quizKey;
+        if (displayTitle.startsWith('_Archive_')) displayTitle = displayTitle.substring(9);
+        const idx = displayTitle.indexOf('｜');
+        if (idx !== -1) displayTitle = displayTitle.substring(idx + 1);
+        
+        item.innerHTML = `
+            <div class="global-mistake-card-content">
+                <div class="global-mistake-title">${displayTitle}</div>
+                <div class="global-mistake-count">${q.count} 個錯題</div>
+            </div>
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+            </svg>
+        `;
+        
+        item.onclick = () => {
+            openMistakeView(q.quizName);
+        };
+        
+        mistakeListContent.appendChild(item);
+    });
+}
+
+async function renderQuizMistakes(quizName) {
+    if (!mistakeListContent) return;
+    mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入中...</p>';
+    
     try {
-        const quizName = getQuizStorageName(selectedJson);
-        const snapshot = await get(ref(database, `mistakes/${auth.currentUser.uid}/${quizName}`));
-
-        if (!snapshot.exists()) {
-            if (mistakeListContent) mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">本單元目前沒有錯題紀錄。</p>';
+        let data = userMistakesCache[quizName];
+        if (!data) {
+            const matchedKey = Object.keys(userMistakesCache).find(k => getQuizStorageName(k) === quizName);
+            if (matchedKey) data = userMistakesCache[matchedKey];
+        }
+        
+        if (!data) {
+            const snap = await get(ref(database, `mistakes/${auth.currentUser.uid}/${quizName}`));
+            data = snap.val();
+        }
+        
+        if (!data) {
+            mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">本單元目前沒有錯題紀錄。</p>';
             return;
         }
-
-        const data = snapshot.val();
-
-        // Recursive helper to extract mistake objects from potentially nested structure (due to old unsanitized keys)
+        
         const mistakes = [];
         const extractMistakes = (obj) => {
             if (!obj || typeof obj !== 'object') return;
-            // Check if this object looks like a mistake record
-            if (obj.question && (typeof obj.count === 'number' || obj.lastMistake)) {
+            if (obj.question) {
+                let matchedQ = allQuestions.find(q => q.question === obj.question);
+                if (matchedQ) {
+                    if (!obj.options && matchedQ.options) obj.options = matchedQ.options;
+                    if (!obj.answer && matchedQ.answer) obj.answer = matchedQ.answer;
+                    if (!obj.explanation && matchedQ.explanation) obj.explanation = matchedQ.explanation;
+                    if (!obj.origin && matchedQ.origin) obj.origin = matchedQ.origin;
+                    if (obj.isMultiSelect === undefined) obj.isMultiSelect = matchedQ.isMultiSelect;
+                    if (obj.isFillBlank === undefined) obj.isFillBlank = matchedQ.isFillBlank;
+                }
                 mistakes.push(obj);
-                // Don't return here if we want to support nested mistakes inside mistakes (unlikely but safe)
-                // But usually a leaf node mistake won't contain other mistakes.
                 return;
             }
-            // Otherwise, recurse into children
             Object.values(obj).forEach(child => extractMistakes(child));
         };
-
+        
         extractMistakes(data);
-
         mistakes.sort((a, b) => (b.count || 0) - (a.count || 0));
-
-        if (mistakeListContent) {
-            mistakeListContent.innerHTML = '';
-            mistakes.forEach(m => {
-                const div = document.createElement('div');
-                div.className = 'mistake-item';
-
-                // Header: Question + Badge
-                const headerRow = document.createElement('div');
-                headerRow.className = 'mistake-item-header';
-
-                const info = document.createElement('div');
-                info.className = 'mistake-info';
-                // Safe parsing check
-                if (typeof m.question === 'string') {
-                    info.innerHTML = marked.parse(m.question);
-                } else {
-                    info.innerHTML = '<i>(題目載入錯誤)</i>';
-                }
-
-                const badge = document.createElement('div');
-                badge.className = 'mistake-count-badge';
-                badge.textContent = `${m.count} 次錯誤`;
-
-                headerRow.appendChild(info);
-                headerRow.appendChild(badge);
-                div.appendChild(headerRow);
-
-                // Details: Options (if any)
-                if (m.options && typeof m.options === 'object') {
-                    const optionsDiv = document.createElement('div');
-                    optionsDiv.className = 'mistake-options';
-
-                    let optionsHtml = '<ul>';
-                    let entries = Object.entries(m.options);
-
-                    // Check if it's a T/F question
-                    const isTrueFalse = entries.length === 2 &&
-                        entries.every(entry => ['T', 'F'].includes(entry[0]));
-
-                    if (isTrueFalse) {
-                        entries.sort((a, b) => {
-                            if (a[0] === 'T') return -1;
-                            if (b[0] === 'T') return 1;
-                            return 0;
-                        });
-                    }
-
-                    entries.forEach(([key, val]) => {
-                        const isAns = Array.isArray(m.answer)
-                            ? m.answer.includes(key)
-                            : m.answer === key;
-                        const styleClass = isAns ? 'class="correct-option"' : '';
-                        const parsedOpt = marked.parse(`${key}: ${val}`).trim();
-                        optionsHtml += `<li ${styleClass}>${parsedOpt}</li>`;
+        
+        mistakeListContent.innerHTML = '';
+        mistakes.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'mistake-item';
+            
+            const headerRow = document.createElement('div');
+            headerRow.className = 'mistake-item-header';
+            
+            const info = document.createElement('div');
+            info.className = 'mistake-info';
+            if (typeof m.question === 'string') {
+                info.innerHTML = marked.parse(m.question);
+            } else {
+                info.innerHTML = '<i>(題目載入錯誤)</i>';
+            }
+            
+            const badge = document.createElement('div');
+            badge.className = 'mistake-count-badge';
+            badge.textContent = `${m.count} 次錯誤`;
+            
+            headerRow.appendChild(info);
+            headerRow.appendChild(badge);
+            div.appendChild(headerRow);
+            
+            if (m.options && typeof m.options === 'object') {
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'mistake-options';
+                let optionsHtml = '<ul>';
+                let entries = Object.entries(m.options);
+                
+                const isTrueFalse = entries.length === 2 && entries.every(entry => ['T', 'F'].includes(entry[0]));
+                if (isTrueFalse) {
+                    entries.sort((a, b) => {
+                        if (a[0] === 'T') return -1;
+                        if (b[0] === 'T') return 1;
+                        return 0;
                     });
-                    optionsHtml += '</ul>';
-                    optionsDiv.innerHTML = optionsHtml;
-                    div.appendChild(optionsDiv);
                 }
-
-                // Details: Origin Tag (if exists)
-                if (m.origin) {
-                    const ansExpDiv = document.createElement('div');
-                    ansExpDiv.className = 'mistake-details';
-                    ansExpDiv.innerHTML = `<div class="mistake-origin-row">出處：${m.origin}</div>`;
-                    div.appendChild(ansExpDiv);
-                }
-
-                // Latex render
-                renderLatex(div);
-
-                mistakeListContent.appendChild(div);
-            });
-        }
-
+                
+                entries.forEach(([key, val]) => {
+                    const isAns = Array.isArray(m.answer) ? m.answer.includes(key) : m.answer === key;
+                    const styleClass = isAns ? 'class="correct-option"' : '';
+                    const parsedOpt = marked.parse(`${key}: ${val}`).trim();
+                    optionsHtml += `<li ${styleClass}>${parsedOpt}</li>`;
+                });
+                optionsHtml += '</ul>';
+                optionsDiv.innerHTML = optionsHtml;
+                div.appendChild(optionsDiv);
+            }
+            
+            const ansExpDiv = document.createElement('div');
+            ansExpDiv.className = 'mistake-details';
+            
+            let ansText = Array.isArray(m.answer) ? m.answer.join(', ') : m.answer;
+            let expText = m.explanation ? marked.parse(m.explanation) : '<i>暫無詳解</i>';
+            
+            let detailsHtml = `
+                <div style="margin-bottom:8px;"><strong>正確答案:</strong> ${ansText}</div>
+                <div class="mistake-explanation-row"><strong>詳解:</strong> ${expText}</div>
+            `;
+            if (m.origin) {
+                detailsHtml += `<div class="mistake-origin-row">出處：${m.origin}</div>`;
+            }
+            
+            ansExpDiv.innerHTML = detailsHtml;
+            div.appendChild(ansExpDiv);
+            
+            renderLatex(div);
+            mistakeListContent.appendChild(div);
+        });
+        
     } catch (err) {
-        console.error('Error fetching mistakes:', err);
-        if (mistakeListContent) mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入失敗，請稍後再試。</p>';
+        console.error('Error rendering mistakes:', err);
+        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入失敗，請稍後再試。</p>';
     }
 }
+
+function hasMistakesRecorded(quizName) {
+    const data = userMistakesCache[quizName];
+    if (!data) return false;
+    let found = false;
+    const checkObj = (obj) => {
+        if (!obj || typeof obj !== 'object' || found) return;
+        if (obj.question) {
+            found = true;
+            return;
+        }
+        Object.values(obj).forEach(checkObj);
+    };
+    checkObj(data);
+    return found;
+}
+
+function openQuizActionModal(key, progress) {
+    const modal = document.getElementById('quizActionModal');
+    const title = document.getElementById('quizActionTitle');
+    const status = document.getElementById('quizActionStatus');
+    const resumeBtn = document.getElementById('quizActionResumeBtn');
+    const restartBtn = document.getElementById('quizActionRestartBtn');
+    
+    if (!modal) return;
+    
+    let displayTitle = key;
+    if (displayTitle.startsWith('_Archive_')) displayTitle = displayTitle.substring(9);
+    title.textContent = displayTitle;
+    
+    let statusText = '這是一個全新的測驗。';
+    let showResume = false;
+    let resumeText = '繼續測驗';
+    let restartText = '開始測驗';
+    
+    if (progress) {
+        const total = progress.allQuestions ? progress.allQuestions.length : 0;
+        const done = progress.currentIndex;
+        if (done >= total) {
+            statusText = `您已完成此測驗（進度：${done}/${total}）。`;
+            showResume = true;
+            resumeText = '查看完整回顧';
+            restartText = '重新挑戰';
+        } else if (done > 0) {
+            statusText = `上次測驗進行到第 ${done + 1} 題（進度：${done}/${total}）。`;
+            showResume = true;
+            resumeText = '繼續測驗';
+            restartText = '重新開始';
+        }
+    }
+    
+    status.textContent = statusText;
+    
+    if (showResume) {
+        resumeBtn.style.display = 'block';
+        resumeBtn.querySelector('span').textContent = resumeText;
+        resumeBtn.onclick = () => {
+            closeQuizActionModal();
+            selectedJson = key;
+            restoreProgress(getQuizStorageName(key));
+        };
+    } else {
+        resumeBtn.style.display = 'none';
+    }
+    
+    restartBtn.querySelector('span').textContent = restartText;
+    restartBtn.onclick = () => {
+        closeQuizActionModal();
+        startFreshQuiz(key);
+    };
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeQuizActionModal() {
+    const modal = document.getElementById('quizActionModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+function startFreshQuiz(key) {
+    selectedJson = key;
+    document.querySelector('.start-screen').style.display = 'none';
+    initQuiz().then(() => {
+        saveProgress();
+    });
+}
+
+async function fetchUserProgressAndMistakes(user) {
+    if (!user) {
+        userProgressCache = {};
+        userMistakesCache = {};
+        return;
+    }
+    try {
+        const oldProgressSnap = await get(ref(database, `progress/${user.uid}/progress`));
+        if (oldProgressSnap.exists()) {
+            const oldVal = oldProgressSnap.val();
+            if (oldVal && oldVal.selectedJson) {
+                const quizName = getQuizStorageName(oldVal.selectedJson);
+                await set(ref(database, `progress/${user.uid}/quizzes/${quizName}`), oldVal);
+                await set(ref(database, `progress/${user.uid}/lastActive`), {
+                    quizName,
+                    selectedJson: oldVal.selectedJson,
+                    lastUpdated: Date.now()
+                });
+                await remove(ref(database, `progress/${user.uid}/progress`));
+                console.log(`Legacy progress migrated for quiz: ${quizName}`);
+            }
+        }
+
+        const [progressSnap, mistakesSnap] = await Promise.all([
+            get(ref(database, `progress/${user.uid}/quizzes`)),
+            get(ref(database, `mistakes/${user.uid}`))
+        ]);
+        
+        userProgressCache = progressSnap.exists() ? progressSnap.val() : {};
+        userMistakesCache = mistakesSnap.exists() ? mistakesSnap.val() : {};
+    } catch (e) {
+        console.error('Failed to fetch user progress/mistakes cache:', e);
+        userProgressCache = {};
+        userMistakesCache = {};
+    }
+}
+
+// Global Mistakes bindings
+const menuGlobalMistakes = document.getElementById('menuGlobalMistakes');
+if (menuGlobalMistakes) menuGlobalMistakes.addEventListener('click', () => {
+    controlsMenu.classList.remove('open');
+    openMistakeView(null);
+});
+
+const backMistakeViewBtn = document.getElementById('backMistakeViewBtn');
+if (backMistakeViewBtn) backMistakeViewBtn.addEventListener('click', () => {
+    openMistakeView(null);
+});
+
+const quizActionCloseBtn = document.getElementById('quizActionCloseBtn');
+if (quizActionCloseBtn) quizActionCloseBtn.addEventListener('click', () => {
+    closeQuizActionModal();
+});
