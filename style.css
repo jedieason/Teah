@@ -5807,6 +5807,7 @@ body.dark-mode .correct-option {
     background-color: var(--outline-variant, #c4c7c5);
     cursor: pointer;
     box-sizing: border-box;
+    position: relative;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s, box-shadow 0.2s;
 }
 
@@ -5822,19 +5823,43 @@ body.dark-mode .correct-option {
     background-color: #d93025;
 }
 
+/* Base outline style using absolute pseudo-element to guarantee pixel-perfect centering */
+.progress-dot.current-progress::after,
+.progress-dot.viewing::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
 /* Current active question in the quiz */
-.progress-dot.current-progress {
-    box-shadow: 0 0 0 1px var(--bg-color, #ffffff), 0 0 0 2px var(--primary, #0b57d0);
+.progress-dot.current-progress::after {
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 1.5px solid var(--primary, #0b57d0);
+    background-color: transparent;
 }
 
 /* Currently viewed question */
-.progress-dot.viewing {
-    box-shadow: 0 0 0 1px var(--primary-container, #d3e3fd);
+.progress-dot.viewing::after {
+    top: -1.5px;
+    left: -1.5px;
+    right: -1.5px;
+    bottom: -1.5px;
+    border: 1px solid var(--primary-container, #d3e3fd);
+    background-color: transparent;
 }
 
 /* Currently viewed and active question */
-.progress-dot.current-progress.viewing {
-    box-shadow: 0 0 0 1px var(--bg-color, #ffffff), 0 0 0 2px var(--primary, #0b57d0);
+.progress-dot.current-progress.viewing::after {
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 1.5px solid var(--primary, #0b57d0);
 }
 
 /* Dark mode overrides for dots */
@@ -5850,16 +5875,16 @@ body.dark-mode .progress-dot.wrong {
     background-color: #d93025;
 }
 
-body.dark-mode .progress-dot.current-progress {
-    box-shadow: 0 0 0 1px var(--bg-color, #0b0c0e), 0 0 0 2px var(--primary, #8ab4f8);
+body.dark-mode .progress-dot.current-progress::after {
+    border-color: var(--primary, #8ab4f8);
 }
 
-body.dark-mode .progress-dot.viewing {
-    box-shadow: 0 0 0 1px var(--primary-container, #1f3a60);
+body.dark-mode .progress-dot.viewing::after {
+    border-color: var(--primary-container, #1f3a60);
 }
 
-body.dark-mode .progress-dot.current-progress.viewing {
-    box-shadow: 0 0 0 1px var(--bg-color, #0b0c0e), 0 0 0 2px var(--primary, #8ab4f8);
+body.dark-mode .progress-dot.current-progress.viewing::after {
+    border-color: var(--primary, #8ab4f8);
 }
 
 /* Back Progress Button */
