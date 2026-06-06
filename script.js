@@ -1160,6 +1160,15 @@ async function fetchQuizList() {
         if (snapshot.exists()) {
             const data = snapshot.val();
             const allKeys = Object.keys(data || {});
+
+            // Track all archived quiz keys globally
+            globalArchivedQuizKeys.clear();
+            allKeys.forEach(k => {
+                if (k.startsWith('_Archive_')) {
+                    globalArchivedQuizKeys.add(getQuizStorageName(k));
+                }
+            });
+
             const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY' && k !== 'mistakes' && k !== 'mistake' && (viewArchiveMode ? k.startsWith('_Archive_') : !k.startsWith('_Archive_')));
             const groups = {};
             quizKeys.forEach(k => {
@@ -1295,8 +1304,8 @@ async function fetchQuizList() {
                     const archiveIcon = document.createElement('button');
                     archiveIcon.className = 'quiz-archive-btn';
                     archiveIcon.innerHTML = viewArchiveMode
-                        ? `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M480-480ZM200-120v-520H80v-120h800v120H760v520H200Zm120-120h320v-400h120L480-840 280-640h120v400Zm160-200Z"/></svg>`
-                        : `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M200-120v-520H80v-120h800v120H760v520H200Zm120-120h320v-400H320v400Zm160-40L600-400l-56-56-104 104v-208h-80v208L256-456l-56 56 200 120Z"/></svg>`;
+                        ? `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M480-520 680-320H560v200H400v-200H280L480-520ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Z"/></svg>`
+                        : `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M480-320 280-520h120v-200h160v200h120L480-320ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Z"/></svg>`;
                     archiveIcon.title = viewArchiveMode ? '取消典藏' : '典藏題庫';
                     archiveIcon.onclick = (e) => {
                         e.stopPropagation();
@@ -1305,12 +1314,6 @@ async function fetchQuizList() {
                     card.appendChild(archiveIcon);
 
                     infoDiv.appendChild(title);
-
-                    const subtitle = document.createElement('div');
-                    subtitle.className = 'unit-subtitle';
-                    const qCount = data && Array.isArray(data[key]) ? data[key].length : 0;
-                    subtitle.textContent = `共 ${qCount} 題`;
-                    infoDiv.appendChild(subtitle);
 
                     // Add progress indicator to card if cache has progress
                     const quizStorageName = getQuizStorageName(key);
@@ -1333,26 +1336,41 @@ async function fetchQuizList() {
                         }
                     }
 
-                    const progressContainer = document.createElement('div');
-                    progressContainer.className = 'unit-progress-container';
+                    const subtitle = document.createElement('div');
+                    subtitle.className = 'unit-subtitle';
+                    const qCount = data && Array.isArray(data[key]) ? data[key].length : 0;
+                    
+                    const countSpan = document.createElement('span');
+                    countSpan.textContent = `共 ${qCount} 題`;
+                    subtitle.appendChild(countSpan);
+
                     if (isCompleted) {
-                        progressContainer.innerHTML = `
-                            <span class="unit-progress-text completed">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 -960 960 960" width="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
-                                    <path d="m382-320 338-338-57-57-281 281-123-122-57 57 180 180Z"/>
-                                </svg>已完成
-                            </span>
+                        const badge = document.createElement('span');
+                        badge.className = 'unit-progress-text completed';
+                        badge.style.display = 'inline-flex';
+                        badge.style.alignItems = 'center';
+                        badge.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor" style="margin-right: 2px;">
+                                <path d="m382-320 338-338-57-57-281 281-123-122-57 57 180 180Z"/>
+                            </svg>已完成
                         `;
+                        subtitle.appendChild(badge);
                         card.classList.add('completed');
-                    } else if (percent > 0) {
+                    }
+                    infoDiv.appendChild(subtitle);
+
+                    // Add progress bar below if active progress
+                    if (!isCompleted && percent > 0) {
+                        const progressContainer = document.createElement('div');
+                        progressContainer.className = 'unit-progress-container';
                         progressContainer.innerHTML = `
                             <span class="unit-progress-text">${progressText}</span>
                             <div class="unit-progress-bar">
                                 <div class="unit-progress-fill" style="width: ${percent}%"></div>
                             </div>
                         `;
+                        infoDiv.appendChild(progressContainer);
                     }
-                    infoDiv.appendChild(progressContainer);
 
                     card.appendChild(iconBox);
                     card.appendChild(infoDiv);
@@ -2089,6 +2107,7 @@ let viewArchiveMode = false;
 let currentActiveFolder = null;
 let selectedQuizzesForBatch = [];
 let globalQuizGroups = {};
+let globalArchivedQuizKeys = new Set();
 
 if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
     isEditMode = !isEditMode;
@@ -2961,6 +2980,10 @@ function renderMistakesQuizzesList(folderName) {
 
 async function renderQuizMistakes(quizName) {
     if (!mistakeListContent) return;
+    if (globalArchivedQuizKeys.has(quizName)) {
+        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">本單元目前沒有錯題紀錄。</p>';
+        return;
+    }
     mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入中...</p>';
     
     try {
@@ -3080,6 +3103,7 @@ async function renderQuizMistakes(quizName) {
 }
 
 function hasMistakesRecorded(quizName) {
+    if (globalArchivedQuizKeys.has(quizName)) return false;
     const data = userMistakesCache[quizName];
     if (!data) return false;
     let found = false;

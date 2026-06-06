@@ -612,6 +612,9 @@ from {
 .unit-subtitle {
     font-size: 0.85rem;
     color: #B2BEC3;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 @media (max-width: 768px) {
