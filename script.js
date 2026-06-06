@@ -331,14 +331,14 @@ function shuffle(array) {
 
 function loadNewQuestion() {
     currentIndex++;
+    selectedOption = null;
+    selectedOptions = [];
     if (currentIndex >= allQuestions.length) {
         stopTimer();
         showEndScreen();
         return;
     }
     viewingIndex = currentIndex;
-    selectedOption = null;
-    selectedOptions = [];
     renderQuestion(currentIndex);
     saveProgress();
 }
