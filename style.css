@@ -14,45 +14,6 @@
     --card-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
 }
 
-body.dark-mode {
-    --bg-color: #0b0c0e;
-    --surface-color: #0b0c0e;
-    --surface-variant: #1a1c1e;
-    --surface-container: #0b0c0e;
-    --on-surface: #f0f6fc;
-    --on-surface-variant: #8b949e;
-    --primary: #8ab4f8;
-    --on-primary: #0b57d0;
-    --outline: #444c56;
-    --outline-variant: #30363d;
-    --primary-container: #1f3a60;
-    --on-primary-container: #d3e3fd;
-    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-
-    background-color: var(--bg-color);
-    color: var(--on-surface);
-}
-
-/* Dark mode for upload inputs */
-
-body.dark-mode #uploadNameInput,
-body.dark-mode #pasteJson {
-    background-color: var(--surface-color);
-    border-color: var(--outline-variant);
-    color: var(--on-surface);
-}
-
-body.dark-mode #uploadNameInput::placeholder,
-body.dark-mode #pasteJson::placeholder {
-    color: var(--on-surface-variant);
-}
-
-body.dark-mode #uploadNameInput:focus,
-body.dark-mode #pasteJson:focus {
-    border-color: var(--primary);
-    background-color: var(--surface-variant);
-}
-
 .file-drop-zone {
     border: 2px dashed #ccc;
     border-radius: 8px;
@@ -79,7 +40,6 @@ body.dark-mode #pasteJson:focus {
     margin-bottom: 10px;
 }
 
-/* Paste JSON textarea (light mode) */
 #pasteJson {
     width: 100%;
     box-sizing: border-box;
@@ -132,8 +92,6 @@ body.dark-mode #pasteJson:focus {
     border-color: #cc4e00;
 }
 
-/* New Progress Display Styles */
-/* Stats & Progress - Google Style */
 .progress-container {
     margin-bottom: 24px;
 }
@@ -158,15 +116,12 @@ body.dark-mode #pasteJson:focus {
     font-weight: 700;
 }
 
-/* Specific colors for counts */
 .progress-count:first-child {
-    /* Right/Green */
     color: #137333;
     background: #e6f4ea;
 }
 
 .progress-count:last-child {
-    /* Wrong/Red */
     color: #c5221f;
     background: #fce8e6;
 }
@@ -179,7 +134,6 @@ body.dark-mode #pasteJson:focus {
     border-radius: 2px;
     overflow: hidden;
     display: flex;
-    /* Stack bars linearly */
 }
 
 .progress-bar {
@@ -187,8 +141,8 @@ body.dark-mode #pasteJson:focus {
     transition: width 0.3s ease;
     border-radius: 0;
     box-shadow: none;
-    /* No glow */
-    /* Original shimmer properties, kept as they are not explicitly removed */
+    
+    
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
 }
@@ -255,7 +209,6 @@ body.dark-mode #pasteJson:focus {
     pointer-events: none;
 }
 
-/* Import Google Fonts for a premium look */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Playfair+Display:wght@400;600&display=swap');
 
 @font-face {
@@ -275,7 +228,6 @@ body.dark-mode #pasteJson:focus {
     font-display: swap;
 }
 
-/* Base Styles */
 body,
 button,
 input,
@@ -291,7 +243,6 @@ body {
     background-color: white;
 }
 
-/* Mobile hygiene */
 html {
     -webkit-text-size-adjust: 100%;
 }
@@ -306,23 +257,21 @@ p {
     margin: 0;
 }
 
-/* Start Screen Styling */
 .start-screen {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /* Changed from center to allow scrolling flow */
+    
     align-items: center;
     min-height: 100svh;
     background: white;
     position: relative;
     transition: all 0.4s ease;
     padding-top: 80px;
-    /* Space for top fixed controls if any, or just spacing */
+    
     box-sizing: border-box;
 }
 
-/* Top-right controls */
 .top-right-controls {
     position: absolute;
     top: 20px;
@@ -382,7 +331,6 @@ p {
     object-fit: cover;
 }
 
-/* --- Google Profile Menu (M3) --- */
 .controls-menu {
     position: absolute;
     top: 60px;
@@ -400,7 +348,7 @@ p {
 }
 
 @keyframes menuFadeIn {
-    from {
+from {
         opacity: 0;
         transform: translateY(-10px) scale(0.95);
     }
@@ -504,8 +452,6 @@ p {
     color: #d93025;
 }
 
-/* --- Modern Home Dashboard Styles --- */
-
 .home-content {
     width: 100%;
     max-width: 900px;
@@ -528,12 +474,11 @@ p {
     line-height: 1.75rem;
 }
 
-/* Continue Hero Card - Material 3 */
 .continue-card {
     background: #fff;
     border: 1px solid #dadce0;
     border-radius: 28px;
-    /* M3 Large rounding */
+    
     padding: 0;
     display: flex;
     flex-direction: row;
@@ -541,7 +486,7 @@ p {
     overflow: hidden;
     min-height: 120px;
     box-shadow: none;
-    /* Flat outlined */
+    
     padding-right: 24px;
     margin-bottom: 32px;
 }
@@ -593,7 +538,6 @@ p {
     margin: 0;
 }
 
-/* Action Button moved to right */
 .continue-btn-action {
     background: #0b57d0;
     color: #fff;
@@ -615,7 +559,6 @@ p {
     transform: none;
 }
 
-/* Units Grid */
 .units-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -644,7 +587,7 @@ p {
     width: 40px;
     height: 40px;
     background: #e8f0fe;
-    /* Light Blue */
+    
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -671,20 +614,15 @@ p {
     color: #B2BEC3;
 }
 
-/* Dark Mode unified styles moved to common block */
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-    .continue-card {
-        flex-direction: column;
-    }
-
-    .continue-graphic {
-        height: 150px;
-        /* shorter graphic area on mobile */
-    }
+.continue-card {
+    flex-direction: column;
 }
 
+.continue-graphic {
+    height: 150px;
+}
+}
 
 .controls-menu.open {
     display: block;
@@ -738,8 +676,6 @@ p {
     margin-right: auto;
 }
 
-/* Dark mode controls moved to unified block */
-
 .start-title {
     font-family: "Playfair Display", "YuWeiShuFaYunMoFanTi", "source-han-serif-tc", "Noto Serif TC", "PMingLiU", "SimSun", serif;
     color: #1A1A1A;
@@ -753,7 +689,6 @@ p {
     -webkit-text-fill-color: transparent;
 }
 
-/* Topics toolbar */
 .topics-toolbar {
     width: 100%;
     max-width: 1100px;
@@ -788,26 +723,10 @@ p {
     color: #9aa0a6;
 }
 
-body.dark-mode .topics-toolbar input[type="text"] {
-    background: var(--surface-color);
-    color: var(--on-surface);
-    border-color: var(--outline-variant);
-}
-
-body.dark-mode .topics-toolbar input[type="text"]:focus {
-    border-color: var(--primary);
-    background: var(--surface-variant);
-}
-
-body.dark-mode .topics-toolbar input::placeholder {
-    color: var(--on-surface-variant);
-}
-
-/* Button Styles */
 .back-button {
     font-size: 1rem;
     color: #5f6368;
-    /* Google Grey */
+    
     border: none;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -821,11 +740,11 @@ body.dark-mode .topics-toolbar input::placeholder {
 .back-button:hover,
 .back-button.selected {
     color: #1a73e8;
-    /* Google Blue */
+    
     background-color: rgba(26, 115, 232, 0.04);
-    /* Subtle hover tint */
+    
     border-radius: 50%;
-    /* Check if circular is okay, or just radius */
+    
     border-radius: 4px;
 }
 
@@ -834,11 +753,11 @@ body.dark-mode .topics-toolbar input::placeholder {
     font-size: 1rem;
     background-color: #ffffff;
     color: #0b57d0;
-    /* Google Blue */
+    
     border: 1px solid #747775;
-    /* Material Outline */
+    
     border-radius: 20px;
-    /* Google Pill Shape? Or maintain 12px? User said "don't change parameters". Set 12px? But Google uses pills. "Don't change layout". 12px is fine. */
+    
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -852,23 +771,19 @@ body.dark-mode .topics-toolbar input::placeholder {
 
 .select-button::before {
     display: none;
-    /* Remove non-standard gradient effect */
 }
-
 
 .select-button:hover,
 .select-button.selected {
     background-color: #e8f0fe;
-    /* Light Blue Tint */
+    
     color: #0b57d0;
     border-color: #0b57d0;
 }
 
-/* Selected state should probably be filled? Material 3 choice chips are often filled or tinted. 
-   Let's use Filled for Selected */
 .select-button.selected {
     background-color: #d3e3fd;
-    /* M3 Secondary Container */
+    
     border-color: transparent;
     color: #041e49;
 }
@@ -877,12 +792,12 @@ body.dark-mode .topics-toolbar input::placeholder {
     padding: 14px 30px;
     font-size: 1.2rem;
     background-color: #0b57d0;
-    /* Google Blue */
+    
     color: #FFFFFF;
     border: none;
     border-radius: 30px;
     letter-spacing: 1px;
-    /* Google uses less tracking */
+    
     margin-top: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -896,20 +811,17 @@ body.dark-mode .topics-toolbar input::placeholder {
     display: none;
 }
 
-
 .start-button:hover {
     background-color: #0a4dbe;
-    /* Darker Blue */
+    
     transform: translateY(-1px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Subtle active/focus states */
 .select-button:active,
 .start-button:active {
     transform: scale(0.98);
 }
-
 
 .quiz-title {
     font-family: 'XiaoZuan', Georgia, "Playfair Display", "Noto Serif TC", serif;
@@ -919,7 +831,6 @@ body.dark-mode .topics-toolbar input::placeholder {
     letter-spacing: 0;
 }
 
-/* Progress Bar Styling */
 .progress {
     display: flex;
     justify-content: space-between;
@@ -947,18 +858,15 @@ body.dark-mode .topics-toolbar input::placeholder {
     margin-left: 5px;
 }
 
-/* Quiz progress bar */
-/* Professional Progress Bar */
-/* Google Material Progress Bar */
 #progress-bar-wrapper {
     width: 100%;
     margin-top: 10px;
     height: 4px;
     background-color: #e0e0e0;
-    /* Grey 300 */
+    
     border-radius: 4px;
     overflow: hidden;
-    /* Clips the bar */
+    
     box-shadow: none;
     position: relative;
     z-index: 10;
@@ -968,35 +876,21 @@ body.dark-mode .topics-toolbar input::placeholder {
     width: 0%;
     height: 100%;
     background-color: #0b57d0;
-    /* Google Blue */
+    
     transition: width 0.3s ease-in-out;
     border-radius: 0;
     position: relative;
-    /* No glow, no shimmer - Clean Material */
 }
 
-/* Remove fancy effects */
 #progress-bar::after,
 #progress-bar::before {
     display: none;
 }
 
-/* Interactive Hover Scale */
 #progress-bar-wrapper:hover #progress-bar {
     filter: none;
 }
 
-/* Dark Mode */
-body.dark-mode #progress-bar-wrapper {
-    background-color: var(--surface-variant);
-}
-
-body.dark-mode #progress-bar {
-    background-color: var(--primary);
-    box-shadow: none;
-}
-
-/* Question Content Styling */
 .question-content {
     font-size: 1.1rem;
     line-height: 1.6;
@@ -1006,264 +900,64 @@ body.dark-mode #progress-bar {
     display: flex;
 }
 
-/* Option Button Styling */
-/* Option Button Styling - Google Style */
 .option-button {
     padding: 16px 24px;
     font-size: 1.1rem;
     color: #202124;
-    /* Grey 900 */
+    
     background-color: #ffffff;
-    /* White cards */
+    
     border: none;
-    /* Grey 300 */
+    
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: left;
     box-shadow: none;
-    /* Flat outlined style preferred by Google */
 }
 
 .option-button:hover {
     background-color: #f8f9fa;
-    /* Grey 50 */
+    
     border-color: #dadce0;
     transform: none;
-    /* Google doesn't usually translate selection items */
 }
 
 .option-button.selected {
     border-color: #0b57d0;
-    /* Google Blue */
+    
     background-color: #e8f0fe;
-    /* Blue 50 */
+    
     color: #1967d2;
-    /* Blue 800 */
 }
 
 .option-button.correct {
     background-color: #ceead6;
-    /* Green 100 */
+    
     border-color: #188038;
-    /* Green 800 */
+    
     color: #0d652d;
-    /* Green 900 */
 }
 
 .option-button.incorrect {
     background-color: #fad2cf;
-    /* Red 100 */
+    
     border-color: #d93025;
-    /* Red 600 */
+    
     color: #a50e0e;
-    /* Red 900 */
 }
 
-/* --- CONSOLIDATED DARK MODE REDESIGN (Google / Material 3 Style) --- */
-body.dark-mode .start-screen,
-body.dark-mode .home-content,
-body.dark-mode .quiz-container,
-body.dark-mode .full-screen-view,
-body.dark-mode .md3-dialog,
-body.dark-mode .modal-content,
-body.dark-mode .starred-modal-content {
-    background-color: var(--bg-color);
-}
-
-body.dark-mode .start-title {
-    background: linear-gradient(135deg, #ffffff 0%, #e3e2e6 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Question Bank Boxes (Cards) */
-body.dark-mode .unit-card,
-body.dark-mode .continue-card {
-    background-color: var(--surface-color);
-    border: 1px solid var(--outline-variant);
-    box-shadow: var(--card-shadow);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body.dark-mode .unit-card:hover,
-body.dark-mode .continue-card:hover {
-    background-color: var(--surface-variant);
-    transform: translateY(-2px);
-    border-color: var(--primary);
-}
-
-body.dark-mode .unit-title,
-body.dark-mode .continue-title-text,
-body.dark-mode .section-title,
-body.dark-mode .quiz-title,
-body.dark-mode .view-title {
-    color: var(--on-surface);
-}
-
-body.dark-mode .unit-subtitle,
-body.dark-mode .continue-stats-text {
-    color: var(--on-surface-variant);
-}
-
-body.dark-mode .unit-icon-box {
-    background-color: var(--primary-container);
-    color: var(--on-primary-container);
-}
-
-/* Controls Menu Redesign */
-body.dark-mode .controls-menu {
-    background-color: var(--surface-container);
-    border: 1px solid var(--outline-variant);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .controls-menu-header {
-    background-color: var(--surface-variant);
-    border-radius: 12px;
-}
-
-body.dark-mode .controls-item {
-    color: var(--on-surface);
-}
-
-body.dark-mode .controls-item:hover {
-    background-color: var(--surface-variant);
-    color: var(--primary);
-}
-
-body.dark-mode .controls-divider {
-    background-color: var(--outline-variant);
-}
-
-/* Quiz Specific Components */
-body.dark-mode .question-content {
-    color: var(--on-surface);
-}
-
-body.dark-mode .option-button {
-    background-color: var(--surface-color);
-    border: 1px solid var(--outline);
-    color: var(--on-surface);
-    transition: all 0.2s ease;
-}
-
-body.dark-mode .option-button:hover {
-    background-color: var(--surface-variant);
-    border-color: var(--primary);
-}
-
-body.dark-mode .option-button.selected {
-    background-color: var(--primary-container);
-    border-color: var(--primary);
-    color: var(--on-primary-container);
-}
-
-body.dark-mode .option-button.correct {
-    background-color: rgba(76, 175, 80, 0.15);
-    border-color: #81c995;
-    color: #e6f4ea;
-}
-
-body.dark-mode .option-button.incorrect {
-    background-color: rgba(234, 67, 53, 0.15);
-    border-color: #f28b82;
-    color: #fce8e6;
-}
-
-body.dark-mode .option-button.missing {
-    background-color: rgba(251, 188, 4, 0.1);
-    border-color: #fdd663;
-}
-
-body.dark-mode .confirm-button,
-body.dark-mode .next-button,
-body.dark-mode .md3-filled-btn,
-body.dark-mode .start-button {
-    background-color: var(--primary);
-    color: var(--on-primary);
-    border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-mode .confirm-button:hover,
-body.dark-mode .next-button:hover,
-body.dark-mode .start-button:hover {
-    background-color: var(--primary);
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .explanation {
-    background-color: var(--surface-container);
-    border: 1px solid var(--outline-variant);
-    color: var(--on-surface);
-}
-
-body.dark-mode .notification-bar {
-    background-color: var(--surface-container);
-    color: var(--on-surface);
-    border: 1px solid var(--outline);
-}
-
-body.dark-mode .header-icon-btn,
-body.dark-mode .action-icon-btn {
-    color: var(--on-surface-variant);
-}
-
-body.dark-mode .header-icon-btn:hover,
-body.dark-mode .action-icon-btn:hover {
-    background-color: var(--surface-variant);
-    color: var(--primary);
-}
-
-body.dark-mode .explanation {
-    background-color: #303134;
-    /* Google Dark Surface */
-    color: #e8eaed;
-    border-color: #5f6368;
-}
-
-body.dark-mode .next-button {
-    background: #8ab4f8;
-    color: #202124;
-    border: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-mode .next-button:hover {
-    background: #a6c8ff;
-    color: #202124;
-}
-
-body.dark-mode .copyright {
-    color: #9aa0a6;
-}
-
-body.dark-mode .copyright a {
-    color: #8b949e;
-}
-
-body.dark-mode .copyright a:hover {
-    color: #c9d1d9;
-}
-
-/* Original CSS Elements Not Renewed */
-
-/* 新增按鈕容器 */
 .button-row {
     display: flex;
-    /* 啟用 Flexbox 佈局 */
+    
     flex-wrap: wrap;
-    /* 允許按鈕換行 */
+    
     gap: 15px;
-    /* 設定按鈕之間的間距 */
+    
     justify-content: center;
-    /* 將按鈕集中對齊 */
+    
     max-width: 80%;
-    /* 容器最大寬度為90% */
+    
     margin: 0 auto;
 }
 
@@ -1278,7 +972,7 @@ body.dark-mode .copyright a:hover {
     cursor: pointer;
     text-align: left;
     word-break: break-word;
-    /* allow long names to wrap */
+    
     transition: box-shadow .15s ease, transform .15s ease, background .15s ease;
 }
 
@@ -1343,101 +1037,82 @@ body.dark-mode .copyright a:hover {
     -webkit-text-fill-color: currentColor !important;
 }
 
-body.dark-mode .group-grid .select-button:hover {
-    color: #f0f6fc !important;
-}
-
-/* Dark mode */
-body.dark-mode .folder-tile {
-    background: #1f1f1f;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #f0f6fc;
-}
-
-body.dark-mode .folder-tile:hover {
-    background: #242424;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-}
-
-/* Responsive tightening for narrow screens */
 @media (max-width: 640px) {
-    .button-row {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+.button-row {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 12px;
-    }
+}
 
-    .folder-tile {
-        padding: 8px 10px;
-    }
+.folder-tile {
+    padding: 8px 10px;
+}
 
-    .group-grid {
-        gap: 10px;
-    }
+.group-grid {
+    gap: 10px;
+}
 
-    .group-grid .select-button {
-        flex: 1 1 160px;
+.group-grid .select-button {
+    flex: 1 1 160px;
         padding: 8px 10px;
         font-size: .9rem;
-    }
+}
 
-    .option-button {
-        padding: 14px 16px;
-    }
+.option-button {
+    padding: 14px 16px;
+}
 
-    .explanation {
-        padding: 5px 14px 16px 14px;
-    }
+.explanation {
+    padding: 5px 14px 16px 14px;
+}
 }
 
 @media (max-width: 420px) {
-    .button-row {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+.button-row {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
         gap: 10px;
-    }
+}
 
-    .folder-tile {
-        padding: 8px 8px;
-    }
+.folder-tile {
+    padding: 8px 8px;
+}
 
-    .group-grid {
-        gap: 8px;
-    }
+.group-grid {
+    gap: 8px;
+}
 
-    .group-grid .select-button {
-        flex: 1 1 140px;
+.group-grid .select-button {
+    flex: 1 1 140px;
         padding: 6px 8px;
         font-size: .85rem;
-    }
+}
 
-    .confirm-button,
-    .next-button {
-        align-self: flex-end;
-    }
+.confirm-button,
+.next-button {
+    align-self: flex-end;
+}
 
-    .option-button {
-        padding: 12px 12px;
-    }
+.option-button {
+    padding: 12px 12px;
+}
 
-    .quiz-container {
-        padding: 12px;
-    }
+.quiz-container {
+    padding: 12px;
+}
 }
 
 @media (max-width: 360px) {
-    .button-row {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+.button-row {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         gap: 8px;
-    }
-
-    .group-grid .select-button {
-        flex: 1 1 120px;
-        padding: 6px 8px;
-        font-size: .82rem;
-    }
 }
 
-/* ==================== Minimalist Buttons Redesign ==================== */
-/* Start button */
+.group-grid .select-button {
+    flex: 1 1 120px;
+        padding: 6px 8px;
+        font-size: .82rem;
+}
+}
+
 .start-button {
     display: inline-flex;
     align-items: center;
@@ -1463,7 +1138,6 @@ body.dark-mode .folder-tile:hover {
     transform: translateY(0);
 }
 
-/* Focus visible outlines (grayscale) */
 .start-button:focus-visible {
     outline: 2px solid #6b7280;
     outline-offset: 2px;
@@ -1479,23 +1153,6 @@ body.dark-mode .folder-tile:hover {
     outline-offset: 2px;
 }
 
-/* Dark Mode Google Colors */
-body.dark-mode .start-button {
-    background: #8ab4f8;
-    /* Google Blue Light */
-    color: #202124;
-    /* Dark Text */
-    border: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-mode .start-button:hover {
-    background: #a6c8ff;
-    /* Lighter Blue */
-    color: #202124;
-}
-
-/* Restore (回到進度) button */
 .restoreBtn_C3D4 {
     display: inline-flex;
     align-items: center;
@@ -1503,12 +1160,12 @@ body.dark-mode .start-button:hover {
     height: 46px;
     padding: 0 16px;
     border-radius: 23px;
-    /* Pill shape */
+    
     background: #ffffff;
     color: #1f1f1f;
-    /* Google Grey 900 */
+    
     border: 1px solid #dadce0;
-    /* Google Grey 300 */
+    
     box-shadow: none;
     gap: 8px;
     position: relative;
@@ -1517,7 +1174,7 @@ body.dark-mode .start-button:hover {
 
 .restoreBtn_C3D4:hover {
     background: #f8f9fa;
-    /* Grey 50 */
+    
     border-color: #dadce0;
     transform: none;
     box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
@@ -1557,18 +1214,6 @@ body.dark-mode .start-button:hover {
     transition: width .3s ease;
 }
 
-body.dark-mode .restoreBtn_C3D4 {
-    background: #161b22;
-    color: #f0f6fc;
-    border-color: #30363d;
-}
-
-body.dark-mode .restoreBtn_C3D4:hover {
-    background: #1f242c;
-    border-color: #3d444d;
-}
-
-/* Select buttons (quiz tiles) */
 .select-button {
     position: relative;
     display: inline-flex;
@@ -1604,22 +1249,8 @@ body.dark-mode .restoreBtn_C3D4:hover {
     outline-offset: 2px;
 }
 
-body.dark-mode .select-button {
-    color: #c9d1d9;
-    border-color: #30363d;
-}
-
-body.dark-mode .select-button:hover {
-    border-color: #3d444d;
-}
-
-/* Keep text color unchanged on hover */
 .select-button:hover {
     color: #111111;
-}
-
-body.dark-mode .select-button:hover {
-    color: #c9d1d9;
 }
 
 .quiz-group {
@@ -1699,30 +1330,6 @@ body.dark-mode .select-button:hover {
     display: flex;
 }
 
-/* Dark mode for folder groups */
-body.dark-mode .quiz-group {
-    background: #1c1f26;
-    border-color: rgba(255, 255, 255, 0.06);
-}
-
-body.dark-mode .quiz-group-title {
-    color: #f0f6fc;
-}
-
-body.dark-mode .quiz-group-buttons {
-    border-top-color: rgba(255, 255, 255, 0.08);
-}
-
-body.dark-mode .quiz-group-title .folder-icon {
-    background: linear-gradient(180deg, #3a4256 0%, #2b3142 100%);
-    box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.06);
-}
-
-body.dark-mode .quiz-group-title .folder-icon::after {
-    background: #30384a;
-}
-
-/* 其他樣式保持不變 */
 .quiz-container {
     display: none;
     flex-direction: column;
@@ -1733,14 +1340,14 @@ body.dark-mode .quiz-group-title .folder-icon::after {
     box-sizing: border-box;
     min-height: 100vh;
     background-color: white;
-    /* 預設淺色模式 */
+    
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
-    /* Distributes space between items */
+    
     align-items: center;
     margin-bottom: 10px;
 }
@@ -1749,10 +1356,8 @@ body.dark-mode .quiz-group-title .folder-icon::after {
     display: flex;
     align-items: center;
     gap: 5px;
-    /* Spacing between Previous Button and Timer */
 }
 
-/* Google Timer Pie Chart */
 .timer-display {
     display: inline-flex;
     align-items: center;
@@ -1768,24 +1373,21 @@ body.dark-mode .quiz-group-title .folder-icon::after {
     font-size: 1.1rem;
     font-variant-numeric: tabular-nums;
     border-radius: 50%;
-    /* Optional: ensuring round shape logic if hover added later */
 }
 
-/* Pie Chart using Conic Gradient */
 .timer-display::before {
     content: '';
     display: block;
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    /* Google Blue Pie with transition handled by JS updating --progress */
+    
     background: conic-gradient(#0b57d0 var(--progress, 100%), #dadce0 0);
-    /* Improve sharpness */
+    
     mask: radial-gradient(white, white);
     -webkit-mask: radial-gradient(white, white);
 }
 
-/* Critical State (< 5s) */
 .timer-display.critical {
     color: #d93025;
 }
@@ -1793,11 +1395,8 @@ body.dark-mode .quiz-group-title .folder-icon::after {
 .timer-display.critical::before {
     background: conic-gradient(#d93025 var(--progress, 100%), #fad2cf 0);
     animation: none;
-    /* Pie handles animation via JS steps */
 }
 
-/* Back Button (Previous) - Material Icon Button */
-/* Header & Action Icon Buttons - Shared Google Style */
 .header-icon-btn,
 .action-icon-btn {
     border-radius: 50%;
@@ -1826,21 +1425,6 @@ body.dark-mode .quiz-group-title .folder-icon::after {
     background-color: rgba(60, 64, 67, 0.12);
 }
 
-/* Dark Mode Icon Color */
-/* Dark Mode Icon Color */
-body.dark-mode .header-icon-btn,
-body.dark-mode .action-icon-btn {
-    color: #e8eaed;
-}
-
-body.dark-mode .header-icon-btn:hover,
-body.dark-mode .action-icon-btn:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #e8eaed;
-    /* Keep text/icon color consistent on hover */
-}
-
-/* Enlarge icon tap area */
 .header-right img {
     padding: 6px;
     border-radius: 8px;
@@ -1857,11 +1441,11 @@ body.dark-mode .action-icon-btn:hover {
     padding: 10px 24px;
     font-size: 1rem;
     background-color: #0b57d0;
-    /* Google Blue */
+    
     color: white;
     border: none;
     border-radius: 20px;
-    /* Pill shape */
+    
     cursor: pointer;
     align-self: flex-end;
     transition: all 0.2s ease;
@@ -1879,7 +1463,7 @@ body.dark-mode .action-icon-btn:hover {
 
 .confirm-button:hover {
     background-color: #0a4dbe;
-    /* Darker Blue */
+    
     color: white;
     box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
     transform: translateY(-1px);
@@ -1892,14 +1476,14 @@ body.dark-mode .action-icon-btn:hover {
 
 .explanation {
     display: none;
-    margin-top: 25px;
+    margin-top: 10px;
     padding: 10px 20px 20px 20px;
     background-color: #f8f9fa;
-    /* Google Grey 50 */
+    
     border-radius: 12px;
     position: relative;
     color: #202124;
-    /* Google Grey 900 */
+    
     border: none;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -1915,7 +1499,7 @@ body.dark-mode .action-icon-btn:hover {
     padding: 10px 24px;
     font-size: 1rem;
     background-color: #0b57d0;
-    /* Google Blue */
+    
     color: #ffffff;
     border: none;
     border-radius: 20px;
@@ -1950,7 +1534,7 @@ body.dark-mode .action-icon-btn:hover {
     margin-top: 20px;
     font-size: 12px;
     color: #a9a9a9;
-    /* 淺灰色 */
+    
     transition: color 0.3s ease;
 }
 
@@ -1964,14 +1548,12 @@ body.dark-mode .action-icon-btn:hover {
     text-decoration: underline;
 }
 
-/* 模態窗口樣式 */
-/* 自訂模態窗口樣式 */
 .modal {
     display: none;
-    /* 預設隱藏 */
+    
     position: fixed;
     z-index: 2000;
-    /* 確保在最上層，超過頂部按鈕 */
+    
     left: 0;
     top: 0;
     width: 100%;
@@ -1979,7 +1561,7 @@ body.dark-mode .action-icon-btn:hover {
     overflow: auto;
     backdrop-filter: blur(5px);
     background-color: rgba(0, 0, 0, 0.4);
-    /* 半透明背景 */
+    
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s ease;
@@ -1998,7 +1580,6 @@ body.dark-mode .action-icon-btn:hover {
     position: relative;
 }
 
-/* Modal close button - top-right */
 .modal-close {
     position: absolute;
     top: 10px;
@@ -2049,60 +1630,16 @@ body.dark-mode .action-icon-btn:hover {
     transform: scale(1.05);
 }
 
-/* 深色模式下的模態窗口 */
-body.dark-mode .modal-content {
-    background-color: #2a2a2a;
-    color: #e0e0e0;
-}
-
-body.dark-mode .modal-confirm-button {
-    background-color: #404040;
-    color: #ffffff;
-}
-
-body.dark-mode .modal-confirm-button:hover {
-    background-color: #313131;
-    color: #ffffff;
-}
-
-body.dark-mode .modal-content {
-    background-color: rgba(30, 30, 30, 0.8);
-    color: #ffffff;
-}
-
-/* Dark mode - modal close */
-body.dark-mode .modal-close {
-    color: #8b949e;
-}
-
-body.dark-mode .modal-close:hover {
-    color: #f0f6fc;
-}
-
-body.dark-mode .modal-confirm-button {
-    background-color: #2d2d2d;
-    color: #ffffff;
-    border: 2px solid #404040;
-}
-
-body.dark-mode .modal-confirm-button:hover {
-    background-color: #000;
-    color: #ffffff;
-}
-
-/* Container for Next and Copy buttons */
 .explanation-buttons {
     display: flex;
     justify-content: space-between;
-    /* Distributes space between items */
+    
     align-items: center;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Style for the Copy text */
 .copy-text {
-    /*padding: 0px 15px;*/
     color: lightgray;
     cursor: pointer;
     font-size: 18px;
@@ -2112,85 +1649,61 @@ body.dark-mode .modal-confirm-button:hover {
     text-decoration: underline;
 }
 
-/* Adjustments for dark mode */
-body.dark-mode .copy-text {
-    color: #888888;
-}
-
 .button-container {
     position: relative;
     width: 30px;
     height: 30px;
 }
 
-/* Dark mode adjustments */
-body.dark-mode .expandable-frame {
-    background-color: #2a2a2a;
-    border-color: #404040;
-}
-
-body.dark-mode .logout-button {
-    color: #cecece;
-}
-
-body.dark-mode .logout-button:hover {
-    color: #121212;
-    background-color: #cecece;
-}
-
 @media (min-width: 1024px) {
-    .language {
-        position: absolute;
+.language {
+    position: absolute;
         bottom: 25px;
-    }
+}
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
-    .start-title {
-        font-size: 3rem;
-    }
+.start-title {
+    font-size: 3rem;
+}
 
-    .select-button {
-        font-size: 0.9rem;
+.select-button {
+    font-size: 0.9rem;
         padding: 8px 16px;
-    }
+}
 
-    #WeeGPTInputSection {
-        margin: 0px 0px 20px 0px;
-    }
+#WeeGPTInputSection {
+    margin: 0px 0px 20px 0px;
+}
 
-    /* Safe-area padding for mobile */
-    .start-screen {
-        padding: 16px;
+.start-screen {
+    padding: 16px;
         padding-top: calc(env(safe-area-inset-top) + 16px);
         padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
-    }
+}
 
-    .quiz-container {
-        padding: 16px;
-    }
+.quiz-container {
+    padding: 16px;
+}
 
-    .topics-toolbar {
-        padding: 0 8px;
-    }
+.topics-toolbar {
+    padding: 0 8px;
+}
 
-    .topics-toolbar input[type="text"] {
-        height: 44px;
-    }
+.topics-toolbar input[type="text"] {
+    height: 44px;
+}
 }
 
 #copy-btn {
     cursor: pointer;
 }
 
-
-/* Google Material Design 3 Chat Input */
 #WeeGPTInputSection {
     margin-top: 16px;
     margin-bottom: 20px;
     display: none;
-    /* Toggled by JS */
+    
     width: 100%;
 }
 
@@ -2198,16 +1711,15 @@ body.dark-mode .logout-button:hover {
     display: flex;
     align-items: center;
     background-color: #f1f3f4;
-    /* Google Grey 100 */
+    
     border-radius: 24px;
     padding: 2px 8px 2px 20px;
-    /* Right padding handled by button margin */
+    
     transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
     width: 100%;
-    /* Ensure full width */
+    
     box-sizing: border-box;
-    /* Include padding in width */
 }
 
 .chat-input-wrapper:focus-within {
@@ -2238,7 +1750,7 @@ body.dark-mode .logout-button:hover {
     border: none;
     background: transparent;
     color: #0b57d0;
-    /* Google Blue */
+    
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -2250,7 +1762,6 @@ body.dark-mode .logout-button:hover {
 
 .chat-send-btn:hover {
     background-color: rgba(11, 87, 208, 0.08);
-    /* Blue tint */
 }
 
 .chat-send-btn:disabled {
@@ -2261,10 +1772,6 @@ body.dark-mode .logout-button:hover {
 .chat-send-btn:disabled:hover {
     background-color: transparent;
 }
-
-
-
-/* Restore: remove legacy rounded pill/arrow hover to use minimalist design */
 
 .option-button.missing {
     border-color: #FFA500;
@@ -2282,9 +1789,8 @@ body.dark-mode .logout-button:hover {
     height: 16px;
 }
 
-
 @keyframes moveLight {
-    from {
+from {
         left: -50%;
     }
 
@@ -2309,11 +1815,6 @@ body.dark-mode .logout-button:hover {
     animation: moveLight 2s linear infinite;
 }
 
-body.dark-mode .typing-effect::before {
-    background: linear-gradient(to right, transparent, rgba(45, 45, 45, 0.7), transparent);
-}
-
-/* Top Left Controls Container */
 .top-left-controls {
     position: absolute;
     top: 20px;
@@ -2321,33 +1822,25 @@ body.dark-mode .typing-effect::before {
     display: flex;
     align-items: center;
     gap: 10px;
-    /* Space between add button and shuffle toggle */
+    
     z-index: 1001;
-    /* Ensure it's above other elements if necessary */
 }
 
-/* Add-Quiz Button - remove absolute positioning if it's now controlled by flex container */
 .add-button {
-    /* position: absolute; */
-    /* Removed as it's now in a flex container */
-    /* top: 20px; */
-    /* Removed */
-    /* left: 20px; */
-    /* Removed */
     width: 32px;
     height: 32px;
     font-size: 24px;
     line-height: 28px;
-    /* Adjust for vertical centering if needed */
+    
     text-align: center;
     background-color: #000;
     color: #fff;
     border: none;
     border-radius: 16px;
-    /* Circular */
+    
     cursor: pointer;
-    /* z-index: 1000; */
-    /* z-index now on parent .top-left-controls */
+    
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2357,12 +1850,6 @@ body.dark-mode .typing-effect::before {
     background-color: #333;
 }
 
-/* Remove old Shuffle Toggle Button styles if they exist */
-/* .shuffle-toggle-button { ... } */
-/* .shuffle-toggle-button:hover { ... } */
-/* .shuffle-toggle-button.active { ... } */
-
-/* Shuffle Slider Styles */
 .shuffle-slider-track {
     width: 44px;
     height: 24px;
@@ -2374,7 +1861,6 @@ body.dark-mode .typing-effect::before {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    /* Ensure padding doesn't add to width/height */
 }
 
 .slider-icon {
@@ -2382,16 +1868,14 @@ body.dark-mode .typing-effect::before {
     top: 50%;
     transform: translateY(-50%);
     font-size: 13px;
-    /* Adjust icon size as needed */
+    
     line-height: 1;
     color: white;
-    /* Icon color, contrasts with both track states */
+    
     z-index: 0;
-    /* Behind the knob */
+    
     transition: left 0.3s ease, right 0.3s ease, opacity 0.3s ease;
-    /* For smooth transition if needed */
 }
-
 
 .shuffle-slider-knob {
     width: 20px;
@@ -2404,44 +1888,36 @@ body.dark-mode .typing-effect::before {
     transition: transform 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    /* Knob is above the icon span */
 }
 
-/* Default state: Ordered (Arrow icon → on the right, knob on the left) */
 .shuffle-slider-track .slider-icon {
     right: 5px;
-    /* Position icon in the right part of the track */
+    
     left: auto;
 }
 
 .shuffle-slider-track .slider-icon::before {
     content: '→';
-    /* Arrow icon */
 }
 
 .shuffle-slider-track.active {
     background-color: #666666;
-    /* Grayscale when active */
 }
 
-/* Active state: Random (Shuffle icon ⇄ on the left, knob on the right) */
 .shuffle-slider-track.active .slider-icon {
     left: 5px;
-    /* Position icon in the left part of the track */
+    
     right: auto;
 }
 
 .shuffle-slider-track.active .slider-icon::before {
     content: '⇄';
-    /* Shuffle icon */
 }
 
 .shuffle-slider-track.active .shuffle-slider-knob {
     transform: translateX(20px);
 }
 
-
-/* Google Sign-In Button (restyled to match select-button) */
 .sign-in-button {
     position: absolute;
     height: 40px;
@@ -2490,7 +1966,6 @@ body.dark-mode .typing-effect::before {
     transform: none;
 }
 
-/* Modern Theme Toggle Button */
 .theme-toggle-button {
     position: absolute;
     top: 20px;
@@ -2561,7 +2036,6 @@ body.dark-mode .typing-effect::before {
     pointer-events: none;
 }
 
-/* Sun Rays Animation */
 .sun-rays {
     position: absolute;
     top: 6px;
@@ -2587,7 +2061,6 @@ body.dark-mode .typing-effect::before {
     animation: sunRays 4s linear infinite;
 }
 
-/* Moon with Stars */
 .moon-craters {
     position: absolute;
     top: 6px;
@@ -2615,7 +2088,6 @@ body.dark-mode .typing-effect::before {
     animation: twinkle 3s ease-in-out infinite;
 }
 
-/* Hover Effects */
 .theme-toggle-button:hover .theme-toggle-track {
     box-shadow:
         0 6px 20px rgba(135, 206, 235, 0.4),
@@ -2635,61 +2107,13 @@ body.dark-mode .typing-effect::before {
     transform: scale(0.97);
 }
 
-/* Dark Mode State */
-.theme-toggle-button.dark-mode-active .theme-toggle-track {
-    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.theme-toggle-button.dark-mode-active .theme-toggle-thumb {
-    left: 30px;
-    background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
-    box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.6),
-        0 1px 2px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.theme-toggle-button.dark-mode-active .sun-rays {
-    opacity: 0;
-    animation: none;
-}
-
-.theme-toggle-button.dark-mode-active .moon-craters {
-    opacity: 0.9;
-}
-
-.theme-toggle-button.dark-mode-active .theme-icon {
-    filter: brightness(1.3) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
-    transform: rotate(180deg) scale(1.1);
-}
-
-.theme-toggle-button:not(.dark-mode-active) .theme-icon {
-    transform: rotate(0deg) scale(1);
-}
-
-/* Transition Effects */
-.theme-toggle-button.dark-mode-active:hover .theme-toggle-thumb {
-    transform: scale(1.15);
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.7),
-        0 2px 4px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* Accessibility */
 .theme-toggle-button:focus-visible {
     outline: 2px solid #87CEEB;
     outline-offset: 3px;
 }
 
-/* Advanced Animation Keyframes */
 @keyframes sunGlow {
-
-    0%,
+0%,
     100% {
         opacity: 0.8;
         transform: scale(1);
@@ -2704,7 +2128,7 @@ body.dark-mode .typing-effect::before {
 }
 
 @keyframes sunRays {
-    0% {
+0% {
         transform: rotate(0deg);
     }
 
@@ -2714,8 +2138,7 @@ body.dark-mode .typing-effect::before {
 }
 
 @keyframes twinkle {
-
-    0%,
+0%,
     100% {
         opacity: 0.7;
         transform: scale(1);
@@ -2737,10 +2160,6 @@ body.dark-mode .typing-effect::before {
     }
 }
 
-
-/* Debug Modal Styles REMOVED */
-
-/* End Screen Layout */
 .end-message {
     text-align: center;
     font-size: 1.2rem;
@@ -2768,7 +2187,6 @@ body.dark-mode .typing-effect::before {
     padding: 12px 0;
 }
 
-/* Center end screen vertically and horizontally */
 .quiz-container.end-screen {
     display: flex !important;
     flex-direction: column;
@@ -2776,7 +2194,6 @@ body.dark-mode .typing-effect::before {
     align-items: center;
 }
 
-/* Overlay for end screen when restarting quiz */
 .end-screen-container {
     display: flex;
     flex-direction: column;
@@ -2784,19 +2201,16 @@ body.dark-mode .typing-effect::before {
     align-items: center;
 }
 
-/* Ensure custom alert appears above overlays */
 #customAlert {
     z-index: 1100 !important;
 }
 
-/* Star buttons */
 #showStarredBtn {
     cursor: pointer;
     width: 24px;
     height: 24px;
 }
 
-/* Starred modal styling */
 .starred-modal-content {
     max-width: 600px;
     width: 90%;
@@ -2878,33 +2292,8 @@ body.dark-mode .typing-effect::before {
     background-color: #c9302c;
 }
 
-body.dark-mode .starred-explanation {
-    background-color: #0d1117;
-    border-left-color: #6b7280;
-    color: #f0f6fc;
-}
-
-body.dark-mode .toggle-explanation-button {
-    background-color: #2a2a2a;
-    border-color: #404040;
-    color: #f0f6fc;
-}
-
-body.dark-mode .toggle-explanation-button:hover {
-    background-color: #363636;
-}
-
-body.dark-mode .starred-delete-button {
-    background-color: #a33;
-}
-
-body.dark-mode .starred-delete-button:hover {
-    background-color: #922;
-}
-
-/* Progress Bar Challenge Animations */
 @keyframes pulse {
-    0% {
+0% {
         transform: scaleY(1);
     }
 
@@ -2918,7 +2307,7 @@ body.dark-mode .starred-delete-button:hover {
 }
 
 @keyframes correctPulse {
-    0% {
+0% {
         transform: scaleY(1);
         box-shadow: 0 0 0 0 rgba(24, 174, 121, 0.7);
     }
@@ -2935,7 +2324,7 @@ body.dark-mode .starred-delete-button:hover {
 }
 
 @keyframes wrongPulse {
-    0% {
+0% {
         transform: scaleY(1);
         box-shadow: 0 0 0 0 rgba(204, 78, 0, 0.8);
     }
@@ -2952,7 +2341,7 @@ body.dark-mode .starred-delete-button:hover {
 }
 
 @keyframes glow {
-    0% {
+0% {
         filter: brightness(1);
     }
 
@@ -2965,10 +2354,8 @@ body.dark-mode .starred-delete-button:hover {
     }
 }
 
-/* New challenging animations */
 @keyframes shake {
-
-    0%,
+0%,
     100% {
         transform: translateX(0) scaleY(1);
     }
@@ -2990,8 +2377,7 @@ body.dark-mode .starred-delete-button:hover {
 }
 
 @keyframes bounce {
-
-    0%,
+0%,
     20%,
     50%,
     80%,
@@ -3009,7 +2395,7 @@ body.dark-mode .starred-delete-button:hover {
 }
 
 @keyframes shimmer {
-    0% {
+0% {
         background-position: -200% 0;
     }
 
@@ -3023,14 +2409,13 @@ body.dark-mode .starred-delete-button:hover {
     top: 0;
     bottom: 0;
     transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* More dynamic easing */
+    
     border-radius: 3px;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
     overflow: hidden;
     background-size: 200% 100%;
-    /* For shimmer */
+    
     animation: shimmer 3s linear infinite;
-    /* Continuous subtle challenge shimmer */
 }
 
 .progress-bar::before {
@@ -3095,363 +2480,17 @@ body.dark-mode .starred-delete-button:hover {
     pointer-events: none;
 }
 
-/* Dark mode progress bar animations */
-body.dark-mode .progress-bar {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode .correct-bar {
-    background: linear-gradient(90deg, #18AE79 0%, #4CAF50 25%, #66BB6A 50%, #4CAF50 75%, #18AE79 100%);
-    background-size: 300% 100%;
-    animation: lavaFlow 6s ease-in-out infinite;
-}
-
-body.dark-mode .wrong-bar {
-    background: linear-gradient(90deg, #cc4e00 0%, #ff5722 25%, #ff8a65 50%, #ff5722 75%, #cc4e00 100%);
-    background-size: 300% 100%;
-    animation: lavaFlow 6s ease-in-out infinite;
-}
-
-body.dark-mode .progress-bars {
-    background-color: var(--surface-variant);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .file-drop-zone {
-    border-color: var(--outline);
-    color: var(--on-surface-variant);
-    background-color: var(--surface-color);
-}
-
-body.dark-mode .file-drop-zone.dragover {
-    border-color: var(--primary);
-    background-color: var(--surface-variant);
-}
-
-/* Dark Mode - Fillblank Elements */
-body.dark-mode .fillblank-input {
-    background-color: var(--surface-variant);
-    border-color: var(--outline);
-    color: var(--on-surface);
-}
-
-body.dark-mode .fillblank-input:focus {
-    border-color: var(--primary);
-    background-color: var(--surface-variant);
-}
-
-body.dark-mode .fillblank-input.correct {
-    border-color: #81c995;
-    background-color: rgba(76, 175, 80, 0.15);
-}
-
-body.dark-mode .fillblank-input.incorrect {
-    border-color: #f28b82;
-    background-color: rgba(234, 67, 53, 0.15);
-}
-
-/* Dark Mode - Progress Container */
-body.dark-mode .progress-container {
-    color: var(--on-surface);
-}
-
-body.dark-mode .progress-counts {
-    color: var(--on-surface-variant);
-}
-
-body.dark-mode .progress-bars {
-    background-color: var(--surface-variant);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .count-text,
-body.dark-mode .count-number {
-    color: #e5e7eb;
-}
-
-/* Dark Mode - Top Left Controls */
-body.dark-mode .top-left-controls {
-    color: #ffffff;
-}
-
-/* Dark Mode - Add Button */
-body.dark-mode .add-button {
-    background-color: #363636;
-    color: #f0f6fc;
-}
-
-body.dark-mode .add-button:hover {
-    background-color: #6b7280;
-    color: #313131;
-}
-
-/* Dark Mode - Shuffle Slider */
-body.dark-mode .shuffle-slider-track {
-    background-color: #404040;
-}
-
-body.dark-mode .shuffle-slider-track.active {
-    background-color: #6b7280;
-}
-
-body.dark-mode .shuffle-slider-knob {
-    background-color: #f0f6fc;
-}
-
-/* Dark Mode - Sign In Button */
-body.dark-mode .sign-in-button {
-    background-color: #2a2a2a;
-    color: #f0f6fc;
-    border: 2px solid #404040;
-}
-
-body.dark-mode .sign-in-button:hover,
-body.dark-mode .sign-in-button.selected {
-    background-color: #363636;
-    color: #f0f6fc;
-    border-color: #6b7280;
-}
-
-body.dark-mode .sign-in-button.profile-mode {
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-}
-
-/* Dark Mode Chat Input */
-body.dark-mode #WeeGPTInputSection .chat-input-wrapper {
-    background-color: #303134;
-    /* Google Dark Surface */
-    border-color: rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode #WeeGPTInputSection .chat-input-wrapper:focus-within {
-    background-color: #303134;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
-    border-color: transparent;
-}
-
-body.dark-mode #userQuestion {
-    color: #e8eaed;
-}
-
-body.dark-mode #userQuestion::placeholder {
-    color: #9aa0a6;
-}
-
-body.dark-mode .chat-send-btn {
-    color: #8ab4f8;
-    /* Google Blue Light */
-}
-
-body.dark-mode .chat-send-btn:hover {
-    background-color: rgba(138, 180, 248, 0.08);
-}
-
-body.dark-mode .restoreBtn_C3D4 {
-    color: #8b949e;
-    border: 2px solid #8b949e;
-    background-color: rgba(139, 148, 158, 0.1);
-}
-
-body.dark-mode .restoreBtn_C3D4:hover {
-    color: #f0f6fc;
-    border-color: #f0f6fc;
-    background-color: rgba(240, 246, 252, 0.1);
-}
-
-
-
-body.dark-mode .end-message {
-    color: #f0f6fc;
-}
-
-body.dark-mode .end-buttons .select-button {
-    background-color: #2a2a2a;
-    color: #f0f6fc;
-    border-color: #404040;
-}
-
-body.dark-mode .end-buttons .select-button:hover,
 .select-button.selected {
     background-color: #363636;
     color: #f0f6fc;
     border-color: #6b7280;
 }
 
-body.dark-mode .starred-modal-content {
-    background-color: #2a2a2a;
-    color: #f0f6fc;
-}
-
-body.dark-mode .starred-item {
-    border-bottom-color: #404040;
-}
-
-body.dark-mode .starred-source {
-    color: #a0a6ad;
-}
-
-body.dark-mode .starred-explanation {
-    background-color: #313131;
-    border-left-color: #6b7280;
-    color: #f0f6fc;
-}
-
-/* Removed empty dark-mode .starred-controls ruleset */
-
-body.dark-mode .toggle-explanation-button {
-    background-color: #363636;
-    border-color: #404040;
-    color: #f0f6fc;
-}
-
-body.dark-mode .toggle-explanation-button:hover {
-    background-color: #3a3a3a;
-}
-
-body.dark-mode .starred-delete-button {
-    background-color: #f85149;
-    color: #f0f6fc;
-}
-
-body.dark-mode .starred-delete-button:hover {
-    background-color: #da3633;
-}
-
-body.dark-mode #progress-bar-wrapper {
-    background-color: var(--surface-variant);
-}
-
-body.dark-mode #progress-bar {
-    background-color: var(--primary);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .correct-bar {
-    background: linear-gradient(90deg, #18AE79 0%, #4CAF50 25%, #66BB6A 50%, #4CAF50 75%, #18AE79 100%);
-    background-size: 300% 100%;
-    animation: lavaFlow 6s ease-in-out infinite;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-body.dark-mode .wrong-bar {
-    background: linear-gradient(90deg, #cc4e00 0%, #ff5722 25%, #ff8a65 50%, #ff5722 75%, #cc4e00 100%);
-    background-size: 300% 100%;
-    animation: lavaFlow 6s ease-in-out infinite;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-body.dark-mode .progress-bar {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-track {
-    background: linear-gradient(135deg, #2a2a2a 0%, #313131 100%);
-    border-color: rgba(88, 166, 255, 0.3);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-body.dark-mode .theme-toggle-button.dark-mode-active .theme-toggle-thumb {
-    background: linear-gradient(135deg, #404040 0%, #363636 100%);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-body.dark-mode .file-drop-zone {
-    border-color: #404040;
-    color: #f0f6fc;
-    background-color: #2a2a2a;
-}
-
-body.dark-mode .file-drop-zone.dragover {
-    border-color: #6b7280;
-    background-color: #3a3a3a;
-}
-
-body.dark-mode .fillblank-input {
-    background-color: #2a2a2a;
-    border-color: #404040;
-    color: #f0f6fc;
-}
-
-body.dark-mode .fillblank-input:focus {
-    border-color: #6b7280;
-    background-color: #313131;
-}
-
-body.dark-mode .fillblank-input.correct {
-    border-color: #238636;
-    background-color: rgba(35, 134, 54, 0.1);
-}
-
-body.dark-mode .fillblank-input.incorrect {
-    border-color: #f85149;
-    background-color: rgba(248, 81, 73, 0.1);
-}
-
-body.dark-mode .progress-container {
-    color: #ffffff;
-}
-
-body.dark-mode .progress-counts {
-    color: #f0f6fc;
-}
-
-body.dark-mode .count-text,
-body.dark-mode .count-number {
-    color: #f0f6fc;
-}
-
-body.dark-mode .top-left-controls {
-    color: #ffffff;
-}
-
-body.dark-mode .add-button {
-    background-color: #363636;
-    color: #f0f6fc;
-}
-
-body.dark-mode .add-button:hover {
-    background-color: #6b7280;
-    color: #313131;
-}
-
-body.dark-mode .shuffle-slider-track {
-    background-color: #404040;
-}
-
-body.dark-mode .shuffle-slider-track.active {
-    background-color: #6b7280;
-}
-
-body.dark-mode .shuffle-slider-knob {
-    background-color: #f0f6fc;
-}
-
-body.dark-mode .sign-in-button {
-    background-color: #2a2a2a;
-    color: #f0f6fc;
-    border: 2px solid #404040;
-}
-
-body.dark-mode .sign-in-button:hover,
-body.dark-mode .sign-in-button.selected {
-    background-color: #363636;
-    color: #f0f6fc;
-    border-color: #6b7280;
-}
-
-
-
 .origin-display {
     font-size: 0.8rem;
     color: #888;
     margin: 8px 0;
     text-align: left;
-}
-
-body.dark-mode .origin-display {
-    color: #8b949e;
 }
 
 .multi-label {
@@ -3466,7 +2505,7 @@ body.dark-mode .origin-display {
 }
 
 @keyframes moveLight {
-    from {
+from {
         left: -50%;
     }
 
@@ -3488,7 +2527,7 @@ body.dark-mode .origin-display {
 }
 
 @keyframes fadeInk {
-    from {
+from {
         opacity: 0;
         transform: translateY(10px);
     }
@@ -3500,7 +2539,7 @@ body.dark-mode .origin-display {
 }
 
 @keyframes pulseRed {
-    0% {
+0% {
         transform: scale(1);
         color: #EA5455;
         text-shadow: 0 0 5px rgba(234, 84, 85, 0.5);
@@ -3520,8 +2559,7 @@ body.dark-mode .origin-display {
 }
 
 @keyframes shake {
-
-    0%,
+0%,
     100% {
         transform: translateX(0);
     }
@@ -3542,20 +2580,6 @@ body.dark-mode .origin-display {
     }
 }
 
-
-
-/* Legacy critical-alert removed */
-
-body.dark-mode .multi-label {
-    color: #ffaa00;
-    background-color: rgba(255, 170, 0, 0.3);
-}
-
-body.dark-mode .question-wrapper {
-    gap: 8px;
-}
-
-/* Override: keep select-button background unchanged when selected */
 .select-button.selected {
     background: #ffffff;
     color: #111111;
@@ -3568,19 +2592,6 @@ body.dark-mode .question-wrapper {
     border: 2px solid #000000;
 }
 
-body.dark-mode .select-button.selected {
-    background: #161b22;
-    color: #c9d1d9;
-    border: 2px solid #000000;
-}
-
-body.dark-mode .select-button.selected:hover {
-    background: #1f242c;
-    color: #c9d1d9;
-    border: 2px solid #000000;
-}
-
-/* Rename Input */
 .rename-input {
     width: 100%;
     padding: 8px 12px;
@@ -3593,15 +2604,6 @@ body.dark-mode .select-button.selected:hover {
     outline: none;
 }
 
-body.dark-mode .rename-input {
-    background-color: #2a2a2a;
-    color: #f0f6fc;
-    border-color: #6b7280;
-}
-
-/* --- New Search Bar (Top Right) --- */
-/* --- Material Expanding Search --- */
-/* --- Google Search Bar (M3) --- */
 .search-container {
     position: absolute;
     top: 20px;
@@ -3704,24 +2706,12 @@ body.dark-mode .rename-input {
     fill: currentColor;
 }
 
-/* --- Action Icon Buttons (Copy, Star, Gemini) --- */
-/* Base styles moved to shared block with .header-icon-btn */
-
-/* Specific colors for actions */
-
-/* Specific colors for actions */
 .action-icon-btn.active svg {
     fill: #fbbc04;
-    /* Google Yellow for Star */
 }
 
-/* Ensure Gemini button has no fill override so gradient shows */
-
-
-/* Star Pop Animation */
-/* Star Pop Animation */
 @keyframes starPop {
-    0% {
+0% {
         transform: scale(1);
     }
 
@@ -3734,69 +2724,25 @@ body.dark-mode .rename-input {
     }
 }
 
-/* Base Star SVG Size */
 .star-btn svg {
     width: 24px;
     height: 24px;
     stroke: #5f6368;
-    /* Google Grey */
+    
     stroke-width: 2px;
-    /* Distinct outline */
+    
     stroke-linejoin: miter;
-    /* Sharp corners */
+    
     fill: transparent;
-    /* Hollow by default */
+    
     transition: fill 0.2s, stroke 0.2s;
 }
 
-/* Active (Filled) State */
 .star-btn.active svg {
     fill: #fbbc04;
     stroke: #fbbc04;
 }
 
-/* Dark Mode Adjustments */
-body.dark-mode .star-btn svg {
-    stroke: #c9d1d9;
-    /* Lighter grey for dark mode outline */
-}
-
-body.dark-mode .star-btn.active svg {
-    fill: #fbbc04;
-    /* Yellow remains same */
-    stroke: none;
-}
-
-/* Optional: Gemini button background hover could be gradient */
-
-
-body.dark-mode .search-inner-bar,
-body.dark-mode .search-container.expanded .search-inner-bar {
-    background-color: var(--surface-variant);
-}
-
-body.dark-mode #topicSearch {
-    color: var(--on-surface);
-}
-
-body.dark-mode #topicSearch::placeholder {
-    color: var(--on-surface-variant);
-}
-
-body.dark-mode .search-icon-btn,
-body.dark-mode .search-close-btn {
-    color: var(--on-surface-variant);
-}
-
-body.dark-mode .search-icon-btn:hover,
-body.dark-mode .search-close-btn:hover {
-    color: var(--primary);
-    background-color: var(--surface-variant);
-}
-
-
-/* --- New Custom Alert (Small Red Floating Bubble) --- */
-/* --- Google Material Snackbar & Dialog --- */
 .notification-bar {
     position: fixed;
     bottom: 24px;
@@ -3804,14 +2750,14 @@ body.dark-mode .search-close-btn:hover {
     transform: translate(-50%, 200%) scale(0.9);
     opacity: 0;
     visibility: hidden;
-    /* Ensure it doesn't block clicks or appear stuck */
+    
     z-index: 10000;
 
-    /* Snackbar Style (Default) */
+    
     background-color: #323232;
     color: #f1f3f4;
     padding: 8px 16px;
-    /* More compact */
+    
     border-radius: 8px;
     box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 
@@ -3822,7 +2768,7 @@ body.dark-mode .search-close-btn:hover {
 
     width: fit-content;
     min-width: auto;
-    /* Allow it to be as narrow as content */
+    
     max-width: 90%;
     font-size: 0.875rem;
     letter-spacing: 0.01em;
@@ -3830,17 +2776,15 @@ body.dark-mode .search-close-btn:hover {
     transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s linear, visibility 0.2s;
 }
 
-/* Show State */
 .notification-bar.show {
     transform: translate(-50%, 0) scale(1);
     opacity: 1;
     visibility: visible;
 }
 
-/* Critical State (Red Snackbar) */
 .notification-bar.critical-alert {
     background-color: #d93025;
-    /* Material Red 600 */
+    
     color: #ffffff;
 }
 
@@ -3848,14 +2792,13 @@ body.dark-mode .search-close-btn:hover {
     flex-grow: 1;
 }
 
-/* Close/Action Button */
 .notification-close {
     background: transparent !important;
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
     color: #d3e3fd;
-    /* Inverse Primary */
+    
     cursor: pointer;
     font-weight: 500;
     font-size: 1.1rem;
@@ -3865,10 +2808,8 @@ body.dark-mode .search-close-btn:hover {
     align-items: center;
     justify-content: center;
     margin-right: -10px;
-    /* Pull to right edge */
 }
 
-/* Close Button in Red Alert */
 .notification-bar.critical-alert .notification-close {
     color: #ffffff;
 }
@@ -3877,61 +2818,28 @@ body.dark-mode .search-close-btn:hover {
     content: none;
 }
 
-/* Dark Mode Overrides */
-body.dark-mode .notification-bar {
-    background-color: #e3e3e3;
-    color: #303030;
-}
-
-body.dark-mode .notification-close {
-    color: #0b57d0;
-}
-
-/* Dark Mode Critical Overrides */
-body.dark-mode .notification-bar.critical-alert {
-    background-color: #e25141;
-    color: #ffffff;
-}
-
-body.dark-mode .notification-bar.critical-alert .notification-close {
-    color: #ffffff;
-}
-
-
-
-
 .notification-close:hover {
     background: rgba(255, 255, 255, 0.4);
 }
 
-body.dark-mode .notification-bar {
-    background-color: #EA5455;
-    /* Keep red in dark mode for visibility or slightly darker */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
-
-/* --- Quiz List Styling (Scrollable & Like Controls) --- */
 #button-row {
     width: 100%;
     max-width: 400px;
-    /* Narrower like a menu */
+    
     margin: 0 auto;
     max-height: 50vh;
-    /* Max height limit */
+    
     overflow-y: auto;
-    /* Scrollable */
+    
     padding: 10px;
     box-sizing: border-box;
-    /* Scrollbar styling */
+    
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
     border-radius: 12px;
     border: none !important;
-    /* Explicitly remove border */
 }
 
-/* Optional: Add a subtle background to the list container */
 #button-row.folder-view {
     background: rgba(0, 0, 0, 0.02);
 }
@@ -3949,7 +2857,6 @@ body.dark-mode .notification-bar {
     border-radius: 3px;
 }
 
-/* Quiz List Item - Mimicking .controls-item */
 .quiz-list-item {
     width: 100%;
     display: flex;
@@ -3958,7 +2865,7 @@ body.dark-mode .notification-bar {
     gap: 12px;
     padding: 12px 16px;
     margin-bottom: 4px;
-    /* Tight spacing like menu */
+    
     border-radius: 8px;
     background: transparent;
     border: none;
@@ -3983,7 +2890,6 @@ body.dark-mode .notification-bar {
     background: #333;
 }
 
-/* Folder Tiles - Also list style */
 .folder-tile {
     width: 100%;
     text-align: left;
@@ -3991,8 +2897,8 @@ body.dark-mode .notification-bar {
     margin-bottom: 6px;
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    /* Keep subtle item border if user wants, but container border gone */
-    /* Subtle border */
+    
+    
     border-radius: 10px;
     font-weight: 600;
     color: #2D3436;
@@ -4008,44 +2914,17 @@ body.dark-mode .notification-bar {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Add an arrow for folder tiles */
 .folder-tile::after {
     content: '›';
     font-size: 1.2rem;
     color: #999;
 }
 
-/* Dark mode for list items */
-body.dark-mode .quiz-list-item {
-    color: #c9d1d9;
-}
-
-body.dark-mode .quiz-list-item:hover {
-    background: rgba(88, 166, 255, 0.12);
-}
-
-body.dark-mode .quiz-list-item.selected {
-    background: #f0f6fc;
-    color: #0d1117;
-}
-
-body.dark-mode .folder-tile {
-    background: #21262d;
-    border-color: #30363d;
-    color: #c9d1d9;
-}
-
-body.dark-mode .folder-tile:hover {
-    background: #2c333a;
-}
-
-/* Folder Header Styling (Updated) */
 .folder-toolbar {
     width: 100%;
     max-width: 400px;
-    /* margin: 0 auto; Removed center alignment */
+    
     margin: 0;
-    /* No sticky needed if it is outside the scroll container */
 }
 
 .folder-header {
@@ -4054,9 +2933,8 @@ body.dark-mode .folder-tile:hover {
     gap: 10px;
     padding: 8px 12px;
     margin-bottom: 0;
-    /* Align closely with list */
+    
     background-color: transparent;
-    /* removed sticky/backdrop-filter as it's outside scroll area */
 }
 
 .folder-back {
@@ -4073,11 +2951,6 @@ body.dark-mode .folder-tile:hover {
     font-size: 1.1rem;
 }
 
-body.dark-mode .folder-back {
-    color: #c9d1d9;
-}
-
-/* Ensure controls don't overlap */
 .top-right-controls {
     align-items: center;
     top: 20px;
@@ -4087,21 +2960,12 @@ body.dark-mode .folder-back {
     display: flex;
 }
 
-/* Time Up Overlay - Full Screen Red Flash */
-/* Time Up Overlay - Full Screen Red Flash */
-/* Time Up Overlay Removed */
-
-/* Updated Search position: Top Left */
-/* Google Material Search Bar */
-
-
 .avatar-button {
     flex-shrink: 0;
     position: relative;
     z-index: 26;
 }
 
-/* Google Material Search Bar */
 .google-search-bar {
     display: flex;
     align-items: center;
@@ -4111,16 +2975,16 @@ body.dark-mode .folder-back {
     height: 48px;
     width: 100%;
     max-width: 584px;
-    /* Typical Google search bar max width */
+    
     margin: 0 0 20px 0;
-    /* Add some spacing */
+    
     box-shadow: none;
     transition: background-color 200ms cubic-bezier(0.4, 0.0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
     position: absolute;
     top: 20px;
     left: 20px;
     width: 48px;
-    /* Collapsed width matches height */
+    
     min-width: 48px;
     background: transparent;
     border-color: transparent;
@@ -4128,7 +2992,6 @@ body.dark-mode .folder-back {
     cursor: pointer;
     z-index: 100;
     pointer-events: auto;
-    /* Ensure it captures clicks */
 }
 
 .google-search-bar:hover,
@@ -4165,7 +3028,7 @@ body.dark-mode .folder-back {
     line-height: 34px;
     width: 100%;
     opacity: 0;
-    /* Hidden by default */
+    
     transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
@@ -4174,27 +3037,6 @@ body.dark-mode .folder-back {
     opacity: 1;
 }
 
-body.dark-mode .google-search-bar {
-    background: #303134;
-    border: 1px solid #5f6368;
-}
-
-body.dark-mode .google-search-bar:hover,
-body.dark-mode .google-search-bar:focus-within {
-    background: #303134;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, .5);
-    border-color: rgba(223, 225, 229, 0);
-}
-
-body.dark-mode .google-search-bar input {
-    color: #e8eaed;
-}
-
-body.dark-mode .google-search-bar .search-icon svg {
-    fill: #9aa0a6;
-}
-
-/* Material Icon Buttons */
 .material-icon-btn {
     width: 40px;
     height: 40px;
@@ -4209,247 +3051,206 @@ body.dark-mode .google-search-bar .search-icon svg {
     transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
     padding: 8px;
-    /* Ensure 24px icon fits nicely */
+    
     box-sizing: border-box;
     box-sizing: border-box;
-    /* Tighter spacing */
 }
-
-/* Specific fix for Star Button padding to make it larger/match others if needed */
-
-
-/* If user meant "touch target" bigger, width/height is 40px fixed. 
-If user meant "icon looks too big", increase padding.
-If user meant "icon looks too small", decrease padding.
-"padding can be bigger" => icon smaller. 
-Let's try 10px for star button specifically if it looks too large compared to others. */
-
 
 .material-icon-btn:hover {
     background-color: rgba(60, 64, 67, 0.08);
-    /* hover-state-layer-opacity */
 }
 
 .material-icon-btn:active {
     background-color: rgba(60, 64, 67, 0.12);
-    /* pressed-state-layer-opacity */
 }
 
 .material-icon-btn svg {
     flex-shrink: 0;
 }
 
-body.dark-mode .material-icon-btn {
-    color: #e8eaed;
-}
-
-body.dark-mode .material-icon-btn:hover {
-    background-color: rgba(232, 234, 237, 0.08);
-}
-
-/* Starred State Logic */
 .material-icon-btn .star-filled {
     display: none;
 }
 
-/* When starred, show filled, hide empty */
 .material-icon-btn.starred .star-filled {
     display: block !important;
-    /* Force show */
 }
 
 .material-icon-btn.starred .star-empty {
     display: none;
 }
 
-/* WeeGPT Glow Effect */
 .material-icon-btn.glow-effect:hover {
     background: linear-gradient(135deg, rgba(66, 133, 244, 0.1), rgba(219, 68, 55, 0.1), rgba(244, 180, 0, 0.1), rgba(15, 157, 88, 0.1));
 }
 
-/* =========================================
-   Mobile Optimization (max-width: 768px)
-   ========================================= */
 @media (max-width: 768px) {
+.start-screen {
+    padding-top: 70px;
+}
 
-    /* Global Adjustments */
-    .start-screen {
-        padding-top: 70px;
-    }
-
-    .start-title {
-        font-size: 2.8rem;
+.start-title {
+    font-size: 2.8rem;
         letter-spacing: 1px;
-    }
+}
 
-    .home-content {
-        padding: 0 16px 30px;
-    }
+.home-content {
+    padding: 0 16px 30px;
+}
 
-    /* Header Controls */
-    .top-right-controls {
-        top: 16px;
+.top-right-controls {
+    top: 16px;
         right: 16px;
         gap: 8px;
-    }
+}
 
-    .avatar-button {
-        width: 36px;
+.avatar-button {
+    width: 36px;
         height: 36px;
-    }
+}
 
-    .avatar-button img {
-        width: 30px;
+.avatar-button img {
+    width: 30px;
         height: 30px;
-    }
+}
 
-    .fab-add {
-        width: 34px;
+.fab-add {
+    width: 34px;
         height: 34px;
         font-size: 20px;
-    }
+}
 
-    /* Search Container adjustments for mobile */
-    .search-container {
-        left: 16px;
+.search-container {
+    left: 16px;
         top: 16px;
-    }
+}
 
-    .search-container.expanded {
-        width: calc(100vw - 80px);
+.search-container.expanded {
+    width: calc(100vw - 80px);
         max-width: 400px;
-    }
+}
 
-    /* Continue Card vertical stack */
-    .continue-card {
-        flex-direction: column;
+.continue-card {
+    flex-direction: column;
         align-items: flex-start;
         padding-right: 0;
         min-height: auto;
-    }
+}
 
-    .continue-details {
-        padding: 20px;
+.continue-details {
+    padding: 20px;
         width: 100%;
         box-sizing: border-box;
-    }
+}
 
-    .continue-btn-action {
-        width: calc(100% - 40px);
+.continue-btn-action {
+    width: calc(100% - 40px);
         margin: 0 20px 20px;
         text-align: center;
         display: block;
-    }
+}
 
-    /* Grid Layout */
-    .units-grid {
-        grid-template-columns: 1fr;
+.units-grid {
+    grid-template-columns: 1fr;
         gap: 12px;
-    }
+}
 
-    /* Quiz Interface */
-    .quiz-container {
-        padding: 16px;
-    }
+.quiz-container {
+    padding: 16px;
+}
 
-    .quiz-title {
-        font-size: 1.25rem;
-    }
+.quiz-title {
+    font-size: 1.25rem;
+}
 
-    .header-right {
-        gap: 8px;
-    }
+.header-right {
+    gap: 8px;
+}
 
-    .question-content {
-        font-size: 1.05rem;
+.question-content {
+    font-size: 1.05rem;
         margin-bottom: 20px;
         line-height: 1.55;
-    }
+}
 
-    .option-button {
-        padding: 16px;
+.option-button {
+    padding: 16px;
         margin-bottom: 12px;
         font-size: 1rem;
-    }
+}
 
-    /* Dialogs/Modals */
-    .controls-menu {
-        width: 260px;
+.controls-menu {
+    width: 260px;
         right: 12px;
         top: 60px;
-    }
+}
 }
 
 @media (max-width: 480px) {
-    .start-title {
-        font-size: 2.2rem;
+.start-title {
+    font-size: 2.2rem;
         margin-top: 10px;
-    }
+}
 
-    .home-content {
-        padding: 0 12px 24px;
-    }
+.home-content {
+    padding: 0 12px 24px;
+}
 
-    .start-screen {
-        padding-top: 60px;
-    }
+.start-screen {
+    padding-top: 60px;
+}
 
-    .search-container {
-        left: 12px;
+.search-container {
+    left: 12px;
         top: 12px;
-    }
+}
 
-    .top-right-controls {
-        top: 12px;
+.top-right-controls {
+    top: 12px;
         right: 12px;
-    }
+}
 
-    /* Progress bar adjustments */
-    .progress-container {
-        margin-bottom: 20px;
-    }
+.progress-container {
+    margin-bottom: 20px;
+}
 
-    .progress-count {
-        padding: 4px 8px;
+.progress-count {
+    padding: 4px 8px;
         font-size: 0.8rem;
-    }
+}
 
-    .explanation-buttons {
-        display: flex;
+.explanation-buttons {
+    display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         width: 100%;
         margin-top: 8px;
         gap: 12px;
-    }
-
-    .next-button {
-        padding: 14px;
-        font-size: 1rem;
-    }
-
-
-    .copy-btn,
-    .gemini-btn,
-    .star-btn {
-        padding: 10px;
-        /* larger touch target for icons */
-    }
-
-    .modal-content {
-        width: 90%;
-        margin: 20% auto;
-    }
-
-    /* Fill blank input */
-    .fillblank-input {
-        padding: 10px;
-        font-size: 1rem;
-    }
 }
 
-/* Mistake List Styles */
+.next-button {
+    padding: 14px;
+        font-size: 1rem;
+}
+
+.copy-btn,
+.gemini-btn,
+.star-btn {
+    padding: 10px;
+}
+
+.modal-content {
+    width: 90%;
+        margin: 20% auto;
+}
+
+.fillblank-input {
+    padding: 10px;
+        font-size: 1rem;
+}
+}
+
 #mistakeList {
     display: flex;
     flex-direction: column;
@@ -4460,7 +3261,6 @@ body.dark-mode .material-icon-btn:hover {
     padding-right: 4px;
 }
 
-/* Scrollbar for mistake list */
 #mistakeList::-webkit-scrollbar {
     width: 6px;
 }
@@ -4468,10 +3268,6 @@ body.dark-mode .material-icon-btn:hover {
 #mistakeList::-webkit-scrollbar-thumb {
     background-color: #dadce0;
     border-radius: 3px;
-}
-
-body.dark-mode #mistakeList::-webkit-scrollbar-thumb {
-    background-color: #5f6368;
 }
 
 .mistake-item {
@@ -4527,43 +3323,19 @@ body.dark-mode #mistakeList::-webkit-scrollbar-thumb {
     margin: 0;
 }
 
-/* Dark Mode */
-body.dark-mode .mistake-item {
-    background: #2a2a2a;
-    border-color: #5f6368;
-}
-
-body.dark-mode .mistake-content {
-    color: #e8eaed;
-}
-
-body.dark-mode .mistake-badge {
-    background: #3c4043;
-    color: #bdc1c6;
-}
-
-body.dark-mode .mistake-badge.high-mistake {
-    background: #663333;
-    /* Darker red bg for dark mode */
-    color: #f28b82;
-    /* Lighter red text for dark mode */
-}
-
-
-/* Item Card */
 .mistake-item {
     display: flex;
     flex-direction: column;
-    /* Vertical stack */
+    
     padding: 16px 0;
-    /* Vertical padding only, no horizontal */
+    
     margin-bottom: 0;
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #f1f3f4;
-    /* Subtle divider */
+    
     height: auto;
-    /* Content drives height */
+    
     gap: 12px;
 }
 
@@ -4576,7 +3348,6 @@ body.dark-mode .mistake-badge.high-mistake {
     box-shadow: none;
 }
 
-/* Header Row */
 .mistake-item-header {
     display: flex;
     justify-content: space-between;
@@ -4589,7 +3360,7 @@ body.dark-mode .mistake-badge.high-mistake {
     font-size: 1.05rem;
     font-weight: 500;
     color: #3c4043;
-    /* Google Grey 800 */
+    
     line-height: 1.5;
 }
 
@@ -4597,20 +3368,18 @@ body.dark-mode .mistake-badge.high-mistake {
     margin: 0;
 }
 
-/* Badge */
 .mistake-count-badge {
     background-color: #fce8e6;
     color: #c5221f;
     padding: 4px 10px;
     border-radius: 99px;
-    /* Pill */
+    
     font-weight: 600;
     font-size: 0.8rem;
     white-space: nowrap;
     align-self: flex-start;
 }
 
-/* Options */
 .mistake-options {
     font-size: 0.95rem;
     color: #4b4b4b;
@@ -4635,14 +3404,13 @@ body.dark-mode .mistake-badge.high-mistake {
 .mistake-options .correct-option {
     background-color: rgba(26, 115, 232, 0.1);
     color: #1a73e8;
-    /* Google Blue */
+    
     font-weight: 600;
 }
 
-/* Details: Answer & Explanation */
 .mistake-details {
     background-color: #f1f3f4;
-    /* Google Grey 100 */
+    
     padding: 12px;
     border-radius: 8px;
     font-size: 0.95rem;
@@ -4653,14 +3421,12 @@ body.dark-mode .mistake-badge.high-mistake {
 .mistake-answer-row {
     margin-bottom: 8px;
     color: #1a73e8;
-    /* Highlight answer row */
 }
 
 .mistake-explanation-row strong {
     color: #202124;
 }
 
-/* Origin Check Style */
 .mistake-origin-row {
     margin-top: 8px;
     font-size: 0.85rem;
@@ -4668,70 +3434,13 @@ body.dark-mode .mistake-badge.high-mistake {
     text-align: right;
 }
 
-/* Dark Mode Overrides */
-body.dark-mode .mistake-modal-content {
-    background-color: #2d2d2d;
-}
-
-body.dark-mode .mistake-modal-content h3 {
-    color: #e8eaed;
-}
-
-body.dark-mode #mistakeList::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-body.dark-mode .mistake-item {
-    background-color: transparent;
-    border-color: transparent;
-    border-bottom-color: #454545;
-}
-
-body.dark-mode .mistake-item:hover {
-    background-color: transparent;
-    box-shadow: none;
-}
-
-body.dark-mode .mistake-info {
-    color: #e8eaed;
-}
-
-body.dark-mode .mistake-count-badge {
-    background-color: #5c1e1d;
-    color: #f2b8b5;
-}
-
-body.dark-mode .mistake-options {
-    color: #c9d1d9;
-}
-
-body.dark-mode .mistake-options .correct-option {
-    background-color: rgba(138, 180, 248, 0.15);
-    color: #8ab4f8;
-    /* Light Blue */
-}
-
-body.dark-mode .mistake-details {
-    background-color: #2a2a2a;
-    color: #9aa0a6;
-}
-
-body.dark-mode .mistake-answer-row {
-    color: #8ab4f8;
-}
-
-body.dark-mode .mistake-explanation-row strong {
-    color: #e8eaed;
-}
-
-/* Full Screen View (Material 3) */
 .full-screen-view {
     position: fixed;
     inset: 0;
     z-index: 2000;
     background-color: #ffffff;
     display: none;
-    /* Hidden by default */
+    
     flex-direction: column;
     width: 100vw;
     height: 100vh;
@@ -4742,9 +3451,9 @@ body.dark-mode .mistake-explanation-row strong {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* Space out Title (Left) and Close (Right) */
+    
     padding: 0 16px;
-    /* Material specifies 16px horizontal padding */
+    
     gap: 24px;
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
@@ -4754,10 +3463,10 @@ body.dark-mode .mistake-explanation-row strong {
 
 .view-title {
     font-size: 1.2rem;
-    /* User requested 1.1rem */
+    
     font-weight: 400;
     font-family: 'XiaoZuan', Georgia, "Playfair Display", "Noto Serif TC", serif;
-    /* User requested XiaoZuan */
+    
     color: #1f1f1f;
     margin: 0;
 }
@@ -4766,35 +3475,18 @@ body.dark-mode .mistake-explanation-row strong {
     flex: 1;
     overflow-y: auto;
     padding: 24px 16px;
-    /* Ensure content is centered or constrained if screen is very wide */
+    
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-/* Dark Mode for Full Screen View */
-body.dark-mode .full-screen-view {
-    background-color: #1a1a1a;
-}
-
-body.dark-mode .top-app-bar {
-    background-color: #1a1a1a;
-    border-bottom-color: #444;
-}
-
-body.dark-mode .view-title {
-    color: #e8eaed;
-}
-
-/* --- Material 3 Dialog & Add Quiz Modal Refinement --- */
-
-/* Overlay */
 .md3-modal-overlay {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.4);
-    /* Scrim */
+    
     display: none;
     align-items: center;
     justify-content: center;
@@ -4802,16 +3494,15 @@ body.dark-mode .view-title {
     animation: fadeIn 0.2s ease-out;
 }
 
-/* Dialog Card */
 .md3-dialog {
     background-color: #ffffff;
-    /* Surface Container High */
+    
     border-radius: 28px;
-    /* M3 Dialog corner radius */
+    
     padding: 24px;
     width: 90%;
     max-width: 400px;
-    /* Standard dialog width */
+    
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: flex;
     flex-direction: column;
@@ -4819,7 +3510,6 @@ body.dark-mode .view-title {
     animation: scaleIn 0.2s ease-out;
 }
 
-/* Header */
 .md3-dialog-header {
     display: flex;
     align-items: center;
@@ -4830,7 +3520,7 @@ body.dark-mode .view-title {
 .md3-dialog-title {
     margin: 0;
     font-size: 1.5rem;
-    /* Headline Small */
+    
     color: #1f1f1f;
     font-weight: 400;
 }
@@ -4848,14 +3538,12 @@ body.dark-mode .view-title {
     background-color: rgba(67, 71, 78, 0.08);
 }
 
-/* Body Content */
 .md3-dialog-body {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Segmented Button */
 .md3-segmented-btn-group {
     display: flex;
     border: 1px solid #727775;
@@ -4888,20 +3576,17 @@ body.dark-mode .view-title {
 
 .md3-segmented-btn input:checked+span {
     background-color: #d3e3fd;
-    /* Secondary Container */
+    
     color: #041e49;
-    /* On Secondary Container */
 }
 
 .md3-segmented-btn:first-child span {
     border-right: 1px solid #727775;
 }
 
-/* Material Outlined Input */
 .md3-input-wrapper {
     position: relative;
     padding-top: 6px;
-    /* Space for label to move up */
 }
 
 .md3-input,
@@ -4909,7 +3594,7 @@ body.dark-mode .view-title {
     width: 100%;
     border: 1px solid #727775;
     border-radius: 4px;
-    /* Text field radius */
+    
     padding: 12px 16px;
     background: transparent;
     color: #1f1f1f;
@@ -4927,11 +3612,10 @@ body.dark-mode .view-title {
 .md3-input:focus,
 .md3-textarea:focus {
     border-color: #0b57d0;
-    /* Primary */
+    
     outline: none;
     border-width: 2px;
     padding: 11px 15px;
-    /* Adjust for border width increase */
 }
 
 .md3-floating-label {
@@ -4940,14 +3624,13 @@ body.dark-mode .view-title {
     top: 16px;
     padding: 0 4px;
     background-color: #fff;
-    /* Mask line */
+    
     color: #444746;
     pointer-events: none;
     transition: 0.2s ease all;
     font-size: 1rem;
 }
 
-/* Float label when focused or has value */
 .md3-input:focus~.md3-floating-label,
 .md3-input:not(:placeholder-shown)~.md3-floating-label,
 .md3-textarea:focus~.md3-floating-label,
@@ -4957,7 +3640,6 @@ body.dark-mode .view-title {
     color: #0b57d0;
 }
 
-/* File Drop Zone Refinement */
 .file-drop-zone {
     border: 2px dashed #727775;
     border-radius: 12px;
@@ -4979,7 +3661,6 @@ body.dark-mode .view-title {
     fill: #0b57d0;
 }
 
-/* Actions */
 .md3-dialog-actions {
     display: flex;
     justify-content: flex-end;
@@ -4991,9 +3672,9 @@ body.dark-mode .view-title {
     border: none;
     background: transparent;
     color: #0b57d0;
-    /* Primary */
+    
     padding: 10px 12px;
-    /* Reduced horizontal padding for text buttons */
+    
     border-radius: 20px;
     font-weight: 500;
     font-size: 0.9rem;
@@ -5027,67 +3708,8 @@ body.dark-mode .view-title {
     box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* Dark Mode Support for M3 Dialog */
-body.dark-mode .md3-dialog {
-    background-color: #2d2d2d;
-    /* Surface Container High Dark */
-}
-
-body.dark-mode .md3-dialog-title {
-    color: #e3e3e3;
-}
-
-body.dark-mode .md3-input,
-body.dark-mode .md3-textarea {
-    color: #e3e3e3;
-    border-color: #8e918f;
-}
-
-body.dark-mode .md3-floating-label {
-    background-color: #2d2d2d;
-    color: #c4c7c5;
-}
-
-body.dark-mode .md3-input:focus,
-body.dark-mode .md3-textarea:focus {
-    border-color: #a8c7fa;
-}
-
-body.dark-mode .md3-input:focus~.md3-floating-label,
-body.dark-mode .md3-textarea:focus~.md3-floating-label {
-    color: #a8c7fa;
-}
-
-body.dark-mode .md3-segmented-btn-group {
-    border-color: #8e918f;
-}
-
-body.dark-mode .md3-segmented-btn span {
-    color: #c4c7c5;
-}
-
-body.dark-mode .md3-segmented-btn input:checked+span {
-    background-color: #004a77;
-    color: #c2e7ff;
-}
-
-body.dark-mode .md3-text-btn {
-    color: #a8c7fa;
-}
-
-body.dark-mode .md3-text-btn:hover {
-    background-color: rgba(168, 199, 250, 0.08);
-}
-
-body.dark-mode .md3-filled-btn {
-    background-color: #a8c7fa;
-    color: #062e6f;
-}
-
-/* Edit Mode Pen Icon Styles */
 .unit-card {
     position: relative;
-    /* For absolute positioning of edit icon if needed */
 }
 
 .quiz-edit-btn {
@@ -5100,7 +3722,7 @@ body.dark-mode .md3-filled-btn {
     width: 32px;
     height: 32px;
     display: none;
-    /* Hidden by default */
+    
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -5122,7 +3744,7 @@ body.dark-mode .md3-filled-btn {
 }
 
 @keyframes popIn {
-    0% {
+0% {
         transform: scale(0);
         opacity: 0;
     }
@@ -5137,22 +3759,11 @@ body.dark-mode .md3-filled-btn {
     }
 }
 
-body.dark-mode .quiz-edit-btn {
-    background-color: #353535;
-    border-color: #555;
-    color: #e3e3e3;
-}
-
-body.dark-mode .quiz-edit-btn:hover {
-    background-color: #454545;
-    color: #a8c7fa;
-}
-
 .quiz-archive-btn {
     position: absolute;
     top: 8px;
     right: 48px;
-    /* positioned to the left of edit button */
+    
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 50%;
@@ -5179,23 +3790,6 @@ body.dark-mode .quiz-edit-btn:hover {
     color: #0b57d0;
 }
 
-body.dark-mode .quiz-archive-btn {
-    background-color: #353535;
-    border-color: #555;
-    color: #e3e3e3;
-}
-
-body.dark-mode .quiz-archive-btn:hover {
-    background-color: #454545;
-    color: #a8c7fa;
-}
-
-body.dark-mode #archiveConfirmMessage {
-    color: #e3e3e3 !important;
-}
-
-/* --- End Screen (Google Material 3 Redesign) --- */
-
 .end-screen-container {
     display: flex;
     flex-direction: column;
@@ -5203,15 +3797,13 @@ body.dark-mode #archiveConfirmMessage {
     align-items: center;
     width: 100%;
     min-height: 400px;
-    /* Ensure some height if standalone */
+    
     animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
     padding: 24px;
     box-sizing: border-box;
-    /* Ensure it overlays correctly if needed, though structure implies flow */
 }
 
-/* --- Google Results Screen (M3 Design) --- */
 .end-screen-overlay {
     position: fixed;
     top: 0;
@@ -5228,7 +3820,7 @@ body.dark-mode #archiveConfirmMessage {
 }
 
 @keyframes overlayFadeIn {
-    from {
+from {
         opacity: 0;
     }
 
@@ -5249,7 +3841,7 @@ body.dark-mode #archiveConfirmMessage {
 }
 
 @keyframes containerSlideUp {
-    from {
+from {
         opacity: 0;
         transform: translateY(40px) scale(0.95);
     }
@@ -5264,7 +3856,6 @@ body.dark-mode #archiveConfirmMessage {
     margin-bottom: 8px;
 }
 
-/* Animated Checkmark SVG */
 .check-animation {
     width: 80px;
     height: 80px;
@@ -5290,7 +3881,7 @@ body.dark-mode #archiveConfirmMessage {
 }
 
 @keyframes stroke {
-    100% {
+100% {
         stroke-dashoffset: 0;
     }
 }
@@ -5408,56 +3999,8 @@ body.dark-mode #archiveConfirmMessage {
     border-color: #1a73e8;
 }
 
-/* Dark Mode Results */
-body.dark-mode .end-screen-overlay {
-    background: rgba(30, 31, 34, 0.95);
-}
-
-body.dark-mode .results-title {
-    color: #e8eaed;
-}
-
-body.dark-mode .results-subtitle {
-    color: #9aa0a6;
-}
-
-body.dark-mode .stat-card {
-    background: #303134;
-}
-
-body.dark-mode .stat-card:hover {
-    background-color: #3c4043;
-}
-
-body.dark-mode .stat-value {
-    color: #e8eaed;
-}
-
-body.dark-mode .stat-label {
-    color: #9aa0a6;
-}
-
-body.dark-mode .m3-btn-filled {
-    background-color: #8ab4f8;
-    color: #202124;
-}
-
-body.dark-mode .m3-btn-outlined {
-    border-color: #5f6368;
-    color: #8ab4f8;
-}
-
-body.dark-mode .m3-btn-outlined:hover {
-    background-color: rgba(138, 180, 248, 0.08);
-}
-
-body.dark-mode .check-circle,
-body.dark-mode .check-mark {
-    stroke: #81c995;
-}
-
 @keyframes fadeIn {
-    from {
+from {
         opacity: 0;
         transform: translateY(20px);
     }
@@ -5468,332 +4011,11 @@ body.dark-mode .check-mark {
     }
 }
 
-/* ==========================================================================
-   UNIFIED DARK MODE OVERRIDES (Pure Color Properties Only)
-   ========================================================================== */
-body.dark-mode {
-    /* 1. App background containers */
-    background-color: var(--bg-color) !important;
-}
 
-body.dark-mode .start-screen,
-body.dark-mode .home-content,
-body.dark-mode .quiz-container,
-body.dark-mode .full-screen-view,
-body.dark-mode .end-screen-overlay {
-    background-color: var(--bg-color) !important;
-    color: var(--on-surface) !important;
-}
-
-/* 2. Elevated Surface Components (All cards, dialogs, menus, list items that are white in light mode) */
-body.dark-mode .unit-card,
-body.dark-mode .continue-card,
-body.dark-mode .select-button,
-body.dark-mode .restoreBtn_C3D4,
-body.dark-mode .folder-tile,
-body.dark-mode .controls-menu,
-body.dark-mode .option-button,
-body.dark-mode .md3-dialog,
-body.dark-mode .modal-content,
-body.dark-mode .starred-modal-content,
-body.dark-mode .mistake-item,
-body.dark-mode .search-inner-bar,
-body.dark-mode .google-search-bar,
-body.dark-mode .quiz-edit-btn,
-body.dark-mode .quiz-archive-btn {
-    background-color: var(--surface-color) !important;
-    background: var(--surface-color) !important;
-    color: var(--on-surface) !important;
-    border-color: var(--outline-variant) !important;
-}
-
-/* 3. Hover / Active states for elevated components */
-body.dark-mode .unit-card:hover,
-body.dark-mode .continue-card:hover,
-body.dark-mode .select-button:hover,
-body.dark-mode .restoreBtn_C3D4:hover,
-body.dark-mode .folder-tile:hover,
-body.dark-mode .option-button:hover,
-body.dark-mode .quiz-edit-btn:hover,
-body.dark-mode .quiz-archive-btn:hover {
-    background-color: var(--surface-variant) !important;
-    background: var(--surface-variant) !important;
-    border-color: var(--primary) !important;
-    color: var(--primary) !important;
-}
-
-/* 4. Controls menu header */
-body.dark-mode .controls-menu-header {
-    background-color: var(--surface-variant) !important;
-    border-color: var(--outline-variant) !important;
-}
-
-/* 5. Flat list items / Icon buttons hover (No border color modifications, transparent overlay only) */
-body.dark-mode .controls-item:hover,
-body.dark-mode .action-icon-btn:hover,
-body.dark-mode .header-icon-btn:hover,
-body.dark-mode .material-icon-btn:hover,
-body.dark-mode .search-icon-btn:hover,
-body.dark-mode .search-close-btn:hover {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: var(--on-surface) !important;
-}
-
-/* 6. Star icon, headers & material icons */
-body.dark-mode .action-icon-btn,
-body.dark-mode .header-icon-btn,
-body.dark-mode .material-icon-btn {
-    color: var(--on-surface-variant) !important;
-}
-
-/* 7. Settings popup user details */
-body.dark-mode .menu-name {
-    color: var(--on-surface) !important;
-}
-
-body.dark-mode .menu-email {
-    color: var(--on-surface-variant) !important;
-}
-
-/* 8. Inputs & Textareas */
-body.dark-mode #uploadNameInput,
-body.dark-mode #pasteJson,
-body.dark-mode #topicSearch,
-body.dark-mode #userQuestion,
-body.dark-mode .fillblank-input,
-body.dark-mode .rename-input,
-body.dark-mode .topics-toolbar input[type="text"] {
-    background-color: var(--surface-color) !important;
-    background: var(--surface-color) !important;
-    border-color: var(--outline-variant) !important;
-    color: var(--on-surface) !important;
-}
-
-body.dark-mode #uploadNameInput:focus,
-body.dark-mode #pasteJson:focus,
-body.dark-mode #topicSearch:focus,
-body.dark-mode #userQuestion:focus,
-body.dark-mode .fillblank-input:focus,
-body.dark-mode .rename-input:focus,
-body.dark-mode .topics-toolbar input[type="text"]:focus {
-    background-color: var(--surface-variant) !important;
-    background: var(--surface-variant) !important;
-    border-color: var(--primary) !important;
-}
-
-body.dark-mode #uploadNameInput::placeholder,
-body.dark-mode #pasteJson::placeholder,
-body.dark-mode #topicSearch::placeholder,
-body.dark-mode #userQuestion::placeholder,
-body.dark-mode .fillblank-input::placeholder,
-body.dark-mode .topics-toolbar input::placeholder {
-    color: var(--on-surface-variant) !important;
-}
-
-/* 9. Floating labels for inputs inside dialogs */
-body.dark-mode .md3-floating-label {
-    background-color: var(--surface-color) !important;
-    background: var(--surface-color) !important;
-    color: var(--on-surface-variant) !important;
-}
-
-/* 10. Dialog Action / Overlay Overrides */
-body.dark-mode .md3-modal-overlay {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-}
-
-body.dark-mode .modal-close,
-body.dark-mode .md3-icon-btn.modal-close {
-    color: var(--on-surface-variant) !important;
-}
-
-body.dark-mode .modal-close:hover {
-    color: var(--on-surface) !important;
-}
-
-/* 11. Action Buttons */
-body.dark-mode .confirm-button,
-body.dark-mode .next-button {
-    background-color: #0b57d0 !important;
-    background: #0b57d0 !important;
-    color: #ffffff !important;
-    border-color: transparent !important;
-}
-
-body.dark-mode .confirm-button:hover,
-body.dark-mode .next-button:hover {
-    background-color: #0a4dbe !important;
-    background: #0a4dbe !important;
-    color: #ffffff !important;
-    border-color: transparent !important;
-}
-
-body.dark-mode .md3-filled-btn,
-body.dark-mode .start-button,
-body.dark-mode .m3-btn-filled {
-    background-color: var(--primary) !important;
-    background: var(--primary) !important;
-    color: var(--on-primary) !important;
-    border-color: transparent !important;
-}
-
-body.dark-mode .md3-filled-btn:hover,
-body.dark-mode .start-button:hover,
-body.dark-mode .m3-btn-filled:hover {
-    background-color: var(--surface-variant) !important;
-    background: var(--surface-variant) !important;
-    color: var(--primary) !important;
-    border-color: var(--primary) !important;
-}
-
-/* 12. Outlined Buttons & Segmented Buttons */
-body.dark-mode .m3-btn-outlined,
-body.dark-mode .md3-text-btn {
-    border-color: var(--outline) !important;
-    color: var(--primary) !important;
-    background-color: transparent !important;
-    background: transparent !important;
-}
-
-body.dark-mode .m3-btn-outlined:hover,
-body.dark-mode .md3-text-btn:hover {
-    background-color: var(--surface-variant) !important;
-}
-
-body.dark-mode .md3-segmented-btn-group {
-    border-color: var(--outline-variant) !important;
-}
-
-body.dark-mode .md3-segmented-btn {
-    border-right-color: var(--outline-variant) !important;
-    color: var(--on-surface-variant) !important;
-}
-
-body.dark-mode .md3-segmented-btn input[type="radio"]:checked+span {
-    background-color: var(--primary-container) !important;
-    color: var(--on-primary-container) !important;
-}
-
-/* 13. Folder Groups & Breadcrumbs */
-body.dark-mode .quiz-group {
-    background-color: var(--surface-color) !important;
-    border-color: var(--outline-variant) !important;
-}
-
-body.dark-mode .quiz-group-title {
-    color: var(--on-surface) !important;
-}
-
-body.dark-mode .quiz-group-buttons {
-    border-top-color: var(--outline-variant) !important;
-}
-
-/* 14. Explanation Box & Chat Input Wrapper */
-body.dark-mode .explanation {
-    background-color: var(--surface-color) !important;
-    color: var(--on-surface) !important;
-    border-color: var(--outline-variant) !important;
-}
-
-body.dark-mode .chat-input-wrapper {
-    background-color: var(--surface-variant) !important;
-    border-color: var(--outline-variant) !important;
-}
-
-body.dark-mode .chat-input-wrapper:focus-within {
-    background-color: var(--surface-color) !important;
-    border-color: var(--primary) !important;
-}
-
-/* 15. Selected State for buttons/options */
-body.dark-mode .option-button.selected,
-body.dark-mode .select-button.selected {
-    background-color: var(--primary-container) !important;
-    background: var(--primary-container) !important;
-    border-color: var(--primary) !important;
-    color: var(--on-primary-container) !important;
-}
-
-body.dark-mode .option-button.selected:hover,
-body.dark-mode .select-button.selected:hover {
-    background-color: var(--primary-container) !important;
-    border-color: var(--primary) !important;
-}
-
-/* Option states */
-body.dark-mode .option-button.correct {
-    background-color: rgba(76, 175, 80, 0.15) !important;
-    background: rgba(76, 175, 80, 0.15) !important;
-    border-color: #81c995 !important;
-    color: #e6f4ea !important;
-}
-
-body.dark-mode .option-button.incorrect {
-    background-color: rgba(234, 67, 53, 0.15) !important;
-    background: rgba(234, 67, 53, 0.15) !important;
-    border-color: #f28b82 !important;
-    color: #fce8e6 !important;
-}
-
-body.dark-mode .option-button.missing {
-    background-color: rgba(251, 188, 4, 0.1) !important;
-    background: rgba(251, 188, 4, 0.1) !important;
-    border-color: #fdd663 !important;
-}
-
-/* 16. Progress display, results and states */
-body.dark-mode #progress-bar-wrapper,
-body.dark-mode .progress-bars {
-    background-color: var(--bg-color) !important;
-    background: var(--bg-color) !important;
-}
-
-body.dark-mode .progress-count {
-    color: var(--on-surface-variant) !important;
-    background-color: var(--surface-variant) !important;
-    background: var(--surface-variant) !important;
-}
-
-body.dark-mode .progress-count:first-child {
-    color: #81c995 !important;
-    background-color: rgba(129, 201, 149, 0.15) !important;
-    background: rgba(129, 201, 149, 0.15) !important;
-}
-
-body.dark-mode .progress-count:last-child {
-    color: #f28b82 !important;
-    background-color: rgba(242, 139, 130, 0.15) !important;
-    background: rgba(242, 139, 130, 0.15) !important;
-}
-
-body.dark-mode .stat-card {
-    background-color: var(--surface-color) !important;
-    color: var(--on-surface) !important;
-}
-
-body.dark-mode .stat-card:hover {
-    background-color: var(--surface-variant) !important;
-}
-
-body.dark-mode .stat-value {
-    color: var(--on-surface) !important;
-}
-
-body.dark-mode .stat-label {
-    color: var(--on-surface-variant) !important;
-}
-
-body.dark-mode .correct-option {
-    color: #81c995 !important;
-}
-
-/* Progress Dots Styles */
 .progress-dots {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
+    gap: -2px; 
     justify-content: flex-start;
     align-items: center;
 }
@@ -5805,7 +4027,9 @@ body.dark-mode .correct-option {
     border-radius: 50%;
     background-color: var(--outline-variant, #c4c7c5);
     cursor: pointer;
-    box-sizing: border-box;
+    box-sizing: content-box;
+    border: 5px solid transparent;
+    background-clip: padding-box;
     position: relative;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
 }
@@ -5814,7 +4038,7 @@ body.dark-mode .correct-option {
     transform: scale(1.3);
 }
 
-/* Custom CSS Tooltip for progress dot */
+
 .progress-dot::before {
     content: attr(data-tooltip);
     position: absolute;
@@ -5850,7 +4074,7 @@ body.dark-mode .correct-option {
     background-color: #d93025;
 }
 
-/* Base outline style using absolute pseudo-element to guarantee pixel-perfect centering */
+
 .progress-dot.current-progress::after,
 .progress-dot.viewing::after {
     content: '';
@@ -5864,54 +4088,24 @@ body.dark-mode .correct-option {
     pointer-events: none;
 }
 
-/* Current active question in the quiz */
+
 .progress-dot.current-progress::after {
     border: 1px solid var(--primary, #0b57d0);
     background-color: transparent;
 }
 
-/* Currently viewed question */
+
 .progress-dot.viewing::after {
     border: 1px solid var(--primary-container, #d3e3fd);
     background-color: transparent;
 }
 
-/* Currently viewed and active question */
+
 .progress-dot.current-progress.viewing::after {
     border: 1px solid var(--primary, #0b57d0);
 }
 
-/* Dark mode overrides for dots */
-body.dark-mode .progress-dot {
-    background-color: var(--outline, #444c56);
-}
 
-body.dark-mode .progress-dot.correct {
-    background-color: #0d652d;
-}
-
-body.dark-mode .progress-dot.wrong {
-    background-color: #d93025;
-}
-
-body.dark-mode .progress-dot::before {
-    background-color: var(--inverse-surface, #e3e3e3);
-    color: var(--inverse-on-surface, #1f1f1f);
-}
-
-body.dark-mode .progress-dot.current-progress::after {
-    border-color: var(--primary, #8ab4f8);
-}
-
-body.dark-mode .progress-dot.viewing::after {
-    border-color: var(--primary-container, #1f3a60);
-}
-
-body.dark-mode .progress-dot.current-progress.viewing::after {
-    border-color: var(--primary, #8ab4f8);
-}
-
-/* Back Progress Button */
 .back-progress-button {
     margin-top: 20px;
     padding: 10px 24px;
@@ -5947,21 +4141,12 @@ body.dark-mode .progress-dot.current-progress.viewing::after {
     align-self: center;
 }
 
-body.dark-mode .back-progress-button {
-    background-color: var(--primary);
-    color: var(--on-primary);
-}
-
-body.dark-mode .back-progress-button:hover {
-    background-color: var(--primary);
-}
-
 .mistake-options li p {
     margin: 0;
     display: inline;
 }
 
-/* Card progress indicator styles */
+
 .unit-progress-container {
     margin-top: 8px;
     display: flex;
@@ -5982,20 +4167,12 @@ body.dark-mode .back-progress-button:hover {
     color: #34a853;
 }
 
-body.dark-mode .unit-progress-text.completed {
-    color: #81c995;
-}
-
 .unit-progress-bar {
     width: 100%;
     height: 4px;
     background-color: var(--outline-variant);
     border-radius: 2px;
     overflow: hidden;
-}
-
-body.dark-mode .unit-progress-bar {
-    background-color: var(--outline);
 }
 
 .unit-progress-fill {
@@ -6005,7 +4182,7 @@ body.dark-mode .unit-progress-bar {
     transition: width 0.3s ease;
 }
 
-/* Global mistake list card styles */
+
 .global-mistake-card {
     display: flex;
     justify-content: space-between;
@@ -6044,10 +4221,6 @@ body.dark-mode .unit-progress-bar {
     font-weight: 500;
 }
 
-body.dark-mode .global-mistake-count {
-    color: #f28b82;
-}
-
 .global-mistake-card .arrow-icon {
     color: var(--on-surface-variant);
     transition: transform 0.2s;
@@ -6058,42 +4231,36 @@ body.dark-mode .global-mistake-count {
     color: var(--on-surface);
 }
 
-/* Modal action options and M3 buttons inside Dialog */
+
 .quiz-action-options button {
     margin: 0 !important;
 }
 
-/* Batch Selection and Action Bar Styles */
+
 .unit-card.batch-selected {
     background-color: #e8f0fe !important;
     border-color: #1a73e8 !important;
     box-shadow: 0 0 0 1px #1a73e8;
 }
 
-body.dark-mode .unit-card.batch-selected {
-    background-color: #1a233a !important;
-    border-color: #8ab4f8 !important;
-    box-shadow: 0 0 0 1px #8ab4f8;
-}
 
-/* Edit Mode card interaction adjustment */
 .units-grid.edit-mode .unit-card {
     transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .units-grid.edit-mode .unit-card:hover {
     transform: none;
-    /* Keep flat in edit mode */
+    
 }
 
-/* Floating Action Bar at bottom */
+
 .batch-action-bar {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(120%);
     background: #1f1f1f;
-    /* Material dark surface */
+    
     color: #ffffff;
     border-radius: 28px;
     padding: 12px 24px;
@@ -6150,33 +4317,27 @@ body.dark-mode .unit-card.batch-selected {
 
 .batch-btn.execute-btn {
     background: #0b57d0;
-    /* Google blue color */
+    
 }
 
 .batch-btn.execute-btn:hover {
     background: #0b60e6;
 }
 
-/* Dark mode overrides for floating bar */
-body.dark-mode .batch-action-bar {
-    background: #e3e3e3;
-    color: #1f1f1f;
+/* ==========================================================================
+   DARK READER DYNAMIC FILTER DARK MODE
+   ========================================================================== */
+html.dark-mode {
+    filter: invert(0.9) hue-rotate(180deg);
+    background-color: #ffffff !important; /* Force white background so it inverts to dark grey */
 }
 
-body.dark-mode .batch-btn {
-    background: rgba(0, 0, 0, 0.08);
-    color: #1f1f1f;
-}
-
-body.dark-mode .batch-btn:hover {
-    background: rgba(0, 0, 0, 0.16);
-}
-
-body.dark-mode .batch-btn.execute-btn {
-    background: #0b57d0;
-    color: #ffffff;
-}
-
-body.dark-mode .batch-btn.execute-btn:hover {
-    background: #0b60e6;
+/* Re-invert media assets, profile images, and icons back to original colors */
+html.dark-mode img,
+html.dark-mode video,
+html.dark-mode iframe,
+html.dark-mode .avatar-button img,
+html.dark-mode .menu-avatar,
+html.dark-mode .exclude-invert {
+    filter: invert(1) hue-rotate(180deg);
 }

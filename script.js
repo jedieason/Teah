@@ -2671,8 +2671,10 @@ function updateMenuThemeLabel() {
 
 function applyTheme() {
     if (isDarkMode) {
+        document.documentElement.classList.add('dark-mode');
         document.body.classList.add('dark-mode');
     } else {
+        document.documentElement.classList.remove('dark-mode');
         document.body.classList.remove('dark-mode');
     }
     // 儲存主題設定到 localStorage
