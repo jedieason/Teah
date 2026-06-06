@@ -4,9 +4,14 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase
 import { getDatabase, ref, get, update, set, remove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+const currentHost = window.location.hostname;
+const defaultAuthDomain = "stock-market-ntumed.firebaseapp.com";
+const isFirebaseHost = currentHost.endsWith(".web.app") || currentHost.endsWith(".firebaseapp.com");
+const authDomain = isFirebaseHost ? currentHost : defaultAuthDomain;
+
 const firebaseConfig = {
     apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
-    authDomain: "stock-market-ntumed.firebaseapp.com",
+    authDomain: authDomain,
     databaseURL: "https://stock-market-ntumed-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "stock-market-ntumed",
     storageBucket: "stock-market-ntumed.firebasestorage.app",
@@ -1900,6 +1905,26 @@ function updateSignInButton(user) {
 
 // Auth UI sync will be wired after controls menu elements are initialized
 
+function isInAppBrowser() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Line") > -1) || (ua.indexOf("Instagram") > -1);
+}
+
+async function handleGoogleSignIn() {
+    if (isInAppBrowser()) {
+        showCustomAlert('偵測到您正在使用 LINE、Facebook 或 Instagram 內建瀏覽器。\n\n這些環境會限制儲存空間，導致 Google 登入失敗（或顯示 "missing initial state" 錯誤）。\n\n建議點擊畫面右上角選單，選擇「在瀏覽器中開啟」或使用 Safari / Chrome 開啟此網頁進行登入。');
+        return;
+    }
+    try {
+        console.log('Starting Google Sign-In with Popup...');
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log('Google Sign-In success, user:', result.user);
+    } catch (error) {
+        console.error('Google sign-in failed:', error);
+        showCustomAlert('登入請求失敗，請確認是否已在 Safari/Chrome 等外部瀏覽器開啟，或稍後再試。');
+    }
+}
+
 if (signInBtn) {
     signInBtn.addEventListener('click', async () => {
         if (auth.currentUser) {
@@ -1916,15 +1941,7 @@ if (signInBtn) {
             }
             return;
         }
-
-        try {
-            console.log('Starting Google Sign-In with Popup...');
-            const result = await signInWithPopup(auth, googleProvider);
-            console.log('Google Sign-In success, user:', result.user);
-        } catch (error) {
-            console.error('Google sign-in failed:', error);
-            showCustomAlert('登入請求失敗，請稍後再試。');
-        }
+        await handleGoogleSignIn();
     });
 }
 
@@ -1957,14 +1974,7 @@ if (controlsMenuBtn && controlsMenu) {
         e.stopPropagation();
         // If not logged in, this button acts as the sign-in trigger
         if (!auth.currentUser) {
-            try {
-                console.log('Starting Google Sign-In with Popup (from controls menu)...');
-                const result = await signInWithPopup(auth, googleProvider);
-                console.log('Google Sign-In success (from controls menu), user:', result.user);
-            } catch (error) {
-                console.error('Google sign-in failed:', error);
-                showCustomAlert('登入請求失敗，請稍後再試。');
-            }
+            await handleGoogleSignIn();
             return;
         }
         const open = controlsMenu.classList.toggle('open');
@@ -2398,17 +2408,8 @@ function loadQuestionFromState() {
     }
 }
 
-const STAR_SHARP_PATH = '<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>';
-
 function setStarState(isFilled) {
     if (!starBtn) return;
-    // We strictly use the sharp path. Visuals (Outline vs Filled) are handled by CSS based on .active class.
-    // Ensure the SVG content is correct (idempotent check or just set it)
-    const svg = starBtn.querySelector('svg');
-    if (svg && svg.innerHTML !== STAR_SHARP_PATH) {
-        svg.innerHTML = STAR_SHARP_PATH;
-    }
-
     if (isFilled) {
         starBtn.classList.add('active');
     } else {
@@ -2545,8 +2546,8 @@ async function openStarredModal() {
                 starBtnLocal.setAttribute('aria-label', '取消收藏');
                 starBtnLocal.setAttribute('title', '取消收藏');
                 starBtnLocal.innerHTML = `
-<svg class="star-filled" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#fbbc04"><path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/></svg>
-<svg class="star-empty" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m354-247 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-80l65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Zm247-355Z"/></svg>
+                    <span class="star-filled">★</span>
+                    <span class="star-empty">☆</span>
                 `;
 
                 starBtnLocal.addEventListener('click', async (e) => {

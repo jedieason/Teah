@@ -2724,23 +2724,34 @@ from {
     }
 }
 
-.star-btn svg {
+.header-right .header-icon-btn.star-btn {
     width: 24px;
     height: 24px;
-    stroke: #5f6368;
-    
-    stroke-width: 2px;
-    
-    stroke-linejoin: miter;
-    
-    fill: transparent;
-    
-    transition: fill 0.2s, stroke 0.2s;
+    padding: 0;
+    font-size: 16px;
+    line-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #5f6368;
+    user-select: none;
+    transition: color 0.2s, transform 0.2s;
 }
 
-.star-btn.active svg {
-    fill: #fbbc04;
-    stroke: #fbbc04;
+.header-right .header-icon-btn.star-btn::before {
+    content: "☆";
+}
+
+.header-right .header-icon-btn.star-btn.active::before {
+    content: "★";
+}
+
+.header-right .header-icon-btn.star-btn.active {
+    color: #fbbc04;
+}
+
+.header-right .header-icon-btn.star-btn.active:hover {
+    color: #fbbc04;
 }
 
 .notification-bar {
@@ -3068,7 +3079,16 @@ from {
     flex-shrink: 0;
 }
 
+.material-icon-btn .star-filled,
+.material-icon-btn .star-empty {
+    font-size: 20px;
+    line-height: 1;
+    user-select: none;
+    flex-shrink: 0;
+}
+
 .material-icon-btn .star-filled {
+    color: #fbbc04;
     display: none;
 }
 
