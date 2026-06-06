@@ -344,7 +344,7 @@ function createProgressDots() {
     allQuestions.forEach((_, i) => {
         const dot = document.createElement('div');
         dot.className = 'progress-dot';
-        dot.title = `第 ${i + 1} 題`;
+        dot.setAttribute('data-tooltip', `第 ${i + 1} 題`);
         dot.addEventListener('click', () => {
             renderQuestion(i);
         });
@@ -1357,14 +1357,7 @@ async function fetchQuizList() {
                         }
                         if (isEditMode) return; // Prevent starting quiz if in edit mode
                         
-                        const currentQuizName = getQuizStorageName(key);
-                        const currentProgress = userProgressCache[currentQuizName];
-                        
-                        if (currentProgress) {
-                            openQuizActionModal(key, currentProgress);
-                        } else {
-                            startFreshQuiz(key);
-                        }
+                        startFreshQuiz(key);
                     };
 
                     gridContainer.appendChild(card);
