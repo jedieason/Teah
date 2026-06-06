@@ -1015,13 +1015,12 @@ body.dark-mode #progress-bar {
     /* Grey 900 */
     background-color: #ffffff;
     /* White cards */
-    border: 1px solid #dadce0;
+    border: none;
     /* Grey 300 */
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: left;
-    margin-bottom: 12px;
     box-shadow: none;
     /* Flat outlined style preferred by Google */
 }
@@ -1901,7 +1900,7 @@ body.dark-mode .action-icon-btn:hover {
     position: relative;
     color: #202124;
     /* Google Grey 900 */
-    border: 1px solid #dadce0;
+    border: none;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -6018,7 +6017,7 @@ body.dark-mode .unit-progress-bar {
     cursor: pointer;
     transition: background-color 0.2s, transform 0.2s, border-color 0.2s;
     border: 1px solid var(--outline-variant);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .global-mistake-card:hover {
@@ -6083,7 +6082,8 @@ body.dark-mode .unit-card.batch-selected {
 }
 
 .units-grid.edit-mode .unit-card:hover {
-    transform: none; /* Keep flat in edit mode */
+    transform: none;
+    /* Keep flat in edit mode */
 }
 
 /* Floating Action Bar at bottom */
@@ -6092,7 +6092,8 @@ body.dark-mode .unit-card.batch-selected {
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(120%);
-    background: #1f1f1f; /* Material dark surface */
+    background: #1f1f1f;
+    /* Material dark surface */
     color: #ffffff;
     border-radius: 28px;
     padding: 12px 24px;
@@ -6148,7 +6149,8 @@ body.dark-mode .unit-card.batch-selected {
 }
 
 .batch-btn.execute-btn {
-    background: #0b57d0; /* Google blue color */
+    background: #0b57d0;
+    /* Google blue color */
 }
 
 .batch-btn.execute-btn:hover {
