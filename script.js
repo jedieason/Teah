@@ -2716,20 +2716,9 @@ document.addEventListener('DOMContentLoaded', initTheme);
 
 
 /* Mistake Tracking Logic */
-const mistakeButton = document.getElementById('mistakeButton');
 const mistakeView = document.getElementById('mistakeView');
 const closeMistakeViewBtn = document.getElementById('closeMistakeViewBtn');
 const mistakeListContent = document.getElementById('mistakeListContent');
-
-if (mistakeButton) {
-    mistakeButton.addEventListener('click', () => {
-        if (!auth.currentUser) {
-            showCustomAlert('請先登入才能查看錯題紀錄！');
-            return;
-        }
-        openMistakeView();
-    });
-}
 
 if (closeMistakeViewBtn) {
     closeMistakeViewBtn.addEventListener('click', () => {

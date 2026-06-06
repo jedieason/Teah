@@ -3735,7 +3735,7 @@ body.dark-mode .rename-input {
 }
 
 /* Base Star SVG Size */
-.action-icon-btn.star-btn svg {
+.star-btn svg {
     width: 24px;
     height: 24px;
     stroke: #5f6368;
@@ -3750,18 +3750,18 @@ body.dark-mode .rename-input {
 }
 
 /* Active (Filled) State */
-.action-icon-btn.star-btn.active svg {
+.star-btn.active svg {
     fill: #fbbc04;
     stroke: #fbbc04;
 }
 
 /* Dark Mode Adjustments */
-body.dark-mode .action-icon-btn.star-btn svg {
+body.dark-mode .star-btn svg {
     stroke: #c9d1d9;
     /* Lighter grey for dark mode outline */
 }
 
-body.dark-mode .action-icon-btn.star-btn.active svg {
+body.dark-mode .star-btn.active svg {
     fill: #fbbc04;
     /* Yellow remains same */
     stroke: none;
