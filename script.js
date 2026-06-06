@@ -1165,6 +1165,7 @@ async function fetchQuizList() {
                 if (!groups[groupName]) groups[groupName] = [];
                 groups[groupName].push(k);
             });
+            globalQuizGroups = groups;
 
             const sortGroups = (names) => names.sort((a, b) => {
                 if (a === '其他' && b !== '其他') return 1;
@@ -1173,6 +1174,7 @@ async function fetchQuizList() {
             });
 
             const renderFolderTiles = () => {
+                currentActiveFolder = null;
                 if (gridContainer) {
                     gridContainer.innerHTML = '';
                     gridContainer.className = 'units-grid' + (isEditMode ? ' edit-mode' : ''); // Reset class but keep edit-mode if active
@@ -1221,6 +1223,7 @@ async function fetchQuizList() {
             };
 
             const renderFolderView = (groupName) => {
+                currentActiveFolder = groupName;
                 if (gridContainer) gridContainer.innerHTML = '';
 
                 // Render Breadcrumb
@@ -1255,6 +1258,9 @@ async function fetchQuizList() {
                     const card = document.createElement('div');
                     card.className = 'unit-card';
                     card.dataset.json = key;
+                    if (isEditMode && selectedQuizzesForBatch.includes(key)) {
+                        card.classList.add('batch-selected');
+                    }
 
                     const iconBox = document.createElement('div');
                     iconBox.className = 'unit-icon-box';
@@ -1355,7 +1361,17 @@ async function fetchQuizList() {
                             showCustomAlert('請先登入後再開始測驗！');
                             return;
                         }
-                        if (isEditMode) return; // Prevent starting quiz if in edit mode
+                        if (isEditMode) {
+                            card.classList.toggle('batch-selected');
+                            const idx = selectedQuizzesForBatch.indexOf(key);
+                            if (idx > -1) {
+                                selectedQuizzesForBatch.splice(idx, 1);
+                            } else {
+                                selectedQuizzesForBatch.push(key);
+                            }
+                            updateBatchActionFloatingBar();
+                            return;
+                        }
                         
                         startFreshQuiz(key);
                     };
@@ -1370,8 +1386,12 @@ async function fetchQuizList() {
                 });
             };
 
-            // Initial render
-            renderFolderTiles();
+            // Initial render - preserve folder view if active
+            if (currentActiveFolder && groups[currentActiveFolder]) {
+                renderFolderView(currentActiveFolder);
+            } else {
+                renderFolderTiles();
+            }
 
         } else {
             document.getElementById('units-grid').innerHTML = '<p>No quizzes found.</p>';
@@ -2056,6 +2076,9 @@ const menuEditQuizName = document.getElementById('menuEditQuizName');
 const menuArchived = document.getElementById('menuArchived');
 let isEditMode = false;
 let viewArchiveMode = false;
+let currentActiveFolder = null;
+let selectedQuizzesForBatch = [];
+let globalQuizGroups = {};
 
 if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
     isEditMode = !isEditMode;
@@ -2087,8 +2110,113 @@ function toggleEditModeUI() {
         } else {
             grid.classList.remove('edit-mode');
             if (label) label.textContent = '編輯題庫';
+            selectedQuizzesForBatch = [];
+            const cards = document.querySelectorAll('.unit-card');
+            cards.forEach(card => card.classList.remove('batch-selected'));
+            updateBatchActionFloatingBar();
         }
     }
+}
+
+function updateBatchActionFloatingBar() {
+    let bar = document.getElementById('batch-action-bar');
+    if (selectedQuizzesForBatch.length === 0) {
+        if (bar) {
+            bar.classList.remove('show');
+            setTimeout(() => {
+                if (selectedQuizzesForBatch.length === 0 && bar && bar.parentNode) {
+                    bar.parentNode.removeChild(bar);
+                }
+            }, 300);
+        }
+        return;
+    }
+
+    if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'batch-action-bar';
+        bar.className = 'batch-action-bar';
+        document.body.appendChild(bar);
+        bar.offsetHeight;
+        bar.classList.add('show');
+    }
+
+    const actionText = viewArchiveMode ? '取消典藏' : '移至典藏';
+    const count = selectedQuizzesForBatch.length;
+
+    bar.innerHTML = `
+        <div class="batch-bar-content">
+            <span class="batch-count">已選擇 ${count} 份習題</span>
+            <div class="batch-actions">
+                <button class="batch-btn select-all-btn">全選</button>
+                <button class="batch-btn execute-btn">${actionText}</button>
+                <button class="batch-btn cancel-btn">取消</button>
+            </div>
+        </div>
+    `;
+
+    bar.querySelector('.select-all-btn').onclick = () => {
+        if (currentActiveFolder && globalQuizGroups[currentActiveFolder]) {
+            const currentQuizzes = globalQuizGroups[currentActiveFolder];
+            const allSelected = currentQuizzes.every(k => selectedQuizzesForBatch.includes(k));
+            if (allSelected) {
+                selectedQuizzesForBatch = selectedQuizzesForBatch.filter(k => !currentQuizzes.includes(k));
+            } else {
+                currentQuizzes.forEach(k => {
+                    if (!selectedQuizzesForBatch.includes(k)) {
+                        selectedQuizzesForBatch.push(k);
+                    }
+                });
+            }
+            const cards = document.querySelectorAll('.unit-card');
+            cards.forEach(card => {
+                const key = card.dataset.json;
+                if (key) {
+                    if (selectedQuizzesForBatch.includes(key)) {
+                        card.classList.add('batch-selected');
+                    } else {
+                        card.classList.remove('batch-selected');
+                    }
+                }
+            });
+            updateBatchActionFloatingBar();
+        }
+    };
+
+    bar.querySelector('.execute-btn').onclick = async () => {
+        const actionName = viewArchiveMode ? '取消典藏' : '典藏';
+        if (confirm(`確定要將這 ${count} 份習題${actionName}嗎？`)) {
+            try {
+                const updates = {};
+                for (const oldName of selectedQuizzesForBatch) {
+                    const isUnarchiving = oldName.startsWith('_Archive_');
+                    const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
+                    
+                    const snapshot = await get(ref(database, oldName));
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        updates[oldName] = null;
+                        updates[newName] = data;
+                    }
+                }
+                await update(ref(database), updates);
+                showCustomAlert(`已完成 ${count} 份習題的${actionName}！`);
+                selectedQuizzesForBatch = [];
+                updateBatchActionFloatingBar();
+                fetchQuizList();
+            } catch (e) {
+                console.error('Batch archive failed:', e);
+                showCustomAlert('批量操作失敗');
+            }
+        }
+    };
+
+    bar.querySelector('.cancel-btn').onclick = () => {
+        selectedQuizzesForBatch = [];
+        const cards = document.querySelectorAll('.unit-card');
+        cards.forEach(card => card.classList.remove('batch-selected'));
+        updateBatchActionFloatingBar();
+    };
 }
 
 async function handleRenameQuiz(oldName) {

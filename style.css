@@ -6063,3 +6063,118 @@ body.dark-mode .global-mistake-count {
 .quiz-action-options button {
     margin: 0 !important;
 }
+
+/* Batch Selection and Action Bar Styles */
+.unit-card.batch-selected {
+    background-color: #e8f0fe !important;
+    border-color: #1a73e8 !important;
+    box-shadow: 0 0 0 1px #1a73e8;
+}
+
+body.dark-mode .unit-card.batch-selected {
+    background-color: #1a233a !important;
+    border-color: #8ab4f8 !important;
+    box-shadow: 0 0 0 1px #8ab4f8;
+}
+
+/* Edit Mode card interaction adjustment */
+.units-grid.edit-mode .unit-card {
+    transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.units-grid.edit-mode .unit-card:hover {
+    transform: none; /* Keep flat in edit mode */
+}
+
+/* Floating Action Bar at bottom */
+.batch-action-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: #1f1f1f; /* Material dark surface */
+    color: #ffffff;
+    border-radius: 28px;
+    padding: 12px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+    width: auto;
+}
+
+.batch-action-bar.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.batch-bar-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.batch-count {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.batch-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.batch-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.batch-btn:hover {
+    background: rgba(255, 255, 255, 0.24);
+}
+
+.batch-btn:active {
+    transform: scale(0.95);
+}
+
+.batch-btn.execute-btn {
+    background: #0b57d0; /* Google blue color */
+}
+
+.batch-btn.execute-btn:hover {
+    background: #0b60e6;
+}
+
+/* Dark mode overrides for floating bar */
+body.dark-mode .batch-action-bar {
+    background: #e3e3e3;
+    color: #1f1f1f;
+}
+
+body.dark-mode .batch-btn {
+    background: rgba(0, 0, 0, 0.08);
+    color: #1f1f1f;
+}
+
+body.dark-mode .batch-btn:hover {
+    background: rgba(0, 0, 0, 0.16);
+}
+
+body.dark-mode .batch-btn.execute-btn {
+    background: #0b57d0;
+    color: #ffffff;
+}
+
+body.dark-mode .batch-btn.execute-btn:hover {
+    background: #0b60e6;
+}
