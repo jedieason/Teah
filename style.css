@@ -5828,6 +5828,10 @@ body.dark-mode .correct-option {
 .progress-dot.viewing::after {
     content: '';
     position: absolute;
+    top: -1.5px;
+    left: -1.5px;
+    right: -1.5px;
+    bottom: -1.5px;
     border-radius: 50%;
     box-sizing: border-box;
     pointer-events: none;
@@ -5835,31 +5839,19 @@ body.dark-mode .correct-option {
 
 /* Current active question in the quiz */
 .progress-dot.current-progress::after {
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 1.5px solid var(--primary, #0b57d0);
+    border: 1px solid var(--primary, #0b57d0);
     background-color: transparent;
 }
 
 /* Currently viewed question */
 .progress-dot.viewing::after {
-    top: -1.5px;
-    left: -1.5px;
-    right: -1.5px;
-    bottom: -1.5px;
     border: 1px solid var(--primary-container, #d3e3fd);
     background-color: transparent;
 }
 
 /* Currently viewed and active question */
 .progress-dot.current-progress.viewing::after {
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 1.5px solid var(--primary, #0b57d0);
+    border: 1px solid var(--primary, #0b57d0);
 }
 
 /* Dark mode overrides for dots */
