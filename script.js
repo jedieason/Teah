@@ -288,6 +288,8 @@ async function initQuiz() {
     viewingIndex = 0;
     correct = 0;
     wrong = 0;
+    selectedOption = null;
+    selectedOptions = [];
     document.getElementById('correct').innerText = 0;
     document.getElementById('wrong').innerText = 0;
 
@@ -830,6 +832,8 @@ function showEndScreen() {
         wrong = 0;
         currentIndex = 0;
         viewingIndex = 0;
+        selectedOption = null;
+        selectedOptions = [];
         initialQuestionCount = allQuestions.length;
         document.getElementById('correct').innerText = 0;
         document.getElementById('wrong').innerText = 0;
@@ -849,7 +853,7 @@ function showEndScreen() {
     resetBtn.className = 'm3-btn m3-btn-outlined';
     resetBtn.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
-            <path d="M240-200h120v-240h240v240h120v-440L480-740 240-640v440Zm-80 80v-600l320-240 320 240v600H520v-240h-80v240H160Zm320-350Z"/>
+            <path d="M240-200h120v-240h240v240h120v-440L480-740 240-440v440Zm-80 80v-600l320-240 320 240v600H520v-240h-80v240H160Zm320-350Z"/>
         </svg>
         <span>重新選題庫</span>
     `;
@@ -1350,7 +1354,7 @@ async function fetchQuizList() {
                         badge.style.display = 'inline-flex';
                         badge.style.alignItems = 'center';
                         badge.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor" style="margin-right: 2px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor" style="margin-right: 2px; transform: translateY(1px);">
                                 <path d="m382-320 338-338-57-57-281 281-123-122-57 57 180 180Z"/>
                             </svg>已完成
                         `;
@@ -1864,6 +1868,8 @@ function restoreProgress(quizName = null) {
         }
         
         viewingIndex = currentIndex;
+        selectedOption = null;
+        selectedOptions = [];
         
         if (currentIndex >= allQuestions.length) {
             viewingIndex = Math.max(0, allQuestions.length - 1);

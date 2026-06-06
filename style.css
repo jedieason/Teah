@@ -2727,34 +2727,20 @@ from {
     }
 }
 
-.header-right .header-icon-btn.star-btn {
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    font-size: 16px;
-    line-height: 24px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #5f6368;
-    user-select: none;
-    transition: color 0.2s, transform 0.2s;
+.star-btn .star-filled {
+    display: none;
 }
 
-.header-right .header-icon-btn.star-btn::before {
-    content: "☆";
+.star-btn.active .star-filled {
+    display: block;
 }
 
-.header-right .header-icon-btn.star-btn.active::before {
-    content: "★";
+.star-btn.active .star-empty {
+    display: none;
 }
 
-.header-right .header-icon-btn.star-btn.active {
-    color: #fbbc04;
-}
-
-.header-right .header-icon-btn.star-btn.active:hover {
-    color: #fbbc04;
+.star-btn svg {
+    flex-shrink: 0;
 }
 
 .notification-bar {
