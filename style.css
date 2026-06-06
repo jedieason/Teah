@@ -3243,9 +3243,7 @@ from {
         font-size: 1rem;
 }
 
-.copy-btn,
-.gemini-btn,
-.star-btn {
+.gemini-btn {
     padding: 10px;
 }
 
