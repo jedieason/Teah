@@ -1779,6 +1779,7 @@ p {
 .option-button.missing {
     border-color: #FFA500;
     background-color: #FFF3CD;
+    color: #b06000;
 }
 
 .multi-label {
@@ -4049,21 +4050,54 @@ p {
 }
 
 .progress-dot {
-    width: 8px;
-    height: 8px;
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
-    border-radius: 50%;
-    background-color: var(--outline-variant, #c4c7c5);
     cursor: pointer;
-    box-sizing: content-box;
-    border: 5px solid transparent;
-    background-clip: padding-box;
     position: relative;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .progress-dot:hover {
     transform: scale(1.3);
+}
+
+.progress-dot-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.progress-dot .dot-fill {
+    fill: var(--outline-variant, #c4c7c5);
+    transition: fill 0.2s;
+}
+
+.progress-dot.correct .dot-fill {
+    fill: #0d652d;
+}
+
+.progress-dot.wrong .dot-fill {
+    fill: #d93025;
+}
+
+.progress-dot .dot-stroke {
+    display: none;
+}
+
+.progress-dot.current-progress .dot-stroke {
+    display: block;
+    stroke: var(--primary, #0b57d0);
+}
+
+.progress-dot.viewing .dot-stroke {
+    display: block;
+    stroke: var(--primary-container, #d3e3fd);
+}
+
+.progress-dot.current-progress.viewing .dot-stroke {
+    display: block;
+    stroke: var(--primary, #0b57d0);
 }
 
 
@@ -4092,45 +4126,6 @@ p {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
-}
-
-.progress-dot.correct {
-    background-color: #0d652d;
-}
-
-.progress-dot.wrong {
-    background-color: #d93025;
-}
-
-
-.progress-dot.current-progress::after,
-.progress-dot.viewing::after {
-    content: '';
-    position: absolute;
-    top: -1.5px;
-    left: -1.5px;
-    right: -1.5px;
-    bottom: -1.5px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    pointer-events: none;
-}
-
-
-.progress-dot.current-progress::after {
-    border: 1px solid var(--primary, #0b57d0);
-    background-color: transparent;
-}
-
-
-.progress-dot.viewing::after {
-    border: 1px solid var(--primary-container, #d3e3fd);
-    background-color: transparent;
-}
-
-
-.progress-dot.current-progress.viewing::after {
-    border: 1px solid var(--primary, #0b57d0);
 }
 
 

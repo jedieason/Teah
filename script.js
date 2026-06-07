@@ -352,6 +352,14 @@ function createProgressDots() {
         const dot = document.createElement('div');
         dot.className = 'progress-dot';
         dot.setAttribute('data-tooltip', `第 ${i + 1} 題`);
+        
+        dot.innerHTML = `
+            <svg viewBox="0 0 18 18" width="18" height="18" class="progress-dot-svg">
+                <circle cx="9" cy="9" r="4" class="dot-fill" />
+                <circle cx="9" cy="9" r="5.5" stroke-width="1" fill="none" class="dot-stroke" />
+            </svg>
+        `;
+        
         dot.addEventListener('click', () => {
             renderQuestion(i);
         });
@@ -853,7 +861,7 @@ function showEndScreen() {
     resetBtn.className = 'm3-btn m3-btn-outlined';
     resetBtn.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
-            <path d="M240-200h120v-240h240v240h120v-440L480-740 240-440v440Zm-80 80v-600l320-240 320 240v600H520v-240h-80v240H160Zm320-350Z"/>
+            <path d="M160-120v-480l320-240 320 240v480H520v-240h-80v240H160Z"/>
         </svg>
         <span>重新選題庫</span>
     `;
