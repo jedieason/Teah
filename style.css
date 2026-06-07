@@ -4178,6 +4178,21 @@ from {
     width: 100%;
 }
 
+.unit-progress-container.inline-progress {
+    margin-top: 0;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+}
+
+.unit-progress-container.inline-progress .unit-progress-bar {
+    width: 60px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
 .unit-progress-text {
     font-size: 0.75rem;
     color: var(--on-surface-variant);

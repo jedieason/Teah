@@ -1361,20 +1361,19 @@ async function fetchQuizList() {
                         subtitle.appendChild(badge);
                         card.classList.add('completed');
                     }
-                    infoDiv.appendChild(subtitle);
-
-                    // Add progress bar below if active progress
+                    // Add progress bar inline if active progress
                     if (!isCompleted && percent > 0) {
                         const progressContainer = document.createElement('div');
-                        progressContainer.className = 'unit-progress-container';
+                        progressContainer.className = 'unit-progress-container inline-progress';
                         progressContainer.innerHTML = `
                             <span class="unit-progress-text">${progressText}</span>
                             <div class="unit-progress-bar">
                                 <div class="unit-progress-fill" style="width: ${percent}%"></div>
                             </div>
                         `;
-                        infoDiv.appendChild(progressContainer);
+                        subtitle.appendChild(progressContainer);
                     }
+                    infoDiv.appendChild(subtitle);
 
                     card.appendChild(iconBox);
                     card.appendChild(infoDiv);
