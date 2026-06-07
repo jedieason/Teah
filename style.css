@@ -2727,20 +2727,36 @@ from {
     }
 }
 
-.star-btn .star-filled {
-    display: none;
-}
-
-.star-btn.active .star-filled {
-    display: block;
-}
-
-.star-btn.active .star-empty {
-    display: none;
+.header-icon-btn.star-btn {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
 }
 
 .star-btn svg {
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
+}
+
+.star-btn .star-fill {
+    fill: transparent;
+    transition: fill 0.2s ease;
+}
+
+.star-btn.active .star-fill {
+    fill: #fbbc04;
+}
+
+.star-btn .star-outline {
+    fill: currentColor;
+    transition: fill 0.2s ease;
+}
+
+.star-btn.active .star-outline {
+    fill: #fbbc04;
 }
 
 .notification-bar {
