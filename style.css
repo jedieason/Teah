@@ -1336,8 +1336,7 @@ p {
 .quiz-container {
     display: none;
     flex-direction: column;
-    width: 95%;
-    max-width: 1200px;
+    width: 75%;
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
@@ -1687,6 +1686,7 @@ p {
 
     .quiz-container {
         padding: 16px;
+        width: 95%;
     }
 
     .topics-toolbar {
@@ -3188,6 +3188,7 @@ p {
 
     .quiz-container {
         padding: 16px;
+        width: 95%;
     }
 
     .quiz-title {
