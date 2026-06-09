@@ -4044,7 +4044,7 @@ p {
     display: flex;
     flex-wrap: wrap;
     gap: -2px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 }
 
