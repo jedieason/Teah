@@ -51,30 +51,39 @@ async function updateRestorePreview(user) {
         const lastActiveSnap = await get(ref(database, `progress/${user.uid}/lastActive`));
         let activeQuizName = null;
         let resolvedSelectedJson = null;
+        let p = null;
         
         if (lastActiveSnap.exists()) {
             const lastActive = lastActiveSnap.val();
             activeQuizName = lastActive.quizName;
             resolvedSelectedJson = lastActive.selectedJson;
+            
+            // Fetch progress directly from Firebase
+            const pSnap = await get(ref(database, `progress/${user.uid}/quizzes/${activeQuizName}`));
+            if (pSnap.exists()) {
+                p = pSnap.val();
+            }
         } else {
-            // Find latest in cache
-            const keys = Object.keys(userProgressCache);
-            if (keys.length === 0) { hideSection(); return; }
-            let maxTime = 0;
-            for (const key of keys) {
-                const p = userProgressCache[key];
-                if (p.lastUpdated && p.lastUpdated > maxTime) {
-                    maxTime = p.lastUpdated;
-                    activeQuizName = key;
-                    resolvedSelectedJson = p.selectedJson;
+            // Fetch progress list directly from Firebase
+            const quizzesSnap = await get(ref(database, `progress/${user.uid}/quizzes`));
+            if (quizzesSnap.exists()) {
+                const quizzes = quizzesSnap.val() || {};
+                const keys = Object.keys(quizzes);
+                if (keys.length === 0) { hideSection(); return; }
+                let maxTime = 0;
+                for (const key of keys) {
+                    const progressVal = quizzes[key];
+                    if (progressVal.lastUpdated && progressVal.lastUpdated > maxTime) {
+                        maxTime = progressVal.lastUpdated;
+                        activeQuizName = key;
+                        resolvedSelectedJson = progressVal.selectedJson;
+                        p = progressVal;
+                    }
                 }
             }
         }
         
-        if (!activeQuizName) { hideSection(); return; }
-
-        const p = userProgressCache[activeQuizName];
-        if (!p) { hideSection(); return; }
+        if (!activeQuizName || !p) { hideSection(); return; }
         
         const fileName = (p.selectedJson || '').split('/').pop().replace('.json', '') || '最近的中斷點';
         
@@ -1392,7 +1401,7 @@ async function fetchQuizList() {
                     card.style.animation = `fadeInk 0.5s ease-out forwards ${index * 0.05}s`;
                     card.style.opacity = '0'; // Init hidden for keyframe
 
-                    card.onclick = () => {
+                    card.onclick = async () => {
                         if (!auth.currentUser) {
                             showCustomAlert('請先登入後再開始測驗！');
                             return;
@@ -1407,6 +1416,20 @@ async function fetchQuizList() {
                             }
                             updateBatchActionFloatingBar();
                             return;
+                        }
+                        
+                        try {
+                            const quizStorageName = getQuizStorageName(key);
+                            const snap = await get(ref(database, `progress/${auth.currentUser.uid}/quizzes/${quizStorageName}`));
+                            if (snap.exists()) {
+                                const progress = snap.val();
+                                if (progress && progress.currentIndex > 0) {
+                                    openQuizActionModal(key, progress);
+                                    return;
+                                }
+                            }
+                        } catch (err) {
+                            console.error('查詢 Firebase 進度失敗：', err);
                         }
                         
                         startFreshQuiz(key);
@@ -1795,20 +1818,25 @@ function restoreProgress(quizName = null) {
             if (snapshot.exists()) {
                 return snapshot.val().quizName;
             }
-            const keys = Object.keys(userProgressCache);
-            if (keys.length > 0) {
-                let latestQuiz = null;
-                let maxTime = 0;
-                for (const key of keys) {
-                    const p = userProgressCache[key];
-                    if (p.lastUpdated && p.lastUpdated > maxTime) {
-                        maxTime = p.lastUpdated;
-                        latestQuiz = key;
+            return get(ref(database, `progress/${auth.currentUser.uid}/quizzes`)).then(quizzesSnap => {
+                if (quizzesSnap.exists()) {
+                    const quizzes = quizzesSnap.val() || {};
+                    const keys = Object.keys(quizzes);
+                    if (keys.length > 0) {
+                        let latestQuiz = null;
+                        let maxTime = 0;
+                        for (const key of keys) {
+                            const p = quizzes[key];
+                            if (p.lastUpdated && p.lastUpdated > maxTime) {
+                                maxTime = p.lastUpdated;
+                                latestQuiz = key;
+                            }
+                        }
+                        if (latestQuiz) return latestQuiz;
                     }
                 }
-                if (latestQuiz) return latestQuiz;
-            }
-            throw new Error('No last active quiz found');
+                throw new Error('No last active quiz found');
+            });
         });
     }
 
@@ -3450,4 +3478,8 @@ if (backMistakeViewBtn) backMistakeViewBtn.addEventListener('click', () => {
 const quizActionCloseBtn = document.getElementById('quizActionCloseBtn');
 if (quizActionCloseBtn) quizActionCloseBtn.addEventListener('click', () => {
     closeQuizActionModal();
+});
+const quizActionModal = document.getElementById('quizActionModal');
+if (quizActionModal) quizActionModal.addEventListener('click', (e) => {
+    if (e.target === quizActionModal) closeQuizActionModal();
 });
