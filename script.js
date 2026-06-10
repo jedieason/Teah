@@ -1,8 +1,8 @@
-// Firebase SDK imports and initialization (v11.6.1)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-import { getDatabase, ref, get, update, set, remove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+// Firebase SDK imports and initialization (v12.12.1)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
+import { getDatabase, ref, get, update, set, remove } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-database.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
 const currentHost = window.location.hostname;
 const defaultAuthDomain = "stock-market-ntumed.firebaseapp.com";
@@ -26,23 +26,9 @@ const database = getDatabase(app);
 // Firebase Auth
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-
-// Handle Redirect Result
-getRedirectResult(auth)
-    .then((result) => {
-        if (result && result.user) {
-            console.log('Redirect sign-in success:', result.user);
-            // Optionally notification is handled by onAuthStateChanged or we can show one here
-            // showCustomAlert('登入成功！');
-        }
-    })
-    .catch((error) => {
-        console.error('Redirect sign-in error:', error);
-        // We can show custom alert if showCustomAlert is available, but it might not be defined yet if it's further down.
-        // Usually safe to relying on console or simple alert, or wait for DOM. 
-        // Since this runs top-level, functions might be hoisted.
-    });
 const signInBtn = document.getElementById('signInBtn');
+const errataModal = document.getElementById('errataModal');
+const errataFormContainer = document.getElementById('errataFormContainer');
 // Restore preview elements
 const restoreBtn = document.getElementById('restore');
 const restoreTitleEl = document.getElementById('restoreTitle');
@@ -206,6 +192,9 @@ async function initQuiz() {
     
     // Process and shuffle allQuestions
     allQuestions = JSON.parse(JSON.stringify(questions));
+    allQuestions.forEach((q, idx) => {
+        q.originalIndex = idx;
+    });
     if (shouldShuffleQuiz) {
         shuffle(allQuestions);
     }
@@ -249,9 +238,11 @@ async function initQuiz() {
             }
             
             let labelMapping = {};
+            q.reverseLabelMapping = {};
             for (let i = 0; i < optionEntries.length; i++) {
                 const [originalLabel, _] = optionEntries[i];
                 labelMapping[originalLabel] = optionLabels[i];
+                q.reverseLabelMapping[optionLabels[i]] = originalLabel;
             }
             
             let newOptions = {};
@@ -918,6 +909,17 @@ document.getElementById('startGame').addEventListener('click', () => {
 document.getElementById('confirm-btn').addEventListener('click', confirmAnswer);
 document.getElementById('next-btn').addEventListener('click', loadNewQuestion);
 document.getElementById('copy-btn').addEventListener('click', copyQuestion);
+const errataBtn = document.getElementById('errata-btn');
+if (errataBtn) errataBtn.addEventListener('click', openErrataModal);
+const errataCloseBtn = document.getElementById('errataCloseBtn');
+if (errataCloseBtn) errataCloseBtn.addEventListener('click', () => { errataModal.style.display = 'none'; });
+const errataCancelBtn = document.getElementById('errataCancelBtn');
+if (errataCancelBtn) errataCancelBtn.addEventListener('click', () => { errataModal.style.display = 'none'; });
+const errataSaveBtn = document.getElementById('errataSaveBtn');
+if (errataSaveBtn) errataSaveBtn.addEventListener('click', saveErrataAnswer);
+if (errataModal) errataModal.addEventListener('click', (e) => {
+    if (e.target === errataModal) errataModal.style.display = 'none';
+});
 document.getElementById('restore').addEventListener('click', () => {
     if (!auth.currentUser) {
         showCustomAlert('請先登入才能恢復進度！');
@@ -1950,25 +1952,26 @@ async function handleGoogleSignIn() {
         console.log('Starting Google Sign-In with Popup...');
         const result = await signInWithPopup(auth, googleProvider);
         console.log('Google Sign-In success, user:', result.user);
+        showCustomAlert('登入成功！');
     } catch (error) {
-        console.error('Google sign-in failed:', error);
-        showCustomAlert('登入請求失敗，請確認是否已在 Safari/Chrome 等外部瀏覽器開啟，或稍後再試。');
+        console.error('Google 登入失敗:', error);
+        let msg = 'Google 登入失敗，請稍後再試。';
+        if (error && error.code === 'auth/popup-closed-by-user') {
+            msg = '已關閉登入視窗。';
+        }
+        showCustomAlert(msg);
     }
 }
 
 if (signInBtn) {
     signInBtn.addEventListener('click', async () => {
         if (auth.currentUser) {
-            const shouldSignOut = confirm('要登出 Google 帳號嗎？');
-            if (!shouldSignOut) {
-                return;
-            }
             try {
                 await signOut(auth);
-                showCustomAlert('已登出 Google 帳號。');
+                showCustomAlert('已成功登出');
             } catch (error) {
-                console.error('Sign-out failed:', error);
-                showCustomAlert('登出失敗，請稍後再試。');
+                console.error('登出失敗:', error);
+                showCustomAlert('登出失敗，請稍後再試');
             }
             return;
         }
@@ -2489,6 +2492,195 @@ async function toggleStarCurrentQuestion() {
         starred.push({ ...currentQuestion, source: sourceName });
     }
     await set(starredRef, starred);
+}
+
+function openErrataModal() {
+    if (!currentQuestion || !currentQuestion.question) {
+        showCustomAlert('當前沒有可用的題目！');
+        return;
+    }
+    
+    // Clear and open
+    errataFormContainer.innerHTML = '';
+    errataModal.style.display = 'flex';
+    
+    if (currentQuestion.isFillBlank) {
+        const currentVal = Array.isArray(currentQuestion.answer) 
+            ? currentQuestion.answer.join(',') 
+            : (currentQuestion.answer || '');
+            
+        const wrapper = document.createElement('div');
+        wrapper.className = 'md3-input-wrapper';
+        wrapper.innerHTML = `
+            <input type="text" id="errataFillBlankInput" class="md3-input" placeholder=" " value="${currentVal}">
+            <label for="errataFillBlankInput" class="md3-floating-label">正確答案關鍵字</label>
+        `;
+        errataFormContainer.appendChild(wrapper);
+        
+        const hint = document.createElement('p');
+        hint.style.cssText = 'font-size: 0.85rem; color: #5f6368; margin: 8px 0 0 0; line-height: 1.4;';
+        hint.innerHTML = '如果是多個關鍵字，請以半角逗號 (<code>,</code>) 分隔，系統將會比對使用者輸入是否包含這些關鍵字。';
+        errataFormContainer.appendChild(hint);
+    } else if (currentQuestion.isMultiSelect) {
+        const list = document.createElement('div');
+        list.className = 'errata-options-list';
+        const currentAnsList = Array.isArray(currentQuestion.answer) ? currentQuestion.answer : [currentQuestion.answer];
+        
+        Object.entries(currentQuestion.options).forEach(([key, value]) => {
+            const label = document.createElement('label');
+            label.className = 'errata-option-item';
+            if (currentAnsList.includes(key)) {
+                label.classList.add('selected');
+            }
+            label.innerHTML = `
+                <input type="checkbox" name="errataOption" value="${key}" ${currentAnsList.includes(key) ? 'checked' : ''}>
+                <span>${key}: ${value}</span>
+            `;
+            
+            const checkbox = label.querySelector('input');
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    label.classList.add('selected');
+                } else {
+                    label.classList.remove('selected');
+                }
+            });
+            list.appendChild(label);
+        });
+        errataFormContainer.appendChild(list);
+    } else {
+        const list = document.createElement('div');
+        list.className = 'errata-options-list';
+        const currentAns = currentQuestion.answer;
+        
+        Object.entries(currentQuestion.options).forEach(([key, value]) => {
+            const label = document.createElement('label');
+            label.className = 'errata-option-item';
+            if (currentAns === key) {
+                label.classList.add('selected');
+            }
+            label.innerHTML = `
+                <input type="radio" name="errataOption" value="${key}" ${currentAns === key ? 'checked' : ''}>
+                <span>${key}: ${value}</span>
+            `;
+            
+            const radio = label.querySelector('input');
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    list.querySelectorAll('.errata-option-item').forEach(item => item.classList.remove('selected'));
+                    label.classList.add('selected');
+                }
+            });
+            list.appendChild(label);
+        });
+        errataFormContainer.appendChild(list);
+    }
+}
+
+async function saveErrataAnswer() {
+    if (!currentQuestion) return;
+    
+    let newAns;
+    
+    if (currentQuestion.isFillBlank) {
+        const inputVal = document.getElementById('errataFillBlankInput').value.trim();
+        if (!inputVal) {
+            showCustomAlert('答案關鍵字不能為空！');
+            return;
+        }
+        if (inputVal.includes(',')) {
+            newAns = inputVal.split(',').map(s => s.trim()).filter(Boolean);
+        } else {
+            newAns = inputVal;
+        }
+    } else if (currentQuestion.isMultiSelect) {
+        const checked = Array.from(errataFormContainer.querySelectorAll('input[name="errataOption"]:checked'));
+        if (checked.length === 0) {
+            showCustomAlert('請至少選擇一個選項！');
+            return;
+        }
+        newAns = checked.map(el => el.value);
+    } else {
+        const checked = errataFormContainer.querySelector('input[name="errataOption"]:checked');
+        if (!checked) {
+            showCustomAlert('請選擇一個選項！');
+            return;
+        }
+        newAns = checked.value;
+    }
+    
+    // 1. Map new standard answers back to database format if reverseLabelMapping exists
+    let databaseAns = newAns;
+    if (currentQuestion.reverseLabelMapping) {
+        if (Array.isArray(newAns)) {
+            databaseAns = newAns.map(val => currentQuestion.reverseLabelMapping[val] || val);
+        } else {
+            databaseAns = currentQuestion.reverseLabelMapping[newAns] || newAns;
+        }
+    }
+    
+    const origIdx = currentQuestion.originalIndex;
+    if (origIdx === undefined) {
+        showCustomAlert('無法找到該題目在資料庫的索引！');
+        return;
+    }
+    
+    try {
+        // 2. Save to Firebase
+        const answerRef = ref(database, `${selectedJson}/${origIdx}/answer`);
+        await set(answerRef, databaseAns);
+        
+        // 3. Update local state
+        currentQuestion.answer = newAns;
+        if (questions && questions[origIdx]) {
+            questions[origIdx].answer = databaseAns;
+        }
+        
+        // 4. Recalculate correctness if user has already answered this question
+        recalculateCorrectness(currentQuestion);
+        
+        showCustomAlert('已成功儲存勘誤答案！');
+        errataModal.style.display = 'none';
+        
+        // 5. Re-render question to update UI classes & colors
+        renderQuestion(viewingIndex);
+    } catch (error) {
+        console.error('儲存勘誤失敗:', error);
+        showCustomAlert('儲存失敗，請確認您是否擁有該題庫的寫入權限。');
+    }
+}
+
+function recalculateCorrectness(q) {
+    if (!q.isConfirmed && !q.isAnswered) return;
+    
+    const wasCorrect = q.isCorrect;
+    
+    if (q.isFillBlank) {
+        const sentence = (q.userSelection || '').toLowerCase();
+        const required = Array.isArray(q.answer) ? q.answer : [q.answer];
+        const allMatch = required.every(keyword => sentence.includes(keyword.toLowerCase()));
+        q.isCorrect = allMatch;
+    } else if (q.isMultiSelect) {
+        const userSel = q.userSelection || [];
+        const isCompletelyCorrect = (userSel.length === q.answer.length) &&
+            q.answer.every(opt => userSel.includes(opt));
+        q.isCorrect = isCompletelyCorrect;
+    } else {
+        q.isCorrect = q.userSelection === q.answer;
+    }
+    
+    if (wasCorrect !== q.isCorrect) {
+        if (q.isCorrect) {
+            correct += 1;
+            wrong = Math.max(0, wrong - 1);
+        } else {
+            correct = Math.max(0, correct - 1);
+            wrong += 1;
+        }
+        document.getElementById('correct').innerText = correct;
+        document.getElementById('wrong').innerText = wrong;
+        saveProgress();
+    }
 }
 
 async function openStarredModal() {

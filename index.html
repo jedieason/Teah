@@ -206,6 +206,11 @@
               <path d="M12 22C12 16.5 8 12 2 12C8 12 12 7.5 12 2C12 7.5 16 12 22 12C16 12 12 16.5 12 22Z" />
             </svg>
           </button>
+          <button id="errata-btn" class="action-icon-btn" aria-label="勘誤題目">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+              <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+            </svg>
+          </button>
         </div>
         <button id="next-btn" class="next-button">下一題</button>
         <button id="back-progress-btn-expl" class="back-progress-button" style="display: none;">回當前進度</button>
@@ -230,6 +235,28 @@
       <span class="modal-close">&times;</span>
       <h3>已收藏的題目</h3>
       <div id="starredList"></div>
+    </div>
+  </div>
+
+  <!-- Errata Modal (Material 3) -->
+  <div id="errataModal" class="md3-modal-overlay" style="display: none;">
+    <div class="md3-dialog">
+      <div class="md3-dialog-header">
+        <h3 class="md3-dialog-title">勘誤題目答案</h3>
+        <button class="md3-icon-btn modal-close" id="errataCloseBtn" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="md3-dialog-body">
+        <p style="font-size: 0.95rem; color: #5f6368; margin: 0 0 -8px 0;">請選擇或輸入正確答案：</p>
+        <div id="errataFormContainer"></div>
+      </div>
+      <div class="md3-dialog-actions">
+        <button class="md3-text-btn" id="errataCancelBtn">取消</button>
+        <button class="md3-filled-btn" id="errataSaveBtn">儲存</button>
+      </div>
     </div>
   </div>
 
