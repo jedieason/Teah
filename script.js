@@ -822,7 +822,9 @@ function showEndScreen() {
                 isAnswered: false,
                 isCorrect: null,
                 userSelection: null,
-                isConfirmed: false
+                isConfirmed: false,
+                originalIndex: q.originalIndex,
+                reverseLabelMapping: q.reverseLabelMapping || null
             };
         });
         
@@ -1781,6 +1783,27 @@ function updateProgressBar(isCorrect = null) {
     updateDotsUI();
 }
 
+function rebuildMappingsAfterRestore() {
+    if (!questions || questions.length === 0) return;
+    allQuestions.forEach(q => {
+        if (q.originalIndex === undefined || q.originalIndex === -1) {
+            q.originalIndex = questions.findIndex(origQ => origQ.question === q.question);
+        }
+        if (!q.isFillBlank && (!q.reverseLabelMapping || Object.keys(q.reverseLabelMapping).length === 0)) {
+            const origQ = questions[q.originalIndex];
+            if (origQ && origQ.options) {
+                q.reverseLabelMapping = {};
+                Object.entries(q.options).forEach(([newLabel, newText]) => {
+                    const origEntry = Object.entries(origQ.options).find(([_, origText]) => origText === newText);
+                    if (origEntry) {
+                        q.reverseLabelMapping[newLabel] = origEntry[0];
+                    }
+                });
+            }
+        }
+    });
+}
+
 function restoreProgress(quizName = null) {
     if (!auth.currentUser) {
         showCustomAlert('請先登入才能恢復進度！');
@@ -1814,7 +1837,7 @@ function restoreProgress(quizName = null) {
 
     getQuizNamePromise.then(resolvedQuizName => {
         return get(ref(database, `progress/${auth.currentUser.uid}/quizzes/${resolvedQuizName}`));
-    }).then(snapshot => {
+    }).then(async snapshot => {
         if (!snapshot.exists()) {
             showCustomAlert('沒有找到已保存的進度！');
             return;
@@ -1875,6 +1898,9 @@ function restoreProgress(quizName = null) {
             currentIndex = p.questionHistory ? p.questionHistory.length : 0;
             selectedJson = p.selectedJson;
         }
+        
+        await loadQuestions();
+        rebuildMappingsAfterRestore();
         
         viewingIndex = currentIndex;
         selectedOption = null;
