@@ -3408,6 +3408,15 @@ p {
     align-self: flex-start;
 }
 
+.mistake-item-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-top: 4px;
+    flex-shrink: 0;
+    accent-color: #0b57d0;
+    cursor: pointer;
+}
+
 .mistake-options {
     font-size: 0.95rem;
     color: #4b4b4b;
@@ -3487,6 +3496,11 @@ p {
     border-bottom: 1px solid #e0e0e0;
     flex-shrink: 0;
     z-index: 2001;
+    transition: margin-top 0.3s ease;
+}
+
+.top-app-bar.hidden {
+    margin-top: -51px; /* Height + 1px border */
 }
 
 .view-title {
@@ -4409,6 +4423,34 @@ p {
     font-size: 0.95rem;
     line-height: 1.4;
     word-break: break-word;
+}
+
+
+/* Mistake Header Actions Styles */
+.top-bar-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#mistakePracticeBtn {
+    margin: 0;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    height: 32px;
+    border-radius: 16px;
+    line-height: 1;
+    font-weight: 500;
+    background-color: #ffffff;
+    border: 1px solid #dadce0;
+    color: #1f1f1f;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#mistakePracticeBtn:hover {
+    background-color: #f1f3f4;
+    border-color: #bdc1c6;
 }
 
 /* ==========================================================================
