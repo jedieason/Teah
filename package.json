@@ -1,0 +1,20 @@
+{
+  "name": "teah-medical-question-bank",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/check.mjs",
+    "catalog": "node scripts/build-catalog.mjs",
+    "build": "node scripts/build.mjs",
+    "test:browser": "node tests/browser-smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2"
+  }
+}

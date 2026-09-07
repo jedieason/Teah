@@ -1,0 +1,23 @@
+/* Shared custom dropdown. Hidden selects only store the form state. */
+.select-menu { position: relative; min-width: 0; width: 190px; font-family: var(--ui-font); }
+.select-menu[data-for=mistakeQuiz] { width: 240px; }
+.select-menu[data-for=mistakeSort] { margin-left: auto; width: 165px; }
+.select-menu-trigger { appearance: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 42px; padding: 10px 13px; border: 1px solid var(--ui-border); border-radius: 10px; color: #444b52; background: white; font: 13px/1.5 var(--ui-font); cursor: pointer; text-align: left; }
+.select-menu-trigger > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.select-menu-trigger:hover { background: #f8f9fb; border-color: #ccd1d7; }
+.select-menu-trigger[aria-expanded=true] { border-color: #a9bedb; background: #f8faff; }
+.select-menu-chevron { width: 6px; height: 6px; border-right: 1.5px solid #757d87; border-bottom: 1.5px solid #757d87; transform: rotate(45deg) translateY(-2px); flex: 0 0 6px; margin-right: 3px; }
+.select-menu-trigger[aria-expanded=true] .select-menu-chevron { transform: rotate(225deg) translate(-1px, -1px); }
+.select-menu-list { position: absolute; z-index: 20; top: calc(100% + 7px); left: 0; box-sizing: border-box; width: max-content; min-width: 100%; max-width: min(340px, calc(100vw - 40px)); max-height: min(310px, 42dvh); overflow-y: auto; overscroll-behavior: contain; padding: 5px; border: 1px solid #e1e5e9; border-radius: 12px; background: white; box-shadow: 0 10px 30px #18233018, 0 2px 5px #18233008; }
+.select-menu[data-for=mistakeSort] .select-menu-list { left: auto; right: 0; }
+.select-menu-option { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 10px 12px; min-height: 20px; border-radius: 7px; color: #39414a; font: 13px/1.6 var(--ui-font); cursor: pointer; }
+.select-menu-option > span:first-child { overflow-wrap: anywhere; }
+.select-menu-option.is-active { background: #f3f5f7; }
+.select-menu-option[aria-selected=true] { color: var(--primary); background: #edf4ff; }
+.select-menu-check { visibility: hidden; font-size: 14px; flex-shrink: 0; }
+.select-menu-option[aria-selected=true] .select-menu-check { visibility: visible; }
+@media (max-width: 680px) {
+    .notebook-filters .select-menu { flex: 1; width: 0; }
+    .select-menu-trigger { font-size: 12px; padding: 10px; gap: 7px; }
+    .select-menu[data-for=mistakeQuiz] .select-menu-list { left: 50%; transform: translateX(-50%); }
+}

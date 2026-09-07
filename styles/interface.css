@@ -1,0 +1,60 @@
+/* Shared library and dialog primitives. The quiz layout stays in base.css. */
+:root {
+    --ui-border: #e3e5e7;
+    --ui-muted: #697078;
+    --ui-hover: #f5f6f7;
+    --ui-radius: 14px;
+    --ui-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
+}
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+.home-content, .controls-menu, .md3-dialog, .starred-modal-content { font-family: var(--ui-font); }
+.home-content { max-width: 1000px; gap: 16px; }
+.library-shortcuts { display: flex; gap: 8px; margin-bottom: 12px; }
+.quiet-button, .primary-button { min-height: 40px; padding: 9px 14px; border-radius: 10px; border: 1px solid transparent; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 12px; line-height: 1.4; }
+.quiet-button { color: var(--on-surface); background: transparent; }
+.quiet-button:hover { background: var(--ui-hover); }
+.primary-button { background: var(--primary); color: white; }
+.primary-button:hover { background: #0848ac; }
+.library-shortcuts .quiet-button { border-color: var(--ui-border); padding-inline: 18px; }
+.library-shortcuts span { color: var(--ui-muted); }
+.home-content .section-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 0; }
+.home-content .section-title { font: 600 18px var(--ui-font); }
+.library-search { width: min(240px, 60%); padding: 10px 12px; min-height: 40px; border: 1px solid var(--ui-border); border-radius: 10px; color: var(--on-surface); background: var(--surface-color); font: 14px var(--ui-font); }
+.continue-card { border-radius: var(--ui-radius); border-color: var(--ui-border); min-height: 104px; margin: 16px 0 12px; }
+.continue-details { padding: 22px; min-width: 0; }
+.continue-title-text { overflow-wrap: anywhere; }
+.continue-btn-action { border-radius: 10px; }
+.units-grid { gap: 12px; }
+.unit-card { border-color: var(--ui-border); padding: 20px; border-radius: var(--ui-radius); animation: none !important; opacity: 1 !important; }
+.unit-info { min-width: 0; }
+.unit-title { font: 500 15px/1.6 var(--ui-font); overflow-wrap: anywhere; }
+.unit-subtitle { color: var(--ui-muted); font: 13px/1.5 var(--ui-font); flex-wrap: wrap; }
+.unit-icon-box { border-radius: 10px; width: 36px; height: 36px; background: #f0f5fc; }
+.folder-toolbar { padding: 0; margin: 0 0 4px; }
+.folder-title { font: 500 16px var(--ui-font); }
+.controls-menu { border: 1px solid var(--ui-border); border-radius: 16px; box-shadow: 0 8px 30px #00000012; }
+.controls-item { font-size: 14px; }
+.md3-dialog input, .md3-dialog textarea { font-family: var(--ui-font); }
+.empty-state { grid-column: 1 / -1; padding: 64px 20px; text-align: center; color: var(--ui-muted); font: 14px/1.8 var(--ui-font); }
+.empty-state h3 { color: var(--on-surface); font-size: 17px; font-weight: 500; margin: 0 0 8px; }
+.empty-state button { margin-top: 16px; }
+.notification-bar { z-index: 5000; font-family: var(--ui-font); }
+.starred-modal-content .mistake-item { border: 1px solid var(--ui-border); border-radius: var(--ui-radius); padding: 20px; box-shadow: none; margin-bottom: 16px; }
+.starred-modal-content .mistake-info { font-family: var(--ui-font); }
+.starred-modal-content .mistake-item:hover { transform: none; box-shadow: none; }
+@media (max-width: 600px) {
+    .home-content { padding: 0 20px 32px; }
+    .continue-details { padding: 18px; }
+    .continue-card { padding-right: 16px; }
+    .continue-btn-action { padding: 10px 14px; }
+    .units-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+.quiz-title[role=button] { cursor: pointer; }
+.quiz-title[role=button]::before { content: '‹'; font-family: var(--ui-font); font-size: 22px; margin-right: 12px; color: #737a81; }

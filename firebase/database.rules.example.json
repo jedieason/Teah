@@ -1,0 +1,30 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "quizCatalog": {
+      ".read": true,
+      ".write": "auth != null && auth.token.admin === true"
+    },
+    "progress": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "mistakes": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "API_KEY": {
+      ".read": false,
+      ".write": false
+    },
+    "$bank": {
+      ".read": "auth != null && (auth.token.admin === true || root.child('quizCatalog').child($bank).exists()) && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'mistake' && $bank !== 'quizAliases'",
+      ".write": "auth != null && auth.token.admin === true && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'mistake' && $bank !== 'quizAliases'"
+    }
+  }
+}

@@ -6,12 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="Images/logo.png" type="image/png">
   <title>題矣</title>
-</head>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-<!-- Firebase v11.6.1 inline initialization -->
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/interface.css">
+<link rel="stylesheet" href="styles/notebook.css">
+<link rel="stylesheet" href="styles/dialogs.css">
+<link rel="stylesheet" href="styles/select-menu.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+
 </head>
 
 <body>
@@ -95,7 +98,6 @@
         </button>
       </div>
     </div>
-    <!-- <input type="file" id="uploadJson" accept=".json" style="display:none;"> -->
     <button id="signInBtn" class="sign-in-button">
       <svg class="g-logo" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -118,31 +120,36 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="home-content">
+    <main class="home-content">
+      <nav class="library-shortcuts" aria-label="學習紀錄">
+        <button id="homeMistakes" class="quiet-button">錯題本 <span aria-hidden="true">↗</span></button>
+        <button id="homeStarred" class="quiet-button">已收藏 <span aria-hidden="true">↗</span></button>
+      </nav>
       <div id="continue-section" style="display:none;">
         <div class="section-header">
           <h2 class="section-title">繼續</h2>
         </div>
         <div id="continue-card" class="continue-card">
           <div class="continue-details">
-            <h3 id="continue-title-text" class="continue-title-text">Unit Name</h3>
+            <h3 id="continue-title-text" class="continue-title-text">題庫名稱</h3>
             <div class="continue-progress-track">
               <div id="continue-progress-fill" class="continue-progress-fill"></div>
             </div>
-            <p id="continue-stats-text" class="continue-stats-text">0/0 cards reviewed</p>
+            <p id="continue-stats-text" class="continue-stats-text">0/0 題</p>
           </div>
           <button id="continue-btn-action" class="continue-btn-action">繼續</button>
         </div>
       </div>
 
       <div class="section-header">
-        <h2 class="section-title">單元</h2>
+        <h2 class="section-title">題庫</h2>
+        <input id="bankSearch" class="library-search" type="search" placeholder="搜尋目前列表" aria-label="搜尋目前列表">
       </div>
 
       <!-- Folder/Unit Navigation logic will render here -->
       <div id="folder-breadcrumb" class="folder-breadcrumb"></div> <!-- Replaces folder-toolbar -->
-      <div id="units-grid" class="units-grid"></div> <!-- Replaces button-row -->
-    </div>
+      <div id="units-grid" class="units-grid"><p class="empty-state" role="status">載入題庫中…</p></div> <!-- Replaces button-row -->
+    </main>
 
     <!-- Hidden legacy elements if needed for script compatibility before full refactor -->
     <div id="folder-toolbar" style="display:none;"></div>
@@ -232,17 +239,17 @@
   </div>
 
   <!-- 自訂模態窗口 Notification Bar -->
-  <div id="customAlert" class="notification-bar">
+  <div id="customAlert" class="notification-bar" role="status" aria-live="polite">
     <div class="notification-content">
-      <span id="modal-message">選點啥吧</span>
+      <span id="modal-message">請選擇題庫</span>
     </div>
-    <button id="modalConfirmBtn" class="notification-close" aria-label="Close">&times;</button>
+    <button id="modalConfirmBtn" class="notification-close" aria-label="關閉視窗">&times;</button>
   </div>
 
   <!-- Starred Questions Modal -->
   <div id="starredModal" class="modal">
     <div class="modal-content starred-modal-content">
-      <span class="modal-close">&times;</span>
+      <button class="dialog-close modal-close" aria-label="關閉收藏">&times;</button>
       <h3>已收藏的題目</h3>
       <div id="starredList"></div>
     </div>
@@ -253,7 +260,7 @@
     <div class="md3-dialog">
       <div class="md3-dialog-header">
         <h3 class="md3-dialog-title">勘誤題目答案</h3>
-        <button class="md3-icon-btn modal-close" id="errataCloseBtn" aria-label="Close">
+        <button class="dialog-close modal-close" id="errataCloseBtn" aria-label="關閉視窗">
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
             <path
               d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -271,36 +278,42 @@
     </div>
   </div>
 
-  <!-- Mistake Full Screen View -->
-  <div id="mistakeView" class="full-screen-view">
-    <div class="top-app-bar">
-      <button id="backMistakeViewBtn" class="action-icon-btn" aria-label="返回" style="display: none;">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
-          <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
-        </svg>
-      </button>
-      <h2 class="view-title" id="mistakeViewTitle">錯題回顧</h2>
-      <div class="top-bar-right-actions">
-        <button id="mistakePracticeBtn" class="m3-btn m3-btn-outlined" style="display: none;">練習全部</button>
-        <button id="closeMistakeViewBtn" class="action-icon-btn" aria-label="關閉">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
-            <path
-              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-          </svg>
-        </button>
+  <!-- Mistake notebook: all controls stay outside the answering interface. -->
+  <section id="mistakeView" class="full-screen-view" role="dialog" aria-modal="true" aria-labelledby="mistakeViewTitle">
+    <header class="notebook-header">
+      <div class="notebook-heading"><h2 id="mistakeViewTitle">錯題本</h2><span>複習紀錄</span></div>
+      <button id="closeMistakeViewBtn" class="quiet-button" aria-label="關閉錯題本">關閉</button>
+    </header>
+    <div class="notebook-controls">
+      <div class="notebook-toolbar">
+        <div class="notebook-tabs" role="group" aria-label="複習狀態">
+          <button data-mistake-status="active" aria-pressed="true">待複習</button>
+          <button data-mistake-status="mastered" aria-pressed="false">已熟悉</button>
+          <button data-mistake-status="all" aria-pressed="false">全部</button>
+        </div>
+        <input id="mistakeSearch" type="search" placeholder="搜尋題目、出處或關鍵字" aria-label="搜尋錯題">
       </div>
+      <div class="notebook-filters">
+        <select id="mistakeSubject" aria-label="篩選科目"><option value="">全部科目</option></select>
+        <select id="mistakeQuiz" aria-label="篩選題庫"><option value="">全部題庫</option></select>
+        <select id="mistakeSort" aria-label="排序錯題"><option value="recent">最近答錯</option><option value="frequent">錯誤最多</option><option value="oldest">最久未回顧</option></select>
+      </div>
+      <p id="mistakeSummary" class="notebook-summary" role="status"></p>
     </div>
-    <div id="mistakeScrollContainer" class="view-body">
-      <div id="mistakeListContent"></div>
-    </div>
-  </div>
-</body>
+    <div id="mistakeScrollContainer" class="notebook-scroll"><div id="mistakeListContent"></div></div>
+    <footer class="notebook-bottom">
+      <label class="notebook-select-all"><input id="mistakeSelectAll" type="checkbox">全選</label>
+      <span id="mistakeSelection" role="status"></span>
+      <button id="mistakeClearSelection" class="quiet-button" hidden>取消選取</button>
+      <button id="mistakePracticeBtn" class="primary-button">開始複習</button>
+    </footer>
+  </section>
 <!-- Upload Quiz Modal (Material 3) -->
 <div id="uploadModal" class="md3-modal-overlay">
   <div class="md3-dialog">
     <div class="md3-dialog-header">
       <h3 class="md3-dialog-title">新增題庫</h3>
-      <button class="md3-icon-btn modal-close" aria-label="Close">
+      <button class="dialog-close modal-close" aria-label="關閉視窗">
         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
           <path
             d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -360,7 +373,7 @@
 
 <!-- Archive Confirm Modal (Material 3) -->
 <div id="archiveConfirmModal" class="md3-modal-overlay" style="display: none;">
-  <div class="md3-dialog" style="max-width: 320px;">
+  <div class="md3-dialog">
     <div class="md3-dialog-header">
       <h3 class="md3-dialog-title" id="archiveConfirmTitle">典藏題庫</h3>
     </div>
@@ -374,36 +387,31 @@
   </div>
 </div>
 
-<!-- Quiz Action Modal (Material 3) -->
-<div id="quizActionModal" class="md3-modal-overlay" style="display: none;">
-  <div class="md3-dialog" style="max-width: 360px;">
-    <div class="md3-dialog-header">
-      <h3 class="md3-dialog-title" id="quizActionTitle">題庫名稱</h3>
-      <button class="md3-icon-btn modal-close" id="quizActionCloseBtn" aria-label="Close">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
-          <path
-            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-        </svg>
-      </button>
+<!-- Quiz entry shares the same dialog shell as editing tools. -->
+<div id="quizActionModal" class="md3-modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="quizActionTitle">
+  <div class="md3-dialog quiz-entry-dialog">
+    <button class="dialog-close modal-close" id="quizActionCloseBtn" aria-label="關閉視窗">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg>
+    </button>
+    <div class="quiz-entry-heading">
+      <p id="quizActionSubject" class="dialog-eyebrow"></p>
+      <h3 id="quizActionTitle">題庫名稱</h3>
     </div>
-    <div class="md3-dialog-body" style="padding-top: 10px;">
-      <p id="quizActionStatus" style="margin: 0 0 16px 0; font-size: 0.95rem; color: var(--on-surface-variant);"></p>
-      <div class="quiz-action-options" style="display: flex; flex-direction: column; gap: 12px;">
-        <button id="quizActionResumeBtn" class="m3-btn m3-btn-filled"
-          style="width: 100%; justify-content: center; margin: 0;">
-          <span>繼續測驗</span>
-        </button>
-        <button id="quizActionRestartBtn" class="m3-btn m3-btn-outlined"
-          style="width: 100%; justify-content: center; margin: 0;">
-          <span>重新開始</span>
-        </button>
-      </div>
+    <div class="quiz-entry-progress">
+      <div class="quiz-entry-progress-label"><span id="quizActionStatus"></span><span id="quizActionCount"></span></div>
+      <div id="quizActionTrack" class="quiz-entry-track"><div id="quizActionFill"></div></div>
+      <p id="quizActionOrder" class="quiz-entry-order"></p>
+    </div>
+    <div class="quiz-action-options">
+      <button id="quizActionResumeBtn" class="primary-button"><span>繼續測驗</span><span aria-hidden="true">→</span></button>
+      <button id="quizActionRestartBtn" class="primary-button"><span>開始測驗</span><span aria-hidden="true">→</span></button>
     </div>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script type="module" src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+<script type="module" src="src/app.js"></script>
 </body>
 
 </html>

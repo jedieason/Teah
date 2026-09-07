@@ -1,39 +1,14 @@
-// Firebase SDK imports and initialization (v12.12.1)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
-import { getDatabase, ref, get, update, set, remove } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-
-const currentHost = window.location.hostname;
-const defaultAuthDomain = "stock-market-ntumed.firebaseapp.com";
-const isFirebaseHost = currentHost.endsWith(".web.app") || currentHost.endsWith(".firebaseapp.com");
-const authDomain = isFirebaseHost ? currentHost : defaultAuthDomain;
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBDUkxPjus-JYd2WZqys_eP5sWxLkMs2CI",
-    authDomain: authDomain,
-    databaseURL: "https://stock-market-ntumed-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "stock-market-ntumed",
-    storageBucket: "stock-market-ntumed.firebasestorage.app",
-    messagingSenderId: "1032461117274",
-    appId: "1:1032461117274:web:33b51256202657864ff563",
-    measurementId: "G-5ZZWMMLEKK"
-};
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const database = getDatabase(app);
-// Firebase Auth
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+import { installDialogBehavior } from './shared/dialogs.js';
+import { readCatalog, writeBanks, validBankName } from './services/catalog.js';
+import { database, auth, googleProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, onAuthStateChanged, signOut } from './services/firebase.js';
+import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quizLabel } from './features/mistakes/model.js';
+import { createNotebook } from './features/mistakes/notebook.js';
+import { markdown, validateQuiz } from './shared/content.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
 // Restore preview elements
 const restoreBtn = document.getElementById('restore');
-const restoreTitleEl = document.getElementById('restoreTitle');
-const restoreSubtitleEl = document.getElementById('restoreSubtitle');
-const restoreProgressBarEl = document.getElementById('restoreProgressBar');
 if (restoreBtn) restoreBtn.style.display = 'none';
 
 async function updateRestorePreview(user) {
@@ -82,7 +57,7 @@ async function updateRestorePreview(user) {
         let done = 0;
         if (p.allQuestions) {
             total = p.allQuestions.length;
-            done = p.currentIndex;
+            done = p.allQuestions.filter(q => q.isAnswered).length;
         } else {
             total = (p.questions?.length || 0) + (p.correct || 0) + (p.wrong || 0);
             done = (p.correct || 0) + (p.wrong || 0);
@@ -121,11 +96,15 @@ let correct = 0;
 let wrong = 0;
 let selectedJson = null; // 初始為 null
 let userProgressCache = {};
+let learningDataReady = false;
 let userMistakesCache = {};
+let catalogPaths = [];
+let catalogData = {};
 
 // 獲取唯一的錯題與收藏存儲鍵名（包含科目與習題名稱）
 function getQuizStorageName(path) {
     if (!path) return 'default';
+    if (catalogData[path]?.storageKey) return catalogData[path].storageKey;
 
     let cleanPath = path;
     if (cleanPath.startsWith('_Archive_')) {
@@ -162,7 +141,7 @@ const originalQuizDisplay = quizContainer.style.display || 'flex';
 let endScreenDiv = null;
 
 // 新增：洗牌偏好設定
-let shouldShuffleQuiz = false; // false: 固定順序 (JSON 順序), true: 隨機順序
+let shouldShuffleQuiz = localStorage.getItem('shuffleQuiz') === 'true'; // false: 固定順序 (JSON 順序), true: 隨機順序
 
 // 新增：歷史紀錄陣列
 let questionHistory = [];
@@ -188,7 +167,7 @@ window.MathJax = {
 // 初始化測驗
 async function initQuiz() {
     isMistakePracticeMode = false;
-    localStorage.removeItem('quizProgress');
+    isTestCompleted = false;
 
     await loadQuestions();
 
@@ -301,17 +280,10 @@ async function initQuiz() {
 
 // 加載題目 (Firebase)
 async function loadQuestions() {
-    try {
-        const snapshot = await get(ref(database, selectedJson));
-        if (snapshot.exists()) {
-            questions = snapshot.val();
-        } else {
-            console.error('No questions found at path:', selectedJson);
-            questions = [];
-        }
-    } catch (error) {
-        console.error('Failed to load questions from Firebase:', error);
-    }
+    questions = [];
+    const snapshot = await get(ref(database, selectedJson));
+    if (!snapshot.exists() || !Array.isArray(snapshot.val()) || !snapshot.val().length) throw new Error('題庫沒有可用題目。');
+    questions = snapshot.val();
 }
 
 // 洗牌函數
@@ -404,7 +376,7 @@ function renderQuestion(index) {
     updateStarIcon();
 
     const questionDiv = document.getElementById('question');
-    const questionHtml = marked.parse(q.question);
+    const questionHtml = markdown(q.question);
     if (q.isMultiSelect) {
         const labelText = q.isFillBlank ? '句' : '多';
         questionDiv.innerHTML = `
@@ -444,7 +416,7 @@ function renderQuestion(index) {
             const button = document.createElement('button');
             button.classList.add('option-button');
             button.dataset.option = key;
-            button.innerHTML = marked.parse(`${key}: ${value}`);
+            button.innerHTML = markdown(`${key}: ${value}`);
             renderLatex(button);
 
             if (q.isConfirmed) {
@@ -493,7 +465,7 @@ function renderQuestion(index) {
     const explanationEl = document.getElementById('explanation');
     const originDisplay = document.getElementById('origin-display');
     if (q.isConfirmed) {
-        document.getElementById('explanation-text').innerHTML = marked.parse(q.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！');
+        document.getElementById('explanation-text').innerHTML = markdown(q.explanation || '尚無詳解');
         renderLatex(document.getElementById('explanation-text'));
         explanationEl.style.display = 'block';
         if (q.origin) {
@@ -536,7 +508,7 @@ function renderQuestion(index) {
 
 function updateExplanationOptions(explanation, labelMapping) {
     if (!explanation) {
-        return '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！';
+        return '尚無詳解';
     }
     // Regex to match (A), ( B ), （Ｃ）, （ D ）, (Ｅ), （F）, etc.
     // It allows for optional spaces between the parentheses (half-width or full-width)
@@ -627,10 +599,6 @@ function hideCustomAlert() {
 
 modalConfirmBtn.addEventListener('click', () => {
     hideCustomAlert();
-    if (isTestCompleted) {
-        location.reload();
-        return;
-    }
     if (typeof customAlertConfirmCallback === 'function') {
         const cb = customAlertConfirmCallback;
         customAlertConfirmCallback = null;
@@ -642,7 +610,7 @@ modalConfirmBtn.addEventListener('click', () => {
 // 修改確認按鈕函數
 function confirmAnswer() {
     const q = allQuestions[currentIndex];
-    if (!q) return;
+    if (!q || q.isAnswered || viewingIndex !== currentIndex) return;
 
     if (q.isFillBlank) {
         const userInput = fillblankInput.value.trim();
@@ -673,7 +641,7 @@ function confirmAnswer() {
     } else {
         if (q.isMultiSelect) {
             if (selectedOptions.length === 0) {
-                showCustomAlert('選點啥吧，用猜的也好！');
+                showCustomAlert('請先選擇答案。');
                 return;
             }
             stopTimer();
@@ -693,7 +661,7 @@ function confirmAnswer() {
             }
         } else {
             if (!selectedOption) {
-                showCustomAlert('選點啥吧，用猜的也好！');
+                showCustomAlert('請先選擇答案。');
                 return;
             }
             stopTimer();
@@ -717,6 +685,7 @@ function confirmAnswer() {
 }
 
 function updateCorrect() {
+    recordAttempt(true);
     correct += 1;
     document.getElementById('correct').innerText = correct;
     updateProgressBar(true);
@@ -726,7 +695,7 @@ function updateWrong() {
     wrong += 1;
     document.getElementById('wrong').innerText = wrong;
     updateProgressBar(false);
-    recordMistake();
+    recordAttempt(false);
 }
 
 function showEndScreen() {
@@ -746,49 +715,34 @@ function showEndScreen() {
     const container = document.createElement('div');
     container.className = 'results-container';
 
-    // Celebration Graphic (SVG instead of emoji)
-    const graphic = document.createElement('div');
-    graphic.className = 'results-graphic';
-    graphic.innerHTML = `
-        <svg class="check-animation" viewBox="0 0 52 52">
-            <circle class="check-circle" cx="26" cy="26" r="25" fill="none"/>
-            <path class="check-mark" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-        </svg>
-    `;
-    container.appendChild(graphic);
-
     const title = document.createElement('h1');
     title.className = 'results-title';
-    title.innerText = '測驗結幕';
+    title.textContent = isMistakePracticeMode ? '複習完成' : '測驗完成';
     container.appendChild(title);
-
-    const fileName = selectedJson ? selectedJson.split('/').pop().replace('.json', '') : '';
     const subtitle = document.createElement('p');
     subtitle.className = 'results-subtitle';
-    subtitle.innerText = fileName;
+    const sources = new Set(allQuestions.map(q => q.sourcePath || selectedJson));
+    subtitle.textContent = isMistakePracticeMode
+        ? `錯題複習 · ${sources.size} 份題庫`
+        : (selectedJson || '').replace(/^_Archive_/, '').replace(/\.json$/, '');
     container.appendChild(subtitle);
-
-    // Stats Grid
+    const totalQuestions = correct + wrong;
+    const accuracy = totalQuestions ? Math.round(correct / totalQuestions * 100) : 0;
+    const score = document.createElement('div');
+    score.className = 'results-accuracy';
+    score.innerHTML = `<strong>${accuracy}%</strong><span>正確率</span>`;
+    container.appendChild(score);
+    const track = document.createElement('div');
+    track.className = 'results-score-track';
+    track.setAttribute('aria-hidden', 'true');
+    track.innerHTML = `<div style="width:${accuracy}%"></div>`;
+    container.appendChild(track);
     const statsGrid = document.createElement('div');
     statsGrid.className = 'results-stats-grid';
-
-    const totalQuestions = correct + wrong;
-    const accuracy = totalQuestions > 0 ? Math.round((correct / totalQuestions) * 100) : 0;
-
     statsGrid.innerHTML = `
-        <div class="stat-card accuracy">
-            <div class="stat-value">${accuracy}%</div>
-            <div class="stat-label">正確率</div>
-        </div>
-        <div class="stat-card correct">
-            <div class="stat-value">${correct}</div>
-            <div class="stat-label">答對</div>
-        </div>
-        <div class="stat-card wrong">
-            <div class="stat-value">${wrong}</div>
-            <div class="stat-label">答錯</div>
-        </div>
-    `;
+        <div class="results-stat"><strong>${totalQuestions}</strong><span>已作答</span></div>
+        <div class="results-stat correct"><strong>${correct}</strong><span>答對</span></div>
+        <div class="results-stat wrong"><strong>${wrong}</strong><span>答錯</span></div>`;
     container.appendChild(statsGrid);
 
     // Action Buttons
@@ -797,7 +751,7 @@ function showEndScreen() {
 
     // Redo Wrong Button
     const redoBtn = document.createElement('button');
-    redoBtn.className = 'm3-btn m3-btn-filled';
+    redoBtn.className = 'primary-button';
     redoBtn.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
             <path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/>
@@ -806,14 +760,18 @@ function showEndScreen() {
     `;
     const wrongList = allQuestions.filter(q => q.isAnswered && !q.isCorrect);
     if (wrongList.length === 0) {
-        redoBtn.disabled = true;
+        redoBtn.hidden = true;
     }
     redoBtn.addEventListener('click', () => {
         const wrongListToRedo = allQuestions.filter(q => q.isAnswered && !q.isCorrect);
         if (wrongListToRedo.length === 0) return;
 
+        isMistakePracticeMode = true;
         allQuestions = wrongListToRedo.map(q => {
             return {
+                sourcePath: q.sourcePath || selectedJson,
+                mistakeQuizKey: q.mistakeQuizKey || getQuizStorageName(q.sourcePath || selectedJson),
+                mistakeRecordPath: q.mistakeRecordPath || null,
                 question: q.question,
                 options: q.options,
                 answer: q.answer,
@@ -855,15 +813,18 @@ function showEndScreen() {
 
     // Reselect Quiz Button
     const resetBtn = document.createElement('button');
-    resetBtn.className = 'm3-btn m3-btn-outlined';
+    resetBtn.className = wrongList.length ? 'secondary-button' : 'primary-button';
     resetBtn.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
             <path d="M160-120v-480l320-240 320 240v480H520v-240h-80v240H160Z"/>
         </svg>
         <span>重新選題庫</span>
     `;
+    resetBtn.querySelector('span').textContent = isMistakePracticeMode ? '返回錯題本' : '返回題庫';
     resetBtn.addEventListener('click', () => {
-        location.reload();
+        const wasPractice = isMistakePracticeMode;
+        returnHome();
+        if (wasPractice) openMistakeView();
     });
     actionArea.appendChild(resetBtn);
 
@@ -871,6 +832,8 @@ function showEndScreen() {
     endScreenDiv.appendChild(container);
 
     quizContainer.parentNode.appendChild(endScreenDiv);
+    container.tabIndex = -1;
+    container.focus({ preventScroll: true });
 }
 
 function copyQuestion() {
@@ -941,6 +904,10 @@ document.getElementById('back-progress-btn-expl').addEventListener('click', () =
 });
 
 document.addEventListener('keydown', function (event) {
+    if (event.isComposing || event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.target.closest('button, summary, select') || (event.target.matches('input, textarea, [contenteditable]') && event.target !== fillblankInput)) return;
+    if ([...document.querySelectorAll('.md3-modal-overlay, .modal, #mistakeView')].some(el => getComputedStyle(el).display !== 'none')) return;
+    if (quizContainer.style.display === 'none' || !allQuestions.length) return;
     if (document.querySelector('.start-screen').style.display !== 'none') {
         if (event.key === 'Enter') {
             if (!selectedJson) {
@@ -1016,6 +983,7 @@ document.getElementById('button-row').addEventListener('click', function (event)
 });
 
 function updateShuffleUI() {
+    localStorage.setItem('shuffleQuiz', String(shouldShuffleQuiz));
     const st = document.getElementById('shuffleToggle');
     if (st) st.title = shouldShuffleQuiz ? '順序：隨機' : '順序：固定';
     const menuShuffleEl = document.getElementById('menuShuffle');
@@ -1041,84 +1009,12 @@ if (shuffleToggle) {
 
 window.addEventListener("beforeunload", function (event) {
     // 只有在測驗中（有題庫且未完成）才跳出提示
-    if (selectedJson && !isTestCompleted) {
+    if (pendingAttempts.size || pendingProgress.size || (selectedJson && !isTestCompleted)) {
         event.preventDefault();
         event.returnValue = '';
     }
 });
 
-// Rename Quiz Function
-function startRenamingQuiz(oldName, btnElement) {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = oldName;
-    input.className = 'rename-input';
-
-    // Replace button content
-    btnElement.innerHTML = '';
-    btnElement.appendChild(input);
-    input.focus();
-
-    let isCommitting = false;
-    const commit = async () => {
-        if (isCommitting) return;
-        isCommitting = true;
-        const newName = input.value.trim();
-        if (!newName || newName === oldName) {
-            btnElement.textContent = oldName;
-            isCommitting = false;
-            return;
-        }
-
-        try {
-            // Check existence
-            const newRef = ref(database, newName);
-            const snap = await get(newRef);
-            if (snap.exists()) {
-                alert('該名稱已存在！');
-                btnElement.textContent = oldName;
-                isCommitting = false;
-                return;
-            }
-
-            // Move data
-            const oldRef = ref(database, oldName);
-            const oldSnap = await get(oldRef);
-            if (oldSnap.exists()) {
-                const data = oldSnap.val();
-                await set(newRef, data);
-                await remove(oldRef);
-                if (selectedJson === oldName) {
-                    selectedJson = newName;
-                }
-                fetchQuizList();
-            }
-        } catch (e) {
-            console.error(e);
-            alert('更名失敗: ' + e.message);
-            btnElement.textContent = oldName;
-        }
-        isCommitting = false;
-    };
-
-    input.addEventListener('blur', commit);
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            input.blur();
-        }
-    });
-    input.addEventListener('click', (e) => e.stopPropagation());
-}
-
-/*
- * Timer Logic
- */
-/*
- * Timer Logic
- */
-/*
- * Timer Logic (Smooth Pie Chart)
- */
 function startTimer() {
     if (timerFrameId) cancelAnimationFrame(timerFrameId);
 
@@ -1169,8 +1065,10 @@ function stopTimer() {
 // 從 Firebase 讀取可用的題庫清單並建立按鈕
 async function fetchQuizList() {
     try {
-        const listRef = ref(database, '/');  // 根目錄或指定清單路徑
-        const snapshot = await get(listRef);
+        const data = await readCatalog();
+        catalogData = data;
+        catalogPaths = Object.keys(data);
+        const snapshot = { exists: () => catalogPaths.length > 0, val: () => data };
         // Target new grid container
         const gridContainer = document.getElementById('units-grid');
         const breadcrumbContainer = document.getElementById('folder-breadcrumb');
@@ -1258,6 +1156,7 @@ async function fetchQuizList() {
 
             const renderFolderView = (groupName) => {
                 currentActiveFolder = groupName;
+                document.getElementById('bankSearch').value = '';
                 if (gridContainer) gridContainer.innerHTML = '';
 
                 // Render Breadcrumb
@@ -1275,7 +1174,8 @@ async function fetchQuizList() {
                     backBtn.className = 'folder-back';
                     backBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>';
                     backBtn.style.writingMode = 'horizontal-tb';
-                    backBtn.onclick = () => renderFolderTiles();
+                    backBtn.setAttribute('aria-label', '返回全部科目');
+                    backBtn.onclick = () => { document.getElementById('bankSearch').value = ''; renderFolderTiles(); };
 
                     const title = document.createElement('span');
                     title.className = 'folder-title';
@@ -1318,7 +1218,7 @@ async function fetchQuizList() {
                     title.className = 'unit-title';
                     let displayTitle = key;
                     if (displayTitle.startsWith('_Archive_')) displayTitle = displayTitle.substring(9);
-                    title.textContent = displayTitle;
+                    title.textContent = quizLabel(displayTitle).title;
 
                     // Archive Icon Logic
                     const archiveIcon = document.createElement('button');
@@ -1344,7 +1244,7 @@ async function fetchQuizList() {
 
                     if (p) {
                         const total = p.allQuestions ? p.allQuestions.length : 0;
-                        const done = p.currentIndex;
+                        const done = p.allQuestions ? p.allQuestions.filter(q => q.isAnswered).length : p.currentIndex || 0;
                         if (total > 0) {
                             percent = Math.min(100, Math.round(done / total * 100));
                             if (done >= total) {
@@ -1358,7 +1258,7 @@ async function fetchQuizList() {
 
                     const subtitle = document.createElement('div');
                     subtitle.className = 'unit-subtitle';
-                    const qCount = data && Array.isArray(data[key]) ? data[key].length : 0;
+                    const qCount = data[key]?.count || 0;
 
                     const countSpan = document.createElement('span');
                     countSpan.textContent = `共 ${qCount} 題`;
@@ -1415,7 +1315,7 @@ async function fetchQuizList() {
                             return;
                         }
 
-                        startFreshQuiz(key);
+                        openQuizActionModal(key, userProgressCache[getQuizStorageName(key)]);
                     };
 
                     gridContainer.appendChild(card);
@@ -1436,10 +1336,13 @@ async function fetchQuizList() {
             }
 
         } else {
-            document.getElementById('units-grid').innerHTML = '<p>No quizzes found.</p>';
+            document.getElementById('units-grid').innerHTML = '<p class="empty-state">目前沒有題庫。</p>';
         }
     } catch (error) {
         console.error('Failed to fetch quiz list:', error);
+        const grid = document.getElementById('units-grid');
+        grid.innerHTML = '<div class="empty-state"><p>題庫載入失敗，請確認連線後重試。</p><button class="quiet-button" id="retryCatalog">重新載入</button></div>';
+        document.getElementById('retryCatalog').onclick = fetchQuizList;
     }
 }
 
@@ -1665,7 +1568,12 @@ uploadConfirmBtn.addEventListener('click', async () => {
     }
 
     try {
-        await update(ref(database, '/'), updates);
+        for (const [name, data] of Object.entries(updates)) {
+            if (!validBankName(name)) throw new Error('題庫名稱不可包含 . # $ [ ] / 或使用系統名稱。');
+            validateQuiz(data);
+            if ((await get(ref(database, name))).exists()) throw new Error(`「${name}」已存在，請使用其他名稱。`);
+        }
+        await writeBanks(updates);
         const count = Object.keys(updates).length;
         if (count === 1) {
             showCustomAlert('題庫已新增：' + Object.keys(updates)[0]);
@@ -1681,7 +1589,7 @@ uploadConfirmBtn.addEventListener('click', async () => {
         updateFileDropZoneUI();
     } catch (err) {
         console.error(err);
-        showCustomAlert('請跟管理員取得權限，或是檔案格式錯誤');
+        showCustomAlert(err.message || '建立失敗，請確認題庫格式與寫入權限。');
     }
 });
 
@@ -1735,124 +1643,36 @@ weeGPTButton.addEventListener('click', () => {
 
 sendQuestionBtn.addEventListener('click', async () => {
     const userQuestion = userQuestionInput.value.trim();
-    if (!userQuestion) {
-        return;
-    }
-    inputSection.style.display = 'none';
-    const defaultAnswer = currentQuestion.answer;
-    const question = currentQuestion.question;
-    const options = currentQuestion.options;
-    currentQuestion.explanation = '<span class="typing-effect">正在等待 Gemini 回應...</span>';
-    document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-
-    let fetchedApiKey;
-    try {
-        const apiKeySnapshot = await get(ref(database, 'API_KEY'));
-        if (!apiKeySnapshot.exists() || typeof apiKeySnapshot.val() !== 'string' || apiKeySnapshot.val().trim() === '') {
-            showCustomAlert('錯誤：無法獲取有效的 API 金鑰。請洽管理員設定。');
-            currentQuestion.explanation = '無法取得 API 金鑰，請聯繫管理員。';
-            document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-            userQuestionInput.value = ''; // Clear input
-            return;
-        }
-        fetchedApiKey = apiKeySnapshot.val();
-    } catch (dbError) {
-        console.error('從 Firebase 讀取 API Key 失敗:', dbError);
-        showCustomAlert('讀取 API 金鑰時發生錯誤，請檢查網路連線或洽管理員。');
-        currentQuestion.explanation = '讀取 API 金鑰時發生錯誤，請稍後再試。';
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        userQuestionInput.value = ''; // Clear input
-        return;
-    }
-
-    const MODEL_NAME = 'gemini-flash-lite-latest';
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${fetchedApiKey}`;
-
-    const systemInstructionText = "使用正體中文（臺灣）或英文回答。回答我的提問，我的提問內容會是基於我提問後面所附的題目，但那個題目並非你主要要回答的內容。回應請使用Markdown格式排版，所有Markdown語法都可以使用。請不要上網搜尋。Simplified Chinese and pinyin are STRICTLY PROHIBITED. Do not include any introductory phrases or opening remarks.";
-
-    const optionsText = Array.isArray(options) && options.length > 0
-        ? options.map(opt => `「${opt}」`).join('、')
-        : Object.keys(options || {}).length > 0 // Check if options is an object with keys
-            ? Object.entries(options).map(([key, value]) => `${key}: 「${value}」`).join('；')
-            : '（這題沒有提供選項）';
-
-
-    const prompt = `好啦，這有個鳥問題：
-題目：「${question}」
-選項有：${optionsText}
-他們說正確答案是：「${defaultAnswer}」
-但我想問說「${userQuestion}」，`;
-
-    const requestBody = {
-        contents: [{
-            parts: [{
-                text: prompt
-            }]
-        }],
-        system_instruction: {
-            parts: [{
-                text: systemInstructionText
-            }]
-        },
-        safety_settings: [
-            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-        ],
+    if (!userQuestion || sendQuestionBtn.disabled) return;
+    const target = currentQuestion;
+    const display = document.getElementById('explanation-text');
+    sendQuestionBtn.disabled = true;
+    const showResponse = text => {
+        if (currentQuestion !== target) return;
+        display.innerHTML = markdown(target.explanation || '尚無詳解') + '<hr>' + markdown(text);
+        renderLatex(display);
     };
-
+    showResponse('正在取得回應…');
     try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
+        const key = await get(ref(database, 'API_KEY'));
+        if (typeof key.val() !== 'string' || !key.val().trim()) throw new Error('AI 服務尚未設定');
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${encodeURIComponent(key.val())}`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: `請以繁體中文回答以下醫學題目的提問，清楚區分已知事實與不確定之處。\n題目：${target.question}\n選項：${JSON.stringify(target.options || {})}\n題庫答案：${JSON.stringify(target.answer)}\n提問：${userQuestion}` }] }]
+            })
         });
-
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            console.error('Gemini API 噴錯了:', errorData);
-            let errMsg = `API 請求失敗，狀態碼：${response.status}`;
-            if (errorData.error && errorData.error.message) {
-                errMsg += `，詳細資訊：${errorData.error.message}`;
-            }
-            throw new Error(errMsg);
-        }
-
+        if (!response.ok) throw new Error(`服務回應 ${response.status}`);
         const result = await response.json();
-        let explanation = '幹，Gemini 好像又罷工了... 🙄';
-
-        if (result.candidates && result.candidates.length > 0 &&
-            result.candidates[0].content && result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0) {
-            explanation = result.candidates[0].content.parts[0].text;
-        } else if (result.promptFeedback && result.promptFeedback.blockReason) {
-            explanation = `操！就算叫你不要篩，你還是擋我？被 Gemini 大神擋下來了！原因：${result.promptFeedback.blockReason} 🤬`;
-            if (result.promptFeedback.safetyRatings) {
-                explanation += ` 安全評分：${JSON.stringify(result.promptFeedback.safetyRatings)}`;
-            }
-        } else if (result.candidates && result.candidates.length > 0 && result.candidates[0].finishReason === "SAFETY") {
-            explanation = `幹！Gemini 因為安全理由拒絕回答，就算我叫他不要篩也一樣！媽的！ 安全評分：${JSON.stringify(result.candidates[0].safetyRatings)} 🖕`;
-        }
-
-        currentQuestion.explanation = explanation;
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderLatex(document.getElementById('explanation-text'));
-        userQuestionInput.value = '';
-        console.log('Gemini 回應更新成功啦！爽喔！🚀');
-
+        const text = result.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('\n');
+        if (!text) throw new Error('服務未提供回應');
+        showResponse(`### AI 回覆\n${text}`);
+        if (currentQuestion === target) userQuestionInput.value = '';
     } catch (error) {
-        console.error('呼叫 Gemini API 的時候又他媽的炸裂了:', error);
-        currentQuestion.explanation = `幹拎老師，呼叫 Gemini API 時噴了個大錯誤：${error.message} 💩。媽的，這預覽版模型是不是有問題啊！`;
-        document.getElementById('explanation-text').innerHTML = marked.parse(currentQuestion.explanation);
-        renderLatex(document.getElementById('explanation-text'));
-    } finally {
-        // inputSection.style.display = 'block'; // 看你要不要加回來
-    }
+        showResponse('暫時無法取得 AI 回覆，請稍後再試。');
+        console.error('AI request failed', error);
+    } finally { sendQuestionBtn.disabled = false; }
 });
-
 
 userQuestionInput.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
@@ -1865,26 +1685,31 @@ userQuestionInput.addEventListener('keydown', function (event) {
     }
 });
 
+let progressQueue = Promise.resolve();
+const pendingProgress = new Map();
 function saveProgress() {
-    if (isMistakePracticeMode) return; // Do not save progress for mistake review practice
-    if (!auth.currentUser || !selectedJson) return;
+    if (isMistakePracticeMode || !auth.currentUser || !selectedJson) return;
+    const uid = auth.currentUser.uid;
     const quizName = getQuizStorageName(selectedJson);
-    const progress = {
-        allQuestions,
-        currentIndex,
-        selectedJson,
-        lastUpdated: Date.now()
-    };
+    const progress = JSON.parse(JSON.stringify({ allQuestions, currentIndex, selectedJson, lastUpdated: Date.now() }));
     userProgressCache[quizName] = progress;
-    update(ref(database, `progress/${auth.currentUser.uid}/quizzes/${quizName}`), progress)
-        .catch(error => console.error('保存進度到 Firebase 失敗：', error));
-
-    update(ref(database, `progress/${auth.currentUser.uid}/lastActive`), {
-        quizName,
-        selectedJson,
-        lastUpdated: Date.now()
-    }).catch(error => console.error('更新最後活動失敗：', error));
+    const save = async () => {
+        if (auth.currentUser?.uid !== uid || pendingProgress.get(quizName) !== save) return;
+        try {
+            await update(ref(database, `progress/${uid}`), {
+                [`quizzes/${quizName}`]: progress,
+                lastActive: { quizName, selectedJson: progress.selectedJson, lastUpdated: progress.lastUpdated }
+            });
+            if (pendingProgress.get(quizName) === save) pendingProgress.delete(quizName);
+        } catch (error) {
+            showCustomAlert('進度尚未同步；恢復連線後會重試，請先保留此頁。');
+            console.error('Progress sync failed', error);
+        }
+    };
+    pendingProgress.set(quizName, save);
+    progressQueue = progressQueue.then(save);
 }
+window.addEventListener('online', () => { for (const task of pendingProgress.values()) progressQueue = progressQueue.then(task); });
 
 function updateProgressBar(isCorrect = null) {
     updateDotsUI();
@@ -2007,8 +1832,11 @@ function restoreProgress(quizName = null) {
             selectedJson = p.selectedJson;
         }
 
+        selectedJson = catalogPaths.find(path => getQuizStorageName(path) === getQuizStorageName(selectedJson)) || selectedJson;
         await loadQuestions();
         rebuildMappingsAfterRestore();
+        isMistakePracticeMode = false;
+        isTestCompleted = currentIndex >= allQuestions.length;
 
         viewingIndex = currentIndex;
         selectedOption = null;
@@ -2116,7 +1944,7 @@ if (signInBtn) {
 
 // Delegate click to close any modal when '×' is clicked
 document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal-close')) {
+    if (e.target.closest('.modal-close')) {
         const modal = e.target.closest('.modal') || e.target.closest('.md3-modal-overlay');
         if (modal) {
             modal.style.display = 'none';
@@ -2215,6 +2043,13 @@ onAuthStateChanged(auth, async (user) => {
     } else {
         userProgressCache = {};
         userMistakesCache = {};
+        learningDataReady = false;
+        pendingAttempts.clear();
+        pendingProgress.clear();
+        closeMistakeView();
+        stopTimer();
+        quizContainer.style.display = 'none';
+        document.querySelector('.start-screen').style.display = 'flex';
     }
     updateRestorePreview(user);
     fetchQuizList();
@@ -2226,7 +2061,7 @@ syncControlsUser(auth.currentUser);
 // Controls item actions (text-only click)
 if (menuStarred) menuStarred.addEventListener('click', () => {
     controlsMenu.classList.remove('open');
-    if (showStarredBtn) openStarredModal();
+    openStarredModal();
 });
 if (menuShuffle) menuShuffle.addEventListener('click', () => {
     // toggle shuffle state same as clicking the slider
@@ -2371,6 +2206,7 @@ function updateBatchActionFloatingBar() {
                     const isUnarchiving = oldName.startsWith('_Archive_');
                     const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
 
+                    if ((await get(ref(database, newName))).exists()) throw new Error(`「${newName}」已存在，無法覆蓋。`);
                     const snapshot = await get(ref(database, oldName));
                     if (snapshot.exists()) {
                         const data = snapshot.val();
@@ -2378,7 +2214,7 @@ function updateBatchActionFloatingBar() {
                         updates[newName] = data;
                     }
                 }
-                await update(ref(database), updates);
+                await writeBanks(updates);
                 showCustomAlert(`已完成 ${count} 份習題的${actionName}！`);
                 selectedQuizzesForBatch = [];
                 updateBatchActionFloatingBar();
@@ -2408,6 +2244,8 @@ async function handleRenameQuiz(oldName) {
         if (oldName.startsWith('_Archive_')) newName = `_Archive_${newName}`;
 
         try {
+            if (!validBankName(newName)) throw new Error('題庫名稱格式不正確');
+            if ((await get(ref(database, newName))).exists()) { showCustomAlert('此名稱已存在，請使用其他名稱。'); return; }
             // Get old data
             const snapshot = await get(ref(database, oldName));
             if (snapshot.exists()) {
@@ -2416,7 +2254,7 @@ async function handleRenameQuiz(oldName) {
                 updates[oldName] = null; // Delete old
                 updates[newName] = data; // Set new
 
-                await update(ref(database), updates);
+                await writeBanks(updates);
                 if (selectedJson === oldName) {
                     selectedJson = newName;
                 }
@@ -2463,13 +2301,14 @@ async function handleArchiveQuiz(oldName) {
 
     archiveCallback = async () => {
         try {
+            if ((await get(ref(database, newName))).exists()) { showCustomAlert('目的題庫已存在，無法覆蓋。'); return; }
             const snapshot = await get(ref(database, oldName));
             if (snapshot.exists()) {
                 const data = snapshot.val();
                 const updates = {};
                 updates[oldName] = null;
                 updates[newName] = data;
-                await update(ref(database), updates);
+                await writeBanks(updates);
                 showCustomAlert(`已${actionName}！`);
                 if (selectedJson === oldName) {
                     selectedJson = newName;
@@ -2487,96 +2326,6 @@ async function handleArchiveQuiz(oldName) {
 // Initialize shuffle state label in menu on load
 updateShuffleUI();
 
-function loadQuestionFromState() {
-    if (!currentQuestion || !currentQuestion.question) {
-        showEndScreen();
-        return;
-    }
-    updateStarIcon();
-    updateStarIcon();
-    const questionEl = document.getElementById('question');
-    questionEl.innerHTML = marked.parse(currentQuestion.question);
-    renderLatex(questionEl);
-
-    if (currentQuestion.isFillBlank) {
-        document.getElementById('options').style.display = 'none';
-        fillblankContainer.style.display = 'flex';
-        fillblankInput.value = ''; // Reset or restore if needed
-        fillblankInput.disabled = false;
-        fillblankInput.classList.remove('correct', 'incorrect');
-    } else if (currentQuestion.options && Object.keys(currentQuestion.options).length > 0) {
-        document.getElementById('options').style.display = 'flex';
-        fillblankContainer.style.display = 'none';
-        const optionsContainer = document.getElementById('options');
-        optionsContainer.innerHTML = '';
-
-        let optionEntriesToDisplay = Object.entries(currentQuestion.options);
-
-        const isTrueFalse = optionEntriesToDisplay.length === 2 &&
-            optionEntriesToDisplay.every(entry => ['T', 'F'].includes(entry[0]));
-
-        if (shouldShuffleQuiz && !isTrueFalse) {
-            shuffle(optionEntriesToDisplay); // Shuffle display order of A,B,C... buttons
-        } else {
-            // Ensure fixed order (A,B,C... or T,F)
-            optionEntriesToDisplay.sort((a, b) => {
-                if (isTrueFalse) { // Specific T,F order
-                    if (a[0] === 'T' && b[0] === 'F') return -1; // T before F
-                    if (a[0] === 'F' && b[0] === 'T') return 1;  // F after T
-                    return 0;
-                }
-                return a[0].localeCompare(b[0]); // Alphabetical for A,B,C...
-            });
-        }
-
-        optionEntriesToDisplay.forEach(([key, value]) => {
-            const button = document.createElement('button');
-            button.classList.add('option-button');
-            button.dataset.option = key;
-            button.innerHTML = marked.parse(`${key}: ${value}`);
-            renderLatex(button); // Render LaTeX in options
-            button.addEventListener('click', selectOption);
-            optionsContainer.appendChild(button);
-        });
-    } else {
-        document.getElementById('options').style.display = 'none';
-        fillblankContainer.style.display = 'none';
-    }
-
-    // Update popup window content (Debug modal)
-    // Update popup window content (Debug modal) - Safe check
-    const popupWindow = document.getElementById('popupWindow');
-    if (popupWindow) {
-        const qEl = popupWindow.querySelector('.editable:nth-child(2)');
-        const oEl = popupWindow.querySelector('.editable:nth-child(3)');
-        const aEl = popupWindow.querySelector('.editable:nth-child(5)');
-        const eEl = popupWindow.querySelector('.editable:nth-child(7)');
-
-        if (qEl) { qEl.innerHTML = marked.parse(currentQuestion.question); renderLatex(qEl); }
-        if (oEl) {
-            const optionsText = Object.entries(currentQuestion.options || {}).map(([k, v]) => `**${k}**: ${v}`).join('\n\n');
-            oEl.innerHTML = marked.parse(optionsText);
-            renderLatex(oEl);
-        }
-        if (aEl) { aEl.innerText = Array.isArray(currentQuestion.answer) ? currentQuestion.answer.join(', ') : currentQuestion.answer; }
-        if (eEl) { eEl.innerHTML = marked.parse(currentQuestion.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！'); renderLatex(eEl); }
-    }
-
-    if (currentQuestion.explanation) {
-        document.getElementById('explanation').style.display = 'block';
-        const originDisplay = document.getElementById('origin-display');
-        if (currentQuestion.origin) {
-            originDisplay.textContent = currentQuestion.origin;
-            originDisplay.style.display = 'block';
-        } else {
-            originDisplay.style.display = 'none';
-        }
-    } else {
-        document.getElementById('explanation').style.display = 'none';
-        document.getElementById('origin-display').style.display = 'none';
-    }
-}
-
 function setStarState(isFilled) {
     if (!starBtn) return;
     if (isFilled) {
@@ -2586,46 +2335,31 @@ function setStarState(isFilled) {
     }
 }
 
+function sameStar(a, b) { return a.question === b.question && (a.source || '') === (b.source || ''); }
 async function updateStarIcon() {
     if (!starBtn) return;
-
-    // Always reset first so we don't show the previous question's state while loading
+    const question = currentQuestion;
+    const source = getQuizStorageName(question.sourcePath || selectedJson);
     setStarState(false);
-
-    if (!auth.currentUser) {
-        return;
-    }
+    if (!auth.currentUser) return;
     try {
         const snap = await get(ref(database, `progress/${auth.currentUser.uid}/starred`));
-        const starred = snap.val() || [];
-        const isStarred = starred.some(q => q.question === currentQuestion.question);
-        setStarState(isStarred);
-    } catch (e) {
-        console.error('讀取收藏題目失敗', e);
-    }
+        if (currentQuestion === question) setStarState((snap.val() || []).some(q => sameStar(q, { ...question, source })));
+    } catch (error) { console.error('讀取收藏失敗', error); }
 }
-
 async function toggleStarCurrentQuestion() {
-    if (!auth.currentUser) {
-        showCustomAlert('請先登入才能收藏題目！');
-        return;
-    }
-    const starredRef = ref(database, `progress/${auth.currentUser.uid}/starred`);
-    const snap = await get(starredRef);
-    let starred = snap.val() || [];
-    const index = starred.findIndex(q => q.question === currentQuestion.question);
-
-    // Optimistic UI update
-    const isNowStarred = index < 0; // If not found, it will be starred
-    setStarState(isNowStarred);
-
-    if (index >= 0) {
-        starred.splice(index, 1);
-    } else {
-        const sourceName = getQuizStorageName(selectedJson);
-        starred.push({ ...currentQuestion, source: sourceName });
-    }
-    await set(starredRef, starred);
+    if (!auth.currentUser) { showCustomAlert('登入後即可收藏題目。'); return; }
+    const question = currentQuestion;
+    const entry = { ...canonicalQuestion(question), source: getQuizStorageName(question.sourcePath || selectedJson) };
+    starBtn.disabled = true;
+    try {
+        const result = await runTransaction(ref(database, `progress/${auth.currentUser.uid}/starred`), value => {
+            const list = Array.isArray(value) ? value : [];
+            return list.some(q => sameStar(q, entry)) ? list.filter(q => !sameStar(q, entry)) : [...list, entry];
+        }, { applyLocally: false });
+        if (currentQuestion === question) setStarState((result.snapshot.val() || []).some(q => sameStar(q, entry)));
+    } catch (error) { showCustomAlert('收藏未儲存，請重試。'); }
+    finally { starBtn.disabled = false; }
 }
 
 function openErrataModal() {
@@ -2712,11 +2446,12 @@ function openErrataModal() {
 }
 
 async function saveErrataAnswer() {
-    if (!currentQuestion) return;
+    const target = currentQuestion;
+    if (!target) return;
 
     let newAns;
 
-    if (currentQuestion.isFillBlank) {
+    if (target.isFillBlank) {
         const inputVal = document.getElementById('errataFillBlankInput').value.trim();
         if (!inputVal) {
             showCustomAlert('答案關鍵字不能為空！');
@@ -2727,7 +2462,7 @@ async function saveErrataAnswer() {
         } else {
             newAns = inputVal;
         }
-    } else if (currentQuestion.isMultiSelect) {
+    } else if (target.isMultiSelect) {
         const checked = Array.from(errataFormContainer.querySelectorAll('input[name="errataOption"]:checked'));
         if (checked.length === 0) {
             showCustomAlert('請至少選擇一個選項！');
@@ -2745,18 +2480,18 @@ async function saveErrataAnswer() {
 
     // 1. Map new standard answers back to database format if reverseLabelMapping exists
     let databaseAns = newAns;
-    if (currentQuestion.reverseLabelMapping) {
+    if (target.reverseLabelMapping) {
         if (Array.isArray(newAns)) {
-            databaseAns = newAns.map(val => currentQuestion.reverseLabelMapping[val] || val);
+            databaseAns = newAns.map(val => target.reverseLabelMapping[val] || val);
         } else {
-            databaseAns = currentQuestion.reverseLabelMapping[newAns] || newAns;
+            databaseAns = target.reverseLabelMapping[newAns] || newAns;
         }
     }
 
-    let origIdx = currentQuestion.originalIndex;
+    let origIdx = target.originalIndex;
     if (origIdx === undefined || origIdx === -1) {
         if (questions && questions.length > 0) {
-            origIdx = questions.findIndex(origQ => origQ.question === currentQuestion.question);
+            origIdx = questions.findIndex(origQ => origQ.question === target.question);
         }
     }
 
@@ -2764,27 +2499,39 @@ async function saveErrataAnswer() {
         showCustomAlert('無法找到該題目在資料庫的索引！');
         return;
     }
-    currentQuestion.originalIndex = origIdx;
+    target.originalIndex = origIdx;
 
     try {
         // 2. Save to Firebase
-        const answerRef = ref(database, `${selectedJson}/${origIdx}/answer`);
-        await set(answerRef, databaseAns);
+        const sourcePath = target.sourcePath || selectedJson;
+        const result = await runTransaction(ref(database, `${sourcePath}/${origIdx}`), value => {
+            if (!value || value.question !== target.question) return;
+            return { ...value, answer: databaseAns };
+        }, { applyLocally: false });
+        if (!result.committed) { showCustomAlert('題庫內容已變更，請重新載入後再勘誤。'); return; }
 
         // 3. Update local state
-        currentQuestion.answer = newAns;
-        if (questions && questions[origIdx]) {
-            questions[origIdx].answer = databaseAns;
-        }
+        target.answer = newAns;
+        if (sourcePath === selectedJson && questions?.[origIdx]?.question === target.question) questions[origIdx].answer = databaseAns;
 
         // 4. Recalculate correctness if user has already answered this question
-        recalculateCorrectness(currentQuestion);
+        recalculateCorrectness(target);
 
-        showCustomAlert('已成功儲存勘誤答案！');
+        showCustomAlert('已更新題庫答案。');
+        const key = target.mistakeQuizKey || getQuizStorageName(sourcePath);
+        const mistake = flattenMistakes(userMistakesCache).find(m => m.quizKey === key && m.question === target.question);
+        if (mistake && auth.currentUser) {
+            try {
+                const record = await runTransaction(ref(database, `mistakes/${auth.currentUser.uid}/${key}/${mistake.recordPath}`), value => value ? {
+                    ...value, ...canonicalQuestion(target), sourcePath, status: 'active', correctStreak: 0, lastResult: 'corrected'
+                } : undefined, { applyLocally: false });
+                if (record.committed) cacheMistake(key, mistake.recordPath, record.snapshot.val());
+            } catch (error) { showCustomAlert('題庫答案已更新，錯題紀錄尚未同步。'); }
+        }
         errataModal.style.display = 'none';
 
         // 5. Re-render question to update UI classes & colors
-        renderQuestion(viewingIndex);
+        if (currentQuestion === target) renderQuestion(viewingIndex);
     } catch (error) {
         console.error('儲存勘誤失敗:', error);
         showCustomAlert('儲存失敗，請確認您是否擁有該題庫的寫入權限。');
@@ -2844,25 +2591,8 @@ async function openStarredModal() {
 
             // Process each starred item to find its mistake count
             // This might be parallelized but sequential is safer for now or Promise.all
-            const promises = starred.map(async (q, idx) => {
-                let mistakeCount = 0;
-                if (q.source && q.question) {
-                    try {
-                        const qKey = btoa(unescape(encodeURIComponent(q.question)))
-                            .replace(/\//g, '_')
-                            .replace(/\+/g, '-');
-                        const mSnap = await get(ref(database, `mistakes/${auth.currentUser.uid}/${q.source}/${qKey}/count`));
-                        if (mSnap.exists()) {
-                            mistakeCount = mSnap.val();
-                        }
-                    } catch (e) {
-                        // ignore encoding errors
-                    }
-                }
-                return { ...q, mistakeCount, originalIndex: idx };
-            });
-
-            const processedStarred = await Promise.all(promises);
+            const mistakes = flattenMistakes(userMistakesCache);
+            const processedStarred = starred.map(q => ({ ...q, mistakeCount: mistakes.find(m => m.quizKey === q.source && m.question === q.question)?.count || 0 }));
 
             processedStarred.forEach((q, loopIdx) => {
                 const item = document.createElement('div');
@@ -2884,7 +2614,7 @@ async function openStarredModal() {
                 info.appendChild(sourceLabel);
 
                 const questionText = document.createElement('div');
-                questionText.innerHTML = marked.parse(q.question);
+                questionText.innerHTML = markdown(q.question);
                 info.appendChild(questionText);
 
                 // Right Side: Badge + Star Button container
@@ -2922,8 +2652,9 @@ async function openStarredModal() {
                     // Note: 'starred' variable inside is from closure, but we can re-read or just filter current visual list
                     // Better to re-read to be safe or filter in memory
                     try {
-                        const newList = starred.filter(item => item.question !== q.question);
-                        await set(ref(database, `progress/${auth.currentUser.uid}/starred`), newList);
+                        await runTransaction(ref(database, `progress/${auth.currentUser.uid}/starred`), value => (value || []).filter(entry => !sameStar(entry, q)), { applyLocally: false });
+                        starred = starred.filter(entry => !sameStar(entry, q));
+                        if (!starred.length) starredListDiv.innerHTML = '<p class="empty-state">尚未收藏任何題目</p>';
                         // Remove this item from DOM visually with animation
                         item.style.opacity = '0';
                         setTimeout(() => item.remove(), 300);
@@ -2954,7 +2685,7 @@ async function openStarredModal() {
                     Object.entries(q.options).forEach(([k, v]) => {
                         // Check if this option is the answer
                         const isAns = Array.isArray(q.answer) ? q.answer.includes(k) : q.answer === k;
-                        const parsedOpt = marked.parse(`${k}: ${v}`).trim();
+                        const parsedOpt = markdown(`${k}: ${v}`).trim();
                         optionsHtml += `<li ${isAns ? 'class="correct-option"' : ''}>${parsedOpt}</li>`;
                     });
                     optionsHtml += '</ul>';
@@ -2967,10 +2698,10 @@ async function openStarredModal() {
                 ansExpDiv.className = 'mistake-details';
 
                 // Answer text
-                let ansText = Array.isArray(q.answer) ? q.answer.join(', ') : q.answer;
+                let ansText = markdown(Array.isArray(q.answer) ? q.answer.join(', ') : q.answer);
 
                 // Explanation text
-                let expText = q.explanation ? marked.parse(q.explanation) : '<i>暫無詳解</i>';
+                let expText = q.explanation ? markdown(q.explanation) : '<i>暫無詳解</i>';
 
                 ansExpDiv.innerHTML = `
                     <div style="margin-bottom:8px;"><strong>正確答案:</strong> ${ansText}</div>
@@ -3083,535 +2814,116 @@ function initTheme() {
 document.addEventListener('DOMContentLoaded', initTheme);
 
 
-/* Mistake Tracking Logic */
+/* Notebook integration. Practice reuses the existing answering interface. */
 const mistakeView = document.getElementById('mistakeView');
-const closeMistakeViewBtn = document.getElementById('closeMistakeViewBtn');
-const mistakeListContent = document.getElementById('mistakeListContent');
+const pendingAttempts = new Set();
+let attemptQueue = Promise.resolve();
+let notebook;
 
-if (closeMistakeViewBtn) {
-    closeMistakeViewBtn.addEventListener('click', () => {
-        closeMistakeView();
-    });
+function closeMistakeView() { notebook.close(); }
+function openMistakeView(quizName = null) {
+    if (!auth.currentUser) { showCustomAlert('登入後即可使用錯題本。'); return; }
+    notebook.open(quizName);
 }
-
-function closeMistakeView() {
-    if (mistakeView) {
-        mistakeView.style.display = 'none';
-        document.body.style.overflow = ''; // Restore scrolling
-        const actionBar = document.getElementById('mistakeActionBar');
-        if (actionBar) actionBar.style.display = 'none';
-    }
+function cacheMistake(quizKey, path, value) {
+    let target = userMistakesCache[quizKey] ||= {};
+    const parts = path.split('/');
+    for (const part of parts.slice(0, -1)) target = target[part] ||= {};
+    target[parts.at(-1)] = value;
 }
-
-function recordMistake() {
-    if (!auth.currentUser || !currentQuestion || !selectedJson) return;
-    try {
-        const quizName = getQuizStorageName(selectedJson);
-        // Sanitize key: replacing '/' is critical as it creates sub-paths in Firebase
-        const qKey = btoa(unescape(encodeURIComponent(currentQuestion.question)))
-            .replace(/\//g, '_')
-            .replace(/\+/g, '-');
-        const userMistakeRef = ref(database, `mistakes/${auth.currentUser.uid}/${quizName}/${qKey}`);
-
-        get(userMistakeRef).then((snapshot) => {
-            let currentData = snapshot.val() || {};
-
-            // Always update/ensure these fields are present and current
-            currentData.question = currentQuestion.question;
-            currentData.options = currentQuestion.options || null;
-            currentData.answer = currentQuestion.answer;
-            currentData.explanation = currentQuestion.explanation;
-            currentData.origin = currentQuestion.origin || null; // Capture Origin
-            currentData.isMultiSelect = currentQuestion.isMultiSelect || false;
-            currentData.isFillBlank = currentQuestion.isFillBlank || false;
-            currentData.originalIndex = currentQuestion.originalIndex;
-            currentData.reverseLabelMapping = currentQuestion.reverseLabelMapping || null;
-
-            currentData.count = (currentData.count || 0) + 1;
-            currentData.lastMistake = Date.now();
-
-            // Update local cache
-            if (!userMistakesCache[quizName]) {
-                userMistakesCache[quizName] = {};
-            }
-            userMistakesCache[quizName][qKey] = currentData;
-
-            update(userMistakeRef, currentData);
-        }).catch(err => console.error('Error recording mistake:', err));
-    } catch (e) {
-        console.error('Encoding error or other:', e);
-    }
-}
-
-let mistakesViewState = 'folders'; // 'folders' | 'quizzes' | 'items'
-let currentMistakesFolder = null;
-let currentMistakesQuizName = null;
-let lastMistakeScrollTop = 0;
-
-async function openMistakeView(targetQuizName = null) {
-    if (!auth.currentUser) return;
-
-    const viewTitle = document.getElementById('mistakeViewTitle');
-    const backBtn = document.getElementById('backMistakeViewBtn');
-
-    if (mistakeView) {
-        mistakeView.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-
-        // Reset top app bar visibility and scroll position
-        const topBar = document.querySelector('#mistakeView .top-app-bar');
-        if (topBar) topBar.classList.remove('hidden');
-        const scrollContainer = document.getElementById('mistakeScrollContainer');
-        if (scrollContainer) scrollContainer.scrollTop = 0;
-        lastMistakeScrollTop = 0;
-    }
-
-    if (targetQuizName) {
-        // View specific quiz mistakes
-        mistakesViewState = 'items';
-        currentMistakesQuizName = targetQuizName;
-        if (backBtn) backBtn.style.display = 'block';
-
-        let displayTitle = targetQuizName;
-        const rawKey = Object.keys(userMistakesCache).find(k => getQuizStorageName(k) === targetQuizName) || targetQuizName;
-
-        let cleanKey = rawKey;
-        if (cleanKey.startsWith('_Archive_')) cleanKey = cleanKey.substring(9);
-        const idx = cleanKey.indexOf('｜');
-        if (idx !== -1) {
-            currentMistakesFolder = cleanKey.slice(0, idx);
-            displayTitle = cleanKey.substring(idx + 1);
-        } else {
-            currentMistakesFolder = '其他';
-            displayTitle = cleanKey;
-        }
-
-        if (viewTitle) viewTitle.textContent = displayTitle;
-
-        await renderQuizMistakes(targetQuizName);
-    } else {
-        // View global folders list
-        mistakesViewState = 'folders';
-        currentMistakesFolder = null;
-        currentMistakesQuizName = null;
-        if (backBtn) backBtn.style.display = 'none';
-        if (viewTitle) viewTitle.textContent = '錯題本';
-
-        const practiceBtn = document.getElementById('mistakePracticeBtn');
-        if (practiceBtn) practiceBtn.style.display = 'none';
-
-        renderGlobalMistakesFolders();
-    }
-}
-
-function openMistakesFolder(folderName) {
-    mistakesViewState = 'quizzes';
-    currentMistakesFolder = folderName;
-    const viewTitle = document.getElementById('mistakeViewTitle');
-    const backBtn = document.getElementById('backMistakeViewBtn');
-
-    if (backBtn) backBtn.style.display = 'block';
-    if (viewTitle) viewTitle.textContent = folderName;
-
-    const practiceBtn = document.getElementById('mistakePracticeBtn');
-    if (practiceBtn) practiceBtn.style.display = 'none';
-
-    renderMistakesQuizzesList(folderName);
-}
-
-function getMistakesGrouped() {
-    console.log('getMistakesGrouped called. userMistakesCache keys:', Object.keys(userMistakesCache));
-    console.log('globalArchivedQuizKeys:', Array.from(globalArchivedQuizKeys));
-    const folders = {}; // folderName -> Array of { quizKey, quizName, count }
-
-    Object.keys(userMistakesCache).forEach(quizKey => {
-        const quizName = getQuizStorageName(quizKey);
-        const hasMistakes = hasMistakesRecorded(quizName);
-        console.log(`Checking quizKey: ${quizKey}, quizName: ${quizName}, hasMistakesRecorded: ${hasMistakes}`);
-        if (hasMistakes) {
-            const mistakesData = userMistakesCache[quizKey];
-            const mistakes = [];
-            const extractMistakes = (obj) => {
-                if (!obj || typeof obj !== 'object') return;
-                if (obj.question) {
-                    mistakes.push(obj);
-                    return;
-                }
-                Object.values(obj).forEach(extractMistakes);
-            };
-            extractMistakes(mistakesData);
-
-            if (mistakes.length > 0) {
-                let cleanKey = quizKey;
-                if (cleanKey.startsWith('_Archive_')) cleanKey = cleanKey.substring(9);
-                const idx = cleanKey.indexOf('｜');
-                const folderName = idx !== -1 ? cleanKey.slice(0, idx) : '其他';
-
-                if (!folders[folderName]) {
-                    folders[folderName] = [];
-                }
-                folders[folderName].push({
-                    quizKey,
-                    quizName,
-                    count: mistakes.length
-                });
-            }
-        }
-    });
-    return folders;
-}
-
-function renderGlobalMistakesFolders() {
-    if (!mistakeListContent) return;
-    mistakeListContent.innerHTML = '';
-
-    const folders = getMistakesGrouped();
-    const folderNames = Object.keys(folders).sort((a, b) => {
-        if (a === '其他' && b !== '其他') return 1;
-        if (b === '其他' && a !== '其他') return -1;
-        return a.localeCompare(b, 'zh-Hant');
-    });
-
-    if (folderNames.length === 0) {
-        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--on-surface-variant);">目前沒有任何錯題紀錄！</p>';
-        return;
-    }
-
-    folderNames.forEach(folderName => {
-        let folderMistakeCount = 0;
-        folders[folderName].forEach(q => {
-            folderMistakeCount += q.count;
-        });
-        const count = folders[folderName].length;
-
-        const item = document.createElement('div');
-        item.className = 'global-mistake-card';
-
-        item.innerHTML = `
-            <div class="global-mistake-card-content">
-                <div class="global-mistake-title">${folderName}</div>
-                <div class="global-mistake-count">${count} 份習題 (共 ${folderMistakeCount} 個錯題)</div>
-            </div>
-            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
-                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
-            </svg>
-        `;
-
-        item.onclick = () => {
-            openMistakesFolder(folderName);
-        };
-
-        mistakeListContent.appendChild(item);
-    });
-}
-
-function renderMistakesQuizzesList(folderName) {
-    if (!mistakeListContent) return;
-    mistakeListContent.innerHTML = '';
-
-    const folders = getMistakesGrouped();
-    const quizzes = folders[folderName] || [];
-
-    if (quizzes.length === 0) {
-        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">此單元目前沒有錯題紀錄。</p>';
-        return;
-    }
-
-    quizzes.sort((a, b) => a.quizKey.localeCompare(b.quizKey, 'zh-Hant'));
-
-    quizzes.forEach(q => {
-        const item = document.createElement('div');
-        item.className = 'global-mistake-card';
-
-        let displayTitle = q.quizKey;
-        if (displayTitle.startsWith('_Archive_')) displayTitle = displayTitle.substring(9);
-        const idx = displayTitle.indexOf('｜');
-        if (idx !== -1) displayTitle = displayTitle.substring(idx + 1);
-
-        item.innerHTML = `
-            <div class="global-mistake-card-content">
-                <div class="global-mistake-title">${displayTitle}</div>
-                <div class="global-mistake-count">${q.count} 個錯題</div>
-            </div>
-            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
-                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
-            </svg>
-        `;
-
-        item.onclick = () => {
-            openMistakeView(q.quizName);
-        };
-
-        mistakeListContent.appendChild(item);
-    });
-}
-
-async function renderQuizMistakes(quizName) {
-    if (!mistakeListContent) return;
-    const practiceBtn = document.getElementById('mistakePracticeBtn');
-    if (globalArchivedQuizKeys.has(quizName)) {
-        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">本單元目前沒有錯題紀錄。</p>';
-        if (practiceBtn) practiceBtn.style.display = 'none';
-        return;
-    }
-    mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入中...</p>';
-
-    try {
-        let data = userMistakesCache[quizName];
-        if (!data) {
-            const matchedKey = Object.keys(userMistakesCache).find(k => getQuizStorageName(k) === quizName);
-            if (matchedKey) data = userMistakesCache[matchedKey];
-        }
-
-        if (!data) {
-            const snap = await get(ref(database, `mistakes/${auth.currentUser.uid}/${quizName}`));
-            data = snap.val();
-        }
-
-        if (!data) {
-            mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">本單元目前沒有錯題紀錄。</p>';
-            if (practiceBtn) practiceBtn.style.display = 'none';
-            return;
-        }
-
-        const mistakes = [];
-        const extractMistakes = (obj) => {
-            if (!obj || typeof obj !== 'object') return;
-            if (obj.question) {
-                let matchedQ = allQuestions.find(q => q.question === obj.question);
-                if (matchedQ) {
-                    if (!obj.options && matchedQ.options) obj.options = matchedQ.options;
-                    if (!obj.answer && matchedQ.answer) obj.answer = matchedQ.answer;
-                    if (!obj.explanation && matchedQ.explanation) obj.explanation = matchedQ.explanation;
-                    if (!obj.origin && matchedQ.origin) obj.origin = matchedQ.origin;
-                    if (obj.isMultiSelect === undefined) obj.isMultiSelect = matchedQ.isMultiSelect;
-                    if (obj.isFillBlank === undefined) obj.isFillBlank = matchedQ.isFillBlank;
-                }
-                mistakes.push(obj);
-                return;
-            }
-            Object.values(obj).forEach(child => extractMistakes(child));
-        };
-
-        extractMistakes(data);
-        if (mistakes.length === 0) {
-            mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">本單元目前沒有錯題紀錄。</p>';
-            if (practiceBtn) practiceBtn.style.display = 'none';
-            return;
-        }
-        if (practiceBtn) practiceBtn.style.display = 'block';
-        mistakes.sort((a, b) => (b.count || 0) - (a.count || 0));
-
-        mistakeListContent.innerHTML = '';
-        mistakes.forEach(m => {
-            const div = document.createElement('div');
-            div.className = 'mistake-item';
-
-            const headerRow = document.createElement('div');
-            headerRow.className = 'mistake-item-header';
-
-            const info = document.createElement('div');
-            info.className = 'mistake-info';
-            if (typeof m.question === 'string') {
-                info.innerHTML = marked.parse(m.question);
-            } else {
-                info.innerHTML = '<i>(題目載入錯誤)</i>';
-            }
-
-            const badge = document.createElement('div');
-            badge.className = 'mistake-count-badge';
-            badge.textContent = `${m.count} 次錯誤`;
-
-            headerRow.appendChild(info);
-            headerRow.appendChild(badge);
-            div.appendChild(headerRow);
-
-            if (m.options && typeof m.options === 'object') {
-                const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'mistake-options';
-                let optionsHtml = '<ul>';
-                let entries = Object.entries(m.options);
-
-                const isTrueFalse = entries.length === 2 && entries.every(entry => ['T', 'F'].includes(entry[0]));
-                if (isTrueFalse) {
-                    entries.sort((a, b) => {
-                        if (a[0] === 'T') return -1;
-                        if (b[0] === 'T') return 1;
-                        return 0;
-                    });
-                }
-
-                entries.forEach(([key, val]) => {
-                    const isAns = Array.isArray(m.answer) ? m.answer.includes(key) : m.answer === key;
-                    const styleClass = isAns ? 'class="correct-option"' : '';
-                    const parsedOpt = marked.parse(`${key}: ${val}`).trim();
-                    optionsHtml += `<li ${styleClass}>${parsedOpt}</li>`;
-                });
-                optionsHtml += '</ul>';
-                optionsDiv.innerHTML = optionsHtml;
-                div.appendChild(optionsDiv);
-            }
-
-            const ansExpDiv = document.createElement('div');
-            ansExpDiv.className = 'mistake-details';
-
-            let ansText = Array.isArray(m.answer) ? m.answer.join(', ') : m.answer;
-            let expText = m.explanation ? marked.parse(m.explanation) : '<i>暫無詳解</i>';
-
-            let detailsHtml = `
-                <div style="margin-bottom:8px;"><strong>正確答案:</strong> ${ansText}</div>
-                <div class="mistake-explanation-row"><strong>詳解:</strong> ${expText}</div>
-            `;
-            if (m.origin) {
-                detailsHtml += `<div class="mistake-origin-row">出處：${m.origin}</div>`;
-            }
-
-            ansExpDiv.innerHTML = detailsHtml;
-            div.appendChild(ansExpDiv);
-
-            renderLatex(div);
-            mistakeListContent.appendChild(div);
-        });
-
-    } catch (err) {
-        console.error('Error rendering mistakes:', err);
-        mistakeListContent.innerHTML = '<p style="text-align:center; padding: 20px;">載入失敗，請稍後再試。</p>';
-    }
-}
-
-async function startMistakePractice(quizName) {
-    let quizData = userMistakesCache[quizName];
-    if (!quizData) {
-        const matchedKey = Object.keys(userMistakesCache).find(k => getQuizStorageName(k) === quizName);
-        if (matchedKey) quizData = userMistakesCache[matchedKey];
-    }
-
-    if (!quizData) {
-        showCustomAlert('找不到該單元的錯題資料！');
-        return;
-    }
-
-    const selectedMistakes = [];
-    const extractMistakes = (obj) => {
-        if (!obj || typeof obj !== 'object') return;
-        if (obj.question) {
-            selectedMistakes.push(obj);
-            return;
-        }
-        Object.values(obj).forEach(child => extractMistakes(child));
+function recordAttempt(isCorrect) {
+    if (!auth.currentUser || !currentQuestion?.question || !selectedJson) return;
+    const uid = auth.currentUser.uid;
+    const q = structuredClone(currentQuestion);
+    const sourcePath = q.sourcePath || selectedJson;
+    const quizKey = q.mistakeQuizKey || getQuizStorageName(sourcePath);
+    const existing = flattenMistakes(userMistakesCache).find(m => m.quizKey === quizKey && m.question === q.question
+        && (m.originalIndex == null || m.originalIndex < 0 || m.originalIndex === q.originalIndex));
+    const eventId = crypto.randomUUID();
+    const now = Date.now();
+    const snapshot = { ...canonicalQuestion(q), sourcePath };
+    // Prefer the unchanged bank explanation over a remapped or AI-expanded answer.
+    if (!isMistakePracticeMode && questions[q.originalIndex]?.question === q.question) snapshot.explanation = questions[q.originalIndex].explanation || ''; 
+    const save = async () => {
+        if (auth.currentUser?.uid !== uid) { pendingAttempts.delete(task); return; }
+        const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${q.originalIndex ?? -1}:${q.question}`));
+        const latest = flattenMistakes(userMistakesCache).find(m => m.quizKey === quizKey && m.question === q.question && (m.originalIndex == null || m.originalIndex < 0 || m.originalIndex === q.originalIndex));
+        const recordPath = q.mistakeRecordPath || latest?.recordPath || existing?.recordPath || 'q_' + Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, '0')).join('');
+        const result = await runTransaction(ref(database, `mistakes/${uid}/${quizKey}/${recordPath}`), previous =>
+            applyAttempt(previous, snapshot, { correct: isCorrect, eventId, now }), { applyLocally: false });
+        if (result.committed && auth.currentUser?.uid === uid) cacheMistake(quizKey, recordPath, result.snapshot.val());
     };
-    extractMistakes(quizData);
-
-    if (selectedMistakes.length === 0) {
-        showCustomAlert('本單元目前沒有錯題紀錄！');
-        return;
-    }
-
-    selectedJson = Object.keys(userMistakesCache).find(k => getQuizStorageName(k) === quizName) || quizName;
-
-    try {
-        await loadQuestions();
-
-        allQuestions = selectedMistakes.map(m => {
-            let origIdx = m.originalIndex;
-            if (origIdx === undefined || origIdx === -1) {
-                origIdx = questions.findIndex(origQ => origQ.question === m.question);
-            }
-
-            let revMap = m.reverseLabelMapping;
-            if (!m.isFillBlank && (!revMap || Object.keys(revMap).length === 0)) {
-                const origQ = questions[origIdx];
-                if (origQ && origQ.options) {
-                    revMap = {};
-                    Object.entries(m.options || {}).forEach(([newLabel, newText]) => {
-                        const origEntry = Object.entries(origQ.options).find(([_, origText]) => origText === newText);
-                        if (origEntry) {
-                            revMap[newLabel] = origEntry[0];
-                        }
-                    });
-                }
-            }
-
-            return {
-                question: m.question,
-                options: m.options,
-                answer: m.answer,
-                explanation: m.explanation || '這題目前還沒有詳解，有任何疑問歡迎詢問 Gemini！',
-                origin: m.origin || null,
-                isFillBlank: m.isFillBlank || false,
-                isMultiSelect: m.isMultiSelect || false,
-                isAnswered: false,
-                isCorrect: null,
-                userSelection: null,
-                isConfirmed: false,
-                originalIndex: origIdx,
-                reverseLabelMapping: revMap || null
-            };
+    // Capture the question before navigating and serialize attempts from rapid retries.
+    const task = () => {
+        if (pendingAttempts.values().next().value !== task) return;
+        return save().then(() => pendingAttempts.delete(task)).catch(error => {
+        pendingAttempts.add(task);
+        showCustomAlert('錯題紀錄尚未同步；恢復連線後會重試，請先保留此頁。');
+        console.error('Mistake sync failed', error);
         });
-
-        wrongQuestions = [];
-        correct = 0;
-        wrong = 0;
-        currentIndex = 0;
-        viewingIndex = 0;
-        selectedOption = null;
-        selectedOptions = [];
-        initialQuestionCount = allQuestions.length;
-
-        document.getElementById('correct').innerText = 0;
-        document.getElementById('wrong').innerText = 0;
-        isTestCompleted = false;
-
-        closeMistakeView();
-
-        document.querySelector('.start-screen').style.display = 'none';
-        document.querySelector('.quiz-container').style.display = 'flex';
-
-        let cleanTitle = selectedJson;
-        if (cleanTitle.startsWith('_Archive_')) cleanTitle = cleanTitle.substring(9);
-        const idx = cleanTitle.indexOf('｜');
-        if (idx !== -1) {
-            cleanTitle = cleanTitle.substring(idx + 1);
-        } else {
-            const slashIdx = cleanTitle.lastIndexOf('/');
-            if (slashIdx !== -1) {
-                cleanTitle = cleanTitle.substring(slashIdx + 1);
-            }
-        }
-
-        const titleText = `${cleanTitle}錯題本`;
-        document.querySelector('.quiz-title').innerText = titleText;
-        document.title = `${titleText} - 題矣`;
-
-        isMistakePracticeMode = true;
-
-        createProgressDots();
-        renderQuestion(currentIndex);
-
-    } catch (error) {
-        console.error('開始錯題練習失敗:', error);
-        showCustomAlert('加載錯題練習失敗，請重試。');
-    }
-}
-
-function hasMistakesRecorded(quizName) {
-    if (globalArchivedQuizKeys.has(quizName)) return false;
-    const data = userMistakesCache[quizName];
-    if (!data) return false;
-    let found = false;
-    const checkObj = (obj) => {
-        if (!obj || typeof obj !== 'object' || found) return;
-        if (obj.question) {
-            found = true;
-            return;
-        }
-        Object.values(obj).forEach(checkObj);
     };
-    checkObj(data);
-    return found;
+    pendingAttempts.add(task);
+    attemptQueue = attemptQueue.then(task);
+}
+window.addEventListener('online', () => { for (const task of pendingAttempts) attemptQueue = attemptQueue.then(task); });
+
+notebook = createNotebook({
+    root: mistakeView, getCache: () => userMistakesCache,
+    refresh: async () => {
+        const uid = auth.currentUser?.uid;
+        for (const task of pendingAttempts) attemptQueue = attemptQueue.then(task);
+        await attemptQueue;
+        if (pendingAttempts.size) throw new Error('Mistakes pending sync');
+        const snap = await get(ref(database, `mistakes/${uid}`));
+        if (auth.currentUser?.uid === uid) userMistakesCache = snap.val() || {};
+    },
+    setStatus: async (m, status) => {
+        const uid = auth.currentUser.uid;
+        const result = await runTransaction(ref(database, `mistakes/${uid}/${m.quizKey}/${m.recordPath}`), value => value ? {
+            ...value, status, correctStreak: status === 'active' ? 0 : value.correctStreak || 0, statusUpdated: Date.now()
+        } : undefined, { applyLocally: false });
+        if (result.committed && auth.currentUser?.uid === uid) cacheMistake(m.quizKey, m.recordPath, result.snapshot.val());
+    },
+    practice: startMistakePractice, renderMath: renderLatex, alert: showCustomAlert
+});
+
+async function startMistakePractice(items) {
+    if (!items.length) return;
+    const sourceKeys = [...new Set(items.map(m => m.sourcePath || m.quizKey))];
+    const sources = new Map();
+    // Fetch each bank once; a removed bank can still be reviewed from its saved snapshot.
+    await Promise.all(sourceKeys.map(async key => {
+        const resolved = catalogPaths.find(p => getQuizStorageName(p) === getQuizStorageName(key)) || key;
+        try { const snap = await get(ref(database, resolved)); if (Array.isArray(snap.val())) sources.set(key, { path: resolved, questions: snap.val() }); }
+        catch (error) { console.warn('Using saved question', key, error); }
+    }));
+    allQuestions = items.map(m => {
+        const source = sources.get(m.sourcePath || m.quizKey);
+        const index = source?.questions[m.originalIndex]?.question === m.question ? m.originalIndex : source?.questions.findIndex(q => q.question === m.question) ?? -1;
+        return preparePractice({ ...m, sourcePath: source?.path || m.sourcePath || m.quizKey, originalIndex: index }, index >= 0 ? source.questions[index] : null);
+    });
+    selectedJson = allQuestions[0].sourcePath;
+    questions = sources.get(items[0].sourcePath || items[0].quizKey)?.questions || [];
+    wrongQuestions = []; correct = 0; wrong = 0; currentIndex = 0; viewingIndex = 0;
+    selectedOption = null; selectedOptions = []; initialQuestionCount = allQuestions.length;
+    document.getElementById('correct').innerText = 0;
+    document.getElementById('wrong').innerText = 0;
+    isTestCompleted = false; isMistakePracticeMode = true;
+    if (endScreenDiv) endScreenDiv.remove();
+    closeMistakeView();
+    document.querySelector('.start-screen').style.display = 'none';
+    quizContainer.style.display = 'flex';
+    document.querySelector('.quiz-title').innerText = '錯題複習';
+    document.title = '錯題複習 - 題矣';
+    createProgressDots(); renderQuestion(0);
 }
 
-function openQuizActionModal(key, progress) {
+async function openQuizActionModal(key, progress) {
+    if (!learningDataReady) {
+        await fetchUserProgressAndMistakes(auth.currentUser);
+        if (!learningDataReady) return;
+        progress = userProgressCache[getQuizStorageName(key)];
+    }
     const modal = document.getElementById('quizActionModal');
     const title = document.getElementById('quizActionTitle');
     const status = document.getElementById('quizActionStatus');
@@ -3620,46 +2932,30 @@ function openQuizActionModal(key, progress) {
 
     if (!modal) return;
 
-    let displayTitle = key;
-    if (displayTitle.startsWith('_Archive_')) displayTitle = displayTitle.substring(9);
-    title.textContent = displayTitle;
-
-    let statusText = '這是一個全新的測驗。';
-    let showResume = false;
-    let resumeText = '繼續測驗';
-    let restartText = '開始測驗';
-
-    if (progress) {
-        const total = progress.allQuestions ? progress.allQuestions.length : 0;
-        const done = progress.currentIndex;
-        if (done >= total) {
-            statusText = `您已完成此測驗（進度：${done}/${total}）。`;
-            showResume = true;
-            resumeText = '查看完整回顧';
-            restartText = '重新挑戰';
-        } else if (done > 0) {
-            statusText = `上次測驗進行到第 ${done + 1} 題（進度：${done}/${total}）。`;
-            showResume = true;
-            resumeText = '繼續測驗';
-            restartText = '重新開始';
-        }
-    }
-
-    status.textContent = statusText;
-
-    if (showResume) {
-        resumeBtn.style.display = 'block';
-        resumeBtn.querySelector('span').textContent = resumeText;
-        resumeBtn.onclick = () => {
-            closeQuizActionModal();
-            selectedJson = key;
-            restoreProgress(getQuizStorageName(key));
-        };
-    } else {
-        resumeBtn.style.display = 'none';
-    }
-
-    restartBtn.querySelector('span').textContent = restartText;
+    const label = quizLabel(key);
+    title.textContent = label.title;
+    document.getElementById('quizActionSubject').textContent = label.subject;
+    const total = progress?.allQuestions?.length || catalogData[key]?.count || 0;
+    const answered = progress?.allQuestions ? progress.allQuestions.filter(q => q.isAnswered).length : progress?.currentIndex || 0;
+    const done = Math.min(total, answered);
+    const showResume = !!progress && (done > 0 || progress.allQuestions?.length > 0);
+    const complete = total > 0 && done >= total;
+    status.textContent = complete ? '已完成' : showResume ? '上次進度' : '題目數';
+    document.getElementById('quizActionCount').textContent = showResume ? `${done} / ${total} 題` : `${total} 題`;
+    document.getElementById('quizActionTrack').hidden = !showResume;
+    document.getElementById('quizActionFill').style.width = `${total ? done / total * 100 : 0}%`;
+    document.getElementById('quizActionOrder').textContent = showResume
+        ? complete ? '可查看本次作答，或重新練習。' : '從上次作答的位置繼續。'
+        : shouldShuffleQuiz ? '隨機題序與選項' : '依題庫順序作答';
+    resumeBtn.hidden = !showResume;
+    resumeBtn.style.display = showResume ? 'flex' : 'none';
+    resumeBtn.querySelector('span').textContent = complete ? '查看作答紀錄' : '繼續測驗';
+    resumeBtn.onclick = () => {
+        closeQuizActionModal(); selectedJson = key; restoreProgress(getQuizStorageName(key));
+    };
+    restartBtn.className = showResume ? 'secondary-button' : 'primary-button';
+    restartBtn.querySelector('span').textContent = showResume ? '重新開始' : '開始測驗';
+    restartBtn.querySelector('span:last-child').hidden = showResume;
     restartBtn.onclick = () => {
         closeQuizActionModal();
         startFreshQuiz(key);
@@ -3667,6 +2963,7 @@ function openQuizActionModal(key, progress) {
 
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    (showResume ? resumeBtn : restartBtn).focus();
 }
 
 function closeQuizActionModal() {
@@ -3678,15 +2975,19 @@ function closeQuizActionModal() {
 }
 
 function startFreshQuiz(key) {
+    if (!learningDataReady) { showCustomAlert('學習紀錄尚未載入，請重新整理後再試。'); return; }
     isMistakePracticeMode = false;
     selectedJson = key;
-    document.querySelector('.start-screen').style.display = 'none';
-    initQuiz().then(() => {
-        saveProgress();
+    initQuiz().catch(error => {
+        selectedJson = null;
+        document.querySelector('.start-screen').style.display = 'flex';
+        showCustomAlert('題庫載入失敗，請重試。');
+        console.error(error);
     });
 }
 
 async function fetchUserProgressAndMistakes(user) {
+    learningDataReady = false;
     if (!user) {
         userProgressCache = {};
         userMistakesCache = {};
@@ -3716,8 +3017,10 @@ async function fetchUserProgressAndMistakes(user) {
 
         userProgressCache = progressSnap.exists() ? progressSnap.val() : {};
         userMistakesCache = mistakesSnap.exists() ? mistakesSnap.val() : {};
+        learningDataReady = true;
     } catch (e) {
         console.error('Failed to fetch user progress/mistakes cache:', e);
+        showCustomAlert('學習紀錄載入失敗，請重新整理後再開始，以免覆蓋既有進度。');
         userProgressCache = {};
         userMistakesCache = {};
     }
@@ -3730,44 +3033,47 @@ if (menuGlobalMistakes) menuGlobalMistakes.addEventListener('click', () => {
     openMistakeView(null);
 });
 
-const backMistakeViewBtn = document.getElementById('backMistakeViewBtn');
-if (backMistakeViewBtn) backMistakeViewBtn.addEventListener('click', () => {
-    if (mistakesViewState === 'items' && currentMistakesFolder) {
-        openMistakesFolder(currentMistakesFolder);
-    } else {
-        openMistakeView(null);
-    }
-});
-
 const quizActionCloseBtn = document.getElementById('quizActionCloseBtn');
 if (quizActionCloseBtn) quizActionCloseBtn.addEventListener('click', () => {
     closeQuizActionModal();
 });
 
-const mistakePracticeBtn = document.getElementById('mistakePracticeBtn');
-if (mistakePracticeBtn) {
-    mistakePracticeBtn.addEventListener('click', () => {
-        if (currentMistakesQuizName) {
-            startMistakePractice(currentMistakesQuizName);
-        }
-    });
-}
 
-// Scroll logic for mistake book top bar
-const mistakeScrollContainer = document.getElementById('mistakeScrollContainer');
-if (mistakeScrollContainer) {
-    mistakeScrollContainer.addEventListener('scroll', () => {
-        const scrollTop = mistakeScrollContainer.scrollTop;
-        const topBar = document.querySelector('#mistakeView .top-app-bar');
-        if (!topBar) return;
+// Home shortcuts keep frequently used collections out of the account menu.
+document.getElementById('homeMistakes').onclick = () => openMistakeView();
+document.getElementById('homeStarred').onclick = () => openStarredModal();
+// Div-based legacy cards retain their nested edit controls and gain keyboard access.
+const unitsGrid = document.getElementById('units-grid');
+new MutationObserver(() => {
+    unitsGrid.querySelectorAll('.unit-card').forEach(card => { card.tabIndex = 0; card.setAttribute('role', 'button'); });
+}).observe(unitsGrid, { childList: true, subtree: true });
+unitsGrid.addEventListener('keydown', e => {
+    if (e.target.matches('.unit-card') && ['Enter', ' '].includes(e.key)) { e.preventDefault(); e.target.click(); }
+});
+document.getElementById('bankSearch').addEventListener('input', e => {
+    const query = e.target.value.trim().toLowerCase();
+    unitsGrid.querySelectorAll('.unit-card').forEach(card => { card.hidden = !card.textContent.toLowerCase().includes(query); });
+});
 
-        if (scrollTop > lastMistakeScrollTop && scrollTop > 50) {
-            // Scroll down: hide top-app-bar
-            topBar.classList.add('hidden');
-        } else {
-            // Scroll up: show top-app-bar
-            topBar.classList.remove('hidden');
-        }
-        lastMistakeScrollTop = scrollTop;
-    });
+function returnHome() {
+    stopTimer();
+    quizContainer.style.display = 'none';
+    endScreenDiv?.remove();
+    document.querySelector('.start-screen').style.display = 'flex';
+    selectedJson = null;
+    document.title = '題矣';
+    document.getElementById('bankSearch').value = '';
+    updateRestorePreview(auth.currentUser);
+    fetchQuizList();
 }
+const quizTitleLink = document.querySelector('.quiz-title');
+quizTitleLink.setAttribute('role', 'button');
+quizTitleLink.tabIndex = 0;
+quizTitleLink.title = '返回題庫';
+quizTitleLink.setAttribute('aria-label', '返回題庫');
+quizTitleLink.addEventListener('click', returnHome);
+quizTitleLink.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); returnHome(); }
+});
+
+installDialogBehavior();

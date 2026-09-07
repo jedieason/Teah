@@ -4,3 +4,8 @@
 .vscode/
 node_modules/
 QuestionBank
+dist/
+artifacts/
+*.generated.json
+*firebase-export*.json
+.env*
