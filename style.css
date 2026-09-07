@@ -3500,7 +3500,8 @@ p {
 }
 
 .top-app-bar.hidden {
-    margin-top: -51px; /* Height + 1px border */
+    margin-top: -51px;
+    /* Height + 1px border */
 }
 
 .view-title {
@@ -3701,6 +3702,57 @@ p {
 .upload-icon {
     margin-bottom: 8px;
     fill: #0b57d0;
+}
+
+.file-selected-list {
+    margin-top: 14px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .file-selected-list {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.file-selected-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+    background: var(--surface, #ffffff);
+    color: var(--on-surface, #1f1f1f);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .file-selected-item {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e3e3e3;
+}
+
+.file-selected-item .file-name {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    flex: 1;
+    margin-right: 12px;
+}
+
+.file-selected-item .file-count {
+    font-size: 0.75rem;
+    opacity: 0.75;
+    white-space: nowrap;
 }
 
 .md3-dialog-actions {
@@ -4374,6 +4426,7 @@ p {
 .batch-btn.execute-btn:hover {
     background: #0b60e6;
 }
+
 /* Errata Option Editor Styles */
 .errata-options-list {
     display: flex;
