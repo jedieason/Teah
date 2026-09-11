@@ -74,6 +74,12 @@
             </svg>
             <span class="item-label">深色模式</span>
           </button>
+          <button class="controls-item" id="menuContribute" role="menuitem">
+            <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+              <path d="M560-160v-520q53-33 111-46.5t129-13.5v500q-63 0-118 16.5T560-160ZM200-740q68 0 126.5 13.5T440-680v520q-56-43-114.5-59.5T200-240q-26 0-51 3.5T100-224q-8 3-14-1.5T80-238v-500q0-7 4-12.5t10-7.5q24-11 51.5-16.5T200-740Zm-40 430q23-4 46.5-6t47.5-2q50 0 97.5 15.5T440-252v-348q-50-24-99-32t-101-8q-27 0-51 3t-49 9v318Zm360 58q42-29 90.5-44.5T710-312q24 0 47.5 2t46.5 6v-318q-25-6-49-9t-51-3q-52 0-101 8t-99 32v348q28-15 56.5-24.5T560-252Zm0-348v348-348Z"/>
+            </svg>
+            <span class="item-label">貢獻題庫</span>
+          </button>
           <button class="controls-item" id="menuAddQuiz" role="menuitem">
             <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
               <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
@@ -308,6 +314,160 @@
       <button id="mistakePracticeBtn" class="primary-button">開始複習</button>
     </footer>
   </section>
+<!-- Contribute Quiz Modal (Material 3) -->
+<div id="contributeModal" class="md3-modal-overlay" style="display: none;">
+  <div class="md3-dialog contribute-dialog">
+    <div class="md3-dialog-header contribute-dialog-header">
+      <div class="contribute-title-wrapper">
+        <h3 class="md3-dialog-title">貢獻題庫與 AI 整理指引</h3>
+        <p class="dialog-eyebrow">透過 AI 快速將考古題與詳解 PDF 轉換為標準題庫</p>
+      </div>
+      <button class="dialog-close modal-close" aria-label="關閉視窗">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="md3-dialog-body contribute-body">
+      <!-- 4-step workflow -->
+      <div class="contribute-steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>準備兩份 PDF</strong><span>跨年份的題目卷與詳解卷</span></div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>複製 Prompt</strong><span>點擊下方一鍵複製指令</span></div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>餵給 AI 生成</strong><span>上傳 PDF 並貼上 Prompt</span></div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>匯入新題庫</strong><span>複製 JSON 貼入新增題庫</span></div>
+        </div>
+      </div>
+
+      <!-- Prompt container -->
+      <div class="prompt-box-card">
+        <div class="prompt-box-header">
+          <div class="prompt-box-title">
+            <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="currentColor">
+              <path d="M480-120 200-400h120v-240h320v240h120L480-120Zm0-170 126-170h-66v-240H420v240h-66l126 170Z"/>
+            </svg>
+            <span>AI 題庫整理 Prompt（雙 PDF 多年份通用）</span>
+          </div>
+          <button id="copyPromptBtn" class="copy-prompt-button" type="button" title="點擊複製完整 Prompt">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 24 24" width="15" fill="currentColor">
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+            <span class="copy-label">複製 Prompt</span>
+          </button>
+        </div>
+        <div class="prompt-code-wrap">
+          <pre><code id="promptCodeBlock"></code></pre>
+        </div>
+      </div>
+
+      <!-- JSON Format Specs & Tabs -->
+      <div class="format-spec-container">
+        <div class="spec-tabs-header" role="tablist">
+          <button class="spec-tab active" data-tab="single" role="tab" aria-selected="true" type="button">單選題</button>
+          <button class="spec-tab" data-tab="multi" role="tab" aria-selected="false" type="button">多選題</button>
+          <button class="spec-tab" data-tab="tf" role="tab" aria-selected="false" type="button">是非題 (TF)</button>
+          <button class="spec-tab" data-tab="fill" role="tab" aria-selected="false" type="button">填空題</button>
+          <button class="spec-tab" data-tab="naming" role="tab" aria-selected="false" type="button">題庫命名與規範</button>
+        </div>
+
+        <div class="spec-tab-panel active" id="tab-single">
+          <p class="tab-desc"><strong>單選題</strong>：提供 <code>options</code>（通常為 A, B, C, D，若有第五選項為 E），<code>answer</code> 為<strong>單一字串</strong>（如 <code>"B"</code>）。</p>
+          <pre class="json-code"><code>[
+  {
+    "question": "下列關於抽胸水檢查的敘述何者正確？",
+    "options": {
+      "A": "Eosinophilia 代表乳糜胸",
+      "B": "pH < 6.5，代表食道破裂"
+    },
+    "answer": "B",
+    "explanation": "Esophageal rupture 通常伴隨胸水 pH 顯著降低。",
+    "origin": "出自 B10 考古 第 3 題"
+  }
+]</code></pre>
+        </div>
+
+        <div class="spec-tab-panel" id="tab-multi" style="display: none;">
+          <p class="tab-desc"><strong>多選題</strong>：提供 <code>options</code>，且 <code>answer</code> 為<strong>字串陣列</strong>（如 <code>["A", "C"]</code>），陣列中每項都必須在 options 中。</p>
+          <pre class="json-code"><code>[
+  {
+    "question": "下列關於心肌梗塞生化標記之敘述，何者正確？（多選）",
+    "options": {
+      "A": "Troponin I 特異性極高",
+      "B": "CK-MB 上升速度最慢",
+      "C": "Myoglobin 最早升高"
+    },
+    "answer": ["A", "C"],
+    "explanation": "Troponin 為心肌特異標記；Myoglobin 於發作後 1-3 小時最早升高；CK-MB 於 4-6 小時升高。",
+    "origin": "出自 B11 期末 第 15 題"
+  }
+]</code></pre>
+        </div>
+
+        <div class="spec-tab-panel" id="tab-tf" style="display: none;">
+          <p class="tab-desc"><strong>是非題</strong>：<code>options</code> 欄位必須嚴格固定為 <code>{"T": "True", "F": "False"}</code>（若原卷為 <code>(O)(X)</code> 請統一轉換為 <code>(T)(F)</code>），<code>answer</code> 為<strong>單一字串</strong> <code>"T"</code> 或 <code>"F"</code>。系統作答時會保持固定順序不隨機洗牌。</p>
+          <pre class="json-code"><code>[
+  {
+    "question": "下列關於原發性肺結核病理變化的敘述是否正確？Ghon complex 包含肺部實質病灶與肺門淋巴結腫大。",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "T",
+    "explanation": "原發性肺結核典型的 Ghon complex 即由 Ghon focus 加上同側肺門淋巴結病變所組成。",
+    "origin": "出自 B11 考古 第 2 題"
+  }
+]</code></pre>
+        </div>
+
+        <div class="spec-tab-panel" id="tab-fill" style="display: none;">
+          <p class="tab-desc"><strong>填空題 / 簡答題</strong>：<strong>絕對不可包含 options 欄位（省略 options）</strong>。<code>answer</code> 為字串陣列，列出所有可被接受的答案、同義詞或縮寫；若需修正詳解或補充，可於 explanation 內換行加上 <code>**題矣註記：說明**</code>。</p>
+          <pre class="json-code"><code>[
+  {
+    "question": "在慢性骨髓性白血病（CML）中，常見由 t(9;22) 染色體易位形成的融合基因是 ______。",
+    "answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"],
+    "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合。\n\n**題矣註記：臨床首選標靶為酪胺酸激酶抑制劑（如 Imatinib）。**",
+    "origin": "出自 110學年度 簡答題 第 1 題"
+  }
+]</code></pre>
+        </div>
+
+        <div class="spec-tab-panel" id="tab-naming" style="display: none;">
+          <div class="rules-list">
+            <div class="rule-item">
+              <span class="rule-badge">命名格式</span>
+              <div>建議格式為 <code>科目區段｜學年度 考卷名稱</code>（例如：<code>檢驗醫學區段一｜B10 考古</code>、<code>藥理區段一｜B11 期末</code>）。</div>
+            </div>
+            <div class="rule-item">
+              <span class="rule-badge warning">字元禁制</span>
+              <div>名稱絕對<strong>不可包含</strong> <code>.</code> <code>#</code> <code>$</code> <code>[</code> <code>]</code> <code>/</code>，亦不可使用 <code>progress</code>、<code>mistakes</code> 等保留名稱。</div>
+            </div>
+            <div class="rule-item">
+              <span class="rule-badge">Markdown / LaTeX</span>
+              <div>題目及詳解支援 Markdown 排版（如 <code>**粗體**</code>、表格、清單）與 LaTeX 數學/化學公式（如 <code>$E=mc^2$</code> 或 <code>$\\text{pH} < 6.5$</code>）。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="md3-dialog-actions contribute-actions">
+      <button class="md3-text-btn modal-close" type="button">關閉</button>
+      <button id="contributeGoUploadBtn" class="md3-filled-btn" type="button">前往新增題庫</button>
+    </div>
+  </div>
+</div>
+
 <!-- Upload Quiz Modal (Material 3) -->
 <div id="uploadModal" class="md3-modal-overlay">
   <div class="md3-dialog">

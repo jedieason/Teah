@@ -1963,6 +1963,7 @@ const menuStarred = document.getElementById('menuStarred');
 const menuShuffle = document.getElementById('menuShuffle');
 const menuTheme = document.getElementById('menuTheme');
 const menuLogout = document.getElementById('menuLogout');
+const menuContribute = document.getElementById('menuContribute');
 const menuAddQuiz = document.getElementById('menuAddQuiz');
 
 if (controlsMenuBtn && controlsMenu) {
@@ -2113,6 +2114,193 @@ if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
     if (controlsMenu) controlsMenu.classList.remove('open');
     openUploadModal('paste');
 });
+
+// Contribute Quiz Modal Logic
+const CONTRIBUTE_AI_PROMPT = `<?xml version="1.0" encoding="UTF-8"?>
+<prompt>
+  <role>你是一個嚴謹的醫學與資訊學科考古題資料結構化專家。你的任務是將使用者提供的題目文本或兩份 PDF（題目卷與詳解卷），精準轉換為本系統指定的 JSON 題庫格式。你必須保持極致的客觀與結構化，絕對不加入任何額外的聊天、前言、後記或 Markdown 區塊外的註解。</role>
+
+  <task>
+    請閱讀使用者輸入的題目與詳解內容，依據下述規則進行整理與精準配對。
+    **重要輸出要求**：
+    1. 請依據「屆數/年份/考卷」進行分拆（舊考古則依據單元分拆），【每一屆數/年份必須獨立成一個獨立的 JSON Array】，並分別放入【各自獨立的 Markdown Code Block (\`\`\`json ... \`\`\`)】當中。
+    2. 在每個 Markdown Code Block 上方，請務必標註該題庫的建議命名標題，格式必須為：\`### 科目區段｜學年度 考卷名稱\`（例如：\`### 檢驗醫學區段一｜B11 考古\`、\`### 檢驗醫學區段一｜B10 考古\`）。
+       - 注意：題庫名稱中【絕對不可包含】下列字元：\`.\` \`#\` \`$\` \`[\` \`]\` \`/\`。
+  </task>
+
+  <constraints>
+    ### 1. 資料處理、配對與排序
+    * **資料完整性與持續性**：請務必完整處理使用者輸入的所有年份題目。若個別題目或答案完全缺失，請跳過該題；但【嚴禁因為年份或題數過多而擅自中斷、精簡或漏失任何一整年的內容】。
+    * **雙文件（題目卷 + 詳解卷）交叉核對**：詳解卷與題目卷之題號可能跨頁或順序微調，請務必根據「題目核心文字」與「年份題號」雙向核對，確保題目、選項與詳解完全對齊。若詳解卷中某題無解析，\`explanation\` 請填寫空字串 \`""\`，不可遺漏題目。
+    * **排序規則**：請將各年份由新到舊分開輸出（例如依序輸出 B11、B10、B09...）；在每一個年份的 JSON Array 內，題目請統一依試卷題號由第 1 題遞增排序到最後一題。
+    * **內容保留**：禁止擅自修改或精簡題幹與詳解內容，但請自動「刪除句中多餘的連續空白與換行雜訊」。
+    * **連續性題組**：若遇到連續性題組（共同題幹），必須在每題的 \`question\` 欄位開頭自動補上該題組的「共同背景描述」，確保單看該題也能明確理解題意。
+    * **圖表與特殊符號**：若原題包含圖表或影像，請在 \`question\` 內以 \`[圖表：描述]\` 或 \`[圖片]\` 標記其相對位置。
+
+    ### 2. 格式與排版規範
+    * **純淨輸出**：整個輸出結果中【只能包含 Markdown 題庫標題與 JSON Code Blocks】。嚴禁在 Code Block 之外寫下任何「好的，以下是為您整理的...」或「注意：我修正了...」等任何人類對話或註解。
+    * **中文標點**：題目與詳解若為中文，請統一使用全形標點符號（如：，、？）。
+    * **上標與下標**：若出現化學式、生物標記或數學公式，請嚴格使用 LaTeX 語法包裹（例如：$CD4^+$、$T_{FH}$、$\\text{pH} < 6.5$）。
+    * **特殊符號替換**：禁止使用「~」符號，請一律轉換為文字，如「2到3」或「2 to 3」，避免 Markdown 渲染錯誤。
+
+    ### 3. 四大題型欄位規範（單選、是非 TF、多選、填空）
+    * **欄位切割**：嚴禁將解釋/詳解寫到題目中，亦不得將題目內容移至解釋中。
+    * **origin（出處）**：必須明確擷取並寫出是「哪一年」的「哪一題」，例如 \`"出自 B11 考古第 1 題"\` 或 \`"出自 111學年度 區段考第 5 題"\`。請將原題幹開頭的題號序號刪除。
+    * **【單選題】**：
+      * \`options\`：若原始選項帶有 \`(1)(2)(3)(4)\` 或 \`1.2.3.4.\`，請一律**刪除這些前綴數字**，統一對應到大寫字母鍵值（\`"A"\`, \`"B"\`, \`"C"\`, \`"D"\`，若有第五選項為 \`"E"\`）。
+      * \`answer\`：必須為**單一字串**（嚴禁中括號或引號內多字母），且必須為 \`options\` 中的某一鍵。例如：\`"answer": "B"\`。
+    * **【是非題】**：
+      * \`options\`：欄位必須嚴格固定為 \`{"T": "True", "F": "False"}\`。若原題使用 \`(O)(X)\`，請自動在題目與詳解中更正為 \`(T)(F)\`。
+      * \`answer\`：必須為單一字串 \`"answer": "T"\` 或 \`"answer": "F"\`。
+    * **【多選題】**（題目註記多選，或官方答案包含兩個以上選項）：
+      * \`options\`：物件，包含 2 個以上選項（\`"A"\`, \`"B"\`, \`"C"\`...）。
+      * \`answer\`：必須使用 **JSON Array 格式**，包含所有正確選項代號，例如 \`"answer": ["A", "C"]\` 或 \`"answer": ["A", "B", "D"]\`。一個引號內嚴禁出現多個字母（禁止 \`"A/D"\` 或 \`"A, B"\`）。
+    * **【填空題 / 簡答題】**（無選項之問答、名詞解釋或填空）：
+      * \`options\`：**絕對不要建立 options 欄位（請在 JSON 中直接省略 options）**。
+      * \`answer\`：必須使用 **JSON Array 格式**，列出所有可被接受的正確答案、同義詞、全稱與縮寫（作答比對時命中其中任一項即算正確）。例如：\`"answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"]\` 或 \`"answer": ["現金股利", "股價"]\`。
+
+    ### 4. 詳解與 AI 校正機制（嚴禁在 JSON 外部寫註解）
+    * 每題均須配對對應的 \`explanation\`。
+    * **題矣註記機制**：當你發現原題的詳解有誤、答案有爭議、或是你有更精準的醫學解釋時，**請直接寫在該題的 \`explanation\` 欄位內部最後面**。
+    * 若修改了錯誤答案，\`answer\` 欄位請放上你認為的正確答案，並在 \`explanation\` 內容的最末端，自動換行並加上以下標記：
+      \`\\n\\n**題矣註記：[在此輸入你認為更詳細的補充、正確答案或修正後的詳解]**\`
+  </constraints>
+
+  <output_schema>
+    請嚴格參照以下格式輸出。每一年的 Code Block 必須是獨立、合法的 JSON Array，並在上方以 Markdown 三級標題標記題庫名稱：
+
+### 檢驗醫學區段一｜B11 考古
+\`\`\`json
+[
+  {
+    "origin": "出自 B11 考古第 1 題",
+    "question": "Which molecule is known as the energy currency of the cell?",
+    "options": {
+      "A": "DNA",
+      "B": "ATP",
+      "C": "RNA",
+      "D": "NADH",
+      "E": "FADH2"
+    },
+    "answer": "B",
+    "explanation": "ATP (adenosine triphosphate) is the primary energy carrier in all living organisms."
+  },
+  {
+    "origin": "出自 B11 考古第 2 題",
+    "question": "下列關於原發性肺結核病理變化的敘述是否正確？Ghon complex 包含肺部實質病灶與肺門淋巴結腫大。",
+    "options": {
+      "T": "True",
+      "F": "False"
+    },
+    "answer": "T",
+    "explanation": "原發性肺結核典型的 Ghon complex 即由 Ghon focus 加上同側肺門淋巴結病變所組成。"
+  },
+  {
+    "origin": "出自 B11 考古第 3 題",
+    "question": "下列哪些數值屬於質數（Prime numbers）？（多選）",
+    "options": {
+      "A": "2",
+      "B": "3",
+      "C": "4",
+      "D": "5",
+      "E": "6"
+    },
+    "answer": ["A", "B", "D"],
+    "explanation": "2, 3, and 5 are prime numbers, while 4 and 6 are composite numbers."
+  },
+  {
+    "origin": "出自 B11 考古第 4 題",
+    "question": "在慢性骨髓性白血病（CML）中，常見由 t(9;22) 染色體易位形成的費城染色體融合基因是 ______。",
+    "answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"],
+    "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**題矣註記：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
+  }
+]
+\`\`\`
+
+### 檢驗醫學區段一｜B10 考古
+\`\`\`json
+[
+  {
+    "origin": "出自 B10 考古第 1 題",
+    "question": "下列關於抽胸水檢查的敘述何者正確？",
+    "options": {
+      "A": "Eosinophilia 代表乳糜胸",
+      "B": "pH < 6.5，代表食道破裂",
+      "C": "Amylase 升高常見於結核性胸水",
+      "D": "Glucose > 60 mg/dL 代表膿胸"
+    },
+    "answer": "B",
+    "explanation": "食道破裂（Boerhaave syndrome）胃酸流入肋膜腔，常導致胸水 pH 顯著降低（< 6.5）。"
+  }
+]
+\`\`\`
+  </output_schema>
+</prompt>`;
+
+const contributeModal = document.getElementById('contributeModal');
+const copyPromptBtn = document.getElementById('copyPromptBtn');
+const promptCodeBlock = document.getElementById('promptCodeBlock');
+const contributeGoUploadBtn = document.getElementById('contributeGoUploadBtn');
+
+if (promptCodeBlock) {
+    promptCodeBlock.textContent = CONTRIBUTE_AI_PROMPT;
+}
+
+if (menuContribute) {
+    menuContribute.addEventListener('click', () => {
+        if (controlsMenu) controlsMenu.classList.remove('open');
+        if (contributeModal) contributeModal.style.display = 'flex';
+    });
+}
+
+if (contributeGoUploadBtn) {
+    contributeGoUploadBtn.addEventListener('click', () => {
+        if (contributeModal) contributeModal.style.display = 'none';
+        openUploadModal('paste');
+    });
+}
+
+if (copyPromptBtn) {
+    copyPromptBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(CONTRIBUTE_AI_PROMPT);
+        } catch (e) {
+            const textarea = document.createElement('textarea');
+            textarea.value = CONTRIBUTE_AI_PROMPT;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        copyPromptBtn.classList.add('copied');
+        const label = copyPromptBtn.querySelector('.copy-label');
+        const originalText = label ? label.textContent : '';
+        if (label) label.textContent = '已複製 ✓';
+        setTimeout(() => {
+            copyPromptBtn.classList.remove('copied');
+            if (label) label.textContent = originalText;
+        }, 2000);
+    });
+}
+
+if (contributeModal) {
+    const specTabs = contributeModal.querySelectorAll('.spec-tab');
+    specTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            specTabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            const targetTab = tab.dataset.tab;
+            const panels = contributeModal.querySelectorAll('.spec-tab-panel');
+            panels.forEach(p => (p.style.display = 'none'));
+            const targetPanel = contributeModal.querySelector(`#tab-${targetTab}`);
+            if (targetPanel) targetPanel.style.display = 'block';
+        });
+    });
+}
 
 function toggleEditModeUI() {
     const grid = document.getElementById('units-grid');
