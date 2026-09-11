@@ -7,9 +7,17 @@ export async function readCatalog() {
     // A dedicated catalog lets rules deny root reads without moving legacy banks.
     const catalog = await get(ref(database, 'quizCatalog'));
     if (catalog.exists()) return catalog.val();
-    const root = await get(ref(database));
-    return Object.fromEntries(Object.entries(root.val() || {}).filter(([key, value]) => !reservedKeys.has(key) && Array.isArray(value))
-        .map(([key, value]) => [key, { count: value.length }]));
+    try {
+        const root = await get(ref(database));
+        return Object.fromEntries(Object.entries(root.val() || {}).filter(([key, value]) => !reservedKeys.has(key) && Array.isArray(value))
+            .map(([key, value]) => [key, { count: value.length }]));
+    } catch (error) {
+        if (error?.message?.includes('Permission denied') || error?.code === 'PERMISSION_DENIED') {
+            console.error('Firebase 根目錄讀取已被權限規則拒絕，且尚未建立 /quizCatalog 節點。請先於 Firebase Console 建立或匯入 /quizCatalog。');
+            throw new Error('題庫目錄 (/quizCatalog) 尚未在 Firebase 建立，且安全規則已禁止讀取根目錄。請先匯入或建立 /quizCatalog。');
+        }
+        throw error;
+    }
 }
 
 export async function writeBanks(changes) {

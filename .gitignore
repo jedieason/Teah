@@ -8,4 +8,7 @@ dist/
 artifacts/
 *.generated.json
 *firebase-export*.json
+*-rtdb-export*.json
+*-export.json
+*.bak
 .env*
