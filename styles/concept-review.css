@@ -1,0 +1,42 @@
+/* Reuse the library / notebook typography, neutral borders and primary accent. */
+.end-screen-overlay .results-container:has(.concept-areas) { max-width: 760px; }
+.concept-review { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--ui-border); color: var(--on-surface); font-family: var(--ui-font); overflow-wrap: anywhere; }
+.concept-review h2 { font: 600 22px/1.5 var(--ui-font); letter-spacing: -.5px; margin: 0 0 8px; }
+.concept-review h3 { font: 600 18px/1.5 var(--ui-font); margin: 0; }
+.concept-review h4 { font: 500 15px/1.6 var(--ui-font); margin: 0; }
+.concept-note, .concept-status { color: var(--ui-muted); font-size: 12px; line-height: 1.8; margin: 8px 0 16px; }
+.concept-status { padding: 12px 14px; background: var(--ui-hover); border-radius: 10px; }
+.concept-summary { font-size: 15px; line-height: 1.9; margin: 20px 0 28px; }
+.concept-section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 24px 0 14px; }
+.concept-section-heading > span { color: var(--ui-muted); font-size: 12px; }
+.concept-areas { display: grid; gap: 12px; list-style: none; padding: 0; margin: 0; }
+.concept-area { border: 1px solid var(--ui-border); border-radius: var(--ui-radius); padding: 20px; min-width: 0; }
+.concept-area-heading { display: flex; align-items: center; gap: 12px; }
+.concept-area-heading > div { flex: 1; min-width: 0; }
+.concept-order { display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; background: var(--ui-hover); color: var(--primary); font-size: 13px; }
+.concept-unit { color: var(--ui-muted); font-size: 12px; margin: 0 0 3px; }
+.concept-count { color: var(--ui-muted); font-size: 12px; white-space: nowrap; }
+.concept-track { height: 4px; background: var(--ui-hover); border-radius: 4px; margin: 18px 0; overflow: hidden; }
+.concept-track > span { display: block; height: 100%; background: var(--primary); border-radius: inherit; }
+.concept-study-details { display: grid; grid-template-columns: 60px 1fr; gap: 12px; margin: 0; font-size: 13px; line-height: 1.8; }
+.concept-study-details dt { color: var(--ui-muted); }
+.concept-study-details dd { margin: 0; }
+.concept-evidence { border-top: 1px solid var(--ui-border); margin-top: 18px; font-size: 12px; line-height: 1.8; }
+.concept-evidence summary { padding-top: 12px; min-height: 28px; cursor: pointer; color: var(--ui-muted); }
+.concept-memory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.concept-memory { border: 1px solid var(--ui-border); border-radius: var(--ui-radius); padding: 20px; }
+.concept-memory:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.concept-memory h4 { color: var(--primary); }
+.concept-rule { font-size: 15px; line-height: 1.85; margin: 12px 0 18px; }
+.concept-distinction { padding-top: 12px; border-top: 1px solid var(--ui-border); font-size: 12px; line-height: 1.8; }
+.concept-distinction span { color: var(--ui-muted); }
+.concept-distinction p { margin: 4px 0 0; }
+.concept-uncertainty { border-left: 3px solid var(--ui-border); padding: 10px 14px; background: var(--ui-hover); font-size: 13px; line-height: 1.8; }
+.concept-review > button { min-height: 44px; }
+@media (max-width: 600px) {
+    .concept-memory-grid { grid-template-columns: 1fr; }
+    .concept-section-heading { flex-wrap: wrap; gap: 4px; }
+    .concept-area, .concept-memory { padding: 16px; }
+    .concept-study-details { grid-template-columns: 1fr; gap: 4px; }
+    .concept-study-details dd + dt { margin-top: 8px; }
+}

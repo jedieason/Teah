@@ -11,7 +11,7 @@ const questions = [
     { question: 'In real-time PCR, samples A and B have Ct values of 25 and 30. What is the ratio A:B?', answer: ['32:1'], explanation: '每次 PCR 循環，DNA 量加倍，差距為 $2^5 = 32$ 倍。', origin: 'B10 區段考 第 2 題' }
 ];
 const bank = '檢驗醫學區段一｜B10 考古'; const bank2 = '藥理區段一｜B09 考古';
-const db = { [bank]: questions, [bank2]: [{ question: '選出正確的敘述。', options: { A: '第一項', B: '第二項', C: '第三項' }, answer: ['A', 'B'] }],
+const db = { API_KEY: 'test-only', [bank]: questions, [bank2]: [{ question: '選出正確的敘述。', options: { A: '第一項', B: '第二項', C: '第三項' }, answer: ['A', 'B'] }],
     quizCatalog: { [bank]: { count: 2 }, [bank2]: { count: 1 } },
     mistakes: { 'test-user': { [bank]: { old: { ...questions[0], originalIndex: 0, count: 3, lastMistake: 1788681600000, lastSelection: 'A' }, fill: { ...questions[1], originalIndex: 1, count: 1, lastMistake: 1788595200000 } }, [bank2]: { multi: { question: '選出正確的敘述。', options: { A: '第一項', B: '第二項', C: '第三項' }, answer: ['A', 'B'], originalIndex: 0, count: 2, lastMistake: 1788508800000 } } } },
     progress: { 'test-user': { quizzes: { [bank]: { selectedJson: bank, currentIndex: 0, lastUpdated: 100, allQuestions: questions.map((q, i) => ({ ...q, originalIndex: i, isAnswered: i === 0, isConfirmed: i === 0, isCorrect: i === 0, isFillBlank: !q.options, userSelection: i === 0 ? 'B' : null })) } } } } };
@@ -19,6 +19,26 @@ await context.addInitScript(value => { window.__testDatabase = value; }, db);
 await context.route('**/src/services/firebase.js', route => route.fulfill({ contentType: 'text/javascript', body: fixture }));
 // Fail closed if another module accidentally requests a production backend.
 await context.route(/firebasedatabase|firebaseio|googleapis.com\/identity|gstatic.com\/firebasejs/, route => route.abort());
+let reviewRequests = 0;
+await context.route('https://generativelanguage.googleapis.com/**', async route => {
+    reviewRequests++;
+    if (reviewRequests === 1) return route.fulfill({ status: 503, body: '{}' });
+    const request = route.request().postDataJSON();
+    assert.equal(request.generationConfig.responseMimeType, 'application/json');
+    const input = JSON.parse(request.contents[0].parts[0].text);
+    assert.equal(input.length, 2);
+    assert.equal(input[0].lastSelection, 'A');
+    const overview = {
+        summary: '先補強檢驗數據的判讀邏輯：區分診斷線索與確診依據，再釐清 Ct 差值與起始量的關係。',
+        studyAreas: [{ unit: '檢驗醫學', title: '從檢驗數據推回臨床意義',
+            blindSpot: '可能直接將單一檢驗結果對應診斷，或把 Ct 差值當成起始量的線性差異。',
+            studyFocus: '複習胸水分析中各指標的意義，以及 real-time PCR 的 Ct 與起始模板量換算。',
+            questionIds: input.map(q => q.questionId) }],
+        remember: [{ concept: '胸水判讀需整合線索', rule: '單一細胞變化不足以直接確認胸水病因。', distinction: '嗜酸性球增加不等同乳糜胸，需結合其他檢驗與臨床資訊。' },
+            { concept: 'Ct 與起始量呈反向關係', rule: '理想倍增條件下，Ct 相差 5，起始量相差 32 倍。', distinction: 'Ct 較低的一組起始量較多；不是 5 倍。' }], uncertainty: ''
+    };
+    return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text: JSON.stringify(overview) }] } }] }) });
+});
 const page = await context.newPage();
 const errors = [];
 page.on('pageerror', e => errors.push(e.message));
@@ -94,7 +114,7 @@ try {
     assert.equal(await page.locator('#wrong').innerText(), '1');
     await page.screenshot({ path: 'artifacts/qa/answer-mobile.png', fullPage: true });
     await page.locator('#next-btn').click();
-    await page.locator('#fillblank-input').fill('32:1');
+    await page.locator('#fillblank-input').fill('16:1');
     await page.locator('#confirm-btn').click();
     await page.locator('#next-btn').click();
     await page.locator('.option-button[data-option="A"]').click();
@@ -103,7 +123,20 @@ try {
     await page.locator('#next-btn').click();
     await page.locator('.results-container').waitFor();
     assert.ok((await page.locator('.results-actions button').first().boundingBox()).height >= 48);
+    await page.getByRole('button', { name: '重新生成觀念回顧' }).waitFor({ state: 'visible' });
+    await page.getByRole('button', { name: '重新生成觀念回顧' }).click();
+    await page.locator('.concept-area').waitFor();
+    assert.equal(await page.locator('.concept-area').count(), 1);
+    assert.equal(await page.locator('.concept-memory').count(), 2);
+    assert.equal(reviewRequests, 2, 'one overview request per attempt, not one per question');
+    assert.match(await page.locator('.concept-status').innerText(), /2 題錯題 → 1 個複習方向/);
+    assert.equal(await page.locator('.concept-evidence[open]').count(), 0);
+    assert.equal(await page.locator('.results-container').evaluate(n => n.scrollWidth > n.clientWidth), false);
+    await page.locator('.concept-area').scrollIntoViewIfNeeded();
     await page.screenshot({ path: 'artifacts/qa/results-mobile.png', fullPage: true });
+    await page.evaluate(() => document.documentElement.classList.add('dark-mode'));
+    await page.screenshot({ path: 'artifacts/qa/results-dark-mobile.png', fullPage: true });
+    await page.evaluate(() => document.documentElement.classList.remove('dark-mode'));
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.screenshot({ path: 'artifacts/qa/results-desktop.png', fullPage: true });
     assert.equal(await page.evaluate(bank => window.__testDatabase.progress['test-user'].quizzes[bank].currentIndex, bank), 0, 'practice must not overwrite normal progress');

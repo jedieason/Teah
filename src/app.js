@@ -1,3 +1,4 @@
+import { mountConceptReview } from './features/concept-review/view.js';
 import { installDialogBehavior } from './shared/dialogs.js';
 import { readCatalog, writeBanks, validBankName } from './services/catalog.js';
 import { database, auth, googleProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, onAuthStateChanged, signOut } from './services/firebase.js';
@@ -832,6 +833,10 @@ function showEndScreen() {
     endScreenDiv.appendChild(container);
 
     quizContainer.parentNode.appendChild(endScreenDiv);
+    mountConceptReview(container, {
+        questions: allQuestions, source: selectedJson,
+        getKey: async () => (await get(ref(database, 'API_KEY'))).val()
+    });
     container.tabIndex = -1;
     container.focus({ preventScroll: true });
 }
