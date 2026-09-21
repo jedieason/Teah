@@ -11,7 +11,6 @@
 .learning-dialog > div > button { margin:6px; }
 .library-shortcuts { flex-wrap:wrap; }
 .sync-status { font-size:12px; color:#777; }
-.question-note { align-self:center; margin:12px; }
 .exam-active #explanation-text,.exam-active #WeeGPT,.exam-active #WeeGPTInputSection,.exam-active #correct,.exam-active #wrong,.exam-active #origin-display { display:none !important; }
 .exam-active .option-button.correct,.exam-active .option-button.incorrect,.exam-active .option-button.missing { background:transparent !important; color:inherit !important; border-color:#8886 !important; }
 .exam-active .fillblank-input { color:inherit !important; border-color:#8886 !important; }
@@ -21,3 +20,8 @@
 .exam-active #copy-btn,.exam-active #errata-btn,.exam-active .question-note { display:none !important; }
 .learning-header { position:sticky; top:-24px; padding-top:12px; z-index:1; background:inherit; }
 .learning-dialog { font-family:inherit; }
+
+.explanation-buttons { flex-wrap:wrap; gap:12px; }
+.explanation-buttons > .header-right { flex-wrap:wrap; gap:4px; }
+.explanation-buttons .action-icon-btn { flex:0 0 40px; }
+.explanation-buttons > .next-button,.explanation-buttons > .back-progress-button { margin-left:auto; }

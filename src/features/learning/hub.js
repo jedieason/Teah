@@ -141,7 +141,13 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
             if (ticket.resolution) el('p', ticket.resolution, body);
         }
     });
-    const report = button('回報內容問題', document.querySelector('.quiz-container'), async () => {
+    const questionActions = document.querySelector('.explanation-buttons > .header-right');
+    const asIcon = (node, label, paths) => {
+        node.className = 'action-icon-btn question-note';
+        node.setAttribute('aria-label', label); node.title = label;
+        node.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+    };
+    const report = button('回報內容問題', questionActions, async () => {
         if (!requireUser()) return; const q = current(); if (!q?.questionId) return;
         const body = open('回報內容問題'); const text = el('textarea', null, body); text.rows = 5; text.maxLength = 2000; text.placeholder = '請說明答案、詳解、來源或顯示問題';
         button('送出回報', body, async () => {
@@ -149,13 +155,13 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
             await set(ref(database, `feedback/${auth.currentUser.uid}/${crypto.randomUUID()}`), { questionId: q.questionId, questionRevision: q.revision || 1, reason: text.value.trim(), status: 'open', createdAt: Date.now() });
             dialog.close(); alert('回報已送出，可在「我的回報」查看處理結果。');
         });
-    }); report.classList.add('question-note');
-    const notes = button('個人筆記', document.querySelector('.quiz-container'), async () => {
+    }); asIcon(report, '回報內容問題', '<path d="M5 21V4m0 0c5-4 9 4 14 0v10c-5 4-9-4-14 0"/>');
+    const notes = button('個人筆記', questionActions, async () => {
         if (!requireUser()) return; const q = current(); if (!q?.questionId) { alert('請重新載入題庫後使用筆記。'); return; }
         const selectedText = window.getSelection()?.toString().slice(0, 2000) || '';
         const body = open('題目筆記'); const input = el('textarea', null, body); input.rows = 8; input.maxLength = 10000; input.value = learningState[`note_${q.questionId}`]?.text || '';
         if (selectedText) button('加入選取的文字', body, () => { input.value += `\n> ${selectedText}\n`; });
         button('以此筆記建立複習卡', body, async () => { if (!input.value.trim()) return; await savePreference(`card_${crypto.randomUUID()}`, { front: q.question, back: input.value, questionId: q.questionId, dueAt: Date.now(), intervalDays: 0 }); dialog.close(); });
         button('儲存筆記', body, async () => { await savePreference(`note_${q.questionId}`, { text: input.value, questionId: q.questionId }); dialog.close(); });
-    }); notes.classList.add('question-note');
+    }); asIcon(notes, '個人筆記', '<rect x="5" y="3" width="15" height="18" rx="2"/><path d="M3 7h4M3 12h4M3 17h4M10 8h6M10 12h6M10 16h4"/>');
 }
