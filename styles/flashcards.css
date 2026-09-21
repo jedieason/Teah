@@ -71,3 +71,9 @@ html.dark-mode .flashcards-dialog .fc-feedback.is-correct h3 { color:#8cddb4; }
 html.dark-mode .flashcards-dialog .fc-feedback.is-wrong h3 { color:#ffb58f; }
 html.dark-mode .flashcards-dialog img { filter:none; }
 .flashcards-dialog pre,.flashcards-dialog table,.flashcards-dialog .katex-display { max-width:100%; overflow-x:auto; }
+/* Keep secondary actions at the start and the next/save action at the end. */
+.fc-split-actions { width:100%; justify-content:space-between; flex-wrap:nowrap; gap:16px; box-sizing:border-box; }
+.fc-split-actions > .primary-button { margin-left:auto; order:1; flex-shrink:0; }
+.fc-feedback .fc-split-actions { margin-top:20px; }
+@media(max-width:400px) { .fc-split-actions { gap:8px; } .fc-ratings button { min-width:0; } }
+.flashcards-dialog { overflow:clip; }

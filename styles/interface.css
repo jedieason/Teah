@@ -58,3 +58,31 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 
 .quiz-title[role=button] { cursor: pointer; }
 .quiz-title[role=button]::before { content: '‹'; font-family: var(--ui-font); font-size: 22px; margin-right: 12px; color: #737a81; }
+/* Site navigation is a full-width top bar, independent of the library content. */
+.start-screen { padding-top:0; }
+.site-topbar { position:sticky; top:0; z-index:100; width:100%; background:var(--surface-color); border-bottom:1px solid var(--ui-border); font-family:var(--ui-font); }
+.site-topbar-inner { width:100%; max-width:1440px; min-height:76px; margin:auto; padding:0 32px; box-sizing:border-box; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:32px; align-items:center; }
+.site-brand { color:var(--on-surface); text-decoration:none; display:flex; align-items:baseline; gap:10px; white-space:nowrap; font-size:23px; font-weight:700; letter-spacing:-.6px; }
+.site-brand span { font-size:11px; font-weight:400; letter-spacing:.1em; color:var(--ui-muted); }
+.site-topbar .library-shortcuts { display:flex; flex-wrap:nowrap; align-items:center; justify-content:center; min-width:0; margin:0; gap:4px; overflow-x:auto; scrollbar-width:thin; }
+.site-topbar .library-shortcuts .quiet-button { flex-shrink:0; min-height:44px; padding:12px 11px; border:0; border-radius:8px; font-size:13px; white-space:nowrap; color:var(--on-surface-variant); }
+.site-topbar .library-shortcuts .quiet-button:hover { color:var(--on-surface); background:var(--ui-hover); }
+.site-account { display:flex; align-items:center; justify-content:flex-end; position:relative; }
+.site-account .top-right-controls { position:relative; inset:auto; }
+.site-account .sign-in-button { position:static; white-space:nowrap; }
+.site-account .controls-menu { top:calc(100% + 14px); right:0; }
+.site-topbar ~ .home-content { padding-top:40px; }
+@media(max-width:1200px) {
+ .site-topbar-inner { gap:20px; padding-inline:24px; }
+ .site-brand span { display:none; }
+ .site-topbar .library-shortcuts { justify-content:flex-start; }
+}
+@media(max-width:900px) {
+ .site-topbar-inner { grid-template-columns:1fr auto; gap:0 16px; padding:0 20px; }
+ .site-brand { min-height:64px; align-items:center; }
+ .site-brand span { display:inline; }
+ .site-account { grid-column:2; grid-row:1; }
+ .site-topbar .library-shortcuts { grid-column:1 / -1; grid-row:2; gap:8px; padding:4px 0 10px; }
+ .site-topbar .library-shortcuts .quiet-button { padding-inline:10px; }
+ .site-topbar ~ .home-content { padding-top:28px; }
+}

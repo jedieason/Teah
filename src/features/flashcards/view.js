@@ -99,7 +99,7 @@ export function createFlashcards({ renderMath }) {
             input.value = value; input.maxLength = max; input.required = key !== 'explanation'; if (key !== 'title') input.rows = key === 'acceptedAnswers' ? 3 : 2; fields[key] = input;
         }
         el('p', 'fc-muted', '打字比對會忽略大小寫、頭尾空白及全半形差異；醫學符號與數值須一致。修改答案時，也請更新填空與同義詞。', form);
-        const controls = el('div', 'fc-actions', null, form), save = el('button', 'primary-button', '儲存字卡', controls); save.type = 'submit';
+        const controls = el('div', 'fc-actions fc-split-actions', null, form), save = el('button', 'primary-button', '儲存字卡', controls); save.type = 'submit';
         button('取消編輯', controls, () => deck.cards.length ? detail() : library());
         form.onsubmit = async event => {
             event.preventDefault(); if (busy) return; busy = true; save.disabled = true;
@@ -130,7 +130,7 @@ export function createFlashcards({ renderMath }) {
             const flip = button('查看答案', stage, () => session.toggle?.()); flip.dataset.flip = 'true';
             const extra = el('div', 'fc-extra', null, body); extra.hidden = true;
             if (card.explanation) rich(card.explanation, extra);
-            const ratings = el('div', 'fc-actions fc-ratings', null, body); ratings.hidden = true;
+            const ratings = el('div', 'fc-actions fc-ratings fc-split-actions', null, body); ratings.hidden = true;
             button('還不熟', ratings, () => advance(false)); button('記得了', ratings, () => advance(true), true);
             session.toggle = () => {
                 session.revealed = !session.revealed; label.textContent = session.revealed ? '正確答案' : '回想問題';
@@ -153,7 +153,7 @@ export function createFlashcards({ renderMath }) {
                 el('h3', '', session.result.correct ? '答對了' : '再記一次', feedback);
                 el('p', '', `你的答案：${input.value}`, feedback); rich(card.back, feedback); el('p', 'fc-muted', `可接受答案：${card.acceptedAnswers.join(' / ')}`, feedback);
                 if (card.explanation) rich(card.explanation, feedback);
-                const actions = el('div', 'fc-actions', null, feedback);
+                const actions = el('div', 'fc-actions fc-split-actions', null, feedback);
                 if (!session.result.correct) button('我的答案也正確', actions, () => { session.result.correct = true; feedback.classList.replace('is-wrong', 'is-correct'); feedback.querySelector('h3').textContent = '已自行標為正確'; });
                 const next = button('下一張', actions, () => advance(session.result.correct), true); next.focus({ preventScroll: true });
             };
