@@ -10,7 +10,7 @@ const el = (tag, className, text) => {
 };
 const date = value => value ? new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' }).format(value) : '日期未記錄';
 
-export function createNotebook({ root, getCache, refresh, setStatus, practice, renderMath, alert }) {
+export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert }) {
     let filters = { query: '', subject: '', quiz: '', status: 'active', sort: 'recent' };
     let selected = new Set();
     let limit = 30;
@@ -24,6 +24,8 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, r
     const quizzes = root.querySelector('#mistakeQuiz');
     const sort = root.querySelector('#mistakeSort');
     const menus = [subjects, quizzes, sort].map(createSelectMenu);
+    const cardsBtn = root.querySelector('#mistakeFlashcardsBtn');
+    const eligibleCards = () => (selected.size ? visible.filter(m => selected.has(m.id)) : visible).filter(m => m.status !== 'mastered');
     const practiceBtn = root.querySelector('#mistakePracticeBtn');
     const summary = root.querySelector('#mistakeSummary');
     const selection = root.querySelector('#mistakeSelection');
@@ -55,6 +57,9 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, r
         clear.hidden = !count;
         practiceBtn.textContent = count ? `練習所選 ${count} 題` : `開始複習${visible.length ? ` · ${visible.length} 題` : ''}`;
         practiceBtn.disabled = !visible.length;
+        cardsBtn.disabled = !eligibleCards().length;
+        cardsBtn.textContent = !selected.size && eligibleCards().length > 30 ? 'AI 一鍵製作字卡（前 30 題）' : 'AI 一鍵製作字卡';
+        cardsBtn.title = '依所選待複習錯題製作；未勾選時按目前排序取前 30 題。每次最多 30 題。';
     }
     function renderCard(m) {
         const card = el('article', 'review-card');
@@ -138,6 +143,10 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, r
         try { await practice(selected.size ? visible.filter(m => selected.has(m.id)) : visible); }
         catch { alert('無法開始複習，請重試。'); }
         finally { updateSelection(); }
+    };
+    cardsBtn.onclick = async () => {
+        cardsBtn.disabled = true;
+        try { await makeCards(selected.size ? eligibleCards() : eligibleCards().slice(0, 30)); } catch (e) { alert(e.message || '無法製作字卡，請重試。'); } finally { updateSelection(); }
     };
     const close = () => { menus.forEach(menu => menu.close()); request++; root.style.display = 'none'; document.body.style.overflow = ''; window.scrollTo(0, previousScrollY); opener?.focus({ preventScroll: true }); };
     root.querySelector('#closeMistakeViewBtn').onclick = close;

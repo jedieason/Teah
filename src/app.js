@@ -1,3 +1,4 @@
+import { createFlashcards } from './features/flashcards/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
 import { normalizeQuestion } from './features/learning/model.js';
 import { loadLearning, recordLearning, readBank } from './services/learning.js';
@@ -942,6 +943,7 @@ document.getElementById('back-progress-btn-expl').addEventListener('click', () =
 });
 
 document.addEventListener('keydown', function (event) {
+    if (document.querySelector('dialog[open]')) return;
     if (event.isComposing || event.metaKey || event.ctrlKey || event.altKey) return;
     if (event.target.closest('button, summary, select') || (event.target.matches('input, textarea, [contenteditable]') && event.target !== fillblankInput)) return;
     if ([...document.querySelectorAll('.md3-modal-overlay, .modal, #mistakeView')].some(el => getComputedStyle(el).display !== 'none')) return;
@@ -2080,6 +2082,7 @@ onAuthStateChanged(auth, async (user) => {
         learningDataReady = false;
         await loadLearning();
         closeMistakeView();
+        flashcards.close();
         stopTimer();
         quizContainer.style.display = 'none';
         document.querySelector('.start-screen').style.display = 'flex';
@@ -3038,6 +3041,7 @@ document.addEventListener('DOMContentLoaded', initTheme);
 /* Notebook integration. Practice reuses the existing answering interface. */
 const mistakeView = document.getElementById('mistakeView');
 let notebook;
+const flashcards = createFlashcards({ renderMath: renderLatex });
 
 function closeMistakeView() { notebook.close(); }
 function openMistakeView(quizName = null) {
@@ -3081,6 +3085,7 @@ notebook = createNotebook({
         } : undefined, { applyLocally: false });
         if (result.committed && auth.currentUser?.uid === uid) cacheMistake(m.quizKey, m.recordPath, result.snapshot.val());
     },
+    makeCards: items => flashcards.generate(items),
     practice: startMistakePractice, renderMath: renderLatex, alert: showCustomAlert
 });
 
@@ -3285,7 +3290,7 @@ quizTitleLink.addEventListener('keydown', event => {
 
 installDialogBehavior();
 
-mountLearningHub({ getCatalog: () => catalogData, alert: showCustomAlert, current: () => currentQuestion,
+mountLearningHub({ openCards: () => flashcards.open(), getCatalog: () => catalogData, alert: showCustomAlert, current: () => currentQuestion,
     start: async (items, mode, options) => {
         customSession = { questions: items, mode, ...options }; selectedJson = items[0].sourcePath;
         await initQuiz(); document.querySelector('.quiz-title').textContent = mode === 'exam' ? '自訂測驗 · 考試' : '自訂測驗 · 學習';

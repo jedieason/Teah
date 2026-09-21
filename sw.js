@@ -1,4 +1,4 @@
-const VERSION = 'teah-shell-v3';
+const VERSION = 'teah-shell-v4';
 const base = new URL('./', self.location.href);
 const shell = ['index.html', 'manifest.webmanifest', 'Images/logo.png', 'styles/learning.css'];
 self.addEventListener('install', event => event.waitUntil(caches.open(VERSION).then(cache => cache.addAll(shell.map(p => new URL(p, base).href)))));

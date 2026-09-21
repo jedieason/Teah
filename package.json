@@ -12,7 +12,8 @@
     "test:browser": "node tests/browser-smoke.mjs",
     "test:learning": "node tests/learning-browser.mjs",
     "test:rules": "firebase emulators:exec --only database --project demo-teah \"node tests/rules.emulator.mjs\"",
-    "test:editorial": "node tests/editorial-browser.mjs"
+    "test:editorial": "node tests/editorial-browser.mjs",
+    "test:flashcards": "node tests/flashcards-browser.mjs"
   },
   "engines": {
     "node": ">=20"

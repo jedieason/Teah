@@ -6,7 +6,7 @@ import { selectQuestions, summarize, DAY } from './model.js';
 const el = (tag, text, parent) => { const node = document.createElement(tag); if (text != null) node.textContent = text; parent?.append(node); return node; };
 const button = (text, parent, action) => { const b = el('button', text, parent); b.type = 'button'; b.className = 'quiet-button'; b.onclick = async () => { b.disabled = true; try { await action(); } catch (e) { window.alert(e.message || '操作失敗，請重試。'); } finally { b.disabled = false; } }; return b; };
 const download = (value, name) => { const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' })); const a = el('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); };
-export function mountLearningHub({ getCatalog, alert, current, start }) {
+export function mountLearningHub({ getCatalog, alert, current, start, openCards }) {
     const nav = document.querySelector('.library-shortcuts');
     const sync = el('p', '', document.querySelector('.home-content')); sync.className = 'sync-status'; sync.setAttribute('role', 'status');
     window.addEventListener('sync-status', ({ detail }) => { sync.textContent = detail.error ? '資料已保存在此裝置，尚未同步；連線後會重試。' : detail.pending ? `${detail.pending} 筆紀錄等待同步` : '學習紀錄已同步'; });
@@ -130,24 +130,7 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
         button('允許使用量分析', body, () => { localStorage.setItem('teah-analytics-consent', 'yes'); el('p', '已允許，下次載入生效。', body); });
         button('停用使用量分析', body, () => { localStorage.removeItem('teah-analytics-consent'); location.reload(); });
     });
-    button('複習卡', nav, async () => {
-        if (!requireUser()) return; await loadLearning(); const body = open('複習卡');
-        const render = () => {
-            body.replaceChildren();
-            const cards = Object.entries(learningState).filter(([key, c]) => key.startsWith('card_') && !c.deleted && (c.dueAt || 0) <= Date.now());
-            el('p', `目前到期 ${cards.length} 張。可在題目筆記建立自己的複習卡。`, body);
-            if (!cards.length) return;
-            const [key, c] = cards[0]; el('h3', c.front, body);
-            const back = el('p', c.back, body); back.hidden = true;
-            button('顯示答案', body, () => { back.hidden = false; ratings.hidden = false; });
-            const ratings = el('div', null, body); ratings.hidden = true;
-            for (const [text, correct] of [['再複習', false], ['記得', true]]) button(text, ratings, async () => {
-                const interval = correct ? Math.min(90, (c.intervalDays || 0.5) * 2) : 1;
-                await savePreference(key, { ...c, intervalDays: interval, dueAt: Date.now() + interval * DAY }); render();
-            });
-            button('刪除此卡', body, async () => { if (window.confirm('刪除此複習卡？')) { await savePreference(key, { deleted: true }); render(); } });
-        }; render();
-    });
+    button('複習卡', nav, async () => { if (requireUser()) await openCards(); });
     button('我的回報', nav, async () => {
         if (!requireUser()) return;
         const body = open('內容回報進度');
