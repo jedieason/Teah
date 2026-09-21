@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "題矣 · 醫學學習",
+  "short_name": "題矣",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4c6259",
+  "icons": [
+    {
+      "src": "Images/logo.png",
+      "sizes": "2040x2040",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

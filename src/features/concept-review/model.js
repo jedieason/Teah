@@ -16,7 +16,7 @@ export const reviewSchema = object({
 export function reviewQuestions(questions, source) {
     return questions.flatMap((q, index) => q.isAnswered && q.isCorrect === false ? [{
         questionId: `q${index + 1}`, position: index + 1, source: q.sourcePath || source || '本次測驗',
-        ...canonicalQuestion(q)
+        ...canonicalQuestion(q), questionId: q.questionId || `q${index + 1}`
     }] : []);
 }
 

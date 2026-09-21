@@ -159,7 +159,7 @@ try {
     await page.evaluate(() => { window.__failWrites = true; });
     await page.locator('.option-button[data-option="A"]').click();
     await page.locator('#confirm-btn').click();
-    await page.waitForFunction(() => document.getElementById('modal-message').textContent.includes('尚未同步'));
+    await page.waitForFunction(() => document.querySelector('.sync-status').textContent.includes('尚未同步'));
     assert.equal(await page.evaluate(bank => window.__testDatabase.mistakes['test-user'][bank].old.count, bank), 3);
     await page.evaluate(() => { window.__failWrites = false; window.dispatchEvent(new Event('online')); });
     await page.waitForFunction(bank => window.__testDatabase.mistakes['test-user'][bank].old.count === 4, bank);

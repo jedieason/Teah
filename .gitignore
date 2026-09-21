@@ -12,3 +12,4 @@ artifacts/
 *-export.json
 *.bak
 .env*
+*-debug.log

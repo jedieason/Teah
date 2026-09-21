@@ -42,6 +42,7 @@ export function canonicalQuestion(question) {
     const explanation = typeof question.explanation === 'string' ? question.explanation.replace(/[（(]\s*([A-L])\s*[）)]/g,
         (match, letter) => mapping[letter] ? `(${mapping[letter]})` : match) : '';
     return {
+        questionId: question.questionId || null, revision: question.revision || 1, taxonomy: question.taxonomy || null,
         question: question.question, options, answer: question.options ? mapAnswer(question.answer) : question.answer,
         explanation, origin: question.origin || null,
         originalIndex: Number.isInteger(question.originalIndex) ? question.originalIndex : -1,

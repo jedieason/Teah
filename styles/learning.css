@@ -1,0 +1,23 @@
+.learning-dialog { width:min(720px,92vw); max-height:85vh; overflow:auto; border:1px solid #aaa5; border-radius:20px; padding:24px; color:inherit; background:var(--md-sys-color-surface,#fff); box-sizing:border-box; }
+.learning-dialog::backdrop { background:#0007; }
+.learning-header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.learning-header h2 { margin:0 0 18px; }
+.learning-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:16px 0; }
+.learning-form label { display:flex; flex-direction:column; gap:6px; font-size:14px; }
+.learning-dialog input,.learning-dialog select,.learning-dialog textarea { box-sizing:border-box; width:100%; padding:10px; border:1px solid #8886; border-radius:8px; background:transparent; color:inherit; font:inherit; }
+.learning-dialog table { width:100%; border-collapse:collapse; font-size:14px; }
+.learning-dialog th,.learning-dialog td { padding:10px 6px; text-align:left; border-bottom:1px solid #8883; }
+.learning-dialog p,.learning-dialog li { line-height:1.7; }
+.learning-dialog > div > button { margin:6px; }
+.library-shortcuts { flex-wrap:wrap; }
+.sync-status { font-size:12px; color:#777; }
+.question-note { align-self:center; margin:12px; }
+.exam-active #explanation-text,.exam-active #WeeGPT,.exam-active #WeeGPTInputSection,.exam-active #correct,.exam-active #wrong,.exam-active #origin-display { display:none !important; }
+.exam-active .option-button.correct,.exam-active .option-button.incorrect,.exam-active .option-button.missing { background:transparent !important; color:inherit !important; border-color:#8886 !important; }
+.exam-active .fillblank-input { color:inherit !important; border-color:#8886 !important; }
+.exam-active .progress-dot { background:#8885 !important; }
+@media(max-width:520px) { .learning-form { grid-template-columns:1fr; } .learning-dialog { padding:18px; } }
+@media(prefers-color-scheme:dark) { .learning-dialog { background:#232326; color:#eee; } }
+.exam-active #copy-btn,.exam-active #errata-btn,.exam-active .question-note { display:none !important; }
+.learning-header { position:sticky; top:-24px; padding-top:12px; z-index:1; background:inherit; }
+.learning-dialog { font-family:inherit; }

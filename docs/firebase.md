@@ -58,7 +58,7 @@ await admin.auth().setCustomUserClaims(adminUid, { ...user.customClaims, admin: 
 
 正式上線建議將 Gemini 請求放入 Cloud Functions 或 Cloud Run：驗證 Firebase ID token、限制請求長度及使用頻率、以 Secret Manager 保存 Gemini key，由伺服器呼叫模型。確認新代理可以使用後，換掉 `src/app.js` 的 Gemini 呼叫及金鑰讀取。
 
-上述規則範例會阻止舊的瀏覽器金鑰讀取，所以**套用後、代理接好前，AI 回覆將暫時不可用**。答題、詳解、收藏及錯題複習不依賴 AI。不要為了維持 AI 功能而開放整個根目錄。
+本輪產品化按要求保留前端 API，因此規則範例僅允許已登入者讀取 `/API_KEY`，仍禁止根目錄讀取。**登入者依然能取得金鑰，這不是後端金鑰保護。** 完成代理後應將 `/API_KEY` 的 `.read` 改回 `false` 並輪替金鑰。答題、詳解、收藏及錯題複習不依賴 AI。
 
 ## 5. 上線驗收
 
@@ -72,7 +72,7 @@ await admin.auth().setCustomUserClaims(adminUid, { ...user.customClaims, admin: 
 6. 斷線時有提示；恢復連線後順序重試，畫面和遠端紀錄一致。
 7. 複習不覆蓋正常進度；舊填空、多選及長題幹均可使用。
 
-本地測試沒有連接線上 Firebase，因此不能代替 Rules Emulator、真實登入與跨裝置驗收。
+`npm run test:rules` 已加入 Rules Emulator 自動測試；本地測試不連接線上 Firebase，仍不能代替正式規則部署、真實登入與跨裝置驗收。完整新資料結構及上線步驟見 [產品化交接](productization.md)。
 
 ## 官方參考
 

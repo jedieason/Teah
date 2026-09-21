@@ -9,12 +9,18 @@
     "check": "node scripts/check.mjs",
     "catalog": "node scripts/build-catalog.mjs",
     "build": "node scripts/build.mjs",
-    "test:browser": "node tests/browser-smoke.mjs"
+    "test:browser": "node tests/browser-smoke.mjs",
+    "test:learning": "node tests/learning-browser.mjs",
+    "test:rules": "firebase emulators:exec --only database --project demo-teah \"node tests/rules.emulator.mjs\"",
+    "test:editorial": "node tests/editorial-browser.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "firebase": "^12.19.0",
+    "firebase-tools": "^15.30.2",
     "playwright": "1.58.2"
   }
 }

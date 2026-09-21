@@ -84,3 +84,7 @@ firebase deploy --only hosting --project stock-market-ntumed
 ## 作者與授權
 
 原作者：Jedieason。沿用原專案的使用說明：可自由使用，保留原作者說明，不改署名。
+
+## 學習引擎與產品化
+
+新增自訂組題、學習／考試模式、逐次作答、離線待送佇列、學習總覽、複習排程、計畫、筆記／複習卡、內容審核與回報、帳戶資料管理及 PWA。詳見 [產品化交接與 Firebase 匯入步驟](docs/productization.md)。資料檔已在本機遷移，程式建置不包含匯出檔或備份；正式資料與權限規則仍需分別匯入／發佈。

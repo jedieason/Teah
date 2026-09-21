@@ -1,0 +1,32 @@
+import { chromium } from 'playwright';
+import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || undefined });
+const context = await browser.newContext();
+await context.addInitScript(() => { window.__testDatabase = { quizCatalog: { sample: { count: 1 } }, sample: [{ question: 'sample', options: { A: 'a', B: 'b' }, answer: 'A' }] }; window.__claims = { contributor: true }; });
+await context.route('**/src/services/firebase.js', r => readFile('tests/fixtures/firebase.js', 'utf8').then(body => r.fulfill({ contentType: 'text/javascript', body })));
+await context.route(/firebasedatabase|firebaseio|gstatic.com\/firebasejs/, r => r.abort());
+const page = await context.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('dialog', d => d.accept());
+try {
+    await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: '內容工作台', exact: true }).click();
+    await page.locator('dialog[open]').getByRole('textbox', { name: '題庫名稱', exact: true }).fill('審核測試');
+    await page.getByLabel('題目 JSON').fill(JSON.stringify([{ question: '試題', options: { A: '甲', B: '乙' }, answer: 'B', provenance: { source: '測試教材 p.1' } }]));
+    await page.getByRole('button', { name: '建立草稿', exact: true }).click();
+    await page.getByRole('button', { name: '送交審核', exact: true }).click();
+    await page.getByText('審核測試 · review', { exact: true }).waitFor();
+    await page.getByRole('button', { name: '關閉', exact: true }).click();
+    await page.evaluate(async () => { const { auth } = await import('/src/services/firebase.js'); auth.currentUser.uid = 'reviewer'; window.__claims = { reviewer: true }; });
+    await page.getByRole('button', { name: '內容工作台', exact: true }).click();
+    await page.getByRole('button', { name: '核准內容', exact: true }).click();
+    await page.getByText('審核測試 · approved', { exact: true }).waitFor();
+    await page.getByRole('button', { name: '關閉', exact: true }).click();
+    await page.evaluate(() => { window.__claims = { admin: true }; });
+    await page.getByRole('button', { name: '內容工作台', exact: true }).click();
+    await page.getByRole('button', { name: '發佈題庫', exact: true }).click();
+    await page.getByText('審核測試 · published', { exact: true }).waitFor();
+    const result = await page.evaluate(() => window.__testDatabase['審核測試'][0]);
+    assert.match(result.questionId, /^q_/); assert.equal(result.provenance.reviewer, 'reviewer');
+    assert.equal(await page.evaluate(() => Object.keys(window.__testDatabase.auditLog).length), 1);
+    assert.deepEqual(errors, []); console.log('Editorial browser passed: draft, review, independent approval, publish, provenance and audit log.');
+} finally { await browser.close(); }

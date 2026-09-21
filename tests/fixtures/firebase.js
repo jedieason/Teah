@@ -1,5 +1,5 @@
 // Browser test double: no requests or writes reach Firebase.
-const user = { uid: 'test-user', displayName: '測試帳號', email: 'student@example.test', photoURL: '' };
+const user = { uid: 'test-user', displayName: '測試帳號', email: 'student@example.test', photoURL: '', getIdTokenResult: async () => ({ claims: window.__claims || {} }) };
 export const auth = { currentUser: user };
 export const database = {};
 export const googleProvider = {};
@@ -26,3 +26,6 @@ export async function runTransaction(path, callback) {
 export function onAuthStateChanged(_, callback) { setTimeout(() => callback(user), 0); }
 export async function signInWithPopup() { return { user }; }
 export async function signOut() { auth.currentUser = null; }
+
+export async function deleteUser() { auth.currentUser = null; }
+export async function reauthenticateWithPopup() {}

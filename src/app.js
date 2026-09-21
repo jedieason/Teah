@@ -1,3 +1,8 @@
+import { mountEditorial } from './features/learning/editorial.js';
+import { normalizeQuestion } from './features/learning/model.js';
+import { loadLearning, recordLearning, readBank } from './services/learning.js';
+import { enqueue, flushOutbox, storage } from './services/outbox.js';
+import { mountLearningHub } from './features/learning/hub.js';
 import { mountConceptReview } from './features/concept-review/view.js';
 import { installDialogBehavior } from './shared/dialogs.js';
 import { readCatalog, writeBanks, validBankName } from './services/catalog.js';
@@ -52,7 +57,7 @@ async function updateRestorePreview(user) {
         const p = userProgressCache[activeQuizName];
         if (!p) { hideSection(); return; }
 
-        const fileName = (p.selectedJson || '').split('/').pop().replace('.json', '') || '最近的中斷點';
+        const fileName = (p.sessionKind === 'custom' ? '自訂測驗' : p.selectedJson || '').split('/').pop().replace('.json', '') || '最近的中斷點';
 
         let total = 0;
         let done = 0;
@@ -84,6 +89,13 @@ async function updateRestorePreview(user) {
     }
 }
 
+let sessionId = crypto.randomUUID();
+let sessionMode = 'study';
+let sessionKind = 'bank';
+let sessionTimeLimit = 15;
+let activeShuffleOptions = false;
+let customSession = null;
+let questionStartedAt = Date.now();
 let questions = [];
 let allQuestions = [];
 let currentIndex = 0;
@@ -167,6 +179,12 @@ window.MathJax = {
 
 // 初始化測驗
 async function initQuiz() {
+    sessionId = crypto.randomUUID();
+    activeShuffleOptions = customSession ? customSession.shuffleOptions : shouldShuffleQuiz;
+    sessionTimeLimit = customSession?.timeLimit ?? 15;
+    sessionKind = customSession ? 'custom' : 'bank';
+    sessionMode = customSession?.mode || 'study';
+    document.body.classList.toggle('exam-active', sessionMode === 'exam');
     isMistakePracticeMode = false;
     isTestCompleted = false;
 
@@ -175,9 +193,9 @@ async function initQuiz() {
     // Process and shuffle allQuestions
     allQuestions = JSON.parse(JSON.stringify(questions));
     allQuestions.forEach((q, idx) => {
-        q.originalIndex = idx;
+        q.originalIndex = q.originalIndex ?? idx;
     });
-    if (shouldShuffleQuiz) {
+    if (sessionKind !== 'custom' && shouldShuffleQuiz) {
         shuffle(allQuestions);
     }
 
@@ -206,7 +224,7 @@ async function initQuiz() {
                 shouldShuffleOptionContent = false;
             } else {
                 optionLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-                shouldShuffleOptionContent = shouldShuffleQuiz;
+                shouldShuffleOptionContent = activeShuffleOptions;
             }
 
             let optionEntries = Object.entries(q.options);
@@ -282,9 +300,8 @@ async function initQuiz() {
 // 加載題目 (Firebase)
 async function loadQuestions() {
     questions = [];
-    const snapshot = await get(ref(database, selectedJson));
-    if (!snapshot.exists() || !Array.isArray(snapshot.val()) || !snapshot.val().length) throw new Error('題庫沒有可用題目。');
-    questions = snapshot.val();
+    questions = customSession?.questions || await readBank(selectedJson);
+    customSession = null;
 }
 
 // 洗牌函數
@@ -343,7 +360,7 @@ function updateDotsUI() {
         const q = allQuestions[i];
         dot.classList.remove('correct', 'wrong', 'current-progress', 'viewing');
 
-        if (q.isAnswered) {
+        if (q.isAnswered && (sessionMode !== 'exam' || isTestCompleted)) {
             if (q.isCorrect) {
                 dot.classList.add('correct');
             } else {
@@ -365,7 +382,10 @@ function renderQuestion(index) {
     viewingIndex = index;
     const q = allQuestions[index];
     if (!q) return;
+    const revealAnswer = sessionMode !== 'exam' || isTestCompleted;
+    document.getElementById('next-btn').textContent = sessionMode === 'exam' && index === allQuestions.length - 1 ? '交卷' : '下一題';
 
+    if (currentQuestion !== q) questionStartedAt = Date.now();
     currentQuestion = q; // Update currentQuestion globally
 
     const confirmBtn = document.getElementById('confirm-btn');
@@ -399,7 +419,7 @@ function renderQuestion(index) {
         fillblankInput.className = 'fillblank-input';
         fillblankInput.disabled = true;
 
-        if (q.isConfirmed) {
+        if (q.isConfirmed && revealAnswer) {
             if (q.isCorrect) {
                 fillblankInput.classList.add('correct');
             } else {
@@ -420,7 +440,7 @@ function renderQuestion(index) {
             button.innerHTML = markdown(`${key}: ${value}`);
             renderLatex(button);
 
-            if (q.isConfirmed) {
+            if (q.isConfirmed && revealAnswer) {
                 if (q.isMultiSelect) {
                     const userSel = q.userSelection || [];
                     if (userSel.includes(key)) {
@@ -466,7 +486,7 @@ function renderQuestion(index) {
     const explanationEl = document.getElementById('explanation');
     const originDisplay = document.getElementById('origin-display');
     if (q.isConfirmed) {
-        document.getElementById('explanation-text').innerHTML = markdown(q.explanation || '尚無詳解');
+        document.getElementById('explanation-text').innerHTML = revealAnswer ? markdown(q.explanation || '尚無詳解') : '';
         renderLatex(document.getElementById('explanation-text'));
         explanationEl.style.display = 'block';
         if (q.origin) {
@@ -529,6 +549,7 @@ function updateExplanationOptions(explanation, labelMapping) {
 
 // 選擇選項
 function selectOption(event) {
+    if (currentQuestion.userSelection || selectedOption || selectedOptions.length) currentQuestion.changedAnswer = true;
     if (!acceptingAnswers) return;
     const btn = event.currentTarget;
     const option = btn.dataset.option;
@@ -610,6 +631,8 @@ modalConfirmBtn.addEventListener('click', () => {
 // 修改確認按鈕函數
 // 修改確認按鈕函數
 function confirmAnswer() {
+    const active = allQuestions[currentIndex];
+    if (active && !active.isAnswered) active.responseTimeMs = Math.max(0, Date.now() - questionStartedAt);
     const q = allQuestions[currentIndex];
     if (!q || q.isAnswered || viewingIndex !== currentIndex) return;
 
@@ -686,6 +709,7 @@ function confirmAnswer() {
 }
 
 function updateCorrect() {
+    if (sessionMode === 'exam' && !isTestCompleted) return;
     recordAttempt(true);
     correct += 1;
     document.getElementById('correct').innerText = correct;
@@ -693,6 +717,7 @@ function updateCorrect() {
 }
 
 function updateWrong() {
+    if (sessionMode === 'exam' && !isTestCompleted) return;
     wrong += 1;
     document.getElementById('wrong').innerText = wrong;
     updateProgressBar(false);
@@ -700,7 +725,12 @@ function updateWrong() {
 }
 
 function showEndScreen() {
+    const wasCompleted = isTestCompleted;
     isTestCompleted = true;
+    if (sessionMode === 'exam' && !wasCompleted) {
+        for (const q of allQuestions) { if (!q.isAnswered) continue; currentQuestion = q; if (q.isCorrect) updateCorrect(); else updateWrong(); }
+    }
+    document.body.classList.remove('exam-active');
 
     // Save progress at completed state (currentIndex = allQuestions.length)
     if (auth.currentUser && selectedJson) {
@@ -768,11 +798,14 @@ function showEndScreen() {
         if (wrongListToRedo.length === 0) return;
 
         isMistakePracticeMode = true;
+        sessionId = crypto.randomUUID(); sessionMode = 'study';
+        document.body.classList.remove('exam-active');
         allQuestions = wrongListToRedo.map(q => {
             return {
                 sourcePath: q.sourcePath || selectedJson,
                 mistakeQuizKey: q.mistakeQuizKey || getQuizStorageName(q.sourcePath || selectedJson),
                 mistakeRecordPath: q.mistakeRecordPath || null,
+                questionId: q.questionId || null, revision: q.revision || 1, taxonomy: q.taxonomy || null,
                 question: q.question,
                 options: q.options,
                 answer: q.answer,
@@ -1014,7 +1047,7 @@ if (shuffleToggle) {
 
 window.addEventListener("beforeunload", function (event) {
     // 只有在測驗中（有題庫且未完成）才跳出提示
-    if (pendingAttempts.size || pendingProgress.size || (selectedJson && !isTestCompleted)) {
+    if ((selectedJson && !isTestCompleted)) {
         event.preventDefault();
         event.returnValue = '';
     }
@@ -1023,7 +1056,8 @@ window.addEventListener("beforeunload", function (event) {
 function startTimer() {
     if (timerFrameId) cancelAnimationFrame(timerFrameId);
 
-    const duration = 15000; // 15 seconds
+    if (!sessionTimeLimit) { timerDisplay.style.display = 'none'; return; }
+    const duration = sessionTimeLimit * 1000;
     const endTime = Date.now() + duration;
 
     timerDisplay.innerHTML = ''; // Ensure no text
@@ -1636,6 +1670,7 @@ const starredModal = document.getElementById('starredModal');
 const starredListDiv = document.getElementById('starredList');
 
 weeGPTButton.addEventListener('click', () => {
+    if (sessionMode === 'exam' && !isTestCompleted) return;
     if (!currentQuestion.question || !currentQuestion.options) {
         showCustomAlert('There is currently no question available for analysis.');
         return;
@@ -1651,7 +1686,9 @@ sendQuestionBtn.addEventListener('click', async () => {
     if (!userQuestion || sendQuestionBtn.disabled) return;
     const target = currentQuestion;
     const display = document.getElementById('explanation-text');
+    if (sessionMode === 'exam' && !isTestCompleted) return;
     sendQuestionBtn.disabled = true;
+    currentQuestion.usedAI = true;
     const showResponse = text => {
         if (currentQuestion !== target) return;
         display.innerHTML = markdown(target.explanation || '尚無詳解') + '<hr>' + markdown(text);
@@ -1690,31 +1727,15 @@ userQuestionInput.addEventListener('keydown', function (event) {
     }
 });
 
-let progressQueue = Promise.resolve();
-const pendingProgress = new Map();
 function saveProgress() {
-    if (isMistakePracticeMode || !auth.currentUser || !selectedJson) return;
+    if (!auth.currentUser || !selectedJson) return;
     const uid = auth.currentUser.uid;
-    const quizName = getQuizStorageName(selectedJson);
-    const progress = JSON.parse(JSON.stringify({ allQuestions, currentIndex, selectedJson, lastUpdated: Date.now() }));
+    const quizName = sessionKind === 'custom' || isMistakePracticeMode || allQuestions.some(q => q.sourcePath && q.sourcePath !== selectedJson) ? `session_${sessionId}` : getQuizStorageName(selectedJson);
+    const progress = JSON.parse(JSON.stringify({ allQuestions, currentIndex, selectedJson, sessionId, sessionMode, sessionKind, sessionTimeLimit, lastUpdated: Date.now() }));
     userProgressCache[quizName] = progress;
-    const save = async () => {
-        if (auth.currentUser?.uid !== uid || pendingProgress.get(quizName) !== save) return;
-        try {
-            await update(ref(database, `progress/${uid}`), {
-                [`quizzes/${quizName}`]: progress,
-                lastActive: { quizName, selectedJson: progress.selectedJson, lastUpdated: progress.lastUpdated }
-            });
-            if (pendingProgress.get(quizName) === save) pendingProgress.delete(quizName);
-        } catch (error) {
-            showCustomAlert('進度尚未同步；恢復連線後會重試，請先保留此頁。');
-            console.error('Progress sync failed', error);
-        }
-    };
-    pendingProgress.set(quizName, save);
-    progressQueue = progressQueue.then(save);
+    storage('cache', 'put', { id: `progress:${uid}:${quizName}`, uid, quizKey: quizName, value: progress }).catch(() => {});
+    enqueue('progress', uid, { quizKey: quizName, progress }).catch(() => showCustomAlert('此瀏覽器無法保存離線資料，請勿關頁並檢查儲存空間。'));
 }
-window.addEventListener('online', () => { for (const task of pendingProgress.values()) progressQueue = progressQueue.then(task); });
 
 function updateProgressBar(isCorrect = null) {
     updateDotsUI();
@@ -1774,6 +1795,8 @@ function restoreProgress(quizName = null) {
     }
 
     getQuizNamePromise.then(resolvedQuizName => {
+        const local = userProgressCache[resolvedQuizName];
+        if (local) return { exists: () => true, val: () => local };
         return get(ref(database, `progress/${auth.currentUser.uid}/quizzes/${resolvedQuizName}`));
     }).then(async snapshot => {
         if (!snapshot.exists()) {
@@ -1781,6 +1804,11 @@ function restoreProgress(quizName = null) {
             return;
         }
         const p = snapshot.val();
+        sessionId = p.sessionId || crypto.randomUUID();
+        sessionMode = p.sessionMode || 'study';
+        sessionKind = p.sessionKind || 'bank';
+        sessionTimeLimit = p.sessionTimeLimit ?? 15;
+        document.body.classList.toggle('exam-active', sessionMode === 'exam');
 
         if (p.allQuestions) {
             allQuestions = p.allQuestions;
@@ -1865,8 +1893,8 @@ function restoreProgress(quizName = null) {
                 else wCount++;
             }
         });
-        correct = cCount;
-        wrong = wCount;
+        correct = sessionMode === 'exam' && !isTestCompleted ? 0 : cCount;
+        wrong = sessionMode === 'exam' && !isTestCompleted ? 0 : wCount;
         document.getElementById('correct').innerText = correct;
         document.getElementById('wrong').innerText = wrong;
 
@@ -2050,8 +2078,7 @@ onAuthStateChanged(auth, async (user) => {
         userProgressCache = {};
         userMistakesCache = {};
         learningDataReady = false;
-        pendingAttempts.clear();
-        pendingProgress.clear();
+        await loadLearning();
         closeMistakeView();
         stopTimer();
         quizContainer.style.display = 'none';
@@ -2699,12 +2726,13 @@ async function saveErrataAnswer() {
         const sourcePath = target.sourcePath || selectedJson;
         const result = await runTransaction(ref(database, `${sourcePath}/${origIdx}`), value => {
             if (!value || value.question !== target.question) return;
-            return { ...value, answer: databaseAns };
+            return { ...value, answer: databaseAns, revision: (value.revision || 1) + 1, history: { ...value.history, [value.revision || 1]: { answer: value.answer, explanation: value.explanation || '', revisedAt: Date.now() } } };
         }, { applyLocally: false });
         if (!result.committed) { showCustomAlert('題庫內容已變更，請重新載入後再勘誤。'); return; }
 
         // 3. Update local state
         target.answer = newAns;
+        target.revision = result.snapshot.val().revision;
         if (sourcePath === selectedJson && questions?.[origIdx]?.question === target.question) questions[origIdx].answer = databaseAns;
 
         // 4. Recalculate correctness if user has already answered this question
@@ -3009,8 +3037,6 @@ document.addEventListener('DOMContentLoaded', initTheme);
 
 /* Notebook integration. Practice reuses the existing answering interface. */
 const mistakeView = document.getElementById('mistakeView');
-const pendingAttempts = new Set();
-let attemptQueue = Promise.resolve();
 let notebook;
 
 function closeMistakeView() { notebook.close(); }
@@ -3026,47 +3052,25 @@ function cacheMistake(quizKey, path, value) {
 }
 function recordAttempt(isCorrect) {
     if (!auth.currentUser || !currentQuestion?.question || !selectedJson) return;
-    const uid = auth.currentUser.uid;
-    const q = structuredClone(currentQuestion);
+    const q = normalizeQuestion(structuredClone(currentQuestion), currentQuestion.sourcePath || selectedJson, currentQuestion.originalIndex);
     const sourcePath = q.sourcePath || selectedJson;
     const quizKey = q.mistakeQuizKey || getQuizStorageName(sourcePath);
-    const existing = flattenMistakes(userMistakesCache).find(m => m.quizKey === quizKey && m.question === q.question
-        && (m.originalIndex == null || m.originalIndex < 0 || m.originalIndex === q.originalIndex));
-    const eventId = crypto.randomUUID();
-    const now = Date.now();
-    const snapshot = { ...canonicalQuestion(q), sourcePath };
-    // Prefer the unchanged bank explanation over a remapped or AI-expanded answer.
-    if (!isMistakePracticeMode && questions[q.originalIndex]?.question === q.question) snapshot.explanation = questions[q.originalIndex].explanation || ''; 
-    const save = async () => {
-        if (auth.currentUser?.uid !== uid) { pendingAttempts.delete(task); return; }
-        const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${q.originalIndex ?? -1}:${q.question}`));
-        const latest = flattenMistakes(userMistakesCache).find(m => m.quizKey === quizKey && m.question === q.question && (m.originalIndex == null || m.originalIndex < 0 || m.originalIndex === q.originalIndex));
-        const recordPath = q.mistakeRecordPath || latest?.recordPath || existing?.recordPath || 'q_' + Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, '0')).join('');
-        const result = await runTransaction(ref(database, `mistakes/${uid}/${quizKey}/${recordPath}`), previous =>
-            applyAttempt(previous, snapshot, { correct: isCorrect, eventId, now }), { applyLocally: false });
-        if (result.committed && auth.currentUser?.uid === uid) cacheMistake(quizKey, recordPath, result.snapshot.val());
-    };
-    // Capture the question before navigating and serialize attempts from rapid retries.
-    const task = () => {
-        if (pendingAttempts.values().next().value !== task) return;
-        return save().then(() => pendingAttempts.delete(task)).catch(error => {
-        pendingAttempts.add(task);
-        showCustomAlert('錯題紀錄尚未同步；恢復連線後會重試，請先保留此頁。');
-        console.error('Mistake sync failed', error);
-        });
-    };
-    pendingAttempts.add(task);
-    attemptQueue = attemptQueue.then(task);
+    const existing = flattenMistakes(userMistakesCache).find(m => m.questionId === q.questionId || (m.quizKey === quizKey && m.question === q.question));
+    const recordPath = q.mistakeRecordPath || existing?.recordPath || q.questionId;
+    const snapshot = { ...canonicalQuestion(q), questionId: q.questionId, revision: q.revision, taxonomy: q.taxonomy, sourcePath };
+    const event = { eventId: `${sessionId}_${q.questionId}`, questionId: q.questionId, questionRevision: q.revision, sessionId,
+        selectedAnswer: snapshot.lastSelection, isCorrect, responseTimeMs: q.responseTimeMs || 0,
+        mode: sessionMode, usedAI: !!q.usedAI, changedAnswer: !!q.changedAnswer, submittedAt: Date.now(), sourcePath, taxonomy: q.taxonomy };
+    const optimistic = applyAttempt(existing, snapshot, { correct: isCorrect, eventId: event.eventId, now: event.submittedAt });
+    if (optimistic) cacheMistake(quizKey, recordPath, optimistic);
+    recordLearning({ event, snapshot, quizKey, recordPath }).catch(() => showCustomAlert('無法保存作答紀錄，請檢查瀏覽器儲存空間。'));
 }
-window.addEventListener('online', () => { for (const task of pendingAttempts) attemptQueue = attemptQueue.then(task); });
 
 notebook = createNotebook({
     root: mistakeView, getCache: () => userMistakesCache,
     refresh: async () => {
         const uid = auth.currentUser?.uid;
-        for (const task of pendingAttempts) attemptQueue = attemptQueue.then(task);
-        await attemptQueue;
-        if (pendingAttempts.size) throw new Error('Mistakes pending sync');
+        await flushOutbox();
         const snap = await get(ref(database, `mistakes/${uid}`));
         if (auth.currentUser?.uid === uid) userMistakesCache = snap.val() || {};
     },
@@ -3082,6 +3086,8 @@ notebook = createNotebook({
 
 async function startMistakePractice(items) {
     if (!items.length) return;
+    sessionId = crypto.randomUUID(); sessionMode = 'study';
+    document.body.classList.remove('exam-active');
     const sourceKeys = [...new Set(items.map(m => m.sourcePath || m.quizKey))];
     const sources = new Map();
     // Fetch each bank once; a removed bank can still be reviewed from its saved snapshot.
@@ -3092,7 +3098,8 @@ async function startMistakePractice(items) {
     }));
     allQuestions = items.map(m => {
         const source = sources.get(m.sourcePath || m.quizKey);
-        const index = source?.questions[m.originalIndex]?.question === m.question ? m.originalIndex : source?.questions.findIndex(q => q.question === m.question) ?? -1;
+        const stableIndex = m.questionId ? source?.questions.findIndex(q => q.questionId === m.questionId) : -1;
+        const index = stableIndex >= 0 ? stableIndex : source?.questions[m.originalIndex]?.question === m.question ? m.originalIndex : source?.questions.findIndex(q => q.question === m.question) ?? -1;
         return preparePractice({ ...m, sourcePath: source?.path || m.sourcePath || m.quizKey, originalIndex: index }, index >= 0 ? source.questions[index] : null);
     });
     selectedJson = allQuestions[0].sourcePath;
@@ -3181,6 +3188,7 @@ function startFreshQuiz(key) {
 
 async function fetchUserProgressAndMistakes(user) {
     learningDataReady = false;
+    await loadLearning();
     if (!user) {
         userProgressCache = {};
         userMistakesCache = {};
@@ -3208,14 +3216,19 @@ async function fetchUserProgressAndMistakes(user) {
             get(ref(database, `mistakes/${user.uid}`))
         ]);
 
+        if (auth.currentUser?.uid !== user.uid) return;
         userProgressCache = progressSnap.exists() ? progressSnap.val() : {};
         userMistakesCache = mistakesSnap.exists() ? mistakesSnap.val() : {};
+        for (const item of await storage('cache', 'getAll')) if (item.uid === user.uid && item.quizKey && (!userProgressCache[item.quizKey] || userProgressCache[item.quizKey].lastUpdated < item.value.lastUpdated)) userProgressCache[item.quizKey] = item.value;
         learningDataReady = true;
+        window.dispatchEvent(new Event('teah-auth-ready'));
     } catch (e) {
+        if (auth.currentUser?.uid !== user.uid) return;
         console.error('Failed to fetch user progress/mistakes cache:', e);
-        showCustomAlert('學習紀錄載入失敗，請重新整理後再開始，以免覆蓋既有進度。');
-        userProgressCache = {};
-        userMistakesCache = {};
+        userProgressCache = {}; userMistakesCache = {};
+        for (const item of await storage('cache', 'getAll')) if (item.uid === user.uid && item.quizKey) userProgressCache[item.quizKey] = item.value;
+        learningDataReady = Object.keys(userProgressCache).length > 0;
+        showCustomAlert(learningDataReady ? '目前使用此裝置的離線進度。' : '學習紀錄載入失敗，請恢復連線後重試。');
     }
 }
 
@@ -3250,6 +3263,7 @@ document.getElementById('bankSearch').addEventListener('input', e => {
 
 function returnHome() {
     stopTimer();
+    document.body.classList.remove('exam-active');
     quizContainer.style.display = 'none';
     endScreenDiv?.remove();
     document.querySelector('.start-screen').style.display = 'flex';
@@ -3270,3 +3284,16 @@ quizTitleLink.addEventListener('keydown', event => {
 });
 
 installDialogBehavior();
+
+mountLearningHub({ getCatalog: () => catalogData, alert: showCustomAlert, current: () => currentQuestion,
+    start: async (items, mode, options) => {
+        customSession = { questions: items, mode, ...options }; selectedJson = items[0].sourcePath;
+        await initQuiz(); document.querySelector('.quiz-title').textContent = mode === 'exam' ? '自訂測驗 · 考試' : '自訂測驗 · 學習';
+    }
+});
+
+if ('serviceWorker' in navigator && !['localhost', '127.0.0.1'].includes(location.hostname)) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
+mountEditorial();

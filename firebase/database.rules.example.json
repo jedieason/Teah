@@ -19,12 +19,54 @@
       }
     },
     "API_KEY": {
-      ".read": false,
+      ".read": "auth != null",
       ".write": false
     },
     "$bank": {
-      ".read": "auth != null && (auth.token.admin === true || root.child('quizCatalog').child($bank).exists()) && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'mistake' && $bank !== 'quizAliases'",
-      ".write": "auth != null && auth.token.admin === true && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'mistake' && $bank !== 'quizAliases'"
+      ".read": "auth != null && root.child('quizCatalog').child($bank).exists() && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'mistake' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'quizAliases' && $bank !== 'learning' && $bank !== 'contentDrafts' && $bank !== 'auditLog' && $bank !== 'feedback' && $bank !== 'quizCatalog'",
+      ".write": "auth != null && auth.token.admin === true && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'mistake' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'quizAliases' && $bank !== 'learning' && $bank !== 'contentDrafts' && $bank !== 'auditLog' && $bank !== 'feedback' && $bank !== 'quizCatalog'"
+    },
+    "learning": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid && !newData.exists()",
+        "attempts": {
+          "$event": {
+            ".write": "auth != null && auth.uid === $uid && newData.exists() && !data.exists()",
+            ".validate": "newData.hasChildren(['eventId','questionId','questionRevision','sessionId','isCorrect','submittedAt','responseTimeMs','mode']) && newData.child('eventId').val() === $event && newData.child('isCorrect').isBoolean() && newData.child('submittedAt').isNumber() && newData.child('responseTimeMs').isNumber() && newData.child('responseTimeMs').val() >= 0"
+          }
+        },
+        "reviews": {
+          ".write": "auth != null && auth.uid === $uid"
+        },
+        "$field": {
+          ".write": "auth != null && auth.uid === $uid && $field !== 'attempts' && $field !== 'reviews'"
+        }
+      }
+    },
+    "contentDrafts": {
+      ".read": "auth != null && (auth.token.admin === true || auth.token.editor === true || auth.token.reviewer === true || auth.token.contributor === true)",
+      "$id": {
+        ".write": "auth != null && newData.exists() && ((!data.exists() && (auth.token.admin === true || auth.token.editor === true || auth.token.contributor === true) && newData.child('author').val() === auth.uid && newData.child('status').val() === 'draft') || (data.exists() && newData.child('author').val() === data.child('author').val() && newData.child('bank').val() === data.child('bank').val() && newData.child('questionsJson').val() === data.child('questionsJson').val() && ((data.child('status').val() === 'draft' && data.child('author').val() === auth.uid && newData.child('status').val() === 'review') || (data.child('status').val() === 'review' && (auth.token.admin === true || auth.token.reviewer === true) && data.child('author').val() !== auth.uid && newData.child('status').val() === 'approved' && newData.child('reviewer').val() === auth.uid) || (data.child('status').val() === 'approved' && auth.token.admin === true && newData.child('status').val() === 'published'))))",
+        ".validate": "newData.hasChildren(['bank','questionsJson','status','author','createdAt']) && newData.child('questionsJson').isString()"
+      }
+    },
+    "auditLog": {
+      ".read": "auth != null && auth.token.admin === true",
+      "$id": {
+        ".write": "auth != null && auth.token.admin === true && !data.exists() && newData.exists()"
+      }
+    },
+    "feedback": {
+      ".read": "auth != null && (auth.token.admin === true || auth.token.reviewer === true)",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid && !newData.exists()",
+        "$id": {
+          ".write": "(auth != null && auth.uid === $uid && !data.exists() && newData.child('status').val() === 'open') || (auth != null && (auth.token.admin === true || auth.token.reviewer === true) && data.exists() && newData.child('questionId').val() === data.child('questionId').val() && newData.child('reason').val() === data.child('reason').val())",
+          ".validate": "newData.hasChildren(['questionId','questionRevision','reason','status','createdAt']) && newData.child('reason').isString() && newData.child('reason').val().length <= 2000"
+        }
+      }
     }
   }
 }
