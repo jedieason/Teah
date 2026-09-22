@@ -29,11 +29,9 @@
 
     <header class="site-topbar">
       <div class="site-topbar-inner">
-        <a class="site-brand" href="./" aria-label="題矣首頁">題矣<span>學習空間</span></a>
-      <nav class="library-shortcuts" aria-label="主要導覽">
-        <button id="homeMistakes" class="quiet-button">錯題本</button>
-        <button id="homeStarred" class="quiet-button">已收藏</button>
-      </nav>
+        <button id="sidebarToggle" class="action-icon-btn" type="button" aria-label="收合側邊導覽" aria-expanded="true" aria-controls="siteSidebar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <a class="site-brand" href="./" aria-label="題矣首頁">題矣</a>
+
         <div class="site-account">
     <div class="top-right-controls">
       <button id="controlsMenuBtn" class="avatar-button" aria-haspopup="true" aria-expanded="false">
@@ -138,6 +136,13 @@
       </div>
     </header>
 
+    <aside id="siteSidebar" class="site-sidebar" aria-label="側邊導覽">
+      <nav class="library-shortcuts" aria-label="主要導覽">
+        <button id="homeMistakes" class="quiet-button">錯題本</button>
+        <button id="homeStarred" class="quiet-button">已收藏</button>
+      </nav>
+    </aside>
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="收合側邊導覽" hidden></button>
     <!-- Main Content Area -->
     <main class="home-content">
 

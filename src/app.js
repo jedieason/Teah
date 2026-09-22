@@ -1,3 +1,4 @@
+import { mountSidebar } from './shared/sidebar.js';
 import { createFlashcards } from './features/flashcards/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
 import { normalizeQuestion } from './features/learning/model.js';
@@ -3302,3 +3303,5 @@ if ('serviceWorker' in navigator && !['localhost', '127.0.0.1'].includes(locatio
 }
 
 mountEditorial();
+
+mountSidebar();
