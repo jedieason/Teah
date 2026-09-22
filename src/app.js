@@ -1,3 +1,4 @@
+import { createCollection } from './features/collections/view.js';
 import { mountSidebar } from './shared/sidebar.js';
 import { createFlashcards } from './features/flashcards/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
@@ -181,6 +182,7 @@ window.MathJax = {
 
 // 初始化測驗
 async function initQuiz() {
+    libraryLocations[libraryPage].scroll = window.scrollY;
     sessionId = crypto.randomUUID();
     activeShuffleOptions = customSession ? customSession.shuffleOptions : shouldShuffleQuiz;
     sessionTimeLimit = customSession?.timeLimit ?? 15;
@@ -1194,6 +1196,7 @@ async function fetchQuizList() {
                 });
 
                 if (breadcrumbContainer) breadcrumbContainer.innerHTML = ''; // Clear header in tile view
+                if (!Object.keys(groups).length) gridContainer.innerHTML = `<p class="empty-state">${viewArchiveMode ? '尚無典藏題庫' : '目前沒有題庫'}</p>`;
             };
 
             const renderFolderView = (groupName) => {
@@ -1268,7 +1271,9 @@ async function fetchQuizList() {
                     archiveIcon.innerHTML = viewArchiveMode
                         ? `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M480-520 680-320H560v200H400v-200H280L480-520ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Z"/></svg>`
                         : `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M480-320 280-520h120v-200h160v200h120L480-320ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Z"/></svg>`;
-                    archiveIcon.title = viewArchiveMode ? '取消典藏' : '典藏題庫';
+                    archiveIcon.title = viewArchiveMode ? '還原至題庫' : '典藏題庫';
+                    archiveIcon.setAttribute('aria-label', archiveIcon.title);
+                    if (viewArchiveMode) { archiveIcon.classList.add('archive-restore'); archiveIcon.textContent = '還原至題庫'; }
                     archiveIcon.onclick = (e) => {
                         e.stopPropagation();
                         handleArchiveQuiz(key);
@@ -1669,8 +1674,6 @@ const explanationText = document.getElementById('explanation-text');
 const confirmBtn = document.getElementById('confirm-btn');
 const starBtn = document.getElementById('starQuestion');
 const showStarredBtn = document.getElementById('showStarredBtn');
-const starredModal = document.getElementById('starredModal');
-const starredListDiv = document.getElementById('starredList');
 
 weeGPTButton.addEventListener('click', () => {
     if (sessionMode === 'exam' && !isTestCompleted) return;
@@ -2075,6 +2078,7 @@ onAuthStateChanged(auth, async (user) => {
     console.log('Auth state changed, user:', user ? user.displayName : 'Logged out');
     updateSignInButton(user);
     syncControlsUser(user);
+    collection.resetForUser(user?.uid);
     if (user) {
         await fetchUserProgressAndMistakes(user);
     } else {
@@ -2098,7 +2102,7 @@ syncControlsUser(auth.currentUser);
 // Controls item actions (text-only click)
 if (menuStarred) menuStarred.addEventListener('click', () => {
     controlsMenu.classList.remove('open');
-    openStarredModal();
+    openCollectionPage();
 });
 if (menuShuffle) menuShuffle.addEventListener('click', () => {
     // toggle shuffle state same as clicking the slider
@@ -2127,6 +2131,29 @@ const menuArchived = document.getElementById('menuArchived');
 let isEditMode = false;
 let viewArchiveMode = false;
 let currentActiveFolder = null;
+let libraryPage = 'library';
+const libraryLocations = { library: { folder: null, scroll: 0, query: '' }, archive: { folder: null, scroll: 0, query: '' }, collection: { scroll: 0 } };
+function showLibraryPage(page) {
+    const old = libraryLocations[libraryPage];
+    if (page !== libraryPage) { old.scroll = window.scrollY; isEditMode = false; toggleEditModeUI(); }
+    if (libraryPage !== 'collection') { old.folder = currentActiveFolder; old.query = document.getElementById('bankSearch').value; }
+    libraryPage = page;
+    document.querySelector('.home-content').hidden = page === 'collection';
+    document.getElementById('collectionPage').hidden = page !== 'collection';
+    controlsMenu?.classList.remove('open');
+    for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive']]) {
+        const button = document.getElementById(id);
+        if (page === name) button?.setAttribute('aria-current', 'page'); else button?.removeAttribute('aria-current');
+    }
+    if (page !== 'collection') {
+        viewArchiveMode = page === 'archive';
+        currentActiveFolder = libraryLocations[page].folder;
+        document.getElementById('libraryPageTitle').textContent = viewArchiveMode ? '典藏庫' : '題庫';
+        document.querySelector('.home-content').classList.toggle('archive-page', viewArchiveMode);
+        const requested = page;
+        fetchQuizList().then(() => { if (libraryPage !== requested) return; const search = document.getElementById('bankSearch'); search.value = libraryLocations[page].query; search.dispatchEvent(new Event('input')); window.scrollTo(0, libraryLocations[page].scroll); });
+    } else window.scrollTo(0, libraryLocations[page].scroll);
+}
 let selectedQuizzesForBatch = [];
 let globalQuizGroups = {};
 let globalArchivedQuizKeys = new Set();
@@ -2137,13 +2164,7 @@ if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
     if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
 });
 
-if (menuArchived) menuArchived.addEventListener('click', () => {
-    viewArchiveMode = !viewArchiveMode;
-    const label = menuArchived.querySelector('.item-label');
-    if (label) label.textContent = viewArchiveMode ? '返回題庫' : '典藏庫';
-    if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
-    fetchQuizList();
-});
+if (menuArchived) menuArchived.addEventListener('click', () => showLibraryPage('archive'));
 
 // Open upload modal from controls menu
 if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
@@ -2379,7 +2400,7 @@ function updateBatchActionFloatingBar() {
         bar.classList.add('show');
     }
 
-    const actionText = viewArchiveMode ? '取消典藏' : '移至典藏';
+    const actionText = viewArchiveMode ? '還原至題庫' : '移至典藏';
     const count = selectedQuizzesForBatch.length;
 
     bar.innerHTML = `
@@ -2422,7 +2443,7 @@ function updateBatchActionFloatingBar() {
     };
 
     bar.querySelector('.execute-btn').onclick = async () => {
-        const actionName = viewArchiveMode ? '取消典藏' : '典藏';
+        const actionName = viewArchiveMode ? '還原至題庫' : '典藏';
         if (confirm(`確定要將這 ${count} 份習題${actionName}嗎？`)) {
             try {
                 const updates = {};
@@ -2516,10 +2537,10 @@ if (archiveActionBtn) archiveActionBtn.addEventListener('click', async () => {
 async function handleArchiveQuiz(oldName) {
     const isUnarchiving = oldName.startsWith('_Archive_');
     const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
-    const actionName = isUnarchiving ? '取消典藏' : '典藏';
+    const actionName = isUnarchiving ? '還原至題庫' : '典藏';
     const displayOldName = isUnarchiving ? oldName.substring(9) : oldName;
 
-    if (archiveConfirmTitle) archiveConfirmTitle.textContent = isUnarchiving ? '取消典藏' : '典藏題庫';
+    if (archiveConfirmTitle) archiveConfirmTitle.textContent = isUnarchiving ? '還原至題庫' : '典藏題庫';
     if (archiveConfirmMessage) archiveConfirmMessage.textContent = `確定要${actionName}「${displayOldName}」嗎？`;
     if (archiveConfirmModal) archiveConfirmModal.style.display = 'flex';
 
@@ -2796,169 +2817,12 @@ function recalculateCorrectness(q) {
     }
 }
 
-async function openStarredModal() {
-    if (!auth.currentUser) {
-        showCustomAlert('請先登入才能查看收藏！');
-        return;
-    }
-    starredListDiv.innerHTML = '<p style="text-align:center; padding: 20px;">載入中...</p>';
-    starredModal.style.display = 'flex';
-
-    try {
-        const snap = await get(ref(database, `progress/${auth.currentUser.uid}/starred`));
-        let starred = snap.val() || [];
-
-        if (starred.length === 0) {
-            starredListDiv.innerHTML = '<p style="text-align:center; padding: 20px;">尚未收藏任何題目</p>';
-        } else {
-            starred.sort((a, b) => (a.source || '').localeCompare(b.source || ''));
-            starredListDiv.innerHTML = ''; // Clear loading
-
-            // Process each starred item to find its mistake count
-            // This might be parallelized but sequential is safer for now or Promise.all
-            const mistakes = flattenMistakes(userMistakesCache);
-            const processedStarred = starred.map(q => ({ ...q, mistakeCount: mistakes.find(m => m.quizKey === q.source && m.question === q.question)?.count || 0 }));
-
-            processedStarred.forEach((q, loopIdx) => {
-                const item = document.createElement('div');
-                item.className = 'mistake-item'; // Reuse mistake-item style for consistency
-
-                // --- Header: Question + Badge + Star ---
-                const headerRow = document.createElement('div');
-                headerRow.className = 'mistake-item-header';
-
-                const info = document.createElement('div');
-                info.className = 'mistake-info';
-
-                // Add Source Label
-                const sourceLabel = document.createElement('div');
-                sourceLabel.style.fontSize = '0.8rem';
-                sourceLabel.style.color = '#1a73e8';
-                sourceLabel.style.marginBottom = '4px';
-                sourceLabel.innerText = q.source || '未知題庫';
-                info.appendChild(sourceLabel);
-
-                const questionText = document.createElement('div');
-                questionText.innerHTML = markdown(q.question);
-                info.appendChild(questionText);
-
-                // Right Side: Badge + Star Button container
-                const rightSide = document.createElement('div');
-                rightSide.style.display = 'flex';
-                rightSide.style.alignItems = 'center';
-                rightSide.style.gap = '8px';
-                rightSide.style.flexShrink = '0';
-
-                // Mistake Badge
-                if (q.mistakeCount > 0) {
-                    const badge = document.createElement('div');
-                    badge.className = 'mistake-count-badge';
-                    if (q.mistakeCount >= 3) badge.classList.add('high-mistake');
-                    badge.textContent = `${q.mistakeCount} 次錯誤`;
-                    rightSide.appendChild(badge);
-                }
-
-                // Star Button (Toggle)
-                const starBtnLocal = document.createElement('button');
-                starBtnLocal.className = 'material-icon-btn starred'; // Reuse existing class
-                starBtnLocal.style.width = '40px';
-                starBtnLocal.style.height = '40px';
-                starBtnLocal.setAttribute('aria-label', '取消收藏');
-                starBtnLocal.setAttribute('title', '取消收藏');
-                starBtnLocal.innerHTML = `
-                    <span class="star-filled">★</span>
-                    <span class="star-empty">☆</span>
-                `;
-
-                starBtnLocal.addEventListener('click', async (e) => {
-                    e.stopPropagation();
-                    // Remove from list
-                    // Use the original list to filter out
-                    // Note: 'starred' variable inside is from closure, but we can re-read or just filter current visual list
-                    // Better to re-read to be safe or filter in memory
-                    try {
-                        await runTransaction(ref(database, `progress/${auth.currentUser.uid}/starred`), value => (value || []).filter(entry => !sameStar(entry, q)), { applyLocally: false });
-                        starred = starred.filter(entry => !sameStar(entry, q));
-                        if (!starred.length) starredListDiv.innerHTML = '<p class="empty-state">尚未收藏任何題目</p>';
-                        // Remove this item from DOM visually with animation
-                        item.style.opacity = '0';
-                        setTimeout(() => item.remove(), 300);
-
-                        // Update local starred array for subsequent clicks if needed, 
-                        // but easier to just let UI handle it. 
-                        // Also update global star button if looking at this question
-                        if (currentQuestion && currentQuestion.question === q.question) {
-                            setStarState(false);
-                        }
-                    } catch (err) {
-                        console.error('Failed to unstar', err);
-                        showCustomAlert('取消收藏失敗');
-                    }
-                });
-
-                rightSide.appendChild(starBtnLocal);
-
-                headerRow.appendChild(info);
-                headerRow.appendChild(rightSide);
-                item.appendChild(headerRow);
-
-                // --- Details: Options ---
-                if (q.options && Object.keys(q.options).length > 0) {
-                    const optionsDiv = document.createElement('div');
-                    optionsDiv.className = 'mistake-options';
-                    let optionsHtml = '<ul>';
-                    Object.entries(q.options).forEach(([k, v]) => {
-                        // Check if this option is the answer
-                        const isAns = Array.isArray(q.answer) ? q.answer.includes(k) : q.answer === k;
-                        const parsedOpt = markdown(`${k}: ${v}`).trim();
-                        optionsHtml += `<li ${isAns ? 'class="correct-option"' : ''}>${parsedOpt}</li>`;
-                    });
-                    optionsHtml += '</ul>';
-                    optionsDiv.innerHTML = optionsHtml;
-                    item.appendChild(optionsDiv);
-                }
-
-                // --- Details: Explanation ---
-                const ansExpDiv = document.createElement('div');
-                ansExpDiv.className = 'mistake-details';
-
-                // Answer text
-                let ansText = markdown(Array.isArray(q.answer) ? q.answer.join(', ') : q.answer);
-
-                // Explanation text
-                let expText = q.explanation ? markdown(q.explanation) : '<i>暫無詳解</i>';
-
-                ansExpDiv.innerHTML = `
-                    <div style="margin-bottom:8px;"><strong>正確答案:</strong> ${ansText}</div>
-                    <div class="mistake-explanation-row"><strong>詳解:</strong> ${expText}</div>
-                `;
-                item.appendChild(ansExpDiv);
-
-                starredListDiv.appendChild(item);
-
-                // Helper to render math
-                renderMathInElement(item, {
-                    delimiters: [
-                        { left: "$", right: "$", display: false },
-                        { left: "\\(", right: "\\)", display: false },
-                        { left: "$$", right: "$$", display: true },
-                        { left: "\\[", right: "\\]", display: true }
-                    ]
-                });
-            });
-        }
-    } catch (e) {
-        console.error('讀取收藏題目失敗', e);
-        starredListDiv.innerHTML = '<p>無法載入收藏</p>';
-    }
+async function openCollectionPage() {
+    try { await collection.open(); } catch (error) { showCustomAlert(error.message); }
 }
 
 if (starBtn) starBtn.addEventListener('click', toggleStarCurrentQuestion);
-if (showStarredBtn) showStarredBtn.addEventListener('click', openStarredModal);
-if (starredModal) starredModal.addEventListener('click', (e) => {
-    if (e.target === starredModal) starredModal.style.display = 'none';
-});
-
+if (showStarredBtn) showStarredBtn.addEventListener('click', openCollectionPage);
 // ========== 深色模式功能 ==========
 
 // 深色模式相關變數
@@ -3253,7 +3117,7 @@ if (quizActionCloseBtn) quizActionCloseBtn.addEventListener('click', () => {
 
 // Home shortcuts keep frequently used collections out of the account menu.
 document.getElementById('homeMistakes').onclick = () => openMistakeView();
-document.getElementById('homeStarred').onclick = () => openStarredModal();
+document.getElementById('homeStarred').onclick = () => openCollectionPage();
 // Div-based legacy cards retain their nested edit controls and gain keyboard access.
 const unitsGrid = document.getElementById('units-grid');
 new MutationObserver(() => {
@@ -3275,9 +3139,10 @@ function returnHome() {
     document.querySelector('.start-screen').style.display = 'flex';
     selectedJson = null;
     document.title = '題矣';
+    if (libraryPage === 'collection') openCollectionPage();
     document.getElementById('bankSearch').value = '';
     updateRestorePreview(auth.currentUser);
-    fetchQuizList();
+    fetchQuizList().then(() => window.scrollTo(0, libraryLocations[libraryPage].scroll));
 }
 const quizTitleLink = document.querySelector('.quiz-title');
 quizTitleLink.setAttribute('role', 'button');
@@ -3304,4 +3169,30 @@ if ('serviceWorker' in navigator && !['localhost', '127.0.0.1'].includes(locatio
 
 mountEditorial();
 
+const archiveNav = document.createElement('button'); archiveNav.id = 'homeArchive'; archiveNav.className = 'quiet-button'; archiveNav.textContent = '典藏庫';
+document.querySelector('.library-shortcuts').append(archiveNav);
+archiveNav.onclick = () => showLibraryPage('archive');
+document.getElementById('homeLibrary').onclick = () => showLibraryPage('library');
+document.getElementById('homeLibrary').setAttribute('aria-current', 'page');
+const collection = createCollection({
+    host: document.getElementById('collectionPage'), getSourceLabel: source => (catalogPaths.find(p => getQuizStorageName(p) === source) || source || '').replace(/^_Archive_/, ''), activate: () => showLibraryPage('collection'), renderMath: renderLatex,
+    onRemove: q => { if (currentQuestion && sameStar(q, { ...currentQuestion, source: getQuizStorageName(currentQuestion.sourcePath || selectedJson) })) setStarState(false); },
+    practice: async entries => {
+        const uid = auth.currentUser?.uid;
+        const banks = new Map();
+        await Promise.all([...new Set(entries.map(q => q.source))].map(async source => {
+            const path = catalogPaths.find(p => getQuizStorageName(p) === source) || source;
+            try { banks.set(source, { path, rows: await readBank(path) }); } catch { banks.set(source, { path, rows: [] }); }
+        }));
+        if (!uid || uid !== auth.currentUser?.uid) throw new Error('帳戶已切換，請重新開啟收藏。');
+        const items = entries.map(q => {
+            const bank = banks.get(q.source);
+            const byId = q.questionId ? bank.rows.findIndex(row => row.questionId === q.questionId) : -1;
+            const index = byId >= 0 ? byId : bank.rows.findIndex(row => row.question === q.question);
+            return { ...normalizeQuestion(index >= 0 ? bank.rows[index] : q, bank.path || '收藏', Math.max(0, index)), sourcePath: bank.path || '收藏', originalIndex: index };
+        });
+        customSession = { questions: items, mode: 'study', shuffleOptions: false, timeLimit: 0 }; selectedJson = items[0].sourcePath;
+        await initQuiz(); document.querySelector('.quiz-title').textContent = '收藏練習';
+    }
+});
 mountSidebar();

@@ -10,6 +10,7 @@
     "catalog": "node scripts/build-catalog.mjs",
     "build": "node scripts/build.mjs",
     "test:browser": "node tests/browser-smoke.mjs",
+    "test:collections": "node tests/collections-browser.mjs",
     "test:learning": "node tests/learning-browser.mjs",
     "test:rules": "firebase emulators:exec --only database --project demo-teah \"node tests/rules.emulator.mjs\"",
     "test:editorial": "node tests/editorial-browser.mjs",

@@ -8,6 +8,7 @@
   <title>題矣</title>
 <link rel="stylesheet" href="styles/base.css">
 <link rel="stylesheet" href="styles/interface.css">
+<link rel="stylesheet" href="styles/collections.css">
 <link rel="stylesheet" href="styles/notebook.css">
 <link rel="stylesheet" href="styles/flashcards.css">
 <link rel="stylesheet" href="styles/dialogs.css">
@@ -138,6 +139,7 @@
 
     <aside id="siteSidebar" class="site-sidebar" aria-label="側邊導覽">
       <nav class="library-shortcuts" aria-label="主要導覽">
+        <button id="homeLibrary" class="quiet-button">題庫</button>
         <button id="homeMistakes" class="quiet-button">錯題本</button>
         <button id="homeStarred" class="quiet-button">已收藏</button>
       </nav>
@@ -163,7 +165,7 @@
       </div>
 
       <div class="section-header">
-        <h2 class="section-title">題庫</h2>
+        <h2 id="libraryPageTitle" class="section-title">題庫</h2>
         <input id="bankSearch" class="library-search" type="search" placeholder="搜尋目前列表" aria-label="搜尋目前列表">
       </div>
 
@@ -171,6 +173,8 @@
       <div id="folder-breadcrumb" class="folder-breadcrumb"></div> <!-- Replaces folder-toolbar -->
       <div id="units-grid" class="units-grid"><p class="empty-state" role="status">載入題庫中…</p></div> <!-- Replaces button-row -->
     </main>
+
+    <main id="collectionPage" class="collection-page" aria-label="已收藏" hidden></main>
 
     <!-- Hidden legacy elements if needed for script compatibility before full refactor -->
     <div id="folder-toolbar" style="display:none;"></div>
@@ -265,15 +269,6 @@
       <span id="modal-message">請選擇題庫</span>
     </div>
     <button id="modalConfirmBtn" class="notification-close" aria-label="關閉視窗">&times;</button>
-  </div>
-
-  <!-- Starred Questions Modal -->
-  <div id="starredModal" class="modal">
-    <div class="modal-content starred-modal-content">
-      <button class="dialog-close modal-close" aria-label="關閉收藏">&times;</button>
-      <h3>已收藏的題目</h3>
-      <div id="starredList"></div>
-    </div>
   </div>
 
   <!-- Errata Modal (Material 3) -->

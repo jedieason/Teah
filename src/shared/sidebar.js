@@ -5,6 +5,8 @@ export function mountSidebar() {
     const backdrop = document.getElementById('sidebarBackdrop');
     const mobile = matchMedia('(max-width:700px)');
     const icons = {
+        '題庫': '<path d="m3 10 9-7 9 7v11H3ZM9 21v-8h6v8"/>',
+        '典藏庫': '<rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v13h14V8M10 12h4"/>',
         '錯題本': '<path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3M8 3v5H3M12 5h9M12 9h6M8 14l5 5m0-5-5 5"/>',
         '已收藏': '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z"/>',
         '自訂測驗': '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h4M8 16h6"/>',
