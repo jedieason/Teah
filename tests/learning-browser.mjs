@@ -30,7 +30,9 @@ try {
     await page.evaluate(() => sessionStorage.setItem('test-db', JSON.stringify(window.__testDatabase)));
     await page.reload({ waitUntil: 'networkidle' });
     await page.getByRole('button', { name: '學習總覽', exact: true }).click();
-    await page.getByText('近 7 天：2 次作答', { exact: false }).waitFor();
+    const recentMetric = page.locator('.panel-metric').filter({ hasText: '近 7 天作答' });
+    await recentMetric.waitFor();
+    assert.equal(await recentMetric.locator('strong').textContent(), '2');
     await page.screenshot({ path: 'artifacts/qa/learning-mobile.png', fullPage: true });
     await page.getByRole('button', { name: '關閉', exact: true }).click();
     // Durable retry survives destruction of the page and is idempotent.

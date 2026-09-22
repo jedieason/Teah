@@ -33,7 +33,7 @@ export function mountEditorial() {
         const list = add('div'); list.className = 'panel-drafts';
         async function refresh() {
             const rows = (await get(ref(database, 'contentDrafts'))).val() || {}; list.replaceChildren();
-            if (!Object.keys(rows).length) empty(list, '尚無內容草稿', '建立草稿後，可在這裡追蹤審核與發佈進度。');
+            if (!Object.keys(rows).length) empty(list, '尚無內容草稿');
             for (const [id, draft] of Object.entries(rows)) {
                 draft.questions = JSON.parse(draft.questionsJson);
                 const card = section(list, draft.bank); node('span', ({ draft: '草稿', review: '待審核', approved: '已核准', published: '已發佈' })[draft.status] || draft.status, card, 'panel-badge');

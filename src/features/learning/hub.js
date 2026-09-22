@@ -12,12 +12,12 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
     const sync = el('p', '', document.querySelector('.home-content')); sync.className = 'sync-status'; sync.setAttribute('role', 'status');
     window.addEventListener('sync-status', ({ detail }) => { sync.textContent = detail.error ? '資料已保存在此裝置，尚未同步；連線後會重試。' : detail.pending ? `${detail.pending} 筆紀錄等待同步` : '學習紀錄已同步'; });
     const dialog = el('dialog', null, document.body); dialog.className = 'learning-dialog';
-    const open = title => { dialog.classList.toggle('learning-panel', ['學習總覽', '組一場測驗', '資料與隱私', '內容回報進度'].includes(title)); dialog.setAttribute('aria-label', title); dialog.replaceChildren(); const header = el('div', null, dialog); header.className = 'learning-header'; el('h2', title, header); button('關閉', header, () => dialog.close()); dialog.showModal(); const body = el('div', null, dialog); body.className = 'panel-body'; return body; };
+    const open = title => { dialog.classList.toggle('learning-panel', ['學習總覽', '自訂測驗', '資料與隱私', '內容回報進度'].includes(title)); dialog.setAttribute('aria-label', title); dialog.replaceChildren(); const header = el('div', null, dialog); header.className = 'learning-header'; el('h2', title, header); button('關閉', header, () => dialog.close()); dialog.showModal(); const body = el('div', null, dialog); body.className = 'panel-body'; return body; };
     const requireUser = () => { if (!auth.currentUser) { alert('請先登入以使用學習紀錄。'); return false; } return true; };
     button('自訂測驗', nav, async () => {
         if (!requireUser()) return;
-        const body = open('組一場測驗');
-        const intro = section(body, '依你的步調練習', '先載入題庫，再選擇範圍、題數與作答方式。');
+        const body = open('自訂測驗');
+        const intro = section(body, '載入題庫');
         const form = el('form', null, body); form.className = 'learning-form panel-card';
         const fields = {};
         const field = (name, label, options) => {
@@ -71,7 +71,7 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
     button('學習總覽', nav, async () => {
         if (!requireUser()) return; await loadLearning(); const body = open('學習總覽'); const now = Date.now();
         overview(body, learningState, now);
-        const plan = section(body, '讀書計畫', '設定考試日期與每日目標，讓練習有方向。');
+        const plan = section(body, '讀書計畫');
         const planStatus = el('p', '', plan); planStatus.setAttribute('role', 'status');
         const planProgress = progress(plan, 0, 1, '今日目標完成進度'); planProgress.hidden = true;
         const form = el('form', null, plan); form.className = 'learning-form';
@@ -81,12 +81,12 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
             input.value = learningState.plan?.[key] || ''; inputs[key] = input;
         }
         const save = el('button', '儲存計畫', form); save.type = 'submit'; save.className = 'primary-button';
-        const describe = () => { const p = learningState.plan; if (p) { const days = Math.max(1, Math.ceil((new Date(p.examDate + 'T23:59:59') - now) / DAY)); const today = new Date(); today.setHours(0, 0, 0, 0); const n = summarize(learningState.attempts, +today).count; planStatus.textContent = `${p.title}：今日 ${n}/${p.daily} 題；剩 ${days} 天，依目前剩餘題數建議每日 ${Math.ceil(Number(p.remaining) / days)} 題。剩餘題數可隨進度更新。`; planProgress.hidden = false; planProgress.max = Math.max(1, Number(p.daily)); planProgress.value = n; planProgress.setAttribute('aria-label', `今日已完成 ${n} 題，目標 ${p.daily} 題`); } else { planStatus.textContent = '還沒有計畫，先為自己設定一個小目標。'; } };
+        const describe = () => { const p = learningState.plan; if (p) { const days = Math.max(1, Math.ceil((new Date(p.examDate + 'T23:59:59') - now) / DAY)); const today = new Date(); today.setHours(0, 0, 0, 0); const n = summarize(learningState.attempts, +today).count; planStatus.textContent = `${p.title}：今日 ${n}/${p.daily} 題；剩 ${days} 天，依目前剩餘題數建議每日 ${Math.ceil(Number(p.remaining) / days)} 題。剩餘題數可隨進度更新。`; planProgress.hidden = false; planProgress.max = Math.max(1, Number(p.daily)); planProgress.value = n; planProgress.setAttribute('aria-label', `今日已完成 ${n} 題，目標 ${p.daily} 題`); } else { planStatus.textContent = '尚未設定計畫'; } };
         describe(); form.onsubmit = async e => { e.preventDefault(); try { await savePreference('plan', Object.fromEntries(Object.entries(inputs).map(([k, i]) => [k, i.value]))); describe(); } catch (error) { planStatus.textContent = error.message; } };
     });
     button('資料與隱私', nav, async () => {
         const body = open('資料與隱私');
-        const dataCard = section(body, '你的學習資料', '跨裝置同步，也保留資料的掌控權。');
+        const dataCard = section(body, '學習資料');
         const policy = el('a', '完整資料政策與使用條款', dataCard); policy.href = 'privacy.html'; policy.target = '_blank'; policy.rel = 'noopener';
         el('p', '題矣保存 Google 登入識別、進度、作答事件、錯題、收藏及個人筆記，供跨裝置學習使用。資料保留至你主動刪除；此裝置另有離線副本。', dataCard);
         const aiCard = section(body, 'AI 與使用條款');
@@ -125,10 +125,10 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
         const body = open('內容回報進度');
         const rows = (await get(ref(database, `feedback/${auth.currentUser.uid}`))).val() || {};
         const metrics = el('div', null, body); metrics.className = 'panel-metrics';
-        metric(metrics, '全部回報', Object.keys(rows).length, '你提交的內容問題');
-        metric(metrics, '待處理', Object.values(rows).filter(t => t.status !== 'resolved').length, '等待內容維護者確認');
-        metric(metrics, '已處理', Object.values(rows).filter(t => t.status === 'resolved').length, '查看下方處理結果');
-        if (!Object.keys(rows).length) empty(body, '目前沒有回報', '遇到內容問題時，可由答題頁的回報按鈕提交。');
+        metric(metrics, '全部回報', Object.keys(rows).length);
+        metric(metrics, '待處理', Object.values(rows).filter(t => t.status !== 'resolved').length);
+        metric(metrics, '已處理', Object.values(rows).filter(t => t.status === 'resolved').length);
+        if (!Object.keys(rows).length) empty(body, '尚無回報');
         for (const ticket of Object.values(rows).sort((a, b) => b.createdAt - a.createdAt)) {
             const card = section(body, ticket.reason);
             const badge = el('span', ticket.status === 'resolved' ? '已處理' : '待處理', card); badge.className = `panel-badge ${ticket.status === 'resolved' ? 'is-success' : 'is-review'}`;

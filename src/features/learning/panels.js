@@ -16,13 +16,13 @@ export function section(parent, title, description) {
 export function empty(parent, title, description) {
     const card = node('div', null, parent, 'panel-empty');
     node('strong', title, card);
-    node('p', description, card);
+    if (description) node('p', description, card);
 }
 export function metric(parent, label, value, detail) {
     const card = node('div', null, parent, 'panel-metric');
     node('span', label, card, 'panel-muted');
     node('strong', value, card);
-    node('small', detail, card, 'panel-muted');
+    if (detail) node('small', detail, card, 'panel-muted');
 }
 export function progress(parent, value, max, label) {
     const bar = node('progress', null, parent, 'panel-progress');
@@ -35,10 +35,6 @@ export function overview(body, state, now) {
     const recent = summarize(attempts, now - 7 * DAY);
     const previous = summarize(attempts.filter(e => e.submittedAt < now - 7 * DAY), now - 14 * DAY);
     const due = Object.values(state.reviews || {}).filter(r => r.dueAt <= now).length;
-    const hero = node('section', null, body, 'panel-hero');
-    node('span', '你的學習足跡', hero, 'panel-eyebrow');
-    node('h3', recent.count ? '每一次練習，都累積一點進步。' : '從第一題開始，累積你的學習足跡。', hero);
-    node('p', `近 7 天：${recent.count} 次作答 · 回顧練習表現，安排下一步。`, hero);
     const metrics = node('div', null, body, 'panel-metrics');
     metric(metrics, '近 7 天作答', recent.count, `前 7 天 ${previous.count} 次`);
     metric(metrics, '正確率', recent.accuracy == null ? '—' : `${recent.accuracy}%`, previous.accuracy == null ? '前 7 天尚無紀錄' : `前 7 天 ${previous.accuracy}%`);
@@ -66,7 +62,7 @@ export function overview(body, state, now) {
     const topics = section(grid, '科目與主題表現', '全部紀錄 · 依正確率由低到高排列');
     const groups = {};
     for (const event of attempts) (groups[event.taxonomy?.topic || event.taxonomy?.subject || '未分類'] ||= []).push(event);
-    if (!attempts.length) empty(topics, '還沒有主題紀錄', '完成練習後，在這裡找出需要加強的觀念。');
+    if (!attempts.length) empty(topics, '尚無主題紀錄');
     const topicList = node('div', null, topics, 'panel-topic-list');
     for (const [topic, rows] of Object.entries(groups).sort((a, b) => summarize(a[1]).accuracy - summarize(b[1]).accuracy)) {
         const summary = summarize(rows), item = node('div', null, topicList, 'panel-topic');
@@ -75,10 +71,10 @@ export function overview(body, state, now) {
         progress(item, summary.accuracy, 100, `${topic}正確率 ${summary.accuracy}%`);
         node('small', `${summary.count} 次作答 · 平均 ${summary.seconds} 秒／題`, item, 'panel-muted');
     }
-    const sessionsCard = section(body, '最近測驗', '最近 10 場 · 每次練習的成果');
+    const sessionsCard = section(body, '最近測驗', '最近 10 場');
     const sessions = {};
     for (const event of attempts) (sessions[event.sessionId] ||= []).push(event);
-    if (!attempts.length) empty(sessionsCard, '準備好開始了嗎？', '從題庫或自訂測驗開始，完成後就會留下紀錄。');
+    if (!attempts.length) empty(sessionsCard, '尚無測驗紀錄');
     const sessionsGrid = node('div', null, sessionsCard, 'panel-session-grid');
     for (const rows of Object.values(sessions).sort((a, b) => Math.max(...b.map(e => e.submittedAt)) - Math.max(...a.map(e => e.submittedAt))).slice(0, 10)) {
         const summary = summarize(rows), card = node('article', null, sessionsGrid, 'panel-session');
@@ -88,7 +84,7 @@ export function overview(body, state, now) {
     }
     const history = node('details', null, body, 'panel-card panel-history');
     node('summary', '最近作答紀錄', history);
-    if (!attempts.length) empty(history, '尚無作答紀錄', '作答後會顯示最近 30 筆紀錄。');
+    if (!attempts.length) empty(history, '尚無作答紀錄');
     const list = node('ol', null, history, 'panel-history-list');
     for (const event of attempts.sort((a, b) => b.submittedAt - a.submittedAt).slice(0, 30)) {
         const item = node('li', null, list, 'panel-row');
