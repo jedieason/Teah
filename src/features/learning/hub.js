@@ -1,3 +1,4 @@
+import { overview, section, empty, metric, progress } from './panels.js';
 import { diagnosticReport } from '../../services/diagnostics.js';
 import { auth, database, ref, get, set, update, signOut, deleteUser, reauthenticateWithPopup, googleProvider } from '../../services/firebase.js';
 import { learningState, loadLearning, readBank, savePreference } from '../../services/learning.js';
@@ -11,12 +12,13 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
     const sync = el('p', '', document.querySelector('.home-content')); sync.className = 'sync-status'; sync.setAttribute('role', 'status');
     window.addEventListener('sync-status', ({ detail }) => { sync.textContent = detail.error ? '資料已保存在此裝置，尚未同步；連線後會重試。' : detail.pending ? `${detail.pending} 筆紀錄等待同步` : '學習紀錄已同步'; });
     const dialog = el('dialog', null, document.body); dialog.className = 'learning-dialog';
-    const open = title => { dialog.replaceChildren(); const header = el('div', null, dialog); header.className = 'learning-header'; el('h2', title, header); button('關閉', header, () => dialog.close()); dialog.showModal(); return el('div', null, dialog); };
+    const open = title => { dialog.classList.toggle('learning-panel', ['學習總覽', '組一場測驗', '資料與隱私', '內容回報進度'].includes(title)); dialog.setAttribute('aria-label', title); dialog.replaceChildren(); const header = el('div', null, dialog); header.className = 'learning-header'; el('h2', title, header); button('關閉', header, () => dialog.close()); dialog.showModal(); const body = el('div', null, dialog); body.className = 'panel-body'; return body; };
     const requireUser = () => { if (!auth.currentUser) { alert('請先登入以使用學習紀錄。'); return false; } return true; };
     button('自訂測驗', nav, async () => {
         if (!requireUser()) return;
         const body = open('組一場測驗');
-        const form = el('form', null, body); form.className = 'learning-form';
+        const intro = section(body, '依你的步調練習', '先載入題庫，再選擇範圍、題數與作答方式。');
+        const form = el('form', null, body); form.className = 'learning-form panel-card';
         const fields = {};
         const field = (name, label, options) => {
             const l = el('label', label, form), input = el(options ? 'select' : 'input', null, l); fields[name] = input;
@@ -55,8 +57,8 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
             }
             loaded = true; status.textContent = `可組題 ${items.length} 題。分類資料未經人工補註時，不會推測醫學主題或難度。`;
         });
-        body.insertBefore(status, form); body.insertBefore(loadButton, form);
-        const submit = el('button', '開始測驗', form); submit.type = 'submit'; submit.className = 'quiet-button';
+        intro.append(status, loadButton);
+        const submit = el('button', '開始測驗', form); submit.type = 'submit'; submit.className = 'primary-button';
         form.onsubmit = async event => {
             event.preventDefault(); if (!loaded) { status.textContent = '請先載入題目。'; return; }
             const filters = Object.fromEntries(Object.entries(fields).map(([k, input]) => [k, input.value]));
@@ -68,54 +70,41 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
     });
     button('學習總覽', nav, async () => {
         if (!requireUser()) return; await loadLearning(); const body = open('學習總覽'); const now = Date.now();
-        const summary = summarize(learningState.attempts, now - 7 * DAY);
-        el('p', `近 7 天：${summary.count} 次作答 · 正確率 ${summary.accuracy == null ? '—' : summary.accuracy + '%'} · 平均 ${summary.seconds} 秒／題`, body);
-        const previous = summarize(Object.values(learningState.attempts || {}).filter(e => e.submittedAt < now - 7 * DAY), now - 14 * DAY);
-        el('p', `前 7 天 ${previous.count} 次作答、正確率 ${previous.accuracy == null ? '—' : previous.accuracy + '%'}；今日到期 ${Object.values(learningState.reviews || {}).filter(r => r.dueAt <= now).length} 題。`, body);
-        el('p', '複習間隔採簡單倍增規則（1–90 天）；此數據僅反映練習表現，不代表臨床能力或記憶保留率。', body);
-        const groups = {};
-        for (const e of Object.values(learningState.attempts || {})) (groups[e.taxonomy?.topic || e.taxonomy?.subject || '未分類'] ||= []).push(e);
-        el('h3', '科目與主題表現', body);
-        const table = el('table', null, body); const head = el('tr', null, table); for (const t of ['分類', '作答', '正確率', '平均秒數']) el('th', t, head);
-        for (const [topic, rows] of Object.entries(groups).sort((a, b) => summarize(a[1]).accuracy - summarize(b[1]).accuracy)) {
-            const s = summarize(rows), tr = el('tr', null, table); for (const value of [topic, s.count, `${s.accuracy}%`, s.seconds]) el('td', value, tr);
-        }
-        el('h3', '最近測驗', body);
-        const sessions = {};
-        for (const e of Object.values(learningState.attempts || {})) (sessions[e.sessionId] ||= []).push(e);
-        for (const rows of Object.values(sessions).sort((a, b) => Math.max(...b.map(e => e.submittedAt)) - Math.max(...a.map(e => e.submittedAt))).slice(0, 10)) {
-            const total = summarize(rows); el('p', `${new Date(rows[0].submittedAt).toLocaleDateString()} · ${rows[0].mode === 'exam' ? '考試' : '學習'} · ${total.count} 題 · ${total.accuracy}%`, body);
-        }
-        el('h3', '最近作答紀錄', body);
-        const list = el('ol', null, body);
-        for (const e of Object.values(learningState.attempts || {}).sort((a, b) => b.submittedAt - a.submittedAt).slice(0, 30)) el('li', `${new Date(e.submittedAt).toLocaleString()} · ${e.taxonomy?.subject || '未分類'} · ${e.isCorrect ? '正確' : '錯誤'} · ${e.mode === 'exam' ? '考試' : '學習'} · v${e.questionRevision}`, list);
-        el('h3', '讀書計畫', body); const form = el('form', null, body); form.className = 'learning-form';
+        overview(body, learningState, now);
+        const plan = section(body, '讀書計畫', '設定考試日期與每日目標，讓練習有方向。');
+        const planStatus = el('p', '', plan); planStatus.setAttribute('role', 'status');
+        const planProgress = progress(plan, 0, 1, '今日目標完成進度'); planProgress.hidden = true;
+        const form = el('form', null, plan); form.className = 'learning-form';
         const inputs = {};
         for (const [key, label, type] of [['title', '目標名稱', 'text'], ['examDate', '考試日期', 'date'], ['daily', '每日目標題數', 'number'], ['remaining', '剩餘待完成題數', 'number']]) {
             const input = el('input', null, el('label', label, form)); input.type = type; input.required = true; if (type === 'number') input.min = 1;
             input.value = learningState.plan?.[key] || ''; inputs[key] = input;
         }
-        const save = el('button', '儲存計畫', form); save.type = 'submit'; save.className = 'quiet-button';
-        const planStatus = el('p', '', body);
-        const describe = () => { const p = learningState.plan; if (p) { const days = Math.max(1, Math.ceil((new Date(p.examDate + 'T23:59:59') - now) / DAY)); const today = new Date(); today.setHours(0, 0, 0, 0); const n = summarize(learningState.attempts, +today).count; planStatus.textContent = `${p.title}：今日 ${n}/${p.daily} 題；剩 ${days} 天，依目前剩餘題數建議每日 ${Math.ceil(Number(p.remaining) / days)} 題。剩餘題數可隨進度更新。`; } };
+        const save = el('button', '儲存計畫', form); save.type = 'submit'; save.className = 'primary-button';
+        const describe = () => { const p = learningState.plan; if (p) { const days = Math.max(1, Math.ceil((new Date(p.examDate + 'T23:59:59') - now) / DAY)); const today = new Date(); today.setHours(0, 0, 0, 0); const n = summarize(learningState.attempts, +today).count; planStatus.textContent = `${p.title}：今日 ${n}/${p.daily} 題；剩 ${days} 天，依目前剩餘題數建議每日 ${Math.ceil(Number(p.remaining) / days)} 題。剩餘題數可隨進度更新。`; planProgress.hidden = false; planProgress.max = Math.max(1, Number(p.daily)); planProgress.value = n; planProgress.setAttribute('aria-label', `今日已完成 ${n} 題，目標 ${p.daily} 題`); } else { planStatus.textContent = '還沒有計畫，先為自己設定一個小目標。'; } };
         describe(); form.onsubmit = async e => { e.preventDefault(); try { await savePreference('plan', Object.fromEntries(Object.entries(inputs).map(([k, i]) => [k, i.value]))); describe(); } catch (error) { planStatus.textContent = error.message; } };
     });
     button('資料與隱私', nav, async () => {
         const body = open('資料與隱私');
-        const policy = el('a', '完整資料政策與使用條款', body); policy.href = 'privacy.html'; policy.target = '_blank'; policy.rel = 'noopener';
-        el('p', '題矣保存 Google 登入識別、進度、作答事件、錯題、收藏及個人筆記，供跨裝置學習使用。資料保留至你主動刪除；此裝置另有離線副本。', body);
-        el('p', 'AI 功能會將你選擇的題目、作答及輸入內容傳送至 Google Gemini。請勿輸入病人或其他個人敏感資料。AI 內容可能有誤，應回查原始教材。', body);
-        el('p', '使用量分析預設停用。你可自行開啟或撤回同意；此裝置只保留最近 100 筆不含題目、答案或 API 金鑰的錯誤及同步診斷。', body);
-        el('p', '使用條款：本服務供學習用途，不提供診斷或治療建議。題庫來源與權利仍屬原作者，請只上傳有權使用的內容。', body);
-        el('p', '刪除學習資料會清除本服務的雲端紀錄及此瀏覽器離線副本；其他裝置應登出並清除網站資料。Google 帳戶本身不受影響。', body);
-        button('匯出此裝置診斷紀錄', body, () => download(diagnosticReport(), 'teah-diagnostics.json'));
-        button('匯出我的資料', body, async () => {
+        const dataCard = section(body, '你的學習資料', '跨裝置同步，也保留資料的掌控權。');
+        const policy = el('a', '完整資料政策與使用條款', dataCard); policy.href = 'privacy.html'; policy.target = '_blank'; policy.rel = 'noopener';
+        el('p', '題矣保存 Google 登入識別、進度、作答事件、錯題、收藏及個人筆記，供跨裝置學習使用。資料保留至你主動刪除；此裝置另有離線副本。', dataCard);
+        const aiCard = section(body, 'AI 與使用條款');
+        el('p', 'AI 功能會將你選擇的題目、作答及輸入內容傳送至 Google Gemini。請勿輸入病人或其他個人敏感資料。AI 內容可能有誤，應回查原始教材。', aiCard);
+        const analyticsCard = section(body, '使用量與診斷');
+        const consent = el('span', localStorage.getItem('teah-analytics-consent') === 'yes' ? '分析已啟用' : '分析已停用', analyticsCard); consent.className = 'panel-badge';
+        el('p', '使用量分析預設停用。你可自行開啟或撤回同意；此裝置只保留最近 100 筆不含題目、答案或 API 金鑰的錯誤及同步診斷。', analyticsCard);
+        el('p', '使用條款：本服務供學習用途，不提供診斷或治療建議。題庫來源與權利仍屬原作者，請只上傳有權使用的內容。', aiCard);
+        const danger = section(body, '刪除帳戶與資料'); danger.classList.add('panel-danger');
+        el('p', '刪除學習資料會清除本服務的雲端紀錄及此瀏覽器離線副本；其他裝置應登出並清除網站資料。Google 帳戶本身不受影響。', danger);
+        button('匯出此裝置診斷紀錄', analyticsCard, () => download(diagnosticReport(), 'teah-diagnostics.json'));
+        button('匯出我的資料', dataCard, async () => {
             if (!requireUser()) return; const uid = auth.currentUser.uid, data = {};
             for (const key of ['progress', 'mistakes', 'learning', 'feedback']) data[key] = (await get(ref(database, `${key}/${uid}`))).val();
             data.pending = (await storage('outbox', 'getAll')).filter(i => i.uid === uid);
             download(data, 'teah-my-data.json');
         });
-        button('刪除帳戶與全部學習資料', body, async () => {
+        button('刪除帳戶與全部學習資料', danger, async () => {
             if (!requireUser() || !window.confirm('將永久刪除此服務帳戶、全部學習紀錄、筆記與收藏。建議先匯出；確定刪除？')) return;
             const user = auth.currentUser, uid = user.uid;
             await reauthenticateWithPopup(user, googleProvider);
@@ -127,18 +116,24 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
                 location.reload();
             } catch (error) { resumeAccount(uid); throw error; }
         });
-        button('允許使用量分析', body, () => { localStorage.setItem('teah-analytics-consent', 'yes'); el('p', '已允許，下次載入生效。', body); });
-        button('停用使用量分析', body, () => { localStorage.removeItem('teah-analytics-consent'); location.reload(); });
+        button('允許使用量分析', analyticsCard, () => { localStorage.setItem('teah-analytics-consent', 'yes'); consent.textContent = '分析已啟用 · 下次載入生效'; });
+        button('停用使用量分析', analyticsCard, () => { localStorage.removeItem('teah-analytics-consent'); location.reload(); });
     });
     button('複習卡', nav, async () => { if (requireUser()) await openCards(); });
     button('我的回報', nav, async () => {
         if (!requireUser()) return;
         const body = open('內容回報進度');
         const rows = (await get(ref(database, `feedback/${auth.currentUser.uid}`))).val() || {};
-        if (!Object.keys(rows).length) el('p', '尚無回報。可在答題頁提交內容問題。', body);
+        const metrics = el('div', null, body); metrics.className = 'panel-metrics';
+        metric(metrics, '全部回報', Object.keys(rows).length, '你提交的內容問題');
+        metric(metrics, '待處理', Object.values(rows).filter(t => t.status !== 'resolved').length, '等待內容維護者確認');
+        metric(metrics, '已處理', Object.values(rows).filter(t => t.status === 'resolved').length, '查看下方處理結果');
+        if (!Object.keys(rows).length) empty(body, '目前沒有回報', '遇到內容問題時，可由答題頁的回報按鈕提交。');
         for (const ticket of Object.values(rows).sort((a, b) => b.createdAt - a.createdAt)) {
-            el('h3', ticket.reason, body); el('p', `${ticket.status === 'resolved' ? '已處理' : '待處理'} · ${new Date(ticket.createdAt).toLocaleDateString()}`, body);
-            if (ticket.resolution) el('p', ticket.resolution, body);
+            const card = section(body, ticket.reason);
+            const badge = el('span', ticket.status === 'resolved' ? '已處理' : '待處理', card); badge.className = `panel-badge ${ticket.status === 'resolved' ? 'is-success' : 'is-review'}`;
+            el('p', new Date(ticket.createdAt).toLocaleDateString(), card).className = 'panel-muted';
+            if (ticket.resolution) el('p', ticket.resolution, card).className = 'panel-resolution';
         }
     });
     const questionActions = document.querySelector('.explanation-buttons > .header-right');

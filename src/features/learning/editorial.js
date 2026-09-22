@@ -1,3 +1,4 @@
+import { section, empty, node } from './panels.js';
 import { auth, database, ref, get, set, update, runTransaction } from '../../services/firebase.js';
 import { validateQuiz } from '../../shared/content.js';
 import { normalizeQuestion } from './model.js';
@@ -7,13 +8,20 @@ export function mountEditorial() {
     launch.onclick = async () => {
         const claims = (await auth.currentUser?.getIdTokenResult?.())?.claims || {};
         if (!['admin', 'editor', 'reviewer', 'contributor'].some(r => claims[r])) { window.alert('此功能需要內容維護角色。請由管理員設定帳戶權限。'); return; }
-        const dialog = document.createElement('dialog'); dialog.className = 'learning-dialog'; document.body.append(dialog);
-        const add = (tag, text, parent = dialog) => { const n = document.createElement(tag); if (text) n.textContent = text; parent.append(n); return n; };
-        const action = (label, callback, parent = dialog) => { const b = add('button', label, parent); b.className = 'quiet-button'; b.onclick = async () => { b.disabled = true; try { await callback(); } catch (e) { status.textContent = e.message; } finally { b.disabled = false; } }; return b; };
-        add('h2', '內容工作台'); action('關閉', () => { dialog.close(); dialog.remove(); });
+        const dialog = document.createElement('dialog'); dialog.className = 'learning-dialog learning-panel'; dialog.setAttribute('aria-label', '內容工作台'); document.body.append(dialog);
+        const body = node('div', null, dialog, 'panel-body');
+        const add = (tag, text, parent = body) => { const n = document.createElement(tag); if (text) n.textContent = text; parent.append(n); return n; };
+        const action = (label, callback, parent = body) => { const b = add('button', label, parent); b.className = 'quiet-button'; b.onclick = async () => { b.disabled = true; try { await callback(); } catch (e) { status.textContent = e.message; } finally { b.disabled = false; } }; return b; };
+        const header = node('div', null, null, 'learning-header'); dialog.prepend(header);
+        add('h2', '內容工作台', header); action('關閉', () => { dialog.close(); dialog.remove(); }, header);
+        const workflow = node('div', null, body, 'panel-workflow');
+        for (const step of ['1 建立草稿', '2 獨立審核', '3 管理員發佈']) node('span', step, workflow, 'panel-badge');
         add('p', '新內容先送審，再由不同維護者核准，最後由管理員發佈。請在題目 provenance 中提供來源、頁碼及參考資料；taxonomy 可標註科目、系統、主題、難度與年份。');
-        const name = add('input'); name.placeholder = '題庫名稱'; name.setAttribute('aria-label', '題庫名稱');
-        const input = add('textarea'); input.rows = 10; input.placeholder = '貼上題目 JSON 陣列'; input.setAttribute('aria-label', '題目 JSON');
+        const draftForm = section(body, '新增內容草稿');
+        const nameLabel = node('label', '題庫名稱', draftForm, 'panel-field');
+        const name = add('input', '', nameLabel); name.placeholder = '題庫名稱'; name.setAttribute('aria-label', '題庫名稱');
+        const contentLabel = node('label', '題目內容', draftForm, 'panel-field');
+        const input = add('textarea', '', contentLabel); input.rows = 10; input.placeholder = '貼上題目 JSON 陣列'; input.setAttribute('aria-label', '題目 JSON');
         const status = add('p'); status.setAttribute('role', 'status');
         action('建立草稿', async () => {
             const bank = name.value.trim(); if (!bank || /[.#$\[\]/]/.test(bank)) throw new Error('請使用有效的題庫名稱。');
@@ -21,13 +29,14 @@ export function mountEditorial() {
             const id = crypto.randomUUID();
             await set(ref(database, `contentDrafts/${id}`), { bank, questionsJson: JSON.stringify(questions), status: 'draft', author: auth.currentUser.uid, createdAt: Date.now() });
             status.textContent = '草稿已建立。'; await refresh();
-        });
-        const list = add('div');
+        }, draftForm);
+        const list = add('div'); list.className = 'panel-drafts';
         async function refresh() {
             const rows = (await get(ref(database, 'contentDrafts'))).val() || {}; list.replaceChildren();
+            if (!Object.keys(rows).length) empty(list, '尚無內容草稿', '建立草稿後，可在這裡追蹤審核與發佈進度。');
             for (const [id, draft] of Object.entries(rows)) {
                 draft.questions = JSON.parse(draft.questionsJson);
-                const card = add('section', '', list); add('h3', `${draft.bank} · ${draft.status}`, card);
+                const card = section(list, draft.bank); node('span', ({ draft: '草稿', review: '待審核', approved: '已核准', published: '已發佈' })[draft.status] || draft.status, card, 'panel-badge');
                 add('p', `${draft.questions.length} 題 · ${new Date(draft.createdAt).toLocaleString()}`, card);
                 const details = add('details', '', card); add('summary', '檢視題目、答案與來源', details); const preview = add('pre', JSON.stringify(draft.questions, null, 2), details); preview.style.whiteSpace = 'pre-wrap';
                 if (draft.status === 'draft' && (draft.author === auth.currentUser.uid || claims.admin)) action('送交審核', async () => {
