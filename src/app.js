@@ -1998,7 +1998,6 @@ const controlsAvatar = document.getElementById('controlsAvatar');
 const menuAvatar = document.getElementById('menuAvatar');
 const menuDisplayName = document.getElementById('menuDisplayName');
 const menuEmail = document.getElementById('menuEmail');
-const menuStarred = document.getElementById('menuStarred');
 const menuShuffle = document.getElementById('menuShuffle');
 const menuTheme = document.getElementById('menuTheme');
 const menuLogout = document.getElementById('menuLogout');
@@ -2100,10 +2099,6 @@ updateSignInButton(auth.currentUser);
 syncControlsUser(auth.currentUser);
 
 // Controls item actions (text-only click)
-if (menuStarred) menuStarred.addEventListener('click', () => {
-    controlsMenu.classList.remove('open');
-    openCollectionPage();
-});
 if (menuShuffle) menuShuffle.addEventListener('click', () => {
     // toggle shuffle state same as clicking the slider
     shouldShuffleQuiz = !shouldShuffleQuiz;
@@ -2127,7 +2122,6 @@ if (menuLogout) menuLogout.addEventListener('click', async () => {
 
 // Edit Quiz Name from controls menu
 const menuEditQuizName = document.getElementById('menuEditQuizName');
-const menuArchived = document.getElementById('menuArchived');
 let isEditMode = false;
 let viewArchiveMode = false;
 let currentActiveFolder = null;
@@ -2163,8 +2157,6 @@ if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
     toggleEditModeUI();
     if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
 });
-
-if (menuArchived) menuArchived.addEventListener('click', () => showLibraryPage('archive'));
 
 // Open upload modal from controls menu
 if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
@@ -3102,12 +3094,6 @@ async function fetchUserProgressAndMistakes(user) {
     }
 }
 
-// Global Mistakes bindings
-const menuGlobalMistakes = document.getElementById('menuGlobalMistakes');
-if (menuGlobalMistakes) menuGlobalMistakes.addEventListener('click', () => {
-    controlsMenu.classList.remove('open');
-    openMistakeView(null);
-});
 
 const quizActionCloseBtn = document.getElementById('quizActionCloseBtn');
 if (quizActionCloseBtn) quizActionCloseBtn.addEventListener('click', () => {
