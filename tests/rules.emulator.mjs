@@ -64,6 +64,14 @@ try {
     assert.equal((await get(ref(alice, studyPath + '/summary/wrong'))).val(), 1);
     await assertFails(set(ref(alice, studyPath + '/events/badBoolean'), { id: 'badBoolean', kind: 'override', at: Date.now(), originalId: 'v1', correct: 'false' }));
     await assertFails(set(ref(alice, studyPath + '/events/badOverride'), { id: 'badOverride', kind: 'override', at: Date.now(), originalId: 'missing', correct: true }));
+    const write = createSession(deck, {}, { activity: 'write' });
+    await assertSucceeds(set(ref(alice, studyPath + '/sessions/learn'), write));
+    const writeKey = write.current.key;
+    assert.equal((await get(ref(alice, studyPath + '/sessions/learn/writeCredits/' + writeKey))).val(), 0);
+    await assertFails(set(ref(alice, studyPath + '/sessions/learn/writeCredits/' + writeKey), 3));
+    await assertFails(set(ref(alice, studyPath + '/sessions/learn/writeCredits/' + writeKey), 0.5));
+    await assertFails(set(ref(alice, studyPath + '/sessions/learn/options/activity'), 'unknown'));
+    await assertSucceeds(set(ref(alice, studyPath + '/sessions/learn'), createSession(deck, {}, { activity: 'spell' })));
     await assertSucceeds(update(ref(alice, deckPath), { deletedAt: Date.now(), revision: 2 }));
     await assertSucceeds(update(ref(alice, deckPath), { deletedAt: null, revision: 3 }));
     await assertFails(set(ref(alice, 'flashcard/alice/study/nonexistent'), { summary: { generation: 'initial', correct: 0, wrong: 0 } }));

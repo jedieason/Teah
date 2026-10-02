@@ -133,6 +133,16 @@
                   "$i": {
                     ".validate": "$i.matches(/^(0|[1-9][0-9]{0,2}|[1-3][0-9]{3})$/) && newData.isString()"
                   }
+                },
+                "options": {
+                  "activity": {
+                    ".validate": "newData.isString() && (newData.val() === 'learn' || newData.val() === 'write' || newData.val() === 'spell')"
+                  }
+                },
+                "writeCredits": {
+                  "$key": {
+                    ".validate": "$key.matches(/^[a-zA-Z0-9_-]{1,80}_(term|definition)$/) && newData.isNumber() && newData.val() >= 0 && newData.val() <= 2 && newData.val() % 1 === 0"
+                  }
                 }
               }
             },

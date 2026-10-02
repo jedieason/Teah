@@ -1,5 +1,5 @@
 import { auth } from '../../services/firebase.js';
-import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
+import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
 import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade } from './service.js';
 const node = (tag, text, parent, className) => {
     const e = document.createElement(tag); if (text != null) e.textContent = text;
@@ -10,7 +10,7 @@ const typeLabels = { choice: '選擇題', multi: '複選題', written: '書寫�
 export function mountFlashcard({ host, activate }) {
     let owner = null, decks = {}, deck = null, study = {}, phase = 'list', draft = null, session = null, flash = null;
     let message = '', conflict = false, operation = 0, busy = false, timer = null, draftTimer = null, questionAt = Date.now(), trash = false;
-    let preferred = { ...DEFAULT_OPTIONS }, direction = 'term', search = '';
+    let preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }, direction = 'term', search = '';
     let screen = '', termFilter = 'all', termQuery = '';
     let audioContext, progressWidths = [], questionKey = '', symbolsKey = '', symbols = [];
     const dialog = node('dialog', null, document.body, 'vocab-dialog');
@@ -127,9 +127,9 @@ export function mountFlashcard({ host, activate }) {
         study = await loadStudy(deckId); safeOwner(); if (ticket !== operation) return;
         phase = 'detail'; preferred = study.sessions?.learn?.options || preferred; message = ''; render();
     }
-    function stats(parent, counts) {
+    function stats(parent, counts, written = false) {
         const wrap = node('div', null, parent, 'vocab-stats');
-        for (const [key, label] of [['new', '未學習'], ['learning', '正在學習'], ['mastered', '已精熟']]) {
+        for (const [key, label] of written ? [['new', '尚未答對'], ['learning', '答對一次'], ['mastered', '答對兩次']] : [['new', '未學習'], ['learning', '正在學習'], ['mastered', '已精熟']]) {
             const item = node('div', null, wrap, `vocab-stat ${key}`); node('strong', counts[key], item); node('span', label, item);
         }
     }
@@ -144,7 +144,7 @@ export function mountFlashcard({ host, activate }) {
         button('Flashcards', studyModes, () => startFlash(), 'vocab-mode');
         button('Learn', studyModes, () => settings(), 'vocab-mode vocab-primary');
         const saved = study.sessions?.learn;
-        if (saved?.version === LEARN_VERSION && saved.deckRevision === deck.revision && saved.generation === projected.generation && !saved.completed) button('繼續 Learn', studyModes, () => { session = clone(saved); phase = 'learn'; render(); }, 'vocab-mode');
+        if (saved?.version === LEARN_VERSION && saved.deckRevision === deck.revision && saved.generation === projected.generation && !saved.completed) button('繼續 ' + activityName(saved), studyModes, () => { session = clone(saved); phase = 'learn'; render(); }, 'vocab-mode');
         const controls = node('div', null, host, 'vocab-toolbar');
         const dir = select('進度方向', controls, [['term', '看解釋 → 答單字'], ['definition', '看單字 → 答解釋'], ['both', '正反向']], direction);
         dir.onchange = () => { direction = dir.value; render(); };
@@ -284,22 +284,26 @@ export function mountFlashcard({ host, activate }) {
     function exportText() { importDialog(true); }
     function download(content, name, type) { const url = URL.createObjectURL(new Blob([content], { type })); const a = node('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
     function settings() {
-        const body = modal('Learn 設定'); const options = { ...DEFAULT_OPTIONS, ...preferred, practice: false };
+        const body = modal('Learn 設定'); const options = { ...DEFAULT_OPTIONS, ...preferred, types: preferred.learnTypes || preferred.types, practice: false };
         const goal = select('這次學習的目標', body, [['master', '記熟全部'], ['quick', '快速熟悉']], options.goal);
         const familiarity = select('對這組單字的熟悉程度', body, [['new', '剛開始學'], ['familiar', '已經看過']], options.familiarity);
         const dir = select('作答方向', body, [['term', '看解釋 → 答單字'], ['definition', '看單字 → 答解釋'], ['both', '正反向']], options.direction);
         const scope = select('練習範圍', body, [['all', '全部'], ['starred', '已標星號'], ['learning', '尚未精熟'], ['due', '到期複習']], options.scope);
         const group = node('fieldset', null, body, 'vocab-types'); node('legend', '題型', group); const types = {};
         for (const [type, label] of Object.entries(typeLabels)) types[type] = check(label, group, options.types.includes(type));
-        const grading = select('批改方式', body, [['strict', '嚴格：忽略大小寫與基本標點'], ['moderate', '適中：接受英文單字的一處拼字差異'], ['relaxed', '寬鬆：接受意思相同的答案']], options.grading);
+        const gradingLabels = { strict: '嚴格', moderate: '適中', relaxed: '寬鬆' };
+        const grading = select('批改方式', body, [['auto', '自動：' + gradingLabels[defaultGrading(deck, options.defaultLanguage)]], ['strict', '嚴格：忽略大小寫與基本標點'], ['moderate', '適中：接受重音與輕微拼字差異'], ['relaxed', '寬鬆：接受意思相同的答案']], options.grading);
         node('p', '替代答案可在字卡編輯中設定；數字、數學符號與單位會保留檢查。', body, 'vocab-muted');
-        const semanticNotice = node('p', '寬鬆批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', body, 'vocab-muted'); semanticNotice.hidden = grading.value !== 'relaxed'; grading.onchange = () => { semanticNotice.hidden = grading.value !== 'relaxed'; };
+        const semanticNotice = node('p', '寬鬆批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', body, 'vocab-muted');
+        const updateNotice = () => { semanticNotice.hidden = (grading.value === 'auto' ? defaultGrading(deck, options.defaultLanguage) : grading.value) !== 'relaxed'; }; grading.onchange = updateNotice; updateNotice();
         const retype = check('答錯後重打正解', body, options.retype), shuffle = check('打亂順序', body, options.shuffle), audio = check('朗讀題目', body, options.audio), sound = check('答題音效', body, options.sound);
+        const audioRate = select('朗讀速度', body, [['0.9', '一般'], ['0.65', '慢速']], String(options.audioRate || 0.9));
         const chunk = select('每組單字數', body, [['7', '7 張'], ['5', '5 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
         const error = node('p', '', body); error.setAttribute('role', 'alert');
         async function begin(onlyType, restart = false) {
             try {
-                preferred = { ...options, freshStart: restart, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: onlyType ? [onlyType] : Object.keys(types).filter(k => types[k].checked), grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, sound: sound.checked, chunkSize: Number(chunk.value) };
+                const learnTypes = Object.keys(types).filter(k => types[k].checked);
+                preferred = { ...options, activity: onlyType === 'written' ? 'write' : onlyType === 'spell' ? 'spell' : 'learn', freshStart: restart, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
                 if (onlyType === 'spell' && !('speechSynthesis' in window)) throw new Error('此瀏覽器不支援朗讀，請使用 Write。');
                 if (restart) study = await saveStudy(deck.id, study, newEvent('reset', { generation: id() }));
                 const next = createSession(deck, study, preferred); await persist(null, next); session = next; phase = 'learn'; dialog.close(); render();
@@ -307,6 +311,7 @@ export function mountFlashcard({ host, activate }) {
         }
         const actions = node('div', null, body, 'vocab-toolbar'); button('開始 Learn', actions, () => begin(), 'vocab-primary');
         button('Write', actions, () => begin('written')); button('Spell', actions, () => begin('spell'));
+        node('p', 'Write 以整個範圍為一輪；Spell 使用嚴格拼字並在錯誤後重試。每題答對兩次完成。', body, 'vocab-muted');
         if (Object.keys(projectStudy(study).facts).length) button('重設 Learn 進度', body, () => { const confirm = node('div', null, body, 'vocab-reset-confirm'); node('p', '重設會重新學習這組字卡，歷史作答紀錄仍會保留。', confirm); button('確認重設並開始', confirm, () => begin(null, true), 'vocab-primary'); });
     }
     async function persist(event, snapshot) {
@@ -323,9 +328,10 @@ export function mountFlashcard({ host, activate }) {
         const p = sessionProgress(session), goal = session.options.goal === 'quick' ? 1 : 2;
         const earned = p.displayedEarned, target = p.total * goal;
         const row = node('div', null, host, 'vocab-progress-row'); node('strong', earned, row, 'vocab-progress-count');
-        const progress = node('div', null, row, 'vocab-learn-progress'); progress.setAttribute('role', 'progressbar'); progress.setAttribute('aria-label', 'Learn 學習進度'); progress.setAttribute('aria-valuemin', '0'); progress.setAttribute('aria-valuemax', String(target)); progress.setAttribute('aria-valuenow', String(earned));
-        const segments = Math.min(24, Math.ceil(target / session.options.chunkSize));
-        const segmentSize = segments === 24 ? target / segments : session.options.chunkSize;
+        const progress = node('div', null, row, 'vocab-learn-progress'); progress.setAttribute('role', 'progressbar'); progress.setAttribute('aria-label', activityName(session) + ' 學習進度'); progress.setAttribute('aria-valuemin', '0'); progress.setAttribute('aria-valuemax', String(target)); progress.setAttribute('aria-valuenow', String(earned));
+        const wholePass = session.options.activity !== 'learn';
+        const segments = wholePass ? 2 : Math.min(24, Math.ceil(target / session.options.chunkSize));
+        const segmentSize = wholePass ? p.total : segments === 24 ? target / segments : session.options.chunkSize;
         for (let i = 0; i < segments; i++) {
             const segment = node('span', null, progress), fill = node('i', null, segment);
             const width = `${Math.max(0, Math.min(1, (earned - i * segmentSize) / Math.min(segmentSize, target - i * segmentSize))) * 100}%`;
@@ -334,33 +340,34 @@ export function mountFlashcard({ host, activate }) {
         }
         node('strong', target, row, 'vocab-progress-count');
         const roundComplete = session.active.filter(k => roundDone(session, k)).length;
-        node('p', `第 ${session.round} 輪 · 本組 ${roundComplete}／${session.active.length} · ${p.mastered}／${p.total} 已精熟`, host, 'vocab-round-state');
+        node('p', `第 ${session.round} 輪 · ${wholePass ? '本輪' : '本組'} ${roundComplete}／${session.active.length} · ${p.mastered}／${p.total} ${wholePass ? '已答對兩次' : '已精熟'}`, host, 'vocab-round-state');
     }
     async function answer(response) {
         if (session.options.sound) { try { audioContext ||= new (window.AudioContext || window.webkitAudioContext)(); void audioContext.resume(); } catch {} }
-        let next = submitAnswer(session, deck, response); if (next === session) return;
+        const answeredAt = Date.now();
+        let next = submitAnswer(session, deck, response, answeredAt); if (next === session) return;
         const q = next.current, card = deck.cards.find(c => c.id === q.cardId);
-        if (session.options.grading === 'relaxed' && !next.feedback.correct && ['written', 'spell'].includes(q.type) && String(response).trim()) {
+        if (gradingFor(session, deck) === 'relaxed' && !next.feedback.correct && q.type === 'written' && String(response).trim()) {
             report('批改中…');
             try { if (await semanticGrade({ prompt: promptFor(card, q.direction), expected: answerFor(card, q.direction), response: String(response), aliases: answersFor(card, q.direction) })) { next = overrideCorrect(next); next.feedback.requiresAcknowledgement = true; } }
             catch { report('語意批改暫時無法使用，已使用嚴格批改。'); }
         }
         const event = newEvent('answer', { cardId: card.id, revision: card.revision, direction: q.direction, correct: next.feedback.correct, response: next.feedback.response.slice(0, 4000), type: q.type,
-            ordinal: next.ordinal, initialStage: Math.min(1, next.feedback.before.stage), sessionId: next.id, generation: next.generation, responseTimeMs: Math.max(0, Date.now() - questionAt) });
+            ordinal: next.ordinal, initialStage: Math.min(1, next.feedback.before.stage), sessionId: next.id, generation: next.generation, responseTimeMs: Math.max(0, answeredAt - questionAt) });
         next.feedback.eventId = event.id; await persist(event, next); session = next; render();
         if (session.options.sound) soundFeedback(next.feedback.correct);
         if (next.feedback.correct && !next.feedback.requiresAcknowledgement) timer = setTimeout(() => { if (phase === 'learn' && !host.hidden && !dialog.open) void action(() => nextLearn()); }, 950);
     }
     async function nextLearn() { const next = advanceSession(session, deck); if (next === session) return; await persist(null, next); session = next; render(); }
     function renderLearn() {
-        studyHeader(session.options.practice ? '持續練習' : 'Learn', () => settings());
+        studyHeader(session.options.practice ? '持續練習' : activityName(session), () => settings());
         if (session.options.practice) node('p', `已作答 ${session.ordinal} 題`, host, 'vocab-round-state'); else learnProgress();
         if (session.completed || session.checkpoint) { renderCheckpoint(); return; }
         const q = session.current, card = deck.cards.find(c => c.id === q.cardId), feedback = session.feedback;
         const currentQuestionKey = `${session.id}:${q.key}:${session.ordinal}`;
         if (!feedback && questionKey !== currentQuestionKey) { questionAt = Date.now(); questionKey = currentQuestionKey; }
         const panel = node('section', null, host, `vocab-question ${feedback ? feedback.correct ? 'is-correct' : 'is-wrong' : ''}`);
-        const top = node('div', null, panel, 'vocab-question-top'); node('span', q.direction === 'term' ? '解釋' : '單字', top, 'vocab-muted'); starButton(card, top);
+        const top = node('div', null, panel, 'vocab-question-top'); node('span', q.type === 'spell' ? q.direction === 'term' ? '單字' : '解釋' : q.direction === 'term' ? '解釋' : '單字', top, 'vocab-muted'); starButton(card, top);
         if (!feedback && session.facts[q.key].wrong && !session.facts[q.key].streak) node('span', '再次練習', top, 'vocab-retry-label');
         icon('◖))', '朗讀題目', top, () => speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'));
         if (q.type === 'spell') { node('h2', '聽寫', panel); button('播放單字', panel, () => speak(answerFor(card, q.direction), q.direction)); }
@@ -396,13 +403,17 @@ export function mountFlashcard({ host, activate }) {
                     }; draw();
                 }
                 form.onsubmit = e => { e.preventDefault(); if (!input.value.trim()) return; void action(() => answer(input.value)); };
-                const partial = writingHint(answerFor(card, q.direction));
+                const partial = q.type === 'spell' ? '' : writingHint(answerFor(card, q.direction));
                 if (partial) {
                     const output = node('div', q.hintShown ? partial : '', panel, 'vocab-written-hint'); output.hidden = !q.hintShown; output.setAttribute('role', 'status');
                     const reveal = button('顯示提示', panel, async () => { q.hintShown = true; await persist(null, session); output.hidden = false; output.textContent = partial; reveal.hidden = true; input.focus({ preventScroll: true }); }, 'vocab-link'); reveal.hidden = !!q.hintShown;
                 }
                 if (!host.hidden) input.focus({ preventScroll: true });
-            } else if (!feedback.skipped) { node('p', '你的答案', panel, 'vocab-muted'); text(feedback.response, panel, feedback.correct ? 'vocab-correct-answer' : 'vocab-incorrect-answer'); }
+            } else if (!feedback.skipped) {
+                node('p', '你的答案', panel, 'vocab-muted');
+                if (q.type === 'spell' && !feedback.correct) spellText(spellingFeedback(feedback.response, feedback.expected).response, panel, 'vocab-incorrect-answer');
+                else text(feedback.response, panel, feedback.correct ? 'vocab-correct-answer' : 'vocab-incorrect-answer');
+            }
         } else if (q.type === 'truefalse') {
             text(q.statement, panel, 'vocab-statement');
             if (!feedback) { const choices = node('div', null, panel, 'vocab-choices'); button('是', choices, () => answer(true), 'vocab-choice'); button('否', choices, () => answer(false), 'vocab-choice'); }
@@ -412,7 +423,11 @@ export function mountFlashcard({ host, activate }) {
         }
         if (!feedback) button('不知道', panel, () => answer(q.type === 'multi' ? [] : q.type === 'truefalse' ? !q.truth : q.type === 'flash' ? false : ''), 'vocab-dontknow');
         if (feedback) {
-            if ((!feedback.correct && (!feedback.skipped || !feedback.retyped) || feedback.requiresAcknowledgement) && q.type !== 'choice' && q.type !== 'multi') { node('p', '正確答案', panel, 'vocab-muted'); text(feedback.expected, panel, 'vocab-correct-answer'); }
+            if ((!feedback.correct && (!feedback.skipped || !feedback.retyped || session.options.activity !== 'learn') || feedback.requiresAcknowledgement) && q.type !== 'choice' && q.type !== 'multi') {
+                node('p', '正確答案', panel, 'vocab-muted');
+                if (q.type === 'spell' && !feedback.correct) { spellText(spellingFeedback(feedback.response, feedback.expected).expected, panel, 'vocab-correct-answer'); button('逐字拼讀', panel, () => speakSpelling(feedback.expected, q.direction)); }
+                else text(feedback.expected, panel, 'vocab-correct-answer');
+            }
             const footer = node('div', null, panel, 'vocab-feedback');
             if (feedback.correct && feedback.requiresAcknowledgement && ['written', 'spell'].includes(q.type)) {
                 button('我的答案其實錯誤', footer, async () => { const next = overrideCorrect(session, Date.now(), false); await persist(newEvent('override', { originalId: feedback.eventId, correct: false }), next); session = next; render(); }, 'vocab-link');
@@ -423,25 +438,28 @@ export function mountFlashcard({ host, activate }) {
                     const form = node('form', null, footer, 'vocab-answer-form'); const correction = field('重打正確答案', form); correction.autocomplete = 'off'; correction.spellcheck = false;
                     const check = node('button', '確認訂正', form, 'vocab-button vocab-primary'); check.type = 'submit';
                     const status = node('p', '', form); status.setAttribute('role', 'status');
-                    form.onsubmit = e => { e.preventDefault(); void action(async () => { if (!gradeAnswer(correction.value, answersFor(card, q.direction))) { status.textContent = '請輸入畫面上的正確答案。'; return; } const next = clone(session); next.feedback.retyped = true; next.updatedAt = Date.now(); await persist(newEvent('repair', { cardId: card.id, direction: q.direction, originalId: feedback.eventId }), next); session = next; await nextLearn(); }); };
+                    form.onsubmit = e => { e.preventDefault(); void action(async () => { if (!gradeAnswer(correction.value, q.type === 'spell' ? [answerFor(card, q.direction)] : answersFor(card, q.direction))) { status.textContent = '請輸入畫面上的正確答案。'; return; } const next = clone(session); next.feedback.retyped = true; next.updatedAt = Date.now(); await persist(newEvent('repair', { cardId: card.id, direction: q.direction, originalId: feedback.eventId }), next); session = next; await nextLearn(); }); };
                     correction.focus({ preventScroll: true });
                 }
             }
-            if (feedback.retyped) { node('p', feedback.correct ? '按 Enter 繼續' : q.type === 'choice' ? '點正確答案或按 Enter 繼續' : '按 Enter 繼續', footer, 'vocab-muted'); button('繼續', footer, () => nextLearn(), 'vocab-primary'); }
+            if (feedback.retyped) { node('p', feedback.correct ? '按 Enter 繼續' : q.type === 'choice' ? '點正確答案或按 Enter 繼續' : '按 Enter 繼續', footer, 'vocab-muted'); button(session.options.activity === 'spell' && !feedback.correct ? '重試' : '繼續', footer, () => nextLearn(), 'vocab-primary'); }
         }
         if (!feedback && (session.options.audio || q.type === 'spell')) timer = setTimeout(() => { if (!host.hidden && !dialog.open) speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'); }, 120);
+        if (feedback && !feedback.correct && session.options.activity === 'spell') timer = setTimeout(() => { if (!host.hidden && !dialog.open) speakSpelling(feedback.expected, q.direction); }, 120);
     }
+    function spellText(parts, parent, cls) { const e = node('div', null, parent, cls + ' vocab-spelling'); for (const part of parts) node(part.incorrect ? 'mark' : 'span', part.text, e); return e; }
     function renderCheckpoint() {
         const panel = node('section', null, host, 'vocab-checkpoint');
         const p = sessionProgress(session); const ring = node('div', `${p.percent}%`, panel, 'vocab-completion-ring'); ring.style.setProperty('--progress', `${p.percent * 3.6}deg`);
-        node('h2', session.completed ? '本次學習完成' : '本輪完成', panel); stats(panel, p);
+        node('h2', session.completed ? '本次學習完成' : '本輪完成', panel); stats(panel, p, session.options.activity !== 'learn');
         const answers = session.roundAnswers, right = answers.filter(a => a.correct).length;
-        node('p', `本輪答對 ${right} 題 · 答錯 ${answers.length - right} 題`, panel, 'vocab-muted');
+        const period = session.options.activity === 'spell' ? '本次' : '本輪';
+        node('p', `${period}答對 ${right} 題 · 答錯 ${answers.length - right} 題`, panel, 'vocab-muted');
         const missed = [...new Set(answers.filter(a => !a.correct).map(a => a.cardId))];
-        if (missed.length) { node('h3', '本輪曾答錯的單字', panel); const list = node('div', null, panel, 'vocab-missed'); for (const cardId of missed) { const card = deck.cards.find(c => c.id === cardId); const row = node('div', null, list); text(card.term, row); text(card.definition, row); } }
+        if (missed.length) { node('h3', period + '曾答錯的單字', panel); const list = node('div', null, panel, 'vocab-missed'); for (const cardId of missed) { const card = deck.cards.find(c => c.id === cardId); const row = node('div', null, list); text(card.term, row); text(card.definition, row); } }
         const studied = [...new Set(answers.map(a => a.cardId))];
         if (studied.length) {
-            const details = node('details', null, panel, 'vocab-round-terms'); node('summary', `本輪練習的 ${studied.length} 張字卡`, details); details.open = !missed.length;
+            const details = node('details', null, panel, 'vocab-round-terms'); node('summary', `${period}練習的 ${studied.length} 張字卡`, details); details.open = !missed.length;
             const list = node('div', null, details, 'vocab-missed');
             for (const cardId of studied) {
                 const card = deck.cards.find(c => c.id === cardId), row = node('div', null, list); text(card.term, row); text(card.definition, row);
@@ -453,14 +471,15 @@ export function mountFlashcard({ host, activate }) {
         else {
             button('繼續練習', panel, async () => { const next = createSession(deck, study, { ...session.options, practice: true, scope: session.options.scope === 'starred' ? 'starred' : 'all' }); await persist(null, next); session = next; render(); }, 'vocab-primary');
             button('返回字卡集', panel, () => { phase = 'detail'; render(); });
-            button('重新開始 Learn', panel, async () => { study = await saveStudy(deck.id, study, newEvent('reset', { generation: id() })); const next = createSession(deck, study, { ...session.options, practice: false, familiarity: 'new', freshStart: true }); await persist(null, next); session = next; render(); });
+            button('重新開始 ' + activityName(session), panel, async () => { if (session.options.activity === 'learn') study = await saveStudy(deck.id, study, newEvent('reset', { generation: id() })); const next = createSession(deck, study, { ...session.options, practice: false, familiarity: 'new', freshStart: true }); await persist(null, next); session = next; render(); });
         }
     }
     async function nextRound() { const next = continueRound(session, deck); await persist(null, next); session = next; render(); }
     function speak(value, side) {
         if (!window.speechSynthesis) throw new Error('此瀏覽器不支援朗讀。');
-        window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(value); utterance.lang = side === 'term' ? deck.termLanguage : deck.definitionLanguage; utterance.rate = 0.9; window.speechSynthesis.speak(utterance);
+        window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(value); utterance.lang = side === 'term' ? deck.termLanguage : deck.definitionLanguage; utterance.rate = phase === 'learn' ? session.options.audioRate || 0.9 : 0.9; window.speechSynthesis.speak(utterance);
     }
+    function speakSpelling(value, side) { speak(Array.from(value).join(' . '), side); }
     function soundFeedback(correct) {
         if (!audioContext || host.hidden) return;
         try {
@@ -570,6 +589,6 @@ export function mountFlashcard({ host, activate }) {
             phase = 'list'; message = '載入字卡集…'; render();
             try { const result = await loadDecks(); safeOwner(); if (ticket !== operation) return; decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); } catch (e) { report(e.message); }
         },
-        resetForUser(uid) { if (uid === owner) return; operation++; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
+        resetForUser(uid) { if (uid === owner) return; operation++; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
     };
 }

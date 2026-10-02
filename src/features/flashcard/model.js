@@ -1,8 +1,8 @@
 // Independent vocabulary sets. Quizlet's undisclosed coefficients are not used.
 export const MAX_CARDS = 2000;
-export const LEARN_VERSION = 2;
+export const LEARN_VERSION = 3;
 export const RECOGNITION_WINDOW = 10;
-export const DEFAULT_OPTIONS = { direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'strict', retype: false, audio: false, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
+export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'auto', defaultLanguage: 'zh-TW', retype: false, audio: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
 export const id = () => crypto.randomUUID();
 export const clone = value => JSON.parse(JSON.stringify(value));
 export const normalize = value => String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase().replace(/\s+/g, ' ');
@@ -17,10 +17,12 @@ export function gradeAnswer(input, answers, grading = 'strict') {
     return answers.some(answer => {
         const expected = answerKey(answer);
         if (key === expected) return true;
-        if (grading !== 'moderate' || /[\d+−=<>/]/.test(expected) || expected.length < 5 || /[^a-zÀ-ž\s-]/i.test(expected)) return false;
+        if (grading !== 'moderate' || /[\d+−=<>/]/.test(expected) || /[^a-zÀ-ž\s-]/i.test(expected)) return false;
         const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
         const a = strip(key), b = strip(expected);
         if (a === b) return true;
+        // Short words accept an omitted/extra letter, but not a different same-length word.
+        if (b.length < 3 || a.length === b.length && b.length < 5) return false;
         if (Math.abs(a.length - b.length) > 1) return false;
         let i = 0, j = 0, errors = 0;
         while (i < a.length && j < b.length) {
@@ -43,7 +45,7 @@ export function parseImport(text, options = { term: 'tab', row: 'newline' }) {
     const { term, row } = delimiters(options);
     const input = String(text).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
     if (input.length > 4000000) throw new Error('匯入文字超過 4 MB，請分批匯入。');
-    // Delimiter based, matching Quizlet's paste tool: only the first term delimiter splits a row.
+    // Teah's delimiter parser preserves the definition after the first separator.
     const cards = [], errors = [];
     for (const [i, line] of input.split(row).entries()) {
         if (!line.trim()) continue;
@@ -85,11 +87,21 @@ export const factKey = (cardId, direction) => `${cardId}_${direction}`;
 export const answerFor = (card, direction) => direction === 'term' ? card.term : card.definition;
 export const promptFor = (card, direction) => direction === 'term' ? card.definition : card.term;
 export const answersFor = (card, direction) => [answerFor(card, direction), ...(direction === 'term' ? card.termAliases || [] : card.definitionAliases || [])];
+export function defaultGrading(deck, defaultLanguage = DEFAULT_OPTIONS.defaultLanguage) {
+    const language = value => String(value || '').toLowerCase().split('-')[0];
+    const term = language(deck.termLanguage), definition = language(deck.definitionLanguage);
+    if (term !== definition || ['zh', 'ja', 'math', 'chemistry', 'akkadian', 'photo'].includes(term)) return 'strict';
+    return deck.cards.length >= 3 && ['en', 'fr', 'de', 'es'].includes(term) && term === language(defaultLanguage) ? 'relaxed' : 'moderate';
+}
+export const gradingFor = (session, deck) => session.options.activity === 'spell' ? 'strict' : session.options.grading === 'auto' ? defaultGrading(deck, session.options.defaultLanguage) : session.options.grading;
+export const activityName = session => session.options.activity === 'write' ? 'Write' : session.options.activity === 'spell' ? 'Spell' : 'Learn';
+const writtenActivity = session => ['write', 'spell'].includes(session.options.activity);
+const sessionCredit = (session, key) => writtenActivity(session) ? session.writeCredits[key] || 0 : creditOf(session.facts[key]);
 export function hydrateSession(value) {
     const s = clone(value);
     s.order = Object.values(s.order || {});
     if (s.mode === 'flash') s.ratings ||= {};
-    else { s.active = Object.values(s.active || {}); s.scope = Object.values(s.scope || {}); s.roundAnswers = Object.values(s.roundAnswers || {}); s.options.types = Object.values(s.options.types || {}); s.flowQueue = Object.values(s.flowQueue || {}); s.retryQueue = Object.values(s.retryQueue || {}); s.roundSeen = Object.values(s.roundSeen || {}); s.practiceQueue = Object.values(s.practiceQueue || {}); }
+    else { s.active = Object.values(s.active || {}); s.scope = Object.values(s.scope || {}); s.roundAnswers = Object.values(s.roundAnswers || {}); s.options.types = Object.values(s.options.types || {}); if (s.options.learnTypes) s.options.learnTypes = Object.values(s.options.learnTypes); s.flowQueue = Object.values(s.flowQueue || {}); s.retryQueue = Object.values(s.retryQueue || {}); s.roundSeen = Object.values(s.roundSeen || {}); s.practiceQueue = Object.values(s.practiceQueue || {}); s.writeCredits ||= {}; s.passMisses = Object.values(s.passMisses || {}); }
     return s;
 }
 export function freshFact() { return { stage: 0, credit: 0, correct: 0, wrong: 0, streak: 0, lastAt: 0, interval: 0, dueAt: 0, lastOrdinal: -10 }; }
@@ -155,6 +167,9 @@ export function progressCounts(deck, projected, direction = 'term') {
 }
 export function createSession(deck, study = {}, input = {}, now = Date.now(), random = Math.random) {
     const options = { ...DEFAULT_OPTIONS, ...input };
+    if (!['learn', 'write', 'spell'].includes(options.activity)) options.activity = 'learn';
+    if (options.activity !== 'learn') { options.goal = 'master'; options.types = [options.activity === 'spell' ? 'spell' : 'written']; }
+    options.audioRate = options.audioRate === 0.65 ? 0.65 : 0.9;
     options.chunkSize = Math.max(3, Math.min(20, Number(options.chunkSize) || 7));
     options.types = [...new Set(options.types)].filter(t => ['choice', 'multi', 'written', 'truefalse', 'flash', 'spell'].includes(t));
     if (!options.types.length) throw new Error('請至少選擇一種題型。');
@@ -178,7 +193,7 @@ export function createSession(deck, study = {}, input = {}, now = Date.now(), ra
         flowQueue.push(...window.filter(key => creditOf(facts[key]) === 0).map(key => ({ key, target: 1 })));
         if (goal === 2) flowQueue.push(...window.filter(key => creditOf(facts[key]) < 2).map(key => ({ key, target: 2 })));
     }
-    const session = { id: id(), version: LEARN_VERSION, mode: 'learn', deckId: deck.id, deckRevision: deck.revision, generation: projected.generation, options, scope, order, facts, flowQueue, retryQueue: [], practiceQueue: [], roundSeen: [], roundRepair: false, active: [], chunk: 0, chunkTarget: 1, chunkGoals: {},
+    const session = { id: id(), version: LEARN_VERSION, mode: 'learn', deckId: deck.id, deckRevision: deck.revision, generation: projected.generation, options, scope, order, facts, flowQueue: options.activity === 'learn' ? flowQueue : [], writeCredits: Object.fromEntries(order.map(key => [key, 0])), passMisses: [], retryQueue: [], practiceQueue: [], roundSeen: [], roundRepair: false, active: [], chunk: 0, chunkTarget: 1, chunkGoals: {},
         ordinal: 0, round: 1, roundAnswers: [], lastKey: '', current: null, feedback: null, checkpoint: false, completed: false, createdAt: now, updatedAt: now };
     return selectNext(session, deck, now, random);
 }
@@ -204,8 +219,37 @@ export function writingSymbols(deck, direction) {
     for (const card of deck.cards) for (const char of plainText(answerFor(card, direction)).match(/[\p{Script=Greek}\p{Script=Cyrillic}À-ÖØ-öø-ÿ±×÷≤≥∞∑√²³]/gu) || []) found.add(char.toLocaleLowerCase());
     return [...found].slice(0, 24);
 }
+export function spellingFeedback(response, expected) {
+    const a = Array.from(plainText(response).trim()), b = Array.from(plainText(expected).trim());
+    const parts = (chars, marks) => {
+        const result = [];
+        chars.forEach((text, i) => { const incorrect = !!marks[i]; if (result.at(-1)?.incorrect === incorrect) result.at(-1).text += text; else result.push({ text, incorrect }); });
+        return result;
+    };
+    // Bounded edit alignment keeps long pasted answers from allocating an unbounded matrix.
+    if (a.length > 256 || b.length > 256) return { response: parts(a, a.map(() => true)), expected: parts(b, b.map(() => true)) };
+    const cost = Array.from({ length: a.length + 1 }, () => new Uint16Array(b.length + 1));
+    for (let i = 0; i <= a.length; i++) cost[i][0] = i;
+    for (let j = 0; j <= b.length; j++) cost[0][j] = j;
+    const same = (i, j) => a[i].toLocaleLowerCase() === b[j].toLocaleLowerCase();
+    for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) cost[i][j] = Math.min(cost[i - 1][j] + 1, cost[i][j - 1] + 1, cost[i - 1][j - 1] + Number(!same(i - 1, j - 1)));
+    const wrongA = [], wrongB = []; let i = a.length, j = b.length;
+    while (i || j) {
+        if (i && j && cost[i][j] === cost[i - 1][j - 1] + Number(!same(i - 1, j - 1))) { if (!same(i - 1, j - 1)) { wrongA[i - 1] = true; wrongB[j - 1] = true; } i--; j--; }
+        else if (i && cost[i][j] === cost[i - 1][j] + 1) wrongA[--i] = true;
+        else wrongB[--j] = true;
+    }
+    return { response: parts(a, wrongA), expected: parts(b, wrongB) };
+}
 function planRound(session) {
     session.chunk++; session.chunkGoals = {}; session.roundSeen = [];
+    if (writtenActivity(session)) {
+        const pending = session.order.filter(key => sessionCredit(session, key) < 2);
+        session.active = [...new Set([...session.passMisses.filter(key => pending.includes(key)), ...pending])];
+        session.chunkGoals = Object.fromEntries(session.active.map(key => [key, 2]));
+        session.chunkTarget = 2; session.roundRepair = false;
+        return;
+    }
     const take = queue => {
         while (queue.length && session.active.length < session.options.chunkSize) {
             const step = queue[0];
@@ -229,7 +273,7 @@ export function roundDone(session, key) {
 }
 export function selectNext(value, deck, now = Date.now(), random = Math.random) {
     const session = clone(value), goal = goalStage(session);
-    const pending = session.order.filter(k => creditOf(session.facts[k]) < goal);
+    const pending = session.order.filter(k => sessionCredit(session, k) < goal);
     if (!pending.length && !session.options.practice) { session.completed = true; session.current = null; return session; }
     let key;
     if (session.options.practice) {
@@ -241,16 +285,20 @@ export function selectNext(value, deck, now = Date.now(), random = Math.random) 
         if (!session.active.length) planRound(session);
         const needsPractice = session.active.filter(k => !roundDone(session, k));
         if (!needsPractice.length) { session.checkpoint = true; session.current = null; return session; }
-        let eligible = needsPractice.filter(k => session.ordinal - session.facts[k].lastOrdinal >= (session.facts[k].wrong ? 3 : 2));
-        if (!eligible.length) eligible = needsPractice;
-        const alternative = eligible.filter(k => k !== session.lastKey);
-        if (alternative.length) eligible = alternative;
-        eligible.sort((a, b) => Number(session.roundSeen.includes(a)) - Number(session.roundSeen.includes(b)) || session.active.indexOf(a) - session.active.indexOf(b));
-        key = eligible[0];
+        if (writtenActivity(session)) key = needsPractice[0];
+        else {
+            let eligible = needsPractice.filter(k => session.ordinal - session.facts[k].lastOrdinal >= (session.facts[k].wrong ? 3 : 2));
+            if (!eligible.length) eligible = needsPractice;
+            const alternative = eligible.filter(k => k !== session.lastKey);
+            if (alternative.length) eligible = alternative;
+            eligible.sort((a, b) => Number(session.roundSeen.includes(a)) - Number(session.roundSeen.includes(b)) || session.active.indexOf(a) - session.active.indexOf(b));
+            key = eligible[0];
+        }
     }
     const item = session.scope.find(f => f.key === key), card = deck.cards.find(c => c.id === item.cardId), fact = session.facts[key];
     const types = session.options.types;
     let type = fact.stage >= 1 && types.includes('written') ? 'written' : types.includes('choice') ? 'choice' : types[0];
+    if (writtenActivity(session)) type = session.options.activity === 'spell' ? 'spell' : 'written';
     const expected = answerFor(card, item.direction), accepted = new Set(answersFor(card, item.direction).map(answerKey)), binary = binaryOptions(expected);
     const candidates = new Map();
     for (const other of deck.cards) {
@@ -264,7 +312,7 @@ export function selectNext(value, deck, now = Date.now(), random = Math.random) 
     const related = deck.cards.filter(c => normalize(promptFor(c, item.direction)) === normalize(promptFor(card, item.direction)));
     const valid = new Map(related.flatMap(c => answersFor(c, item.direction)).map(a => [answerKey(a), a]));
     const correctAnswers = [...valid.values()].slice(0, 3);
-    if (fact.stage === 0 && types.includes('multi') && correctAnswers.length > 1) type = 'multi';
+    if (!writtenActivity(session) && fact.stage === 0 && types.includes('multi') && correctAnswers.length > 1) type = 'multi';
     let choices = [], statement = '', truth = true;
     // Quizlet presents Yes/No rather than long explanations for binary definitions.
     const choiceAnswer = type === 'choice' && binary ? binary.answer : expected;
@@ -278,22 +326,31 @@ export function selectNext(value, deck, now = Date.now(), random = Math.random) 
 export function submitAnswer(value, deck, response, now = Date.now()) {
     if (!value.current || value.feedback || value.checkpoint || value.completed) return value;
     const session = clone(value), q = session.current, card = deck.cards.find(c => c.id === q.cardId);
-    const correct = q.type === 'multi' ? Array.isArray(response) && response.length === q.correctAnswers.length && q.correctAnswers.every(a => response.includes(a)) : q.type === 'flash' ? response === true : q.type === 'truefalse' ? response === q.truth : gradeAnswer(response, q.type === 'choice' ? [q.choiceAnswer] : answersFor(card, q.direction), session.options.grading);
+    const exact = q.type === 'choice' || q.type === 'spell';
+    const accepted = q.type === 'choice' ? [q.choiceAnswer] : q.type === 'spell' ? [answerFor(card, q.direction)] : answersFor(card, q.direction);
+    const correct = q.type === 'multi' ? Array.isArray(response) && response.length === q.correctAnswers.length && q.correctAnswers.every(a => response.includes(a)) : q.type === 'flash' ? response === true : q.type === 'truefalse' ? response === q.truth : gradeAnswer(response, accepted, exact ? 'strict' : gradingFor(session, deck));
     const savedResponse = q.type === 'multi' ? JSON.stringify(response) : String(response);
     const before = clone(session.facts[q.key]);
+    const beforeWriteCredit = session.writeCredits[q.key] || 0;
     session.ordinal++;
     session.facts[q.key] = { ...gradeFact(before, correct, now, session.ordinal), revision: card.revision };
+    if (writtenActivity(session)) session.writeCredits[q.key] = Math.min(2, beforeWriteCredit + Number(correct));
     session.roundAnswers.push({ key: q.key, cardId: card.id, direction: q.direction, correct, response: savedResponse, type: q.type });
     if (session.options.practice) session.roundAnswers = session.roundAnswers.slice(-20);
-    if (!session.roundSeen.includes(q.key)) session.roundSeen.push(q.key);
-    session.feedback = { correct, skipped: !correct && !savedResponse && ['written', 'spell'].includes(q.type), response: savedResponse, expected: answerFor(card, q.direction), before, retyped: !session.options.retype || correct || !['written', 'spell'].includes(q.type) };
+    if ((session.options.activity !== 'spell' || correct) && !session.roundSeen.includes(q.key)) session.roundSeen.push(q.key);
+    session.feedback = { correct, skipped: !correct && !savedResponse && ['written', 'spell'].includes(q.type), response: savedResponse, expected: answerFor(card, q.direction), before, beforeWriteCredit, answeredAt: now, retyped: !session.options.retype || correct || !['written', 'spell'].includes(q.type) };
     session.lastKey = q.key; session.updatedAt = now;
     return session;
 }
 export function overrideCorrect(value, now = Date.now(), correct = true) {
     const session = clone(value);
     if (!session.feedback || session.feedback.correct === correct) return session;
-    session.facts[session.current.key] = { ...gradeFact(session.feedback.before, correct, now, session.ordinal), revision: session.facts[session.current.key].revision };
+    session.facts[session.current.key] = { ...gradeFact(session.feedback.before, correct, session.feedback.answeredAt ?? now, session.ordinal), revision: session.facts[session.current.key].revision };
+    if (writtenActivity(session)) session.writeCredits[session.current.key] = Math.min(2, session.feedback.beforeWriteCredit + Number(correct));
+    if (session.options.activity === 'spell') {
+        session.roundSeen = session.roundSeen.filter(key => key !== session.current.key);
+        if (correct) session.roundSeen.push(session.current.key);
+    }
     session.feedback.correct = correct; session.feedback.retyped = correct || !session.options.retype;
     session.roundAnswers.at(-1).correct = correct; session.updatedAt = now;
     return session;
@@ -307,23 +364,27 @@ export function advanceSession(value, deck, now = Date.now(), random = Math.rand
         return selectNext(session, deck, now, random);
     }
     const session = clone(value); session.feedback = null; session.current = null; session.updatedAt = now;
-    if (session.order.every(k => creditOf(session.facts[k]) >= goalStage(session))) { session.completed = true; return session; }
-    if (session.active.every(k => roundDone(session, k))) { session.checkpoint = true; return session; }
+    if (session.order.every(k => sessionCredit(session, k) >= goalStage(session))) { session.completed = true; return session; }
+    if (session.active.every(k => roundDone(session, k))) {
+        if (session.options.activity === 'spell') { session.round++; session.active = []; return selectNext(session, deck, now, random); }
+        session.checkpoint = true; return session;
+    }
     return selectNext(session, deck, now, random);
 }
 export function continueRound(value, deck, now = Date.now(), random = Math.random) {
     const session = clone(value); session.round++; session.roundAnswers = []; session.checkpoint = false;
+    if (writtenActivity(session)) session.passMisses = [...new Set(value.roundAnswers.filter(answer => !answer.correct).map(answer => answer.key))];
     for (const key of session.active) {
-        if (creditOf(session.facts[key]) < session.chunkGoals[key] && !session.retryQueue.some(step => step.key === key)) session.retryQueue.push({ key, target: session.chunkGoals[key] });
+        if (!writtenActivity(session) && creditOf(session.facts[key]) < session.chunkGoals[key] && !session.retryQueue.some(step => step.key === key)) session.retryQueue.push({ key, target: session.chunkGoals[key] });
     }
     session.active = [];
     return selectNext(session, deck, now, random);
 }
 export function sessionProgress(session) {
-    const stages = session.order.map(k => session.facts[k].stage), goal = goalStage(session);
-    const earned = session.order.reduce((n, k) => n + Math.min(goal, creditOf(session.facts[k])), 0);
+    const stages = session.order.map(k => writtenActivity(session) ? sessionCredit(session, k) : session.facts[k].stage), goal = goalStage(session);
+    const earned = session.order.reduce((n, k) => n + Math.min(goal, sessionCredit(session, k)), 0);
     // Feedback is shown before the progress marker advances to the next question.
-    const displayedEarned = session.feedback ? earned - Math.min(goal, creditOf(session.facts[session.current.key])) + Math.min(goal, creditOf(session.feedback.before)) : earned;
+    const displayedEarned = session.feedback ? earned - Math.min(goal, sessionCredit(session, session.current.key)) + Math.min(goal, writtenActivity(session) ? session.feedback.beforeWriteCredit : creditOf(session.feedback.before)) : earned;
     return { earned, displayedEarned, total: stages.length, new: stages.filter(s => !s).length, learning: stages.filter(s => s === 1).length, mastered: stages.filter(s => s === 2).length,
-        completed: session.order.filter(k => creditOf(session.facts[k]) >= goal).length, percent: Math.round(earned / (stages.length * goal) * 100) };
+        completed: session.order.filter(k => sessionCredit(session, k) >= goal).length, percent: Math.round(earned / (stages.length * goal) * 100) };
 }

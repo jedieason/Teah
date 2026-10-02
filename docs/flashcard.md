@@ -6,6 +6,8 @@
 
 使用 Quizlet 官方說明、官方技術文章，以及公開字卡集的桌面版實際操作。實測字卡集為 [STAT 121: Lesson 29，17 張](https://quizlet.com/590765484/stat-121-lesson-29-flash-cards/)。實測涵蓋 Flashcards、Learn 的完整 17 張辨識／書寫交替、跨輪錯題回問、完成頁與持續練習、選擇題的答對／答錯／不知道、重試與結算、完整選項、Write 錯誤結果。建立頁起初要求登入，後續重新開啟遇到人工驗證；未操作驗證，因此匯入／建立／編輯以官方文件為依據，沒有冒稱已完成登入後全流程實測。
 
+另開啟 [Basic Chinese Fruits and Vegetables Vocabulary for Beginners，19 張](https://quizlet.com/1169189467/basic-chinese-fruits-and-vegetables-vocabulary-for-beginners-flash-cards/)，確認其中的中文／英文短單字、拼音、句子與重複單字。進入 Learn 時出現 Press & Hold 人工驗證，尚未取得完成驗證的同意；沒有以這個集合宣稱已核對短單字的 Learn 排題或提示規則。Write／Spell 的完整排程補充以下官方文件，仍沒有完成原站兩種模式的全程對照。
+
 Quizlet 未公開當前 Learn 完整排程程式、模型權重、所有帳戶版本與實驗分組。本版重現可觀察的主要學習流程，使用可檢查的 Teah 排程，不宣稱取得 Quizlet 的專有演算法或達成每一帳戶版本的像素級一致。
 
 以下分為：**文件確認**、**當次實測**、**Teah 設計**。歷史文章只能支持其發表時的產品／研究方向。
@@ -159,6 +161,22 @@ Quizlet 2017 年技術文章描述以答題表現、時間、先前練習間距�
 
 Teah 的持續模式每循環打亂此範圍的所有 fact，錯題插入約兩題之後，小集合放寬；有其他卡時避免立即重問同一張。沒有每七題結算、沒有終止條件；使用者可從上方返回。session 只保留最近 20 次練習答案，完整歷史仍在 events。首次題 J、沒有進度條與錯誤後下一題 K 是實測；整個循環隨機規則、錯題間距與 20 次窗口是 Teah 設計，尚未取得 Quizlet 持續模式的完整順序。
 
+### Write 與 Spell：獨立的本次進度
+
+[官方 Write 說明](https://help.quizlet.com/hc/en-us/articles/360030990531-Studying-with-Write-mode)確認第一輪先作答集合內每一題，後續輪次針對錯題，完成需要每題答對兩次；不知道會揭露正解，可手動認定原答案正確。它不等同於 Learn 只勾書寫題，也不能套用本版 Learn 的七題／十張排程。
+
+Teah 的 `options.activity` 為 `learn`、`write` 或 `spell`；三者從同一 Learn 設定入口啟動，當前 session 仍保存在 `/sessions/learn`。Write／Spell 另有 `writeCredits[key]`（0–2），開始一次新練習時歸零，不套用既有 Learn credit、已看過或 Flashcards 知道分類。每次答題仍寫入不可重複的 answer event，更新集合的總體 facts；本次完成與總體精熟分開。
+
+- **Write 第一輪**：整個所選範圍依本次排序各作答一次，錯題在這輪不立刻再問，也沒有七題小結。17 張含兩題錯誤時，第 17 次作答才結算，進度為 15／34。
+- **Write 後續輪**：上輪曾錯題先排，再排尚未取得兩次正確的其他題，每題這輪作答一次。沿用例子，第二輪全對到 32／34，第三輪只剩原本兩張；答對後 34／34 完成。錯誤不抹掉本次已取得的一次正確。
+- **改分與訂正**：手動改分從 `beforeWriteCredit` 重算當題信用，可以雙向修正，不增加 ordinal。重打正解只產生 repair，不增加 Write／Spell 信用；重新整理恢復原題、提示、結果與本次信用。
+- **Write 不知道**：顯示正解後等待繼續。這與實測一般 Learn 的書寫不知道僅顯示 Skipped 有別。
+- **重新開始 Write／Spell**：只建立這個模式的新 session 信用，不重設整個 Learn 歷史世代。
+
+[官方 Spell 說明](https://help.quizlet.com/hc/en-au/articles/360030645752-Studying-with-Spell-mode)確認聽音輸入、每字正確兩次、拼錯字元標示、逐字拼讀與重試，並可選慢速語音。Teah 採嚴格拼字，不用語意批改接受同義詞；拼錯後顯示輸入與標準答案的字元差異、自動逐字拼讀，按重試回到同一字。答對一次後問其他字，之後完整再走尚未答對兩次者；全部達兩次才顯示完成結果。語音速度可為一般 0.9 或慢速 0.65，使用瀏覽器語音與所選答案語言；沒有把這些速度當成 Quizlet 原始參數。
+
+**尚屬實作推導**：Write 第二輪錯題與其他題的精確排序、是否共用先前模式的信用、Spell 的完整 pass 順序及同題立即重試方式，官方說明沒有足夠細節，未完成原站實測。上面的完整規則是可以重現、儲存與測試的 Teah 選擇，不能稱為原廠私有排程。Spell 只接受聽到的標準答案，不把另一個同義詞當成正確拼字；一般書寫仍接受字卡替代答案。拼字差異以 Unicode 字元的有界編輯距離對齊（兩面各不超過 256 字元），超過時標示整段差異以限制記憶體使用；這也不是原廠差異演算法。
+
 ### 跨日複習
 
 stage 2 答對後更新間隔：`min(90, max(1, 舊間隔 × 2, 距上次作答天數 × 2))`，`dueAt = now + intervalDays × 1日`。stage 0／1 間隔為 0。到期範圍為本次 session 設定 stage／credit 1 再提取一遍；尚未精熟範圍也會為已取得兩次信用但尚未精熟的卡建立一次新的提取機會；答錯保留 stage 1，稍後再提取。
@@ -168,7 +186,8 @@ stage 2 答對後更新間隔：`min(90, max(1, 舊間隔 × 2, 距上次作答�
 ### 批改與干擾答案
 
 - 嚴格：NFKC、大小寫、空白與基本標點正規化，接受已設定替代答案；數字、大小於、正負、斜線、單位等保持重要性。
-- 適中：以上加上英文答案一處編輯差異／重音差異；限至少五字元的英文文字，不對數字與運算式套用模糊批改。
+- 自動：依兩面語言、集合張數與此裝置的預設語言，選嚴格／適中／寬鬆。兩面不同語言，以及中文、日文、數學等一律嚴格；同語言且至少三張、英文／法文／德文／西文與預設語言相同時寬鬆，其他同語言用適中。依據 [官方批改選項](https://help.quizlet.com/hc/en-us/articles/360048313652-Using-grading-options-US)。Quizlet 使用帳戶預設語言，Teah 使用 `navigator.language`，此差別仍待帳戶實測。手動選擇寬鬆可用於其他語言，這是 Teah 的延伸，不是原站支援範圍。
+- 適中：以上加上拉丁字母答案的重音差異，以及至少三字元答案的一處增／漏字；同長度替換字母限至少五字元。數字與運算式不套用模糊批改。這些精確門檻是 Teah 的保守規則，官方只描述輕微重音與漏字，沒有公開判分程式。
 - 寬鬆：先本地精確／替代答案檢查，再將本題、標準答案、替代答案與作答交給既有 Gemini 整合判斷等義。12 秒逾時或不可用時保留嚴格結果，可手動更正。設定中清楚揭露傳送對象；不是 Quizlet 的智慧批改模型。
 - 選項先排除重複答案、正解替代答案、相同提示的歧義卡；隨機選至多三個同組干擾答案，合計 2–4 選項。
 - 複選適用同提示／替代答案有多個有效答案；選取集合須完全相符，少選、多選都錯；不把其中一個同義答案當作錯誤選項。
@@ -216,8 +235,10 @@ stage 2 答對後更新間隔：`min(90, max(1, 舊間隔 × 2, 距上次作答�
       id, deckId, deckRevision, generation, options
       version, scope[], order[], facts{}, active[], chunkGoals{}
       flowQueue[], retryQueue[], practiceQueue[], roundSeen[], roundRepair
+      writeCredits{}, passMisses[]  # Write／Spell 本次信用與上輪錯題
       ordinal, round, chunk, chunkTarget, roundAnswers[]
       current, feedback, checkpoint, completed, createdAt, updatedAt
+      # options.activity, grading, defaultLanguage, audioRate, learnTypes
     /sessions/flash
       id, deckId, deckRevision, options, order[], index, ratings{}
       flipped, playing, completed, updatedAt
@@ -238,7 +259,7 @@ stage 2 答對後更新間隔：`min(90, max(1, 舊間隔 × 2, 距上次作答�
 7. 字卡集軟刪除，可從已刪除還原；已刪除／不存在的集忽略遲到答題，不重建字卡集。
 8. 切換帳號會清空可見狀態、取消 timer、依 uid 隔離 cache/outbox；匯出我的資料與刪除帳戶包含新 namespace。
 
-排程版本為 2；舊版 session 不顯示續答，但事件與已學習事實保留，新 session 從既有進度開始。RTDB 不保存空陣列／空物件，載入 session 時補回空的 active、roundAnswers、flowQueue、retryQueue、roundSeen、practiceQueue、ratings 等集合；已用真實 Emulator 和模擬 wire shape 測試。卡片最多 2000、雙向 fact 最多 4000；本版一次交易會重播該集全部事件，適合個人題庫。長期歷史量很大時應再引入伺服器摘要快照／封存；目前沒有自動刪歷史，也不宣稱具備無限事件的效能。
+排程版本為 3；舊版 session 不顯示續答，但事件與已學習事實保留，新 session 從既有進度開始。RTDB 不保存空陣列／空物件，載入 session 時補回空的 active、roundAnswers、flowQueue、retryQueue、roundSeen、practiceQueue、ratings 等集合；已用真實 Emulator 和模擬 wire shape 測試。卡片最多 2000、雙向 fact 最多 4000；本版一次交易會重播該集全部事件，適合個人題庫。長期歷史量很大時應再引入伺服器摘要快照／封存；目前沒有自動刪歷史，也不宣稱具備無限事件的效能。
 
 ## Firebase Rules 套用
 
@@ -246,7 +267,7 @@ stage 2 答對後更新間隔：`min(90, max(1, 舊間隔 × 2, 距上次作答�
 
 如果正式庫沿用專案規則，可將完整規則檔貼到 Firebase Console → `stock-market-ntumed` → Realtime Database → Rules → Publish。若正式規則已有其他客製，將片段的 `rules.flashcard` 合併進現有 `rules`，並在原 `$bank` 的 read/write 排除條件加入 `$bank !== 'flashcard'`。片段不能單獨整份取代原規則，否則會移除其他功能規則。
 
-根目錄 read/write 必須保持拒絕；較上層若直接允許全部讀寫，子節點無法再拒絕其他人的字卡。新 namespace 只允許 `auth.uid === $uid`。rules 驗證字卡／session 必填欄位、最大字面長度、索引上限、事件型別與必要欄位，拒絕修改既有事件核心值；手動 override 必須指向已有 answer。個人進度由自己的客戶端計算，不是可作考試認證的伺服器評分。
+根目錄 read/write 必須保持拒絕；較上層若直接允許全部讀寫，子節點無法再拒絕其他人的字卡。新 namespace 只允許 `auth.uid === $uid`。rules 驗證字卡／session 必填欄位、最大字面長度、索引上限、事件型別與必要欄位，拒絕修改既有事件核心值；手動 override 必須指向已有 answer。Write／Spell 本次信用須為 0–2 整數，activity 只允許已知模式。個人進度由自己的客戶端計算，不是可作考試認證的伺服器評分。
 
 無需建立索引、Firestore collection、Storage bucket 或手動匯入初始資料；第一次儲存會建立自己的 sets/study。沿用現有 Authentication。嚴格／適中批改不用任何 AI key；寬鬆批改沿用專案既有 API_KEY／Gemini 設定，不會在此功能另外寫入金鑰。
 
@@ -278,4 +299,4 @@ npm run test:rules
 
 Rules 測試使用 demo 專案。Java 21+ 使用 Firebase CLI；Java 17 可使用已下載在標準 emulator cache 的相容 Database Emulator v4，啟動獨立臨時連接埠。不會下載 JAR 或連接正式 Firebase。
 
-驗證涵蓋：7 個單字中兩次錯誤需要九次作答才結算、十張辨識後轉提取、混合回合跨輪補錯／保留信用、完成信用與連續精熟分離、持續練習與重新開始、重打不晉級、等義接受等待確認、雙向手動更正不重算、重送／亂序／新 epoch、內容修改失效、同義複選、書寫提示／游標字元插入／大小寫／保留未送出文字、手機／深色、續答、離線補送、軟刪復原與既有複習卡隔離。
+驗證涵蓋：7 個單字中兩次錯誤需要九次作答才結算、十張辨識後轉提取、混合回合跨輪補錯／保留信用、完成信用與連續精熟分離、持續練習與重新開始、重打不晉級、等義接受等待確認、雙向手動更正不重算、重送／亂序／新 epoch、Write 整集首輪／本次兩次正確／不知道揭答、Spell 錯字差異／逐字朗讀／重試續答、自動批改依語言與張數選擇、內容修改失效、同義複選、書寫提示／游標字元插入／大小寫／保留未送出文字、手機／深色、續答、離線補送、軟刪復原與既有複習卡隔離。

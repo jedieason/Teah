@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseImport, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols } from '../src/features/flashcard/model.js';
+import { parseImport, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor } from '../src/features/flashcard/model.js';
 const deck = (n = 17) => prepareDeck({ title: 'Test', cards: Array.from({ length: n }, (_, i) => ({ term: `word${i}`, definition: `解釋${i}` })) });
 function response(s, d) { const c = d.cards.find(c => c.id === s.current.cardId); return s.current.type === 'multi' ? s.current.correctAnswers : s.current.direction === 'term' ? c.term : c.definition; }
 function step(s, d, input, at = 1000) { const answered = submitAnswer(s, d, input, at); return advanceSession(answered, d, at + 1, () => .4); }
@@ -144,4 +144,66 @@ test('select all accepts exactly the valid answers and excludes ambiguous distra
     assert.equal(s.current.type, 'multi'); assert.deepEqual([...s.current.correctAnswers].sort(), ['automobile', 'car']);
     assert.equal(submitAnswer(s, d, ['car']).feedback.correct, false);
     assert.equal(submitAnswer(s, d, ['car', 'automobile']).feedback.correct, true);
+});
+test('Write traverses the full set before retrying misses and requires two new correct responses per run', () => {
+    const d = deck(), events = {};
+    d.cards.forEach((card, i) => { for (let n = 0; n < 2; n++) { const id = `old${i}-${n}`; events[id] = { id, kind: 'answer', at: i * 2 + n, cardId: card.id, direction: 'term', revision: 1, correct: true }; } });
+    let s = createSession(d, { events }, { activity: 'write', goal: 'quick', chunkSize: 5 });
+    assert.equal(s.completed, false); assert.equal(sessionProgress(s).earned, 0); assert.equal(s.options.goal, 'master'); assert.equal(s.active.length, 17);
+    for (let i = 0; i < 17; i++) {
+        assert.equal(s.current.cardId, d.cards[i].id); assert.equal(s.current.type, 'written');
+        s = step(s, d, i === 0 || i === 2 ? 'wrong' : response(s, d));
+        assert.equal(s.checkpoint, i === 16, 'no seven-question checkpoint or same-pass retry');
+    }
+    assert.equal(sessionProgress(s).earned, 15); assert.equal(s.roundAnswers.length, 17);
+    s = continueRound(s, d); assert.equal(s.current.cardId, d.cards[0].id);
+    s = step(s, d, response(s, d)); assert.equal(s.current.cardId, d.cards[2].id);
+    while (!s.checkpoint) s = step(s, d, response(s, d));
+    assert.equal(sessionProgress(s).earned, 32); assert.equal(s.completed, false);
+    s = continueRound(s, d); assert.equal(s.active.length, 2);
+    s = step(s, d, response(s, d)); s = step(s, d, response(s, d));
+    assert.equal(s.completed, true); assert.equal(sessionProgress(s).earned, 34);
+});
+test('Write override and wire hydration preserve independent run credits without a second attempt', () => {
+    const d = deck(1); let s = createSession(d, {}, { activity: 'write' });
+    s = submitAnswer(s, d, 'wrong'); assert.equal(sessionProgress(s).earned, 0);
+    s = overrideCorrect(s); assert.equal(sessionProgress(s).earned, 1); assert.equal(sessionProgress(s).displayedEarned, 0);
+    s = overrideCorrect(s, 1000, false); assert.equal(sessionProgress(s).earned, 0); assert.equal(s.ordinal, 1);
+    const wire = JSON.parse(JSON.stringify(s)); delete wire.passMisses; assert.deepEqual(hydrateSession(wire).passMisses, []);
+    s = advanceSession(hydrateSession(wire), d); assert.equal(s.checkpoint, true);
+    s = continueRound(s, d); s = step(s, d, response(s, d)); assert.equal(s.completed, false);
+    s = continueRound(s, d); s = step(s, d, response(s, d)); assert.equal(s.completed, true);
+});
+test('Spell repeats a miss without awarding repair credit, traverses full passes, and always grades spelling strictly', () => {
+    const d = deck(8); let s = createSession(d, {}, { activity: 'spell', grading: 'relaxed' });
+    const key = s.current.key; assert.equal(gradingFor(s, d), 'strict');
+    s = step(s, d, 'wrong'); assert.equal(s.current.key, key); assert.equal(sessionProgress(s).earned, 0); assert.equal(s.checkpoint, false);
+    for (let pass = 0; pass < 2; pass++) for (let i = 0; i < 8; i++) {
+        assert.equal(s.current.cardId, d.cards[i].id); assert.equal(s.current.type, 'spell');
+        s = step(s, d, response(s, d)); assert.equal(s.checkpoint, false);
+    }
+    assert.equal(s.completed, true); assert.equal(sessionProgress(s).earned, 16);
+    assert.deepEqual(spellingFeedback('aple', 'apple').expected.filter(p => p.incorrect), [{ text: 'p', incorrect: true }]);
+    assert.deepEqual(spellingFeedback('catz', 'cats').response.filter(p => p.incorrect), [{ text: 'z', incorrect: true }]);
+    assert.equal(spellingFeedback('μg', 'μg').expected.some(p => p.incorrect), false);
+    assert.equal(spellingFeedback('a'.repeat(4000), 'b'.repeat(4000)).expected.length, 1);
+});
+test('default grading follows set language, size and default language; accents and omitted letters are moderate errors', () => {
+    const same = prepareDeck({ title: 'Same language', termLanguage: 'en-US', definitionLanguage: 'en-GB', cards: [{ term: 'apple', definition: 'fruit' }, { term: 'car', definition: 'vehicle' }, { term: 'pear', definition: 'fruit' }] });
+    assert.equal(defaultGrading(same, 'en-GB'), 'relaxed'); assert.equal(defaultGrading(same, 'zh-TW'), 'moderate');
+    assert.equal(defaultGrading({ ...same, cards: same.cards.slice(0, 2) }, 'en-US'), 'moderate');
+    assert.equal(defaultGrading(deck(), 'en-US'), 'strict');
+    for (const language of ['zh-TW', 'ja-JP', 'math']) assert.equal(defaultGrading({ ...same, termLanguage: language, definitionLanguage: language }), 'strict');
+    assert.equal(gradeAnswer('cafe', ['café'], 'moderate'), true); assert.equal(gradeAnswer('ct', ['cat'], 'moderate'), true);
+    assert.equal(gradeAnswer('bat', ['cat'], 'moderate'), false); assert.equal(gradeAnswer('café', ['cafe']), false);
+});
+test('choice options and heard spelling cannot use written typo tolerance or semantic aliases', () => {
+    const d = prepareDeck({ title: 'Nearby spellings', cards: [{ term: 'car', definition: '汽車', termAliases: ['automobile'] }, { term: 'care', definition: '關心' }, { term: 'cat', definition: '貓' }] });
+    const choice = createSession(d, {}, { grading: 'moderate', types: ['choice'] });
+    assert.ok(choice.current.choices.includes('care')); assert.equal(submitAnswer(choice, d, 'care').feedback.correct, false);
+    const spell = createSession(d, {}, { activity: 'spell', grading: 'moderate' });
+    assert.equal(submitAnswer(spell, d, 'automobile').feedback.correct, false); assert.equal(submitAnswer(spell, d, 'care').feedback.correct, false);
+    const write = createSession(d, {}, { activity: 'write' }); assert.equal(submitAnswer(write, d, 'automobile').feedback.correct, true);
+    const overridden = overrideCorrect(submitAnswer(spell, d, 'wrong', 100), 5000);
+    assert.equal(overridden.facts[overridden.current.key].lastAt, 100, 'correction time must not become retrieval time');
 });

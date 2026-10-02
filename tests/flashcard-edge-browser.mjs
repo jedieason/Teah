@@ -63,7 +63,7 @@ try {
     await view.getByText('✓ 答對了', { exact: true }).waitFor(); assert.equal(semanticCalls, 1); await idle();
     await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).waitFor();
     assert.equal(await view.locator('.vocab-correct-answer').count(), 2);
-    assert.equal(await view.getByRole('progressbar', { name: 'Learn 學習進度' }).getAttribute('aria-valuenow'), '1');
+    assert.equal(await view.getByRole('progressbar', { name: 'Write 學習進度' }).getAttribute('aria-valuenow'), '0');
     await page.screenshot({ path: 'artifacts/qa/vocabulary-semantic.png', fullPage: true });
     await page.waitForTimeout(1100); // Semantic acceptance must wait for acknowledgement instead of the 950 ms timer.
     assert.equal(await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).isVisible(), true);
@@ -72,11 +72,16 @@ try {
     assert.equal(rejected.summary.wrong, 1); assert.equal(rejected.summary.correct, 1);
     assert.equal(Object.values(rejected.events).filter(e => e.kind === 'override' && e.correct === false).length, 1);
     await view.getByRole('button', { name: '我的答案其實正確', exact: true }).click(); await idle();
-    await page.keyboard.press('Space'); await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
+    await page.keyboard.press('Space'); await view.getByRole('heading', { name: '本輪完成', exact: true }).waitFor();
+    assert.equal(await view.getByRole('progressbar', { name: 'Write 學習進度' }).getAttribute('aria-valuenow'), '1');
+    // The second Write retrieval is still required even though Learn already awarded this card credit.
+    await view.getByRole('button', { name: '繼續下一輪', exact: true }).click(); await idle();
+    await answer.fill('car'); await answer.press('Enter'); await idle(); await view.getByRole('button', { name: '繼續', exact: true }).click({ force: true });
+    await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
     await view.getByRole('button', { name: '繼續練習', exact: true }).click(); await idle();
-    assert.equal(await view.getByRole('progressbar', { name: 'Learn 學習進度' }).count(), 0);
+    assert.equal(await view.getByRole('progressbar').count(), 0);
     await view.getByRole('button', { name: '不知道', exact: true }).click(); await idle();
-    await view.getByText('已略過', { exact: true }).waitFor(); assert.equal(await view.locator('.vocab-correct-answer').count(), 0);
+    await view.getByText('已略過', { exact: true }).waitFor(); assert.equal(await view.locator('.vocab-correct-answer').count(), 1, 'Write reveals an unknown answer');
     assert.equal(await view.getByRole('button', { name: '我的答案其實正確', exact: true }).count(), 0);
     await view.getByRole('button', { name: '繼續', exact: true }).click(); await idle();
     await view.getByLabel('你的答案', { exact: true }).waitFor();
@@ -86,6 +91,26 @@ try {
     await idle(); await view.getByRole('button', { name: '設定', exact: true }).click(); await settings.getByRole('button', { name: 'Spell', exact: true }).click();
     await view.getByRole('button', { name: '播放單字', exact: true }).waitFor();
     await page.waitForFunction(() => window.__spoken.length > 0); assert.equal(await page.evaluate(() => window.__spoken.at(-1)), 'car');
+    assert.equal(await view.getByRole('progressbar', { name: 'Spell 學習進度' }).getAttribute('aria-valuenow'), '0');
+    await answer.fill('cap'); await answer.press('Enter'); await idle();
+    await page.waitForFunction(() => window.__spoken.at(-1) === 'c . a . r');
+    assert.equal(await view.locator('.vocab-incorrect-answer mark').innerText(), 'p');
+    assert.equal(await view.locator('.vocab-correct-answer mark').innerText(), 'r');
+    await page.screenshot({ path: 'artifacts/qa/vocabulary-spell-error.png', fullPage: true });
+    await view.getByRole('button', { name: '重試', exact: true }).click(); await idle();
+    assert.equal(await view.locator('.vocab-choices').count(), 0);
+    const spellBeforeReload = await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id].sessions.learn, synonyms.id);
+    assert.equal(spellBeforeReload.current.cardId, synonyms.cards[0].id);
+    assert.equal(spellBeforeReload.writeCredits[spellBeforeReload.current.key], 0);
+    await page.evaluate(() => sessionStorage.setItem('edge-db', JSON.stringify(window.__testDatabase)));
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.getByRole('button', { name: 'Flashcard', exact: true }).click(); await view.getByRole('button', { name: 'Synonyms', exact: true }).click();
+    await view.getByRole('button', { name: '繼續 Spell', exact: true }).click(); await idle();
+    const spellAfterReload = await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id].sessions.learn, synonyms.id);
+    assert.equal(spellAfterReload.current.key, spellBeforeReload.current.key);
+    await answer.fill('car'); await answer.press('Enter'); await idle(); await view.getByRole('button', { name: '繼續', exact: true }).click({ force: true });
+    await answer.waitFor();
+    assert.equal(await view.getByRole('progressbar', { name: 'Spell 學習進度' }).getAttribute('aria-valuenow'), '1');
     await view.getByRole('button', { name: '‹ Synonyms', exact: true }).click();
     await view.getByRole('button', { name: '編輯字卡集', exact: true }).click();
     await view.getByLabel('字卡集名稱', { exact: true }).fill('本機修改');
