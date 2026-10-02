@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseImport, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession } from '../src/features/flashcard/model.js';
+import { parseImport, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols } from '../src/features/flashcard/model.js';
 const deck = (n = 17) => prepareDeck({ title: 'Test', cards: Array.from({ length: n }, (_, i) => ({ term: `word${i}`, definition: `解釋${i}` })) });
 function response(s, d) { const c = d.cards.find(c => c.id === s.current.cardId); return s.current.type === 'multi' ? s.current.correctAnswers : s.current.direction === 'term' ? c.term : c.definition; }
 function step(s, d, input, at = 1000) { const answered = submitAnswer(s, d, input, at); return advanceSession(answered, d, at + 1, () => .4); }
@@ -31,7 +31,7 @@ test('grading handles explicit aliases and formatting but never equates meaningf
     assert.equal(gradeAnswer('32 / 1', ['32:1']), false);
     assert.equal(gradeAnswer('CD4-', ['CD4+']), false);
 });
-test('Learn repairs the whole seven-term chunk before checkpoint and advances recognition to recall', () => {
+test('Learn spaces recognition misses and reaches recall mastery through bounded windows', () => {
     const d = deck(); let s = createSession(d, {}, { shuffle: false, types: ['choice', 'written'], retype: false }, 0, () => .4);
     const first = s.current.cardId; s = step(s, d, 'wrong');
     const intervening = [];
@@ -39,7 +39,7 @@ test('Learn repairs the whole seven-term chunk before checkpoint and advances re
     assert.ok(intervening.length >= 2, 'wrong card must be spaced by other questions');
     assert.equal(s.current.cardId, first); assert.equal(s.current.type, 'choice');
     let guard = 0, checkpoint = false, written = false;
-    while (!s.completed && guard++ < 150) { if (s.current?.type === 'written') written = true; s = step(s, d, response(s, d)); if (s.checkpoint) { checkpoint = true; assert.ok(s.active.every(k => s.facts[k].stage >= s.chunkGoals[k])); s = continueRound(s, d); } }
+    while (!s.completed && guard++ < 150) { if (s.current?.type === 'written') written = true; s = step(s, d, response(s, d)); if (s.checkpoint) { checkpoint = true; if (s.roundRepair) assert.ok(s.active.every(k => s.facts[k].stage >= s.chunkGoals[k])); else assert.equal(s.roundSeen.length, s.active.length); s = continueRound(s, d); } }
     assert.equal(s.completed, true); assert.equal(sessionProgress(s).mastered, 17); assert.ok(written && checkpoint);
 });
 test('observed Quizlet trace: two misses in seven new terms extend the round to nine attempts, then introduce the next group', () => {
@@ -57,19 +57,76 @@ test('retyping is a repair, not a graded retrieval; manual override counts only 
     const corrected = { ...s, feedback: { ...s.feedback, retyped: true } };
     const next = advanceSession(corrected, d); assert.equal(next.facts[key].stage, 0);
     const override = overrideCorrect(s); assert.equal(override.facts[key].correct, 1); assert.equal(override.facts[key].wrong, 0); assert.equal(override.ordinal, 1);
+    const rejected = overrideCorrect(override, 2000, false); assert.equal(rejected.facts[key].correct, 0); assert.equal(rejected.facts[key].wrong, 1); assert.equal(rejected.ordinal, 1); assert.equal(rejected.feedback.retyped, false);
+});
+test('ten new terms precede recall; a failed recall retains credit and is prioritized in the next mixed round', () => {
+    const d = deck(); let s = createSession(d, {}, { types: ['choice', 'written'], retype: false });
+    const visited = [];
+    for (let i = 0; i < 10; i++) {
+        if (s.checkpoint) s = continueRound(s, d);
+        assert.equal(s.current.type, 'choice'); assert.equal(s.current.cardId, d.cards[i].id);
+        visited.push(s.current.cardId); s = step(s, d, response(s, d));
+    }
+    assert.equal(s.current.type, 'written'); assert.equal(s.current.cardId, d.cards[0].id);
+    const before = sessionProgress(s).earned, failedKey = s.current.key;
+    s = step(s, d, 'wrong'); assert.equal(s.facts[failedKey].stage, 1); assert.equal(sessionProgress(s).earned, before);
+    while (!s.checkpoint) { assert.notEqual(s.current.key, failedKey); s = step(s, d, response(s, d)); }
+    s = continueRound(s, d); assert.equal(s.current.key, failedKey); assert.equal(s.current.type, 'written');
+    s = step(s, d, response(s, d));
+    let guard = 0;
+    while (!s.completed && guard++ < 80) { if (s.checkpoint) s = continueRound(s, d); else s = step(s, d, response(s, d)); }
+    assert.equal(sessionProgress(s).earned, 34); assert.equal(sessionProgress(s).mastered, 16); assert.equal(s.completed, true);
+});
+test('binary explanations become two choices while written answers still require their explanation', () => {
+    const d = prepareDeck({ title: 'Binary', cards: [{ term: 'Randomized?', definition: 'Yes, because treatments were assigned randomly.' }] });
+    let s = createSession(d, {}, { direction: 'definition', types: ['choice', 'written'] });
+    assert.deepEqual(s.current.choices, ['Yes', 'No']); assert.equal(s.current.choiceAnswer, 'Yes');
+    s = submitAnswer(s, d, 'Yes'); assert.equal(s.feedback.correct, true);
+    assert.equal(sessionProgress(s).earned, 1); assert.equal(sessionProgress(s).displayedEarned, 0);
+    s = advanceSession(s, d); s = continueRound(s, d); assert.equal(s.current.type, 'written');
+    assert.equal(submitAnswer(s, d, 'Yes').feedback.correct, false);
+    const phrase = prepareDeck({ title: 'Phrase', cards: [{ term: 'no longer', definition: '不再' }] });
+    assert.equal(createSession(phrase, {}, { types: ['choice'] }).current.type, 'written', 'a vocabulary phrase beginning with no must retain the full answer');
+});
+test('writing hints preserve observed partial patterns; input palette follows the answer direction', () => {
+    assert.equal(writingHint('0.01 < p-value < 0.02'), '0.01 < ______ ___');
+    assert.equal(writingHint('Yes, since both histograms have no outliers.'), '');
+    assert.equal(writingHint('17'), '');
+    assert.equal(writingHint('Reject H0 and conclude that those who drink no beer have a shorter mean reaction times, on average, than those who drink two cans of beers.'), 'Reject H0 and conclude that those who drink no beer have a shorter...');
+    const d = prepareDeck({ title: 'Symbols', cards: [{ term: 'μM', definition: '大小比較 ≤' }, { term: 'μg', definition: '劑量' }] });
+    assert.deepEqual(writingSymbols(d, 'term'), ['μ']); assert.deepEqual(writingSymbols(d, 'definition'), ['≤']);
 });
 test('events replay chronologically across offline/concurrent delivery; retries, repairs and overrides never double count', () => {
     const events = [1, 2, 3].map(n => ({ id: 'a' + n, at: n, kind: 'answer', cardId: 'c', revision: 1, direction: 'term', correct: n !== 2, generation: 'initial', ordinal: n }));
     let study = {};
     for (const e of [events[2], events[0], events[1], events[0]]) study = mergeStudy(study, e);
-    assert.equal(projectStudy(study).facts.c_term.stage, 1);
+    assert.equal(projectStudy(study).facts.c_term.stage, 1); assert.equal(projectStudy(study).facts.c_term.credit, 2);
     study = mergeStudy(study, { id: 'repair', kind: 'repair', at: 4 }); assert.equal(projectStudy(study).correct, 2);
     study = mergeStudy(study, { id: 'override', kind: 'override', at: 5, originalId: 'a2', correct: true });
     assert.equal(projectStudy(study).correct, 3); assert.equal(projectStudy(study).wrong, 0); assert.equal(projectStudy(study).facts.c_term.stage, 2);
     assert.deepEqual(projectStudy(study), projectStudy({ events: Object.fromEntries(Object.values(study.events).reverse().map(e => [e.id, e])) }));
+    study = mergeStudy(study, { id: 'incorrect', kind: 'override', at: 5.5, originalId: 'a3', correct: false });
+    assert.equal(projectStudy(study).correct, 2); assert.equal(projectStudy(study).wrong, 1); assert.equal(projectStudy(study).facts.c_term.stage, 1);
     study = mergeStudy(study, { id: 'reset', kind: 'reset', at: 6, generation: 'fresh' });
     assert.deepEqual(projectStudy(study).facts, {});
     study = mergeStudy(study, { ...events[0], id: 'late', at: 7 }); assert.deepEqual(projectStudy(study).facts, {});
+});
+test('completed progress and consecutive mastery are independent; continuous practice remains usable', () => {
+    const d = deck(3); let s = createSession(d, {}, { types: ['written'] });
+    const events = []; let at = 100;
+    while (!s.completed) {
+        if (s.checkpoint) { s = continueRound(s, d); continue; }
+        const q = s.current, c = d.cards.find(c => c.id === q.cardId);
+        events.push({ id: 'e' + at, kind: 'answer', at: at++, cardId: c.id, revision: c.revision, direction: q.direction, correct: true, ordinal: s.ordinal + 1 });
+        s = step(s, d, response(s, d));
+    }
+    let study = { events: Object.fromEntries(events.map(e => [e.id, e])) };
+    s = createSession(d, study, { practice: true, types: ['written'] }, at, () => .4);
+    assert.equal(s.completed, false); const missed = s.current.key;
+    s = step(s, d, 'wrong'); assert.equal(s.facts[missed].stage, 1); assert.equal(s.facts[missed].credit, 2); assert.equal(sessionProgress(s).earned, 6);
+    for (let i = 0; i < 25; i++) { assert.equal(s.checkpoint, false); s = step(s, d, response(s, d)); }
+    assert.equal(s.completed, false); assert.equal(s.roundAnswers.length, 20); assert.equal(s.facts[missed].stage, 2);
+    const wire = JSON.parse(JSON.stringify(s)); delete wire.practiceQueue; assert.deepEqual(hydrateSession(wire).practiceQueue, []);
 });
 test('direction, star scope, small sets, equal answers and changed revisions remain independent', () => {
     const d = deck(1), both = createSession(d, {}, { direction: 'both' });

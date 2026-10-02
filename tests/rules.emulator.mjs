@@ -59,6 +59,10 @@ try {
     await assertFails(set(ref(alice, studyPath + '/events/v1'), { ...vocabEvent, direction: 'definition' }));
     await assertFails(set(ref(alice, studyPath + '/events/bad'), { id: 'bad', kind: 'answer', at: 1 }));
     await assertSucceeds(runTransaction(ref(alice, studyPath), old => mergeStudy(old, { id: 'override', kind: 'override', at: Date.now() + 1, originalId: 'v1', correct: true })));
+    await assertSucceeds(runTransaction(ref(alice, studyPath), old => mergeStudy(old, { id: 'incorrect', kind: 'override', at: Date.now() + 2, originalId: 'v1', correct: false })));
+    assert.equal((await get(ref(alice, studyPath + '/summary/correct'))).val(), 0);
+    assert.equal((await get(ref(alice, studyPath + '/summary/wrong'))).val(), 1);
+    await assertFails(set(ref(alice, studyPath + '/events/badBoolean'), { id: 'badBoolean', kind: 'override', at: Date.now(), originalId: 'v1', correct: 'false' }));
     await assertFails(set(ref(alice, studyPath + '/events/badOverride'), { id: 'badOverride', kind: 'override', at: Date.now(), originalId: 'missing', correct: true }));
     await assertSucceeds(update(ref(alice, deckPath), { deletedAt: Date.now(), revision: 2 }));
     await assertSucceeds(update(ref(alice, deckPath), { deletedAt: null, revision: 3 }));

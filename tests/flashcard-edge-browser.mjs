@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { prepareDeck } from '../src/features/flashcard/model.js';
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
 const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
-const synonyms = prepareDeck({ title: 'Synonyms', cards: [{ term: 'car', definition: '汽車', termAliases: ['automobile'] }, { term: 'apple', definition: '蘋果' }, { term: 'pear', definition: '梨' }] });
+const synonyms = prepareDeck({ title: 'Synonyms', cards: [{ term: 'car', definition: '汽車', termAliases: ['automobile'] }, { term: 'apple', definition: '蘋果' }, { term: 'pearμ', definition: '梨' }] });
 const large = prepareDeck({ title: '大量字卡', cards: Array.from({ length: 2000 }, (_, i) => ({ term: `vocabulary${i}`, definition: `解釋 ${i}\nline two` })) });
 const db = { API_KEY: 'test-only', quizCatalog: { Demo: { count: 1 } }, flashcard: { 'test-user': { sets: { [synonyms.id]: synonyms, [large.id]: large } } } };
 await context.addInitScript(data => {
@@ -55,10 +55,32 @@ try {
     await view.getByRole('button', { name: '返回字卡集', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click();
     await settings.getByLabel('這次學習的目標', { exact: true }).selectOption('master'); await settings.getByLabel('批改方式', { exact: true }).selectOption('relaxed');
     await settings.getByRole('button', { name: 'Write', exact: true }).click(); await idle();
-    const answer = view.getByLabel('你的答案', { exact: true }); await answer.fill('an automobile'); await answer.press('Enter');
+    const answer = view.getByLabel('你的答案', { exact: true });
+    await view.getByRole('button', { name: 'μ', exact: true }).click(); await idle(); assert.equal(await answer.inputValue(), 'μ');
+    await view.getByRole('button', { name: '大寫', exact: true }).click(); await idle();
+    await view.getByRole('button', { name: 'Μ', exact: true }).click(); await idle(); assert.equal(await answer.inputValue(), 'μΜ');
+    await answer.fill('an automobile'); await answer.press('Enter');
     await view.getByText('✓ 答對了', { exact: true }).waitFor(); assert.equal(semanticCalls, 1); await idle();
-    await view.getByRole('button', { name: '繼續', exact: true }).click({ force: true }); await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
-    await view.getByRole('button', { name: '返回字卡集', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).waitFor();
+    assert.equal(await view.locator('.vocab-correct-answer').count(), 2);
+    assert.equal(await view.getByRole('progressbar', { name: 'Learn 學習進度' }).getAttribute('aria-valuenow'), '1');
+    await page.screenshot({ path: 'artifacts/qa/vocabulary-semantic.png', fullPage: true });
+    await page.waitForTimeout(1100); // Semantic acceptance must wait for acknowledgement instead of the 950 ms timer.
+    assert.equal(await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).isVisible(), true);
+    await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).click(); await idle();
+    const rejected = await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id], synonyms.id);
+    assert.equal(rejected.summary.wrong, 1); assert.equal(rejected.summary.correct, 1);
+    assert.equal(Object.values(rejected.events).filter(e => e.kind === 'override' && e.correct === false).length, 1);
+    await view.getByRole('button', { name: '我的答案其實正確', exact: true }).click(); await idle();
+    await page.keyboard.press('Space'); await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
+    await view.getByRole('button', { name: '繼續練習', exact: true }).click(); await idle();
+    assert.equal(await view.getByRole('progressbar', { name: 'Learn 學習進度' }).count(), 0);
+    await view.getByRole('button', { name: '不知道', exact: true }).click(); await idle();
+    await view.getByText('已略過', { exact: true }).waitFor(); assert.equal(await view.locator('.vocab-correct-answer').count(), 0);
+    assert.equal(await view.getByRole('button', { name: '我的答案其實正確', exact: true }).count(), 0);
+    await view.getByRole('button', { name: '繼續', exact: true }).click(); await idle();
+    await view.getByLabel('你的答案', { exact: true }).waitFor();
+    await view.getByRole('button', { name: '‹ Synonyms', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click();
     await settings.getByLabel('練習範圍', { exact: true }).selectOption('all'); await settings.getByLabel('批改方式', { exact: true }).selectOption('strict');
     await settings.getByRole('button', { name: '重設 Learn 進度', exact: true }).click(); await settings.getByRole('button', { name: '確認重設並開始', exact: true }).click();
     await idle(); await view.getByRole('button', { name: '設定', exact: true }).click(); await settings.getByRole('button', { name: 'Spell', exact: true }).click();
@@ -91,6 +113,6 @@ try {
     assert.equal(await view.evaluate(e => e.scrollWidth > e.clientWidth), false); assert.ok(await view.locator('.vocab-learn-progress > span').count() <= 24);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-large-mobile.png', fullPage: true });
     assert.deepEqual(errors, []);
-    console.log('Vocabulary edge cases passed: Firebase empty collections, flash reload, starred scope, select-all, optional semantic grading, Write/Spell, reset epochs, concurrent-edit preservation, 2000-term mobile progress.');
+    console.log('Vocabulary edge cases passed: Firebase empty collections, flash reload, starred scope, select-all, semantic acknowledgement and bidirectional correction, Write/Spell, reset epochs, concurrent-edit preservation, 2000-term mobile progress.');
 } catch (e) { console.error('Edge test failure:', e.message); await page.screenshot({ path: 'artifacts/qa/vocabulary-edge-failure.png' }).catch(() => {}); console.log((await view.innerText()).slice(0, 1800)); throw e; }
 finally { await browser.close(); }

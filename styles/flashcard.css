@@ -95,6 +95,7 @@
 .vocab-choice input { accent-color:var(--v-accent); width:18px; height:18px; flex-shrink:0; }
 .vocab-answer-form { display:flex; gap:12px; align-items:end; flex-wrap:wrap; }.vocab-answer-form .vocab-field { flex:1; min-width:160px; }.vocab-answer-form input { min-height:50px; border:2px solid var(--v-line); }
 .vocab-answer-form > p { flex-basis:100%; margin:0; }
+.vocab-symbols { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; order:-1; }.vocab-symbols .vocab-symbol { min-width:36px; padding:6px 10px; border-radius:18px; background:var(--v-soft); border:0; }.vocab-written-hint { margin:16px 0 4px; color:var(--v-muted); font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; }
 .vocab-dontknow { display:block; border:0; color:var(--v-accent); background:none; margin:14px 0 0 auto; padding-right:0; }
 .vocab-feedback { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-top:20px; }.vocab-feedback .vocab-answer-form { flex-basis:100%; }
 .vocab-correct-answer,.vocab-revealed-answer { color:var(--v-success); font-size:22px; white-space:pre-wrap; overflow-wrap:anywhere; }.vocab-incorrect-answer { color:var(--v-error); font-size:20px; white-space:pre-wrap; text-decoration:line-through; overflow-wrap:anywhere; }

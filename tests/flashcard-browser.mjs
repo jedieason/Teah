@@ -85,9 +85,17 @@ try {
         assert.ok(s?.current); const card = stored.cards.find(c => c.id === s.current.cardId); seen.add(card.id);
         const expected = (s.current.direction === 'term' ? card.term : card.definition).replace(/\*\*/g, '');
         if (s.feedback) { await view.getByRole('button', { name: '繼續', exact: true }).click({force:true}); continue; }
+        if (s.facts[s.current.key].wrong && s.facts[s.current.key].streak > 0) assert.equal(await view.locator('.vocab-retry-label').count(), 0);
         if (s.current.type === 'written') {
             const input = view.getByLabel('你的答案', { exact: true });
             if (!repaired) {
+                await input.fill('未完成的答案');
+                await view.getByRole('button', { name: '標記星號', exact: true }).click(); await state();
+                assert.equal(await input.inputValue(), '未完成的答案');
+                await view.getByRole('button', { name: '顯示提示', exact: true }).click(); await state();
+                assert.ok((await view.locator('.vocab-written-hint').innerText()).includes('_'));
+                assert.equal(await input.inputValue(), '未完成的答案');
+                await page.screenshot({ path: 'artifacts/qa/vocabulary-hint.png', fullPage: true });
                 await input.fill('錯誤答案'); await input.press('Enter');
                 await view.getByLabel('重打正確答案', { exact: true }).waitFor();
                 const correction = view.getByLabel('重打正確答案', { exact: true }); await correction.fill(expected); await correction.press('Enter');
@@ -110,7 +118,21 @@ try {
     await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
     assert.ok(checkpoint && repaired && override); assert.equal(seen.size, 9);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-learn-complete.png', fullPage: true });
-    await view.getByRole('button', { name: '返回字卡集', exact: true }).click();
+    await view.getByRole('button', { name: '繼續練習', exact: true }).click();
+    await view.getByRole('heading', { name: '持續練習', exact: true }).waitFor(); s = await state();
+    assert.equal(s.options.practice, true); assert.equal(s.completed, false); assert.equal(await view.locator('.vocab-learn-progress').count(), 0);
+    const practicingCard = stored.cards.find(c => c.id === s.current.cardId);
+    await view.getByLabel('你的答案', { exact: true }).fill(practicingCard.term.replace(/\*\*/g, ''));
+    await view.getByRole('button', { name: '確認答案', exact: true }).click(); await view.getByText('✓ 答對了', { exact: true }).waitFor();
+    await view.getByRole('button', { name: '繼續', exact: true }).click({force:true}); s = await state(); assert.equal(s.ordinal, 1); assert.equal(s.completed, false);
+    await page.screenshot({ path: 'artifacts/qa/vocabulary-practice.png', fullPage: true });
+    await view.getByRole('button', { name: '‹ 水果單字', exact: true }).click();
+    await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await page.getByRole('dialog', { name: 'Learn 設定', exact: true }).getByRole('button', { name: '開始 Learn', exact: true }).click();
+    await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
+    await view.getByRole('button', { name: '重新開始 Learn', exact: true }).click(); s = await state();
+    assert.equal(s.options.practice, false); assert.equal(s.generation === 'initial', false); assert.equal(s.ordinal, 0); assert.equal(Object.values(s.facts).some(f => f.credit !== 0), false);
+    await view.getByRole('button', { name: '‹ 水果單字', exact: true }).click();
     assert.equal(await page.evaluate(() => window.__testDatabase.learning['test-user'].legacy.title), 'Old cards');
     await view.getByRole('button', { name: '編輯字卡集', exact: true }).click();
     await view.getByLabel('解釋 1', { exact: true }).fill('紅色或綠色的水果');
