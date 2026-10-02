@@ -1,6 +1,7 @@
 import { createCollection } from './features/collections/view.js';
 import { mountSidebar } from './shared/sidebar.js';
 import { createFlashcards } from './features/flashcards/view.js';
+import { mountFlashcard } from './features/flashcard/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
 import { normalizeQuestion } from './features/learning/model.js';
 import { loadLearning, recordLearning, readBank } from './services/learning.js';
@@ -2078,6 +2079,7 @@ onAuthStateChanged(auth, async (user) => {
     updateSignInButton(user);
     syncControlsUser(user);
     collection.resetForUser(user?.uid);
+    vocabulary.resetForUser(user?.uid);
     if (user) {
         await fetchUserProgressAndMistakes(user);
     } else {
@@ -2126,20 +2128,21 @@ let isEditMode = false;
 let viewArchiveMode = false;
 let currentActiveFolder = null;
 let libraryPage = 'library';
-const libraryLocations = { library: { folder: null, scroll: 0, query: '' }, archive: { folder: null, scroll: 0, query: '' }, collection: { scroll: 0 } };
+const libraryLocations = { library: { folder: null, scroll: 0, query: '' }, archive: { folder: null, scroll: 0, query: '' }, collection: { scroll: 0 }, flashcard: { scroll: 0 } };
 function showLibraryPage(page) {
     const old = libraryLocations[libraryPage];
     if (page !== libraryPage) { old.scroll = window.scrollY; isEditMode = false; toggleEditModeUI(); }
-    if (libraryPage !== 'collection') { old.folder = currentActiveFolder; old.query = document.getElementById('bankSearch').value; }
+    if (['library', 'archive'].includes(libraryPage)) { old.folder = currentActiveFolder; old.query = document.getElementById('bankSearch').value; }
     libraryPage = page;
-    document.querySelector('.home-content').hidden = page === 'collection';
+    document.querySelector('.home-content').hidden = ['collection', 'flashcard'].includes(page);
     document.getElementById('collectionPage').hidden = page !== 'collection';
+    document.getElementById('flashcardPage').hidden = page !== 'flashcard';
     controlsMenu?.classList.remove('open');
-    for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive']]) {
+    for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive'], ['homeFlashcard', 'flashcard']]) {
         const button = document.getElementById(id);
         if (page === name) button?.setAttribute('aria-current', 'page'); else button?.removeAttribute('aria-current');
     }
-    if (page !== 'collection') {
+    if (['library', 'archive'].includes(page)) {
         viewArchiveMode = page === 'archive';
         currentActiveFolder = libraryLocations[page].folder;
         document.getElementById('libraryPageTitle').textContent = viewArchiveMode ? '典藏庫' : '題庫';
@@ -3181,4 +3184,6 @@ const collection = createCollection({
         await initQuiz(); document.querySelector('.quiz-title').textContent = '收藏練習';
     }
 });
+const vocabulary = mountFlashcard({ host: document.getElementById('flashcardPage'), activate: () => showLibraryPage('flashcard') });
+document.getElementById('homeFlashcard').onclick = () => vocabulary.open();
 mountSidebar();

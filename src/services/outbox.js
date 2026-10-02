@@ -14,12 +14,16 @@ export async function storage(store, action, value) {
     });
 }
 let handler, getUid, busy = false;
+const handlers = new Map();
+export function registerOutboxHandler(kind, send) { handlers.set(kind, send); }
 const suspended = new Set();
 export async function suspendAccount(uid) { suspended.add(uid); while (busy) await new Promise(resolve => setTimeout(resolve, 100)); }
 export function resumeAccount(uid) { suspended.delete(uid); void flushOutbox(); }
 export function installOutbox(uid, send) { getUid = uid; handler = send; window.addEventListener('online', flushOutbox); setInterval(flushOutbox, 30000); }
+let lastQueuedAt = 0;
 export async function enqueue(kind, uid, payload) {
-    const item = { id: crypto.randomUUID(), kind, uid, payload, createdAt: Date.now() };
+    lastQueuedAt = Math.max(Date.now(), lastQueuedAt + 1);
+    const item = { id: crypto.randomUUID(), kind, uid, payload, createdAt: lastQueuedAt };
     await storage('outbox', 'put', item);
     void flushOutbox();
     return item;
@@ -31,16 +35,24 @@ export async function flushOutbox() {
     try {
         const items = (await storage('outbox', 'getAll')).filter(i => i.uid === getUid()).sort((a, b) => a.createdAt - b.createdAt);
         window.dispatchEvent(new CustomEvent('sync-status', { detail: { pending: items.length } }));
+        const blockedKinds = new Set();
+        let failed = false;
         for (const item of items) {
             if (item.uid !== getUid() || suspended.has(item.uid)) break;
+            if (blockedKinds.has(item.kind)) continue;
             const start = performance.now();
-            await handler(item);
-            diagnostic('sync-complete', { kind: item.kind, durationMs: Math.round(performance.now() - start) });
-            await storage('outbox', 'delete', item.id);
+            try {
+                await (handlers.get(item.kind) || handler)(item);
+                diagnostic('sync-complete', { kind: item.kind, durationMs: Math.round(performance.now() - start) });
+                await storage('outbox', 'delete', item.id);
+            } catch (error) {
+                failed = true; blockedKinds.add(item.kind);
+                window.dispatchEvent(new CustomEvent('sync-status', { detail: { error: error.code || 'sync-failed' } }));
+            }
         }
         const pending = (await storage('outbox', 'getAll')).filter(i => i.uid === getUid()).length;
-        retrySoon = pending > 0;
-        window.dispatchEvent(new CustomEvent('sync-status', { detail: { pending } }));
+        retrySoon = pending > 0 && !failed;
+        window.dispatchEvent(new CustomEvent('sync-status', { detail: { pending, error: failed ? 'sync-failed' : null } }));
     } catch (error) {
         window.dispatchEvent(new CustomEvent('sync-status', { detail: { error: error.code || 'sync-failed' } }));
     } finally { busy = false; if (retrySoon) setTimeout(flushOutbox, 0); }

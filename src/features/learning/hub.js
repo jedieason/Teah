@@ -88,7 +88,7 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
         const body = open('資料與隱私');
         const dataCard = section(body, '學習資料');
         const policy = el('a', '完整資料政策與使用條款', dataCard); policy.href = 'privacy.html'; policy.target = '_blank'; policy.rel = 'noopener';
-        el('p', '題矣保存 Google 登入識別、進度、作答事件、錯題、收藏及個人筆記，供跨裝置學習使用。資料保留至你主動刪除；此裝置另有離線副本。', dataCard);
+        el('p', '題矣保存 Google 登入識別、進度、作答事件、錯題、收藏、Flashcard 字卡集及個人筆記，供跨裝置學習使用。資料保留至你主動刪除；此裝置另有離線副本。', dataCard);
         const aiCard = section(body, 'AI 與使用條款');
         el('p', 'AI 功能會將你選擇的題目、作答及輸入內容傳送至 Google Gemini。請勿輸入病人或其他個人敏感資料。AI 內容可能有誤，應回查原始教材。', aiCard);
         const analyticsCard = section(body, '使用量與診斷');
@@ -100,17 +100,17 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
         button('匯出此裝置診斷紀錄', analyticsCard, () => download(diagnosticReport(), 'teah-diagnostics.json'));
         button('匯出我的資料', dataCard, async () => {
             if (!requireUser()) return; const uid = auth.currentUser.uid, data = {};
-            for (const key of ['progress', 'mistakes', 'learning', 'feedback']) data[key] = (await get(ref(database, `${key}/${uid}`))).val();
+            for (const key of ['progress', 'mistakes', 'learning', 'feedback', 'flashcard']) data[key] = (await get(ref(database, `${key}/${uid}`))).val();
             data.pending = (await storage('outbox', 'getAll')).filter(i => i.uid === uid);
             download(data, 'teah-my-data.json');
         });
         button('刪除帳戶與全部學習資料', danger, async () => {
-            if (!requireUser() || !window.confirm('將永久刪除此服務帳戶、全部學習紀錄、筆記與收藏。建議先匯出；確定刪除？')) return;
+            if (!requireUser() || !window.confirm('將永久刪除此服務帳戶、全部學習紀錄、筆記、收藏與 Flashcard 字卡集。建議先匯出；確定刪除？')) return;
             const user = auth.currentUser, uid = user.uid;
             await reauthenticateWithPopup(user, googleProvider);
             await suspendAccount(uid);
             try {
-                await update(ref(database), { [`progress/${uid}`]: null, [`mistakes/${uid}`]: null, [`learning/${uid}`]: null, [`feedback/${uid}`]: null });
+                await update(ref(database), { [`progress/${uid}`]: null, [`mistakes/${uid}`]: null, [`learning/${uid}`]: null, [`feedback/${uid}`]: null, [`flashcard/${uid}`]: null });
                 await clearAccountCache(uid);
                 await deleteUser(user);
                 location.reload();

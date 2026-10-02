@@ -1,7 +1,9 @@
 import { initializeTestEnvironment, assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
 import { ref, set, get, remove, update, runTransaction } from 'firebase/database';
 import { readFile } from 'node:fs/promises';
-const env = await initializeTestEnvironment({ projectId: 'demo-teah', database: { host: '127.0.0.1', port: 9000, rules: await readFile('firebase/database.rules.example.json', 'utf8') } });
+import assert from 'node:assert/strict';
+import { prepareDeck, createSession, submitAnswer, mergeStudy } from '../src/features/flashcard/model.js';
+const env = await initializeTestEnvironment({ projectId: 'demo-teah', database: { host: '127.0.0.1', port: Number(process.env.TEAH_RULES_PORT || 9000), rules: await readFile('firebase/database.rules.example.json', 'utf8') } });
 try {
     const alice = env.authenticatedContext('alice').database(), bob = env.authenticatedContext('bob').database(), anon = env.unauthenticatedContext().database();
     await env.withSecurityRulesDisabled(async c => { await set(ref(c.database()), { quizCatalog: { bank: { count: 1 } }, bank: [{ question: 'q' }], API_KEY: 'fake' }); });
@@ -34,6 +36,34 @@ try {
     await assertFails(get(ref(bob, 'feedback/alice')));
     await assertFails(update(ref(alice, 'feedback/alice/t1'), { status: 'resolved' }));
     await assertSucceeds(update(ref(reviewer, 'feedback/alice/t1'), { status: 'resolved', resolution: '已修正' }));
+    const deck = prepareDeck({ title: 'Private vocabulary', cards: [{ term: 'apple', definition: '蘋果' }, { term: 'pear', definition: '梨' }, { term: 'orange', definition: '橘子' }] });
+    const deckPath = `flashcard/alice/sets/${deck.id}`, studyPath = `flashcard/alice/study/${deck.id}`;
+    await assertFails(set(ref(anon, deckPath), deck));
+    await assertFails(set(ref(bob, deckPath), deck));
+    await assertSucceeds(set(ref(alice, deckPath), deck));
+    await assertSucceeds(get(ref(alice, 'flashcard/alice/sets')));
+    await assertFails(get(ref(bob, 'flashcard/alice')));
+    await assertFails(get(ref(anon, 'flashcard/alice')));
+    await assertFails(update(ref(alice, deckPath), { title: '' }));
+    await assertFails(update(ref(alice, deckPath + '/cards/0'), { definition: '' }));
+    await assertFails(update(ref(alice, deckPath), { id: 'wrong-id' }));
+    const s = createSession(deck, {}, { types: ['written'] });
+    const graded = submitAnswer(s, deck, deck.cards[0].term);
+    const vocabEvent = { id: 'v1', kind: 'answer', at: Date.now(), cardId: s.current.cardId, revision: 1, direction: s.current.direction, correct: true, response: 'apple', sessionId: s.id, generation: 'initial', ordinal: 1, type: 'written', responseTimeMs: 100 };
+    await assertSucceeds(runTransaction(ref(alice, studyPath), old => mergeStudy(old, vocabEvent, graded)));
+    await assertSucceeds(runTransaction(ref(alice, studyPath), old => mergeStudy(old, vocabEvent, graded)));
+    assert.equal((await get(ref(alice, studyPath + '/summary/correct'))).val(), 1);
+    await assertFails(set(ref(bob, studyPath + '/events/v2'), { ...vocabEvent, id: 'v2' }));
+    await assertFails(set(ref(alice, studyPath + '/events/v1'), { ...vocabEvent, correct: false }));
+    await assertFails(set(ref(alice, studyPath + '/events/v1'), { ...vocabEvent, revision: 2 }));
+    await assertFails(set(ref(alice, studyPath + '/events/v1'), { ...vocabEvent, direction: 'definition' }));
+    await assertFails(set(ref(alice, studyPath + '/events/bad'), { id: 'bad', kind: 'answer', at: 1 }));
+    await assertSucceeds(runTransaction(ref(alice, studyPath), old => mergeStudy(old, { id: 'override', kind: 'override', at: Date.now() + 1, originalId: 'v1', correct: true })));
+    await assertFails(set(ref(alice, studyPath + '/events/badOverride'), { id: 'badOverride', kind: 'override', at: Date.now(), originalId: 'missing', correct: true }));
+    await assertSucceeds(update(ref(alice, deckPath), { deletedAt: Date.now(), revision: 2 }));
+    await assertSucceeds(update(ref(alice, deckPath), { deletedAt: null, revision: 3 }));
+    await assertFails(set(ref(alice, 'flashcard/alice/study/nonexistent'), { summary: { generation: 'initial', correct: 0, wrong: 0 } }));
+    await assertSucceeds(remove(ref(alice, 'flashcard/alice')));
     await assertSucceeds(remove(ref(alice, 'learning/alice')));
-    console.log('Rules passed: root/anonymous key denial, account isolation, immutable events, draft review roles and account deletion.');
+    console.log('Rules passed: root/anonymous key denial, account isolation, immutable events, draft review roles, vocabulary schema/transactions/override/recovery and account deletion.');
 } finally { await env.cleanup(); }

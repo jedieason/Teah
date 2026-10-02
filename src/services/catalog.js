@@ -2,7 +2,7 @@ import { storage } from './outbox.js';
 import { normalizeQuestion } from '../features/learning/model.js';
 import { database, auth, ref, get, update } from './firebase.js';
 
-export const reservedKeys = new Set(['progress', 'mistakes', 'mistake', 'API_KEY', 'quizCatalog', 'quizAliases', 'config', 'learning', 'contentDrafts', 'auditLog', 'feedback']);
+export const reservedKeys = new Set(['progress', 'mistakes', 'mistake', 'API_KEY', 'quizCatalog', 'quizAliases', 'config', 'learning', 'contentDrafts', 'auditLog', 'feedback', 'flashcard']);
 export const validBankName = name => !!name.trim() && !/[.#$\[\]/]/.test(name) && !reservedKeys.has(name);
 
 export async function readCatalog() {

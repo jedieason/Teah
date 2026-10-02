@@ -12,9 +12,11 @@
     "test:browser": "node tests/browser-smoke.mjs",
     "test:collections": "node tests/collections-browser.mjs",
     "test:learning": "node tests/learning-browser.mjs",
-    "test:rules": "firebase emulators:exec --only database --project demo-teah \"node tests/rules.emulator.mjs\"",
+    "test:rules": "node scripts/test-rules.mjs",
     "test:editorial": "node tests/editorial-browser.mjs",
-    "test:flashcards": "node tests/flashcards-browser.mjs"
+    "test:flashcards": "node tests/flashcards-browser.mjs",
+    "test:vocabulary": "node tests/flashcard-browser.mjs",
+    "test:vocabulary:edge": "node tests/flashcard-edge-browser.mjs"
   },
   "engines": {
     "node": ">=20"

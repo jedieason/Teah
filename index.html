@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="styles/collections.css">
 <link rel="stylesheet" href="styles/notebook.css">
 <link rel="stylesheet" href="styles/flashcards.css">
+<link rel="stylesheet" href="styles/flashcard.css">
 <link rel="stylesheet" href="styles/dialogs.css">
 <link rel="stylesheet" href="styles/select-menu.css">
 <link rel="stylesheet" href="styles/concept-review.css">
@@ -120,6 +121,7 @@
         <button id="homeLibrary" class="quiet-button">題庫</button>
         <button id="homeMistakes" class="quiet-button">錯題本</button>
         <button id="homeStarred" class="quiet-button">已收藏</button>
+        <button id="homeFlashcard" class="quiet-button">Flashcard</button>
       </nav>
     </aside>
     <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="收合側邊導覽" hidden></button>
@@ -153,6 +155,7 @@
     </main>
 
     <main id="collectionPage" class="collection-page" aria-label="已收藏" hidden></main>
+    <main id="flashcardPage" class="vocab-page" aria-label="Flashcard" hidden></main>
 
     <!-- Hidden legacy elements if needed for script compatibility before full refactor -->
     <div id="folder-toolbar" style="display:none;"></div>
