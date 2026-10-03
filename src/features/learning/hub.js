@@ -151,6 +151,7 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
             dialog.close(); alert('回報已送出，可在「我的回報」查看處理結果。');
         });
     }); asIcon(report, '回報內容問題', '<path d="M5 21V4m0 0c5-4 9 4 14 0v10c-5 4-9-4-14 0"/>');
+    report.style.display = 'none';
     const notes = button('個人筆記', questionActions, async () => {
         if (!requireUser()) return; const q = current(); if (!q?.questionId) { alert('請重新載入題庫後使用筆記。'); return; }
         const selectedText = window.getSelection()?.toString().slice(0, 2000) || '';
