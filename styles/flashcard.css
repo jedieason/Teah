@@ -144,6 +144,10 @@
 .dark-mode .vocab-pill { color:#202020; }
 
 .vocab-editor-heading { position:sticky; top:76px; z-index:4; background:var(--surface-color,#fff); padding:12px 0; border-bottom:1px solid var(--v-line); }
+.vocab-editor-errors { flex-basis:100%; order:1; margin:0; color:#c22136; font-size:14px; font-weight:600; }
+.vocab-field-error { color:#c22136; font-size:13px; font-weight:400; }
+.vocab-page .vocab-field [aria-invalid="true"] { border:2px solid #c22136; }
+.vocab-page .vocab-field [aria-invalid="true"]:focus-visible { outline-color:#f2a4ae; }
 .vocab-save-bottom { display:block; min-width:180px; margin:20px auto; }
 
 /* Paste import follows the full-screen workspace supplied in the reference. */

@@ -5,7 +5,7 @@ const node = (tag, text, parent, className) => {
     const e = document.createElement(tag); if (text != null) e.textContent = text;
     if (className) e.className = className; parent?.append(e); return e;
 };
-const languages = [['en-US', 'English'], ['zh-TW', '繁體中文'], ['ja-JP', '日本語'], ['ko-KR', '한국어'], ['fr-FR', 'Français'], ['de-DE', 'Deutsch'], ['es-ES', 'Español'], ['it-IT', 'Italiano'], ['la', 'Latin'], ['math', '數學／化學符號']];
+const languages = [['en-US', 'English'], ['zh-TW', '繁體中文'], ['ms-MY', '馬來文（Bahasa Melayu）'], ['ja-JP', '日本語'], ['ko-KR', '한국어'], ['fr-FR', 'Français'], ['de-DE', 'Deutsch'], ['es-ES', 'Español'], ['it-IT', 'Italiano'], ['la', 'Latin'], ['math', '數學／化學符號']];
 const typeLabels = { choice: '選擇題', multi: '複選題', written: '書寫／填空題', flash: '字卡', truefalse: '是非題', spell: '聽寫題' };
 export function mountFlashcard({ host, activate }) {
     let owner = null, decks = {}, deck = null, study = {}, phase = 'list', draft = null, session = null, flash = null;
@@ -13,9 +13,13 @@ export function mountFlashcard({ host, activate }) {
     let preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }, direction = 'term', search = '';
     let screen = '', termFilter = 'all', termQuery = '';
     let audioContext, progressWidths = [], questionKey = '', symbolsKey = '', symbols = [];
+    let speechGeneration = 0, pendingVoiceLoad = null, speechError = '';
     const dialog = node('dialog', null, document.body, 'vocab-dialog');
+    window.speechSynthesis?.getVoices?.();
     function report(text) { message = text; const status = host.querySelector('.vocab-status'); if (status) status.textContent = text; }
-    function stop() { clearTimeout(timer); timer = null; window.speechSynthesis?.cancel(); }
+    function reportSpeechError(text) { speechError = text; report(text); }
+    function stopSpeech() { speechGeneration++; pendingVoiceLoad?.(); pendingVoiceLoad = null; window.speechSynthesis?.cancel(); }
+    function stop() { clearTimeout(timer); timer = null; stopSpeech(); }
     function safeOwner() { if (!owner || auth.currentUser?.uid !== owner) throw new Error('請先登入或重新開啟 Flashcard。'); }
     async function action(work) {
         if (busy) return; busy = true; host.setAttribute('aria-busy', 'true');
@@ -185,7 +189,38 @@ export function mountFlashcard({ host, activate }) {
     function renderEditor() {
         const h = heading(deck ? '編輯字卡集' : '建立字卡集', { label: deck ? '字卡集' : 'Flashcard', action: async () => { clearTimeout(draftTimer); await saveDraft(deck?.id, clone(draft)); phase = deck ? 'detail' : 'list'; render(); } });
         h.classList.add('vocab-editor-heading');
+        const fields = new Map(); let attemptedSave = false, invalidFields = new Set();
+        const summary = node('p', '', h, 'vocab-editor-errors'); summary.setAttribute('role', 'alert'); summary.hidden = true;
+        function requiredField(input, key) {
+            const error = node('span', '', input.parentElement, 'vocab-field-error'); error.id = `vocab-field-error-${key}`; error.hidden = true;
+            input.setAttribute('aria-describedby', error.id); fields.set(key, { input, error });
+        }
+        function validate(focus = false) {
+            const issues = new Map();
+            if (!draft.title.trim()) issues.set('title', '請填寫字卡集名稱。');
+            const filled = draft.cards.filter(c => c.term.trim() || c.definition.trim());
+            if (!filled.length) {
+                if (draft.cards[0]) for (const key of ['term', 'definition']) issues.set(`${draft.cards[0].id}-${key}`, key === 'term' ? '請填寫單字。' : '請填寫解釋。');
+            } else for (const c of filled) {
+                if (!c.term.trim()) issues.set(`${c.id}-term`, '請填寫單字。');
+                if (!c.definition.trim()) issues.set(`${c.id}-definition`, '請填寫解釋。');
+            }
+            for (const key of new Set([...invalidFields, ...issues.keys()])) {
+                const entry = fields.get(key); if (!entry) continue;
+                const message = issues.get(key); entry.input.setAttribute('aria-invalid', String(!!message)); entry.error.textContent = message || ''; entry.error.hidden = !message;
+            }
+            invalidFields = new Set(issues.keys());
+            const invalid = issues.size > 0 || !filled.length;
+            summary.textContent = issues.has('title') ? issues.get('title') : !filled.length ? '請至少新增一張完整字卡。' : invalid ? '請補齊標示欄位的單字或解釋。' : '';
+            summary.hidden = !invalid;
+            if (focus && invalid) {
+                const input = fields.get(issues.keys().next().value)?.input || host.querySelector('.vocab-add');
+                input?.focus({ preventScroll: true }); input?.scrollIntoView({ block: 'center' });
+            }
+            return !invalid;
+        }
         async function save(andLearn = false) {
+            attemptedSave = true; if (!validate(true)) return;
             clearTimeout(draftTimer);
             const value = { ...draft, cards: draft.cards.filter(c => c.term.trim() || c.definition.trim()) }, oldId = deck?.id;
             const next = await saveDeck(value, deck); safeOwner(); await clearDraft(oldId);
@@ -194,7 +229,9 @@ export function mountFlashcard({ host, activate }) {
         button('完成', h, () => save(), 'vocab-primary'); button('建立並練習', h, () => save(true));
         const meta = node('div', null, host, 'vocab-meta');
         for (const [key, label, type, max] of [['title', '字卡集名稱', 'input', 160], ['description', '說明（選填）', 'textarea', 2000]]) {
-            const input = field(label, meta, draft[key], type); input.maxLength = max; input.oninput = () => { draft[key] = input.value; queueDraft(); };
+            const input = field(label, meta, draft[key], type); input.maxLength = max;
+            if (key === 'title') { input.required = true; requiredField(input, key); }
+            input.oninput = () => { draft[key] = input.value; if (attemptedSave) validate(); queueDraft(); };
         }
         const langs = node('div', null, host, 'vocab-toolbar');
         for (const [key, label] of [['termLanguage', '單字語言'], ['definitionLanguage', '解釋語言']]) { const s = select(label, langs, languages, draft[key]); s.onchange = () => { draft[key] = s.value; queueDraft(); }; }
@@ -205,6 +242,7 @@ export function mountFlashcard({ host, activate }) {
         const list = node('div', null, host, 'vocab-editor-rows'); let dragIndex = null;
         function redraw(focusIndex) {
             list.replaceChildren();
+            for (const key of fields.keys()) if (key !== 'title') fields.delete(key);
             draft.cards.forEach((c, i) => {
                 const row = node('article', null, list, 'vocab-edit-row'); row.dataset.index = i;
                 const top = node('div', null, row, 'vocab-row-tools'); node('span', i + 1, top, 'vocab-row-number');
@@ -220,13 +258,14 @@ export function mountFlashcard({ host, activate }) {
                 const sides = node('div', null, row, 'vocab-edit-sides');
                 for (const [key, label] of [['term', '單字'], ['definition', '解釋']]) {
                     const wrap = node('div', null, sides); const input = field(`${label} ${i + 1}`, wrap, c[key], 'textarea'); input.maxLength = 4000; input.rows = 2;
-                    input.oninput = () => { c[key] = input.value; queueDraft(); };
+                    requiredField(input, `${c.id}-${key}`);
+                    input.oninput = () => { c[key] = input.value; if (attemptedSave) validate(); queueDraft(); };
                     input.onkeydown = e => {
                         if (key === 'definition' && e.key === 'Tab' && !e.shiftKey && i === draft.cards.length - 1 && draft.cards.length < MAX_CARDS) { e.preventDefault(); draft.cards.push({ id: id(), term: '', definition: '' }); queueDraft(); redraw(i + 1); }
                     };
                     const formatting = node('div', null, wrap, 'vocab-format');
                     for (const [title, marker] of [['粗體', '**'], ['斜體', '*'], ['底線', '__'], ['標示', '==']]) {
-                        const b = button(title, formatting, () => { const start = input.selectionStart, end = input.selectionEnd; input.setRangeText(marker + input.value.slice(start, end) + marker, start, end, 'select'); c[key] = input.value; queueDraft(); input.focus(); }); b.tabIndex = -1;
+                        const b = button(title, formatting, () => { const start = input.selectionStart, end = input.selectionEnd; input.setRangeText(marker + input.value.slice(start, end) + marker, start, end, 'select'); input.dispatchEvent(new Event('input', { bubbles: true })); input.focus(); }); b.tabIndex = -1;
                     }
                 }
                 const aliases = node('details', null, row, 'vocab-aliases'); node('summary', '替代答案', aliases);
@@ -235,6 +274,7 @@ export function mountFlashcard({ host, activate }) {
                 }
                 button('＋ 插入下一張', row, () => { if (draft.cards.length >= MAX_CARDS) throw new Error(`每組最多 ${MAX_CARDS} 張。`); draft.cards.splice(i + 1, 0, { id: id(), term: '', definition: '' }); queueDraft(); redraw(i + 1); }, 'vocab-insert');
             });
+            if (attemptedSave) validate();
             if (focusIndex != null) list.querySelector(`[data-index="${focusIndex}"] textarea`)?.focus();
         }
         redraw(); button('＋ 新增字卡', host, () => { if (draft.cards.length >= MAX_CARDS) throw new Error(`每組最多 ${MAX_CARDS} 張。`); draft.cards.push({ id: id(), term: '', definition: '' }); queueDraft(); redraw(draft.cards.length - 1); }, 'vocab-add');
@@ -399,11 +439,10 @@ export function mountFlashcard({ host, activate }) {
         const currentQuestionKey = `${session.id}:${q.key}:${session.ordinal}`;
         if (!feedback && questionKey !== currentQuestionKey) { questionAt = Date.now(); questionKey = currentQuestionKey; }
         const panel = node('section', null, host, `vocab-question ${feedback ? feedback.correct ? 'is-correct' : 'is-wrong' : ''}`);
-        const top = node('div', null, panel, 'vocab-question-top'); node('span', q.type === 'spell' ? q.direction === 'term' ? '單字' : '解釋' : q.direction === 'term' ? '解釋' : '單字', top, 'vocab-muted'); starButton(card, top);
+        const top = node('div', null, panel, 'vocab-question-top'); node('span', q.direction === 'term' ? '解釋' : '單字', top, 'vocab-muted'); starButton(card, top);
         if (!feedback && session.facts[q.key].wrong && !session.facts[q.key].streak) node('span', '再次練習', top, 'vocab-retry-label');
-        icon('◖))', '朗讀題目', top, () => speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'));
-        if (q.type === 'spell') { node('h2', '聽寫', panel); button('播放單字', panel, () => speak(answerFor(card, q.direction), q.direction)); }
-        else text(promptFor(card, q.direction), panel, 'vocab-prompt');
+        icon('◖))', q.type === 'spell' ? '朗讀答案' : '朗讀題目', top, () => speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'));
+        text(promptFor(card, q.direction), panel, 'vocab-prompt');
         const hint = node('p', typeLabels[q.type], panel, 'vocab-question-hint');
         if (feedback) { hint.textContent = feedback.correct ? '✓ 答對了' : feedback.skipped ? '已略過' : '再練一次'; hint.className += feedback.correct ? ' success' : ' error'; hint.setAttribute('role', 'status'); }
         if (q.type === 'choice') {
@@ -507,9 +546,35 @@ export function mountFlashcard({ host, activate }) {
         }
     }
     async function nextRound() { const next = continueRound(session, deck); await persist(null, next); session = next; render(); }
-    function speak(value, side) {
-        if (!window.speechSynthesis) throw new Error('此瀏覽器不支援朗讀。');
-        window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(value); utterance.lang = side === 'term' ? deck.termLanguage : deck.definitionLanguage; utterance.rate = phase === 'learn' ? session.options.audioRate || 0.9 : 0.9; window.speechSynthesis.speak(utterance);
+    async function speak(value, side) {
+        const synthesis = window.speechSynthesis;
+        if (!synthesis) { reportSpeechError('此瀏覽器不支援朗讀。'); return; }
+        stopSpeech(); const generation = speechGeneration;
+        const language = side === 'term' ? deck.termLanguage : deck.definitionLanguage;
+        const rate = phase === 'learn' ? session.options.audioRate || 0.9 : 0.9;
+        let voices = synthesis.getVoices?.() || [];
+        if (!voices.length && synthesis.getVoices && synthesis.addEventListener) voices = await new Promise(resolve => {
+            let timeout, finished = false;
+            const finish = () => {
+                if (finished) return; finished = true; clearTimeout(timeout); synthesis.removeEventListener('voiceschanged', loaded);
+                if (pendingVoiceLoad === finish) pendingVoiceLoad = null;
+                resolve(synthesis.getVoices());
+            };
+            const loaded = () => { if (synthesis.getVoices().length) finish(); };
+            pendingVoiceLoad = finish; synthesis.addEventListener('voiceschanged', loaded); timeout = setTimeout(finish, 1000); loaded();
+        });
+        if (generation !== speechGeneration || host.hidden) return;
+        const code = language.toLowerCase().replaceAll('_', '-'), base = code.split('-')[0];
+        const voiceCode = voice => voice.lang.toLowerCase().replaceAll('_', '-');
+        const voice = voices.find(v => voiceCode(v) === code) || voices.find(v => voiceCode(v).split('-')[0] === base);
+        if (base === 'ms' && !voice && synthesis.getVoices) { reportSpeechError('此裝置尚無馬來文語音，請在系統語音設定新增馬來文後重試。'); return; }
+        if (speechError && message === speechError) report(''); speechError = '';
+        const utterance = new SpeechSynthesisUtterance(value); utterance.lang = language; utterance.rate = rate; if (voice) utterance.voice = voice;
+        utterance.onerror = event => {
+            if (generation !== speechGeneration || ['canceled', 'interrupted'].includes(event.error)) return;
+            reportSpeechError(base === 'ms' ? '馬來文語音無法播放，請檢查系統語音設定後重試。' : '語音無法播放，請檢查系統語音設定後重試。');
+        };
+        synthesis.speak(utterance);
     }
     function speakSpelling(value, side) { speak(Array.from(value).join(' . '), side); }
     function soundFeedback(correct) {
