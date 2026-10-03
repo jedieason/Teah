@@ -127,6 +127,18 @@ try {
     await view.getByRole('button', { name: '編輯字卡集', exact: true }).click();
     await view.locator('.vocab-edit-row').first().waitFor(); await idle();
     assert.equal(await view.locator('.vocab-edit-row').count(), 2000);
+    // Limit the query to the import control instead of naming every tool in the 2000-card editor.
+    assert.equal(await view.locator('.vocab-import-trigger').getAttribute('aria-label'), '匯入文字');
+    await view.locator('.vocab-import-trigger').click();
+    const importing = page.getByRole('dialog', { name: '匯入文字', exact: true });
+    await importing.getByLabel('貼上文字', { exact: true }).fill(Array.from({ length: 2000 }, (_, i) => `added${i}\t新增 ${i}`).join('\n'));
+    assert.equal(await importing.locator('.vocab-import-preview > div').count(), 2000, 'preview must include every parsed card');
+    assert.equal(await importing.getByRole('button', { name: '匯入', exact: true }).isDisabled(), true);
+    assert.ok((await importing.locator('.vocab-import-status').innerText()).includes('超過 2000 張'));
+    await importing.getByLabel('貼上文字', { exact: true }).fill('extra\t額外一張');
+    assert.equal(await importing.getByRole('button', { name: '匯入', exact: true }).isDisabled(), true);
+    await importing.getByRole('button', { name: '取消匯入', exact: true }).click(); await idle();
+    assert.equal(await view.locator('.vocab-edit-row').count(), 2000);
     await view.getByLabel('解釋 2000', { exact: true }).fill('最後一張的修改');
     // Avoid an all-DOM accessible-name scan over thousands of editor tools; click the visible save control.
     assert.equal(await view.locator('.vocab-save-bottom').innerText(), '儲存字卡集');

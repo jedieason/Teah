@@ -199,7 +199,7 @@ export function mountFlashcard({ host, activate }) {
         const langs = node('div', null, host, 'vocab-toolbar');
         for (const [key, label] of [['termLanguage', '單字語言'], ['definitionLanguage', '解釋語言']]) { const s = select(label, langs, languages, draft[key]); s.onchange = () => { draft[key] = s.value; queueDraft(); }; }
         const toolbar = node('div', null, host, 'vocab-toolbar');
-        button('匯入文字', toolbar, () => importDialog(), 'vocab-primary');
+        const importButton = button('＋ Import', toolbar, () => importDialog(), 'vocab-import-trigger'); importButton.setAttribute('aria-label', '匯入文字');
         button('交換單字與解釋', toolbar, () => { draft.cards = draft.cards.map(c => ({ ...c, term: c.definition, definition: c.term, termAliases: c.definitionAliases || [], definitionAliases: c.termAliases || [] })); [draft.termLanguage, draft.definitionLanguage] = [draft.definitionLanguage, draft.termLanguage]; queueDraft(); render(); });
         node('span', `${draft.cards.length}／${MAX_CARDS} 張`, toolbar, 'vocab-muted');
         const list = node('div', null, host, 'vocab-editor-rows'); let dragIndex = null;
@@ -240,48 +240,80 @@ export function mountFlashcard({ host, activate }) {
         redraw(); button('＋ 新增字卡', host, () => { if (draft.cards.length >= MAX_CARDS) throw new Error(`每組最多 ${MAX_CARDS} 張。`); draft.cards.push({ id: id(), term: '', definition: '' }); queueDraft(); redraw(draft.cards.length - 1); }, 'vocab-add');
         button('儲存字卡集', host, () => save(), 'vocab-primary vocab-save-bottom');
     }
-    function modal(title) {
-        stop(); dialog.replaceChildren(); dialog.setAttribute('aria-label', title);
+    function modal(title, variant = '') {
+        stop(); dialog.className = 'vocab-dialog' + (variant ? ' ' + variant : ''); dialog.replaceChildren(); dialog.setAttribute('aria-label', title);
         const h = node('header', null, dialog, 'vocab-heading'); node('h2', title, h); icon('×', '關閉對話框', h, () => dialog.close());
         const body = node('div', null, dialog, 'vocab-dialog-body'); dialog.showModal(); return body;
     }
-    function importDialog(exportMode = false) {
-        const body = modal(exportMode ? '匯出文字' : '匯入文字');
-        const input = field(exportMode ? '匯出內容' : '貼上文字', body, '', 'textarea'); input.rows = 8; input.spellcheck = false;
-        input.placeholder = 'apple\t蘋果\nbanana\t香蕉';
+    function importDialog() {
+        const body = modal('匯入文字', 'vocab-import-dialog');
+        const header = dialog.querySelector('header'); header.querySelector('h2').textContent = '匯入資料';
+        const instructions = node('p', '從 Word、Excel 或 Google 文件複製並貼上。', null, 'vocab-import-instructions'); header.insertBefore(instructions, header.lastElementChild);
+        const input = field('貼上文字', body, '', 'textarea'); input.parentElement.classList.add('vocab-import-input'); input.rows = 8; input.spellcheck = false;
+        input.placeholder = 'Word 1\tDefinition 1\nWord 2\tDefinition 2\nWord 3\tDefinition 3';
+        const controls = node('div', null, body, 'vocab-import-controls');
+        function separators(label, name, values, initial, customLabel) {
+            const group = node('fieldset', null, controls, 'vocab-import-separators'); node('legend', label, group);
+            const radios = {};
+            function option(value, label, parent = group) {
+                const row = node('label', null, parent, 'vocab-import-radio'); const radio = node('input', null, row); radio.type = 'radio'; radio.name = name; radio.value = value; radio.checked = value === initial;
+                node('span', label, row); radio.onchange = update; radios[value] = radio; return row;
+            }
+            for (const [value, label] of values) option(value, label);
+            const customRow = node('div', null, group, 'vocab-import-custom'); option('custom', '自訂', customRow).classList.add('vocab-custom-radio');
+            const custom = field(customLabel, customRow); custom.placeholder = '自訂'; custom.maxLength = 20;
+            const chooseCustom = () => { radios.custom.checked = true; update(); };
+            custom.onfocus = chooseCustom; custom.oninput = chooseCustom;
+            return { value: () => Object.values(radios).find(radio => radio.checked).value, custom };
+        }
+        const term = separators('單字與解釋之間', 'vocab-import-term', [['tab', 'Tab'], ['comma', 'Comma']], 'tab', '自訂單字分隔符');
+        const row = separators('字卡與字卡之間', 'vocab-import-row', [['newline', '換行'], ['semicolon', '分號 ;']], 'newline', '自訂字卡分隔符');
+        const previewHeading = node('div', null, body, 'vocab-preview-heading'); node('h3', '預覽', previewHeading); const count = node('span', '0 張字卡', previewHeading, 'vocab-muted');
+        const status = node('p', '', body, 'vocab-import-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite'); status.id = 'vocab-import-status'; input.setAttribute('aria-describedby', status.id);
+        const empty = node('p', '尚無預覽內容', body, 'vocab-import-empty');
+        const preview = node('div', null, body, 'vocab-import-preview'); let parsed = null;
+        const footer = node('footer', null, dialog, 'vocab-import-footer'); button('取消匯入', footer, () => dialog.close());
+        const confirm = button('匯入', footer, () => {
+            if (!parsed?.cards.length || parsed.errors.length) return;
+            const keep = draft.cards.filter(c => c.term.trim() || c.definition.trim());
+            if (keep.length + parsed.cards.length > MAX_CARDS) { status.textContent = `加上現有字卡後超過 ${MAX_CARDS} 張。`; confirm.disabled = true; return; }
+            draft.cards = [...keep, ...parsed.cards.map(c => ({ ...c, id: id() }))]; queueDraft(); dialog.close(); message = `已匯入 ${parsed.cards.length} 張字卡。`; render();
+            host.querySelector(`[data-index="${keep.length}"] textarea`)?.focus();
+        }, 'vocab-primary');
+        function update() {
+            const options = { term: term.value(), row: row.value(), termCustom: term.custom.value, rowCustom: row.custom.value };
+            preview.replaceChildren();
+            try {
+                parsed = parseImport(input.value, options);
+                const overLimit = draft.cards.filter(c => c.term.trim() || c.definition.trim()).length + parsed.cards.length > MAX_CARDS;
+                confirm.disabled = !parsed.cards.length || parsed.errors.length > 0 || overLimit;
+                count.textContent = `${parsed.cards.length} 張字卡`;
+                status.textContent = overLimit ? `加上現有字卡後超過 ${MAX_CARDS} 張。` : parsed.errors.length ? `${parsed.errors.length} 處格式問題：第 ${parsed.errors[0].row} 行${parsed.errors[0].message}` : parsed.duplicates ? `${parsed.duplicates} 張重複（會保留）` : '';
+                input.setAttribute('aria-invalid', String(parsed.errors.length > 0)); empty.hidden = parsed.cards.length > 0;
+                for (const [i, c] of parsed.cards.entries()) { const r = node('div', null, preview); node('span', i + 1, r); node('span', c.term || '（空白）', r); node('span', c.definition || '（空白）', r); if (!c.term || !c.definition) r.classList.add('has-error'); }
+            } catch (e) { status.textContent = e.message; confirm.disabled = true; parsed = null; count.textContent = '0 張字卡'; empty.hidden = true; input.setAttribute('aria-invalid', 'true'); }
+        }
+        input.oninput = update; update(); input.focus({ preventScroll: true });
+    }
+    function exportText() {
+        const body = modal('匯出文字');
+        const input = field('匯出內容', body, '', 'textarea'); input.rows = 8; input.readOnly = true;
         const controls = node('div', null, body, 'vocab-import-controls');
         const term = select('單字與解釋之間', controls, [['tab', 'Tab'], ['comma', '逗號 ,'], ['dash', '連字號 -'], ['custom', '自訂']], 'tab');
         const termCustom = field('自訂單字分隔符', controls); termCustom.maxLength = 20; termCustom.hidden = true; termCustom.parentElement.hidden = true;
         const row = select('字卡與字卡之間', controls, [['newline', '換行'], ['semicolon', '分號 ;'], ['custom', '自訂']], 'newline');
         const rowCustom = field('自訂字卡分隔符', controls); rowCustom.maxLength = 20; rowCustom.parentElement.hidden = true;
         const status = node('p', '', body, 'vocab-import-status'); status.setAttribute('role', 'status');
-        const preview = node('div', null, body, 'vocab-import-preview'); let parsed = null;
-        const confirm = button(exportMode ? '下載文字檔' : '匯入', body, () => {
-            if (exportMode) { download(input.value, deck.title + '.txt', 'text/plain'); return; }
-            if (!parsed?.cards.length || parsed.errors.length) return;
-            const keep = draft.cards.filter(c => c.term.trim() || c.definition.trim());
-            if (keep.length + parsed.cards.length > MAX_CARDS) throw new Error(`加上現有字卡後超過 ${MAX_CARDS} 張。`);
-            draft.cards = [...keep, ...parsed.cards.map(c => ({ ...c, id: id() }))]; queueDraft(); dialog.close(); message = `已匯入 ${parsed.cards.length} 張字卡。`; render();
-        }, 'vocab-primary');
+        button('下載文字檔', body, () => download(input.value, deck.title + '.txt', 'text/plain'), 'vocab-primary');
         function update() {
             termCustom.parentElement.hidden = term.value !== 'custom'; termCustom.hidden = false; rowCustom.parentElement.hidden = row.value !== 'custom';
-            const options = { term: term.value, row: row.value, termCustom: termCustom.value, rowCustom: rowCustom.value };
-            if (exportMode) {
-                const a = term.value === 'tab' ? '\t' : term.value === 'comma' ? ',' : term.value === 'dash' ? '-' : termCustom.value;
-                const b = row.value === 'newline' ? '\n' : row.value === 'semicolon' ? ';' : rowCustom.value;
-                input.value = deck.cards.map(c => c.term + a + c.definition).join(b); input.readOnly = true;
-                status.textContent = '內容包含分隔符號時，請改用自訂分隔符。'; return;
-            }
-            try {
-                parsed = parseImport(input.value, options); preview.replaceChildren(); confirm.disabled = !parsed.cards.length || parsed.errors.length > 0;
-                status.textContent = `${parsed.cards.length} 張字卡` + (parsed.errors.length ? ` · ${parsed.errors.length} 處格式問題：第 ${parsed.errors[0].row} 行${parsed.errors[0].message}` : '') + (parsed.duplicates ? ` · ${parsed.duplicates} 張重複（會保留）` : '');
-                for (const [i, c] of parsed.cards.slice(0, 200).entries()) { const r = node('div', null, preview); node('span', i + 1, r); node('span', c.term || '（空白）', r); node('span', c.definition || '（空白）', r); }
-                if (parsed.cards.length > 200) node('p', `預覽前 200 張，匯入共 ${parsed.cards.length} 張。`, preview);
-            } catch (e) { status.textContent = e.message; confirm.disabled = true; parsed = null; }
+            const a = term.value === 'tab' ? '\t' : term.value === 'comma' ? ',' : term.value === 'dash' ? '-' : termCustom.value;
+            const b = row.value === 'newline' ? '\n' : row.value === 'semicolon' ? ';' : rowCustom.value;
+            input.value = deck.cards.map(c => c.term + a + c.definition).join(b);
+            status.textContent = '內容包含分隔符號時，請改用自訂分隔符。';
         }
         for (const e of [input, termCustom, rowCustom]) e.oninput = update; term.onchange = update; row.onchange = update; update();
     }
-    function exportText() { importDialog(true); }
     function download(content, name, type) { const url = URL.createObjectURL(new Blob([content], { type })); const a = node('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
     function settings() {
         const body = modal('Learn 設定'); const options = { ...DEFAULT_OPTIONS, ...preferred, types: preferred.learnTypes || preferred.types, practice: false };
