@@ -5,6 +5,22 @@ import { database, auth, ref, get, update } from './firebase.js';
 export const reservedKeys = new Set(['progress', 'mistakes', 'mistake', 'API_KEY', 'quizCatalog', 'quizAliases', 'config', 'learning', 'contentDrafts', 'auditLog', 'feedback', 'flashcard']);
 export const validBankName = name => !!name.trim() && !/[.#$\[\]/]/.test(name) && !reservedKeys.has(name);
 
+export async function bankExists(name) {
+    if (!name) return false;
+    try {
+        const snap = await get(ref(database, `quizCatalog/${name}`));
+        if (snap.exists()) return true;
+        const catalogSnap = await get(ref(database, 'quizCatalog'));
+        if (catalogSnap.exists()) return false;
+    } catch {}
+    try {
+        const entries = await readCatalog();
+        return Boolean(entries && Object.prototype.hasOwnProperty.call(entries, name));
+    } catch {
+        return false;
+    }
+}
+
 export async function readCatalog() {
     // A dedicated catalog lets rules deny root reads without moving legacy banks.
     let catalog;

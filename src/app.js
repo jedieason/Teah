@@ -9,7 +9,7 @@ import { enqueue, flushOutbox, storage } from './services/outbox.js';
 import { mountLearningHub } from './features/learning/hub.js';
 import { mountConceptReview } from './features/concept-review/view.js';
 import { installDialogBehavior } from './shared/dialogs.js';
-import { readCatalog, writeBanks, validBankName } from './services/catalog.js';
+import { readCatalog, writeBanks, validBankName, bankExists } from './services/catalog.js';
 import { database, auth, googleProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, onAuthStateChanged, signOut } from './services/firebase.js';
 import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quizLabel } from './features/mistakes/model.js';
 import { createNotebook } from './features/mistakes/notebook.js';
@@ -1619,7 +1619,7 @@ uploadConfirmBtn.addEventListener('click', async () => {
         for (const [name, data] of Object.entries(updates)) {
             if (!validBankName(name)) throw new Error('題庫名稱不可包含 . # $ [ ] / 或使用系統名稱。');
             validateQuiz(data);
-            if ((await get(ref(database, name))).exists()) throw new Error(`「${name}」已存在，請使用其他名稱。`);
+            if (await bankExists(name)) throw new Error(`「${name}」已存在，請使用其他名稱。`);
         }
         await writeBanks(updates);
         const count = Object.keys(updates).length;
@@ -2005,6 +2005,20 @@ const menuLogout = document.getElementById('menuLogout');
 const menuContribute = document.getElementById('menuContribute');
 const menuAddQuiz = document.getElementById('menuAddQuiz');
 
+function closeControlsMenu() {
+    if (!controlsMenu) return;
+    if (document.activeElement && controlsMenu.contains(document.activeElement)) {
+        if (controlsMenuBtn && controlsMenuBtn.style.display !== 'none') {
+            controlsMenuBtn.focus();
+        } else {
+            document.activeElement.blur();
+        }
+    }
+    controlsMenu.classList.remove('open');
+    controlsMenuBtn?.setAttribute('aria-expanded', 'false');
+    controlsMenu.setAttribute('aria-hidden', 'true');
+}
+
 if (controlsMenuBtn && controlsMenu) {
     controlsMenuBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -2021,21 +2035,12 @@ if (controlsMenuBtn && controlsMenu) {
         // Close if clicking outside
         if (!controlsMenu.contains(e.target) && e.target !== controlsMenuBtn) {
             if (controlsMenu.classList.contains('open')) {
-                controlsMenu.classList.remove('open');
-                controlsMenuBtn.setAttribute('aria-expanded', 'false');
-                controlsMenu.setAttribute('aria-hidden', 'true');
+                closeControlsMenu();
             }
         }
         // Also close if clicking an item inside (except container clicks)
         if (controlsMenu.contains(e.target) && (e.target.tagName === 'BUTTON' || e.target.closest('button'))) {
-            // Optional: delay slightly or close immediately.
-            // If the button logic needs to run first, standard event bubbling is fine.
-            // But we should verify if we want to close for ALL buttons.
-            // Logout/Theme/Shuffle/etc all seem fine to close menu.
-            // Edit Name might want to keep it open? No, it toggles mode then closes.
-            controlsMenu.classList.remove('open');
-            controlsMenuBtn.setAttribute('aria-expanded', 'false');
-            controlsMenu.setAttribute('aria-hidden', 'true');
+            closeControlsMenu();
         }
     });
 }
@@ -2052,9 +2057,7 @@ function syncControlsUser(user) {
 
     // Ensure the menu is closed when logged out
     if (!isLoggedIn && controlsMenu) {
-        controlsMenu.classList.remove('open');
-        controlsMenu.setAttribute('aria-hidden', 'true');
-        if (controlsMenuBtn) controlsMenuBtn.setAttribute('aria-expanded', 'false');
+        closeControlsMenu();
     }
 
     if (user) {
@@ -2137,7 +2140,7 @@ function showLibraryPage(page) {
     document.querySelector('.home-content').hidden = ['collection', 'flashcard'].includes(page);
     document.getElementById('collectionPage').hidden = page !== 'collection';
     document.getElementById('flashcardPage').hidden = page !== 'flashcard';
-    controlsMenu?.classList.remove('open');
+    closeControlsMenu();
     for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive'], ['homeFlashcard', 'flashcard']]) {
         const button = document.getElementById(id);
         if (page === name) button?.setAttribute('aria-current', 'page'); else button?.removeAttribute('aria-current');
@@ -2158,12 +2161,12 @@ let globalArchivedQuizKeys = new Set();
 if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
     isEditMode = !isEditMode;
     toggleEditModeUI();
-    if (typeof controlsMenu !== 'undefined' && controlsMenu) controlsMenu.classList.remove('open');
+    closeControlsMenu();
 });
 
 // Open upload modal from controls menu
 if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
-    if (controlsMenu) controlsMenu.classList.remove('open');
+    closeControlsMenu();
     openUploadModal('paste');
 });
 
@@ -2300,7 +2303,7 @@ if (promptCodeBlock) {
 
 if (menuContribute) {
     menuContribute.addEventListener('click', () => {
-        if (controlsMenu) controlsMenu.classList.remove('open');
+        closeControlsMenu();
         if (contributeModal) contributeModal.style.display = 'flex';
     });
 }
@@ -2446,7 +2449,7 @@ function updateBatchActionFloatingBar() {
                     const isUnarchiving = oldName.startsWith('_Archive_');
                     const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
 
-                    if ((await get(ref(database, newName))).exists()) throw new Error(`「${newName}」已存在，無法覆蓋。`);
+                    if (await bankExists(newName)) throw new Error(`「${newName}」已存在，無法覆蓋。`);
                     const snapshot = await get(ref(database, oldName));
                     if (snapshot.exists()) {
                         const data = snapshot.val();
@@ -2485,7 +2488,7 @@ async function handleRenameQuiz(oldName) {
 
         try {
             if (!validBankName(newName)) throw new Error('題庫名稱格式不正確');
-            if ((await get(ref(database, newName))).exists()) { showCustomAlert('此名稱已存在，請使用其他名稱。'); return; }
+            if (await bankExists(newName)) { showCustomAlert('此名稱已存在，請使用其他名稱。'); return; }
             // Get old data
             const snapshot = await get(ref(database, oldName));
             if (snapshot.exists()) {
@@ -2541,7 +2544,7 @@ async function handleArchiveQuiz(oldName) {
 
     archiveCallback = async () => {
         try {
-            if ((await get(ref(database, newName))).exists()) { showCustomAlert('目的題庫已存在，無法覆蓋。'); return; }
+            if (await bankExists(newName)) { showCustomAlert('目的題庫已存在，無法覆蓋。'); return; }
             const snapshot = await get(ref(database, oldName));
             if (snapshot.exists()) {
                 const data = snapshot.val();

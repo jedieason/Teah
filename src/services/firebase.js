@@ -29,3 +29,12 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 export { database, auth, googleProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, onAuthStateChanged, signOut, deleteUser, reauthenticateWithPopup };
+
+if (typeof window !== 'undefined') {
+    window.auth = auth;
+    window.database = database;
+    window.firebase = {
+        auth: () => auth,
+        database: () => database
+    };
+}
