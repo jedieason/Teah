@@ -134,3 +134,51 @@ test('streamGemini throws descriptive error on non-ok HTTP responses', async () 
         globalThis.fetch = originalFetch;
     }
 });
+
+test('streamGemini falls back to direct Gemini SSE stream when endpoint returns 405 on static hosting', async () => {
+    const originalFetch = globalThis.fetch;
+    const fetchCalls = [];
+    const encoder = new TextEncoder();
+
+    const mockSseStream = new ReadableStream({
+        async start(controller) {
+            controller.enqueue(encoder.encode('data: {"candidates": [{"content": {"parts": [{"text": "Direct "}]}}]}\n\n'));
+            controller.enqueue(encoder.encode('data: {"candidates": [{"content": {"parts": [{"text": "stream!"}]}}]}\n\n'));
+            controller.close();
+        }
+    });
+
+    try {
+        globalThis.fetch = async (url, opts) => {
+            fetchCalls.push({ url, opts });
+            if (url === '/api/chat') {
+                return new Response('<html><head><title>405 Not Allowed</title></head></html>', {
+                    status: 405,
+                    headers: { 'Content-Type': 'text/html' }
+                });
+            }
+            if (String(url).includes('streamGenerateContent')) {
+                return new Response(mockSseStream, {
+                    status: 200,
+                    headers: { 'Content-Type': 'text/event-stream' }
+                });
+            }
+            return new Response('Not found', { status: 404 });
+        };
+
+        const deltas = [];
+        const result = await streamGemini({
+            contents: [{ parts: [{ text: 'test' }] }],
+            apiKey: 'mock-key',
+            onDelta: (delta) => deltas.push(delta),
+        });
+
+        assert.equal(fetchCalls.length, 2);
+        assert.equal(fetchCalls[0].url, '/api/chat');
+        assert.match(String(fetchCalls[1].url), /generativelanguage\.googleapis\.com.*streamGenerateContent.*alt=sse/);
+        assert.equal(result, 'Direct stream!');
+        assert.deepEqual(deltas, ['Direct ', 'stream!']);
+    } finally {
+        globalThis.fetch = originalFetch;
+    }
+});
