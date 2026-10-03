@@ -215,7 +215,7 @@ stage 2 答對後更新間隔：`min(90, max(1, 舊間隔 × 2, 距上次作答�
 - 題目採置中白底卡片與紫色操作、短選項雙欄、長選項單欄；手機自動單欄。
 - 答對選項綠底、勾號、淡化其他選項、950 ms 後自動下一題（等義接受須等待確認）；答錯橘框叉號、綠虛線正解、停留等待繼續。書寫顯示原答案與正解，支援重打與手動更正。
 - 單選鍵盤 1–4；書寫 Enter 提交；錯誤且完成訂正後可用一般字元鍵／Enter／Space 繼續；輸入欄與對話框不攔截此快捷鍵。
-- 可選音效、題目朗讀；Spell 自動播放答案，提供再播放；語音使用瀏覽器 speechSynthesis，語言依字卡設定。書寫提示、特殊字元與大小寫切換不算作答；空白輸入時確認按鈕停用。
+- 可選音效、題目朗讀與答案朗讀；Spell 自動播放答案，提供再播放；語音使用瀏覽器 speechSynthesis，語言依字卡設定。書寫提示、特殊字元與大小寫切換不算作答；空白輸入時確認按鈕停用。
 - 支援深色模式、觸控滑動、focus-visible、aria 狀態／進度、減少動態效果。頁面切換取消自動前進，避免使用者不在頁面時偷偷作答。
 
 ## Firebase Realtime Database 架構
@@ -250,7 +250,7 @@ stage 2 答對後更新間隔：`min(90, max(1, 舊間隔 × 2, 距上次作答�
       writeCredits{}, passMisses[]  # Write／Spell 本次信用與上輪錯題
       ordinal, round, chunk, chunkTarget, roundAnswers[]
       current, feedback, checkpoint, completed, createdAt, updatedAt
-      # options.activity, grading, defaultLanguage, audioRate, learnTypes
+      # options.activity, grading, defaultLanguage, audioRate, learnTypes, audioAnswer
     /sessions/flash
       id, deckId, deckRevision, options, order[], index, ratings{}
       flipped, playing, completed, updatedAt

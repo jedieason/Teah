@@ -2,7 +2,7 @@
 export const MAX_CARDS = 2000;
 export const LEARN_VERSION = 3;
 export const RECOGNITION_WINDOW = 10;
-export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'auto', defaultLanguage: 'zh-TW', retype: false, audio: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
+export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'auto', defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
 export const id = () => crypto.randomUUID();
 export const clone = value => JSON.parse(JSON.stringify(value));
 export const normalize = value => String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase().replace(/\s+/g, ' ');

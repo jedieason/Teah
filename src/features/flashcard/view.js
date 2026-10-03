@@ -9,7 +9,7 @@ const languages = [['en-US', 'English'], ['zh-TW', '繁體中文'], ['ms-MY', '�
 const typeLabels = { choice: '選擇題', multi: '複選題', written: '書寫／填空題', flash: '字卡', truefalse: '是非題', spell: '聽寫題' };
 export function mountFlashcard({ host, activate }) {
     let owner = null, decks = {}, deck = null, study = {}, phase = 'list', draft = null, session = null, flash = null;
-    let message = '', conflict = false, operation = 0, busy = false, timer = null, draftTimer = null, questionAt = Date.now(), trash = false;
+    let message = '', conflict = false, operation = 0, busy = false, timer = null, speechTimer = null, draftTimer = null, questionAt = Date.now(), trash = false;
     let preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }, direction = 'term', search = '';
     let screen = '', termFilter = 'all', termQuery = '';
     let audioContext, progressWidths = [], questionKey = '', symbolsKey = '', symbols = [];
@@ -19,7 +19,7 @@ export function mountFlashcard({ host, activate }) {
     function report(text) { message = text; const status = host.querySelector('.vocab-status'); if (status) status.textContent = text; }
     function reportSpeechError(text) { speechError = text; report(text); }
     function stopSpeech() { speechGeneration++; pendingVoiceLoad?.(); pendingVoiceLoad = null; window.speechSynthesis?.cancel(); }
-    function stop() { clearTimeout(timer); timer = null; stopSpeech(); }
+    function stop() { clearTimeout(timer); timer = null; clearTimeout(speechTimer); speechTimer = null; stopSpeech(); }
     function safeOwner() { if (!owner || auth.currentUser?.uid !== owner) throw new Error('請先登入或重新開啟 Flashcard。'); }
     async function action(work) {
         if (busy) return; busy = true; host.setAttribute('aria-busy', 'true');
@@ -368,14 +368,14 @@ export function mountFlashcard({ host, activate }) {
         node('p', '替代答案可在字卡編輯中設定；數字、數學符號與單位會保留檢查。', body, 'vocab-muted');
         const semanticNotice = node('p', '寬鬆批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', body, 'vocab-muted');
         const updateNotice = () => { semanticNotice.hidden = (grading.value === 'auto' ? defaultGrading(deck, options.defaultLanguage) : grading.value) !== 'relaxed'; }; grading.onchange = updateNotice; updateNotice();
-        const retype = check('答錯後重打正解', body, options.retype), shuffle = check('打亂順序', body, options.shuffle), audio = check('朗讀題目', body, options.audio), sound = check('答題音效', body, options.sound);
+        const retype = check('答錯後重打正解', body, options.retype), shuffle = check('打亂順序', body, options.shuffle), audio = check('朗讀題目', body, options.audio), audioAnswer = check('朗讀答案', body, options.audioAnswer), sound = check('答題音效', body, options.sound);
         const audioRate = select('朗讀速度', body, [['0.9', '一般'], ['0.65', '慢速']], String(options.audioRate || 0.9));
         const chunk = select('每組單字數', body, [['7', '7 張'], ['5', '5 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
         const error = node('p', '', body); error.setAttribute('role', 'alert');
         async function begin(onlyType, restart = false) {
             try {
                 const learnTypes = Object.keys(types).filter(k => types[k].checked);
-                preferred = { ...options, activity: onlyType === 'written' ? 'write' : onlyType === 'spell' ? 'spell' : 'learn', freshStart: restart, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
+                preferred = { ...options, activity: onlyType === 'written' ? 'write' : onlyType === 'spell' ? 'spell' : 'learn', freshStart: restart, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
                 if (onlyType === 'spell' && !('speechSynthesis' in window)) throw new Error('此瀏覽器不支援朗讀，請使用 Write。');
                 if (restart) study = await saveStudy(deck.id, study, newEvent('reset', { generation: id() }));
                 const next = createSession(deck, study, preferred); await persist(null, next); session = next; phase = 'learn'; dialog.close(); render();
@@ -428,7 +428,7 @@ export function mountFlashcard({ host, activate }) {
             ordinal: next.ordinal, initialStage: Math.min(1, next.feedback.before.stage), sessionId: next.id, generation: next.generation, responseTimeMs: Math.max(0, answeredAt - questionAt) });
         next.feedback.eventId = event.id; await persist(event, next); session = next; render();
         if (session.options.sound) soundFeedback(next.feedback.correct);
-        if (next.feedback.correct && !next.feedback.requiresAcknowledgement) timer = setTimeout(() => { if (phase === 'learn' && !host.hidden && !dialog.open) void action(() => nextLearn()); }, 950);
+        if (next.feedback.correct && !next.feedback.requiresAcknowledgement) timer = setTimeout(() => { if (phase === 'learn' && !host.hidden && !dialog.open) void action(() => nextLearn()); }, session.options.audioAnswer ? 1600 : 950);
     }
     async function nextLearn() { const next = advanceSession(session, deck); if (next === session) return; await persist(null, next); session = next; render(); }
     function renderLearn() {
@@ -489,7 +489,7 @@ export function mountFlashcard({ host, activate }) {
             text(q.statement, panel, 'vocab-statement');
             if (!feedback) { const choices = node('div', null, panel, 'vocab-choices'); button('是', choices, () => answer(true), 'vocab-choice'); button('否', choices, () => answer(false), 'vocab-choice'); }
         } else if (q.type === 'flash') {
-            const reveal = button('查看答案', panel, () => { reveal.hidden = true; text(answerFor(card, q.direction), panel, 'vocab-revealed-answer'); const ratings = node('div', null, panel, 'vocab-ratings'); button('還在學習', ratings, () => answer(false)); button('知道了', ratings, () => answer(true), 'vocab-primary'); });
+            const reveal = button('查看答案', panel, () => { reveal.hidden = true; text(answerFor(card, q.direction), panel, 'vocab-revealed-answer'); if (session.options.audioAnswer) speak(answerFor(card, q.direction), q.direction); const ratings = node('div', null, panel, 'vocab-ratings'); button('還在學習', ratings, () => answer(false)); button('知道了', ratings, () => answer(true), 'vocab-primary'); });
             if (feedback) reveal.hidden = true;
         }
         if (!feedback) button('不知道', panel, () => answer(q.type === 'multi' ? [] : q.type === 'truefalse' ? !q.truth : q.type === 'flash' ? false : ''), 'vocab-dontknow');
@@ -515,8 +515,9 @@ export function mountFlashcard({ host, activate }) {
             }
             if (feedback.retyped) { node('p', feedback.correct ? '按 Enter 繼續' : q.type === 'choice' ? '點正確答案或按 Enter 繼續' : '按 Enter 繼續', footer, 'vocab-muted'); button(session.options.activity === 'spell' && !feedback.correct ? '重試' : '繼續', footer, () => nextLearn(), 'vocab-primary'); }
         }
-        if (!feedback && (session.options.audio || q.type === 'spell')) timer = setTimeout(() => { if (!host.hidden && !dialog.open) speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'); }, 120);
-        if (feedback && !feedback.correct && session.options.activity === 'spell') timer = setTimeout(() => { if (!host.hidden && !dialog.open) speakSpelling(feedback.expected, q.direction); }, 120);
+        if (!feedback && (session.options.audio || q.type === 'spell')) speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'); }, 120);
+        if (feedback && !feedback.correct && session.options.activity === 'spell') speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speakSpelling(feedback.expected, q.direction); }, 120);
+        else if (feedback && session.options.audioAnswer) speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speak(answerFor(card, q.direction), q.direction); }, 120);
     }
     function spellText(parts, parent, cls) { const e = node('div', null, parent, cls + ' vocab-spelling'); for (const part of parts) node(part.incorrect ? 'mark' : 'span', part.text, e); return e; }
     function renderCheckpoint() {

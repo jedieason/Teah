@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseImport, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor } from '../src/features/flashcard/model.js';
+import { DEFAULT_OPTIONS, parseImport, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor } from '../src/features/flashcard/model.js';
 const deck = (n = 17) => prepareDeck({ title: 'Test', cards: Array.from({ length: n }, (_, i) => ({ term: `word${i}`, definition: `解釋${i}` })) });
 function response(s, d) { const c = d.cards.find(c => c.id === s.current.cardId); return s.current.type === 'multi' ? s.current.correctAnswers : s.current.direction === 'term' ? c.term : c.definition; }
 function step(s, d, input, at = 1000) { const answered = submitAnswer(s, d, input, at); return advanceSession(answered, d, at + 1, () => .4); }
@@ -206,4 +206,11 @@ test('choice options and heard spelling cannot use written typo tolerance or sem
     const write = createSession(d, {}, { activity: 'write' }); assert.equal(submitAnswer(write, d, 'automobile').feedback.correct, true);
     const overridden = overrideCorrect(submitAnswer(spell, d, 'wrong', 100), 5000);
     assert.equal(overridden.facts[overridden.current.key].lastAt, 100, 'correction time must not become retrieval time');
+});
+test('audio and audioAnswer preferences are preserved in session options', () => {
+    assert.equal(DEFAULT_OPTIONS.audio, false);
+    assert.equal(DEFAULT_OPTIONS.audioAnswer, false);
+    const s = createSession(deck(2), {}, { audio: true, audioAnswer: true });
+    assert.equal(s.options.audio, true);
+    assert.equal(s.options.audioAnswer, true);
 });
