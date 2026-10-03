@@ -8,8 +8,10 @@ dist/
 artifacts/
 *.generated.json
 *firebase-export*.json
+*firebase-adminsdk*.json
 *-rtdb-export*.json
 *-export.json
+*.serviceAccountKey.json
 *.bak
 .env*
 *-debug.log
