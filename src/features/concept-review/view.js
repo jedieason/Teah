@@ -1,4 +1,5 @@
 import { reviewQuestions, reviewRequest, parseReview } from './model.js';
+import { streamGemini } from '../../services/gemini-stream.js';
 
 const el = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -81,15 +82,48 @@ export function mountConceptReview(parent, { questions, source, getKey }) {
         controller.signal.addEventListener('abort', abort, { once: true });
         const timer = setTimeout(abort, 90000);
         try {
+            const req = reviewRequest(items);
+            let overviewText = '';
+            let streamWorked = false;
+
+            // Try server streaming first
+            try {
+                overviewText = await streamGemini({
+                    contents: req.contents,
+                    config: {
+                        systemInstruction: req.systemInstruction?.parts?.[0]?.text,
+                        ...req.generationConfig,
+                    },
+                    signal: timeout.signal,
+                    onStart: () => {
+                        status.textContent = '正在串流分析錯題與核心觀念…';
+                    },
+                    onDelta: (delta, accumulated) => {
+                        status.textContent = `正在生成觀念回顧… (${accumulated.length} 字)`;
+                    },
+                });
+                if (overviewText) streamWorked = true;
+            } catch (streamErr) {
+                if (controller.signal.aborted || timeout.signal.aborted) return;
+            }
+
+            if (streamWorked) {
+                const overview = parseReview(overviewText, items);
+                if (controller.signal.aborted) return;
+                render(overview);
+                status.textContent = `${items.length} 題錯題 → ${overview.studyAreas.length} 個複習方向`;
+                return;
+            }
+
+            // Fallback for direct API / offline / test runner
             const key = await Promise.race([getKey(), new Promise((_, reject) => {
                 timeout.signal.addEventListener('abort', () => reject(new Error('回顧逾時')), { once: true });
             })]);
             if (controller.signal.aborted) return;
             if (typeof key !== 'string' || !key.trim()) throw new Error('AI 服務尚未設定');
-            // One request includes every wrong answer; the model synthesizes a single overview.
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${encodeURIComponent(key)}`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: timeout.signal,
-                body: JSON.stringify(reviewRequest(items))
+                body: JSON.stringify(req)
             });
             if (!response.ok) throw new Error('AI 服務暫時無法使用');
             const data = await response.json();

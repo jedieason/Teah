@@ -1,13 +1,20 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
+import { handleNodeGeminiStream } from '../src/server/gemini.js';
+
+try { process.loadEnvFile?.(); } catch {}
 
 const root = resolve('.');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff': 'font/woff', '.woff2': 'font/woff2' };
 const port = Number(process.env.PORT || 4173);
 createServer(async (req, res) => {
     try {
-        const url = new URL(req.url, 'http://localhost');
+        const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+        if (req.method === 'POST' && (url.pathname === '/api/chat' || url.pathname === '/api/gemini/stream')) {
+            await handleNodeGeminiStream(req, res);
+            return;
+        }
         const path = resolve(root, '.' + decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname));
         if (!path.startsWith(root + sep) || path.includes(`${sep}.git${sep}`)) { res.writeHead(403); res.end(); return; }
         const data = await readFile(path);

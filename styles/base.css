@@ -1761,6 +1761,83 @@ p {
     background-color: transparent;
 }
 
+.chat-stop-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #b3261e;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s linear;
+    flex-shrink: 0;
+    margin-left: 4px;
+}
+
+.chat-stop-btn:hover {
+    background-color: rgba(179, 38, 30, 0.08);
+}
+
+.chat-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.chat-user-msg,
+.chat-assistant-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.chat-role-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #5f6368;
+}
+
+.chat-streaming-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: #5f6368;
+}
+
+.chat-spinner-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #0b57d0;
+    display: inline-block;
+    animation: chatDotPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes chatDotPulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+.chat-status-badge {
+    font-size: 0.8rem;
+    color: #747775;
+    margin-top: 2px;
+}
+
+.chat-status-badge.error {
+    color: #b3261e;
+}
+
+.chat-status-badge.interrupted {
+    color: #747775;
+    font-style: italic;
+}
+
 .option-button.missing {
     border-color: #FFA500;
     background-color: #FFF3CD;

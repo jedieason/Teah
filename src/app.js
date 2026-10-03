@@ -14,6 +14,7 @@ import { database, auth, googleProvider, ref, get, update, set, remove, runTrans
 import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quizLabel } from './features/mistakes/model.js';
 import { createNotebook } from './features/mistakes/notebook.js';
 import { markdown, validateQuiz } from './shared/content.js';
+import { streamGemini } from './services/gemini-stream.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -390,7 +391,13 @@ function renderQuestion(index) {
     const revealAnswer = sessionMode !== 'exam' || isTestCompleted;
     document.getElementById('next-btn').textContent = sessionMode === 'exam' && index === allQuestions.length - 1 ? '交卷' : '下一題';
 
-    if (currentQuestion !== q) questionStartedAt = Date.now();
+    if (currentQuestion !== q) {
+        questionStartedAt = Date.now();
+        if (currentAbortController) {
+            currentAbortController.abort();
+            currentAbortController = null;
+        }
+    }
     currentQuestion = q; // Update currentQuestion globally
 
     const confirmBtn = document.getElementById('confirm-btn');
@@ -491,8 +498,11 @@ function renderQuestion(index) {
     const explanationEl = document.getElementById('explanation');
     const originDisplay = document.getElementById('origin-display');
     if (q.isConfirmed) {
-        document.getElementById('explanation-text').innerHTML = revealAnswer ? markdown(q.explanation || '尚無詳解') : '';
-        renderLatex(document.getElementById('explanation-text'));
+        if (revealAnswer) {
+            renderChatDisplay(q);
+        } else {
+            document.getElementById('explanation-text').innerHTML = '';
+        }
         explanationEl.style.display = 'block';
         if (q.origin) {
             originDisplay.textContent = q.origin;
@@ -1670,11 +1680,83 @@ function renderLatex(element) {
 const weeGPTButton = document.getElementById('WeeGPT');
 const inputSection = document.getElementById('WeeGPTInputSection');
 const sendQuestionBtn = document.getElementById('sendQuestionBtn');
+const stopQuestionBtn = document.getElementById('stopQuestionBtn');
 const explanationDiv = document.getElementById('explanation');
 const explanationText = document.getElementById('explanation-text');
 const confirmBtn = document.getElementById('confirm-btn');
 const starBtn = document.getElementById('starQuestion');
 const showStarredBtn = document.getElementById('showStarredBtn');
+
+let currentAbortController = null;
+let chatRafId = null;
+
+function renderChatDisplay(target = currentQuestion) {
+    const display = document.getElementById('explanation-text');
+    if (!display || !target) return;
+    const baseExplanation = markdown(target.explanation || '尚無詳解');
+    if (!target.aiMessages || target.aiMessages.length === 0) {
+        display.innerHTML = baseExplanation;
+        try { renderLatex(display); } catch {}
+        return;
+    }
+
+    let chatHtml = '';
+    for (const msg of target.aiMessages) {
+        if (msg.role === 'user') {
+            chatHtml += `
+                <div class="chat-user-msg">
+                    <span class="chat-role-label">提問</span>
+                    <div class="chat-msg-body">${markdown(msg.content)}</div>
+                </div>
+            `;
+        } else if (msg.role === 'assistant') {
+            let bodyHtml = '';
+            if (msg.content) {
+                bodyHtml = `<div class="chat-msg-body">${markdown(msg.content)}</div>`;
+            }
+            let statusHtml = '';
+            if (msg.status === 'streaming' && !msg.content) {
+                statusHtml = `<div class="chat-streaming-loading"><span class="chat-spinner-dot"></span>正在思考中…</div>`;
+            } else if (msg.status === 'interrupted') {
+                statusHtml = `<div class="chat-status-badge interrupted">（已停止生成）</div>`;
+            } else if (msg.status === 'error') {
+                statusHtml = msg.content
+                    ? `<div class="chat-status-badge error">（連線中斷）</div>`
+                    : `<div class="chat-status-badge error">暫時無法取得 AI 回覆，請稍後再試。</div>`;
+            }
+            chatHtml += `
+                <div class="chat-assistant-msg">
+                    <span class="chat-role-label">AI 回覆</span>
+                    ${bodyHtml}
+                    ${statusHtml}
+                </div>
+            `;
+        }
+    }
+
+    display.innerHTML = `${baseExplanation}<hr class="explanation-divider"><div class="chat-thread">${chatHtml}</div>`;
+    try { renderLatex(display); } catch {}
+}
+
+function scheduleChatRender(target) {
+    if (chatRafId) return;
+    chatRafId = requestAnimationFrame(() => {
+        chatRafId = null;
+        if (currentQuestion === target) {
+            renderChatDisplay(target);
+        }
+    });
+}
+
+function flushChatRender(target) {
+    if (chatRafId) {
+        cancelAnimationFrame(chatRafId);
+        chatRafId = null;
+    }
+    if (currentQuestion === target) {
+        renderChatDisplay(target);
+    }
+}
 
 weeGPTButton.addEventListener('click', () => {
     if (sessionMode === 'exam' && !isTestCompleted) return;
@@ -1688,39 +1770,104 @@ weeGPTButton.addEventListener('click', () => {
     }
 });
 
+stopQuestionBtn?.addEventListener('click', () => {
+    if (currentAbortController) {
+        currentAbortController.abort();
+    }
+});
+
 sendQuestionBtn.addEventListener('click', async () => {
     const userQuestion = userQuestionInput.value.trim();
     if (!userQuestion || sendQuestionBtn.disabled) return;
     const target = currentQuestion;
-    const display = document.getElementById('explanation-text');
     if (sessionMode === 'exam' && !isTestCompleted) return;
-    sendQuestionBtn.disabled = true;
-    currentQuestion.usedAI = true;
-    const showResponse = text => {
-        if (currentQuestion !== target) return;
-        display.innerHTML = markdown(target.explanation || '尚無詳解') + '<hr>' + markdown(text);
-        renderLatex(display);
+
+    target.usedAI = true;
+    target.aiMessages ||= [];
+
+    const userMsg = {
+        id: 'user_' + Date.now(),
+        role: 'user',
+        content: userQuestion,
     };
-    showResponse('正在取得回應…');
+    const assistantMsg = {
+        id: 'asst_' + Date.now(),
+        role: 'assistant',
+        content: '',
+        status: 'streaming',
+    };
+    target.aiMessages.push(userMsg, assistantMsg);
+
+    userQuestionInput.value = '';
+    sendQuestionBtn.style.display = 'none';
+    if (stopQuestionBtn) stopQuestionBtn.style.display = 'flex';
+    sendQuestionBtn.disabled = true;
+
+    flushChatRender(target);
+
+    currentAbortController = new AbortController();
+
+    const systemPrompt = `請以繁體中文回答以下醫學題目的提問，清楚區分已知事實與不確定之處。\n題目：${target.question}\n選項：${JSON.stringify(target.options || {})}\n題庫答案：${JSON.stringify(target.answer)}`;
+
+    const contents = [];
+    contents.push({
+        role: 'user',
+        parts: [{ text: `${systemPrompt}\n提問：${target.aiMessages[0].content}` }]
+    });
+
+    for (let i = 1; i < target.aiMessages.length; i++) {
+        const m = target.aiMessages[i];
+        if (m === assistantMsg) break;
+        if (m.role === 'user') {
+            contents.push({ role: 'user', parts: [{ text: m.content }] });
+        } else if (m.role === 'assistant' && m.content) {
+            contents.push({ role: 'model', parts: [{ text: m.content }] });
+        }
+    }
+
+    let fallbackKey = '';
     try {
-        const key = await get(ref(database, 'API_KEY'));
-        if (typeof key.val() !== 'string' || !key.val().trim()) throw new Error('AI 服務尚未設定');
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${encodeURIComponent(key.val())}`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: `請以繁體中文回答以下醫學題目的提問，清楚區分已知事實與不確定之處。\n題目：${target.question}\n選項：${JSON.stringify(target.options || {})}\n題庫答案：${JSON.stringify(target.answer)}\n提問：${userQuestion}` }] }]
-            })
+        const keySnap = await get(ref(database, 'API_KEY'));
+        fallbackKey = typeof keySnap.val() === 'string' ? keySnap.val().trim() : '';
+    } catch {}
+
+    try {
+        await streamGemini({
+            contents,
+            model: 'gemini-2.5-flash-lite',
+            apiKey: fallbackKey,
+            signal: currentAbortController.signal,
+            onStart: () => {
+                scheduleChatRender(target);
+            },
+            onDelta: (delta, accumulated) => {
+                assistantMsg.content = accumulated;
+                scheduleChatRender(target);
+            },
         });
-        if (!response.ok) throw new Error(`服務回應 ${response.status}`);
-        const result = await response.json();
-        const text = result.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('\n');
-        if (!text) throw new Error('服務未提供回應');
-        showResponse(`### AI 回覆\n${text}`);
-        if (currentQuestion === target) userQuestionInput.value = '';
+        if (assistantMsg.status === 'streaming') {
+            assistantMsg.status = 'complete';
+        }
     } catch (error) {
-        showResponse('暫時無法取得 AI 回覆，請稍後再試。');
-        console.error('AI request failed', error);
-    } finally { sendQuestionBtn.disabled = false; }
+        if (currentAbortController?.signal?.aborted || error.name === 'AbortError') {
+            assistantMsg.status = 'interrupted';
+            if (error.partialText && !assistantMsg.content) {
+                assistantMsg.content = error.partialText;
+            }
+        } else {
+            console.error('AI streaming request failed', error);
+            assistantMsg.status = 'error';
+            if (error.partialText && !assistantMsg.content) {
+                assistantMsg.content = error.partialText;
+            }
+        }
+    } finally {
+        currentAbortController = null;
+        sendQuestionBtn.style.display = 'flex';
+        if (stopQuestionBtn) stopQuestionBtn.style.display = 'none';
+        sendQuestionBtn.disabled = false;
+        flushChatRender(target);
+    }
 });
 
 userQuestionInput.addEventListener('keydown', function (event) {
