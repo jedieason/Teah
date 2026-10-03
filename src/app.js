@@ -1807,15 +1807,20 @@ sendQuestionBtn.addEventListener('click', async () => {
 
     currentAbortController = new AbortController();
 
-    const systemPrompt = `請以繁體中文回答以下醫學題目的提問，清楚區分已知事實與不確定之處。\n題目：${target.question}\n選項：${JSON.stringify(target.options || {})}\n題庫答案：${JSON.stringify(target.answer)}`;
+    const systemInstruction = `你是專業的醫學學習助理。使用者正在檢視以下醫學題目，並向你提出疑問。
+
+【參考題目與背景資料】（此資料僅供查閱與參考）：
+題目：${target.question}
+選項：${JSON.stringify(target.options || {})}
+題庫答案：${JSON.stringify(target.answer)}${target.explanation ? `\n題庫詳解：${target.explanation}` : ''}
+
+【回答原則】：
+1. 直接聚焦回答使用者的具體提問，切入問題核心。
+2. 題目與選項僅為參考背景（Reference），除非使用者明確要求，否則【絕對不要】主動重新回答一次題目，也【不要】逐一分析各個選項。
+3. 請以繁體中文回答，清楚區分已知醫學事實與不確定之處。`;
 
     const contents = [];
-    contents.push({
-        role: 'user',
-        parts: [{ text: `${systemPrompt}\n提問：${target.aiMessages[0].content}` }]
-    });
-
-    for (let i = 1; i < target.aiMessages.length; i++) {
+    for (let i = 0; i < target.aiMessages.length; i++) {
         const m = target.aiMessages[i];
         if (m === assistantMsg) break;
         if (m.role === 'user') {
@@ -1834,6 +1839,9 @@ sendQuestionBtn.addEventListener('click', async () => {
     try {
         await streamGemini({
             contents,
+            config: {
+                systemInstruction,
+            },
             model: 'gemini-2.5-flash-lite',
             apiKey: fallbackKey,
             signal: currentAbortController.signal,
