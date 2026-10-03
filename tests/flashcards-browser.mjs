@@ -61,7 +61,9 @@ try {
     await page.waitForFunction(() => Object.values(window.__testDatabase.learning['test-user']).some(d => d.cards?.[0]?.reviewCount === 3));
     assert.equal(await page.evaluate(bank => window.__testDatabase.mistakes['test-user'][bank].first.count, bank), 2);
     await page.evaluate(() => { window.__testDatabase.learning['test-user'].card_legacy = { front: '既有筆記問題', back: '舊答案', dueAt: 0, updatedAt: 1 }; sessionStorage.setItem('fc-db', JSON.stringify(window.__testDatabase)); });
-    await page.reload({ waitUntil: 'networkidle' }); await page.getByRole('button', { name: '複習卡', exact: true }).click();
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.locator('#sidebarToggle').click();
+    await page.getByRole('button', { name: '複習卡', exact: true }).click();
     await view.getByRole('heading', { name: '我的 PCR 字卡', exact: true }).waitFor();
     await view.locator('.fc-deck').filter({ hasText: '我的 PCR 字卡' }).getByRole('button', { name: '開啟字卡集', exact: true }).click();
     await view.getByRole('button', { name: '編輯', exact: true }).click(); assert.match(await view.getByLabel('可接受答案 · 每行一個同義詞').inputValue(), /32 倍/);

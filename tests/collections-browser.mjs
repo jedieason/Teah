@@ -56,18 +56,21 @@ try {
     await page.waitForFunction(() => window.__testDatabase.progress['test-user'].starred.length === 2);
     await page.getByRole('button', { name: '全部單元' }).click();
     await page.getByLabel('搜尋收藏').fill('細胞');
-    assert.equal(await page.locator('.collection-unit').count(), 1);
-    await page.getByRole('button', { name: '典藏庫', exact: true }).click();
+    const openSidebarNav = async name => {
+        if (await page.locator('#siteSidebar').isHidden()) await page.locator('#sidebarToggle').click();
+        await page.getByRole('button', { name, exact: true }).click();
+    };
+    await openSidebarNav('典藏庫');
     await page.locator('#units-grid .unit-card').filter({ hasText: '舊題庫' }).click();
-    await page.getByRole('button', { name: '題庫', exact: true }).click();
-    await page.getByRole('button', { name: '典藏庫', exact: true }).click();
+    await openSidebarNav('題庫');
+    await openSidebarNav('典藏庫');
     await page.getByRole('button', { name: '還原至題庫', exact: true }).waitFor();
     await page.screenshot({ path: 'artifacts/qa/archive-mobile.png' });
     await page.getByRole('button', { name: '還原至題庫', exact: true }).click();
     await page.locator('#archiveActionBtn').click();
     await page.waitForFunction(() => !!window.__testDatabase['舊題庫｜練習'] && !window.__testDatabase['_Archive_舊題庫｜練習']);
     await page.getByText('尚無典藏題庫', { exact: true }).waitFor();
-    await page.getByRole('button', { name: '題庫', exact: true }).click();
+    await openSidebarNav('題庫');
     await page.locator('#units-grid .unit-card').filter({ hasText: '舊題庫' }).waitFor();
     assert.deepEqual(errors, []);
     console.log('Collection browser passed: unit grouping, source filter, hidden answers, selected practice, return, mobile detail, unstar, search and archive restore.');

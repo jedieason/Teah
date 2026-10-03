@@ -218,6 +218,15 @@ try {
     await page.screenshot({ path: 'artifacts/qa/start-dialog-mobile.png', fullPage: true });
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('#quizActionModal').isVisible(), false);
+    const sidebar = page.locator('#siteSidebar');
+    assert.equal(await sidebar.isVisible(), false, 'sidebar must be invisible on mobile initially');
+    await page.locator('#sidebarToggle').click();
+    await sidebar.waitFor({ state: 'visible' });
+    assert.equal(await sidebar.isVisible(), true, 'sidebar must expand when clicking toggle');
+    assert.equal(await page.locator('#sidebarBackdrop').isVisible(), true, 'backdrop must be visible when expanded');
+    await page.locator('#sidebarBackdrop').click();
+    await sidebar.waitFor({ state: 'hidden' });
+    assert.equal(await sidebar.isVisible(), false, 'sidebar must close when clicking backdrop');
     assert.deepEqual(errors, []);
-    console.log('Browser checks passed: filters, hidden answers, reversible status, selection, mobile overflow, mixed-bank practice, duplicate confirmation, progress isolation, resume, offline retry, mastery and catalog rename.');
+    console.log('Browser checks passed: filters, hidden answers, reversible status, selection, mobile overflow, mobile drawer sidebar, mixed-bank practice, duplicate confirmation, progress isolation, resume, offline retry, mastery and catalog rename.');
 } finally { await browser.close(); }

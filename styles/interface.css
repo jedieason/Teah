@@ -80,12 +80,28 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .start-screen > .home-content { padding-top:40px; }
 .sidebar-backdrop { display:none; }
 @media(max-width:700px) {
- .start-screen { padding-left:64px; --sidebar-width:240px; }
- .start-screen.sidebar-collapsed { --sidebar-width:64px; }
- .site-topbar { width:calc(100% + 64px); margin-left:-64px; }
+ .start-screen { padding-left:0; --sidebar-width:240px; }
+ .start-screen.sidebar-collapsed { --sidebar-width:240px; }
+ .site-topbar { width:100%; margin-left:0; }
  .site-topbar-inner { padding-inline:12px; gap:10px; }
  .site-brand { font-size:32px; letter-spacing:2px; }
- .site-sidebar { padding:16px 8px; }
+ .site-sidebar {
+   width:var(--sidebar-width);
+   padding:16px 12px max(16px, env(safe-area-inset-bottom));
+   transform:translateX(-100%);
+   visibility:hidden;
+   pointer-events:none;
+   box-shadow:none;
+ }
+ .sidebar-animating .site-sidebar {
+   transition:transform .25s ease, visibility .25s ease;
+ }
+ .start-screen.sidebar-open .site-sidebar {
+   transform:translateX(0);
+   visibility:visible;
+   pointer-events:auto;
+   box-shadow:2px 0 16px rgba(0,0,0,.15);
+ }
  .start-screen > .home-content { padding:28px 16px 32px; }
  .sidebar-backdrop:not([hidden]) { display:block; position:fixed; inset:76px 0 0; z-index:100; border:0; background:#0004; }
  .site-account .sign-in-button { max-width:190px; font-size:12px; padding-inline:10px; }

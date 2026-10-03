@@ -3,6 +3,7 @@ export function mountSidebar() {
     const nav = document.querySelector('.library-shortcuts');
     const toggle = document.getElementById('sidebarToggle');
     const backdrop = document.getElementById('sidebarBackdrop');
+    const sidebar = document.getElementById('siteSidebar');
     const mobile = matchMedia('(max-width:700px)');
     const icons = {
         '題庫': '<path d="m3 10 9-7 9 7v11H3ZM9 21v-8h6v8"/>',
@@ -27,20 +28,23 @@ export function mountSidebar() {
         button.replaceChildren(icon, text);
     }
     const stored = () => { try { return localStorage.getItem('teah-sidebar-collapsed') === 'true'; } catch { return false; } };
+    const isExpanded = () => mobile.matches ? home.classList.contains('sidebar-open') : !home.classList.contains('sidebar-collapsed');
     function setCollapsed(collapsed, save = false) {
         home.classList.toggle('sidebar-collapsed', collapsed);
+        home.classList.toggle('sidebar-open', !collapsed && mobile.matches);
         toggle.setAttribute('aria-expanded', String(!collapsed));
         toggle.setAttribute('aria-label', collapsed ? '展開側邊導覽' : '收合側邊導覽');
         toggle.title = collapsed ? '展開導覽' : '收合導覽';
         backdrop.hidden = collapsed || !mobile.matches;
-        if (save) try { localStorage.setItem('teah-sidebar-collapsed', String(collapsed)); } catch {}
+        if (sidebar) sidebar.inert = collapsed && mobile.matches;
+        if (save && !mobile.matches) try { localStorage.setItem('teah-sidebar-collapsed', String(collapsed)); } catch {}
     }
     setCollapsed(mobile.matches || stored());
-    toggle.onclick = () => setCollapsed(!home.classList.contains('sidebar-collapsed'), true);
-    backdrop.onclick = () => { setCollapsed(true); toggle.focus(); };
-    nav.addEventListener('click', e => { if (mobile.matches && e.target.closest('button')) setCollapsed(true); });
+    toggle.onclick = () => { home.classList.add('sidebar-animating'); setCollapsed(isExpanded(), true); };
+    backdrop.onclick = () => { home.classList.add('sidebar-animating'); setCollapsed(true); toggle.focus(); };
+    nav.addEventListener('click', e => { if (mobile.matches && e.target.closest('button')) { home.classList.add('sidebar-animating'); setCollapsed(true); } });
     home.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && !home.classList.contains('sidebar-collapsed') && !document.querySelector('dialog[open]')) { setCollapsed(true); toggle.focus(); }
+        if (e.key === 'Escape' && isExpanded() && !document.querySelector('dialog[open]')) { home.classList.add('sidebar-animating'); setCollapsed(true); toggle.focus(); }
     });
-    mobile.addEventListener('change', () => setCollapsed(mobile.matches || stored()));
+    mobile.addEventListener('change', () => { home.classList.remove('sidebar-animating'); setCollapsed(mobile.matches || stored()); });
 }
