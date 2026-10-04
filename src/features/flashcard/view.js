@@ -7,6 +7,19 @@ const node = (tag, text, parent, className) => {
 };
 const languages = [['en-US', 'English'], ['zh-TW', '繁體中文'], ['ms-MY', '馬來文（Bahasa Melayu）'], ['ja-JP', '日本語'], ['ko-KR', '한국어'], ['fr-FR', 'Français'], ['de-DE', 'Deutsch'], ['es-ES', 'Español'], ['it-IT', 'Italiano'], ['la', 'Latin'], ['math', '數學／化學符號']];
 const typeLabels = { choice: '選擇題', multi: '複選題', written: '書寫／填空題', flash: '字卡', truefalse: '是非題', spell: '聽寫題' };
+const studyIcons = {
+    cards: '<rect x="3" y="3" width="14" height="14" rx="2" fill="currentColor" stroke="none"/><path d="M8 20h12V8"/>',
+    learn: '<path d="M18 4a9 9 0 1 0 3 12"/><path d="m18 4 3 1-1 3M21 11v1"/>',
+    settings: '<path d="m10 3-.6 2.3-2 .9L5.3 5.5 3 9.5l1.6 1.6v2L3 14.5l2.3 4 2.1-.7 2 .9L10 21h4l.6-2.3 2-.9 2.1.7 2.3-4-1.6-1.4v-2L21 9.5l-2.3-4-2.1.7-2-.9L14 3Z"/><circle cx="12" cy="12" r="3"/>',
+    close: '<path d="m6 6 12 12M18 6 6 18"/>',
+    left: '<path d="m14 5-7 7 7 7M7 12h14"/>', right: '<path d="m10 5 7 7-7 7M3 12h14"/>',
+    check: '<path d="m5 12 4 4L19 6"/>', shuffle: '<path d="M3 6h3l12 12h3M17 14l4 4-4 4M3 18h3l4-4M14 10l4-4h3M17 2l4 4-4 4"/>',
+    play: '<path d="m8 5 11 7-11 7Z" fill="currentColor" stroke="none"/>', pause: '<path d="M8 5v14M16 5v14" stroke-width="4"/>',
+    undo: '<path d="m8 4-5 5 5 5M3 9h10a6 6 0 0 1 0 12"/>', edit: '<path d="m16 3 5 5L8 21H3v-5Z"/>',
+    audio: '<path d="M11 5 6 9H3v6h3l5 4ZM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/>',
+    chevron: '<path d="m6 9 6 6 6-6"/>'
+};
+studyIcons.star = '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/>';
 export function mountFlashcard({ host, activate }) {
     let owner = null, decks = {}, deck = null, study = {}, phase = 'list', draft = null, session = null, flash = null;
     let message = '', conflict = false, operation = 0, busy = false, timer = null, speechTimer = null, draftTimer = null, questionAt = Date.now(), trash = false;
@@ -14,6 +27,7 @@ export function mountFlashcard({ host, activate }) {
     let screen = '', termFilter = 'all', termQuery = '';
     let audioContext, progressWidths = [], questionKey = '', symbolsKey = '', symbols = [];
     let speechGeneration = 0, pendingVoiceLoad = null, speechError = '';
+    const backgroundInert = new Map();
     const dialog = node('dialog', null, document.body, 'vocab-dialog');
     window.speechSynthesis?.getVoices?.();
     function report(text) { message = text; const status = host.querySelector('.vocab-status'); if (status) status.textContent = text; }
@@ -34,6 +48,22 @@ export function mountFlashcard({ host, activate }) {
         const b = button(text, parent, work, 'vocab-icon'); b.setAttribute('aria-label', label); b.title = label;
         if (text === '◖))') b.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4ZM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></svg>';
         return b;
+    }
+    function studyIcon(name, label, parent, work, cls = '') {
+        const b = icon('', label, parent, work); b.className += ' ' + cls;
+        b.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${studyIcons[name]}</svg>`;
+        return b;
+    }
+    function toggle(label, parent, checked, work) {
+        const input = check(label, parent, checked); input.parentElement.classList.add('vocab-toggle');
+        input.onchange = () => action(() => work(input.checked)); return input;
+    }
+    function pill(label, name, parent, checked, work) {
+        const input = check(label, parent, checked); input.parentElement.classList.add('vocab-option-pill');
+        const glyph = node('span', null, null, 'vocab-pill-glyph'); glyph.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${studyIcons[name]}</svg>`;
+        input.parentElement.prepend(glyph);
+        if (work) input.onchange = () => action(() => work(input.checked));
+        return input;
     }
     function field(label, parent, value = '', type = 'input') {
         const l = node('label', null, parent, 'vocab-field'); node('span', label, l);
@@ -65,6 +95,16 @@ export function mountFlashcard({ host, activate }) {
         const titleNode = node('h1', title, h); titleNode.tabIndex = -1;
         return h;
     }
+    function studyLayout() {
+        const active = !host.hidden && ['flash', 'learn'].includes(phase);
+        document.body.classList.toggle('vocab-studying', active);
+        if (active) {
+            for (const sibling of host.parentElement.children) if (sibling !== host && !backgroundInert.has(sibling)) { backgroundInert.set(sibling, sibling.inert); sibling.inert = true; }
+        } else {
+            for (const [element, previous] of backgroundInert) element.inert = previous;
+            backgroundInert.clear();
+        }
+    }
     function render() {
         const nextScreen = `${phase}:${deck?.id || ''}:${phase === 'learn' ? `${session?.id}:${session?.current?.key || ''}:${session?.round}:${!!session?.checkpoint}:${!!session?.completed}` : ''}`;
         const changedScreen = screen !== nextScreen;
@@ -73,8 +113,10 @@ export function mountFlashcard({ host, activate }) {
         progressWidths = [...host.querySelectorAll('.vocab-learn-progress i')].map(e => e.style.width);
         stop(); host.replaceChildren();
         host.dataset.phase = phase;
+        studyLayout();
         host.dataset.ordinal = phase === 'learn' ? String(session?.ordinal || 0) : '';
         host.dataset.feedback = phase === 'learn' && session?.feedback ? session.feedback.correct ? 'correct' : 'wrong' : 'none';
+        host.dataset.skipped = String(phase === 'learn' && !!session?.feedback?.skipped);
         host.dataset.currentKey = phase === 'learn' ? session?.current?.key || '' : '';
         const status = node('p', message, host, 'vocab-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
         if (conflict) {
@@ -355,36 +397,93 @@ export function mountFlashcard({ host, activate }) {
         for (const e of [input, termCustom, rowCustom]) e.oninput = update; term.onchange = update; row.onchange = update; update();
     }
     function download(content, name, type) { const url = URL.createObjectURL(new Blob([content], { type })); const a = node('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
-    function settings() {
-        const body = modal('Learn 設定'); const options = { ...DEFAULT_OPTIONS, ...preferred, types: preferred.learnTypes || preferred.types, practice: false };
-        const goal = select('這次學習的目標', body, [['master', '記熟全部'], ['quick', '快速熟悉']], options.goal);
-        const familiarity = select('對這組單字的熟悉程度', body, [['new', '剛開始學'], ['familiar', '已經看過']], options.familiarity);
-        const dir = select('作答方向', body, [['term', '看解釋 → 答單字'], ['definition', '看單字 → 答解釋'], ['both', '正反向']], options.direction);
-        const scope = select('練習範圍', body, [['all', '全部'], ['starred', '已標星號'], ['learning', '尚未精熟'], ['due', '到期複習']], options.scope);
-        const group = node('fieldset', null, body, 'vocab-types'); node('legend', '題型', group); const types = {};
-        for (const [type, label] of Object.entries(typeLabels)) types[type] = check(label, group, options.types.includes(type));
-        const gradingLabels = { strict: '嚴格', moderate: '適中', relaxed: '寬鬆' };
-        const grading = select('批改方式', body, [['auto', '自動：' + gradingLabels[defaultGrading(deck, options.defaultLanguage)]], ['strict', '嚴格：忽略大小寫與基本標點'], ['moderate', '適中：接受重音與輕微拼字差異'], ['relaxed', '寬鬆：接受意思相同的答案']], options.grading);
-        node('p', '替代答案可在字卡編輯中設定；數字、數學符號與單位會保留檢查。', body, 'vocab-muted');
-        const semanticNotice = node('p', '寬鬆批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', body, 'vocab-muted');
-        const updateNotice = () => { semanticNotice.hidden = (grading.value === 'auto' ? defaultGrading(deck, options.defaultLanguage) : grading.value) !== 'relaxed'; }; grading.onchange = updateNotice; updateNotice();
-        const retype = check('答錯後重打正解', body, options.retype), shuffle = check('打亂順序', body, options.shuffle), audio = check('朗讀題目', body, options.audio), audioAnswer = check('朗讀答案', body, options.audioAnswer), sound = check('答題音效', body, options.sound);
-        const audioRate = select('朗讀速度', body, [['0.9', '一般'], ['0.65', '慢速']], String(options.audioRate || 0.9));
-        const chunk = select('每組單字數', body, [['7', '7 張'], ['5', '5 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
-        const error = node('p', '', body); error.setAttribute('role', 'alert');
-        async function begin(onlyType, restart = false) {
-            try {
-                const learnTypes = Object.keys(types).filter(k => types[k].checked);
-                preferred = { ...options, activity: onlyType === 'written' ? 'write' : onlyType === 'spell' ? 'spell' : 'learn', freshStart: restart, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
-                if (onlyType === 'spell' && !('speechSynthesis' in window)) throw new Error('此瀏覽器不支援朗讀，請使用 Write。');
-                if (restart) study = await saveStudy(deck.id, study, newEvent('reset', { generation: id() }));
-                const next = createSession(deck, study, preferred); await persist(null, next); session = next; phase = 'learn'; dialog.close(); render();
-            } catch (e) { error.textContent = e.message; }
+    function learnOptions() {
+        const source = phase === 'learn' ? session.options : preferred;
+        return { ...DEFAULT_OPTIONS, ...source, types: source.learnTypes || source.types || DEFAULT_OPTIONS.types };
+    }
+    async function beginLearn(options, restart = false) {
+        if (options.activity === 'spell' && !('speechSynthesis' in window)) throw new Error('此瀏覽器不支援朗讀，請使用 Write。');
+        // Validate before resetting progress, so an empty scope or type selection cannot erase a session.
+        createSession(deck, restart ? {} : study, options);
+        if (restart) study = await saveStudy(deck.id, study, newEvent('reset', { generation: id() }));
+        let next = createSession(deck, study, { ...options, freshStart: restart });
+        const flowKeys = ['activity', 'direction', 'scope', 'shuffle', 'goal', 'types', 'familiarity', 'chunkSize', 'practice'];
+        if (!restart && phase === 'learn' && flowKeys.every(key => JSON.stringify(next.options[key]) === JSON.stringify(session.options[key]))) {
+            next = { ...clone(session), options: next.options };
         }
-        const actions = node('div', null, body, 'vocab-toolbar'); button('開始 Learn', actions, () => begin(), 'vocab-primary');
-        button('Write', actions, () => begin('written')); button('Spell', actions, () => begin('spell'));
-        node('p', 'Write 以整個範圍為一輪；Spell 使用嚴格拼字並在錯誤後重試。每題答對兩次完成。', body, 'vocab-muted');
-        if (Object.keys(projectStudy(study).facts).length) button('重設 Learn 進度', body, () => { const confirm = node('div', null, body, 'vocab-reset-confirm'); node('p', '重設會重新學習這組字卡，歷史作答紀錄仍會保留。', confirm); button('確認重設並開始', confirm, () => begin(null, true), 'vocab-primary'); });
+        await persist(null, next); preferred = clone(next.options); session = next; phase = 'learn'; dialog.close(); render();
+    }
+    function settings(full = phase === 'learn', initialOptions = null) {
+        const options = initialOptions || learnOptions();
+        if (!full) {
+            const body = modal('Learn 設定', 'vocab-goal-dialog');
+            const h = dialog.querySelector('header'); h.querySelector('h2').textContent = '選擇這次學習的目標';
+            h.prepend(node('p', deck.title, null, 'vocab-goal-deck'));
+            const group = node('fieldset', null, body, 'vocab-goals'); node('legend', '這次學習的目標', group);
+            for (const [value, label, glyph] of [['quick', '快速熟悉', '◷'], ['master', '記熟全部', '◎']]) {
+                const l = node('label', null, group, 'vocab-goal'); const input = node('input', null, l); input.type = 'radio'; input.name = 'vocab-goal'; input.value = value; input.checked = options.goal === value;
+                node('span', label, l); node('span', glyph, l, 'vocab-goal-icon'); input.onchange = () => { options.goal = value; };
+            }
+            const error = node('p', '', body, 'vocab-settings-error'); error.setAttribute('role', 'alert');
+            const footer = node('div', null, body, 'vocab-options-footer');
+            button('學習設定', footer, () => settings(true, { ...options, activity: 'learn', practice: false }), 'vocab-link');
+            button('開始 Learn', footer, async () => { try { await beginLearn({ ...options, activity: 'learn', practice: false }); } catch (e) { error.textContent = e.message; } }, 'vocab-primary');
+            return;
+        }
+        const body = modal('Learn 設定', 'vocab-options-dialog');
+        const top = node('div', null, body, 'vocab-option-pills');
+        const shuffle = pill('打亂順序', 'shuffle', top, options.shuffle), starred = pill('只學星號單字', 'star', top, options.scope === 'starred'), sound = pill('答題音效', 'audio', top, options.sound);
+        function section(title) { const d = node('details', null, body, 'vocab-setting-section'); node('summary', title, d); return node('div', null, d, 'vocab-setting-content'); }
+        const questionTypes = section('題型'); const types = {};
+        for (const [type, label] of Object.entries(typeLabels)) { types[type] = check(label, questionTypes, options.types.includes(type)); types[type].parentElement.classList.add('vocab-toggle'); }
+        const answerWith = section('作答方向');
+        const dir = select('作答方向', answerWith, [['term', '看解釋 → 答單字'], ['definition', '看單字 → 答解釋'], ['both', '正反向']], options.direction);
+        const scope = select('練習範圍', answerWith, [['all', '全部'], ['starred', '已標星號'], ['learning', '尚未精熟'], ['due', '到期複習']], options.scope);
+        starred.onchange = () => { scope.value = starred.checked ? 'starred' : 'all'; }; scope.onchange = () => { starred.checked = scope.value === 'starred'; };
+        const goal = select('這次學習的目標', answerWith, [['master', '記熟全部'], ['quick', '快速熟悉']], options.goal);
+        const familiarity = select('對這組單字的熟悉程度', answerWith, [['new', '剛開始學'], ['familiar', '已經看過']], options.familiarity);
+        const chunk = select('每組單字數', answerWith, [['7', '7 張'], ['5', '5 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
+        const gradingBody = section('批改方式'); const gradingLabels = { strict: '嚴格', moderate: '適中', relaxed: '寬鬆' };
+        const grading = select('批改方式', gradingBody, [['auto', '自動：' + gradingLabels[defaultGrading(deck, options.defaultLanguage)]], ['strict', '嚴格：忽略大小寫與基本標點'], ['moderate', '適中：接受重音與輕微拼字差異'], ['relaxed', '寬鬆：接受意思相同的答案']], options.grading);
+        const semanticNotice = node('p', '寬鬆批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', gradingBody, 'vocab-muted');
+        const updateNotice = () => { semanticNotice.hidden = (grading.value === 'auto' ? defaultGrading(deck, options.defaultLanguage) : grading.value) !== 'relaxed'; }; grading.onchange = updateNotice; updateNotice();
+        const retype = check('答錯後重打正解', gradingBody, options.retype); retype.parentElement.classList.add('vocab-toggle');
+        const audioBody = section('語音');
+        const audio = check('朗讀題目', audioBody, options.audio), audioAnswer = check('朗讀答案', audioBody, options.audioAnswer);
+        for (const input of [audio, audioAnswer]) input.parentElement.classList.add('vocab-toggle');
+        const audioRate = select('朗讀速度', audioBody, [['0.9', '一般'], ['0.65', '慢速']], String(options.audioRate || 0.9));
+        const modes = node('div', null, body, 'vocab-setting-content vocab-write-modes');
+        const error = node('p', '', body, 'vocab-settings-error'); error.setAttribute('role', 'alert');
+        function selected(activity = options.activity || 'learn') {
+            const learnTypes = Object.keys(types).filter(k => types[k].checked);
+            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
+        }
+        async function begin(activity, restart = false) { try { await beginLearn(selected(activity), restart); } catch (e) { error.textContent = e.message; } }
+        button('Write', modes, () => begin('write'), 'vocab-link'); button('Spell', modes, () => begin('spell'), 'vocab-link');
+        const footer = node('div', null, body, 'vocab-options-footer');
+        button('重設 Learn 進度', footer, () => { const confirm = node('div', null, body, 'vocab-reset-confirm'); node('p', '重新學習這組字卡，歷史作答紀錄仍會保留。', confirm); button('確認重設並開始', confirm, () => begin('learn', true), 'vocab-primary'); }, 'vocab-danger');
+        button('取消', footer, () => dialog.close());
+        button(phase === 'learn' ? '儲存' : '開始 Learn', footer, () => begin(phase === 'learn' ? options.activity : 'learn'), 'vocab-primary');
+    }
+    function quickSettings() {
+        stop();
+        const existing = host.querySelector('.vocab-quick-options');
+        if (existing) return;
+        const popover = node('div', null, host, 'vocab-quick-options'); popover.id = 'vocab-quick-options'; popover.setAttribute('popover', 'auto'); popover.setAttribute('aria-label', 'Learn 快速設定');
+        const options = learnOptions(), top = node('div', null, popover, 'vocab-option-pills');
+        async function update(changes) { await beginLearn({ ...options, ...changes }); }
+        pill('打亂順序', 'shuffle', top, options.shuffle, value => update({ shuffle: value }));
+        pill('只學星號單字', 'star', top, options.scope === 'starred', value => update({ scope: value ? 'starred' : 'all' }));
+        pill('答題音效', 'audio', top, options.sound, async value => { options.sound = value; session.options.sound = value; await persist(null, session); preferred = clone(session.options); });
+        const group = node('div', null, popover, 'vocab-setting-content'); node('h3', '題型', group);
+        for (const type of Object.keys(typeLabels)) {
+            const input = toggle(typeLabels[type], group, options.types.includes(type), async value => {
+                try { await update({ types: value ? [...options.types, type] : options.types.filter(t => t !== type), learnTypes: value ? [...options.types, type] : options.types.filter(t => t !== type) }); }
+                catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; input.checked = options.types.includes(type); }
+            });
+        }
+        const error = node('p', '', popover, 'vocab-settings-error'); error.setAttribute('role', 'alert');
+        button('全部設定', popover, () => { popover.remove(); settings(true); }, 'vocab-link');
     }
     async function persist(event, snapshot) {
         safeOwner();
@@ -393,8 +492,21 @@ export function mountFlashcard({ host, activate }) {
         study = await saveStudy(deckId, study, event, snapshot); safeOwner();
     }
     function studyHeader(mode, settingsAction) {
-        const h = heading(mode, { label: deck.title, action: () => { stop(); phase = 'detail'; render(); } });
-        button('設定', h, settingsAction); return h;
+        const h = node('header', null, host, 'vocab-study-header');
+        const menu = node('details', null, h, 'vocab-mode-menu'); const summary = node('summary', null, menu);
+        const glyph = node('span', null, summary, 'vocab-mode-glyph'); glyph.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${studyIcons[phase === 'flash' ? 'cards' : 'learn']}</svg>`;
+        node('span', mode, summary); node('span', '⌄', summary);
+        const choices = node('div', null, menu, 'vocab-mode-list');
+        button('Flashcards', choices, () => { menu.open = false; return startFlash(); }); button('Learn', choices, () => { menu.open = false; settings(false); });
+        const title = node('div', null, h, 'vocab-study-title');
+        const accessibleTitle = node('h1', mode, title, 'vocab-sr-only'); accessibleTitle.tabIndex = -1;
+        if (phase === 'flash') node('strong', `${Math.min(flash.index + 1, flash.order.length)} / ${flash.order.length}`, title, 'vocab-study-count');
+        node('span', deck.title, title);
+        const actions = node('div', null, h, 'vocab-study-actions');
+        const settingsButton = studyIcon('settings', '設定', actions, settingsAction);
+        if (phase === 'learn') settingsButton.setAttribute('popovertarget', 'vocab-quick-options');
+        const close = studyIcon('close', '‹ ' + deck.title, actions, () => { stop(); phase = 'detail'; render(); }); close.title = '返回字卡集';
+        return h;
     }
     function learnProgress() {
         const p = sessionProgress(session), goal = session.options.goal === 'quick' ? 1 : 2;
@@ -414,10 +526,11 @@ export function mountFlashcard({ host, activate }) {
         const roundComplete = session.active.filter(k => roundDone(session, k)).length;
         node('p', `第 ${session.round} 輪 · ${wholePass ? '本輪' : '本組'} ${roundComplete}／${session.active.length} · ${p.mastered}／${p.total} ${wholePass ? '已答對兩次' : '已精熟'}`, host, 'vocab-round-state');
     }
-    async function answer(response) {
+    async function answer(response, skipped = false) {
         if (session.options.sound) { try { audioContext ||= new (window.AudioContext || window.webkitAudioContext)(); void audioContext.resume(); } catch {} }
         const answeredAt = Date.now();
         let next = submitAnswer(session, deck, response, answeredAt); if (next === session) return;
+        if (skipped) next.feedback.skipped = true;
         const q = next.current, card = deck.cards.find(c => c.id === q.cardId);
         if (gradingFor(session, deck) === 'relaxed' && !next.feedback.correct && q.type === 'written' && String(response).trim()) {
             report('批改中…');
@@ -432,19 +545,20 @@ export function mountFlashcard({ host, activate }) {
     }
     async function nextLearn() { const next = advanceSession(session, deck); if (next === session) return; await persist(null, next); session = next; render(); }
     function renderLearn() {
-        studyHeader(session.options.practice ? '持續練習' : activityName(session), () => settings());
+        studyHeader(session.options.practice ? '持續練習' : activityName(session), () => quickSettings());
         if (session.options.practice) node('p', `已作答 ${session.ordinal} 題`, host, 'vocab-round-state'); else learnProgress();
         if (session.completed || session.checkpoint) { renderCheckpoint(); return; }
         const q = session.current, card = deck.cards.find(c => c.id === q.cardId), feedback = session.feedback;
         const currentQuestionKey = `${session.id}:${q.key}:${session.ordinal}`;
         if (!feedback && questionKey !== currentQuestionKey) { questionAt = Date.now(); questionKey = currentQuestionKey; }
         const panel = node('section', null, host, `vocab-question ${feedback ? feedback.correct ? 'is-correct' : 'is-wrong' : ''}`);
-        const top = node('div', null, panel, 'vocab-question-top'); node('span', q.direction === 'term' ? '解釋' : '單字', top, 'vocab-muted'); starButton(card, top);
+        const top = node('div', null, panel, 'vocab-question-top'); node('span', q.direction === 'term' ? '解釋' : '單字', top, 'vocab-muted');
         if (!feedback && session.facts[q.key].wrong && !session.facts[q.key].streak) node('span', '再次練習', top, 'vocab-retry-label');
         icon('◖))', q.type === 'spell' ? '朗讀答案' : '朗讀題目', top, () => speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'));
+        starButton(card, top);
         text(promptFor(card, q.direction), panel, 'vocab-prompt');
-        const hint = node('p', typeLabels[q.type], panel, 'vocab-question-hint');
-        if (feedback) { hint.textContent = feedback.correct ? '✓ 答對了' : feedback.skipped ? '已略過' : '再練一次'; hint.className += feedback.correct ? ' success' : ' error'; hint.setAttribute('role', 'status'); }
+        const hint = node('p', ['choice', 'multi'].includes(q.type) ? '選擇答案' : typeLabels[q.type], panel, 'vocab-question-hint');
+        if (feedback) { hint.textContent = feedback.correct ? '✓ 答對了' : feedback.skipped ? '已略過' : '答錯了'; hint.className += feedback.correct ? ' success' : feedback.skipped ? ' vocab-muted' : ' error'; hint.setAttribute('role', 'status'); }
         if (q.type === 'choice') {
             const choices = node('div', null, panel, 'vocab-choices');
             if (q.choices.some(value => value.length > 65)) choices.classList.add('long-choices');
@@ -492,14 +606,14 @@ export function mountFlashcard({ host, activate }) {
             const reveal = button('查看答案', panel, () => { reveal.hidden = true; text(answerFor(card, q.direction), panel, 'vocab-revealed-answer'); if (session.options.audioAnswer) speak(answerFor(card, q.direction), q.direction); const ratings = node('div', null, panel, 'vocab-ratings'); button('還在學習', ratings, () => answer(false)); button('知道了', ratings, () => answer(true), 'vocab-primary'); });
             if (feedback) reveal.hidden = true;
         }
-        if (!feedback) button('不知道', panel, () => answer(q.type === 'multi' ? [] : q.type === 'truefalse' ? !q.truth : q.type === 'flash' ? false : ''), 'vocab-dontknow');
+        const unknown = button('不知道', panel, () => answer(q.type === 'multi' ? [] : q.type === 'truefalse' ? !q.truth : q.type === 'flash' ? false : '', true), 'vocab-dontknow'); unknown.disabled = !!feedback;
         if (feedback) {
             if ((!feedback.correct && (!feedback.skipped || !feedback.retyped || session.options.activity !== 'learn') || feedback.requiresAcknowledgement) && q.type !== 'choice' && q.type !== 'multi') {
                 node('p', '正確答案', panel, 'vocab-muted');
                 if (q.type === 'spell' && !feedback.correct) { spellText(spellingFeedback(feedback.response, feedback.expected).expected, panel, 'vocab-correct-answer'); button('逐字拼讀', panel, () => speakSpelling(feedback.expected, q.direction)); }
                 else text(feedback.expected, panel, 'vocab-correct-answer');
             }
-            const footer = node('div', null, panel, 'vocab-feedback');
+            const footer = node('div', null, host, 'vocab-feedback');
             if (feedback.correct && feedback.requiresAcknowledgement && ['written', 'spell'].includes(q.type)) {
                 button('我的答案其實錯誤', footer, async () => { const next = overrideCorrect(session, Date.now(), false); await persist(newEvent('override', { originalId: feedback.eventId, correct: false }), next); session = next; render(); }, 'vocab-link');
             }
@@ -600,62 +714,113 @@ export function mountFlashcard({ host, activate }) {
         }
         flash.playing = false; phase = 'flash'; await persist(null, flash); render();
     }
+    async function changeFlashOptions(changes) {
+        const options = { ...flash.options, ...changes };
+        if (options.direction !== flash.options.direction || options.scope !== flash.options.scope || options.shuffle !== flash.options.shuffle) await startFlash(options, true);
+        else { flash.options = options; flash.playing = false; await saveFlash(); render(); }
+    }
     function flashSettings() {
-        const body = modal('Flashcards 設定');
-        const dir = select('正面顯示', body, [['definition', '單字'], ['term', '解釋']], flash.options.direction);
-        const scope = select('練習範圍', body, [['all', '全部'], ['starred', '已標星號'], ['learning', '還在學習']], flash.options.scope);
-        const track = check('追蹤進度', body, flash.options.track), shuffle = check('打亂順序', body, flash.options.shuffle), audio = check('朗讀卡片', body, flash.options.audio);
-        button('儲存並開始', body, async () => { await startFlash({ direction: dir.value, scope: scope.value, track: track.checked, shuffle: shuffle.checked, audio: audio.checked }, true); dialog.close(); }, 'vocab-primary');
+        const body = modal('Flashcards 設定', 'vocab-flash-options');
+        toggle('追蹤進度', body, flash.options.track, value => changeFlashOptions({ track: value }));
+        toggle('只學星號單字', body, flash.options.scope === 'starred', value => changeFlashOptions({ scope: value ? 'starred' : 'all' }));
+        const dir = select('正面顯示', body, [['definition', '單字 · ' + (languages.find(l => l[0] === deck.termLanguage)?.[1] || deck.termLanguage)], ['term', '解釋 · ' + (languages.find(l => l[0] === deck.definitionLanguage)?.[1] || deck.definitionLanguage)]], flash.options.direction);
+        dir.onchange = () => action(() => changeFlashOptions({ direction: dir.value }));
+        toggle('同時顯示雙面', body, !!flash.options.showBoth, value => changeFlashOptions({ showBoth: value }));
+        toggle('打亂順序', body, flash.options.shuffle, value => changeFlashOptions({ shuffle: value }));
+        const shortcuts = node('details', null, body, 'vocab-shortcuts'); node('summary', '鍵盤快捷鍵', shortcuts);
+        const keys = node('dl', null, shortcuts);
+        for (const [label, key] of [['知道了／下一張', '→'], ['還在學習／上一張', '←'], ['翻面', 'Space'], ['撤銷分類／上一張', 'Backspace'], ['標記星號', 'S'], ['編輯', 'E'], ['打亂', 'H'], ['朗讀', 'A'], ['單字正面', 'T'], ['解釋正面', 'D']]) { node('dt', label, keys); node('dd', key, keys); }
+        toggle('朗讀卡片', body, flash.options.audio, value => changeFlashOptions({ audio: value }));
+        button('重新開始 Flashcards', body, async () => { await startFlash(flash.options, true); dialog.close(); }, 'vocab-danger');
+    }
+    async function editFlashCard() {
+        const card = deck.cards.find(c => c.id === flash.order[flash.index]);
+        const body = modal('編輯字卡'); const term = field('單字', body, card.term, 'textarea'), definition = field('解釋', body, card.definition, 'textarea');
+        term.maxLength = definition.maxLength = 4000;
+        const error = node('p', '', body, 'vocab-settings-error'); error.setAttribute('role', 'alert');
+        const footer = node('div', null, body, 'vocab-options-footer'); button('取消', footer, () => dialog.close());
+        button('儲存字卡', footer, async () => {
+            if (!term.value.trim() || !definition.value.trim()) { error.textContent = '請填寫單字與解釋。'; return; }
+            const next = clone(deck), edited = next.cards.find(c => c.id === card.id); edited.term = term.value; edited.definition = definition.value;
+            deck = await saveDeck(next, deck); decks[deck.id] = deck; flash.deckRevision = deck.revision; await saveFlash(); dialog.close(); render();
+        }, 'vocab-primary');
     }
     async function saveFlash() { flash.updatedAt = Date.now(); await persist(null, flash); }
-    async function flip() { flash.flipped = !flash.flipped; await saveFlash(); updateFlip(); }
+    async function flip() { if (flash.options.showBoth) return; flash.flipped = !flash.flipped; await saveFlash(); updateFlip(); }
     function updateFlip() {
         const stage = host.querySelector('.vocab-flip'); if (!stage) return;
-        stage.classList.toggle('flipped', flash.flipped); stage.setAttribute('aria-label', flash.flipped ? '查看正面' : '查看背面');
-        stage.querySelector('.front').setAttribute('aria-hidden', String(flash.flipped)); stage.querySelector('.back').setAttribute('aria-hidden', String(!flash.flipped));
+        stage.classList.toggle('flipped', flash.flipped); stage.classList.toggle('show-both', !!flash.options.showBoth);
+        stage.setAttribute('aria-label', flash.options.showBoth ? '字卡雙面' : flash.flipped ? '查看正面' : '查看背面');
+        stage.querySelector('.front').setAttribute('aria-hidden', String(!flash.options.showBoth && flash.flipped)); stage.querySelector('.back').setAttribute('aria-hidden', String(!flash.options.showBoth && !flash.flipped));
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
         if (flash.options.audio) speak(flash.flipped ? answerFor(card, flash.options.direction) : promptFor(card, flash.options.direction), flash.flipped ? flash.options.direction : flash.options.direction === 'term' ? 'definition' : 'term');
+    }
+    function speakFlash() {
+        const card = deck.cards.find(c => c.id === flash.order[flash.index]);
+        speak(flash.flipped ? answerFor(card, flash.options.direction) : promptFor(card, flash.options.direction), flash.flipped ? flash.options.direction : flash.options.direction === 'term' ? 'definition' : 'term');
     }
     async function rateFlash(known) {
         if (flash.completed) return;
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
         const stage = host.querySelector('.vocab-flip'); stage?.classList.add(known ? 'swipe-known' : 'swipe-learning');
         const event = newEvent('flash', { cardId: card.id, direction: flash.options.direction, revision: card.revision, correct: known, sessionId: flash.id });
-        const next = clone(flash); next.ratings[card.id] = known; next.index++; next.flipped = false; next.completed = next.index >= next.order.length; next.updatedAt = Date.now(); next.playing = false;
+        const next = clone(flash); next.history ||= []; next.history.push({ index: flash.index, eventId: event.id, cardId: card.id, known });
+        next.ratings[card.id] = known; next.index++; next.flipped = false; next.completed = next.index >= next.order.length; next.updatedAt = Date.now(); next.playing = false;
         await persist(event, next); await new Promise(resolve => setTimeout(resolve, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 210)); flash = next; render();
+    }
+    async function undoFlash() {
+        const last = flash.history?.at(-1); if (!last) return;
+        const next = clone(flash); next.history.pop(); next.index = last.index; next.completed = false; next.flipped = false; next.playing = false;
+        const previous = next.history.filter(item => item.cardId === last.cardId).at(-1);
+        if (previous) next.ratings[last.cardId] = previous.known; else delete next.ratings[last.cardId];
+        const original = study.events[last.eventId];
+        // A compensating flash event preserves the immutable history and works with existing Firebase rules.
+        await persist(newEvent('flash', { cardId: original.cardId, direction: original.direction, revision: original.revision, correct: original.correct, sessionId: flash.id, originalId: original.id, value: false }), next);
+        flash = next; render();
     }
     async function moveFlash(shift) {
         const dest = flash.index + shift; if (dest < 0) return;
         flash.index = Math.min(flash.order.length, dest); flash.completed = dest >= flash.order.length; flash.flipped = false; await saveFlash(); render();
+    }
+    async function shuffleFlash() {
+        await startFlash({ ...flash.options, shuffle: true }, true);
     }
     function renderFlash() {
         studyHeader('Flashcards', () => flashSettings());
         const known = Object.values(flash.ratings).filter(Boolean).length, learning = Object.values(flash.ratings).filter(v => !v).length;
         if (flash.completed) {
             const panel = node('section', null, host, 'vocab-checkpoint'); node('h2', '本輪字卡完成', panel); node('p', flash.options.track ? `知道了 ${known} 張 · 還在學習 ${learning} 張` : `已瀏覽 ${flash.order.length} 張字卡`, panel);
-            if (learning) button(`再練還在學習的 ${learning} 張`, panel, async () => { const next = clone(flash); next.order = next.order.filter(cardId => next.ratings[cardId] === false); next.ratings = {}; next.index = 0; next.completed = false; next.updatedAt = Date.now(); await persist(null, next); flash = next; render(); }, 'vocab-primary');
-            button('在 Learn 中練習', panel, () => settings()); button('重新開始 Flashcards', panel, () => startFlash(flash.options, true)); button('返回字卡集', panel, () => { phase = 'detail'; render(); }); return;
+            if (learning) button(`再練還在學習的 ${learning} 張`, panel, async () => { const next = clone(flash); next.order = next.order.filter(cardId => next.ratings[cardId] === false); next.ratings = {}; next.history = []; next.index = 0; next.flipped = false; next.completed = false; next.updatedAt = Date.now(); await persist(null, next); flash = next; render(); }, 'vocab-primary');
+            if (flash.history?.length) button('撤銷上一張分類', panel, undoFlash);
+            button('在 Learn 中練習', panel, () => settings(false)); button('重新開始 Flashcards', panel, () => startFlash(flash.options, true)); button('返回字卡集', panel, () => { phase = 'detail'; render(); }); return;
         }
-        const toolbar = node('div', null, host, 'vocab-flash-top');
-        const tracking = check('追蹤進度', toolbar, flash.options.track);
-        tracking.onchange = () => action(async () => { flash.options.track = tracking.checked; await saveFlash(); render(); });
-        if (flash.options.track) { node('span', `還在學習 ${learning}`, toolbar, 'error'); node('span', `知道了 ${known}`, toolbar, 'success'); }
-        const card = deck.cards.find(c => c.id === flash.order[flash.index]); const actions = node('div', null, toolbar, 'vocab-toolbar'); starButton(card, actions);
-        icon('◖))', '朗讀卡片', actions, () => speak(flash.flipped ? answerFor(card, flash.options.direction) : promptFor(card, flash.options.direction), flash.flipped ? flash.options.direction : flash.options.direction === 'term' ? 'definition' : 'term'));
-        const stage = node('button', null, host, 'vocab-flip'); stage.type = 'button'; stage.setAttribute('aria-label', '查看背面'); stage.onclick = () => action(flip);
+        const workspace = node('section', null, host, 'vocab-flash-workspace');
+        if (flash.options.track) {
+            const counts = node('div', null, workspace, 'vocab-flash-counts');
+            node('span', `還在學習 ${learning}`, counts, 'error'); node('span', `知道了 ${known}`, counts, 'success');
+        }
+        const card = deck.cards.find(c => c.id === flash.order[flash.index]);
+        const wrapper = node('div', null, workspace, 'vocab-flash-card');
+        const stage = node('button', null, wrapper, 'vocab-flip'); stage.type = 'button'; stage.setAttribute('aria-label', '查看背面'); stage.onclick = () => action(flip);
         const faces = node('div', null, stage, 'vocab-flip-inner');
-        for (const side of ['front', 'back']) { const face = node('div', null, faces, 'vocab-face ' + side); node('span', side === 'front' ? '正面' : '背面', face, 'vocab-face-label'); text(side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction), face); node('span', '點擊或按空白鍵翻面', face, 'vocab-face-help'); }
-        updateFlip(); let down = null;
-        stage.onpointerdown = e => { down = [e.clientX, e.clientY]; }; stage.onpointerup = e => { if (!down || !flash.options.track) return; const delta = e.clientX - down[0]; if (Math.abs(delta) > 70 && Math.abs(e.clientY - down[1]) < 100) { stage.onclick = null; void action(() => rateFlash(delta > 0)); } down = null; };
-        if (flash.options.track) { const ratings = node('div', null, host, 'vocab-ratings'); button('← 還在學習', ratings, () => rateFlash(false), 'vocab-learning'); button('知道了 →', ratings, () => rateFlash(true), 'vocab-known'); }
-        const controls = node('div', null, host, 'vocab-flash-controls');
-        const prev = icon('←', '上一張字卡', controls, () => moveFlash(-1)); prev.disabled = flash.index === 0;
-        node('span', `${flash.index + 1}／${flash.order.length}`, controls); icon('→', '下一張字卡', controls, () => moveFlash(1));
-        const play = button(flash.playing ? '暫停' : '自動播放', controls, async () => { flash.playing = !flash.playing; await saveFlash(); render(); }); play.setAttribute('aria-pressed', String(flash.playing));
-        button('打亂', controls, async () => { flash.order = shuffled(flash.order); flash.index = 0; flash.flipped = false; flash.completed = false; await saveFlash(); render(); });
-        const bar = node('progress', null, host, 'vocab-flash-progress'); bar.max = flash.order.length; bar.value = flash.index; bar.setAttribute('aria-label', '字卡瀏覽進度');
-        node('p', flash.options.track ? '空白鍵翻面 · ← 還在學習 · → 知道了 · Backspace 返回上一張' : '空白鍵翻面 · ← 上一張 · → 下一張', host, 'vocab-key-help');
-        if (flash.playing) timer = setTimeout(() => { if (host.hidden || dialog.open || phase !== 'flash') return; void action(async () => { if (!flash.flipped) { await flip(); timer = setTimeout(() => { if (!host.hidden && !dialog.open) void action(() => moveFlash(1)); }, 2200); } else await moveFlash(1); }); }, 2200);
+        for (const side of ['front', 'back']) { const face = node('div', null, faces, 'vocab-face ' + side); text(side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction), face); }
+        const actions = node('div', null, wrapper, 'vocab-card-actions');
+        studyIcon('edit', '編輯字卡', actions, editFlashCard); studyIcon('audio', '朗讀卡片', actions, speakFlash); starButton(card, actions);
+        updateFlip(); let down = null, swiped = false;
+        stage.onpointerdown = e => { down = [e.clientX, e.clientY]; swiped = false; };
+        stage.onpointercancel = () => { down = null; };
+        stage.onpointerup = e => { if (!down) return; const delta = e.clientX - down[0]; if (Math.abs(delta) > 70 && Math.abs(e.clientY - down[1]) < 100) { swiped = true; void action(() => flash.options.track ? rateFlash(delta > 0) : moveFlash(delta < 0 ? 1 : -1)); } down = null; };
+        stage.onclick = () => { if (!swiped) void action(flip); swiped = false; };
+        const controls = node('div', null, workspace, 'vocab-flash-controls');
+        toggle('追蹤進度', controls, flash.options.track, value => changeFlashOptions({ track: value }));
+        const navigation = node('div', null, controls, 'vocab-flash-navigation');
+        if (flash.options.track) { studyIcon('close', '← 還在學習', navigation, () => rateFlash(false), 'vocab-learning'); studyIcon('check', '知道了 →', navigation, () => rateFlash(true), 'vocab-known'); }
+        else { const prev = studyIcon('left', '上一張字卡', navigation, () => moveFlash(-1)); prev.disabled = flash.index === 0; studyIcon('right', '下一張字卡', navigation, () => moveFlash(1)); }
+        const extras = node('div', null, controls, 'vocab-flash-extras');
+        if (flash.options.track) { const undo = studyIcon('undo', '撤銷上一張分類', extras, undoFlash); undo.disabled = !flash.history?.length; }
+        else { const play = studyIcon(flash.playing ? 'pause' : 'play', flash.playing ? '暫停' : '自動播放', extras, async () => { flash.playing = !flash.playing; await saveFlash(); render(); }); play.setAttribute('aria-pressed', String(flash.playing)); }
+        studyIcon('shuffle', '打亂', extras, shuffleFlash);
+        if (flash.playing) timer = setTimeout(() => { if (host.hidden || dialog.open || phase !== 'flash') return; void action(async () => { if (!flash.flipped && !flash.options.showBoth) { await flip(); timer = setTimeout(() => { if (!host.hidden && !dialog.open) void action(() => moveFlash(1)); }, 2200); } else await moveFlash(1); }); }, 2200);
     }
     window.addEventListener('flashcard-sync', ({ detail }) => {
         if (detail.uid !== owner) return;
@@ -665,20 +830,28 @@ export function mountFlashcard({ host, activate }) {
         if (!owner || host.hidden || auth.currentUser?.uid !== owner) return;
         if (!detail.error && detail.pending === 0 && !conflict) report('資料已同步');
     });
-    new MutationObserver(() => { if (host.hidden) stop(); }).observe(host, { attributes: true, attributeFilter: ['hidden'] });
+    new MutationObserver(() => { if (host.hidden) stop(); studyLayout(); }).observe(host, { attributes: true, attributeFilter: ['hidden'] });
     document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
     document.addEventListener('keydown', e => {
-        if (host.hidden || !owner || dialog.open || document.querySelector('dialog[open]') || busy || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
+        if (host.hidden || !owner || dialog.open || document.querySelector('dialog[open]') || host.querySelector('[popover]:popover-open') || host.querySelector('.vocab-mode-menu[open]') || busy || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
         if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+        if (e.key === 'Escape') { e.preventDefault(); stop(); phase = 'detail'; render(); return; }
         if (phase === 'flash' && !flash.completed) {
             if (e.key === ' ') { e.preventDefault(); void action(flip); }
             if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); void action(() => flash.options.track ? rateFlash(e.key === 'ArrowRight') : moveFlash(e.key === 'ArrowRight' ? 1 : -1)); }
-            if (e.key === 'Backspace') { e.preventDefault(); void action(() => moveFlash(-1)); }
+            if (e.key === 'Backspace') { e.preventDefault(); void action(() => flash.options.track ? undoFlash() : moveFlash(-1)); }
+            const shortcuts = { s: () => star(deck.cards.find(c => c.id === flash.order[flash.index])), e: editFlashCard, h: shuffleFlash, a: speakFlash, t: () => changeFlashOptions({ direction: 'definition' }), d: () => changeFlashOptions({ direction: 'term' }) };
+            const shortcut = shortcuts[e.key.toLowerCase()]; if (shortcut) { e.preventDefault(); void action(shortcut); }
         } else if (phase === 'learn' && session.feedback?.retyped && (e.key === 'Enter' || e.key === ' ' || (!session.feedback.correct || session.feedback.requiresAcknowledgement) && e.key.length === 1)) { e.preventDefault(); void action(nextLearn); }
         else if (phase === 'learn' && session.checkpoint && !session.completed && (e.key === 'Enter' || e.key === ' ' || e.key.length === 1)) { e.preventDefault(); void action(nextRound); }
         else if (phase === 'learn' && !session.feedback && session.current?.type === 'choice' && /^[1-4]$/.test(e.key)) { const value = session.current.choices[Number(e.key) - 1]; if (value) { e.preventDefault(); void action(() => answer(value)); } }
     });
-    dialog.addEventListener('close', () => { if (phase === 'flash' && flash?.playing) { flash.playing = false; render(); } });
+    dialog.addEventListener('close', () => {
+        if (host.hidden) return;
+        if (phase === 'flash' && flash?.playing) { flash.playing = false; render(); }
+        if (phase === 'flash') host.querySelector('.vocab-flip')?.focus({ preventScroll: true });
+        if (phase === 'learn') (host.querySelector('.vocab-answer-form input') || host.querySelector('h1'))?.focus({ preventScroll: true });
+    });
     return {
         async open() {
             const ticket = ++operation; owner = auth.currentUser?.uid || null; activate();

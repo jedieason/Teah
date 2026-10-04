@@ -214,3 +214,18 @@ test('audio and audioAnswer preferences are preserved in session options', () =>
     assert.equal(s.options.audio, true);
     assert.equal(s.options.audioAnswer, true);
 });
+
+test('undoing flash classifications restores the previous rating without contributing Learn credit', () => {
+    const d = deck(1), card = d.cards[0];
+    const event = (id, at, correct, extra = {}) => ({ id, at, kind: 'flash', cardId: card.id, direction: 'term', revision: card.revision, sessionId: 'flash-session', correct, ...extra });
+    const old = event('old', 1, false), known = event('known', 2, true), undo = event('undo', 3, true, { originalId: 'known', value: false });
+    const study = { events: { old, known, undo } }, projected = projectStudy(study);
+    assert.equal(projected.flash[`${card.id}_term`].known, false);
+    assert.equal(projected.correct, 0); assert.equal(projected.wrong, 0);
+    assert.equal(createSession(d, study).facts[`${card.id}_term`].credit, 0);
+    const only = projectStudy({ events: { known, undo } });
+    assert.equal(only.flash[`${card.id}_term`], undefined);
+    // Offline order and duplicate undo replay produce the same projection.
+    assert.deepEqual(projectStudy({ events: { undo, known, old } }), projected);
+    assert.deepEqual(projectStudy({ events: { old, known, undo, again: { ...undo, id: 'undo-again', at: 4 } } }), projected);
+});

@@ -37,6 +37,12 @@ await context.route('https://generativelanguage.googleapis.com/**', async route 
 const page = await context.newPage(); page.setDefaultTimeout(15000); const errors = []; page.on('pageerror', e => { errors.push(e.message); console.error(e.message); });
 const view = page.locator('#flashcardPage'), settings = page.getByRole('dialog', { name: 'Learn 設定', exact: true });
 const idle = () => page.waitForFunction(() => document.getElementById('flashcardPage').getAttribute('aria-busy') !== 'true');
+async function expandLearnSettings() {
+    const options = page.getByRole('dialog', { name: 'Learn 設定', exact: true });
+    if (await view.getByRole('button', { name: '全部設定', exact: true }).isVisible()) await view.getByRole('button', { name: '全部設定', exact: true }).click();
+    if (await options.getByRole('button', { name: '學習設定', exact: true }).isVisible()) await options.getByRole('button', { name: '學習設定', exact: true }).click();
+    for (const section of await options.locator('.vocab-setting-section').all()) if (!await section.evaluate(e => e.open)) await section.locator('summary').click();
+}
 await mkdir('artifacts/qa', { recursive: true });
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
@@ -50,7 +56,7 @@ try {
     assert.equal(await view.locator('.vocab-flip').count(), 1); await page.keyboard.press('Space'); await view.locator('.flipped').waitFor();
     await view.getByRole('button', { name: '‹ Synonyms', exact: true }).click();
     await view.locator('.vocab-term').first().getByRole('button', { name: '標記星號', exact: true }).click(); await idle();
-    await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
     await settings.getByLabel('練習範圍', { exact: true }).selectOption('starred');
     await settings.getByLabel('這次學習的目標', { exact: true }).selectOption('quick');
     await settings.getByRole('button', { name: '開始 Learn', exact: true }).click(); await idle();
@@ -58,13 +64,19 @@ try {
     await view.getByRole('button', { name: '確認答案', exact: true }).click();
     await view.getByText('✓ 答對了', { exact: true }).waitFor(); await idle(); await view.getByRole('button', { name: '繼續', exact: true }).click({ force: true });
     await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
-    await view.getByRole('button', { name: '返回字卡集', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await view.getByRole('button', { name: '返回字卡集', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
     await settings.getByLabel('這次學習的目標', { exact: true }).selectOption('master'); await settings.getByLabel('批改方式', { exact: true }).selectOption('relaxed');
     await settings.getByRole('button', { name: 'Write', exact: true }).click(); await idle();
     const answer = view.getByLabel('你的答案', { exact: true });
     await view.getByRole('button', { name: 'μ', exact: true }).click(); await idle(); assert.equal(await answer.inputValue(), 'μ');
     await view.getByRole('button', { name: '大寫', exact: true }).click(); await idle();
     await view.getByRole('button', { name: 'Μ', exact: true }).click(); await idle(); assert.equal(await answer.inputValue(), 'μΜ');
+    const writingSessionId = await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id].sessions.learn.id, synonyms.id);
+    await view.getByRole('button', { name: '設定', exact: true }).click(); await expandLearnSettings();
+    await settings.getByLabel('朗讀速度', { exact: true }).selectOption('0.65');
+    await settings.getByRole('button', { name: '儲存', exact: true }).click(); await idle();
+    assert.equal(await answer.inputValue(), 'μΜ', 'saving non-flow settings preserves an unfinished written answer');
+    assert.equal(await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id].sessions.learn.id, synonyms.id), writingSessionId);
     await answer.fill('an automobile'); await answer.press('Enter');
     await view.getByText('✓ 答對了', { exact: true }).waitFor(); assert.equal(semanticCalls, 1); await idle();
     await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).waitFor();
@@ -91,10 +103,10 @@ try {
     assert.equal(await view.getByRole('button', { name: '我的答案其實正確', exact: true }).count(), 0);
     await view.getByRole('button', { name: '繼續', exact: true }).click(); await idle();
     await view.getByLabel('你的答案', { exact: true }).waitFor();
-    await view.getByRole('button', { name: '‹ Synonyms', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await view.getByRole('button', { name: '‹ Synonyms', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
     await settings.getByLabel('練習範圍', { exact: true }).selectOption('all'); await settings.getByLabel('批改方式', { exact: true }).selectOption('strict');
     await settings.getByRole('button', { name: '重設 Learn 進度', exact: true }).click(); await settings.getByRole('button', { name: '確認重設並開始', exact: true }).click();
-    await idle(); await view.getByRole('button', { name: '設定', exact: true }).click(); await settings.getByRole('button', { name: 'Spell', exact: true }).click();
+    await idle(); await view.getByRole('button', { name: '設定', exact: true }).click(); await expandLearnSettings(); await settings.getByRole('button', { name: 'Spell', exact: true }).click();
     await view.getByRole('button', { name: '朗讀答案', exact: true }).waitFor();
     assert.equal(await view.getByRole('button', { name: '播放單字', exact: true }).count(), 0);
     assert.equal(await view.locator('.vocab-prompt').innerText(), '汽車');
@@ -140,7 +152,7 @@ try {
     await view.getByRole('button', { name: '完成', exact: true }).click();
     await page.waitForFunction(id => window.__testDatabase.flashcard['test-user'].sets[id].revision === 2, malay.id);
     assert.equal(await page.evaluate(id => window.__testDatabase.flashcard['test-user'].sets[id].termLanguage, malay.id), 'ms-MY');
-    await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
     await settings.getByLabel('作答方向', { exact: true }).selectOption('term'); await settings.getByLabel('打亂順序', { exact: true }).uncheck();
     await settings.getByRole('button', { name: 'Spell', exact: true }).click(); await idle();
     assert.equal(await view.locator('.vocab-prompt').innerText(), '蘋果');
@@ -150,12 +162,12 @@ try {
     await view.getByRole('button', { name: '朗讀答案', exact: true }).click(); await idle();
     assert.equal(await page.evaluate(() => window.__utterances.length), spokenCount + 1);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-spell-malay.png' });
-    await view.getByRole('button', { name: '設定', exact: true }).click(); await settings.getByLabel('作答方向', { exact: true }).selectOption('definition');
+    await view.getByRole('button', { name: '設定', exact: true }).click(); await expandLearnSettings(); await settings.getByLabel('作答方向', { exact: true }).selectOption('definition');
     await settings.getByRole('button', { name: 'Spell', exact: true }).click(); await idle();
     assert.equal(await view.locator('.vocab-prompt').innerText(), 'epal');
     await page.waitForFunction(() => window.__utterances.at(-1)?.text === '蘋果');
     assert.equal(await page.evaluate(() => window.__utterances.at(-1).voice), 'zh-TW');
-    await view.getByRole('button', { name: '設定', exact: true }).click(); await settings.getByLabel('作答方向', { exact: true }).selectOption('term');
+    await view.getByRole('button', { name: '設定', exact: true }).click(); await expandLearnSettings(); await settings.getByLabel('作答方向', { exact: true }).selectOption('term');
     await page.evaluate(() => { window.__voices = window.__voices.filter(v => !v.lang.startsWith('ms')); });
     const beforeMissingVoice = await page.evaluate(() => window.__utterances.length);
     await settings.getByRole('button', { name: 'Spell', exact: true }).click(); await idle();
@@ -195,7 +207,7 @@ try {
     await view.locator('.vocab-save-bottom').click();
     await page.waitForFunction(id => window.__testDatabase.flashcard['test-user'].sets[id].revision === 2, large.id);
     assert.equal(await page.evaluate(id => window.__testDatabase.flashcard['test-user'].sets[id].cards[1999].definition, large.id), '最後一張的修改');
-    await view.getByRole('button', { name: 'Learn', exact: true }).click(); await settings.getByLabel('聽寫題', { exact: true }).uncheck(); await settings.getByLabel('選擇題', { exact: true }).check(); await settings.getByLabel('書寫／填空題', { exact: true }).check(); await settings.getByRole('button', { name: '開始 Learn', exact: true }).click();
+    await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings(); await settings.getByLabel('聽寫題', { exact: true }).uncheck(); await settings.getByLabel('選擇題', { exact: true }).check(); await settings.getByLabel('書寫／填空題', { exact: true }).check(); await settings.getByRole('button', { name: '開始 Learn', exact: true }).click();
     await view.locator('.vocab-choices').waitFor(); await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(await view.evaluate(e => e.scrollWidth > e.clientWidth), false); assert.ok(await view.locator('.vocab-learn-progress > span').count() <= 24);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-large-mobile.png', fullPage: true });

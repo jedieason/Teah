@@ -13,6 +13,12 @@ page.setDefaultTimeout(12000); page.setDefaultNavigationTimeout(25000);
 page.on('pageerror', e => { errors.push(e.message); console.error('Page error:', e.message); });
 const view = page.locator('#flashcardPage'), dialog = page.getByRole('dialog', { name: '匯入文字', exact: true });
 const words = [['apple', '蘋果'], ['banana', '香蕉'], ['cherry', '櫻桃'], ['grape', '葡萄'], ['pear', '梨'], ['orange', '橘子'], ['lemon', '檸檬'], ['peach', '桃子'], ['melon', '甜瓜']];
+async function expandLearnSettings() {
+    const options = page.getByRole('dialog', { name: 'Learn 設定', exact: true });
+    if (await view.getByRole('button', { name: '全部設定', exact: true }).isVisible()) await view.getByRole('button', { name: '全部設定', exact: true }).click();
+    if (await options.getByRole('button', { name: '學習設定', exact: true }).isVisible()) await options.getByRole('button', { name: '學習設定', exact: true }).click();
+    for (const section of await options.locator('.vocab-setting-section').all()) if (!await section.evaluate(e => e.open)) await section.locator('summary').click();
+}
 await mkdir('artifacts/qa', { recursive: true });
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' }); console.log('Loaded page');
@@ -105,7 +111,7 @@ try {
     await view.getByRole('button', { name: '知道了 →', exact: true }).click();
     await view.getByText('知道了 1', { exact: true }).waitFor();
     await view.getByRole('button', { name: '‹ 水果單字', exact: true }).click();
-    await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
     const settings = page.getByRole('dialog', { name: 'Learn 設定', exact: true });
     await settings.getByLabel('作答方向', { exact: true }).selectOption('term');
     await settings.getByLabel('複選題', { exact: true }).uncheck();
@@ -113,7 +119,7 @@ try {
     await settings.getByRole('button', { name: '開始 Learn', exact: true }).click();
     await view.locator('.vocab-choices').waitFor();
     await view.getByRole('button', { name: '不知道', exact: true }).click();
-    await view.getByText('再練一次', { exact: true }).waitFor();
+    await view.getByText('已略過', { exact: true }).waitFor();
     assert.equal(await view.locator('.correct-option').count(), 1);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-learn-wrong.png', fullPage: true });
     await view.getByRole('button', { name: '繼續', exact: true }).click({force:true});
@@ -183,7 +189,7 @@ try {
     await view.getByRole('button', { name: '繼續', exact: true }).click({force:true}); s = await state(); assert.equal(s.ordinal, 1); assert.equal(s.completed, false);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-practice.png', fullPage: true });
     await view.getByRole('button', { name: '‹ 水果單字', exact: true }).click();
-    await view.getByRole('button', { name: 'Learn', exact: true }).click();
+    await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
     await page.getByRole('dialog', { name: 'Learn 設定', exact: true }).getByRole('button', { name: '開始 Learn', exact: true }).click();
     await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
     await view.getByRole('button', { name: '重新開始 Learn', exact: true }).click(); s = await state();

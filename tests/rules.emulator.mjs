@@ -64,6 +64,14 @@ try {
     assert.equal((await get(ref(alice, studyPath + '/summary/wrong'))).val(), 1);
     await assertFails(set(ref(alice, studyPath + '/events/badBoolean'), { id: 'badBoolean', kind: 'override', at: Date.now(), originalId: 'v1', correct: 'false' }));
     await assertFails(set(ref(alice, studyPath + '/events/badOverride'), { id: 'badOverride', kind: 'override', at: Date.now(), originalId: 'missing', correct: true }));
+    const flashEvent = { id: 'flash-known', kind: 'flash', at: Date.now() + 3, cardId: deck.cards[1].id, revision: 1, direction: 'term', correct: true, sessionId: 'flash-session' };
+    await assertSucceeds(runTransaction(ref(alice, studyPath), old => mergeStudy(old, flashEvent)));
+    assert.equal((await get(ref(alice, studyPath + `/summary/flash/${deck.cards[1].id}_term/known`))).val(), true);
+    const flashUndo = { ...flashEvent, id: 'flash-undo', at: Date.now() + 4, originalId: flashEvent.id, value: false };
+    await assertSucceeds(runTransaction(ref(alice, studyPath), old => mergeStudy(old, flashUndo)));
+    assert.equal((await get(ref(alice, studyPath + `/summary/flash/${deck.cards[1].id}_term`))).exists(), false);
+    assert.equal((await get(ref(alice, studyPath + '/summary/wrong'))).val(), 1, 'undo must not change Learn answer totals');
+    await assertFails(set(ref(alice, studyPath + '/events/flash-undo'), { ...flashUndo, value: true }));
     const write = createSession(deck, {}, { activity: 'write' });
     await assertSucceeds(set(ref(alice, studyPath + '/sessions/learn'), write));
     const writeKey = write.current.key;

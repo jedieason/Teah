@@ -16,6 +16,7 @@
     "test:editorial": "node tests/editorial-browser.mjs",
     "test:flashcards": "node tests/flashcards-browser.mjs",
     "test:vocabulary": "node tests/flashcard-browser.mjs",
+    "test:vocabulary:study": "node tests/flashcard-study-browser.mjs",
     "test:vocabulary:edge": "node tests/flashcard-edge-browser.mjs"
   },
   "engines": {

@@ -100,7 +100,7 @@ const sessionCredit = (session, key) => writtenActivity(session) ? session.write
 export function hydrateSession(value) {
     const s = clone(value);
     s.order = Object.values(s.order || {});
-    if (s.mode === 'flash') s.ratings ||= {};
+    if (s.mode === 'flash') { s.ratings ||= {}; s.history = Object.values(s.history || {}); }
     else { s.active = Object.values(s.active || {}); s.scope = Object.values(s.scope || {}); s.roundAnswers = Object.values(s.roundAnswers || {}); s.options.types = Object.values(s.options.types || {}); if (s.options.learnTypes) s.options.learnTypes = Object.values(s.options.learnTypes); s.flowQueue = Object.values(s.flowQueue || {}); s.retryQueue = Object.values(s.retryQueue || {}); s.roundSeen = Object.values(s.roundSeen || {}); s.practiceQueue = Object.values(s.practiceQueue || {}); s.writeCredits ||= {}; s.passMisses = Object.values(s.passMisses || {}); }
     return s;
 }
@@ -118,12 +118,14 @@ export function gradeFact(fact, correct, now, ordinal = 0) {
 // Chronological event replay gives the same aggregates after offline retries or concurrent devices.
 export function projectStudy(study = {}) {
     const events = Object.values(study.events || {}).sort((a, b) => a.at - b.at || a.id.localeCompare(b.id));
+    const undoneFlash = new Set(events.filter(e => e.kind === 'flash' && e.value === false && e.originalId).map(e => e.originalId));
     const overrides = new Map(events.filter(e => e.kind === 'override').map(e => [e.originalId, e]));
     const reset = events.filter(e => e.kind === 'reset').at(-1);
     const generation = reset?.generation || 'initial', facts = {}, flash = {}, stars = {};
     let correct = 0, wrong = 0;
     for (const e of events) {
         if (e.kind === 'star') { stars[e.cardId] = e.value; continue; }
+        if (e.kind === 'flash' && (e.value === false || undoneFlash.has(e.id))) continue;
         if (e.kind === 'flash') { flash[factKey(e.cardId, e.direction)] = { known: e.correct, revision: e.revision, at: e.at }; continue; }
         if (e.kind !== 'answer' || (e.generation || 'initial') !== generation) continue;
         const key = factKey(e.cardId, e.direction), old = facts[key];
