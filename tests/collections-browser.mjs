@@ -57,7 +57,7 @@ try {
     await page.getByRole('button', { name: '全部單元' }).click();
     await page.getByLabel('搜尋收藏').fill('細胞');
     const openSidebarNav = async name => {
-        if (await page.locator('#siteSidebar').isHidden()) await page.locator('#sidebarToggle').click();
+        if (await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'false') await page.locator('#sidebarToggle').click();
         await page.getByRole('button', { name, exact: true }).click();
     };
     await openSidebarNav('典藏庫');

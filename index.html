@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="styles/base.css">
 <link rel="stylesheet" href="styles/interface.css">
 <link rel="stylesheet" href="styles/collections.css">
+<link rel="stylesheet" href="styles/search.css">
 <link rel="stylesheet" href="styles/notebook.css">
 <link rel="stylesheet" href="styles/flashcards.css">
 <link rel="stylesheet" href="styles/flashcard.css">
@@ -146,12 +147,13 @@
 
       <div class="section-header">
         <h2 id="libraryPageTitle" class="section-title">題庫</h2>
-        <input id="bankSearch" class="library-search" type="search" placeholder="搜尋目前列表" aria-label="搜尋目前列表">
+        <input id="bankSearch" class="library-search" type="search" placeholder="搜尋題庫、題目或選項" aria-label="搜尋題庫、題目或選項" aria-controls="units-grid questionSearch" autocomplete="off">
       </div>
 
       <!-- Folder/Unit Navigation logic will render here -->
       <div id="folder-breadcrumb" class="folder-breadcrumb"></div> <!-- Replaces folder-toolbar -->
       <div id="units-grid" class="units-grid"><p class="empty-state" role="status">載入題庫中…</p></div> <!-- Replaces button-row -->
+      <section id="questionSearch" class="question-search" aria-label="題目搜尋結果" hidden></section>
     </main>
 
     <main id="collectionPage" class="collection-page" aria-label="已收藏" hidden></main>

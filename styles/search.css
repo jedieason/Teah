@@ -1,0 +1,29 @@
+.home-content .section-header { flex-wrap:wrap; }
+#bankSearch { width:min(430px,100%); max-width:100%; box-sizing:border-box; }
+.question-search { width:100%; min-width:0; text-align:left; }
+.question-search > h3 { margin:16px 0 8px; font:600 18px/1.5 var(--ui-font); }
+.question-search-status,.question-search-match,.question-search-origin { color:var(--ui-muted); font:13px/1.6 var(--ui-font); margin:8px 0; overflow-wrap:anywhere; }
+.question-search-list { display:grid; gap:16px; margin:16px 0; }
+.question-search-card { border:1px solid var(--ui-border); border-radius:var(--ui-radius); background:var(--surface-color); padding:24px; min-width:0; overflow-wrap:anywhere; }
+.question-search-card-header { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.question-search-card-header h4 { margin:0; color:var(--ui-muted); font:500 13px/1.7 var(--ui-font); min-width:0; }
+.question-search-card-header button { flex-shrink:0; }
+.question-search-question { font:16px/1.8 var(--ui-font); margin:16px 0; }
+.question-search-options { padding:0; margin:0; list-style:none; display:grid; gap:8px; font:15px/1.7 var(--ui-font); }
+.question-search-options li { display:flex; align-items:baseline; gap:12px; border:1px solid var(--ui-border); border-radius:8px; padding:10px 12px; min-width:0; }
+.question-search-option-key { font-weight:600; flex-shrink:0; }
+.question-search-options li > div { min-width:0; flex:1; }
+.question-search-options p { margin:0; }
+.question-search-card img { max-width:100%; height:auto; }
+.question-search-card pre { overflow-x:auto; white-space:pre; }
+.question-search-card table { display:block; max-width:100%; overflow-x:auto; }
+.question-search-card .katex-display { max-width:100%; overflow-x:auto; overflow-y:hidden; padding-bottom:4px; }
+.question-search-card mark { background:#fff0aa; color:inherit; border-radius:2px; }
+.question-search-answer { border-top:1px solid var(--ui-border); padding-top:12px; margin-top:20px; font:15px/1.8 var(--ui-font); }
+.question-search-answer summary { cursor:pointer; font-weight:500; padding:4px 0; }
+@media(max-width:600px) {
+ #bankSearch { width:100%; }
+ .question-search-card { padding:16px; }
+ .question-search-card-header { align-items:flex-start; gap:8px; }
+ .question-search-card-header button { padding:8px 10px; }
+}

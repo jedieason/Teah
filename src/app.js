@@ -1,4 +1,6 @@
 import { createCollection } from './features/collections/view.js';
+import { mountQuestionSearch } from './features/search/view.js';
+import { normalizeSearchText } from './features/search/model.js';
 import { mountSidebar } from './shared/sidebar.js';
 import { createFlashcards } from './features/flashcards/view.js';
 import { mountFlashcard } from './features/flashcard/view.js';
@@ -118,6 +120,7 @@ let learningDataReady = false;
 let userMistakesCache = {};
 let catalogPaths = [];
 let catalogData = {};
+let catalogRequest = 0;
 
 // 獲取唯一的錯題與收藏存儲鍵名（包含科目與習題名稱）
 function getQuizStorageName(path) {
@@ -185,6 +188,7 @@ window.MathJax = {
 // 初始化測驗
 async function initQuiz() {
     libraryLocations[libraryPage].scroll = window.scrollY;
+    if (['library', 'archive'].includes(libraryPage)) libraryLocations[libraryPage].query = document.getElementById('bankSearch').value;
     sessionId = crypto.randomUUID();
     activeShuffleOptions = customSession ? customSession.shuffleOptions : shouldShuffleQuiz;
     sessionTimeLimit = customSession?.timeLimit ?? 15;
@@ -1119,8 +1123,10 @@ function stopTimer() {
 
 // 從 Firebase 讀取可用的題庫清單並建立按鈕
 async function fetchQuizList() {
+    const request = ++catalogRequest, uid = auth.currentUser?.uid, page = libraryPage;
     try {
         const data = await readCatalog();
+        if (request !== catalogRequest || uid !== auth.currentUser?.uid || page !== libraryPage) return;
         catalogData = data;
         catalogPaths = Object.keys(data);
         const snapshot = { exists: () => catalogPaths.length > 0, val: () => data };
@@ -1210,9 +1216,9 @@ async function fetchQuizList() {
                 if (!Object.keys(groups).length) gridContainer.innerHTML = `<p class="empty-state">${viewArchiveMode ? '尚無典藏題庫' : '目前沒有題庫'}</p>`;
             };
 
-            const renderFolderView = (groupName) => {
+            const renderFolderView = (groupName, clearSearch = true) => {
                 currentActiveFolder = groupName;
-                document.getElementById('bankSearch').value = '';
+                if (clearSearch) { document.getElementById('bankSearch').value = ''; questionSearch.refresh(); }
                 if (gridContainer) gridContainer.innerHTML = '';
 
                 // Render Breadcrumb
@@ -1231,7 +1237,7 @@ async function fetchQuizList() {
                     backBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>';
                     backBtn.style.writingMode = 'horizontal-tb';
                     backBtn.setAttribute('aria-label', '返回全部科目');
-                    backBtn.onclick = () => { document.getElementById('bankSearch').value = ''; renderFolderTiles(); };
+                    backBtn.onclick = () => { document.getElementById('bankSearch').value = ''; renderFolderTiles(); questionSearch.refresh(); };
 
                     const title = document.createElement('span');
                     title.className = 'folder-title';
@@ -1388,7 +1394,7 @@ async function fetchQuizList() {
 
             // Initial render - preserve folder view if active
             if (currentActiveFolder && groups[currentActiveFolder]) {
-                renderFolderView(currentActiveFolder);
+                renderFolderView(currentActiveFolder, false);
             } else {
                 renderFolderTiles();
             }
@@ -1396,7 +1402,10 @@ async function fetchQuizList() {
         } else {
             document.getElementById('units-grid').innerHTML = '<p class="empty-state">目前沒有題庫。</p>';
         }
+        questionSearch.setCatalog(data);
     } catch (error) {
+        if (request !== catalogRequest || uid !== auth.currentUser?.uid || page !== libraryPage) return;
+        questionSearch.catalogFailed();
         console.error('Failed to fetch quiz list:', error);
         const grid = document.getElementById('units-grid');
         grid.innerHTML = '<div class="empty-state"><p>題庫載入失敗，請確認連線後重試。</p><button class="quiet-button" id="retryCatalog">重新載入</button></div>';
@@ -2238,6 +2247,7 @@ onAuthStateChanged(auth, async (user) => {
     syncControlsUser(user);
     collection.resetForUser(user?.uid);
     vocabulary.resetForUser(user?.uid);
+    questionSearch.resetForUser(user?.uid);
     if (user) {
         await fetchUserProgressAndMistakes(user);
     } else {
@@ -2292,6 +2302,7 @@ function showLibraryPage(page) {
     if (page !== libraryPage) { old.scroll = window.scrollY; isEditMode = false; toggleEditModeUI(); }
     if (['library', 'archive'].includes(libraryPage)) { old.folder = currentActiveFolder; old.query = document.getElementById('bankSearch').value; }
     libraryPage = page;
+    questionSearch.cancel();
     document.querySelector('.home-content').hidden = ['collection', 'flashcard'].includes(page);
     document.getElementById('collectionPage').hidden = page !== 'collection';
     document.getElementById('flashcardPage').hidden = page !== 'flashcard';
@@ -2305,8 +2316,11 @@ function showLibraryPage(page) {
         currentActiveFolder = libraryLocations[page].folder;
         document.getElementById('libraryPageTitle').textContent = viewArchiveMode ? '典藏庫' : '題庫';
         document.querySelector('.home-content').classList.toggle('archive-page', viewArchiveMode);
+        const search = document.getElementById('bankSearch');
+        search.placeholder = viewArchiveMode ? '搜尋典藏題庫、題目或選項' : '搜尋題庫、題目或選項';
+        search.value = libraryLocations[page].query;
         const requested = page;
-        fetchQuizList().then(() => { if (libraryPage !== requested) return; const search = document.getElementById('bankSearch'); search.value = libraryLocations[page].query; search.dispatchEvent(new Event('input')); window.scrollTo(0, libraryLocations[page].scroll); });
+        fetchQuizList().then(() => { if (libraryPage === requested) window.scrollTo(0, libraryLocations[page].scroll); });
     } else window.scrollTo(0, libraryLocations[page].scroll);
 }
 let selectedQuizzesForBatch = [];
@@ -3273,9 +3287,14 @@ new MutationObserver(() => {
 unitsGrid.addEventListener('keydown', e => {
     if (e.target.matches('.unit-card') && ['Enter', ' '].includes(e.key)) { e.preventDefault(); e.target.click(); }
 });
-document.getElementById('bankSearch').addEventListener('input', e => {
-    const query = e.target.value.trim().toLowerCase();
-    unitsGrid.querySelectorAll('.unit-card').forEach(card => { card.hidden = !card.textContent.toLowerCase().includes(query); });
+const questionSearch = mountQuestionSearch({
+    input: document.getElementById('bankSearch'), host: document.getElementById('questionSearch'), readBank,
+    getUser: () => auth.currentUser?.uid, getScope: () => libraryPage, renderMath: renderLatex,
+    filterBanks: query => unitsGrid.querySelectorAll('.unit-card').forEach(card => { card.hidden = !normalizeSearchText(card.querySelector('.unit-title')?.textContent).includes(query); }),
+    practice: async q => {
+        customSession = { questions: [q], mode: 'study', shuffleOptions: false, timeLimit: 0 }; selectedJson = q.sourcePath;
+        await initQuiz(); document.querySelector('.quiz-title').textContent = '搜尋練習';
+    }
 });
 
 function returnHome() {
@@ -3287,7 +3306,7 @@ function returnHome() {
     selectedJson = null;
     document.title = '題矣';
     if (libraryPage === 'collection') openCollectionPage();
-    document.getElementById('bankSearch').value = '';
+    document.getElementById('bankSearch').value = libraryLocations[libraryPage].query || '';
     updateRestorePreview(auth.currentUser);
     fetchQuizList().then(() => window.scrollTo(0, libraryLocations[libraryPage].scroll));
 }
