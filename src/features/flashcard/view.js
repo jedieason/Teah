@@ -653,7 +653,16 @@ export function mountFlashcard({ host, activate }) {
             if (q.choices.some(value => value.length > 65)) choices.classList.add('long-choices');
             q.choices.forEach((value, i) => {
                 const correctOption = gradeAnswer(value, [q.choiceAnswer]), selected = feedback?.response === value;
-                const b = button('', choices, () => feedback ? correctOption && nextLearn() : answer(value), 'vocab-choice'); node('span', feedback && correctOption ? '✓' : feedback && selected ? '×' : i + 1, b, 'vocab-choice-key'); text(value, b);
+                const b = button('', choices, () => feedback ? correctOption && nextLearn() : answer(value), 'vocab-choice');
+                const key = node('span', null, b, 'vocab-choice-key');
+                if (feedback && correctOption) {
+                    key.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>';
+                } else if (feedback && selected) {
+                    key.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
+                } else {
+                    key.textContent = i + 1;
+                }
+                text(value, b);
                 if (feedback) { b.classList.toggle('correct-option', correctOption); b.classList.toggle('selected-correct', feedback.correct && selected); b.classList.toggle('wrong-option', !feedback.correct && selected); b.disabled = !correctOption; }
             });
         } else if (q.type === 'multi') {
