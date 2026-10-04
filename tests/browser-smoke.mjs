@@ -66,8 +66,12 @@ try {
     await page.screenshot({ path: 'artifacts/qa/notebook-menu-desktop.png', fullPage: true });
     await page.getByRole('option', { name: '檢驗醫學區段一', exact: true }).click();
     assert.equal(await page.locator('.review-card').count(), 2);
-    await page.locator('#mistakeSubjectTrigger').click();
+    await page.getByRole('option', { name: '藥理區段一', exact: true }).click();
+    assert.equal(await page.locator('.review-card').count(), 3);
+    assert.equal(await page.locator('#mistakeSubjectTrigger').innerText(), '檢驗醫學區段一、藥理區段一');
     await page.getByRole('option', { name: '全部科目', exact: true }).click();
+    assert.equal(await page.locator('.review-card').count(), 3);
+    await page.locator('#mistakeSubjectTrigger').click();
     await page.locator('#mistakeSortTrigger').focus();
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('ArrowDown');

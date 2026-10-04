@@ -1,5 +1,6 @@
 // The native select remains the data source; all visible interaction is custom.
 export function createSelectMenu(select) {
+    const isMultiple = select.multiple;
     const wrapper = document.createElement('div');
     wrapper.className = 'select-menu';
     wrapper.dataset.for = select.id;
@@ -19,6 +20,7 @@ export function createSelectMenu(select) {
     list.id = `${select.id}Listbox`;
     list.className = 'select-menu-list';
     list.setAttribute('role', 'listbox');
+    if (isMultiple) list.setAttribute('aria-multiselectable', 'true');
     list.setAttribute('aria-label', select.getAttribute('aria-label'));
     list.hidden = true;
     trigger.setAttribute('aria-controls', list.id);
@@ -46,14 +48,39 @@ export function createSelectMenu(select) {
     }
     function refresh() {
         const items = choices();
-        label.textContent = items.find(option => option.value === select.value)?.textContent || '';
-        trigger.setAttribute('aria-label', `${select.getAttribute('aria-label')}：${label.textContent}`);
+        if (isMultiple) {
+            const selectedOptions = items.filter(option => option.selected && option.value !== '');
+            const count = selectedOptions.length;
+            if (count === 0) {
+                label.textContent = items[0]?.textContent || '';
+                trigger.title = '';
+            } else if (count === 1) {
+                label.textContent = selectedOptions[0].textContent;
+                trigger.title = '';
+            } else if (count === 2) {
+                label.textContent = selectedOptions.map(o => o.textContent).join('、');
+                trigger.title = label.textContent;
+            } else {
+                const unit = select.dataset.unit || (select.id.toLowerCase().includes('subject') ? '科' : '項');
+                label.textContent = `已選 ${count} ${unit}`;
+                trigger.title = selectedOptions.map(o => o.textContent).join('、');
+            }
+            trigger.setAttribute('aria-label', `${select.getAttribute('aria-label')}：${label.textContent}`);
+        } else {
+            label.textContent = items.find(option => option.value === select.value)?.textContent || '';
+            trigger.title = '';
+            trigger.setAttribute('aria-label', `${select.getAttribute('aria-label')}：${label.textContent}`);
+        }
+        const prevScrollTop = list.scrollTop;
         list.replaceChildren(...items.map((option, i) => {
             const row = document.createElement('div');
             row.id = `${select.id}Option${i}`;
             row.className = 'select-menu-option';
             row.setAttribute('role', 'option');
-            row.setAttribute('aria-selected', String(option.value === select.value));
+            const isSelected = isMultiple
+                ? (option.value === '' ? !items.some(opt => opt.value !== '' && opt.selected) : option.selected)
+                : (option.value === select.value);
+            row.setAttribute('aria-selected', String(isSelected));
             const text = document.createElement('span');
             text.textContent = option.textContent;
             const check = document.createElement('span');
@@ -65,23 +92,43 @@ export function createSelectMenu(select) {
             row.onclick = () => choose(i);
             return row;
         }));
-        if (!list.hidden) highlight(Math.max(0, select.selectedIndex));
+        list.scrollTop = prevScrollTop;
+        if (!list.hidden) highlight(isMultiple ? Math.max(0, Math.min(active, items.length - 1)) : Math.max(0, select.selectedIndex));
     }
     function open() {
         document.dispatchEvent(new CustomEvent('select-menu-open', { detail: trigger.id }));
         refresh();
         list.hidden = false;
         trigger.setAttribute('aria-expanded', 'true');
-        highlight(Math.max(0, select.selectedIndex));
+        const defaultIndex = isMultiple
+            ? Math.max(0, choices().findIndex(opt => opt.selected && opt.value !== ''))
+            : Math.max(0, select.selectedIndex);
+        highlight(defaultIndex >= 0 ? defaultIndex : 0);
     }
     function choose(index) {
-        const option = choices()[index];
+        const items = choices();
+        const option = items[index];
         if (!option) return;
-        select.value = option.value;
-        close();
-        select.dispatchEvent(new Event('change', { bubbles: true }));
-        refresh();
-        trigger.focus({ preventScroll: true });
+        active = index;
+        if (isMultiple) {
+            if (index === 0 || option.value === '') {
+                items.forEach((opt, i) => { opt.selected = (i === 0); });
+            } else {
+                option.selected = !option.selected;
+                const anySelected = items.some((opt, i) => i > 0 && opt.value !== '' && opt.selected);
+                if (items[0]) items[0].selected = !anySelected;
+            }
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            refresh();
+            highlight(index);
+            trigger.focus({ preventScroll: true });
+        } else {
+            select.value = option.value;
+            close();
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            refresh();
+            trigger.focus({ preventScroll: true });
+        }
     }
     trigger.onclick = () => list.hidden ? open() : close();
     trigger.onkeydown = event => {

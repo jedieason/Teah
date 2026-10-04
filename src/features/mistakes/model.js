@@ -21,9 +21,12 @@ export function flattenMistakes(cache = {}) {
     return result;
 }
 
-export function filterMistakes(items, { query = '', subject = '', quiz = '', status = 'active', sort = 'recent' } = {}) {
+export function filterMistakes(items, { query = '', subject = '', subjects = null, quiz = '', status = 'active', sort = 'recent' } = {}) {
     const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-    return items.filter(m => (!subject || m.subject === subject) && (!quiz || m.quizKey === quiz)
+    const rawSubjects = subjects ?? subject;
+    const subjectList = (Array.isArray(rawSubjects) ? rawSubjects : [rawSubjects]).filter(Boolean);
+    const subjectSet = subjectList.length ? new Set(subjectList) : null;
+    return items.filter(m => (!subjectSet || subjectSet.has(m.subject)) && (!quiz || m.quizKey === quiz)
         && (status === 'all' || (status === 'mastered' ? m.status === 'mastered' : m.status !== 'mastered'))
         && words.every(word => [m.question, m.title, m.subject, m.origin, ...Object.values(m.options || {})]
             .join(' ').toLocaleLowerCase().includes(word)))

@@ -11,7 +11,7 @@ const el = (tag, className, text) => {
 const date = value => value ? new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' }).format(value) : '日期未記錄';
 
 export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert }) {
-    let filters = { query: '', subject: '', quiz: '', status: 'active', sort: 'recent' };
+    let filters = { query: '', subject: [], quiz: '', status: 'active', sort: 'recent' };
     let selected = new Set();
     let limit = 30;
     let visible = [];
@@ -33,13 +33,32 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     const clear = root.querySelector('#mistakeClearSelection');
 
     function options(node, entries, label, value) {
-        node.replaceChildren(new Option(label, ''), ...entries.map(([key, text]) => new Option(text, key)));
-        node.value = value;
+        const isMultiple = node.multiple;
+        const selectedValues = isMultiple
+            ? new Set(Array.isArray(value) ? value : (value ? [value] : []))
+            : null;
+        const firstOption = new Option(label, '');
+        if (isMultiple && selectedValues.size === 0) {
+            firstOption.selected = true;
+        }
+        const optionElements = entries.map(([key, text]) => {
+            const opt = new Option(text, key);
+            if (isMultiple && selectedValues.has(key)) {
+                opt.selected = true;
+            }
+            return opt;
+        });
+        node.replaceChildren(firstOption, ...optionElements);
+        if (!isMultiple) {
+            node.value = typeof value === 'string' ? value : '';
+        }
     }
     function updateFilters() {
         const all = flattenMistakes(getCache());
         options(subjects, [...new Set(all.map(m => m.subject))].sort().map(s => [s, s]), '全部科目', filters.subject);
-        const scoped = all.filter(m => !filters.subject || m.subject === filters.subject);
+        const subjectList = Array.isArray(filters.subject) ? filters.subject : (filters.subject ? [filters.subject] : []);
+        const subjectSet = subjectList.length ? new Set(subjectList) : null;
+        const scoped = all.filter(m => !subjectSet || subjectSet.has(m.subject));
         options(quizzes, [...new Map(scoped.map(m => [m.quizKey, m.title])).entries()].sort((a, b) => a[1].localeCompare(b[1], 'zh-Hant')), '全部題庫', filters.quiz);
         root.querySelectorAll('[data-mistake-status]').forEach(button => {
             const status = button.dataset.mistakeStatus;
@@ -111,14 +130,16 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         visible = filterMistakes(flattenMistakes(getCache()), filters);
         selected = new Set([...selected].filter(id => visible.some(m => m.id === id)));
         content.replaceChildren();
-        summary.textContent = filters.query || filters.quiz || filters.subject ? `符合條件 ${visible.length} 題` : '連續答對 2 次，自動移至已熟悉；再答錯會回到待複習。';
+        const hasSubject = Array.isArray(filters.subject) ? filters.subject.length > 0 : Boolean(filters.subject);
+        const hasFilter = Boolean(filters.query || filters.quiz || hasSubject);
+        summary.textContent = hasFilter ? `符合條件 ${visible.length} 題` : '連續答對 2 次，自動移至已熟悉；再答錯會回到待複習。';
         if (!visible.length) {
             const empty = el('div', 'empty-state');
             empty.append(el('h3', '', filters.status === 'mastered' ? '尚無已熟悉的題目' : '目前沒有待複習的錯題'));
-            empty.append(el('p', '', filters.query || filters.subject || filters.quiz ? '試試其他關鍵字，或清除篩選。' : '答錯的題目會保存在這裡。'));
+            empty.append(el('p', '', hasFilter ? '試試其他關鍵字，或清除篩選。' : '答錯的題目會保存在這裡。'));
             const reset = el('button', 'secondary-button', '清除篩選');
-            reset.onclick = () => { filters = { query: '', subject: '', quiz: '', status: 'all', sort: 'recent' }; search.value = ''; sort.value = 'recent'; render(); };
-            if (filters.query || filters.subject || filters.quiz) empty.append(reset);
+            reset.onclick = () => { filters = { query: '', subject: [], quiz: '', status: 'all', sort: 'recent' }; search.value = ''; sort.value = 'recent'; render(); };
+            if (hasFilter) empty.append(reset);
             content.append(empty);
         } else {
             content.append(...visible.slice(0, limit).map(renderCard));
@@ -132,7 +153,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     }
     function changed() { selected.clear(); limit = 30; render(); }
     search.oninput = () => { filters.query = search.value; changed(); };
-    subjects.onchange = () => { filters.subject = subjects.value; filters.quiz = ''; changed(); };
+    subjects.onchange = () => { filters.subject = [...subjects.selectedOptions].map(o => o.value).filter(Boolean); filters.quiz = ''; changed(); };
     quizzes.onchange = () => { filters.quiz = quizzes.value; changed(); };
     sort.onchange = () => { filters.sort = sort.value; changed(); };
     root.querySelectorAll('[data-mistake-status]').forEach(button => button.onclick = () => { filters.status = button.dataset.mistakeStatus; changed(); });
@@ -162,7 +183,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     async function open(quizKey = null) {
         const token = ++request;
         if (root.style.display !== 'flex') { opener = document.activeElement; previousScrollY = window.scrollY; }
-        filters.quiz = quizKey || ''; filters.subject = ''; filters.query = ''; search.value = '';
+        filters.quiz = quizKey || ''; filters.subject = []; filters.query = ''; search.value = '';
         selected.clear(); limit = 30;
         root.style.display = 'flex'; window.scrollTo(0, 0); document.body.style.overflow = 'hidden';
         root.querySelector('#mistakeScrollContainer').scrollTop = 0;

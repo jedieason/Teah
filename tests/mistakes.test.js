@@ -46,6 +46,25 @@ test('filters combine words, bank, subject and status without mutating the input
     assert.equal(filterMistakes(rows, { status: 'all', sort: 'frequent' })[0].recordPath, 'b');
     assert.equal(rows[0].recordPath, 'a');
 });
+test('filterMistakes supports multiple subjects simultaneously', () => {
+    const rows = flattenMistakes({
+        '生理｜A01': { a: { question: 'Physiology Q1' } },
+        '病理｜B01': { b: { question: 'Pathology Q1' } },
+        '藥理｜C01': { c: { question: 'Pharmacology Q1' } }
+    });
+    const multi = filterMistakes(rows, { subject: ['生理', '藥理'] });
+    assert.equal(multi.length, 2);
+    assert.ok(multi.some(m => m.subject === '生理'));
+    assert.ok(multi.some(m => m.subject === '藥理'));
+    assert.ok(!multi.some(m => m.subject === '病理'));
+
+    const all = filterMistakes(rows, { subject: [] });
+    assert.equal(all.length, 3);
+
+    const named = filterMistakes(rows, { subjects: ['病理'] });
+    assert.equal(named.length, 1);
+    assert.equal(named[0].subject, '病理');
+});
 test('malformed banks are rejected before upload', () => {
     assert.throws(() => validateQuiz([]));
     assert.throws(() => validateQuiz([{ question: 'Q', options: { A: '1', B: '2' }, answer: 'C' }]));
