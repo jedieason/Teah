@@ -8,10 +8,12 @@
 .vocab-heading { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:24px; }
 .vocab-heading h1,.vocab-heading h2 { flex:1; min-width:150px; }
 .vocab-heading .vocab-back { flex-basis:100%; text-align:left; width:max-content; padding:0; background:none; border:0; color:var(--v-muted); }
-.vocab-button { border:1px solid var(--v-line); background:var(--surface-color,#fff); color:inherit; border-radius:9px; padding:10px 17px; font:600 14px/1.5 var(--ui-font); cursor:pointer; transition:background .15s,border-color .15s; min-height:42px; overflow-wrap:anywhere; }
+.vocab-button { border:1px solid var(--v-line); background:var(--surface-color,#fff); color:inherit; border-radius:9px; padding:10px 17px; font:600 14px/1.5 var(--ui-font); cursor:pointer; transition:background .15s,border-color .15s,transform .06s ease; min-height:42px; overflow-wrap:anywhere; user-select:none; -webkit-user-select:none; }
 .vocab-button:hover { background:var(--v-soft); border-color:#aba7ee; }
+.vocab-button:active:not(:disabled) { transform:scale(0.985); }
+.vocab-button:focus { outline:none; }
 .vocab-button:disabled { opacity:.5; cursor:default; }
-.vocab-button:focus-visible,.vocab-flip:focus-visible,.vocab-field input:focus-visible,.vocab-field textarea:focus-visible,.vocab-field select:focus-visible { outline:3px solid #b9b5ff; outline-offset:3px; }
+.vocab-button:focus-visible,.vocab-flip:focus-visible,.vocab-field input:focus-visible,.vocab-field textarea:focus-visible,.vocab-field select:focus-visible { outline:2px solid var(--v-accent,#6366f1); outline-offset:2px; }
 .vocab-button.vocab-primary { background:var(--v-accent); color:#fff; border-color:var(--v-accent); }
 .vocab-button.vocab-primary:hover { background:#443aca; }
 .vocab-button.vocab-link { border:0; background:none; padding-left:0; color:var(--v-accent); }
@@ -95,7 +97,11 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-prompt { font-size:23px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; padding:8px 0 48px; min-height:150px; }
 .vocab-question-hint { font-size:14px; font-weight:600; margin:0 0 18px; }
 .vocab-choices { display:grid; grid-template-columns:1fr 1fr; gap:22px 14px; }
-.vocab-choice { display:flex; align-items:center; text-align:left; gap:15px; width:100%; min-height:76px; border:2px solid var(--v-line); padding:16px; font-weight:400; font-size:16px; background:var(--surface-color,#fff); color:inherit; border-radius:8px; cursor:pointer; }
+.vocab-choice { display:flex; align-items:center; text-align:left; gap:15px; width:100%; min-height:76px; border:2px solid var(--v-line); padding:16px; font-weight:400; font-size:16px; background:var(--surface-color,#fff); color:inherit; border-radius:8px; cursor:pointer; user-select:none; -webkit-user-select:none; outline:none; transition:transform .06s ease, border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+.vocab-choice:hover:not(:disabled) { border-color:var(--v-accent, #6366f1); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.vocab-choice:active:not(:disabled) { transform:scale(0.985); }
+.vocab-choice:focus { outline:none; }
+.vocab-choice:focus-visible { outline:2px solid var(--v-accent, #6366f1); outline-offset:2px; }
 .vocab-choice > div { white-space:pre-wrap; overflow-wrap:anywhere; min-width:0; }
 .vocab-choice-key { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; font-size:13px; line-height:1; background:var(--v-soft); color:var(--v-muted); flex-shrink:0; }
 .vocab-choice-key svg { display:block; width:22px; height:22px; }

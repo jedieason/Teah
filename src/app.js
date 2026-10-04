@@ -3332,9 +3332,8 @@ if ('serviceWorker' in navigator && !['localhost', '127.0.0.1'].includes(locatio
 
 mountEditorial();
 
-const archiveNav = document.createElement('button'); archiveNav.id = 'homeArchive'; archiveNav.className = 'quiet-button'; archiveNav.textContent = '典藏庫';
-document.querySelector('.library-shortcuts').append(archiveNav);
-archiveNav.onclick = () => showLibraryPage('archive');
+const menuArchive = document.getElementById('menuArchive');
+if (menuArchive) menuArchive.onclick = () => showLibraryPage('archive');
 document.getElementById('homeLibrary').onclick = () => showLibraryPage('library');
 document.getElementById('homeLibrary').setAttribute('aria-current', 'page');
 const collection = createCollection({

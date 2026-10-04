@@ -9,6 +9,7 @@
 [hidden] { display: none !important; }
 button, input, select, textarea { font: inherit; }
 button:disabled { opacity: .45; cursor: not-allowed; }
+button:focus:not(:focus-visible) { outline: none !important; }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
 .home-content, .controls-menu, .md3-dialog, .starred-modal-content { font-family: var(--ui-font); }
 .home-content { max-width: 1000px; gap: 16px; }

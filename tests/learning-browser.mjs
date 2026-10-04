@@ -37,8 +37,8 @@ try {
     assert.equal(await recentMetric.locator('strong').textContent(), '2');
     await page.screenshot({ path: 'artifacts/qa/learning-mobile.png', fullPage: true });
     await page.getByRole('button', { name: '關閉', exact: true }).click();
-    if (await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'false') await page.locator('#sidebarToggle').click();
-    await page.getByRole('button', { name: '資料與隱私', exact: true }).click();
+    await page.locator('#controlsMenuBtn').click();
+    await page.locator('#menuPrivacy').click();
     assert.equal(await page.locator('.panel-badge', { hasText: '分析已啟用' }).isVisible(), true);
     assert.ok((await page.locator('.panel-body').textContent()).includes('使用量分析預設啟用'));
     await page.getByRole('button', { name: '關閉', exact: true }).click();

@@ -3,9 +3,8 @@ import { auth, database, ref, get, set, update, runTransaction } from '../../ser
 import { validateQuiz } from '../../shared/content.js';
 import { normalizeQuestion } from './model.js';
 export function mountEditorial() {
-    const launch = document.createElement('button'); launch.className = 'quiet-button'; launch.textContent = '內容工作台';
-    launch.style.display = 'none'; launch.hidden = true;
-    document.querySelector('.library-shortcuts').append(launch);
+    const launch = document.getElementById('menuEditorial');
+    if (!launch) return;
     launch.onclick = async () => {
         const claims = (await auth.currentUser?.getIdTokenResult?.())?.claims || {};
         if (!['admin', 'editor', 'reviewer', 'contributor'].some(r => claims[r])) { window.alert('此功能需要內容維護角色。請由管理員設定帳戶權限。'); return; }

@@ -84,7 +84,7 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
         const describe = () => { const p = learningState.plan; if (p) { const days = Math.max(1, Math.ceil((new Date(p.examDate + 'T23:59:59') - now) / DAY)); const today = new Date(); today.setHours(0, 0, 0, 0); const n = summarize(learningState.attempts, +today).count; planStatus.textContent = `${p.title}：今日 ${n}/${p.daily} 題；剩 ${days} 天，依目前剩餘題數建議每日 ${Math.ceil(Number(p.remaining) / days)} 題。剩餘題數可隨進度更新。`; planProgress.hidden = false; planProgress.max = Math.max(1, Number(p.daily)); planProgress.value = n; planProgress.setAttribute('aria-label', `今日已完成 ${n} 題，目標 ${p.daily} 題`); } else { planStatus.textContent = '尚未設定計畫'; } };
         describe(); form.onsubmit = async e => { e.preventDefault(); try { await savePreference('plan', Object.fromEntries(Object.entries(inputs).map(([k, i]) => [k, i.value]))); describe(); } catch (error) { planStatus.textContent = error.message; } };
     }, 'quiet-button');
-    button('資料與隱私', nav, async () => {
+    const openPrivacy = async () => {
         const body = open('資料與隱私');
         const dataCard = section(body, '學習資料');
         const policy = el('a', '完整資料政策與使用條款', dataCard); policy.href = 'privacy.html'; policy.target = '_blank'; policy.rel = 'noopener';
@@ -123,8 +123,10 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
             consent.textContent = wasDisabled ? '分析已啟用 · 下次載入生效' : '分析已啟用';
         }, 'secondary-button');
         button('停用使用量分析', analyticsCard, () => { try { localStorage.setItem('teah-analytics-consent', 'no'); } catch {} location.reload(); }, 'secondary-button');
-    }, 'quiet-button');
-    const myReports = button('我的回報', nav, async () => {
+    };
+    const menuPrivacy = document.getElementById('menuPrivacy');
+    if (menuPrivacy) menuPrivacy.onclick = () => { void openPrivacy(); };
+    const openFeedback = async () => {
         if (!requireUser()) return;
         const body = open('內容回報進度');
         const rows = (await get(ref(database, `feedback/${auth.currentUser.uid}`))).val() || {};
@@ -139,9 +141,9 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
             el('p', new Date(ticket.createdAt).toLocaleDateString(), card).className = 'panel-muted';
             if (ticket.resolution) el('p', ticket.resolution, card).className = 'panel-resolution';
         }
-    }, 'quiet-button');
-    myReports.style.display = 'none';
-    myReports.hidden = true;
+    };
+    const menuFeedback = document.getElementById('menuFeedback');
+    if (menuFeedback) menuFeedback.onclick = () => { void openFeedback(); };
     const questionActions = document.querySelector('.explanation-buttons > .header-right');
     const asIcon = (node, label, paths) => {
         node.className = 'action-icon-btn question-note';

@@ -914,9 +914,12 @@ p {
 
     border-radius: 20px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease, transform 0.05s ease;
     text-align: left;
     box-shadow: none;
+    user-select: none;
+    -webkit-user-select: none;
+    outline: none;
 }
 
 .option-button:hover {
@@ -924,6 +927,19 @@ p {
 
     border-color: #dadce0;
     transform: none;
+}
+
+.option-button:active:not(:disabled) {
+    transform: scale(0.985);
+}
+
+.option-button:focus {
+    outline: none;
+}
+
+.option-button:focus-visible {
+    outline: 2px solid #0b57d0;
+    outline-offset: 2px;
 }
 
 .option-button.selected {
