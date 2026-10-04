@@ -1,7 +1,8 @@
 import { auth } from '../../services/firebase.js';
 import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
-import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade, generateDeck } from './service.js';
+import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade, generateDeck, editDeckWithAI } from './service.js';
 import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS } from './generation.js';
+import { editingBatches } from './editing.js';
 const node = (tag, text, parent, className) => {
     const e = document.createElement(tag); if (text != null) e.textContent = text;
     if (className) e.className = className; parent?.append(e); return e;
@@ -149,7 +150,6 @@ export function mountFlashcard({ host, activate }) {
     }
     function renderList() {
         const h = heading('Flashcard'); button('＋ 建立字卡集', h, () => edit(null), 'vocab-primary');
-        button('AI 生成字卡', h, () => generationDialog([]));
         const toolbar = node('div', null, host, 'vocab-toolbar');
         const query = field('搜尋字卡集', toolbar, search); query.type = 'search'; query.placeholder = '字卡集名稱或內容';
         button(trash ? '返回字卡集' : '已刪除', toolbar, () => { trash = !trash; render(); });
@@ -187,6 +187,7 @@ export function mountFlashcard({ host, activate }) {
     function renderDetail() {
         const h = heading(deck.title, { label: 'Flashcard', action: () => { phase = 'list'; deck = null; render(); } });
         button('編輯字卡集', h, () => edit(deck));
+        button('AI 編輯字卡', h, async () => { await edit(deck); editingDialog(); });
         if (deck.description) node('p', deck.description, host, 'vocab-description');
         const projected = projectStudy(study), counts = progressCounts(deck, projected, direction);
         const studyModes = node('div', null, host, 'vocab-modes');
@@ -282,6 +283,8 @@ export function mountFlashcard({ host, activate }) {
         for (const [key, label] of [['termLanguage', '單字語言'], ['definitionLanguage', '解釋語言']]) { const s = select(label, langs, languages, draft[key]); s.onchange = () => { draft[key] = s.value; queueDraft(); }; }
         const toolbar = node('div', null, host, 'vocab-toolbar');
         const importButton = button('＋ Import', toolbar, () => importDialog(), 'vocab-import-trigger'); importButton.setAttribute('aria-label', '匯入文字');
+        const aiEdit = button('AI 編輯字卡', toolbar, () => editingDialog());
+        const updateAIEdit = () => { aiEdit.disabled = !draft.cards.some(c => c.term.trim() || c.definition.trim()); }; updateAIEdit();
         button('交換單字與解釋', toolbar, () => { draft.cards = draft.cards.map(c => ({ ...c, term: c.definition, definition: c.term, termAliases: c.definitionAliases || [], definitionAliases: c.termAliases || [] })); [draft.termLanguage, draft.definitionLanguage] = [draft.definitionLanguage, draft.termLanguage]; queueDraft(); render(); });
         node('span', `${draft.cards.length}／${MAX_CARDS} 張`, toolbar, 'vocab-muted');
         const list = node('div', null, host, 'vocab-editor-rows'); let dragIndex = null;
@@ -304,7 +307,7 @@ export function mountFlashcard({ host, activate }) {
                 for (const [key, label] of [['term', '單字'], ['definition', '解釋']]) {
                     const wrap = node('div', null, sides); const input = field(`${label} ${i + 1}`, wrap, c[key], 'textarea'); input.maxLength = 4000; input.rows = 2;
                     requiredField(input, `${c.id}-${key}`);
-                    input.oninput = () => { c[key] = input.value; if (attemptedSave) validate(); queueDraft(); };
+                    input.oninput = () => { c[key] = input.value; if (attemptedSave) validate(); queueDraft(); updateAIEdit(); };
                     input.onkeydown = e => {
                         if (key === 'definition' && e.key === 'Tab' && !e.shiftKey && i === draft.cards.length - 1 && draft.cards.length < MAX_CARDS) { e.preventDefault(); draft.cards.push({ id: id(), term: '', definition: '' }); queueDraft(); redraw(i + 1); }
                     };
@@ -319,7 +322,7 @@ export function mountFlashcard({ host, activate }) {
                 }
                 button('＋ 插入下一張', row, () => { if (draft.cards.length >= MAX_CARDS) throw new Error(`每組最多 ${MAX_CARDS} 張。`); draft.cards.splice(i + 1, 0, { id: id(), term: '', definition: '' }); queueDraft(); redraw(i + 1); }, 'vocab-insert');
             });
-            if (attemptedSave) validate();
+            if (attemptedSave) validate(); updateAIEdit();
             if (focusIndex != null) list.querySelector(`[data-index="${focusIndex}"] textarea`)?.focus();
         }
         redraw(); button('＋ 新增字卡', host, () => { if (draft.cards.length >= MAX_CARDS) throw new Error(`每組最多 ${MAX_CARDS} 張。`); draft.cards.push({ id: id(), term: '', definition: '' }); queueDraft(); redraw(draft.cards.length - 1); }, 'vocab-add');
@@ -332,18 +335,17 @@ export function mountFlashcard({ host, activate }) {
     }
     function generationDialog(sources) {
         const body = modal('AI 生成字卡', 'vocab-generation-dialog');
-        if (sources.length) node('p', `來源：${sources.length} 題待複習錯題`, body, 'vocab-muted');
+        node('p', `來源：${sources.length} 題待複習錯題`, body, 'vocab-muted');
         const form = node('form', null, body, 'vocab-generation-form');
-        const instructions = field(sources.length ? '生成指令（選填）' : '生成指令', form, '', 'textarea');
-        instructions.rows = 6; instructions.maxLength = MAX_GENERATION_INSTRUCTIONS; instructions.required = !sources.length;
-        instructions.placeholder = sources.length ? '例如：以問答呈現，只整理判讀步驟與容易混淆的觀念，答案用條列。' : '例如：生成 15 張英文水果單字卡，背面放繁體中文解釋與簡短例句。';
+        const instructions = field('生成指令（選填）', form, '', 'textarea');
+        instructions.rows = 6; instructions.maxLength = MAX_GENERATION_INSTRUCTIONS;
+        instructions.placeholder = '例如：以問答呈現，只整理判讀步驟與容易混淆的觀念，答案用條列。';
         const status = node('p', '', form, 'vocab-generation-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
         const controls = node('div', null, form, 'vocab-toolbar');
         const cancel = node('button', '取消', controls, 'vocab-button'); cancel.type = 'button'; cancel.onclick = () => dialog.close();
         const submit = node('button', '生成字卡', controls, 'vocab-button vocab-primary'); submit.type = 'submit';
         form.onsubmit = async event => {
             event.preventDefault(); if (generation || busy) return;
-            if (!sources.length && !instructions.value.trim()) { status.textContent = '請輸入想生成的內容與風格。'; instructions.focus(); return; }
             const controller = new AbortController(), generationOwner = owner;
             generation = controller; submit.disabled = instructions.disabled = true; form.setAttribute('aria-busy', 'true');
             status.textContent = '正在生成字卡…';
@@ -364,6 +366,40 @@ export function mountFlashcard({ host, activate }) {
                 if (generationOwner === owner && dialog.open && form.isConnected) status.textContent = controller.signal.aborted ? '生成已取消或逾時，請重試。' : e.message || '生成失敗，請重試。';
             } finally {
                 clearTimeout(timeout); savingGeneration = false; if (generation === controller) generation = null;
+                submit.disabled = instructions.disabled = cancel.disabled = false; form.setAttribute('aria-busy', 'false');
+                if (form.isConnected) dialog.querySelector('header button').disabled = false;
+            }
+        };
+        instructions.focus();
+    }
+    function editingDialog() {
+        const original = clone(draft); editingBatches(original);
+        const body = modal('AI 編輯字卡', 'vocab-generation-dialog');
+        node('p', `${original.cards.filter(c => c.term.trim() || c.definition.trim()).length} 張現有字卡`, body, 'vocab-muted');
+        const form = node('form', null, body, 'vocab-generation-form');
+        const instructions = field('編輯指令', form, '', 'textarea'); instructions.rows = 6; instructions.maxLength = MAX_GENERATION_INSTRUCTIONS; instructions.required = true;
+        instructions.placeholder = '例如：修正英文拼字，將解釋改成繁體中文條列，重點用粗體。';
+        const status = node('p', '', form, 'vocab-generation-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
+        const controls = node('div', null, form, 'vocab-toolbar');
+        const cancel = node('button', '取消', controls, 'vocab-button'); cancel.type = 'button'; cancel.onclick = () => dialog.close();
+        const submit = node('button', '套用 AI 編輯', controls, 'vocab-button vocab-primary'); submit.type = 'submit';
+        form.onsubmit = async event => {
+            event.preventDefault(); if (generation || busy) return;
+            if (!instructions.value.trim()) { status.textContent = '請輸入編輯指令。'; instructions.focus(); return; }
+            const controller = new AbortController(), editingOwner = owner, draftId = deck?.id;
+            generation = controller; submit.disabled = instructions.disabled = true; form.setAttribute('aria-busy', 'true');
+            try {
+                safeOwner(); clearTimeout(draftTimer);
+                const edited = await editDeckWithAI(original, instructions.value, controller.signal, (batch, total) => { status.textContent = total > 1 ? `正在編輯字卡… ${batch}/${total}` : '正在編輯字卡…'; });
+                safeOwner(); controller.signal.throwIfAborted();
+                savingGeneration = true; cancel.disabled = true; dialog.querySelector('header button').disabled = true;
+                await saveDraft(draftId, edited); safeOwner(); controller.signal.throwIfAborted();
+                draft = edited; phase = 'editor'; message = 'AI 編輯已套用，請檢查內容後按「完成」儲存。'; dialog.close(); render();
+            } catch (e) {
+                if (editingOwner === owner && dialog.open && form.isConnected) status.textContent = controller.signal.aborted || e.name === 'AbortError' ? '編輯已取消或逾時，原內容未修改。' : e.message || '編輯失敗，請重試。';
+            } finally {
+                savingGeneration = false;
+                if (generation === controller) generation = null;
                 submit.disabled = instructions.disabled = cancel.disabled = false; form.setAttribute('aria-busy', 'false');
                 if (form.isConnected) dialog.querySelector('header button').disabled = false;
             }

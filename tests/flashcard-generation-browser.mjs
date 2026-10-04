@@ -85,10 +85,12 @@ try {
     assert.equal(await page.locator('#mistakeView').isVisible(), true); await persist(); assert.equal(await countDecks(), 1);
     await page.locator('#closeMistakeViewBtn').click(); await page.locator('#homeFlashcard').click();
     if (await view.getByRole('button', { name: '‹ Flashcard', exact: true }).isVisible()) await view.getByRole('button', { name: '‹ Flashcard', exact: true }).click();
-    // Direct generation requires a prompt and has the same pre-generation flow on mobile.
-    await page.setViewportSize({ width: 390, height: 844 }); await view.getByRole('button', { name: 'AI 生成字卡', exact: true }).click();
-    await dialog.getByRole('button', { name: '生成字卡', exact: true }).click(); assert.equal(await countDecks(), 1);
-    await dialog.getByLabel('生成指令', { exact: true }).fill('生成一張英文水果單字卡，背面用繁體中文');
+    assert.equal(await view.getByRole('button', { name: 'AI 生成字卡', exact: true }).count(), 0);
+    // Generation on mobile still uses the selected mistake and keeps the notebook open until success.
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#sidebarToggle').click(); await page.locator('#homeMistakes').click(); await page.locator('#mistakeView[aria-busy="false"]').waitFor();
+    await page.locator('.review-meta input').first().check(); await page.locator('#mistakeFlashcardsBtn').click();
+    await dialog.getByLabel('生成指令（選填）', { exact: true }).fill('只整理這題的 Ct 判讀，答案用繁體中文條列');
     assert.equal(await dialog.evaluate(e => e.scrollWidth > e.clientWidth), false);
     await mkdir('artifacts/qa', { recursive: true }); await page.screenshot({ path: 'artifacts/qa/flashcard-generation-mobile.png', fullPage: true });
     await page.evaluate(() => document.documentElement.classList.add('dark-mode'));
@@ -96,7 +98,7 @@ try {
     mode = 'ok'; await page.evaluate(() => { window.__failWrites = true; });
     await dialog.getByRole('button', { name: '生成字卡', exact: true }).click();
     await view.getByRole('heading', { name: '編輯字卡集', exact: true }).waitFor();
-    assert.deepEqual(requests.at(-1).sources, []); assert.equal(await view.getByLabel('單字 1', { exact: true }).inputValue(), 'apple');
+    assert.equal(requests.at(-1).sources.length, 1); assert.equal(await view.getByLabel('單字 1', { exact: true }).inputValue(), 'Ct 相差 5 次，理想起始量比為何？');
     assert.equal(await view.evaluate(e => e.scrollWidth > e.clientWidth), false);
     await page.screenshot({ path: 'artifacts/qa/flashcard-generated-editor-mobile.png', fullPage: true });
     assert.equal(await countDecks(), 1, 'failed cloud writes retain a local deck until sync');
@@ -104,6 +106,6 @@ try {
     assert.deepEqual(await page.evaluate(() => window.__testDatabase.learning['test-user']), legacy);
     assert.equal(await page.evaluate(bank => window.__testDatabase.mistakes['test-user'][bank].m0.count, bank), 2);
     assert.deepEqual(errors, []);
-    console.log('Flashcard generation passed: prompts before editing, source limits/filtering, failures/retry, native persistence, editing/reload, cancel, direct prompts, mobile/dark and offline retry.');
+    console.log('Flashcard generation passed: prompts before editing, source limits/filtering, failures/retry, native persistence, editing/reload, cancel, source-only prompts, mobile/dark and offline retry.');
 } catch (error) { await mkdir('artifacts/qa', { recursive: true }); await page.screenshot({ path: 'artifacts/qa/flashcard-generation-failure.png', fullPage: true }); throw error; }
 finally { if (releasePending) await releasePending(); await browser.close(); }

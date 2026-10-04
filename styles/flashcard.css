@@ -72,6 +72,8 @@
 .vocab-generation-form { display:grid; gap:17px; }
 .vocab-generation-status { margin:0; font-size:13px; color:var(--v-muted); overflow-wrap:anywhere; }
 .vocab-generation-status:empty { display:none; }
+html.dark-mode .vocab-generation-dialog { --surface-color:#242629; --on-surface:#edf0f2; --v-line:#4b5058; --v-muted:#b6bbc4; --v-accent:#aaa2ff; --v-soft:#30343a; color-scheme:dark; }
+html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-import-controls { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 .vocab-import-preview { max-height:330px; overflow:auto; border:1px solid var(--v-line); border-radius:8px; }
 .vocab-import-preview:empty { display:none; }

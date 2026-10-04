@@ -2,6 +2,7 @@ import { database, auth, ref, get, runTransaction } from '../../services/firebas
 import { storage, enqueue, flushOutbox, registerOutboxHandler } from '../../services/outbox.js';
 import { mergeStudy, prepareDeck, hydrateSession, id } from './model.js';
 import { generationRequest, parseGeneratedDeck } from './generation.js';
+import { editingBatches, editingRequest, parseEditedBatch } from './editing.js';
 const owner = () => {
     const uid = auth.currentUser?.uid;
     if (!uid) throw new Error('請先登入。');
@@ -96,7 +97,11 @@ export async function discardConflicts(deckId) {
 export { flushOutbox };
 
 export async function generateDeck(sources, instructions, signal) {
-    const uid = owner(), request = generationRequest(sources, instructions);
+    const text = await requestCardAI(generationRequest(sources, instructions), signal);
+    return parseGeneratedDeck(text, sources);
+}
+async function requestCardAI(request, signal, editing = false) {
+    const uid = owner();
     signal.throwIfAborted();
     let abortListener;
     try {
@@ -108,11 +113,29 @@ export async function generateDeck(sources, instructions, signal) {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${encodeURIComponent(key)}`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(request), signal
         }); ensure(uid); signal.throwIfAborted();
-        if (!response.ok) throw new Error(response.status === 429 ? 'AI 使用量暫時達上限，請稍後重試。' : 'AI 暫時無法生成字卡，請重試。');
+        if (!response.ok) throw new Error(response.status === 429 ? 'AI 使用量暫時達上限，請稍後重試。' : editing ? 'AI 暫時無法編輯字卡，請重試。' : 'AI 暫時無法生成字卡，請重試。');
         const result = await response.json(), candidate = result.candidates?.[0]; ensure(uid); signal.throwIfAborted();
-        if (candidate?.finishReason !== 'STOP') throw new Error('字卡未完整生成，請重試。');
-        return parseGeneratedDeck(candidate.content?.parts?.filter(p => !p.thought).map(p => p.text || '').join(''), sources);
+        if (candidate?.finishReason !== 'STOP') throw new Error(editing ? '字卡未完整編輯，原內容未修改。' : '字卡未完整生成，請重試。');
+        return candidate.content?.parts?.filter(p => !p.thought).map(p => p.text || '').join('');
     } finally { signal.removeEventListener('abort', abortListener); }
+}
+export async function editDeckWithAI(draft, instructions, signal, onProgress) {
+    const uid = owner(), batches = editingBatches(draft), cards = new Map(); let metadata;
+    for (const [i, batch] of batches.entries()) {
+        ensure(uid); signal.throwIfAborted(); onProgress?.(i + 1, batches.length);
+        const controller = new AbortController(), cancel = () => controller.abort();
+        signal.addEventListener('abort', cancel, { once: true });
+        const timeout = setTimeout(cancel, 90000);
+        try {
+            const text = await requestCardAI(editingRequest(draft, batch, instructions, metadata), controller.signal, true);
+            ensure(uid); signal.throwIfAborted();
+            const edited = parseEditedBatch(text, batch, metadata);
+            metadata ||= Object.fromEntries(['title', 'description', 'termLanguage', 'definitionLanguage'].map(k => [k, edited[k]]));
+            edited.cards.forEach(c => cards.set(c.id, c));
+        } finally { clearTimeout(timeout); signal.removeEventListener('abort', cancel); }
+    }
+    ensure(uid); signal.throwIfAborted();
+    return { ...draft, ...metadata, cards: draft.cards.map(c => cards.get(c.id) || c) };
 }
 
 // Optional semantic grading follows the existing Gemini integration; strict local grading remains available offline.

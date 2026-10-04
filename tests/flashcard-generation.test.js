@@ -15,8 +15,9 @@ test('generation carries custom instructions separately from bounded question so
     assert.equal(request.generationConfig.responseMimeType, 'application/json');
     assert.throws(() => sourceQuestions(Array(31).fill({})), /30/);
     assert.throws(() => generationRequest(sources, 'x'.repeat(4001)), /4000/);
-    assert.throws(() => generationRequest([], '  '), /內容與風格/);
-    assert.doesNotThrow(() => generationRequest([], '生成英文水果單字卡'));
+    assert.throws(() => generationRequest([], '  '), /錯題/);
+    assert.throws(() => sourceQuestions([]), /錯題/);
+    assert.throws(() => generationRequest([], '生成英文水果單字卡'), /錯題/);
     assert.doesNotThrow(() => generationRequest(sources));
 });
 test('generated content saves as native Flashcard fields with aliases and source attribution', () => {
@@ -28,7 +29,7 @@ test('generated content saves as native Flashcard fields with aliases and source
     assert.match(saved.description, /錯題來源：檢驗學/);
     assert.equal(saved.cards[0].revision, 1);
     assert.equal('front' in saved.cards[0], false);
-    assert.equal(parse({ ...deck, cards: [{ ...card, sourceIds: [] }] }, []).cards.length, 1);
+    assert.throws(() => parse({ ...deck, cards: [{ ...card, sourceIds: [] }] }, []), /錯題/);
 });
 test('malformed, incomplete, duplicate and unlinked generated decks cannot be saved', () => {
     for (const changes of [{ sourceIds: [] }, { sourceIds: ['invented'] }, { sourceIds: null }, { term: '' }, { definition: 'x'.repeat(4001) }, { termAliases: [''] }, { definitionAliases: Array(13).fill('a') }]) {
