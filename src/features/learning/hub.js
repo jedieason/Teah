@@ -92,8 +92,9 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
         const aiCard = section(body, 'AI 與使用條款');
         el('p', 'AI 功能會將你選擇的題目、作答及輸入內容傳送至 Google Gemini。請勿輸入病人或其他個人敏感資料。AI 內容可能有誤，應回查原始教材。', aiCard);
         const analyticsCard = section(body, '使用量與診斷');
-        const consent = el('span', localStorage.getItem('teah-analytics-consent') === 'yes' ? '分析已啟用' : '分析已停用', analyticsCard); consent.className = 'panel-badge';
-        el('p', '使用量分析預設停用。你可自行開啟或撤回同意；此裝置只保留最近 100 筆不含題目、答案或 API 金鑰的錯誤及同步診斷。', analyticsCard);
+        const isAnalyticsEnabled = () => { try { return localStorage.getItem('teah-analytics-consent') !== 'no'; } catch { return true; } };
+        const consent = el('span', isAnalyticsEnabled() ? '分析已啟用' : '分析已停用', analyticsCard); consent.className = 'panel-badge';
+        el('p', '使用量分析預設啟用。你可自行開啟或撤回同意；此裝置只保留最近 100 筆不含題目、答案或 API 金鑰的錯誤及同步診斷。', analyticsCard);
         el('p', '使用條款：本服務供學習用途，不提供診斷或治療建議。題庫來源與權利仍屬原作者，請只上傳有權使用的內容。', aiCard);
         const danger = section(body, '刪除帳戶與資料'); danger.classList.add('panel-danger');
         el('p', '刪除學習資料會清除本服務的雲端紀錄及此瀏覽器離線副本；其他裝置應登出並清除網站資料。Google 帳戶本身不受影響。', danger);
@@ -116,8 +117,12 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
                 location.reload();
             } catch (error) { resumeAccount(uid); throw error; }
         }, 'secondary-button panel-danger-btn');
-        button('允許使用量分析', analyticsCard, () => { localStorage.setItem('teah-analytics-consent', 'yes'); consent.textContent = '分析已啟用 · 下次載入生效'; }, 'secondary-button');
-        button('停用使用量分析', analyticsCard, () => { localStorage.removeItem('teah-analytics-consent'); location.reload(); }, 'secondary-button');
+        button('允許使用量分析', analyticsCard, () => {
+            const wasDisabled = !isAnalyticsEnabled();
+            try { localStorage.setItem('teah-analytics-consent', 'yes'); } catch {}
+            consent.textContent = wasDisabled ? '分析已啟用 · 下次載入生效' : '分析已啟用';
+        }, 'secondary-button');
+        button('停用使用量分析', analyticsCard, () => { try { localStorage.setItem('teah-analytics-consent', 'no'); } catch {} location.reload(); }, 'secondary-button');
     }, 'quiet-button');
     button('我的回報', nav, async () => {
         if (!requireUser()) return;

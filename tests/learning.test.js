@@ -26,3 +26,12 @@ test('statistics count events, handle empty and apply the requested time window'
     assert.equal(summarize({}).accuracy, null);
     assert.deepEqual(summarize({ a: event('a', 1), b: event('b', 3, false) }, 2), { count: 1, accuracy: 0, seconds: 10 });
 });
+test('analytics consent defaults to enabled and can be explicitly disabled', () => {
+    const isConsentGiven = store => store.get('teah-analytics-consent') !== 'no';
+    const fakeStorage = new Map();
+    assert.equal(isConsentGiven(fakeStorage), true);
+    fakeStorage.set('teah-analytics-consent', 'yes');
+    assert.equal(isConsentGiven(fakeStorage), true);
+    fakeStorage.set('teah-analytics-consent', 'no');
+    assert.equal(isConsentGiven(fakeStorage), false);
+});

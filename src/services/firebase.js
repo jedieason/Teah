@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 // Analytics is optional and must not block studying.
-if (localStorage.getItem('teah-analytics-consent') === 'yes') { try { getAnalytics(app); } catch {} }
+try { if (localStorage.getItem('teah-analytics-consent') !== 'no') getAnalytics(app); } catch {}
 const database = getDatabase(app);
 // Firebase Auth
 const auth = getAuth(app);

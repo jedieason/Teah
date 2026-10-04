@@ -12,6 +12,7 @@ await context.route(/firebasedatabase|firebaseio|gstatic.com\/firebasejs|generat
 const page = await context.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('dialog', d => d.accept());
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' });
+    if (await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'false') await page.locator('#sidebarToggle').click();
     await page.getByRole('button', { name: '自訂測驗', exact: true }).click();
     await page.getByRole('button', { name: '載入題目', exact: true }).click();
     await page.getByText('可組題 2 題。', { exact: false }).waitFor();
@@ -29,11 +30,17 @@ try {
     assert.equal(await page.evaluate(() => Object.values(window.__testDatabase.learning['test-user'].attempts).filter(e => e.isCorrect).length), 1);
     await page.evaluate(() => sessionStorage.setItem('test-db', JSON.stringify(window.__testDatabase)));
     await page.reload({ waitUntil: 'networkidle' });
+    if (await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'false') await page.locator('#sidebarToggle').click();
     await page.getByRole('button', { name: '學習總覽', exact: true }).click();
     const recentMetric = page.locator('.panel-metric').filter({ hasText: '近 7 天作答' });
     await recentMetric.waitFor();
     assert.equal(await recentMetric.locator('strong').textContent(), '2');
     await page.screenshot({ path: 'artifacts/qa/learning-mobile.png', fullPage: true });
+    await page.getByRole('button', { name: '關閉', exact: true }).click();
+    if (await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'false') await page.locator('#sidebarToggle').click();
+    await page.getByRole('button', { name: '資料與隱私', exact: true }).click();
+    assert.equal(await page.locator('.panel-badge', { hasText: '分析已啟用' }).isVisible(), true);
+    assert.ok((await page.locator('.panel-body').textContent()).includes('使用量分析預設啟用'));
     await page.getByRole('button', { name: '關閉', exact: true }).click();
     // Durable retry survives destruction of the page and is idempotent.
     await page.evaluate(async () => {
