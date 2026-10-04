@@ -9,6 +9,7 @@ await context.route(/firebasedatabase|firebaseio|gstatic.com\/firebasejs/, r => 
 const page = await context.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('dialog', d => d.accept());
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' });
+    await page.evaluate(() => { const b = [...document.querySelectorAll('.library-shortcuts button')].find(e => e.textContent.includes('內容工作台')); if (b) { b.style.display = ''; b.hidden = false; } });
     await page.getByRole('button', { name: '內容工作台', exact: true }).click();
     await page.locator('dialog[open]').getByRole('textbox', { name: '題庫名稱', exact: true }).fill('審核測試');
     await page.getByLabel('題目 JSON').fill(JSON.stringify([{ question: '試題', options: { A: '甲', B: '乙' }, answer: 'B', provenance: { source: '測試教材 p.1' } }]));

@@ -124,7 +124,7 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
         }, 'secondary-button');
         button('停用使用量分析', analyticsCard, () => { try { localStorage.setItem('teah-analytics-consent', 'no'); } catch {} location.reload(); }, 'secondary-button');
     }, 'quiet-button');
-    button('我的回報', nav, async () => {
+    const myReports = button('我的回報', nav, async () => {
         if (!requireUser()) return;
         const body = open('內容回報進度');
         const rows = (await get(ref(database, `feedback/${auth.currentUser.uid}`))).val() || {};
@@ -140,6 +140,8 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
             if (ticket.resolution) el('p', ticket.resolution, card).className = 'panel-resolution';
         }
     }, 'quiet-button');
+    myReports.style.display = 'none';
+    myReports.hidden = true;
     const questionActions = document.querySelector('.explanation-buttons > .header-right');
     const asIcon = (node, label, paths) => {
         node.className = 'action-icon-btn question-note';

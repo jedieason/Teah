@@ -4,6 +4,7 @@ import { validateQuiz } from '../../shared/content.js';
 import { normalizeQuestion } from './model.js';
 export function mountEditorial() {
     const launch = document.createElement('button'); launch.className = 'quiet-button'; launch.textContent = '內容工作台';
+    launch.style.display = 'none'; launch.hidden = true;
     document.querySelector('.library-shortcuts').append(launch);
     launch.onclick = async () => {
         const claims = (await auth.currentUser?.getIdTokenResult?.())?.claims || {};
