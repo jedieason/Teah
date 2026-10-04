@@ -2,7 +2,7 @@ import { auth, database, ref, get, runTransaction } from '../../services/firebas
 import { quizLabel } from '../mistakes/model.js';
 import { markdown } from '../../shared/content.js';
 const node = (tag, text, parent, cls) => { const n = document.createElement(tag); if (text != null) n.textContent = text; if (cls) n.className = cls; parent?.append(n); return n; };
-const button = (label, parent, action, cls = 'quiet-button') => { const b = node('button', label, parent, cls); b.type = 'button'; b.onclick = action; return b; };
+const button = (label, parent, action, cls = 'secondary-button') => { const b = node('button', label, parent, cls); b.type = 'button'; b.onclick = action; return b; };
 const identity = q => JSON.stringify([q.source || '', q.question]);
 const plain = text => { const n = document.createElement('div'); n.innerHTML = markdown(text || ''); return n.textContent; };
 export function createCollection({ host, activate, practice, renderMath, onRemove, getSourceLabel = source => source || '' }) {

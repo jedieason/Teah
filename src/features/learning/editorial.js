@@ -11,9 +11,9 @@ export function mountEditorial() {
         const dialog = document.createElement('dialog'); dialog.className = 'learning-dialog learning-panel'; dialog.setAttribute('aria-label', '內容工作台'); document.body.append(dialog);
         const body = node('div', null, dialog, 'panel-body');
         const add = (tag, text, parent = body) => { const n = document.createElement(tag); if (text) n.textContent = text; parent.append(n); return n; };
-        const action = (label, callback, parent = body) => { const b = add('button', label, parent); b.className = 'quiet-button'; b.onclick = async () => { b.disabled = true; try { await callback(); } catch (e) { status.textContent = e.message; } finally { b.disabled = false; } }; return b; };
+        const action = (label, callback, parent = body, className = 'secondary-button') => { const b = add('button', label, parent); b.className = className; b.onclick = async () => { b.disabled = true; try { await callback(); } catch (e) { status.textContent = e.message; } finally { b.disabled = false; } }; return b; };
         const header = node('div', null, null, 'learning-header'); dialog.prepend(header);
-        add('h2', '內容工作台', header); action('關閉', () => { dialog.close(); dialog.remove(); }, header);
+        add('h2', '內容工作台', header); action('關閉', () => { dialog.close(); dialog.remove(); }, header, 'secondary-button');
         const workflow = node('div', null, body, 'panel-workflow');
         for (const step of ['1 建立草稿', '2 獨立審核', '3 管理員發佈']) node('span', step, workflow, 'panel-badge');
         add('p', '新內容先送審，再由不同維護者核准，最後由管理員發佈。請在題目 provenance 中提供來源、頁碼及參考資料；taxonomy 可標註科目、系統、主題、難度與年份。');
@@ -29,7 +29,7 @@ export function mountEditorial() {
             const id = crypto.randomUUID();
             await set(ref(database, `contentDrafts/${id}`), { bank, questionsJson: JSON.stringify(questions), status: 'draft', author: auth.currentUser.uid, createdAt: Date.now() });
             status.textContent = '草稿已建立。'; await refresh();
-        }, draftForm);
+        }, draftForm, 'primary-button');
         const list = add('div'); list.className = 'panel-drafts';
         async function refresh() {
             const rows = (await get(ref(database, 'contentDrafts'))).val() || {}; list.replaceChildren();
@@ -56,7 +56,7 @@ export function mountEditorial() {
                     await update(ref(database), { [draft.bank]: questions, [`quizCatalog/${draft.bank}`]: { ...catalogEntry, count: questions.length, schemaVersion: 3, storageKey: catalogEntry.storageKey || draft.bank },
                         [`contentDrafts/${id}/status`]: 'published', [`auditLog/${auditId}`]: { bank: draft.bank, action: 'publish', actor: auth.currentUser.uid, at: Date.now(), previous: current || [], draftId: id } });
                     status.textContent = '已發佈。重新整理首頁可看見題庫。'; await refresh();
-                }, card);
+                }, card, 'primary-button');
             }
             if (claims.admin || claims.reviewer) {
                 add('h3', '使用者回報', list);

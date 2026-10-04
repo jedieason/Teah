@@ -96,7 +96,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         card.append(details);
         const footer = el('div', 'review-footer');
         footer.append(el('span', '', `最近答錯 ${date(m.lastMistake)}${m.correctStreak ? ` · 連續答對 ${m.correctStreak} 次` : ''}`));
-        const status = el('button', 'quiet-button', m.status === 'mastered' ? '移回待複習' : '標為已熟悉');
+        const status = el('button', 'secondary-button', m.status === 'mastered' ? '移回待複習' : '標為已熟悉');
         status.onclick = async () => {
             status.disabled = true;
             try { await setStatus(m, m.status === 'mastered' ? 'active' : 'mastered'); render(); }
@@ -116,14 +116,14 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
             const empty = el('div', 'empty-state');
             empty.append(el('h3', '', filters.status === 'mastered' ? '尚無已熟悉的題目' : '目前沒有待複習的錯題'));
             empty.append(el('p', '', filters.query || filters.subject || filters.quiz ? '試試其他關鍵字，或清除篩選。' : '答錯的題目會保存在這裡。'));
-            const reset = el('button', 'quiet-button', '清除篩選');
+            const reset = el('button', 'secondary-button', '清除篩選');
             reset.onclick = () => { filters = { query: '', subject: '', quiz: '', status: 'all', sort: 'recent' }; search.value = ''; sort.value = 'recent'; render(); };
             if (filters.query || filters.subject || filters.quiz) empty.append(reset);
             content.append(empty);
         } else {
             content.append(...visible.slice(0, limit).map(renderCard));
             if (visible.length > limit) {
-                const more = el('button', 'load-more quiet-button', `顯示更多（尚有 ${visible.length - limit} 題）`);
+                const more = el('button', 'load-more secondary-button', `顯示更多（尚有 ${visible.length - limit} 題）`);
                 more.onclick = () => { limit += 30; render(); };
                 content.append(more);
             }
@@ -172,7 +172,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         catch {
             if (token !== request) return;
             summary.textContent = '錯題同步失敗，目前顯示上次載入的紀錄。';
-            const retry = el('button', 'quiet-button', '重試');
+            const retry = el('button', 'secondary-button', '重試');
             retry.onclick = () => open(filters.quiz); summary.append(' ', retry);
         } finally { if (token === request) root.setAttribute('aria-busy', 'false'); }
     }

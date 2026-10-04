@@ -1,14 +1,18 @@
-.learning-dialog { width:min(720px,92vw); max-height:85vh; overflow:auto; border:1px solid #aaa5; border-radius:20px; padding:24px; color:inherit; background:var(--md-sys-color-surface,#fff); box-sizing:border-box; }
+.learning-dialog { width:min(720px,92vw); max-height:85vh; overflow:auto; border:1px solid var(--ui-border, #e3e5e7); border-radius:20px; padding:24px; color:inherit; background:var(--surface-color,#fff); box-sizing:border-box; box-shadow:0 20px 70px rgba(0,0,0,0.15); }
 .learning-dialog::backdrop { background:#0007; }
-.learning-header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.learning-header h2 { margin:0 0 18px; }
+.learning-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+.learning-header h2 { margin:0; font-size:20px; font-weight:600; }
+.learning-header button { margin:0; flex-shrink:0; }
+.learning-dialog .dialog-actions { display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-top:20px; flex-wrap:wrap; }
+.learning-dialog .dialog-actions > button { min-height:42px; }
+.learning-dialog .panel-danger-btn { border-color:var(--panel-danger-border,#edcccc) !important; color:var(--panel-danger,#aa3737) !important; }
+.learning-dialog .panel-danger-btn:hover { background:#fff5f5 !important; border-color:var(--panel-danger,#aa3737) !important; }
 .learning-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:16px 0; }
 .learning-form label { display:flex; flex-direction:column; gap:6px; font-size:14px; }
-.learning-dialog input,.learning-dialog select,.learning-dialog textarea { box-sizing:border-box; width:100%; padding:10px; border:1px solid #8886; border-radius:8px; background:transparent; color:inherit; font:inherit; }
+.learning-dialog input,.learning-dialog select,.learning-dialog textarea { box-sizing:border-box; width:100%; padding:12px; border:1px solid var(--ui-border, #8886); border-radius:10px; background:transparent; color:inherit; font:inherit; }
 .learning-dialog table { width:100%; border-collapse:collapse; font-size:14px; }
 .learning-dialog th,.learning-dialog td { padding:10px 6px; text-align:left; border-bottom:1px solid #8883; }
 .learning-dialog p,.learning-dialog li { line-height:1.7; }
-.learning-dialog > div > button { margin:6px; }
 .library-shortcuts { flex-wrap:wrap; }
 .sync-status { font-size:12px; color:#777; }
 .exam-active #explanation-text,.exam-active #WeeGPT,.exam-active #WeeGPTInputSection,.exam-active #correct,.exam-active #wrong,.exam-active #origin-display { display:none !important; }

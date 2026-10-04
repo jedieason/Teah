@@ -12,7 +12,7 @@ export function createFlashcards({ renderMath }) {
     const status = el('p', 'fc-status', '', root); status.setAttribute('role', 'status');
     let owner, opener, generation, screen = 'library', deck, session, busy = false, token = 0;
     const button = (text, parent, action, primary = false) => {
-        const b = el('button', primary ? 'primary-button' : 'quiet-button', text, parent); b.type = 'button';
+        const b = el('button', primary ? 'primary-button' : 'secondary-button', text, parent); b.type = 'button';
         b.onclick = async () => {
             if (busy) return; busy = true; b.disabled = true;
             try { checkOwner(); await action(); } catch (e) { status.textContent = e.name === 'AbortError' ? '製作已取消或逾時，請重試。' : e.message || '儲存失敗，請重試。'; }
@@ -27,7 +27,7 @@ export function createFlashcards({ renderMath }) {
         heading.textContent = title; screen = view; body.replaceChildren(); nav.replaceChildren(); status.textContent = ''; body.scrollTop = 0;
         if (view !== 'library') button('我的字卡', nav, () => { generation?.abort(); token++; library(); });
         // Closing remains available while network work is in flight.
-        const dismiss = el('button', 'quiet-button', '關閉字卡', nav); dismiss.onclick = close;
+        const dismiss = el('button', 'secondary-button', '關閉字卡', nav); dismiss.onclick = close;
     }
     async function show() {
         if (!auth.currentUser) throw new Error('請先登入後使用字卡。');
