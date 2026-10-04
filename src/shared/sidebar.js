@@ -13,7 +13,6 @@ export function mountSidebar() {
         '自訂測驗': '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h4M8 16h6"/>',
         '學習總覽': '<path d="M4 3v17h17M8 16v-4m5 4V8m5 8V5"/>',
         '資料與隱私': '<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6Z"/><path d="m8 12 3 3 5-6"/>',
-        '複習卡': '<rect x="6" y="6" width="15" height="15" rx="2"/><path d="M17 3H5a2 2 0 0 0-2 2v12M10 11h7m-7 5h5"/>',
         'Flashcard': '<rect x="4" y="6" width="16" height="15" rx="2"/><path d="M7 3h10M9 11h6M9 16h4"/>',
         '我的回報': '<path d="M4 21V4c5-4 10 4 16 0v10c-6 4-11-4-16 0"/>',
         '內容工作台': '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/>'

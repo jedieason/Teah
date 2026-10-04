@@ -1,6 +1,7 @@
 import { database, auth, ref, get, runTransaction } from '../../services/firebase.js';
 import { storage, enqueue, flushOutbox, registerOutboxHandler } from '../../services/outbox.js';
 import { mergeStudy, prepareDeck, hydrateSession, id } from './model.js';
+import { generationRequest, parseGeneratedDeck } from './generation.js';
 const owner = () => {
     const uid = auth.currentUser?.uid;
     if (!uid) throw new Error('請先登入。');
@@ -93,6 +94,26 @@ export async function discardConflicts(deckId) {
     await storage('cache', 'delete', `flashcard:${uid}:study:${deckId}`); ensure(uid);
 }
 export { flushOutbox };
+
+export async function generateDeck(sources, instructions, signal) {
+    const uid = owner(), request = generationRequest(sources, instructions);
+    signal.throwIfAborted();
+    let abortListener;
+    try {
+        const key = await Promise.race([get(ref(database, 'API_KEY')).then(s => s.val()), new Promise((_, reject) => {
+            abortListener = () => reject(new DOMException('已取消生成。', 'AbortError'));
+            signal.addEventListener('abort', abortListener, { once: true });
+        })]); ensure(uid); signal.throwIfAborted();
+        if (typeof key !== 'string' || !key.trim()) throw new Error('AI 服務尚未設定。');
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${encodeURIComponent(key)}`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(request), signal
+        }); ensure(uid); signal.throwIfAborted();
+        if (!response.ok) throw new Error(response.status === 429 ? 'AI 使用量暫時達上限，請稍後重試。' : 'AI 暫時無法生成字卡，請重試。');
+        const result = await response.json(), candidate = result.candidates?.[0]; ensure(uid); signal.throwIfAborted();
+        if (candidate?.finishReason !== 'STOP') throw new Error('字卡未完整生成，請重試。');
+        return parseGeneratedDeck(candidate.content?.parts?.filter(p => !p.thought).map(p => p.text || '').join(''), sources);
+    } finally { signal.removeEventListener('abort', abortListener); }
+}
 
 // Optional semantic grading follows the existing Gemini integration; strict local grading remains available offline.
 export async function semanticGrade({ prompt, expected, response, aliases }) {

@@ -1,4 +1,4 @@
-/* Vocabulary workspace; independent of the existing mistake-review cards. */
+/* Flashcard workspace and AI generation. */
 .vocab-page,.vocab-dialog { --v-accent:#5148dc; --v-success:#28724e; --v-error:#a35025; --v-soft:#f6f6fc; --v-line:#e3e4ec; --v-muted:#596173; font:15px/1.6 var(--ui-font); color:var(--on-surface,#263044); text-align:left; }
 .vocab-page { width:100%; max-width:1160px; padding:36px 36px 70px; box-sizing:border-box; min-width:0; }
 .vocab-page *,.vocab-dialog * { box-sizing:border-box; }
@@ -69,6 +69,9 @@
 .vocab-dialog { border:1px solid var(--v-line); background:var(--surface-color,#fff); border-radius:16px; padding:26px; width:min(760px,calc(100vw - 36px)); max-height:calc(100dvh - 44px); overflow:auto; }
 .vocab-dialog::backdrop { background:#17204475; backdrop-filter:blur(3px); }
 .vocab-dialog-body { display:grid; gap:17px; }
+.vocab-generation-form { display:grid; gap:17px; }
+.vocab-generation-status { margin:0; font-size:13px; color:var(--v-muted); overflow-wrap:anywhere; }
+.vocab-generation-status:empty { display:none; }
 .vocab-import-controls { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 .vocab-import-preview { max-height:330px; overflow:auto; border:1px solid var(--v-line); border-radius:8px; }
 .vocab-import-preview:empty { display:none; }

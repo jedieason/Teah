@@ -2,7 +2,6 @@ import { createCollection } from './features/collections/view.js';
 import { mountQuestionSearch } from './features/search/view.js';
 import { normalizeSearchText } from './features/search/model.js';
 import { mountSidebar } from './shared/sidebar.js';
-import { createFlashcards } from './features/flashcards/view.js';
 import { mountFlashcard } from './features/flashcard/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
 import { normalizeQuestion } from './features/learning/model.js';
@@ -2256,7 +2255,6 @@ onAuthStateChanged(auth, async (user) => {
         learningDataReady = false;
         await loadLearning();
         closeMistakeView();
-        flashcards.close();
         stopTimer();
         quizContainer.style.display = 'none';
         document.querySelector('.start-screen').style.display = 'flex';
@@ -3073,7 +3071,6 @@ document.addEventListener('DOMContentLoaded', initTheme);
 /* Notebook integration. Practice reuses the existing answering interface. */
 const mistakeView = document.getElementById('mistakeView');
 let notebook;
-const flashcards = createFlashcards({ renderMath: renderLatex });
 
 function closeMistakeView() { notebook.close(); }
 function openMistakeView(quizName = null) {
@@ -3117,7 +3114,7 @@ notebook = createNotebook({
         } : undefined, { applyLocally: false });
         if (result.committed && auth.currentUser?.uid === uid) cacheMistake(m.quizKey, m.recordPath, result.snapshot.val());
     },
-    makeCards: items => flashcards.generate(items),
+    makeCards: items => vocabulary.generate(items),
     practice: startMistakePractice, renderMath: renderLatex, alert: showCustomAlert
 });
 
@@ -3322,7 +3319,7 @@ quizTitleLink.addEventListener('keydown', event => {
 
 installDialogBehavior();
 
-mountLearningHub({ openCards: () => flashcards.open(), getCatalog: () => catalogData, alert: showCustomAlert, current: () => currentQuestion,
+mountLearningHub({ getCatalog: () => catalogData, alert: showCustomAlert, current: () => currentQuestion,
     start: async (items, mode, options) => {
         customSession = { questions: items, mode, ...options }; selectedJson = items[0].sourcePath;
         await initQuiz(); document.querySelector('.quiz-title').textContent = mode === 'exam' ? '自訂測驗 · 考試' : '自訂測驗 · 學習';
@@ -3361,6 +3358,9 @@ const collection = createCollection({
         await initQuiz(); document.querySelector('.quiz-title').textContent = '收藏練習';
     }
 });
-const vocabulary = mountFlashcard({ host: document.getElementById('flashcardPage'), activate: () => showLibraryPage('flashcard') });
+const vocabulary = mountFlashcard({ host: document.getElementById('flashcardPage'), activate: () => {
+    if (mistakeView.style.display === 'flex') closeMistakeView();
+    showLibraryPage('flashcard');
+} });
 document.getElementById('homeFlashcard').onclick = () => vocabulary.open();
 mountSidebar();

@@ -7,10 +7,10 @@ import { selectQuestions, summarize, DAY } from './model.js';
 const el = (tag, text, parent) => { const node = document.createElement(tag); if (text != null) node.textContent = text; parent?.append(node); return node; };
 const button = (text, parent, action, className = 'secondary-button') => { const b = el('button', text, parent); b.type = 'button'; b.className = className; b.onclick = async () => { b.disabled = true; try { await action(); } catch (e) { window.alert(e.message || '操作失敗，請重試。'); } finally { b.disabled = false; } }; return b; };
 const download = (value, name) => { const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' })); const a = el('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); };
-export function mountLearningHub({ getCatalog, alert, current, start, openCards }) {
+export function mountLearningHub({ getCatalog, alert, current, start }) {
     const nav = document.querySelector('.library-shortcuts');
     const sync = el('p', '', document.querySelector('.home-content')); sync.className = 'sync-status'; sync.setAttribute('role', 'status');
-    window.addEventListener('sync-status', ({ detail }) => { sync.textContent = detail.error ? '資料已保存在此裝置，尚未同步；連線後會重試。' : detail.pending ? `${detail.pending} 筆紀錄等待同步` : '學習紀錄已同步'; });
+    window.addEventListener('sync-status', ({ detail }) => { sync.textContent = detail.error ? '資料已保存在此裝置，尚未同步；連線後會重試。' : detail.pending ? `${detail.pending} 筆紀錄等待同步` : ''; });
     const dialog = el('dialog', null, document.body); dialog.className = 'learning-dialog';
     const open = title => { dialog.classList.toggle('learning-panel', ['學習總覽', '自訂測驗', '資料與隱私', '內容回報進度'].includes(title)); dialog.setAttribute('aria-label', title); dialog.replaceChildren(); const header = el('div', null, dialog); header.className = 'learning-header'; el('h2', title, header); button('關閉', header, () => dialog.close(), 'secondary-button'); dialog.showModal(); const body = el('div', null, dialog); body.className = 'panel-body'; return body; };
     const requireUser = () => { if (!auth.currentUser) { alert('請先登入以使用學習紀錄。'); return false; } return true; };
@@ -119,7 +119,6 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
         button('允許使用量分析', analyticsCard, () => { localStorage.setItem('teah-analytics-consent', 'yes'); consent.textContent = '分析已啟用 · 下次載入生效'; }, 'secondary-button');
         button('停用使用量分析', analyticsCard, () => { localStorage.removeItem('teah-analytics-consent'); location.reload(); }, 'secondary-button');
     }, 'quiet-button');
-    button('複習卡', nav, async () => { if (requireUser()) await openCards(); }, 'quiet-button');
     button('我的回報', nav, async () => {
         if (!requireUser()) return;
         const body = open('內容回報進度');
@@ -159,7 +158,6 @@ export function mountLearningHub({ getCatalog, alert, current, start, openCards 
         const body = open('題目筆記'); const input = el('textarea', null, body); input.rows = 8; input.maxLength = 10000; input.value = learningState[`note_${q.questionId}`]?.text || '';
         const actions = el('div', null, body); actions.className = 'dialog-actions';
         if (selectedText) button('加入選取的文字', actions, () => { input.value += `\n> ${selectedText}\n`; }, 'secondary-button');
-        button('以此筆記建立複習卡', actions, async () => { if (!input.value.trim()) return; await savePreference(`card_${crypto.randomUUID()}`, { front: q.question, back: input.value, questionId: q.questionId, dueAt: Date.now(), intervalDays: 0 }); dialog.close(); }, 'secondary-button');
         button('儲存筆記', actions, async () => { await savePreference(`note_${q.questionId}`, { text: input.value, questionId: q.questionId }); dialog.close(); }, 'primary-button');
     }); asIcon(notes, '個人筆記', '<rect x="5" y="3" width="15" height="18" rx="2"/><path d="M3 7h4M3 12h4M3 17h4M10 8h6M10 12h6M10 16h4"/>');
 }

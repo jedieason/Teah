@@ -91,6 +91,6 @@ firebase deploy --only hosting --project stock-market-ntumed
 
 ## 學習引擎與產品化
 
-新增自訂組題、學習／考試模式、逐次作答、離線待送佇列、學習總覽、複習排程、計畫、筆記／複習卡、內容審核與回報、帳戶資料管理及 PWA。詳見 [產品化交接與 Firebase 匯入步驟](docs/productization.md)。資料檔已在本機遷移，程式建置不包含匯出檔或備份；正式資料與權限規則仍需分別匯入／發佈。
+新增自訂組題、學習／考試模式、逐次作答、離線待送佇列、學習總覽、複習排程、計畫、筆記、內容審核與回報、帳戶資料管理及 PWA。詳見 [產品化交接與 Firebase 匯入步驟](docs/productization.md)。資料檔已在本機遷移，程式建置不包含匯出檔或備份；正式資料與權限規則仍需分別匯入／發佈。
 
-錯題本現支援 [AI 一鍵製作可編輯字卡](docs/flashcards.md)，提供空白鍵翻面與 Learn 打字填空兩種練習模式。
+錯題本支援 [AI 一鍵生成 Flashcard](docs/flashcard.md#ai-生成字卡)：先輸入內容與風格指令，生成成功後進入 Flashcard 編輯頁。Flashcard 也可直接依指令生成新字卡集。

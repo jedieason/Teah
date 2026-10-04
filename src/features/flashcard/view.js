@@ -1,6 +1,7 @@
 import { auth } from '../../services/firebase.js';
 import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
-import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade } from './service.js';
+import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade, generateDeck } from './service.js';
+import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS } from './generation.js';
 const node = (tag, text, parent, className) => {
     const e = document.createElement(tag); if (text != null) e.textContent = text;
     if (className) e.className = className; parent?.append(e); return e;
@@ -27,6 +28,7 @@ export function mountFlashcard({ host, activate }) {
     let screen = '', termFilter = 'all', termQuery = '';
     let audioContext, progressWidths = [], questionKey = '', symbolsKey = '', symbols = [];
     let speechGeneration = 0, pendingVoiceLoad = null, speechError = '';
+    let generation = null, savingGeneration = false;
     const backgroundInert = new Map();
     const dialog = node('dialog', null, document.body, 'vocab-dialog');
     window.speechSynthesis?.getVoices?.();
@@ -147,10 +149,11 @@ export function mountFlashcard({ host, activate }) {
     }
     function renderList() {
         const h = heading('Flashcard'); button('＋ 建立字卡集', h, () => edit(null), 'vocab-primary');
+        button('AI 生成字卡', h, () => generationDialog([]));
         const toolbar = node('div', null, host, 'vocab-toolbar');
         const query = field('搜尋字卡集', toolbar, search); query.type = 'search'; query.placeholder = '字卡集名稱或內容';
         button(trash ? '返回字卡集' : '已刪除', toolbar, () => { trash = !trash; render(); });
-        button('重新同步', toolbar, async () => { await flushOutbox(); const result = await loadDecks(); decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : '資料已同步'); render(); });
+        button('重新同步', toolbar, async () => { await flushOutbox(); const result = await loadDecks(); decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); });
         const grid = node('div', null, host, 'vocab-grid');
         function list() {
             grid.replaceChildren(); const filtered = Object.values(decks).filter(d => !!d.deletedAt === trash && normalize(d.title + ' ' + d.description + ' ' + d.cards.map(c => c.term + ' ' + c.definition).join(' ')).includes(normalize(search))).sort((a, b) => b.updatedAt - a.updatedAt);
@@ -326,6 +329,46 @@ export function mountFlashcard({ host, activate }) {
         stop(); dialog.className = 'vocab-dialog' + (variant ? ' ' + variant : ''); dialog.replaceChildren(); dialog.setAttribute('aria-label', title);
         const h = node('header', null, dialog, 'vocab-heading'); node('h2', title, h); icon('×', '關閉對話框', h, () => dialog.close());
         const body = node('div', null, dialog, 'vocab-dialog-body'); dialog.showModal(); return body;
+    }
+    function generationDialog(sources) {
+        const body = modal('AI 生成字卡', 'vocab-generation-dialog');
+        if (sources.length) node('p', `來源：${sources.length} 題待複習錯題`, body, 'vocab-muted');
+        const form = node('form', null, body, 'vocab-generation-form');
+        const instructions = field(sources.length ? '生成指令（選填）' : '生成指令', form, '', 'textarea');
+        instructions.rows = 6; instructions.maxLength = MAX_GENERATION_INSTRUCTIONS; instructions.required = !sources.length;
+        instructions.placeholder = sources.length ? '例如：以問答呈現，只整理判讀步驟與容易混淆的觀念，答案用條列。' : '例如：生成 15 張英文水果單字卡，背面放繁體中文解釋與簡短例句。';
+        const status = node('p', '', form, 'vocab-generation-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
+        const controls = node('div', null, form, 'vocab-toolbar');
+        const cancel = node('button', '取消', controls, 'vocab-button'); cancel.type = 'button'; cancel.onclick = () => dialog.close();
+        const submit = node('button', '生成字卡', controls, 'vocab-button vocab-primary'); submit.type = 'submit';
+        form.onsubmit = async event => {
+            event.preventDefault(); if (generation || busy) return;
+            if (!sources.length && !instructions.value.trim()) { status.textContent = '請輸入想生成的內容與風格。'; instructions.focus(); return; }
+            const controller = new AbortController(), generationOwner = owner;
+            generation = controller; submit.disabled = instructions.disabled = true; form.setAttribute('aria-busy', 'true');
+            status.textContent = '正在生成字卡…';
+            const timeout = setTimeout(() => controller.abort(), 90000);
+            try {
+                safeOwner();
+                const generated = await generateDeck(sources, instructions.value, controller.signal);
+                const result = await loadDecks();
+                safeOwner(); controller.signal.throwIfAborted();
+                // Saving uses the same durable Flashcard outbox as manually created sets.
+                clearTimeout(timeout); savingGeneration = true;
+                cancel.disabled = true; dialog.querySelector('header button').disabled = true;
+                const next = await saveDeck(generated); safeOwner();
+                decks = result.decks; decks[next.id] = next; deck = next; study = {}; trash = false; search = ''; termFilter = 'all'; termQuery = '';
+                draft = { ...clone(next), baseRevision: next.revision }; phase = 'editor';
+                message = `已生成 ${next.cards.length} 張字卡並儲存至 Flashcard。`; dialog.close(); activate(); render();
+            } catch (e) {
+                if (generationOwner === owner && dialog.open && form.isConnected) status.textContent = controller.signal.aborted ? '生成已取消或逾時，請重試。' : e.message || '生成失敗，請重試。';
+            } finally {
+                clearTimeout(timeout); savingGeneration = false; if (generation === controller) generation = null;
+                submit.disabled = instructions.disabled = cancel.disabled = false; form.setAttribute('aria-busy', 'false');
+                if (form.isConnected) dialog.querySelector('header button').disabled = false;
+            }
+        };
+        instructions.focus();
     }
     function importDialog() {
         const body = modal('匯入文字', 'vocab-import-dialog');
@@ -828,9 +871,11 @@ export function mountFlashcard({ host, activate }) {
     });
     window.addEventListener('sync-status', async ({ detail }) => {
         if (!owner || host.hidden || auth.currentUser?.uid !== owner) return;
-        if (!detail.error && detail.pending === 0 && !conflict) report('資料已同步');
+        if (!detail.error && detail.pending === 0 && !conflict) {
+            if (message && (message.includes('同步') || message.includes('存取'))) report('');
+        }
     });
-    new MutationObserver(() => { if (host.hidden) stop(); studyLayout(); }).observe(host, { attributes: true, attributeFilter: ['hidden'] });
+    new MutationObserver(() => { if (host.hidden) { stop(); generation?.abort(); if (dialog.classList.contains('vocab-generation-dialog')) dialog.close(); } studyLayout(); }).observe(host, { attributes: true, attributeFilter: ['hidden'] });
     document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
     document.addEventListener('keydown', e => {
         if (host.hidden || !owner || dialog.open || document.querySelector('dialog[open]') || host.querySelector('[popover]:popover-open') || host.querySelector('.vocab-mode-menu[open]') || busy || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
@@ -846,7 +891,9 @@ export function mountFlashcard({ host, activate }) {
         else if (phase === 'learn' && session.checkpoint && !session.completed && (e.key === 'Enter' || e.key === ' ' || e.key.length === 1)) { e.preventDefault(); void action(nextRound); }
         else if (phase === 'learn' && !session.feedback && session.current?.type === 'choice' && /^[1-4]$/.test(e.key)) { const value = session.current.choices[Number(e.key) - 1]; if (value) { e.preventDefault(); void action(() => answer(value)); } }
     });
+    dialog.addEventListener('cancel', e => { if (savingGeneration) e.preventDefault(); });
     dialog.addEventListener('close', () => {
+        generation?.abort(); generation = null;
         if (host.hidden) return;
         if (phase === 'flash' && flash?.playing) { flash.playing = false; render(); }
         if (phase === 'flash') host.querySelector('.vocab-flip')?.focus({ preventScroll: true });
@@ -860,6 +907,12 @@ export function mountFlashcard({ host, activate }) {
             phase = 'list'; message = '載入字卡集…'; render();
             try { const result = await loadDecks(); safeOwner(); if (ticket !== operation) return; decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); } catch (e) { report(e.message); }
         },
-        resetForUser(uid) { if (uid === owner) return; operation++; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
+        async generate(items) {
+            if (!auth.currentUser) throw new Error('請先登入。');
+            const uid = auth.currentUser.uid, sources = clone(sourceQuestions(items));
+            if (uid !== owner) this.resetForUser(uid);
+            safeOwner(); generationDialog(sources);
+        },
+        resetForUser(uid) { if (uid === owner) return; operation++; generation?.abort(); generation = null; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
     };
 }

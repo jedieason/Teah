@@ -40,7 +40,7 @@
 .review-card pre, .review-card table, .review-card .katex-display { max-width: 100%; overflow-x: auto; }
 .review-card table { display: block; border-collapse: collapse; }
 .review-card th, .review-card td { border: 1px solid var(--ui-border); padding: 8px; }
-.notebook-bottom { display: flex; gap: 14px; align-items: center; min-height: 78px; padding-top: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom)); font-size: 13px; background: white; }
+.notebook-bottom { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-height: 78px; padding-top: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom)); font-size: 13px; background: white; }
 .notebook-select-all { display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
 #mistakeSelection { color: var(--ui-muted); white-space: nowrap; }
 #mistakePracticeBtn { margin-left: auto; white-space: nowrap; }
@@ -64,6 +64,7 @@
     .review-meta input { margin-top: 3px; }
     .review-footer { align-items: center; }
     .notebook-bottom { gap: 8px; padding-inline: 16px; }
+    #mistakeFlashcardsBtn, #mistakePracticeBtn { flex: 1; min-width: 140px; font-size: 13px; }
     #mistakeClearSelection { font-size: 0; gap: 0; padding: 6px; }
     #mistakeClearSelection::after { content: '取消'; font-size: 12px; }
 }
