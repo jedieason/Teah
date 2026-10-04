@@ -329,11 +329,16 @@ export function mountFlashcard({ host, activate }) {
         button('儲存字卡集', host, () => save(), 'vocab-primary vocab-save-bottom');
     }
     function modal(title, variant = '') {
-        stop(); dialog.className = 'vocab-dialog' + (variant ? ' ' + variant : ''); dialog.replaceChildren(); dialog.setAttribute('aria-label', title);
+        stop();
+        if (dialog.open) {
+            try { dialog.close(); } catch (err) { console.warn('[FlashcardGen] dialog.close warning:', err); }
+        }
+        dialog.className = 'vocab-dialog' + (variant ? ' ' + variant : ''); dialog.replaceChildren(); dialog.setAttribute('aria-label', title);
         const h = node('header', null, dialog, 'vocab-heading'); node('h2', title, h); icon('×', '關閉對話框', h, () => dialog.close());
         const body = node('div', null, dialog, 'vocab-dialog-body'); dialog.showModal(); return body;
     }
     function generationDialog(sources) {
+        console.log('[FlashcardGen] 開啟 AI 生成字卡對話框，素材數：', sources.length);
         const body = modal('AI 生成字卡', 'vocab-generation-dialog');
         node('p', `來源：${sources.length} 題待複習錯題`, body, 'vocab-muted');
         const form = node('form', null, body, 'vocab-generation-form');
@@ -345,7 +350,9 @@ export function mountFlashcard({ host, activate }) {
         const cancel = node('button', '取消', controls, 'vocab-button'); cancel.type = 'button'; cancel.onclick = () => dialog.close();
         const submit = node('button', '生成字卡', controls, 'vocab-button vocab-primary'); submit.type = 'submit';
         form.onsubmit = async event => {
-            event.preventDefault(); if (generation || busy) return;
+            event.preventDefault();
+            console.log('[FlashcardGen] 提交生成字卡表單', { sourcesCount: sources.length, instructions: instructions.value });
+            if (generation || busy) return;
             const controller = new AbortController(), generationOwner = owner;
             generation = controller; submit.disabled = instructions.disabled = true; form.setAttribute('aria-busy', 'true');
             status.textContent = '正在生成字卡…';
@@ -353,16 +360,19 @@ export function mountFlashcard({ host, activate }) {
             try {
                 safeOwner();
                 const generated = await generateDeck(sources, instructions.value, controller.signal);
+                console.log('[FlashcardGen] AI 生成成功，開始儲存字卡集', generated.title);
                 const result = await loadDecks();
                 safeOwner(); controller.signal.throwIfAborted();
                 // Saving uses the same durable Flashcard outbox as manually created sets.
                 clearTimeout(timeout); savingGeneration = true;
                 cancel.disabled = true; dialog.querySelector('header button').disabled = true;
                 const next = await saveDeck(generated); safeOwner();
+                console.log('[FlashcardGen] 字卡集儲存成功，ID:', next.id);
                 decks = result.decks; decks[next.id] = next; deck = next; study = {}; trash = false; search = ''; termFilter = 'all'; termQuery = '';
                 draft = { ...clone(next), baseRevision: next.revision }; phase = 'editor';
                 message = `已生成 ${next.cards.length} 張字卡並儲存至 Flashcard。`; dialog.close(); activate(); render();
             } catch (e) {
+                console.error('[FlashcardGen] 生成字卡發生錯誤：', e);
                 if (generationOwner === owner && dialog.open && form.isConnected) status.textContent = controller.signal.aborted ? '生成已取消或逾時，請重試。' : e.message || '生成失敗，請重試。';
             } finally {
                 clearTimeout(timeout); savingGeneration = false; if (generation === controller) generation = null;
@@ -944,9 +954,17 @@ export function mountFlashcard({ host, activate }) {
             try { const result = await loadDecks(); safeOwner(); if (ticket !== operation) return; decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); } catch (e) { report(e.message); }
         },
         async generate(items) {
+            console.log('[FlashcardGen] vocabulary.generate 執行', {
+                itemCount: items?.length,
+                currentUser: auth.currentUser?.uid || null,
+                currentOwner: owner
+            });
             if (!auth.currentUser) throw new Error('請先登入。');
             const uid = auth.currentUser.uid, sources = clone(sourceQuestions(items));
-            if (uid !== owner) this.resetForUser(uid);
+            if (uid !== owner) {
+                console.log('[FlashcardGen] 切換使用者 owner', { uid, oldOwner: owner });
+                this.resetForUser(uid);
+            }
             safeOwner(); generationDialog(sources);
         },
         resetForUser(uid) { if (uid === owner) return; operation++; generation?.abort(); generation = null; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }

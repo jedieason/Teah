@@ -166,8 +166,24 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         finally { updateSelection(); }
     };
     cardsBtn.onclick = async () => {
+        const eligible = eligibleCards();
+        console.log('[FlashcardGen] AI 一鍵製作字卡被點擊', {
+            selectedCount: selected.size,
+            eligibleCount: eligible.length,
+            visibleCount: visible.length
+        });
         cardsBtn.disabled = true;
-        try { await makeCards(selected.size ? eligibleCards() : eligibleCards().slice(0, 30)); } catch (e) { alert(e.message || '無法製作字卡，請重試。'); } finally { updateSelection(); }
+        try {
+            const items = selected.size ? eligible : eligible.slice(0, 30);
+            console.log('[FlashcardGen] 準備製作字卡，題目數：', items.length);
+            await makeCards(items);
+            console.log('[FlashcardGen] 字卡對話框已成功啟動');
+        } catch (e) {
+            console.error('[FlashcardGen] 製作字卡失敗：', e);
+            alert(e.message || '無法製作字卡，請重試。');
+        } finally {
+            updateSelection();
+        }
     };
     const close = () => { menus.forEach(menu => menu.close()); request++; root.style.display = 'none'; document.body.style.overflow = ''; window.scrollTo(0, previousScrollY); opener?.focus({ preventScroll: true }); };
     root.querySelector('#closeMistakeViewBtn').onclick = close;

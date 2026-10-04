@@ -105,17 +105,29 @@ async function requestCardAI(request, signal, editing = false) {
     signal.throwIfAborted();
     let abortListener;
     try {
+        console.log('[FlashcardGen] 正在自 Firebase 讀取 API_KEY...');
         const key = await Promise.race([get(ref(database, 'API_KEY')).then(s => s.val()), new Promise((_, reject) => {
             abortListener = () => reject(new DOMException('已取消生成。', 'AbortError'));
             signal.addEventListener('abort', abortListener, { once: true });
         })]); ensure(uid); signal.throwIfAborted();
-        if (typeof key !== 'string' || !key.trim()) throw new Error('AI 服務尚未設定。');
+        if (typeof key !== 'string' || !key.trim()) {
+            console.error('[FlashcardGen] Firebase /API_KEY 為空或未設定');
+            throw new Error('AI 服務尚未設定。');
+        }
+        console.log('[FlashcardGen] 正在呼叫 Gemini API...');
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${encodeURIComponent(key)}`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(request), signal
         }); ensure(uid); signal.throwIfAborted();
-        if (!response.ok) throw new Error(response.status === 429 ? 'AI 使用量暫時達上限，請稍後重試。' : editing ? 'AI 暫時無法編輯字卡，請重試。' : 'AI 暫時無法生成字卡，請重試。');
+        if (!response.ok) {
+            const errDetails = await response.text().catch(() => '');
+            console.error('[FlashcardGen] Gemini API 回傳錯誤：', response.status, errDetails);
+            throw new Error(response.status === 429 ? 'AI 使用量暫時達上限，請稍後重試。' : editing ? 'AI 暫時無法編輯字卡，請重試。' : 'AI 暫時無法生成字卡，請重試。');
+        }
         const result = await response.json(), candidate = result.candidates?.[0]; ensure(uid); signal.throwIfAborted();
-        if (candidate?.finishReason !== 'STOP') throw new Error(editing ? '字卡未完整編輯，原內容未修改。' : '字卡未完整生成，請重試。');
+        if (candidate?.finishReason !== 'STOP') {
+            console.error('[FlashcardGen] Gemini 未正常完成，finishReason:', candidate?.finishReason);
+            throw new Error(editing ? '字卡未完整編輯，原內容未修改。' : '字卡未完整生成，請重試。');
+        }
         return candidate.content?.parts?.filter(p => !p.thought).map(p => p.text || '').join('');
     } finally { signal.removeEventListener('abort', abortListener); }
 }
