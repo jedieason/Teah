@@ -346,7 +346,7 @@ export function mountFlashcard({ host, activate }) {
         instructions.rows = 6; instructions.maxLength = MAX_GENERATION_INSTRUCTIONS;
         instructions.placeholder = '例如：以問答呈現，只整理判讀步驟與容易混淆的觀念，答案用條列。';
         const status = node('p', '', form, 'vocab-generation-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
-        const controls = node('div', null, form, 'vocab-toolbar');
+        const controls = node('div', null, form, 'vocab-toolbar vocab-dialog-actions');
         const cancel = node('button', '取消', controls, 'vocab-button'); cancel.type = 'button'; cancel.onclick = () => dialog.close();
         const submit = node('button', '生成字卡', controls, 'vocab-button vocab-primary'); submit.type = 'submit';
         form.onsubmit = async event => {
@@ -390,7 +390,7 @@ export function mountFlashcard({ host, activate }) {
         const instructions = field('編輯指令', form, '', 'textarea'); instructions.rows = 6; instructions.maxLength = MAX_GENERATION_INSTRUCTIONS; instructions.required = true;
         instructions.placeholder = '例如：修正英文拼字，將解釋改成繁體中文條列，重點用粗體。';
         const status = node('p', '', form, 'vocab-generation-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
-        const controls = node('div', null, form, 'vocab-toolbar');
+        const controls = node('div', null, form, 'vocab-toolbar vocab-dialog-actions');
         const cancel = node('button', '取消', controls, 'vocab-button'); cancel.type = 'button'; cancel.onclick = () => dialog.close();
         const submit = node('button', '套用 AI 編輯', controls, 'vocab-button vocab-primary'); submit.type = 'submit';
         form.onsubmit = async event => {

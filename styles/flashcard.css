@@ -72,6 +72,9 @@
 .vocab-generation-form { display:grid; gap:17px; }
 .vocab-generation-status { margin:0; font-size:13px; color:var(--v-muted); overflow-wrap:anywhere; }
 .vocab-generation-status:empty { display:none; }
+.vocab-generation-dialog .vocab-toolbar,
+.vocab-dialog-actions { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:18px 0 0; }
+.vocab-dialog-actions > :only-child { margin-left:auto; }
 html.dark-mode .vocab-generation-dialog { --surface-color:#242629; --on-surface:#edf0f2; --v-line:#4b5058; --v-muted:#b6bbc4; --v-accent:#aaa2ff; --v-soft:#30343a; color-scheme:dark; }
 html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-import-controls { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
@@ -183,7 +186,8 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-import-dialog .vocab-import-preview { max-height:none; overflow:visible; }
 .vocab-import-dialog .vocab-import-preview > div { grid-template-columns:32px minmax(0,1fr) minmax(0,1fr); content-visibility:auto; contain-intrinsic-size:auto 50px; }
 .vocab-import-preview .has-error { background:#fff6ef; }
-.vocab-import-footer { display:flex; flex-shrink:0; justify-content:flex-end; gap:12px; padding:16px 26px max(16px,env(safe-area-inset-bottom)); border-top:1px solid var(--v-line); background:var(--surface-color,#fff); }
+.vocab-import-footer { display:flex; flex-shrink:0; justify-content:space-between; align-items:center; gap:12px; padding:16px 26px max(16px,env(safe-area-inset-bottom)); border-top:1px solid var(--v-line); background:var(--surface-color,#fff); }
+.vocab-import-footer > :only-child { margin-left:auto; }
 .vocab-import-footer .vocab-button { border:0; border-radius:24px; font-size:13px; background:var(--v-soft); color:var(--v-muted); }
 .vocab-import-footer .vocab-primary { background:var(--v-accent); color:#fff; }
 .vocab-import-footer .vocab-primary:disabled { background:var(--v-soft); color:var(--v-muted); }
@@ -273,7 +277,8 @@ body.vocab-studying { overflow:hidden; }
 .vocab-setting-section { border-radius:12px; background:var(--v-soft); }.vocab-setting-section > summary { padding:24px; font-weight:600; cursor:pointer; }
 .vocab-setting-content { display:grid; gap:16px; padding:0 24px 24px; }.vocab-setting-content .vocab-toggle { padding:4px 0; min-height:36px; }
 .vocab-setting-content .vocab-muted { margin:0; }.vocab-write-modes { background:var(--v-soft); padding:16px 24px; border-radius:12px; }
-.vocab-options-footer { display:flex; align-items:center; justify-content:end; flex-wrap:wrap; gap:14px; padding:24px 0; border-top:1px solid var(--v-line); }
+.vocab-options-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding:24px 0; border-top:1px solid var(--v-line); }
+.vocab-options-footer > :only-child { margin-left:auto; }
 .vocab-options-dialog .vocab-options-footer { position:sticky; bottom:0; background:var(--surface-color,#fff); z-index:1; }
 .vocab-options-footer .vocab-danger,.vocab-options-footer .vocab-link { margin-right:auto; }.vocab-options-footer .vocab-button { border-radius:30px; }
 .vocab-settings-error { margin:0; color:var(--v-error); font-size:14px; }.vocab-settings-error:empty { display:none; }

@@ -8,7 +8,8 @@
 .dialog-close svg { width: 19px; height: 19px; flex-shrink: 0; }
 .dialog-close:hover { background: #f1f3f5; color: #25292f; }
 .md3-dialog-body { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
-.md3-dialog-actions { display: flex; justify-content: flex-end; gap: 10px; padding-top: 4px; }
+.md3-dialog-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 4px; }
+.md3-dialog-actions > :only-child { margin-left: auto; }
 .md3-text-btn, .md3-filled-btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 11px 20px; border-radius: 10px; font: 500 14px/1.5 var(--ui-font); cursor: pointer; flex-shrink: 0; box-sizing: border-box; }
 .md3-text-btn { background: var(--surface-color, #ffffff); color: var(--on-surface, #555e69); border: 1px solid var(--ui-border, #dfe4ea); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04); transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease; }
 .md3-text-btn:hover { background: var(--ui-hover, #f7f9fb); border-color: #b0b8c4; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); }

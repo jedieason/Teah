@@ -3,7 +3,8 @@
 .learning-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
 .learning-header h2 { margin:0; font-size:20px; font-weight:600; }
 .learning-header button { margin:0; flex-shrink:0; }
-.learning-dialog .dialog-actions { display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-top:20px; flex-wrap:wrap; }
+.learning-dialog .dialog-actions { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:20px; flex-wrap:wrap; }
+.learning-dialog .dialog-actions > :only-child { margin-left:auto; }
 .learning-dialog .dialog-actions > button { min-height:42px; }
 .learning-dialog .panel-danger-btn { border-color:var(--panel-danger-border,#edcccc) !important; color:var(--panel-danger,#aa3737) !important; }
 .learning-dialog .panel-danger-btn:hover { background:#fff5f5 !important; border-color:var(--panel-danger,#aa3737) !important; }
