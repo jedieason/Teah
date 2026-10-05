@@ -18,6 +18,7 @@
     "test:flashcard-ai-edit": "node tests/flashcard-ai-edit-browser.mjs",
     "test:vocabulary": "node tests/flashcard-browser.mjs",
     "test:vocabulary:study": "node tests/flashcard-study-browser.mjs",
+    "test:vocabulary:swipe": "node tests/flashcard-swipe-browser.mjs",
     "test:vocabulary:edge": "node tests/flashcard-edge-browser.mjs"
   },
   "engines": {

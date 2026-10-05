@@ -219,6 +219,8 @@ body.vocab-studying { overflow:hidden; }
 .vocab-study-title { display:grid; text-align:center; gap:2px; font-size:15px; font-weight:600; min-width:0; }
 .vocab-study-title > span { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
 .vocab-study-count { font-size:16px; }
+.vocab-study-center { display:contents; }
+.vocab-mobile-count,.vocab-flash-preview,.vocab-swipe-feedback { display:none; }
 .vocab-study-actions { display:flex; gap:10px; justify-content:end; color:var(--v-muted); }
 .vocab-study-actions .vocab-icon { display:grid; place-items:center; }
 .vocab-mode-menu { position:relative; justify-self:start; color:var(--v-muted); }
@@ -318,12 +320,37 @@ html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
 .vocab-goal-dialog .vocab-options-footer { margin-top:42px; border:0; padding-bottom:0; }
 @media(max-width:700px) {
     .vocab-page:is([data-phase="flash"],[data-phase="learn"]):not([hidden]) { padding:0 16px 20px; }
+    .vocab-page[data-phase="flash"]:not([hidden]) { overflow-x:hidden; }
     .vocab-study-header { grid-template-columns:1fr auto; gap:8px; min-height:100px; margin-bottom:18px; }.vocab-study-title { grid-column:1/-1; grid-row:2; font-size:13px; padding-bottom:10px; }.vocab-study-actions { grid-column:2; grid-row:1; }.vocab-mode-menu > summary { font-size:15px; gap:8px; }
-    .vocab-flash-workspace { margin:auto; }.vocab-flash-card .vocab-flip { height:clamp(240px,calc(100dvh - 340px),620px); }.vocab-flash-card .vocab-face { padding:70px 24px 35px; font-size:28px; }.vocab-card-actions { top:16px; right:12px; }
+    .vocab-study-center:has(.vocab-mobile-count) { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,1fr); align-items:center; gap:8px; grid-column:1/-1; grid-row:2; padding-bottom:10px; }
+    .vocab-study-center:has(.vocab-mobile-count) .vocab-study-title { grid-column:2; grid-row:1; padding-bottom:0; }
+    .vocab-mobile-count { display:flex; align-items:center; gap:4px; padding:4px 8px; border:1px solid currentColor; border-radius:22px; font-size:12px; font-weight:600; white-space:nowrap; }
+    .vocab-mobile-count.error { justify-self:start; }.vocab-mobile-count.success { justify-self:end; }
+    .vocab-flash-counts { display:none; }
+    .vocab-flash-workspace { margin:auto; }.vocab-flash-card .vocab-flip { height:clamp(240px,calc(100dvh - 340px),620px); touch-action:pan-y pinch-zoom; }.vocab-flash-card .vocab-face { padding:70px 24px 35px; font-size:28px; touch-action:pan-y pinch-zoom; }.vocab-card-actions { top:16px; right:12px; }
+    .vocab-flash-card .vocab-flip { z-index:1; transform:translateX(var(--swipe-x,0px)) rotate(var(--swipe-angle,0deg)); transform-origin:50% 70%; transition:transform .28s cubic-bezier(.2,.7,.3,1); }
+    .vocab-flash-card .vocab-flip.swipe-dragging { transition:none; }
+    .vocab-flip:is(.swipe-dragging,.swipe-exiting) { will-change:transform; }
+    .vocab-flash-preview:not([hidden]) { display:flex; flex-direction:column; position:absolute; inset:0; pointer-events:none; border-radius:20px; background:var(--surface-color,#fff); box-shadow:0 0 36px #18224418; opacity:calc(.35 + var(--swipe-progress,0) * .65); transform:scale(calc(.96 + var(--swipe-progress,0) * .04)); transition:transform .28s ease,opacity .28s ease; }
+    .vocab-flash-card:has(.swipe-dragging) .vocab-flash-preview { transition:none; }
+    .vocab-preview-face { display:grid; place-content:center; flex:1; padding:70px 24px 35px; font-size:28px; white-space:pre-wrap; overflow-wrap:anywhere; text-align:center; overflow:hidden; min-height:0; }
+    .vocab-flash-preview.show-both .vocab-preview-face { flex-basis:50%; padding:60px 48px 30px; }
+    .vocab-flash-preview.show-both .vocab-preview-face + .vocab-preview-face { border-top:1px solid var(--v-line); padding-top:30px; }
+    .vocab-swipe-feedback { display:grid; place-items:center; position:absolute; inset:0; z-index:3; pointer-events:none; border:2px solid currentColor; border-radius:20px; background:var(--surface-color,#fff); opacity:var(--swipe-feedback,0); transition:opacity .2s ease; font-size:24px; font-weight:600; }
+    .swipe-dragging .vocab-swipe-feedback { transition:none; }
+    .vocab-swipe-feedback > span { display:none; }
+    .vocab-flip[data-swipe="learning"] .vocab-swipe-feedback { color:var(--v-error); }
+    .vocab-flip[data-swipe="known"] .vocab-swipe-feedback { color:var(--v-success); }
+    .vocab-flip[data-swipe="learning"] .vocab-swipe-learning,.vocab-flip[data-swipe="known"] .vocab-swipe-known { display:block; }
     .vocab-flash-controls { grid-template-columns:1fr auto; row-gap:16px; }.vocab-flash-navigation { grid-row:1; grid-column:1/-1; justify-content:center; }.vocab-flash-controls > .vocab-toggle { grid-row:2; font-size:12px; }.vocab-flash-extras { grid-row:2; }.vocab-flash-counts { font-size:12px; }
+    .vocab-flash-navigation { display:none; }
+    .vocab-flash-controls > .vocab-toggle,.vocab-flash-controls .vocab-flash-extras { grid-row:1; }
     .vocab-page[data-phase="learn"] .vocab-question { padding:22px 18px; }.vocab-page[data-phase="learn"] .vocab-prompt { font-size:22px; min-height:110px; padding-bottom:30px; }.vocab-page[data-phase="learn"] .vocab-choices { grid-template-columns:1fr; gap:12px; }.vocab-page[data-phase="learn"] .vocab-choice { font-size:18px; min-height:65px; padding:12px; }.vocab-page[data-phase="learn"] .vocab-feedback { padding-top:24px; }.vocab-page[data-phase="learn"] .vocab-progress-row { margin-top:0; margin-bottom:16px; }
     .vocab-options-dialog,.vocab-flash-options,.vocab-goal-dialog { padding:24px 20px; }.vocab-option-pills { flex-wrap:wrap; }.vocab-option-pills .vocab-check { min-width:90px; }.vocab-setting-section > summary { padding:20px; }.vocab-setting-content { padding:0 20px 20px; }.vocab-options-footer { gap:10px; }.vocab-options-dialog .vocab-options-footer { padding-bottom:0; }
     .vocab-goal-dialog .vocab-heading { margin-bottom:26px; }.vocab-goal-dialog .vocab-heading h2 { font-size:24px; }.vocab-goals { grid-template-columns:1fr; gap:14px; }.vocab-goal-dialog .vocab-options-footer { margin-top:16px; }.vocab-shortcuts dl { grid-template-columns:1fr auto; }
+}
+@media(max-width:700px) and (prefers-reduced-motion:reduce) {
+    .vocab-flash-card .vocab-flip,.vocab-flash-preview:not([hidden]) { transform:none; }
 }
 
 .vocab-dialog:is(.vocab-goal-dialog,.vocab-options-dialog,.vocab-flash-options) { --v-accent:#4d52ff; --v-muted:#64708a; --v-line:#eceef4; --v-soft:#f5f6fa; color:#303647; }

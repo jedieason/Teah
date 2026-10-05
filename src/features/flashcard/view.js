@@ -3,6 +3,7 @@ import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseI
 import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade, generateDeck, editDeckWithAI } from './service.js';
 import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS } from './generation.js';
 import { editingBatches } from './editing.js';
+import { isMobileFlash, bindMobileFlashSwipe, animateMobileFlashExit, resetMobileFlashSwipe } from './mobile-swipe.js';
 const node = (tag, text, parent, className) => {
     const e = document.createElement(tag); if (text != null) e.textContent = text;
     if (className) e.className = className; parent?.append(e); return e;
@@ -639,10 +640,19 @@ export function mountFlashcard({ host, activate }) {
         chevron.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${studyIcons.chevron}</svg>`;
         const choices = node('div', null, menu, 'vocab-mode-list');
         button('Flashcards', choices, () => { menu.open = false; return startFlash(); }); button('Learn', choices, () => { menu.open = false; settings(false); });
-        const title = node('div', null, h, 'vocab-study-title');
+        const center = node('div', null, h, 'vocab-study-center');
+        if (phase === 'flash' && flash.options.track && !flash.completed) {
+            const learning = node('div', null, center, 'vocab-mobile-count error');
+            node('span', '還在學習', learning); node('strong', String(Object.values(flash.ratings).filter(value => !value).length), learning);
+        }
+        const title = node('div', null, center, 'vocab-study-title');
         const accessibleTitle = node('h1', mode, title, 'vocab-sr-only'); accessibleTitle.tabIndex = -1;
         if (phase === 'flash') node('strong', `${Math.min(flash.index + 1, flash.order.length)} / ${flash.order.length}`, title, 'vocab-study-count');
         node('span', deck.title, title);
+        if (phase === 'flash' && flash.options.track && !flash.completed) {
+            const known = node('div', null, center, 'vocab-mobile-count success');
+            node('span', '知道了', known); node('strong', String(Object.values(flash.ratings).filter(Boolean).length), known);
+        }
         const actions = node('div', null, h, 'vocab-study-actions');
         const settingsButton = studyIcon('settings', '設定', actions, settingsAction);
         if (phase === 'learn') settingsButton.setAttribute('popovertarget', 'vocab-quick-options');
@@ -925,11 +935,18 @@ export function mountFlashcard({ host, activate }) {
     async function rateFlash(known) {
         if (flash.completed) return;
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
-        const stage = host.querySelector('.vocab-flip'); stage?.classList.add(known ? 'swipe-known' : 'swipe-learning');
+        const stage = host.querySelector('.vocab-flip'), mobile = isMobileFlash();
+        if (!mobile) stage?.classList.add(known ? 'swipe-known' : 'swipe-learning');
+        updateFlashPreview(1);
+        const animation = mobile ? animateMobileFlashExit(stage, known ? 1 : -1, true) : null;
         const event = newEvent('flash', { cardId: card.id, direction: flash.options.direction, revision: card.revision, correct: known, sessionId: flash.id });
         const next = clone(flash); next.history ||= []; next.history.push({ index: flash.index, eventId: event.id, cardId: card.id, known });
         next.ratings[card.id] = known; next.index++; next.flipped = false; next.completed = next.index >= next.order.length; next.updatedAt = Date.now(); next.playing = false;
-        await persist(event, next); await new Promise(resolve => setTimeout(resolve, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 210)); flash = next; render();
+        try {
+            if (mobile) await Promise.all([persist(event, next), animation]);
+            else { await persist(event, next); await new Promise(resolve => setTimeout(resolve, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 210)); }
+        } catch (error) { resetMobileFlashSwipe(stage); stage?.classList.remove('swipe-known', 'swipe-learning'); throw error; }
+        flash = next; render();
     }
     async function undoFlash() {
         const last = flash.history?.at(-1); if (!last) return;
@@ -941,12 +958,26 @@ export function mountFlashcard({ host, activate }) {
         await persist(newEvent('flash', { cardId: original.cardId, direction: original.direction, revision: original.revision, correct: original.correct, sessionId: flash.id, originalId: original.id, value: false }), next);
         flash = next; render();
     }
-    async function moveFlash(shift) {
-        const dest = flash.index + shift; if (dest < 0) return;
-        flash.index = Math.min(flash.order.length, dest); flash.completed = dest >= flash.order.length; flash.flipped = false; await saveFlash(); render();
+    async function moveFlash(shift, swipeDirection = -Math.sign(shift)) {
+        const stage = host.querySelector('.vocab-flip'), dest = flash.index + shift;
+        if (dest < 0) { resetMobileFlashSwipe(stage); return; }
+        const next = clone(flash); next.index = Math.min(flash.order.length, dest); next.completed = dest >= flash.order.length; next.flipped = false; next.updatedAt = Date.now();
+        updateFlashPreview(shift);
+        try { await Promise.all([persist(null, next), animateMobileFlashExit(stage, swipeDirection, false)]); }
+        catch (error) { resetMobileFlashSwipe(stage); throw error; }
+        flash = next; render();
     }
     async function shuffleFlash() {
         await startFlash({ ...flash.options, shuffle: true }, true);
+    }
+    function updateFlashPreview(shift) {
+        const preview = host.querySelector('.vocab-flash-preview'); if (!preview) return;
+        preview.replaceChildren();
+        const card = deck.cards.find(c => c.id === flash.order[flash.index + shift]);
+        preview.hidden = !card; if (!card) return;
+        preview.classList.toggle('show-both', !!flash.options.showBoth);
+        text(promptFor(card, flash.options.direction), preview, 'vocab-preview-face');
+        if (flash.options.showBoth) text(answerFor(card, flash.options.direction), preview, 'vocab-preview-face');
     }
     function renderFlash() {
         studyHeader('Flashcards', () => flashSettings());
@@ -964,6 +995,8 @@ export function mountFlashcard({ host, activate }) {
         }
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
         const wrapper = node('div', null, workspace, 'vocab-flash-card');
+        const preview = node('div', null, wrapper, 'vocab-flash-preview'); preview.setAttribute('aria-hidden', 'true'); preview.inert = true;
+        updateFlashPreview(1);
         const stage = node('div', null, wrapper, 'vocab-flip');
         stage.setAttribute('role', 'button'); stage.setAttribute('tabindex', '0');
         stage.setAttribute('aria-label', flash.options.showBoth ? '字卡雙面' : flash.flipped ? '查看正面' : '查看背面');
@@ -982,8 +1015,15 @@ export function mountFlashcard({ host, activate }) {
             starButton(card, actions);
             text(side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction), face);
         }
+        const feedback = node('div', null, stage, 'vocab-swipe-feedback'); feedback.setAttribute('aria-hidden', 'true');
+        node('span', '還在學習', feedback, 'vocab-swipe-learning'); node('span', '知道了', feedback, 'vocab-swipe-known');
+        bindMobileFlashSwipe(stage, {
+            blocked: () => busy || dialog.open || host.hidden || phase !== 'flash', tracking: () => flash.options.track,
+            preview: direction => updateFlashPreview(flash.options.track || direction < 0 ? 1 : -1),
+            swipe: direction => { void action(() => flash.options.track ? rateFlash(direction > 0) : moveFlash(direction < 0 ? 1 : -1, direction)); }
+        });
         updateFlip(); let down = null, swiped = false;
-        stage.onpointerdown = e => { if (e.target.closest('.vocab-card-actions')) return; down = [e.clientX, e.clientY]; swiped = false; };
+        stage.onpointerdown = e => { if (isMobileFlash() || e.target.closest('.vocab-card-actions')) return; down = [e.clientX, e.clientY]; swiped = false; };
         stage.onpointercancel = () => { down = null; };
         stage.onpointerup = e => { if (!down) return; const delta = e.clientX - down[0]; if (Math.abs(delta) > 70 && Math.abs(e.clientY - down[1]) < 100) { swiped = true; void action(() => flash.options.track ? rateFlash(delta > 0) : moveFlash(delta < 0 ? 1 : -1)); } down = null; };
         stage.onclick = e => { if (e.target.closest('.vocab-card-actions')) return; if (!swiped) void action(flip); swiped = false; };

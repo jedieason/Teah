@@ -28,7 +28,7 @@ async function advanced() {
 }
 await mkdir('artifacts/qa', { recursive: true });
 try {
-    await page.goto('http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
+    await page.goto(process.env.TEST_BASE_URL || 'http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
     await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
     await view.getByRole('button', { name: deck.title, exact: true }).click();
     await view.getByRole('button', { name: 'Flashcards', exact: true }).click(); await idle();
