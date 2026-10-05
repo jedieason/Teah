@@ -922,8 +922,11 @@ export function mountFlashcard({ host, activate }) {
         back?.setAttribute('aria-hidden', String(backHidden));
         front?.querySelectorAll('button').forEach(b => { b.tabIndex = frontHidden ? -1 : 0; });
         back?.querySelectorAll('button').forEach(b => { b.tabIndex = (backHidden || flash.options.showBoth) ? -1 : 0; });
+        const frontActions = front?.querySelector('.vocab-card-actions'), backActions = back?.querySelector('.vocab-card-actions');
+        if (frontActions) frontActions.style.display = frontHidden ? 'none' : '';
+        if (backActions) backActions.style.display = (backHidden || flash.options.showBoth) ? 'none' : '';
         if (flash.options.showBoth) {
-            back?.querySelector('.vocab-card-actions')?.setAttribute('aria-hidden', 'true');
+            backActions?.setAttribute('aria-hidden', 'true');
         }
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
         if (flash.options.audio) speak(flash.flipped ? answerFor(card, flash.options.direction) : promptFor(card, flash.options.direction), flash.flipped ? flash.options.direction : flash.options.direction === 'term' ? 'definition' : 'term');
