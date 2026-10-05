@@ -10,7 +10,8 @@
 .learning-dialog .panel-danger-btn:hover { background:#fff5f5 !important; border-color:var(--panel-danger,#aa3737) !important; }
 .learning-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:16px 0; }
 .learning-form label { display:flex; flex-direction:column; gap:6px; font-size:14px; }
-.learning-dialog input,.learning-dialog select,.learning-dialog textarea { box-sizing:border-box; width:100%; padding:12px; border:1px solid var(--ui-border, #8886); border-radius:10px; background:transparent; color:inherit; font:inherit; }
+.learning-dialog input,.learning-dialog select,.learning-dialog textarea { box-sizing:border-box; width:100%; padding:12px; border:1px solid var(--ui-border, #8886); border-radius:10px; background:transparent; color:inherit; font:inherit; transition:border-color .15s ease; }
+.learning-dialog input:focus,.learning-dialog input:focus-visible,.learning-dialog select:focus,.learning-dialog select:focus-visible,.learning-dialog textarea:focus,.learning-dialog textarea:focus-visible { outline:none !important; border-color:var(--primary, #0b57d0) !important; }
 .learning-dialog table { width:100%; border-collapse:collapse; font-size:14px; }
 .learning-dialog th,.learning-dialog td { padding:10px 6px; text-align:left; border-bottom:1px solid #8883; }
 .learning-dialog p,.learning-dialog li { line-height:1.7; }

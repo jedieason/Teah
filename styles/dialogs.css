@@ -22,10 +22,10 @@
 #uploadModal .md3-segmented-btn input:checked + span { background: white; color: #202833; box-shadow: 0 1px 3px #1f293714; }
 #uploadModal .md3-segmented-btn input:focus-visible + span { outline: 2px solid var(--primary); outline-offset: -2px; }
 #uploadModal .md3-input-wrapper { margin: 0; }
-#uploadModal #uploadNameInput, #uploadModal #pasteJson { box-sizing: border-box; border: 1px solid #dce1e6; border-radius: 10px; background: #fff; padding: 14px; margin: 0; font: 14px/1.6 var(--ui-font); }
+#uploadModal #uploadNameInput, #uploadModal #pasteJson { box-sizing: border-box; border: 1px solid #dce1e6; border-radius: 10px; background: #fff; padding: 14px; margin: 0; font: 14px/1.6 var(--ui-font); transition: border-color .15s ease; }
 #uploadModal #pasteJson { min-height: 160px; resize: vertical; }
 #uploadModal .md3-floating-label { color: #6a737e; font-size: 13px; }
-#uploadModal #uploadNameInput:focus, #uploadModal #pasteJson:focus { border-color: var(--primary); }
+#uploadModal #uploadNameInput:focus, #uploadModal #pasteJson:focus, #uploadModal #uploadNameInput:focus-visible, #uploadModal #pasteJson:focus-visible { outline: none !important; border-color: var(--primary); }
 .quiz-entry-dialog { max-width: 440px; gap: 26px; padding: 32px; }
 .quiz-entry-heading { padding-right: 32px; }
 .dialog-eyebrow { color: #757e8a; font: 13px/1.6 var(--ui-font); margin: 0 0 7px; }

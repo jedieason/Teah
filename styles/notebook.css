@@ -9,9 +9,11 @@
 .notebook-tabs { display: flex; gap: 4px; padding: 4px; background: #f4f5f6; border-radius: 12px; flex-shrink: 0; }
 .notebook-tabs button { padding: 9px 14px; min-height: 38px; font-size: 14px; border: 0; background: transparent; color: #666d74; border-radius: 9px; cursor: pointer; white-space: nowrap; }
 .notebook-tabs button[aria-pressed=true] { color: #1f1f1f; background: white; box-shadow: 0 1px 3px #00000012; }
-#mistakeSearch { width: 310px; min-width: 120px; border: 1px solid var(--ui-border); border-radius: 10px; padding: 12px 14px; font-size: 14px; background: white; color: #1f1f1f; }
+#mistakeSearch { width: 310px; min-width: 120px; border: 1px solid var(--ui-border); border-radius: 10px; padding: 12px 14px; font-size: 14px; background: white; color: #1f1f1f; transition: border-color .15s ease; }
+#mistakeSearch:focus, #mistakeSearch:focus-visible { outline: none !important; border-color: var(--primary, #0b57d0) !important; }
 .notebook-filters { display: flex; gap: 10px; }
-.notebook-filters select { min-width: 0; max-width: 42%; border: 1px solid var(--ui-border); border-radius: 8px; padding: 9px 28px 9px 12px; background: white; color: #444746; font-size: 13px; min-height: 38px; text-overflow: ellipsis; }
+.notebook-filters select { min-width: 0; max-width: 42%; border: 1px solid var(--ui-border); border-radius: 8px; padding: 9px 28px 9px 12px; background: white; color: #444746; font-size: 13px; min-height: 38px; text-overflow: ellipsis; transition: border-color .15s ease; }
+.notebook-filters select:focus, .notebook-filters select:focus-visible { outline: none !important; border-color: var(--primary, #0b57d0) !important; }
 #mistakeSort { margin-left: auto; }
 .notebook-summary { font-size: 12px; line-height: 1.6; color: var(--ui-muted); margin: 14px 0 0; }
 .notebook-scroll { overflow-y: auto; flex: 1; min-height: 0; overscroll-behavior: contain; background: #fafbfc; border-block: 1px solid var(--ui-border); scrollbar-gutter: stable; }

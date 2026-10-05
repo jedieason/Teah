@@ -6,7 +6,8 @@
 .collection-breadcrumb:empty { display:none; }
 .collection-toolbar { display:flex; gap:12px; margin-bottom:20px; }
 .collection-toolbar .library-search { width:min(360px,100%); }
-.collection-toolbar select { max-width:280px; min-width:0; padding:10px 12px; border:1px solid var(--ui-border); border-radius:10px; background:var(--surface-color); color:inherit; }
+.collection-toolbar select { max-width:280px; min-width:0; padding:10px 12px; border:1px solid var(--ui-border); border-radius:10px; background:var(--surface-color); color:inherit; transition:border-color .15s ease; }
+.collection-toolbar select:focus, .collection-toolbar select:focus-visible { outline:none !important; border-color:var(--primary, #0b57d0) !important; }
 .collection-page > [role=status]:empty { display:none; }
 .collection-workspace { display:grid; grid-template-columns:minmax(0,1fr); gap:24px; align-items:start; }
 .collection-workspace.has-preview { grid-template-columns:minmax(0,1fr) minmax(300px,1fr); }

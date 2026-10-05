@@ -79,9 +79,10 @@
     transition: border-color 0.3s ease;
 }
 
-.fillblank-input:focus {
+.fillblank-input:focus,
+.fillblank-input:focus-visible {
     outline: none;
-    border-color: #666666;
+    border-color: var(--primary, #0b57d0);
 }
 
 .fillblank-input.correct {
@@ -933,13 +934,10 @@ p {
     transform: scale(0.985);
 }
 
-.option-button:focus {
-    outline: none;
-}
-
+.option-button:focus,
 .option-button:focus-visible {
-    outline: 2px solid #0b57d0;
-    outline-offset: 2px;
+    outline: none;
+    border-color: #0b57d0;
 }
 
 .option-button.selected {
@@ -1163,8 +1161,8 @@ p {
 }
 
 .select-button:focus-visible {
-    outline: 2px solid #6b7280;
-    outline-offset: 2px;
+    outline: none;
+    border-color: var(--primary, #0b57d0);
 }
 
 .restoreBtn_C3D4:focus-visible {
@@ -1264,8 +1262,8 @@ p {
 }
 
 .select-button:focus-visible {
-    outline: 2px solid #6b7280;
-    outline-offset: 2px;
+    outline: none;
+    border-color: var(--primary, #0b57d0);
 }
 
 .select-button:hover {
