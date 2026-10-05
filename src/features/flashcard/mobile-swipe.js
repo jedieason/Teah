@@ -37,10 +37,10 @@ export async function animateMobileFlashExit(stage, direction, track) {
 export function bindMobileFlashSwipe(stage, { blocked, tracking, preview, swipe }) {
     let down = null, suppressClick = false;
     const release = pointerId => { if (stage.hasPointerCapture(pointerId)) stage.releasePointerCapture(pointerId); };
-    const cancel = () => {
+    const cancel = (scrolled = false) => {
         if (!down) return;
         const { pointerId, dragging } = down; down = null;
-        suppressClick ||= dragging; release(pointerId); resetMobileFlashSwipe(stage);
+        suppressClick ||= dragging || scrolled; release(pointerId); resetMobileFlashSwipe(stage);
     };
     stage.addEventListener('pointerdown', event => {
         if (!mobile() || blocked() || !event.isPrimary || event.button !== 0 || event.target.closest('.vocab-card-actions')) return;
@@ -54,7 +54,7 @@ export function bindMobileFlashSwipe(stage, { blocked, tracking, preview, swipe 
         const x = event.clientX - down.x, y = event.clientY - down.y;
         if (!down.dragging) {
             if (Math.max(Math.abs(x), Math.abs(y)) < 8) return;
-            if (Math.abs(y) >= Math.abs(x)) { cancel(); return; }
+            if (Math.abs(y) >= Math.abs(x)) { cancel(true); return; }
             down.dragging = true; stage.classList.add('swipe-dragging');
         }
         const direction = Math.sign(x);
@@ -75,8 +75,9 @@ export function bindMobileFlashSwipe(stage, { blocked, tracking, preview, swipe 
         if (mobile() && !blocked() && Math.abs(x) >= threshold && Math.abs(x) > Math.abs(y) * 1.2) swipe(Math.sign(x));
         else resetMobileFlashSwipe(stage);
     });
-    stage.addEventListener('pointercancel', cancel);
-    stage.addEventListener('lostpointercapture', cancel);
+    stage.addEventListener('pointercancel', () => cancel());
+    stage.addEventListener('lostpointercapture', () => cancel());
+    stage.addEventListener('scroll', () => { suppressClick = true; }, { capture: true, passive: true });
     stage.addEventListener('click', event => {
         if (!suppressClick || event.detail === 0) return;
         event.preventDefault(); event.stopImmediatePropagation(); suppressClick = false;

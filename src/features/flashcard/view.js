@@ -928,6 +928,15 @@ export function mountFlashcard({ host, activate }) {
         if (flash.options.showBoth) {
             backActions?.setAttribute('aria-hidden', 'true');
         }
+        stage.querySelectorAll('.vocab-face-scroll').forEach(scroller => {
+            const { scrollTop, scrollHeight, clientHeight } = scroller;
+            const max = scrollHeight - clientHeight;
+            if (max <= 1) scroller.dataset.overflow = 'none';
+            else {
+                const top = scrollTop > 2, bottom = scrollTop < max - 2;
+                scroller.dataset.overflow = top && bottom ? 'both' : top ? 'top' : bottom ? 'bottom' : 'none';
+            }
+        });
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
         if (flash.options.audio) speak(flash.flipped ? answerFor(card, flash.options.direction) : promptFor(card, flash.options.direction), flash.flipped ? flash.options.direction : flash.options.direction === 'term' ? 'definition' : 'term');
     }
@@ -1016,7 +1025,35 @@ export function mountFlashcard({ host, activate }) {
                 speak(textToSpeak, lang);
             });
             starButton(card, actions);
-            text(side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction), face);
+            const scroller = node('div', null, face, 'vocab-face-scroll');
+            text(side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction), scroller, 'vocab-face-text');
+            const updateFade = () => {
+                const { scrollTop, scrollHeight, clientHeight } = scroller;
+                const max = scrollHeight - clientHeight;
+                if (max <= 1) { scroller.dataset.overflow = 'none'; return; }
+                const top = scrollTop > 2, bottom = scrollTop < max - 2;
+                scroller.dataset.overflow = top && bottom ? 'both' : top ? 'top' : bottom ? 'bottom' : 'none';
+            };
+            scroller.addEventListener('scroll', updateFade, { passive: true });
+            requestAnimationFrame(updateFade);
+            if (typeof ResizeObserver !== 'undefined') {
+                const ro = new ResizeObserver(updateFade);
+                ro.observe(scroller);
+            }
+            Object.defineProperty(face, 'scrollTop', {
+                get() { return scroller.scrollTop; },
+                set(v) { scroller.scrollTop = v; updateFade(); },
+                configurable: true
+            });
+            Object.defineProperty(face, 'scrollHeight', {
+                get() { return scroller.scrollHeight; },
+                configurable: true
+            });
+            Object.defineProperty(face, 'clientHeight', {
+                get() { return scroller.clientHeight; },
+                configurable: true
+            });
+            face.scrollTo = (...args) => scroller.scrollTo(...args);
         }
         const feedback = node('div', null, stage, 'vocab-swipe-feedback'); feedback.setAttribute('aria-hidden', 'true');
         node('span', '還在學習', feedback, 'vocab-swipe-learning'); node('span', '知道了', feedback, 'vocab-swipe-known');
@@ -1028,7 +1065,7 @@ export function mountFlashcard({ host, activate }) {
         updateFlip(); let down = null, swiped = false;
         stage.onpointerdown = e => { if (isMobileFlash() || e.target.closest('.vocab-card-actions')) return; down = [e.clientX, e.clientY]; swiped = false; };
         stage.onpointercancel = () => { down = null; };
-        stage.onpointerup = e => { if (!down) return; const delta = e.clientX - down[0]; if (Math.abs(delta) > 70 && Math.abs(e.clientY - down[1]) < 100) { swiped = true; void action(() => flash.options.track ? rateFlash(delta > 0) : moveFlash(delta < 0 ? 1 : -1)); } down = null; };
+        stage.onpointerup = e => { if (!down) return; const delta = e.clientX - down[0]; if (Math.abs(delta) > 70 && Math.abs(e.clientY - down[1]) < 100) { swiped = true; void action(() => flash.options.track ? rateFlash(delta > 0) : moveFlash(delta < 0 ? 1 : -1)); } else if (Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 8) { swiped = true; } down = null; };
         stage.onclick = e => { if (e.target.closest('.vocab-card-actions')) return; if (!swiped) void action(flip); swiped = false; };
         const controls = node('div', null, workspace, 'vocab-flash-controls');
         toggle('追蹤進度', controls, flash.options.track, value => changeFlashOptions({ track: value }));
