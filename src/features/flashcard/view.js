@@ -77,6 +77,56 @@ export function mountFlashcard({ host, activate }) {
         for (const [v, text] of values) { const o = node('option', text, s); o.value = v; }
         s.value = value; return s;
     }
+    function dropdown(label, parent, values, value, onchange) {
+        const wrap = node('div', null, parent, 'vocab-field vocab-field-row');
+        node('span', label, wrap);
+        const container = node('div', null, wrap, 'vocab-dropdown');
+        const trigger = node('button', null, container, 'vocab-dropdown-trigger');
+        trigger.type = 'button';
+        trigger.setAttribute('aria-label', label);
+        trigger.setAttribute('aria-haspopup', 'listbox');
+        trigger.setAttribute('aria-expanded', 'false');
+        const selected = values.find(([v]) => v === value) || values[0];
+        const labelSpan = node('span', selected ? selected[1] : '', trigger, 'vocab-dropdown-label');
+        const chevron = node('span', null, trigger, 'vocab-dropdown-chevron');
+        chevron.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${studyIcons.chevron}</svg>`;
+        const menu = node('div', null, container, 'vocab-dropdown-menu');
+        menu.setAttribute('role', 'listbox');
+        trigger.onclick = e => {
+            e.stopPropagation();
+            const isOpen = container.classList.toggle('open');
+            trigger.setAttribute('aria-expanded', String(isOpen));
+        };
+        values.forEach(([v, text]) => {
+            const item = node('button', text, menu, 'vocab-dropdown-item' + (v === value ? ' selected' : ''));
+            item.type = 'button'; item.setAttribute('role', 'option'); item.setAttribute('aria-selected', String(v === value));
+            item.onclick = e => {
+                e.stopPropagation();
+                container.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false');
+                labelSpan.textContent = text;
+                menu.querySelectorAll('.vocab-dropdown-item').forEach(b => {
+                    const isCurrent = b === item; b.classList.toggle('selected', isCurrent); b.setAttribute('aria-selected', String(isCurrent));
+                });
+                onchange(v);
+            };
+        });
+        const onDocClick = e => {
+            if (!container.isConnected) { document.removeEventListener('pointerdown', onDocClick); return; }
+            if (!container.contains(e.target)) {
+                container.classList.remove('open');
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+        };
+        document.addEventListener('pointerdown', onDocClick);
+        container.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && container.classList.contains('open')) {
+                e.preventDefault(); e.stopPropagation();
+                container.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false');
+                trigger.focus();
+            }
+        });
+        return container;
+    }
     function check(label, parent, checked) {
         const l = node('label', null, parent, 'vocab-check'); const input = node('input', null, l); input.type = 'checkbox'; input.checked = checked; node('span', label, l); return input;
     }
@@ -823,8 +873,12 @@ export function mountFlashcard({ host, activate }) {
         const body = modal('Flashcards 設定', 'vocab-flash-options');
         toggle('追蹤進度', body, flash.options.track, value => changeFlashOptions({ track: value }));
         toggle('只學星號單字', body, flash.options.scope === 'starred', value => changeFlashOptions({ scope: value ? 'starred' : 'all' }));
-        const dir = select('正面顯示', body, [['definition', '單字 · ' + (languages.find(l => l[0] === deck.termLanguage)?.[1] || deck.termLanguage)], ['term', '解釋 · ' + (languages.find(l => l[0] === deck.definitionLanguage)?.[1] || deck.definitionLanguage)]], flash.options.direction);
-        dir.onchange = () => action(() => changeFlashOptions({ direction: dir.value }));
+        const termLangName = languages.find(l => l[0] === deck.termLanguage)?.[1] || deck.termLanguage;
+        const defLangName = languages.find(l => l[0] === deck.definitionLanguage)?.[1] || deck.definitionLanguage;
+        const isDiff = termLangName && defLangName && termLangName !== defLangName;
+        const termLabel = isDiff ? termLangName : '單字';
+        const defLabel = isDiff ? defLangName : '解釋';
+        dropdown('正面顯示', body, [['term', defLabel], ['definition', termLabel]], flash.options.direction, val => action(() => changeFlashOptions({ direction: val })));
         toggle('同時顯示雙面', body, !!flash.options.showBoth, value => changeFlashOptions({ showBoth: value }));
         toggle('打亂順序', body, flash.options.shuffle, value => changeFlashOptions({ shuffle: value }));
         const shortcuts = node('details', null, body, 'vocab-shortcuts'); node('summary', '鍵盤快捷鍵', shortcuts);
