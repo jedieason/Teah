@@ -10,12 +10,12 @@ const node = (tag, text, parent, className) => {
 const languages = [['en-US', 'English'], ['zh-TW', '繁體中文'], ['ms-MY', '馬來文（Bahasa Melayu）'], ['ja-JP', '日本語'], ['ko-KR', '한국어'], ['fr-FR', 'Français'], ['de-DE', 'Deutsch'], ['es-ES', 'Español'], ['it-IT', 'Italiano'], ['la', 'Latin'], ['math', '數學／化學符號']];
 const typeLabels = { choice: '選擇題', multi: '複選題', written: '書寫／填空題', flash: '字卡', truefalse: '是非題', spell: '聽寫題' };
 const studyIcons = {
-    cards: '<rect x="3" y="3" width="14" height="14" rx="2" fill="currentColor" stroke="none"/><path d="M8 20h12V8"/>',
+    cards: '<rect x="6" y="5" width="15" height="13" rx="3.5" fill="var(--v-card-back,#4cd9ff)" stroke="none"/><rect x="2" y="1" width="15" height="13" rx="3.5" fill="currentColor" stroke="none"/>',
     learn: '<path d="M18 4a9 9 0 1 0 3 12"/><path d="m18 4 3 1-1 3M21 11v1"/>',
     settings: '<path d="m10 3-.6 2.3-2 .9L5.3 5.5 3 9.5l1.6 1.6v2L3 14.5l2.3 4 2.1-.7 2 .9L10 21h4l.6-2.3 2-.9 2.1.7 2.3-4-1.6-1.4v-2L21 9.5l-2.3-4-2.1.7-2-.9L14 3Z"/><circle cx="12" cy="12" r="3"/>',
     close: '<path d="m6 6 12 12M18 6 6 18"/>',
     left: '<path d="m14 5-7 7 7 7M7 12h14"/>', right: '<path d="m10 5 7 7-7 7M3 12h14"/>',
-    check: '<path d="m5 12 4 4L19 6"/>', shuffle: '<path d="M3 6h3l12 12h3M17 14l4 4-4 4M3 18h3l4-4M14 10l4-4h3M17 2l4 4-4 4"/>',
+    check: '<path d="m5 12 4 4L19 6"/>', shuffle: '<path d="M4 20L20 4M14.5 4h5.5v5.5M4 4l5 5M15 15l5 5M14.5 20h5.5v-5.5"/>',
     play: '<path d="m8 5 11 7-11 7Z" fill="currentColor" stroke="none"/>', pause: '<path d="M8 5v14M16 5v14" stroke-width="4"/>',
     undo: '<path d="m8 4-5 5 5 5M3 9h10a6 6 0 0 1 0 12"/>', edit: '<path d="m16 3 5 5L8 21H3v-5Z"/>',
     audio: '<path d="M11 5 6 9H3v6h3l5 4ZM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/>',
@@ -183,7 +183,7 @@ export function mountFlashcard({ host, activate }) {
         }
     }
     async function star(card) { const value = !projectStudy(study).stars[card.id]; study = await saveStudy(deck.id, study, newEvent('star', { cardId: card.id, value })); render(); }
-    function starButton(card, parent) { const starred = !!projectStudy(study).stars[card.id]; const b = icon(starred ? '★' : '☆', starred ? '取消星號' : '標記星號', parent, () => star(card)); b.classList.toggle('starred', starred); b.setAttribute('aria-pressed', String(starred)); }
+    function starButton(card, parent) { const starred = !!projectStudy(study).stars[card.id]; const b = studyIcon('star', starred ? '取消星號' : '標記星號', parent, () => star(card)); b.classList.toggle('starred', starred); b.setAttribute('aria-pressed', String(starred)); return b; }
     function renderDetail() {
         const h = heading(deck.title, { label: 'Flashcard', action: () => { phase = 'list'; deck = null; render(); } });
         button('編輯字卡集', h, () => edit(deck));
@@ -584,7 +584,9 @@ export function mountFlashcard({ host, activate }) {
         const h = node('header', null, host, 'vocab-study-header');
         const menu = node('details', null, h, 'vocab-mode-menu'); const summary = node('summary', null, menu);
         const glyph = node('span', null, summary, 'vocab-mode-glyph'); glyph.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${studyIcons[phase === 'flash' ? 'cards' : 'learn']}</svg>`;
-        node('span', mode, summary); node('span', '⌄', summary);
+        node('span', mode, summary);
+        const chevron = node('span', null, summary, 'vocab-mode-chevron');
+        chevron.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${studyIcons.chevron}</svg>`;
         const choices = node('div', null, menu, 'vocab-mode-list');
         button('Flashcards', choices, () => { menu.open = false; return startFlash(); }); button('Learn', choices, () => { menu.open = false; settings(false); });
         const title = node('div', null, h, 'vocab-study-title');
@@ -849,7 +851,16 @@ export function mountFlashcard({ host, activate }) {
         const stage = host.querySelector('.vocab-flip'); if (!stage) return;
         stage.classList.toggle('flipped', flash.flipped); stage.classList.toggle('show-both', !!flash.options.showBoth);
         stage.setAttribute('aria-label', flash.options.showBoth ? '字卡雙面' : flash.flipped ? '查看正面' : '查看背面');
-        stage.querySelector('.front').setAttribute('aria-hidden', String(!flash.options.showBoth && flash.flipped)); stage.querySelector('.back').setAttribute('aria-hidden', String(!flash.options.showBoth && !flash.flipped));
+        const front = stage.querySelector('.front'), back = stage.querySelector('.back');
+        const frontHidden = !flash.options.showBoth && flash.flipped;
+        const backHidden = !flash.options.showBoth && !flash.flipped;
+        front?.setAttribute('aria-hidden', String(frontHidden));
+        back?.setAttribute('aria-hidden', String(backHidden));
+        front?.querySelectorAll('button').forEach(b => { b.tabIndex = frontHidden ? -1 : 0; });
+        back?.querySelectorAll('button').forEach(b => { b.tabIndex = (backHidden || flash.options.showBoth) ? -1 : 0; });
+        if (flash.options.showBoth) {
+            back?.querySelector('.vocab-card-actions')?.setAttribute('aria-hidden', 'true');
+        }
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
         if (flash.options.audio) speak(flash.flipped ? answerFor(card, flash.options.direction) : promptFor(card, flash.options.direction), flash.flipped ? flash.options.direction : flash.options.direction === 'term' ? 'definition' : 'term');
     }
@@ -899,16 +910,29 @@ export function mountFlashcard({ host, activate }) {
         }
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
         const wrapper = node('div', null, workspace, 'vocab-flash-card');
-        const stage = node('button', null, wrapper, 'vocab-flip'); stage.type = 'button'; stage.setAttribute('aria-label', '查看背面'); stage.onclick = () => action(flip);
+        const stage = node('div', null, wrapper, 'vocab-flip');
+        stage.setAttribute('role', 'button'); stage.setAttribute('tabindex', '0');
+        stage.setAttribute('aria-label', flash.options.showBoth ? '字卡雙面' : flash.flipped ? '查看正面' : '查看背面');
+        stage.onkeydown = e => { if (e.target !== stage) return; if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); void action(flip); } };
         const faces = node('div', null, stage, 'vocab-flip-inner');
-        for (const side of ['front', 'back']) { const face = node('div', null, faces, 'vocab-face ' + side); text(side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction), face); }
-        const actions = node('div', null, wrapper, 'vocab-card-actions');
-        studyIcon('edit', '編輯字卡', actions, editFlashCard); studyIcon('audio', '朗讀卡片', actions, speakFlash); starButton(card, actions);
+        for (const side of ['front', 'back']) {
+            const face = node('div', null, faces, 'vocab-face ' + side);
+            const actions = node('div', null, face, 'vocab-card-actions');
+            actions.onclick = e => e.stopPropagation(); actions.onpointerdown = e => e.stopPropagation(); actions.onpointerup = e => e.stopPropagation();
+            studyIcon('edit', '編輯字卡', actions, editFlashCard);
+            studyIcon('audio', '朗讀卡片', actions, () => {
+                const textToSpeak = side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction);
+                const lang = side === 'front' ? (flash.options.direction === 'term' ? 'definition' : 'term') : flash.options.direction;
+                speak(textToSpeak, lang);
+            });
+            starButton(card, actions);
+            text(side === 'front' ? promptFor(card, flash.options.direction) : answerFor(card, flash.options.direction), face);
+        }
         updateFlip(); let down = null, swiped = false;
-        stage.onpointerdown = e => { down = [e.clientX, e.clientY]; swiped = false; };
+        stage.onpointerdown = e => { if (e.target.closest('.vocab-card-actions')) return; down = [e.clientX, e.clientY]; swiped = false; };
         stage.onpointercancel = () => { down = null; };
         stage.onpointerup = e => { if (!down) return; const delta = e.clientX - down[0]; if (Math.abs(delta) > 70 && Math.abs(e.clientY - down[1]) < 100) { swiped = true; void action(() => flash.options.track ? rateFlash(delta > 0) : moveFlash(delta < 0 ? 1 : -1)); } down = null; };
-        stage.onclick = () => { if (!swiped) void action(flip); swiped = false; };
+        stage.onclick = e => { if (e.target.closest('.vocab-card-actions')) return; if (!swiped) void action(flip); swiped = false; };
         const controls = node('div', null, workspace, 'vocab-flash-controls');
         toggle('追蹤進度', controls, flash.options.track, value => changeFlashOptions({ track: value }));
         const navigation = node('div', null, controls, 'vocab-flash-navigation');
