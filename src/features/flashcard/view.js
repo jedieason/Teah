@@ -1,6 +1,9 @@
+import { gradeEquivalence } from './equivalence.js';
+import { GRADING_LEVELS, gradingOptions, gradingLevel } from './grading-options.js';
+import { resetEquivalence } from './equivalence-client.js';
 import { auth } from '../../services/firebase.js';
-import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer, expandParentheses } from './model.js';
-import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade, generateDeck, editDeckWithAI } from './service.js';
+import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
+import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, generateDeck, editDeckWithAI } from './service.js';
 import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS } from './generation.js';
 import { editingBatches } from './editing.js';
 import { isMobileFlash, bindMobileFlashSwipe, animateMobileFlashExit, resetMobileFlashSwipe } from './mobile-swipe.js';
@@ -586,7 +589,7 @@ export function mountFlashcard({ host, activate }) {
     function download(content, name, type) { const url = URL.createObjectURL(new Blob([content], { type })); const a = node('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
     function learnOptions() {
         const source = phase === 'learn' ? session.options : preferred;
-        return { ...DEFAULT_OPTIONS, ...source, types: source.learnTypes || source.types || DEFAULT_OPTIONS.types };
+        return gradingOptions({ ...DEFAULT_OPTIONS, ...source, types: source.learnTypes || source.types || DEFAULT_OPTIONS.types });
     }
     async function beginLearn(options, restart = false) {
         if (options.activity === 'spell' && !('speechSynthesis' in window)) throw new Error('此瀏覽器不支援朗讀，請使用 Write。');
@@ -630,11 +633,10 @@ export function mountFlashcard({ host, activate }) {
         const goal = select('這次學習的目標', answerWith, [['master', '記熟全部'], ['quick', '快速熟悉']], options.goal);
         const familiarity = select('對這組單字的熟悉程度', answerWith, [['new', '剛開始學'], ['familiar', '已經看過']], options.familiarity);
         const chunk = select('每組單字數', answerWith, [['7', '7 張'], ['5', '5 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
-        const gradingBody = section('批改方式'); const gradingLabels = { strict: '嚴格', moderate: '適中', relaxed: '寬鬆' };
-        const grading = select('批改方式', gradingBody, [['auto', '自動：' + gradingLabels[defaultGrading(deck, options.defaultLanguage)]], ['strict', '嚴格：忽略大小寫與基本標點'], ['moderate', '適中：接受重音與輕微拼字差異'], ['relaxed', '寬鬆：接受意思相同的答案']], options.grading);
-        const geminiCheck = check('啟用 Gemini 批改', gradingBody, !!options.useGemini); geminiCheck.parentElement.classList.add('vocab-toggle');
-        const semanticNotice = node('p', '啟用 Gemini 批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', gradingBody, 'vocab-muted');
-        const updateNotice = () => { semanticNotice.hidden = !geminiCheck.checked && (grading.value === 'auto' ? defaultGrading(deck, options.defaultLanguage) : grading.value) !== 'relaxed'; }; grading.onchange = updateNotice; geminiCheck.onchange = updateNotice; updateNotice();
+        const gradingBody = section('批改方式');
+        const grading = select('批改方式', gradingBody, GRADING_LEVELS, gradingLevel(options.grading));
+        const semanticNotice = node('p', '智慧判讀在此裝置執行；首次使用會下載詞彙資料，需要語意模型時另下載約 380 MB。', gradingBody, 'vocab-muted');
+        const updateNotice = () => { semanticNotice.hidden = grading.value === 'exact'; }; grading.onchange = updateNotice; updateNotice();
         const retype = check('答錯後重打正解', gradingBody, options.retype); retype.parentElement.classList.add('vocab-toggle');
         const audioBody = section('語音');
         const audio = check('朗讀題目', audioBody, options.audio), audioAnswer = check('朗讀答案', audioBody, options.audioAnswer);
@@ -644,7 +646,7 @@ export function mountFlashcard({ host, activate }) {
         const error = node('p', '', body, 'vocab-settings-error'); error.setAttribute('role', 'alert');
         function selected(activity = options.activity || 'learn') {
             const learnTypes = Object.keys(types).filter(k => types[k].checked);
-            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, useGemini: geminiCheck.checked, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
+            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
         }
         async function begin(activity, restart = false) { try { await beginLearn(selected(activity), restart); } catch (e) { error.textContent = e.message; error.scrollIntoView({ block: 'nearest' }); } }
         button('Write', modes, () => begin('write'), 'vocab-link'); button('Spell', modes, () => begin('spell'), 'vocab-link');
@@ -670,8 +672,9 @@ export function mountFlashcard({ host, activate }) {
                 catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; input.checked = options.types.includes(type); }
             });
         }
-        toggle('啟用 Gemini', group, !!options.useGemini, async value => {
-            try { await update({ useGemini: value }); }
+        const grading = select('批改方式', group, GRADING_LEVELS, gradingLevel(options.grading));
+        grading.onchange = () => void action(async () => {
+            try { await update({ grading: grading.value }); }
             catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; }
         });
         const error = node('p', '', popover, 'vocab-settings-error'); error.setAttribute('role', 'alert');
@@ -732,16 +735,34 @@ export function mountFlashcard({ host, activate }) {
     async function answer(response, skipped = false) {
         if (session.options.sound) { try { audioContext ||= new (window.AudioContext || window.webkitAudioContext)(); void audioContext.resume(); } catch {} }
         const answeredAt = Date.now();
-        let next = submitAnswer(session, deck, response, answeredAt); if (next === session) return;
+        if (!session.current || session.feedback) return;
+        const activeSession = session, activeDeck = deck, activeOperation = operation;
+        const q = session.current, card = deck.cards.find(c => c.id === q.cardId);
+        let judgement = null;
+        if (!skipped && q.type === 'written' && String(response).trim()) {
+            const submit = host.querySelector('.vocab-question-actions .vocab-primary');
+            const status = node('p', '', host.querySelector('.vocab-written-form'), 'vocab-muted'); status.setAttribute('role', 'status');
+            const form = host.querySelector('.vocab-written-form');
+            form?.querySelectorAll('input,select,button').forEach(e => { e.disabled = true; });
+            let cancelled = false;
+            const controller = new AbortController();
+            const cancel = node('button', '取消判讀', form, 'vocab-button vocab-link'); cancel.type = 'button';
+            cancel.onclick = () => { cancelled = true; cancel.disabled = true; controller.abort(); resetEquivalence(); };
+            if (submit) { submit.textContent = '判讀中…'; submit.disabled = true; }
+            judgement = await gradeEquivalence({ prompt: promptFor(card, q.direction), expected: answerFor(card, q.direction), response: String(response), aliases: answersFor(card, q.direction).slice(1), grading: gradingFor(session),
+                signal: controller.signal,
+                onProgress: progress => {
+                    status.textContent = progress.status === 'terminology' ? '載入詞彙資料中…' : progress.status === 'inference' ? '智慧判讀中…' : progress.status === 'progress' && Number.isFinite(progress.progress) ? `下載模型中… ${Math.floor(progress.progress)}%` : '載入智慧判讀模型中…';
+                }
+            });
+            if (cancelled) judgement = { status: 'uncertain', correct: false, reason: 'cancelled' };
+        }
+        // A late worker response must not write into another account or deck.
+        safeOwner();
+        if (operation !== activeOperation || session !== activeSession || deck !== activeDeck || phase !== 'learn') return;
+        let next = submitAnswer(session, deck, response, answeredAt, judgement); if (next === session) return;
         if (mobileStudy() && host.contains(document.activeElement)) document.activeElement.blur();
         if (skipped) next.feedback.skipped = true;
-        const q = next.current, card = deck.cards.find(c => c.id === q.cardId);
-        if (session.options.useGemini && !next.feedback.correct && q.type === 'written' && String(response).trim()) {
-            const submit = host.querySelector('.vocab-question-actions .vocab-primary');
-            if (submit) { submit.textContent = '批改中…'; submit.disabled = true; }
-            try { if (await semanticGrade({ prompt: promptFor(card, q.direction), expected: answerFor(card, q.direction), response: String(response), aliases: answersFor(card, q.direction).flatMap(expandParentheses) })) { next = overrideCorrect(next); next.feedback.requiresAcknowledgement = true; } }
-            catch { report('語意批改暫時無法使用，已使用嚴格批改。'); }
-        }
         const event = newEvent('answer', { cardId: card.id, revision: card.revision, direction: q.direction, correct: next.feedback.correct, response: next.feedback.response.slice(0, 4000), type: q.type,
             ordinal: next.ordinal, initialStage: Math.min(1, next.feedback.before.stage), sessionId: next.id, generation: next.generation, responseTimeMs: Math.max(0, answeredAt - questionAt) });
         next.feedback.eventId = event.id; await persist(event, next); session = next; render();
@@ -768,7 +789,7 @@ export function mountFlashcard({ host, activate }) {
         const result = feedback ? node('div', null, area, `vocab-answer-result ${feedbackChanged ? 'is-entering' : ''}`) : area;
         const hint = node('p', q.type === 'multi' ? '選擇所有正確答案' : q.type === 'choice' ? '選擇答案' : typeLabels[q.type], result, 'vocab-question-hint');
         if (!feedback && q.type === 'written') hint.classList.add('vocab-sr-only');
-        if (feedback) { hint.textContent = feedback.correct ? '✓ 答對了' : feedback.skipped ? '已略過' : '答錯了'; hint.className += feedback.correct ? ' success' : feedback.skipped ? ' vocab-muted' : ' error'; hint.setAttribute('role', 'status'); }
+        if (feedback) { hint.textContent = feedback.correct ? '✓ 答對了' : feedback.skipped ? '已略過' : feedback.gradingStatus === 'uncertain' ? '無法確定，請核對正確答案' : '答錯了'; hint.className += feedback.correct ? ' success' : feedback.skipped ? ' vocab-muted' : ' error'; hint.setAttribute('role', 'status'); }
         const actions = !feedback ? node('div', null, null, 'vocab-question-actions') : null;
         if (actions) button('不知道', actions, () => answer(q.type === 'multi' ? [] : q.type === 'truefalse' ? !q.truth : q.type === 'flash' ? false : '', true), 'vocab-dontknow');
         if (q.type === 'choice') {
@@ -820,12 +841,12 @@ export function mountFlashcard({ host, activate }) {
                         const reveal = button('顯示提示', tools, async () => { q.hintShown = true; await persist(null, session); if (output) output.hidden = false; if (output) output.textContent = partial; reveal.hidden = true; if (!mobileStudy()) input.focus({ preventScroll: true }); }, 'vocab-link'); reveal.hidden = !!q.hintShown;
                     }
                     if (q.type === 'written') {
-                        const geminiToggle = check('啟用 Gemini', tools, !!session.options.useGemini);
-                        geminiToggle.onchange = async () => {
-                            session.options.useGemini = geminiToggle.checked;
-                            preferred.useGemini = geminiToggle.checked;
+                        const grading = select('批改方式', tools, GRADING_LEVELS, gradingFor(session));
+                        grading.onchange = () => void action(async () => {
+                            session.options.grading = grading.value;
+                            preferred = gradingOptions({ ...preferred, grading: grading.value });
                             await persist(null, session);
-                        };
+                        });
                     }
                 }
                 if (!host.hidden && !mobileStudy()) input.focus({ preventScroll: true });
@@ -846,14 +867,15 @@ export function mountFlashcard({ host, activate }) {
         if (actions) area.append(actions);
         if (feedback) {
             if ((!feedback.correct || feedback.requiresAcknowledgement) && q.type !== 'choice' && q.type !== 'multi') {
-                node('p', '正確答案', result, 'vocab-answer-label vocab-muted');
+                node('p', feedback.correct ? '原始答案' : '正確答案', result, 'vocab-answer-label vocab-muted');
                 const expected = node('div', null, result, 'vocab-expected-answer');
                 if (q.type === 'spell' && !feedback.correct) { spellText(spellingFeedback(feedback.response, feedback.expected).expected, expected, 'vocab-correct-answer'); button('逐字拼讀', expected, () => speakSpelling(feedback.expected, q.direction)); }
                 else text(feedback.expected, expected, 'vocab-correct-answer');
             }
+            if (feedback.gradingReason === 'model-unavailable') node('p', '智慧判讀模型無法載入，請核對正確答案或切換為絕對相同。', result, 'vocab-muted');
             const footer = node('div', null, result, 'vocab-feedback');
             if (feedback.correct && feedback.requiresAcknowledgement && ['written', 'spell'].includes(q.type)) {
-                button('我的答案其實錯誤', footer, async () => { const next = overrideCorrect(session, Date.now(), false); await persist(newEvent('override', { originalId: feedback.eventId, correct: false }), next); session = next; render(); }, 'vocab-link');
+                button('我是錯的', footer, async () => { const next = overrideCorrect(session, Date.now(), false); await persist(newEvent('override', { originalId: feedback.eventId, correct: false }), next); session = next; render(); }, 'vocab-link');
             }
             if (!feedback.correct && ['written', 'spell'].includes(q.type)) {
                 if (!feedback.skipped) button('我的答案其實正確', footer, async () => { const next = overrideCorrect(session); await persist(newEvent('override', { originalId: feedback.eventId, correct: true }), next); session = next; render(); }, 'vocab-link');
@@ -1176,6 +1198,8 @@ export function mountFlashcard({ host, activate }) {
     document.addEventListener('keydown', e => {
         if (host.hidden || !owner || dialog.open || document.querySelector('dialog[open]') || host.querySelector('[popover]:popover-open') || host.querySelector('.vocab-mode-menu[open]') || busy || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
         if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('button, a, summary')) return;
+        const needsConfirmation = session?.feedback?.correct && session.feedback.requiresAcknowledgement;
         if (e.key === 'Escape') { e.preventDefault(); stop(); phase = 'detail'; render(); return; }
         if (phase === 'flash' && !flash.completed) {
             if (e.key === ' ') { e.preventDefault(); void action(flip); }
@@ -1183,7 +1207,7 @@ export function mountFlashcard({ host, activate }) {
             if (e.key === 'Backspace') { e.preventDefault(); void action(() => flash.options.track ? undoFlash() : moveFlash(-1)); }
             const shortcuts = { s: () => star(deck.cards.find(c => c.id === flash.order[flash.index])), e: editFlashCard, h: shuffleFlash, a: speakFlash, t: () => changeFlashOptions({ direction: 'definition' }), d: () => changeFlashOptions({ direction: 'term' }) };
             const shortcut = shortcuts[e.key.toLowerCase()]; if (shortcut) { e.preventDefault(); void action(shortcut); }
-        } else if (phase === 'learn' && session.feedback?.retyped && (e.key === 'Enter' || e.key === ' ' || (!session.feedback.correct || session.feedback.requiresAcknowledgement) && e.key.length === 1)) { e.preventDefault(); void action(nextLearn); }
+        } else if (phase === 'learn' && session.feedback?.retyped && (e.key === 'Enter' || !needsConfirmation && (e.key === ' ' || !session.feedback.correct && e.key.length === 1))) { e.preventDefault(); void action(nextLearn); }
         else if (phase === 'learn' && session.checkpoint && !session.completed && (e.key === 'Enter' || e.key === ' ' || e.key.length === 1)) { e.preventDefault(); void action(nextRound); }
         else if (phase === 'learn' && !session.feedback && session.current?.type === 'choice' && /^[1-4]$/.test(e.key)) { const value = session.current.choices[Number(e.key) - 1]; if (value) { e.preventDefault(); void action(() => answer(value)); } }
     });
@@ -1217,6 +1241,6 @@ export function mountFlashcard({ host, activate }) {
             }
             safeOwner(); generationDialog(sources);
         },
-        resetForUser(uid) { if (uid === owner) return; operation++; generation?.abort(); generation = null; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
+        resetForUser(uid) { if (uid === owner) return; operation++; resetEquivalence(); generation?.abort(); generation = null; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
     };
 }

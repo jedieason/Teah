@@ -1,8 +1,9 @@
+import { gradingLevel, gradingOptions } from './grading-options.js';
 // Independent vocabulary sets. Quizlet's undisclosed coefficients are not used.
 export const MAX_CARDS = 2000;
 export const LEARN_VERSION = 3;
 export const RECOGNITION_WINDOW = 10;
-export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'auto', useGemini: false, defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
+export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'standard', defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
 export const id = () => crypto.randomUUID();
 export const clone = value => JSON.parse(JSON.stringify(value));
 export const normalize = value => String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase().replace(/\s+/g, ' ');
@@ -26,7 +27,7 @@ export function expandParentheses(text) {
             const needsSpace = v || before ? !isCJK((v + before).slice(-1)) && !isCJK(inside.slice(0, 1)) : false;
             nextVariants.push(v + before + (needsSpace ? ' ' : '') + inside);
         }
-        variants = nextVariants;
+        variants = nextVariants.slice(0, 32);
         lastIndex = match.index + match[0].length;
     }
     const tail = raw.slice(lastIndex);
@@ -42,12 +43,16 @@ export function answerKey(value) {
     s = s.replace(/["'“”‘’`「」『』]/g, '');
     s = s.replace(/[，,、;；…~～—–\(\)（）\[\]【】《》!?！？]/g, ' ');
     s = s.replace(/(?<!\d):|:(?!\d)|：/g, ' ');
-    s = s.replace(/(?<!\d)\.|\.(?!\d)|。/g, ' ');
+    s = s.replace(/\.(?!\d)|。/g, ' ');
     s = s.replace(/(?<=\p{L})[-—–_](?=\p{L})/gu, ' ');
     s = s.replace(/(?<=[\u4e00-\u9fa5\u3040-\u30ff])\s+(?=[\u4e00-\u9fa5\u3040-\u30ff])/g, '');
     return s.replace(/\s+/g, ' ').trim();
 }
 export function gradeAnswer(input, answers, grading = 'strict') {
+    if (grading === 'exact') {
+        const key = answerKey(input).replace(/\s/g, '');
+        return !!key && (answers || []).some(a => answerKey(a).replace(/\s/g, '') === key);
+    }
     const inputKeys = expandParentheses(input).map(answerKey).filter(Boolean);
     if (!inputKeys.length) return false;
     const allExpected = (answers || []).flatMap(expandParentheses);
@@ -209,12 +214,14 @@ export function defaultGrading(deck, defaultLanguage = DEFAULT_OPTIONS.defaultLa
     if (term !== definition || ['zh', 'ja', 'math', 'chemistry', 'akkadian', 'photo'].includes(term)) return 'strict';
     return deck.cards.length >= 3 && ['en', 'fr', 'de', 'es'].includes(term) && term === language(defaultLanguage) ? 'relaxed' : 'moderate';
 }
-export const gradingFor = (session, deck) => session.options.activity === 'spell' ? 'strict' : session.options.grading === 'auto' ? defaultGrading(deck, session.options.defaultLanguage) : session.options.grading;
+export const gradingFor = session => session.options.activity === 'spell' ? 'exact' : gradingLevel(session.options.grading);
 export const activityName = session => session.options.activity === 'write' ? 'Write' : session.options.activity === 'spell' ? 'Spell' : 'Learn';
 const writtenActivity = session => ['write', 'spell'].includes(session.options.activity);
 const sessionCredit = (session, key) => writtenActivity(session) ? session.writeCredits[key] || 0 : creditOf(session.facts[key]);
 export function hydrateSession(value) {
     const s = clone(value);
+    if (s.mode !== 'flash') s.options = gradingOptions(s.options || DEFAULT_OPTIONS);
+    if (s.current?.type === 'written' && s.feedback?.correct && s.feedback.response !== plainText(s.feedback.expected)) s.feedback.requiresAcknowledgement = true;
     s.order = Object.values(s.order || {});
     if (s.mode === 'flash') { s.ratings ||= {}; s.history = Object.values(s.history || {}); }
     else { s.active = Object.values(s.active || {}); s.scope = Object.values(s.scope || {}); s.roundAnswers = Object.values(s.roundAnswers || {}); s.options.types = Object.values(s.options.types || {}); if (s.options.learnTypes) s.options.learnTypes = Object.values(s.options.learnTypes); s.flowQueue = Object.values(s.flowQueue || {}); s.retryQueue = Object.values(s.retryQueue || {}); s.roundSeen = Object.values(s.roundSeen || {}); s.practiceQueue = Object.values(s.practiceQueue || {}); s.writeCredits ||= {}; s.passMisses = Object.values(s.passMisses || {}); }
@@ -284,7 +291,7 @@ export function progressCounts(deck, projected, direction = 'term') {
     return counts;
 }
 export function createSession(deck, study = {}, input = {}, now = Date.now(), random = Math.random) {
-    const options = { ...DEFAULT_OPTIONS, ...input };
+    const options = gradingOptions({ ...DEFAULT_OPTIONS, ...input });
     if (!['learn', 'write', 'spell'].includes(options.activity)) options.activity = 'learn';
     if (options.activity !== 'learn') { options.goal = 'master'; options.types = [options.activity === 'spell' ? 'spell' : 'written']; }
     options.audioRate = options.audioRate === 0.65 ? 0.65 : 0.9;
@@ -441,12 +448,12 @@ export function selectNext(value, deck, now = Date.now(), random = Math.random) 
     session.feedback = null; session.updatedAt = now;
     return session;
 }
-export function submitAnswer(value, deck, response, now = Date.now()) {
+export function submitAnswer(value, deck, response, now = Date.now(), judgement = null) {
     if (!value.current || value.feedback || value.checkpoint || value.completed) return value;
     const session = clone(value), q = session.current, card = deck.cards.find(c => c.id === q.cardId);
     const exact = q.type === 'choice' || q.type === 'spell';
     const accepted = q.type === 'choice' ? [q.choiceAnswer] : q.type === 'spell' ? [answerFor(card, q.direction)] : answersFor(card, q.direction);
-    const correct = q.type === 'multi' ? Array.isArray(response) && response.length === q.correctAnswers.length && q.correctAnswers.every(a => response.includes(a)) : q.type === 'flash' ? response === true : q.type === 'truefalse' ? response === q.truth : gradeAnswer(response, accepted, exact ? 'strict' : gradingFor(session, deck));
+    const correct = q.type === 'written' && judgement ? judgement.correct === true : q.type === 'multi' ? Array.isArray(response) && response.length === q.correctAnswers.length && q.correctAnswers.every(a => response.includes(a)) : q.type === 'flash' ? response === true : q.type === 'truefalse' ? response === q.truth : gradeAnswer(response, accepted, exact ? 'strict' : 'exact');
     const savedResponse = q.type === 'multi' ? JSON.stringify(response) : String(response);
     const before = clone(session.facts[q.key]);
     const beforeWriteCredit = session.writeCredits[q.key] || 0;
@@ -457,6 +464,11 @@ export function submitAnswer(value, deck, response, now = Date.now()) {
     if (session.options.practice) session.roundAnswers = session.roundAnswers.slice(-20);
     if ((session.options.activity !== 'spell' || correct) && !session.roundSeen.includes(q.key)) session.roundSeen.push(q.key);
     session.feedback = { correct, skipped: !correct && !savedResponse && ['written', 'spell'].includes(q.type), response: savedResponse, expected: answerFor(card, q.direction), before, beforeWriteCredit, answeredAt: now, retyped: !session.options.retype || correct || !['written', 'spell'].includes(q.type) };
+    if (q.type === 'written' && judgement) {
+        session.feedback.gradingStatus = judgement.status;
+        session.feedback.gradingReason = judgement.reason;
+    }
+    if (q.type === 'written') session.feedback.requiresAcknowledgement = correct && savedResponse !== plainText(session.feedback.expected);
     session.lastKey = q.key; session.updatedAt = now;
     return session;
 }
@@ -470,6 +482,7 @@ export function overrideCorrect(value, now = Date.now(), correct = true) {
         if (correct) session.roundSeen.push(session.current.key);
     }
     session.feedback.correct = correct; session.feedback.retyped = correct || !session.options.retype;
+    if (session.current.type === 'written') session.feedback.requiresAcknowledgement = correct && session.feedback.response !== plainText(session.feedback.expected);
     session.roundAnswers.at(-1).correct = correct; session.updatedAt = now;
     return session;
 }

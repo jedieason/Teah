@@ -327,6 +327,8 @@ html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
 .vocab-written-form .vocab-symbols { margin:0; }
 .vocab-written-form .vocab-written-hint { margin:0; font-size:14px; }
 .vocab-written-form .vocab-written-tools { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.vocab-written-form .vocab-written-tools .vocab-field { display:flex; align-items:center; gap:8px; flex:0 1 auto; min-width:0; margin-left:auto; }
+.vocab-written-form .vocab-written-tools select { width:auto; padding:6px 10px; font-size:13px; }
 .vocab-written-form .vocab-written-tools .vocab-link { padding:4px 0; min-height:32px; font-weight:400; font-size:13px; }
 .vocab-written-form .vocab-written-tools .vocab-check { margin-left:auto; font-size:13px; color:var(--v-muted); user-select:none; }
 .vocab-written-form .vocab-written-tools .vocab-check input { width:16px; height:16px; }

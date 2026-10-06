@@ -42,7 +42,7 @@ async function configure(type) {
     for (const input of await types.getByRole('checkbox').all()) await input.uncheck();
     await types.getByLabel(type, { exact: true }).check();
     await options.locator('summary').filter({ hasText: '批改方式' }).click();
-    await options.getByLabel('批改方式', { exact: true }).selectOption('strict');
+    await options.getByLabel('批改方式', { exact: true }).selectOption('exact');
     await options.getByRole('button', { name: '開始 Learn', exact: true }).click(); await idle(); await settle();
 }
 await mkdir('artifacts/qa', { recursive: true });

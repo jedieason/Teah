@@ -221,7 +221,7 @@ test('Write override and wire hydration preserve independent run credits without
 });
 test('Spell repeats a miss without awarding repair credit, traverses full passes, and always grades spelling strictly', () => {
     const d = deck(8); let s = createSession(d, {}, { activity: 'spell', grading: 'relaxed' });
-    const key = s.current.key; assert.equal(gradingFor(s, d), 'strict');
+    const key = s.current.key; assert.equal(gradingFor(s, d), 'exact');
     s = step(s, d, 'wrong'); assert.equal(s.current.key, key); assert.equal(sessionProgress(s).earned, 0); assert.equal(s.checkpoint, false);
     for (let pass = 0; pass < 2; pass++) for (let i = 0; i < 8; i++) {
         assert.equal(s.current.cardId, d.cards[i].id); assert.equal(s.current.type, 'spell');

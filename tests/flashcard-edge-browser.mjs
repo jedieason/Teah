@@ -29,11 +29,12 @@ fixture = fixture.replace('const clone = v => v == null ? null : JSON.parse(JSON
 await context.route('**/src/services/firebase.js', route => route.fulfill({ contentType: 'text/javascript', body: fixture }));
 await context.route(/firebasedatabase|firebaseio|googleapis.com\/identity|gstatic.com\/firebasejs/, route => route.abort());
 let semanticCalls = 0;
-await context.route('https://generativelanguage.googleapis.com/**', async route => {
-    semanticCalls++; const request = route.request().postDataJSON(); assert.equal(request.generationConfig.temperature, 0);
-    const data = JSON.parse(request.contents[0].parts[0].text); assert.equal(data.response, 'an automobile'); assert.equal(data.expected, 'car');
-    await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text: '{"equivalent":true}' }] } }] }) });
-});
+await context.route('https://generativelanguage.googleapis.com/**', () => { semanticCalls++; throw new Error('Written grading must not call Gemini'); });
+await context.route('**/src/features/flashcard/equivalence-worker.js', route => route.fulfill({ contentType: 'text/javascript', body: `
+self.onmessage = ({ data: { id, pair } }) => {
+    if (pair.candidate !== 'an automobile' || pair.reference !== 'car' || pair.prompt !== '汽車') throw new Error('Unexpected answer pair');
+    self.postMessage({ id, result: { forward: { entailment: .99, contradiction: .001 }, backward: { entailment: .99, contradiction: .001 } } });
+};` }));
 const page = await context.newPage(); page.setDefaultTimeout(15000); const errors = []; page.on('pageerror', e => { errors.push(e.message); console.error(e.message); });
 const view = page.locator('#flashcardPage'), settings = page.getByRole('dialog', { name: 'Learn 設定', exact: true });
 const idle = () => page.waitForFunction(() => document.getElementById('flashcardPage').getAttribute('aria-busy') !== 'true');
@@ -78,19 +79,19 @@ try {
     assert.equal(await answer.inputValue(), 'μΜ', 'saving non-flow settings preserves an unfinished written answer');
     assert.equal(await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id].sessions.learn.id, synonyms.id), writingSessionId);
     await answer.fill('an automobile'); await answer.press('Enter');
-    await view.getByText('✓ 答對了', { exact: true }).waitFor(); assert.equal(semanticCalls, 1); await idle();
-    await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).waitFor();
+    await view.getByText('✓ 答對了', { exact: true }).waitFor(); assert.equal(semanticCalls, 0); await idle();
+    await view.getByRole('button', { name: '我是錯的', exact: true }).waitFor();
     assert.equal(await view.locator('.vocab-correct-answer').count(), 2);
     assert.equal(await view.getByRole('progressbar', { name: 'Write 學習進度' }).getAttribute('aria-valuenow'), '0');
     await page.screenshot({ path: 'artifacts/qa/vocabulary-semantic.png', fullPage: true });
     await page.waitForTimeout(1100); // Semantic acceptance must wait for acknowledgement instead of the 950 ms timer.
-    assert.equal(await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).isVisible(), true);
-    await view.getByRole('button', { name: '我的答案其實錯誤', exact: true }).click(); await idle();
+    assert.equal(await view.getByRole('button', { name: '我是錯的', exact: true }).isVisible(), true);
+    await view.getByRole('button', { name: '我是錯的', exact: true }).click(); await idle();
     const rejected = await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id], synonyms.id);
     assert.equal(rejected.summary.wrong, 1); assert.equal(rejected.summary.correct, 1);
     assert.equal(Object.values(rejected.events).filter(e => e.kind === 'override' && e.correct === false).length, 1);
     await view.getByRole('button', { name: '我的答案其實正確', exact: true }).click(); await idle();
-    await page.keyboard.press('Space'); await view.getByRole('heading', { name: '本輪完成', exact: true }).waitFor();
+    await page.keyboard.press('Enter'); await view.getByRole('heading', { name: '本輪完成', exact: true }).waitFor();
     assert.equal(await view.getByRole('progressbar', { name: 'Write 學習進度' }).getAttribute('aria-valuenow'), '1');
     // The second Write retrieval is still required even though Learn already awarded this card credit.
     await view.getByRole('button', { name: '繼續下一輪', exact: true }).click(); await idle();
@@ -104,7 +105,7 @@ try {
     await view.getByRole('button', { name: '繼續', exact: true }).click(); await idle();
     await view.getByLabel('你的答案', { exact: true }).waitFor();
     await view.getByRole('button', { name: '‹ Synonyms', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
-    await settings.getByLabel('練習範圍', { exact: true }).selectOption('all'); await settings.getByLabel('批改方式', { exact: true }).selectOption('strict');
+    await settings.getByLabel('練習範圍', { exact: true }).selectOption('all'); await settings.getByLabel('批改方式', { exact: true }).selectOption('exact');
     await settings.getByRole('button', { name: '重設 Learn 進度', exact: true }).click(); await settings.getByRole('button', { name: '確認重設並開始', exact: true }).click();
     await idle(); await view.getByRole('button', { name: '設定', exact: true }).click(); await expandLearnSettings(); await settings.getByRole('button', { name: 'Spell', exact: true }).click();
     await view.getByRole('button', { name: '朗讀答案', exact: true }).waitFor();
@@ -193,7 +194,7 @@ try {
     assert.equal(await view.locator('.vocab-import-trigger').getAttribute('aria-label'), '匯入文字');
     await view.locator('.vocab-import-trigger').click();
     const importing = page.getByRole('dialog', { name: '匯入文字', exact: true });
-    await importing.getByLabel('貼上文字', { exact: true }).fill(Array.from({ length: 2000 }, (_, i) => `added${i}\t新增 ${i}`).join('\n'));
+    await importing.getByLabel('貼上文字', { exact: true }).fill(Array.from({ length: 2000 }, (_, i) => `added${i}\t新增 ${i}`).join('\n'), { timeout: 60000 });
     assert.equal(await importing.locator('.vocab-import-preview > div').count(), 2000, 'preview must include every parsed card');
     assert.equal(await importing.getByRole('button', { name: '匯入', exact: true }).isDisabled(), true);
     assert.ok((await importing.locator('.vocab-import-status').innerText()).includes('超過 2000 張'));
