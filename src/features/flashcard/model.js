@@ -2,36 +2,75 @@
 export const MAX_CARDS = 2000;
 export const LEARN_VERSION = 3;
 export const RECOGNITION_WINDOW = 10;
-export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'auto', defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
+export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'auto', useGemini: false, defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
 export const id = () => crypto.randomUUID();
 export const clone = value => JSON.parse(JSON.stringify(value));
 export const normalize = value => String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase().replace(/\s+/g, ' ');
 export const plainText = value => String(value ?? '').replace(/\*\*(.+?)\*\*|__(.+?)__|==(.+?)==|\*([^*]+?)\*/gs, (_, a, b, c, d) => a || b || c || d);
+
+const isCJK = ch => /[\u4e00-\u9fa5\u3040-\u30ff]/.test(ch);
+
+export function expandParentheses(text) {
+    const raw = String(text ?? '');
+    const regex = /\([^()]*\)|（[^（）]*）|\[[^\[\]]*\]|【[^【】]*】/g;
+    const matches = [...raw.matchAll(regex)];
+    if (!matches.length) return [raw];
+    let variants = [''];
+    let lastIndex = 0;
+    for (const match of matches) {
+        const before = raw.slice(lastIndex, match.index);
+        const inside = match[0].slice(1, -1);
+        const nextVariants = [];
+        for (const v of variants) {
+            nextVariants.push(v + before);
+            const needsSpace = v || before ? !isCJK((v + before).slice(-1)) && !isCJK(inside.slice(0, 1)) : false;
+            nextVariants.push(v + before + (needsSpace ? ' ' : '') + inside);
+        }
+        variants = nextVariants;
+        lastIndex = match.index + match[0].length;
+    }
+    const tail = raw.slice(lastIndex);
+    const results = variants.map(v => {
+        const needsSpace = tail && v && !v.endsWith(' ') && !tail.startsWith(' ') && !isCJK(v.slice(-1)) && !isCJK(tail.slice(0, 1));
+        return (v + (needsSpace ? ' ' : '') + tail).replace(/\s+/g, ' ').trim();
+    }).filter(Boolean);
+    return [...new Set(results.length ? results : [raw])];
+}
+
 export function answerKey(value) {
-    // Keep medical/math operators, units, decimal points and digits significant.
-    return normalize(plainText(value)).replace(/[，,。!?！？“”"'‘’]/g, '').replace(/[.;；]$/g, '').trim();
+    let s = normalize(plainText(value));
+    s = s.replace(/["'“”‘’`「」『』]/g, '');
+    s = s.replace(/[，,、;；…~～—–\(\)（）\[\]【】《》!?！？]/g, ' ');
+    s = s.replace(/(?<!\d):|:(?!\d)|：/g, ' ');
+    s = s.replace(/(?<!\d)\.|\.(?!\d)|。/g, ' ');
+    s = s.replace(/(?<=\p{L})[-—–_](?=\p{L})/gu, ' ');
+    s = s.replace(/(?<=[\u4e00-\u9fa5\u3040-\u30ff])\s+(?=[\u4e00-\u9fa5\u3040-\u30ff])/g, '');
+    return s.replace(/\s+/g, ' ').trim();
 }
 export function gradeAnswer(input, answers, grading = 'strict') {
-    const key = answerKey(input);
-    if (!key) return false;
-    return answers.some(answer => {
-        const expected = answerKey(answer);
-        if (key === expected) return true;
-        if (grading !== 'moderate' || /[\d+−=<>/]/.test(expected) || /[^a-zÀ-ž\s-]/i.test(expected)) return false;
-        const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
-        const a = strip(key), b = strip(expected);
-        if (a === b) return true;
-        // Short words accept an omitted/extra letter, but not a different same-length word.
-        if (b.length < 3 || a.length === b.length && b.length < 5) return false;
-        if (Math.abs(a.length - b.length) > 1) return false;
-        let i = 0, j = 0, errors = 0;
-        while (i < a.length && j < b.length) {
-            if (a[i] === b[j]) { i++; j++; continue; }
-            if (++errors > 1) return false;
-            if (a.length >= b.length) i++;
-            if (b.length >= a.length) j++;
-        }
-        return errors + (a.length - i) + (b.length - j) <= 1;
+    const inputKeys = expandParentheses(input).map(answerKey).filter(Boolean);
+    if (!inputKeys.length) return false;
+    const allExpected = (answers || []).flatMap(expandParentheses);
+    return inputKeys.some(key => {
+        return allExpected.some(answer => {
+            const expected = answerKey(answer);
+            if (key === expected) return true;
+            if (grading !== 'moderate' || /[\d+−=<>/]/.test(expected) || /[^a-zÀ-ž\s-]/i.test(expected)) return false;
+            const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
+            const a = strip(key), b = strip(expected);
+            if (a === b) return true;
+            // Short words accept an omitted/extra letter, but not a different same-length word.
+            if (b.length < 3 || a.length === b.length && b.length < 5) return false;
+            if (Math.abs(a.length - b.length) > 1) return false;
+            let i = 0, j = 0, errors = 0;
+            while (i < a.length && j < b.length) {
+                if (a[i] === b[j]) { i++; j++; continue; }
+                if (++errors > 1) return false;
+                if (a.length >= b.length) i++;
+                if (b.length >= a.length) j++;
+            }
+            return errors + (a.length - i) + (b.length - j) <= 1;
+        });
     });
 }
 function delimiters(options) {

@@ -30,6 +30,14 @@ test('grading handles explicit aliases and formatting but never equates meaningf
     assert.equal(gradeAnswer('pH > 6.5', ['pH < 6.5']), false);
     assert.equal(gradeAnswer('32 / 1', ['32:1']), false);
     assert.equal(gradeAnswer('CD4-', ['CD4+']), false);
+    assert.equal(gradeAnswer('Intradermal nevus', ['Intradermal (melanocytic) nevus']), true);
+    assert.equal(gradeAnswer('Intradermal melanocytic nevus', ['Intradermal (melanocytic) nevus']), true);
+    assert.equal(gradeAnswer('Intradermal (melanocytic) nevus', ['Intradermal (melanocytic) nevus']), true);
+    assert.equal(gradeAnswer('皮內痣', ['皮內痣（黑色素細胞痣）']), true);
+    assert.equal(gradeAnswer('皮內痣黑色素細胞痣', ['皮內痣（黑色素細胞痣）']), true);
+    assert.equal(gradeAnswer('Endocarditis infective', ['Endocarditis, infective']), true);
+    assert.equal(gradeAnswer('Type 1 Diabetes', ['Type 1: Diabetes']), true);
+    assert.equal(gradeAnswer('Non Hodgkin lymphoma', ['Non-Hodgkin lymphoma']), true);
 });
 test('Learn spaces recognition misses and reaches recall mastery through bounded windows', () => {
     const d = deck(); let s = createSession(d, {}, { shuffle: false, types: ['choice', 'written'], retype: false }, 0, () => .4);

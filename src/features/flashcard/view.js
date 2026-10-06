@@ -1,5 +1,5 @@
 import { auth } from '../../services/firebase.js';
-import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
+import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer, expandParentheses } from './model.js';
 import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade, generateDeck, editDeckWithAI } from './service.js';
 import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS } from './generation.js';
 import { editingBatches } from './editing.js';
@@ -607,8 +607,9 @@ export function mountFlashcard({ host, activate }) {
         const chunk = select('每組單字數', answerWith, [['7', '7 張'], ['5', '5 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
         const gradingBody = section('批改方式'); const gradingLabels = { strict: '嚴格', moderate: '適中', relaxed: '寬鬆' };
         const grading = select('批改方式', gradingBody, [['auto', '自動：' + gradingLabels[defaultGrading(deck, options.defaultLanguage)]], ['strict', '嚴格：忽略大小寫與基本標點'], ['moderate', '適中：接受重音與輕微拼字差異'], ['relaxed', '寬鬆：接受意思相同的答案']], options.grading);
-        const semanticNotice = node('p', '寬鬆批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', gradingBody, 'vocab-muted');
-        const updateNotice = () => { semanticNotice.hidden = (grading.value === 'auto' ? defaultGrading(deck, options.defaultLanguage) : grading.value) !== 'relaxed'; }; grading.onchange = updateNotice; updateNotice();
+        const geminiCheck = check('啟用 Gemini 批改', gradingBody, !!options.useGemini); geminiCheck.parentElement.classList.add('vocab-toggle');
+        const semanticNotice = node('p', '啟用 Gemini 批改會將這一題、正解與作答傳送至 Google Gemini；無法連線時使用嚴格批改，可自行更正結果。', gradingBody, 'vocab-muted');
+        const updateNotice = () => { semanticNotice.hidden = !geminiCheck.checked && (grading.value === 'auto' ? defaultGrading(deck, options.defaultLanguage) : grading.value) !== 'relaxed'; }; grading.onchange = updateNotice; geminiCheck.onchange = updateNotice; updateNotice();
         const retype = check('答錯後重打正解', gradingBody, options.retype); retype.parentElement.classList.add('vocab-toggle');
         const audioBody = section('語音');
         const audio = check('朗讀題目', audioBody, options.audio), audioAnswer = check('朗讀答案', audioBody, options.audioAnswer);
@@ -618,7 +619,7 @@ export function mountFlashcard({ host, activate }) {
         const error = node('p', '', body, 'vocab-settings-error'); error.setAttribute('role', 'alert');
         function selected(activity = options.activity || 'learn') {
             const learnTypes = Object.keys(types).filter(k => types[k].checked);
-            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
+            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, useGemini: geminiCheck.checked, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
         }
         async function begin(activity, restart = false) { try { await beginLearn(selected(activity), restart); } catch (e) { error.textContent = e.message; error.scrollIntoView({ block: 'nearest' }); } }
         button('Write', modes, () => begin('write'), 'vocab-link'); button('Spell', modes, () => begin('spell'), 'vocab-link');
@@ -644,6 +645,10 @@ export function mountFlashcard({ host, activate }) {
                 catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; input.checked = options.types.includes(type); }
             });
         }
+        toggle('啟用 Gemini', group, !!options.useGemini, async value => {
+            try { await update({ useGemini: value }); }
+            catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; }
+        });
         const error = node('p', '', popover, 'vocab-settings-error'); error.setAttribute('role', 'alert');
         button('全部設定', popover, () => { popover.remove(); settings(true); }, 'vocab-link');
     }
@@ -706,10 +711,10 @@ export function mountFlashcard({ host, activate }) {
         if (mobileStudy() && host.contains(document.activeElement)) document.activeElement.blur();
         if (skipped) next.feedback.skipped = true;
         const q = next.current, card = deck.cards.find(c => c.id === q.cardId);
-        if (gradingFor(session, deck) === 'relaxed' && !next.feedback.correct && q.type === 'written' && String(response).trim()) {
+        if (session.options.useGemini && !next.feedback.correct && q.type === 'written' && String(response).trim()) {
             const submit = host.querySelector('.vocab-question-actions .vocab-primary');
             if (submit) { submit.textContent = '批改中…'; submit.disabled = true; }
-            try { if (await semanticGrade({ prompt: promptFor(card, q.direction), expected: answerFor(card, q.direction), response: String(response), aliases: answersFor(card, q.direction) })) { next = overrideCorrect(next); next.feedback.requiresAcknowledgement = true; } }
+            try { if (await semanticGrade({ prompt: promptFor(card, q.direction), expected: answerFor(card, q.direction), response: String(response), aliases: answersFor(card, q.direction).flatMap(expandParentheses) })) { next = overrideCorrect(next); next.feedback.requiresAcknowledgement = true; } }
             catch { report('語意批改暫時無法使用，已使用嚴格批改。'); }
         }
         const event = newEvent('answer', { cardId: card.id, revision: card.revision, direction: q.direction, correct: next.feedback.correct, response: next.feedback.response.slice(0, 4000), type: q.type,
@@ -782,7 +787,21 @@ export function mountFlashcard({ host, activate }) {
                 const partial = q.type === 'spell' ? '' : writingHint(answerFor(card, q.direction));
                 if (partial) {
                     const output = node('div', q.hintShown ? partial : '', form, 'vocab-written-hint'); output.hidden = !q.hintShown; output.setAttribute('role', 'status');
-                    const reveal = button('顯示提示', form, async () => { q.hintShown = true; await persist(null, session); output.hidden = false; output.textContent = partial; reveal.hidden = true; if (!mobileStudy()) input.focus({ preventScroll: true }); }, 'vocab-link'); reveal.hidden = !!q.hintShown;
+                }
+                if (partial || q.type === 'written') {
+                    const tools = node('div', null, form, 'vocab-written-tools');
+                    if (partial) {
+                        const output = form.querySelector('.vocab-written-hint');
+                        const reveal = button('顯示提示', tools, async () => { q.hintShown = true; await persist(null, session); if (output) output.hidden = false; if (output) output.textContent = partial; reveal.hidden = true; if (!mobileStudy()) input.focus({ preventScroll: true }); }, 'vocab-link'); reveal.hidden = !!q.hintShown;
+                    }
+                    if (q.type === 'written') {
+                        const geminiToggle = check('啟用 Gemini', tools, !!session.options.useGemini);
+                        geminiToggle.onchange = async () => {
+                            session.options.useGemini = geminiToggle.checked;
+                            preferred.useGemini = geminiToggle.checked;
+                            await persist(null, session);
+                        };
+                    }
                 }
                 if (!host.hidden && !mobileStudy()) input.focus({ preventScroll: true });
             } else if (!feedback.skipped) {
