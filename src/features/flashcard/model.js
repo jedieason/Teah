@@ -73,6 +73,24 @@ export function gradeAnswer(input, answers, grading = 'strict') {
         });
     });
 }
+export const FLASHCARD_IMPORT_PROMPT = `請將以下學習內容整理為單字卡 JSON 陣列。
+
+格式要求：
+[
+  {
+    "term": "單字或概念",
+    "definition": "解釋或詳細說明"
+  }
+]
+
+注意事項：
+1. 每張字卡包含 "term"（正面）與 "definition"（背面）。
+2. 若內容或解釋有多行（例如詞性、中文解釋、例句說明），請在字串內使用 \\n 表示換行（例如："n. 蘋果\\n甜甜白白的"）。
+3. 只需輸出標準 JSON 陣列，不要加入 Markdown 語法區塊（如 \`\`\`json）或其他對話文字。
+
+內容如下：
+`;
+
 function delimiters(options) {
     const decode = s => (s || '').replace(/\\t/g, '\t').replace(/\\n/g, '\n');
     const term = decode(options.term === 'tab' ? '\t' : options.term === 'comma' ? ',' : options.term === 'dash' ? '-' : options.termCustom);
@@ -80,16 +98,75 @@ function delimiters(options) {
     if (!term || !row || term === row || term.length > 20 || row.length > 20) throw new Error('請設定不同且非空的分隔符號（最多 20 字元）。');
     return { term, row };
 }
+export function parseImportJson(text) {
+    const input = String(text ?? '').replace(/^\uFEFF/, '').trim();
+    if (!input) return { cards: [], errors: [], duplicates: 0 };
+    if (input.length > 4000000) throw new Error('匯入文字超過 4 MB，請分批匯入。');
+    let raw = input;
+    if (raw.startsWith('```')) {
+        raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+    }
+    let parsed;
+    try {
+        parsed = JSON.parse(raw);
+    } catch {
+        throw new Error('JSON 格式錯誤，請確認內容符合 JSON 語法。');
+    }
+    const list = Array.isArray(parsed)
+        ? parsed
+        : (Array.isArray(parsed?.cards)
+            ? parsed.cards
+            : (Array.isArray(parsed?.deck?.cards) ? parsed.deck.cards : null));
+    if (!list) {
+        throw new Error('JSON 必須為字卡陣列或包含 cards 陣列的物件。');
+    }
+    const decode = s => String(s ?? '')
+        .replace(/\r\n?/g, '\n')
+        .replace(/\\r\\n/g, '\n')
+        .replace(/\\n/g, '\n')
+        .replace(/\\t/g, '\t');
+    const cards = [], errors = [];
+    for (const [i, item] of list.entries()) {
+        if (!item || typeof item !== 'object' || Array.isArray(item)) {
+            errors.push({ row: i + 1, message: '字卡項目格式不正確' });
+            continue;
+        }
+        const termVal = item.term ?? item.word ?? item.front ?? item.question ?? '';
+        const defVal = item.definition ?? item.meaning ?? item.back ?? item.answer ?? '';
+        const a = decode(termVal).trim();
+        const b = decode(defVal).trim();
+        const card = { term: a, definition: b };
+        if (Array.isArray(item.termAliases)) {
+            card.termAliases = item.termAliases.map(v => decode(v).trim()).filter(Boolean);
+        }
+        if (Array.isArray(item.definitionAliases)) {
+            card.definitionAliases = item.definitionAliases.map(v => decode(v).trim()).filter(Boolean);
+        }
+        cards.push(card);
+        if (!a || !b) errors.push({ row: i + 1, message: '單字或解釋為空白' });
+        if (a.length > 4000 || b.length > 4000) errors.push({ row: i + 1, message: '單面最多 4000 字元' });
+        if (cards.length > MAX_CARDS) throw new Error(`每組最多 ${MAX_CARDS} 張字卡。`);
+    }
+    const seen = new Set(); let duplicates = 0;
+    for (const c of cards) { const key = normalize(c.term) + '\u0000' + normalize(c.definition); if (seen.has(key)) duplicates++; seen.add(key); }
+    return { cards, errors, duplicates };
+}
 export function parseImport(text, options = { term: 'tab', row: 'newline' }) {
+    if (options?.format === 'json') return parseImportJson(text);
     const { term, row } = delimiters(options);
     const input = String(text).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
     if (input.length > 4000000) throw new Error('匯入文字超過 4 MB，請分批匯入。');
     // Teah's delimiter parser preserves the definition after the first separator.
     const cards = [], errors = [];
+    const decode = s => String(s ?? '')
+        .replace(/\\r\\n/g, '\n')
+        .replace(/\\n/g, '\n')
+        .replace(/\\t/g, '\t');
     for (const [i, line] of input.split(row).entries()) {
         if (!line.trim()) continue;
         const cut = line.indexOf(term);
-        const a = cut < 0 ? line.trim() : line.slice(0, cut).trim(), b = cut < 0 ? '' : line.slice(cut + term.length).trim();
+        const a = decode(cut < 0 ? line.trim() : line.slice(0, cut).trim()).trim();
+        const b = decode(cut < 0 ? '' : line.slice(cut + term.length).trim()).trim();
         cards.push({ term: a, definition: b });
         if (!a || !b) errors.push({ row: i + 1, message: cut < 0 ? '找不到單字與解釋的分隔符號' : '單字或解釋為空白' });
         if (a.length > 4000 || b.length > 4000) errors.push({ row: i + 1, message: '單面最多 4000 字元' });

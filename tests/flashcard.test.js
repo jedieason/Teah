@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DEFAULT_OPTIONS, parseImport, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor } from '../src/features/flashcard/model.js';
+import { DEFAULT_OPTIONS, parseImport, parseImportJson, FLASHCARD_IMPORT_PROMPT, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor } from '../src/features/flashcard/model.js';
 const deck = (n = 17) => prepareDeck({ title: 'Test', cards: Array.from({ length: n }, (_, i) => ({ term: `word${i}`, definition: `解釋${i}` })) });
 function response(s, d) { const c = d.cards.find(c => c.id === s.current.cardId); return s.current.type === 'multi' ? s.current.correctAnswers : s.current.direction === 'term' ? c.term : c.definition; }
 function step(s, d, input, at = 1000) { const answered = submitAnswer(s, d, input, at); return advanceSession(answered, d, at + 1, () => .4); }
@@ -11,9 +11,46 @@ test('paste import supports CRLF, comma/tab/dash/custom delimiters and preserves
     assert.equal(parseImport('word - meaning', { term: 'dash', row: 'newline' }).cards[0].definition, 'meaning');
     assert.equal(parseImport('missing\nword,', { term: 'comma', row: 'newline' }).errors.length, 2);
     assert.equal(parseImport('a\tb\na\tb').duplicates, 1);
+    assert.equal(parseImport('apple\tn. 蘋果\\n甜甜白白的').cards[0].definition, 'n. 蘋果\n甜甜白白的');
     assert.throws(() => parseImport('a', { term: 'custom', termCustom: '', row: 'newline' }));
     assert.throws(() => parseImport('a', { term: 'custom', termCustom: '\\t', row: 'custom', rowCustom: '\t' }));
     assert.throws(() => parseImport(Array(2002).fill('a\tb').join('\n')));
+});
+test('JSON import parses AI generated cards, handles markdown code fences, and decodes newlines and aliases', () => {
+    assert.match(FLASHCARD_IMPORT_PROMPT, /"term"/);
+    assert.match(FLASHCARD_IMPORT_PROMPT, /\\n/);
+    assert.match(FLASHCARD_IMPORT_PROMPT, /蘋果/);
+
+    const jsonSnippet = `[
+        { "term": "apple", "definition": "n. 蘋果\\n甜甜白白的" },
+        { "term": "banana", "definition": "香蕉", "termAliases": ["bananas"], "definitionAliases": ["芎蕉"] }
+    ]`;
+    const res = parseImport(jsonSnippet, { format: 'json' });
+    assert.equal(res.cards.length, 2);
+    assert.equal(res.cards[0].term, 'apple');
+    assert.equal(res.cards[0].definition, 'n. 蘋果\n甜甜白白的');
+    assert.deepEqual(res.cards[1].definitionAliases, ['芎蕉']);
+
+    // Markdown code fences
+    const fenced = '```json\n[{"term":"car","definition":"汽車"}]\n```';
+    assert.equal(parseImportJson(fenced).cards[0].term, 'car');
+
+    // Object with cards array
+    const objWithCards = JSON.stringify({ cards: [{ term: 'dog', definition: '狗' }] });
+    assert.equal(parseImportJson(objWithCards).cards[0].definition, '狗');
+
+    // Literal and unescaped newlines
+    const multiLineDef = JSON.stringify([{ term: 'cat', definition: 'n. 貓\n可愛的動物' }]);
+    assert.equal(parseImportJson(multiLineDef).cards[0].definition, 'n. 貓\n可愛的動物');
+
+    // Duplicate detection and empty handling
+    assert.equal(parseImportJson('').cards.length, 0);
+    assert.equal(parseImportJson('[{"term":"a","definition":"b"},{"term":"a","definition":"b"}]').duplicates, 1);
+
+    // Errors for invalid format or missing sides
+    assert.equal(parseImportJson('[{"term":"only"}]').errors.length, 1);
+    assert.throws(() => parseImportJson('{ invalid json }'));
+    assert.throws(() => parseImportJson('"not an array or card object"'));
 });
 test('stable card IDs and revisions invalidate only changed content, not rearrangement or metadata', () => {
     const d = deck(3), edited = prepareDeck({ ...d, title: 'Renamed', cards: [d.cards[2], d.cards[0], d.cards[1]] }, d);

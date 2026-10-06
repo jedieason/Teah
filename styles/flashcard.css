@@ -194,6 +194,9 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-import-custom { display:flex; align-items:center; gap:10px; margin-top:2px; }
 .vocab-import-custom .vocab-field { flex:1; min-width:0; }
 .vocab-import-custom .vocab-field input { background:var(--v-soft); border:1px solid transparent; font-size:14px; height:44px; }
+.vocab-import-prompt-btn { margin-top:6px; padding:6px 14px; font-size:13px; min-height:36px; border-radius:18px; background:var(--v-soft); border:1px solid var(--v-line); color:var(--on-surface,#303647); cursor:pointer; transition:background .15s, border-color .15s; }
+.vocab-import-prompt-btn:hover { background:#e9e8fa; border-color:var(--v-accent,#6366f1); }
+.vocab-import-json-hint { margin:0; font-size:13px; color:var(--v-muted); align-self:center; }
 .vocab-preview-heading { display:flex; align-items:baseline; gap:6px; margin:14px 0 8px; }
 .vocab-preview-heading h3 { margin:0; font-size:16px; font-weight:650; }
 .vocab-import-empty { margin:0; font-size:14px; color:var(--v-muted); }
@@ -213,6 +216,8 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
     .vocab-import-instructions { flex-basis:100%; order:1; }
     .vocab-import-dialog > .vocab-dialog-body { padding:0 16px 20px; }
     .vocab-import-dialog .vocab-import-controls { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; margin-top:20px; }
+    .vocab-import-format-group { grid-column:1 / -1; }
+    .vocab-import-json-hint { grid-column:1 / -1; }
     .vocab-import-separators { width:auto; }
     .vocab-import-separators legend { font-size:13px; }
     .vocab-import-dialog .vocab-import-preview > div { grid-template-columns:22px minmax(0,1fr) minmax(0,1fr); gap:10px; padding:10px; }

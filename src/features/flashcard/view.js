@@ -1,5 +1,5 @@
 import { auth } from '../../services/firebase.js';
-import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer, expandParentheses } from './model.js';
+import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer, expandParentheses } from './model.js';
 import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, semanticGrade, generateDeck, editDeckWithAI } from './service.js';
 import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS } from './generation.js';
 import { editingBatches } from './editing.js';
@@ -504,14 +504,32 @@ export function mountFlashcard({ host, activate }) {
                 node('span', label, row); radio.onchange = update; radios[value] = radio; return row;
             }
             for (const [value, label] of values) option(value, label);
-            const customRow = node('div', null, group, 'vocab-import-custom'); option('custom', '自訂', customRow).classList.add('vocab-custom-radio');
-            const custom = field(customLabel, customRow); custom.placeholder = '自訂'; custom.maxLength = 20;
-            const chooseCustom = () => { radios.custom.checked = true; update(); };
-            custom.onfocus = chooseCustom; custom.oninput = chooseCustom;
-            return { value: () => Object.values(radios).find(radio => radio.checked).value, custom };
+            if (customLabel) {
+                const customRow = node('div', null, group, 'vocab-import-custom'); option('custom', '自訂', customRow).classList.add('vocab-custom-radio');
+                const custom = field(customLabel, customRow); custom.placeholder = '自訂'; custom.maxLength = 20;
+                const chooseCustom = () => { radios.custom.checked = true; update(); };
+                custom.onfocus = chooseCustom; custom.oninput = chooseCustom;
+                return { group, value: () => Object.values(radios).find(radio => radio.checked).value, set: v => { if (radios[v]) { radios[v].checked = true; update(); } }, custom };
+            }
+            return { group, value: () => Object.values(radios).find(radio => radio.checked).value, set: v => { if (radios[v]) { radios[v].checked = true; update(); } } };
         }
+        const format = separators('匯入格式', 'vocab-import-format', [['delimiter', '分隔符號'], ['json', 'JSON']], 'delimiter');
+        format.group.classList.add('vocab-import-format-group');
+        const copyBtn = node('button', '複製 Prompt', format.group, 'vocab-button vocab-import-prompt-btn'); copyBtn.type = 'button';
+        async function copyPrompt() {
+            try {
+                if (navigator?.clipboard?.writeText) await navigator.clipboard.writeText(FLASHCARD_IMPORT_PROMPT);
+                else throw new Error('No clipboard');
+            } catch {
+                const ta = document.createElement('textarea'); ta.value = FLASHCARD_IMPORT_PROMPT; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+            }
+            copyBtn.textContent = '已複製 Prompt'; format.set('json'); setTimeout(() => { copyBtn.textContent = '複製 Prompt'; }, 2000);
+        }
+        copyBtn.onclick = copyPrompt;
         const term = separators('單字與解釋之間', 'vocab-import-term', [['tab', 'Tab'], ['comma', 'Comma']], 'tab', '自訂單字分隔符');
         const row = separators('字卡與字卡之間', 'vocab-import-row', [['newline', '換行'], ['semicolon', '分號 ;']], 'newline', '自訂字卡分隔符');
+        const jsonHint = node('p', '支援換行（\\n），可將 AI 生成的 JSON 直接貼上。', controls, 'vocab-import-json-hint'); jsonHint.hidden = true;
         const previewHeading = node('div', null, body, 'vocab-preview-heading'); node('h3', '預覽', previewHeading); const count = node('span', '0 張字卡', previewHeading, 'vocab-muted');
         const status = node('p', '', body, 'vocab-import-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite'); status.id = 'vocab-import-status'; input.setAttribute('aria-describedby', status.id);
         const empty = node('p', '尚無預覽內容', body, 'vocab-import-empty');
@@ -525,7 +543,14 @@ export function mountFlashcard({ host, activate }) {
             host.querySelector(`[data-index="${keep.length}"] textarea`)?.focus();
         }, 'vocab-primary');
         function update() {
-            const options = { term: term.value(), row: row.value(), termCustom: term.custom.value, rowCustom: row.custom.value };
+            const isJson = format.value() === 'json';
+            term.group.hidden = isJson; row.group.hidden = isJson; jsonHint.hidden = !isJson;
+            input.placeholder = isJson
+                ? '[\n  {\n    "term": "單字",\n    "definition": "n. 蘋果\\n甜甜白白的"\n  }\n]'
+                : 'Word 1\tDefinition 1\nWord 2\tDefinition 2\nWord 3\tDefinition 3';
+            const options = isJson
+                ? { format: 'json' }
+                : { format: 'delimiter', term: term.value(), row: row.value(), termCustom: term.custom.value, rowCustom: row.custom.value };
             preview.replaceChildren();
             try {
                 parsed = parseImport(input.value, options);
