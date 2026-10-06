@@ -96,7 +96,8 @@ try {
     await advanced(); await options.locator('summary').filter({ hasText: '語音' }).click();
     await options.getByLabel('朗讀速度', { exact: true }).selectOption('0.65'); await options.getByRole('button', { name: '儲存', exact: true }).click(); await idle();
     assert.equal((await study()).sessions.learn.id, before.id); assert.equal((await study()).sessions.learn.current.key, before.current.key);
-    await advanced(); await options.locator('summary').filter({ hasText: '題型' }).click();
+    await advanced();
+    assert.equal(await options.locator('.vocab-setting-section').first().evaluate(e => e.open), true, 'question types are immediately available');
     for (const checkbox of await options.locator('.vocab-setting-section').first().getByRole('checkbox').all()) await checkbox.uncheck();
     await options.getByRole('button', { name: '儲存', exact: true }).click();
     await options.getByText('請至少選擇一種題型。', { exact: true }).waitFor(); assert.equal((await study()).sessions.learn.id, before.id);
