@@ -65,7 +65,7 @@ try {
     await view.getByRole('button', { name: '設定', exact: true }).click();
     await flashOptions.getByLabel('同時顯示雙面', { exact: true }).uncheck(); await idle(); await page.keyboard.press('Escape'); await flashOptions.waitFor({ state: 'hidden' });
     await page.waitForFunction(() => document.activeElement.matches('.vocab-flip'));
-    await page.keyboard.press('Space'); await view.locator('.vocab-flip.flipped').waitFor();
+    await page.keyboard.press('Space'); await view.locator('.vocab-flip.flipped').waitFor(); await idle();
     await page.evaluate(() => sessionStorage.setItem('study-db', JSON.stringify(window.__testDatabase)));
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.getByRole('button', { name: 'Flashcard', exact: true }).click(); await view.getByRole('button', { name: deck.title, exact: true }).click();

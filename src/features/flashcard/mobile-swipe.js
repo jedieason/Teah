@@ -77,7 +77,6 @@ export function bindMobileFlashSwipe(stage, { blocked, tracking, preview, swipe 
         else resetMobileFlashSwipe(stage);
     });
     stage.addEventListener('pointercancel', () => cancel());
-    stage.addEventListener('lostpointercapture', () => cancel());
     stage.addEventListener('scroll', () => { suppressClick = true; }, { capture: true, passive: true });
     stage.addEventListener('click', event => {
         if (!suppressClick || event.detail === 0) return;
