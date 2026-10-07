@@ -815,7 +815,23 @@ export function mountFlashcard({ host, activate }) {
             if (!feedback) { const confirm = button('確認答案', actions, () => answer([...selected]), 'vocab-primary'); confirm.disabled = true; choices.addEventListener('change', () => { confirm.disabled = selected.size === 0; }); }
         } else if (q.type === 'written' || q.type === 'spell') {
             if (!feedback) {
-                const form = node('form', null, area, 'vocab-answer-form vocab-written-form'); form.id = 'vocab-written-answer'; const input = field('你的答案', form); input.autocomplete = 'off'; input.spellcheck = false; input.maxLength = 4000; input.placeholder = '輸入答案'; input.enterKeyHint = 'done';
+                const targetText = answerFor(card, q.direction) || '';
+                const multiline = /\r?\n/.test(targetText) || answersFor(card, q.direction).some(a => /\r?\n/.test(a));
+                const form = node('form', null, area, 'vocab-answer-form vocab-written-form'); form.id = 'vocab-written-answer'; const input = field('你的答案', form, '', multiline ? 'textarea' : 'input'); input.autocomplete = 'off'; input.spellcheck = false; input.maxLength = 4000; input.placeholder = '輸入答案';
+                if (multiline) {
+                    input.rows = Math.min(6, Math.max(2, (targetText.match(/\n/g) || []).length + 1));
+                    input.enterKeyHint = 'enter';
+                    input.onkeydown = e => {
+                        if (e.key === 'Enter') {
+                            if (e.ctrlKey || e.metaKey || (!e.shiftKey && !/\r?\n/.test(targetText))) {
+                                e.preventDefault();
+                                form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true }));
+                            }
+                        }
+                    };
+                } else {
+                    input.enterKeyHint = 'done';
+                }
                 input.value = q.draftResponse || '';
                 const b = node('button', '確認答案', actions, 'vocab-button vocab-primary'); b.type = 'submit'; b.setAttribute('form', form.id);
                 b.disabled = !input.value.trim(); input.oninput = () => { q.draftResponse = input.value; b.disabled = !input.value.trim(); };
@@ -867,11 +883,26 @@ export function mountFlashcard({ host, activate }) {
             if (!feedback.correct && ['written', 'spell'].includes(q.type)) {
                 if (!feedback.skipped) button('我的答案其實正確', footer, async () => { const next = overrideCorrect(session); await persist(newEvent('override', { originalId: feedback.eventId, correct: true }), next); session = next; render(); }, 'vocab-link');
                 if (!feedback.retyped) {
-                    const form = node('form', null, footer, 'vocab-answer-form'); const correction = field('重打正確答案', form); correction.autocomplete = 'off'; correction.spellcheck = false;
+                    const targetText = answerFor(card, q.direction) || '';
+                    const multiline = /\r?\n/.test(targetText) || answersFor(card, q.direction).some(a => /\r?\n/.test(a));
+                    const form = node('form', null, footer, 'vocab-answer-form'); const correction = field('重打正確答案', form, '', multiline ? 'textarea' : 'input'); correction.autocomplete = 'off'; correction.spellcheck = false; correction.maxLength = 4000;
+                    if (multiline) {
+                        correction.rows = Math.min(6, Math.max(2, (targetText.match(/\n/g) || []).length + 1));
+                        correction.enterKeyHint = 'enter';
+                        correction.onkeydown = e => {
+                            if (e.key === 'Enter') {
+                                if (e.ctrlKey || e.metaKey || (!e.shiftKey && !/\r?\n/.test(targetText))) {
+                                    e.preventDefault();
+                                    form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true }));
+                                }
+                            }
+                        };
+                    } else {
+                        correction.enterKeyHint = 'done';
+                    }
                     const check = node('button', '確認訂正', form, 'vocab-button vocab-primary'); check.type = 'submit';
                     const status = node('p', '', form); status.setAttribute('role', 'status');
                     form.onsubmit = e => { e.preventDefault(); void action(async () => { if (!gradeAnswer(correction.value, q.type === 'spell' ? [answerFor(card, q.direction)] : answersFor(card, q.direction))) { status.textContent = '請輸入畫面上的正確答案。'; return; } const next = clone(session); next.feedback.retyped = true; next.updatedAt = Date.now(); await persist(newEvent('repair', { cardId: card.id, direction: q.direction, originalId: feedback.eventId }), next); session = next; await nextLearn(); }); };
-                    correction.enterKeyHint = 'done';
                     if (!mobileStudy()) correction.focus({ preventScroll: true });
                 }
             }

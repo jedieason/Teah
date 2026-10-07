@@ -111,7 +111,7 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-choice.correct-option { border-color:var(--v-success); border-style:dashed; background:#f6fbf8; opacity:1; color:inherit; animation:vocab-correct .35s ease; }.vocab-choice.correct-option .vocab-choice-key { color:var(--v-success); background:none; font-size:23px; line-height:1; }
 .vocab-choice.wrong-option { border-color:#c79873; opacity:1; animation:vocab-wrong .32s ease; }.vocab-choice.wrong-option .vocab-choice-key { color:var(--v-error); background:none; font-size:23px; line-height:1; }
 .vocab-choice input { accent-color:var(--v-accent); width:18px; height:18px; flex-shrink:0; }
-.vocab-answer-form { display:flex; gap:12px; align-items:end; flex-wrap:wrap; }.vocab-answer-form .vocab-field { flex:1; min-width:160px; }.vocab-answer-form input { min-height:50px; border:2px solid var(--v-line); }
+.vocab-answer-form { display:flex; gap:12px; align-items:end; flex-wrap:wrap; }.vocab-answer-form .vocab-field { flex:1; min-width:160px; }.vocab-answer-form :is(input, textarea) { min-height:50px; border:2px solid var(--v-line); }.vocab-answer-form textarea { resize:vertical; min-height:64px; line-height:1.5; font-family:inherit; }
 .vocab-answer-form > p { flex-basis:100%; margin:0; }
 .vocab-symbols { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; order:-1; }.vocab-symbols .vocab-symbol { min-width:36px; padding:6px 10px; border-radius:18px; background:var(--v-soft); border:0; }.vocab-written-hint { margin:16px 0 4px; color:var(--v-muted); font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; }
 .vocab-spelling { white-space:pre-wrap; overflow-wrap:anywhere; }.vocab-spelling.vocab-incorrect-answer { text-decoration:none; color:inherit; }.vocab-spelling mark { color:var(--v-error); background:#ffedd9; border-bottom:2px solid #c79873; border-radius:3px; padding:1px 2px; }
@@ -333,8 +333,9 @@ html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
 .vocab-page[data-phase="learn"] :is(.vocab-dontknow, .vocab-hint-btn):focus-visible { outline:2px solid var(--v-accent); outline-offset:2px; }
 .vocab-written-form { display:grid; gap:12px; }
 .vocab-written-form .vocab-field { gap:8px; }
-.vocab-written-form input { font-size:16px; min-height:50px; background:var(--v-soft); border:1px solid var(--v-line); }
-.vocab-written-form input:focus { background:var(--surface-color,#fff); }
+.vocab-written-form :is(input, textarea) { font-size:16px; min-height:50px; background:var(--v-soft); border:1px solid var(--v-line); }
+.vocab-written-form :is(input, textarea):focus { background:var(--surface-color,#fff); }
+.vocab-written-form textarea { resize:vertical; min-height:72px; line-height:1.5; font-family:inherit; }
 .vocab-written-form .vocab-symbols { margin:0; }
 .vocab-written-form .vocab-written-hint { margin:0; font-size:14px; }
 .vocab-written-form > .vocab-link { justify-self:start; padding:4px 0; min-height:32px; font-weight:400; font-size:13px; }

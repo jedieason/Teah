@@ -274,3 +274,11 @@ test('undoing flash classifications restores the previous rating without contrib
     assert.deepEqual(projectStudy({ events: { undo, known, old } }), projected);
     assert.deepEqual(projectStudy({ events: { old, known, undo, again: { ...undo, id: 'undo-again', at: 4 } } }), projected);
 });
+test('multiline definitions and terms match answers with newlines and ignore whitespace differences', () => {
+    const card = { term: 'DNA\nRNA', definition: 'Deoxyribonucleic acid\nRibonucleic acid' };
+    assert.equal(gradeAnswer('DNA\nRNA', [card.term]), true);
+    assert.equal(gradeAnswer('DNA RNA', [card.term]), true);
+    assert.equal(gradeAnswer('Deoxyribonucleic acid\nRibonucleic acid', [card.definition]), true);
+    assert.equal(gradeAnswer('Deoxyribonucleic acid Ribonucleic acid', [card.definition]), true);
+});
+
