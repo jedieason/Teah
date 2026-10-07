@@ -833,8 +833,8 @@ export function mountFlashcard({ host, activate }) {
                 const partial = q.type === 'spell' ? '' : writingHint(answerFor(card, q.direction));
                 if (partial) {
                     const output = node('div', q.hintShown ? partial : '', form, 'vocab-written-hint'); output.hidden = !q.hintShown; output.setAttribute('role', 'status');
-                    const tools = node('div', null, form, 'vocab-written-tools');
-                    const reveal = button('顯示提示', tools, async () => { q.hintShown = true; await persist(null, session); if (output) output.hidden = false; if (output) output.textContent = partial; reveal.hidden = true; if (!mobileStudy()) input.focus({ preventScroll: true }); }, 'vocab-link'); reveal.hidden = !!q.hintShown;
+                    const reveal = button('顯示提示', null, async () => { q.hintShown = true; await persist(null, session); if (output) output.hidden = false; if (output) output.textContent = partial; reveal.hidden = true; if (!mobileStudy()) input.focus({ preventScroll: true }); }, 'vocab-hint-btn'); reveal.hidden = !!q.hintShown;
+                    actions?.prepend(reveal);
                 }
                 if (!host.hidden && !mobileStudy()) input.focus({ preventScroll: true });
             } else if (!feedback.skipped) {

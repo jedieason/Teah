@@ -60,6 +60,12 @@ try {
     assert.ok((await confirm.boundingBox()).y + (await confirm.boundingBox()).height <= 844, 'the recorded medical prompt and answer actions fit together');
     const hint = await view.getByRole('button', { name: '顯示提示', exact: true }).boundingBox(), field = await input.boundingBox();
     assert.ok(hint.y >= field.y + field.height, 'the hint follows the input');
+    await view.getByRole('button', { name: '不知道', exact: true }).hover();
+    await page.waitForTimeout(200);
+    await page.screenshot({ path: 'artifacts/qa/hover-dontknow.png' });
+    await view.getByRole('button', { name: '顯示提示', exact: true }).hover();
+    await page.waitForTimeout(200);
+    await page.screenshot({ path: 'artifacts/qa/hover-hint.png' });
     await page.screenshot({ path: 'artifacts/qa/learn-medical-mobile.png' });
     await input.fill('Coagulative necrosis');
     assert.equal(await confirm.isEnabled(), true);
