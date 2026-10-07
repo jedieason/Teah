@@ -833,21 +833,8 @@ export function mountFlashcard({ host, activate }) {
                 const partial = q.type === 'spell' ? '' : writingHint(answerFor(card, q.direction));
                 if (partial) {
                     const output = node('div', q.hintShown ? partial : '', form, 'vocab-written-hint'); output.hidden = !q.hintShown; output.setAttribute('role', 'status');
-                }
-                if (partial || q.type === 'written') {
                     const tools = node('div', null, form, 'vocab-written-tools');
-                    if (partial) {
-                        const output = form.querySelector('.vocab-written-hint');
-                        const reveal = button('顯示提示', tools, async () => { q.hintShown = true; await persist(null, session); if (output) output.hidden = false; if (output) output.textContent = partial; reveal.hidden = true; if (!mobileStudy()) input.focus({ preventScroll: true }); }, 'vocab-link'); reveal.hidden = !!q.hintShown;
-                    }
-                    if (q.type === 'written') {
-                        const grading = select('批改方式', tools, GRADING_LEVELS, gradingFor(session));
-                        grading.onchange = () => void action(async () => {
-                            session.options.grading = grading.value;
-                            preferred = gradingOptions({ ...preferred, grading: grading.value });
-                            await persist(null, session);
-                        });
-                    }
+                    const reveal = button('顯示提示', tools, async () => { q.hintShown = true; await persist(null, session); if (output) output.hidden = false; if (output) output.textContent = partial; reveal.hidden = true; if (!mobileStudy()) input.focus({ preventScroll: true }); }, 'vocab-link'); reveal.hidden = !!q.hintShown;
                 }
                 if (!host.hidden && !mobileStudy()) input.focus({ preventScroll: true });
             } else if (!feedback.skipped) {
@@ -1015,7 +1002,12 @@ export function mountFlashcard({ host, activate }) {
         }, 'vocab-primary');
     }
     async function saveFlash() { flash.updatedAt = Date.now(); await persist(null, flash); }
-    async function flip() { if (flash.options.showBoth) return; flash.flipped = !flash.flipped; await saveFlash(); updateFlip(); }
+    async function flip() {
+        if (flash.options.showBoth) return;
+        flash.flipped = !flash.flipped;
+        updateFlip();
+        await saveFlash();
+    }
     function updateFlip() {
         const stage = host.querySelector('.vocab-flip'); if (!stage) return;
         stage.classList.toggle('flipped', flash.flipped); stage.classList.toggle('show-both', !!flash.options.showBoth);
@@ -1028,18 +1020,25 @@ export function mountFlashcard({ host, activate }) {
         front?.querySelectorAll('button').forEach(b => { b.tabIndex = frontHidden ? -1 : 0; });
         back?.querySelectorAll('button').forEach(b => { b.tabIndex = (backHidden || flash.options.showBoth) ? -1 : 0; });
         const frontActions = front?.querySelector('.vocab-card-actions'), backActions = back?.querySelector('.vocab-card-actions');
-        if (frontActions) frontActions.style.display = frontHidden ? 'none' : '';
-        if (backActions) backActions.style.display = (backHidden || flash.options.showBoth) ? 'none' : '';
         if (flash.options.showBoth) {
+            if (backActions) backActions.style.display = 'none';
             backActions?.setAttribute('aria-hidden', 'true');
+        } else {
+            if (backActions) backActions.style.display = '';
+            if (frontActions) frontActions.style.display = '';
         }
         stage.querySelectorAll('.vocab-face-scroll').forEach(scroller => {
             const { scrollTop, scrollHeight, clientHeight } = scroller;
             const max = scrollHeight - clientHeight;
-            if (max <= 1) scroller.dataset.overflow = 'none';
-            else {
+            const face = scroller.closest('.vocab-face');
+            if (max <= 1) {
+                scroller.dataset.overflow = 'none';
+                if (face) face.dataset.overflow = 'none';
+            } else {
                 const top = scrollTop > 2, bottom = scrollTop < max - 2;
-                scroller.dataset.overflow = top && bottom ? 'both' : top ? 'top' : bottom ? 'bottom' : 'none';
+                const state = top && bottom ? 'both' : top ? 'top' : bottom ? 'bottom' : 'none';
+                scroller.dataset.overflow = state;
+                if (face) face.dataset.overflow = state;
             }
         });
         const card = deck.cards.find(c => c.id === flash.order[flash.index]);
@@ -1135,9 +1134,15 @@ export function mountFlashcard({ host, activate }) {
             const updateFade = () => {
                 const { scrollTop, scrollHeight, clientHeight } = scroller;
                 const max = scrollHeight - clientHeight;
-                if (max <= 1) { scroller.dataset.overflow = 'none'; return; }
+                if (max <= 1) {
+                    scroller.dataset.overflow = 'none';
+                    face.dataset.overflow = 'none';
+                    return;
+                }
                 const top = scrollTop > 2, bottom = scrollTop < max - 2;
-                scroller.dataset.overflow = top && bottom ? 'both' : top ? 'top' : bottom ? 'bottom' : 'none';
+                const state = top && bottom ? 'both' : top ? 'top' : bottom ? 'bottom' : 'none';
+                scroller.dataset.overflow = state;
+                face.dataset.overflow = state;
             };
             scroller.addEventListener('scroll', updateFade, { passive: true });
             requestAnimationFrame(updateFade);
@@ -1168,6 +1173,7 @@ export function mountFlashcard({ host, activate }) {
             swipe: direction => { void action(() => flash.options.track ? rateFlash(direction > 0) : moveFlash(direction < 0 ? 1 : -1, direction)); }
         });
         updateFlip(); let down = null, swiped = false;
+        stage.addEventListener('scroll', () => { swiped = true; }, { capture: true, passive: true });
         stage.onpointerdown = e => { if (isMobileFlash() || e.target.closest('.vocab-card-actions')) return; down = [e.clientX, e.clientY]; swiped = false; };
         stage.onpointercancel = () => { down = null; };
         stage.onpointerup = e => { if (!down) return; const delta = e.clientX - down[0]; if (Math.abs(delta) > 70 && Math.abs(e.clientY - down[1]) < 100) { swiped = true; void action(() => flash.options.track ? rateFlash(delta > 0) : moveFlash(delta < 0 ? 1 : -1)); } else if (Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 8) { swiped = true; } down = null; };

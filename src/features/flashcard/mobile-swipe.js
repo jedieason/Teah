@@ -46,7 +46,6 @@ export function bindMobileFlashSwipe(stage, { blocked, tracking, preview, swipe 
         if (!mobile() || blocked() || !event.isPrimary || event.button !== 0 || event.target.closest('.vocab-card-actions')) return;
         suppressClick = false;
         down = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, dragging: false, direction: 0 };
-        stage.setPointerCapture(event.pointerId);
     });
     stage.addEventListener('pointermove', event => {
         if (!down || event.pointerId !== down.pointerId) return;
@@ -55,7 +54,9 @@ export function bindMobileFlashSwipe(stage, { blocked, tracking, preview, swipe 
         if (!down.dragging) {
             if (Math.max(Math.abs(x), Math.abs(y)) < 8) return;
             if (Math.abs(y) >= Math.abs(x)) { cancel(true); return; }
-            down.dragging = true; stage.classList.add('swipe-dragging');
+            down.dragging = true;
+            try { stage.setPointerCapture(event.pointerId); } catch (_) {}
+            stage.classList.add('swipe-dragging');
         }
         const direction = Math.sign(x);
         if (direction !== down.direction) { down.direction = direction; preview(direction); }
