@@ -138,12 +138,10 @@ try {
     await view.getByLabel('字卡集名稱', { exact: true }).fill('本機修改');
     await page.evaluate(id => { window.__testDatabase.flashcard['test-user'].sets[id].revision++; window.__testDatabase.flashcard['test-user'].sets[id].title = '雲端修改'; }, synonyms.id);
     await view.getByRole('button', { name: '完成', exact: true }).click();
-    await view.getByRole('button', { name: '保留本機版本為新字卡集', exact: true }).waitFor(); await idle();
+    await page.waitForFunction(id => window.__testDatabase.flashcard['test-user'].sets[id].title === '本機修改', synonyms.id);
+    assert.equal(await page.evaluate(id => window.__testDatabase.flashcard['test-user'].sets[id].title, synonyms.id), '本機修改');
+    await view.getByRole('heading', { name: '本機修改', exact: true }).waitFor();
     await page.screenshot({ path: 'artifacts/qa/vocabulary-conflict.png', fullPage: true });
-    await view.getByRole('button', { name: '保留本機版本為新字卡集', exact: true }).click();
-    await view.getByRole('heading', { name: '本機修改（本機副本）', exact: true }).waitFor();
-    await page.waitForFunction(() => Object.values(window.__testDatabase.flashcard['test-user'].sets).some(d => d.title === '本機修改（本機副本）'));
-    assert.equal(await page.evaluate(id => window.__testDatabase.flashcard['test-user'].sets[id].title, synonyms.id), '雲端修改');
     await view.getByRole('button', { name: '‹ Flashcard', exact: true }).click();
     await view.getByRole('button', { name: '馬來文測試', exact: true }).click();
     await view.getByRole('button', { name: '編輯字卡集', exact: true }).click();

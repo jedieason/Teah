@@ -18,19 +18,34 @@ registerOutboxHandler('flashcard', async item => {
     try {
         if (p.op === 'deck') {
             const path = ref(database, `flashcard/${uid}/sets/${p.deck.id}`);
-            // Warm the SDK cache before a revision-based abort: transactions may otherwise first receive null.
             await get(path); ensure(uid);
+            let nextRevision = p.deck.revision || 1;
+            let nextUpdatedAt = p.deck.updatedAt || Date.now();
             const result = await runTransaction(path, previous => {
                 if (previous?.operations?.[item.id]) return;
-                if ((previous?.revision || 0) !== p.baseRevision) return;
-                return { ...p.deck, operations: { ...previous?.operations, [item.id]: true } };
+                nextRevision = Math.max(previous?.revision || 0, p.deck.revision || 1);
+                nextUpdatedAt = Math.max(previous?.updatedAt || 0, p.deck.updatedAt || Date.now());
+                return {
+                    ...p.deck,
+                    revision: nextRevision,
+                    updatedAt: nextUpdatedAt,
+                    operations: { ...previous?.operations, [item.id]: true }
+                };
             }, { applyLocally: false });
-            if (!result.committed && !result.snapshot.val()?.operations?.[item.id]) {
-                const error = new Error('其他裝置已修改這組字卡。請保留本機版本為新字卡集，或重新載入雲端版本。'); error.code = 'flashcard/conflict'; throw error;
+            const finalDeck = result.snapshot.val() || { ...p.deck, revision: nextRevision, updatedAt: nextUpdatedAt };
+            const cachedDecks = await readCache(uid, 'sets') || {};
+            if (cachedDecks[p.deck.id] && !cachedDecks[p.deck.id].deletedAt) {
+                cachedDecks[p.deck.id] = { ...cachedDecks[p.deck.id], revision: finalDeck.revision, updatedAt: finalDeck.updatedAt };
+                await cache(uid, 'sets', cachedDecks);
             }
             const publicPath = ref(database, `flashcard/publicSets/${p.deck.id}`);
             if (p.deck.isPublic && !p.deck.deletedAt) {
-                const publicDeck = { ...p.deck, authorId: p.deck.authorId || uid };
+                const publicDeck = {
+                    ...p.deck,
+                    revision: finalDeck.revision,
+                    updatedAt: finalDeck.updatedAt,
+                    authorId: p.deck.authorId || uid
+                };
                 await runTransaction(publicPath, previous => {
                     if (previous?.operations?.[item.id]) return;
                     return { ...publicDeck, operations: { ...previous?.operations, [item.id]: true } };
@@ -56,7 +71,7 @@ registerOutboxHandler('flashcard', async item => {
         }
         status({ uid, saved: true, deckId: p.deckId || p.deck.id });
     } catch (error) {
-        status({ uid, error: error.code === 'flashcard/conflict' ? error.message : /permission/i.test(error.code || error.message) ? 'Firebase 尚未允許 Flashcard 存取；資料已保存在此裝置，套用規則後可重試同步。' : '資料已保存在此裝置，連線恢復後會重試同步。', conflict: error.code === 'flashcard/conflict', deckId: p.deckId || p.deck?.id });
+        status({ uid, error: /permission/i.test(error.code || error.message) ? 'Firebase 尚未允許 Flashcard 存取；資料已保存在此裝置，套用規則後可重試同步。' : '資料已保存在此裝置，連線恢復後會重試同步。', conflict: false, deckId: p.deckId || p.deck?.id });
         throw error;
     }
 });

@@ -291,14 +291,12 @@ export function mountFlashcard({ host, activate }) {
         const status = node('p', message, host, 'vocab-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
         if (conflict) {
             const resolve = node('div', null, host, 'vocab-conflict');
-            button('保留本機版本為新字卡集', resolve, async () => {
+            button('立即同步至雲端', resolve, async () => {
                 const candidate = deck?.id === host.dataset.conflictDeck ? deck : decks[host.dataset.conflictDeck];
                 const local = candidate ? clone(candidate) : null;
-                if (!local) throw new Error('請先開啟發生衝突的字卡集。');
-                await discardConflicts(local.id);
-                const result = await loadDecks(); decks = result.decks;
-                local.id = id(); local.title += '（本機副本）';
-                deck = await saveDeck(local); decks[deck.id] = deck; study = {}; conflict = false; message = '本機版本已保留為新字卡集。'; phase = 'detail'; render();
+                if (!local) throw new Error('請先開啟要同步的字卡集。');
+                deck = await saveDeck(local); decks[deck.id] = deck; conflict = false; message = '字卡集已同步至雲端。'; phase = 'detail'; render();
+                await flushOutbox();
             });
             button('重新載入雲端版本', resolve, async () => {
                 await discardConflicts(host.dataset.conflictDeck || deck?.id); conflict = false;
