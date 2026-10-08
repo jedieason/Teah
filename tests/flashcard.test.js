@@ -281,4 +281,28 @@ test('multiline definitions and terms match answers with newlines and ignore whi
     assert.equal(gradeAnswer('Deoxyribonucleic acid\nRibonucleic acid', [card.definition]), true);
     assert.equal(gradeAnswer('Deoxyribonucleic acid Ribonucleic acid', [card.definition]), true);
 });
+test('public deck toggle and author metadata are preserved and bounded in prepareDeck', () => {
+    const draft = {
+        title: 'Public Deck',
+        cards: [{ term: 'mitochondria', definition: 'powerhouse of the cell' }],
+        isPublic: true,
+        authorId: 'user_123',
+        authorName: 'Dr. Smith',
+        authorPhoto: 'https://example.com/avatar.jpg'
+    };
+    const deck = prepareDeck(draft);
+    assert.equal(deck.isPublic, true);
+    assert.equal(deck.authorId, 'user_123');
+    assert.equal(deck.authorName, 'Dr. Smith');
+    assert.equal(deck.authorPhoto, 'https://example.com/avatar.jpg');
+
+    // Updating deck preserves author and toggles isPublic
+    const updated = prepareDeck({ ...deck, title: 'Updated Title', isPublic: false }, deck);
+    assert.equal(updated.isPublic, false);
+    assert.equal(updated.authorId, 'user_123');
+    assert.equal(updated.authorName, 'Dr. Smith');
+    assert.equal(updated.authorPhoto, 'https://example.com/avatar.jpg');
+    assert.equal(updated.revision, 2);
+});
+
 

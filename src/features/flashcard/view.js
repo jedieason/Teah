@@ -77,59 +77,150 @@ export function mountFlashcard({ host, activate }) {
         const input = node(type, null, l); input.setAttribute('aria-label', label); input.value = value; return input;
     }
     function select(label, parent, values, value) {
-        const s = field(label, parent, '', 'select');
-        for (const [v, text] of values) { const o = node('option', text, s); o.value = v; }
-        s.value = value; return s;
-    }
-    function dropdown(label, parent, values, value, onchange) {
-        const wrap = node('div', null, parent, 'vocab-field vocab-field-row');
-        node('span', label, wrap);
+        const isToolbar = parent?.classList?.contains('vocab-toolbar') || parent?.classList?.contains('vocab-import-controls');
+        const wrap = node('div', null, parent, isToolbar ? 'vocab-field' : 'vocab-field vocab-field-row');
+        node('span', label, wrap, 'vocab-field-label');
         const container = node('div', null, wrap, 'vocab-dropdown');
+
+        const hiddenSelect = node('select', null, container, 'vocab-hidden-select');
+        hiddenSelect.tabIndex = -1;
+        hiddenSelect.setAttribute('aria-hidden', 'true');
+        hiddenSelect.style.cssText = 'position:absolute;opacity:0;pointer-events:none;width:0;height:0;margin:0;padding:0;border:0;';
+        for (const [v, text] of values) {
+            const o = node('option', text, hiddenSelect);
+            o.value = String(v);
+        }
+
         const trigger = node('button', null, container, 'vocab-dropdown-trigger');
         trigger.type = 'button';
         trigger.setAttribute('aria-label', label);
         trigger.setAttribute('aria-haspopup', 'listbox');
         trigger.setAttribute('aria-expanded', 'false');
-        const selected = values.find(([v]) => v === value) || values[0];
-        const labelSpan = node('span', selected ? selected[1] : '', trigger, 'vocab-dropdown-label');
+
+        const labelSpan = node('span', '', trigger, 'vocab-dropdown-label');
         const chevron = node('span', null, trigger, 'vocab-dropdown-chevron');
         chevron.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${studyIcons.chevron}</svg>`;
+
         const menu = node('div', null, container, 'vocab-dropdown-menu');
         menu.setAttribute('role', 'listbox');
+
+        let currentValue = String(value ?? (values[0] ? values[0][0] : ''));
+        let changeHandler = null;
+
+        const closeMenu = () => {
+            container.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+        };
+
+        const updateUI = (val) => {
+            currentValue = String(val);
+            hiddenSelect.value = currentValue;
+            const match = values.find(([v]) => String(v) === currentValue) || values[0];
+            labelSpan.textContent = match ? match[1] : currentValue;
+            menu.querySelectorAll('.vocab-dropdown-item').forEach(b => {
+                const isSelected = b.dataset.value === currentValue;
+                b.classList.toggle('selected', isSelected);
+                b.setAttribute('aria-selected', String(isSelected));
+            });
+        };
+
         trigger.onclick = e => {
             e.stopPropagation();
+            if (trigger.disabled) return;
+            document.querySelectorAll('.vocab-dropdown.open').forEach(d => {
+                if (d !== container) {
+                    d.classList.remove('open');
+                    d.querySelector('.vocab-dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+                }
+            });
             const isOpen = container.classList.toggle('open');
             trigger.setAttribute('aria-expanded', String(isOpen));
         };
+
         values.forEach(([v, text]) => {
-            const item = node('button', text, menu, 'vocab-dropdown-item' + (v === value ? ' selected' : ''));
-            item.type = 'button'; item.setAttribute('role', 'option'); item.setAttribute('aria-selected', String(v === value));
+            const item = node('button', null, menu, 'vocab-dropdown-item');
+            item.type = 'button';
+            item.dataset.value = String(v);
+            item.setAttribute('role', 'option');
+            node('span', text, item, 'vocab-dropdown-item-label');
+            const checkIcon = node('span', null, item, 'vocab-dropdown-item-check');
+            checkIcon.setAttribute('aria-hidden', 'true');
+            checkIcon.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">${studyIcons.check}</svg>`;
             item.onclick = e => {
                 e.stopPropagation();
-                container.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false');
-                labelSpan.textContent = text;
-                menu.querySelectorAll('.vocab-dropdown-item').forEach(b => {
-                    const isCurrent = b === item; b.classList.toggle('selected', isCurrent); b.setAttribute('aria-selected', String(isCurrent));
-                });
-                onchange(v);
+                closeMenu();
+                if (currentValue !== String(v)) {
+                    updateUI(v);
+                    if (typeof changeHandler === 'function') {
+                        changeHandler.call(wrap, { target: wrap });
+                    }
+                    wrap.dispatchEvent(new Event('change', { bubbles: true }));
+                    hiddenSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                }
             };
         });
+
         const onDocClick = e => {
-            if (!container.isConnected) { document.removeEventListener('pointerdown', onDocClick); return; }
+            if (!container.isConnected) {
+                document.removeEventListener('pointerdown', onDocClick);
+                return;
+            }
             if (!container.contains(e.target)) {
-                container.classList.remove('open');
-                trigger.setAttribute('aria-expanded', 'false');
+                closeMenu();
             }
         };
         document.addEventListener('pointerdown', onDocClick);
+
         container.addEventListener('keydown', e => {
             if (e.key === 'Escape' && container.classList.contains('open')) {
-                e.preventDefault(); e.stopPropagation();
-                container.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false');
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
                 trigger.focus();
             }
         });
-        return container;
+
+        hiddenSelect.addEventListener('change', () => {
+            if (hiddenSelect.value !== currentValue) {
+                updateUI(hiddenSelect.value);
+                if (typeof changeHandler === 'function') {
+                    changeHandler.call(wrap, { target: wrap });
+                }
+                wrap.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+
+        updateUI(currentValue);
+
+        Object.defineProperty(wrap, 'value', {
+            get: () => currentValue,
+            set: (v) => {
+                updateUI(v);
+            }
+        });
+
+        Object.defineProperty(wrap, 'onchange', {
+            get: () => changeHandler,
+            set: (fn) => {
+                changeHandler = fn;
+            }
+        });
+
+        Object.defineProperty(wrap, 'disabled', {
+            get: () => trigger.disabled,
+            set: (val) => {
+                trigger.disabled = Boolean(val);
+                hiddenSelect.disabled = Boolean(val);
+                if (val) closeMenu();
+            }
+        });
+
+        return wrap;
+    }
+    function dropdown(label, parent, values, value, onchange) {
+        const s = select(label, parent, values, value);
+        if (typeof onchange === 'function') s.onchange = () => onchange(s.value);
+        return s;
     }
     function check(label, parent, checked) {
         const l = node('label', null, parent, 'vocab-check'); const input = node('input', null, l); input.type = 'checkbox'; input.checked = checked; node('span', label, l); return input;
@@ -232,11 +323,24 @@ export function mountFlashcard({ host, activate }) {
         button('重新同步', toolbar, async () => { await flushOutbox(); const result = await loadDecks(); decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); });
         const grid = node('div', null, host, 'vocab-grid');
         function list() {
-            grid.replaceChildren(); const filtered = Object.values(decks).filter(d => !!d.deletedAt === trash && normalize(d.title + ' ' + d.description + ' ' + d.cards.map(c => c.term + ' ' + c.definition).join(' ')).includes(normalize(search))).sort((a, b) => b.updatedAt - a.updatedAt);
+            grid.replaceChildren(); const filtered = Object.values(decks).filter(d => !!d.deletedAt === trash && normalize(d.title + ' ' + (d.authorName || '') + ' ' + d.description + ' ' + d.cards.map(c => c.term + ' ' + c.definition).join(' ')).includes(normalize(search))).sort((a, b) => b.updatedAt - a.updatedAt);
             if (!filtered.length) node('p', trash ? '沒有已刪除字卡集' : search ? '沒有符合的字卡集' : '尚無字卡集', grid, 'vocab-empty');
             for (const d of filtered) {
                 const card = node('article', null, grid, 'vocab-deck');
                 const open = button(d.title, card, () => openDeck(d.id), 'vocab-deck-title'); if (trash) open.disabled = true;
+                if (d.authorName || d.isPublic) {
+                    const authorRow = node('div', null, card, 'vocab-deck-author');
+                    if (d.authorPhoto) {
+                        const avatar = node('img', null, authorRow, 'vocab-author-avatar');
+                        avatar.src = d.authorPhoto;
+                        avatar.alt = d.authorName || '作者';
+                        avatar.onerror = () => { avatar.style.display = 'none'; };
+                    } else if (d.authorName) {
+                        node('span', d.authorName.slice(0, 1).toUpperCase(), authorRow, 'vocab-author-avatar vocab-author-initial');
+                    }
+                    if (d.authorName) node('span', d.authorName, authorRow, 'vocab-author-name');
+                    if (d.isPublic) node('span', '公開', authorRow, 'vocab-pill vocab-pill-public');
+                }
                 node('p', `${d.cards.length} 張字卡`, card, 'vocab-muted');
                 if (d.description) node('p', d.description, card, 'vocab-description');
                 const preview = node('div', null, card, 'vocab-deck-preview');
@@ -261,9 +365,25 @@ export function mountFlashcard({ host, activate }) {
     async function star(card) { const value = !projectStudy(study).stars[card.id]; study = await saveStudy(deck.id, study, newEvent('star', { cardId: card.id, value })); render(); }
     function starButton(card, parent) { const starred = !!projectStudy(study).stars[card.id]; const b = studyIcon('star', starred ? '取消星號' : '標記星號', parent, () => star(card)); b.classList.toggle('starred', starred); b.setAttribute('aria-pressed', String(starred)); return b; }
     function renderDetail() {
+        const isAuthor = !deck.authorId || deck.authorId === owner;
         const h = heading(deck.title, { label: 'Flashcard', action: () => { phase = 'list'; deck = null; render(); } });
-        button('編輯字卡集', h, () => edit(deck));
-        button('AI 編輯字卡', h, async () => { await edit(deck); editingDialog(); });
+        if (isAuthor) {
+            button('編輯字卡集', h, () => edit(deck));
+            button('AI 編輯字卡', h, async () => { await edit(deck); editingDialog(); });
+        }
+        if (deck.authorName || deck.isPublic) {
+            const authorBar = node('div', null, host, 'vocab-detail-author');
+            if (deck.authorPhoto) {
+                const avatar = node('img', null, authorBar, 'vocab-author-avatar');
+                avatar.src = deck.authorPhoto;
+                avatar.alt = deck.authorName || '作者';
+                avatar.onerror = () => { avatar.style.display = 'none'; };
+            } else if (deck.authorName) {
+                node('span', deck.authorName.slice(0, 1).toUpperCase(), authorBar, 'vocab-author-avatar vocab-author-initial');
+            }
+            if (deck.authorName) node('span', `作者：${deck.authorName}`, authorBar, 'vocab-author-name');
+            if (deck.isPublic) node('span', '公開字卡集', authorBar, 'vocab-pill vocab-pill-public');
+        }
         if (deck.description) node('p', deck.description, host, 'vocab-description');
         const projected = projectStudy(study), counts = progressCounts(deck, projected, direction);
         const studyModes = node('div', null, host, 'vocab-modes');
@@ -275,7 +395,9 @@ export function mountFlashcard({ host, activate }) {
         const dir = select('進度方向', controls, [['term', '看解釋 → 答單字'], ['definition', '看單字 → 答解釋'], ['both', '正反向']], direction);
         dir.onchange = () => { direction = dir.value; render(); };
         button('匯出文字', controls, () => exportText());
-        button('刪除字卡集', controls, async () => { decks[deck.id] = await changeDeleted(deck, true); message = '字卡集已移至「已刪除」，可隨時復原。'; deck = null; phase = 'list'; render(); });
+        if (isAuthor) {
+            button('刪除字卡集', controls, async () => { decks[deck.id] = await changeDeleted(deck, true); message = '字卡集已移至「已刪除」，可隨時復原。'; deck = null; phase = 'list'; render(); });
+        }
         stats(host, counts);
         const track = node('div', null, host, 'vocab-mastery-track'); track.setAttribute('role', 'img'); track.setAttribute('aria-label', `${counts.mastered} 張已精熟，${counts.learning} 張正在學習，${counts.new} 張未學習`);
         for (const key of ['mastered', 'learning', 'new']) { const segment = node('span', null, track, key); segment.style.width = `${counts[key] / counts.total * 100}%`; }
@@ -298,7 +420,7 @@ export function mountFlashcard({ host, activate }) {
     }
     async function edit(previous) {
         const recovered = await readDraft(previous?.id); safeOwner();
-        draft = recovered && (!previous || recovered.baseRevision === previous.revision) ? recovered : { ...(previous ? clone(previous) : { title: '', description: '', termLanguage: 'en-US', definitionLanguage: 'zh-TW', cards: Array.from({ length: 3 }, () => ({ id: id(), term: '', definition: '' })) }), baseRevision: previous?.revision || 0 };
+        draft = recovered && (!previous || recovered.baseRevision === previous.revision) ? recovered : { ...(previous ? clone(previous) : { title: '', description: '', isPublic: false, termLanguage: 'en-US', definitionLanguage: 'zh-TW', cards: Array.from({ length: 3 }, () => ({ id: id(), term: '', definition: '' })) }), baseRevision: previous?.revision || 0 };
         deck = previous; phase = 'editor'; message = recovered ? '已恢復此裝置的編輯草稿。' : ''; render();
     }
     function queueDraft() {
@@ -355,6 +477,8 @@ export function mountFlashcard({ host, activate }) {
             if (key === 'title') { input.required = true; requiredField(input, key); }
             input.oninput = () => { draft[key] = input.value; if (attemptedSave) validate(); queueDraft(); };
         }
+        const publicToggleWrap = node('div', null, meta, 'vocab-public-toggle-wrap');
+        toggle('公開字卡集', publicToggleWrap, !!draft.isPublic, checked => { draft.isPublic = checked; queueDraft(); });
         const langs = node('div', null, host, 'vocab-toolbar');
         for (const [key, label] of [['termLanguage', '單字語言'], ['definitionLanguage', '解釋語言']]) { const s = select(label, langs, languages, draft[key]); s.onchange = () => { draft[key] = s.value; queueDraft(); }; }
         const toolbar = node('div', null, host, 'vocab-toolbar');

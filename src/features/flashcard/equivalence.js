@@ -1,4 +1,4 @@
-import { answerKey, plainText } from './model.js';
+import { answerKey, plainText, expandParentheses } from './model.js';
 import { gradingLevel } from './grading-options.js';
 import { inferEquivalence } from './equivalence-client.js';
 import { terminologyComparison } from './terminology.js';
@@ -73,11 +73,17 @@ export async function gradeEquivalence({ prompt = '', expected, aliases = [], re
     const responseKey = exactKey(response);
     if (!responseKey) return verdict('incorrect', 'empty');
     const accepted = [...new Set([expected, ...aliases].filter(a => typeof a === 'string' && a.trim()))];
-    // Keep all qualifiers, including parentheses. The model evaluates their meaning.
-    const candidates = accepted;
-    if (candidates.some(a => exactKey(a) === responseKey && !criticalConflict(a, response))) return verdict('correct', 'exact');
+    if (accepted.some(a => exactKey(a) === responseKey && !criticalConflict(a, response))) return verdict('correct', 'exact');
     if (level === 'exact') return verdict('incorrect', 'exact-mismatch');
-    const safe = candidates.filter(a => !criticalConflict(a, response));
+
+    const expandedVariants = accepted.flatMap(a => expandParentheses(a));
+    const inputVariants = expandParentheses(response);
+    if (!criticalConflict(expected, response) && inputVariants.some(inp => {
+        const inpKey = exactKey(inp);
+        return inpKey && expandedVariants.some(exp => exactKey(exp) === inpKey && !criticalConflict(exp, inp));
+    })) return verdict('correct', 'exact');
+
+    const safe = accepted.filter(a => !criticalConflict(a, response));
     if (!safe.length) return verdict('incorrect', 'critical-conflict');
     const threshold = GRADING_THRESHOLDS[level];
     let best = null, uncertain = safe.length > 16;

@@ -1,9 +1,62 @@
 {
   "rules": {
     "flashcard": {
+      "publicSets": {
+        ".read": "auth != null",
+        "$deck": {
+          ".write": "auth != null && (!data.exists() || data.child('authorId').val() === auth.uid) && (!newData.exists() || newData.child('authorId').val() === auth.uid)",
+          ".validate": "newData.hasChildren(['id','title','cards','revision','createdAt','updatedAt','termLanguage','definitionLanguage','authorId']) && newData.child('id').val() === $deck && newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('title').val().length <= 160 && newData.child('revision').isNumber() && newData.child('revision').val() >= 1 && newData.child('cards').hasChild('0') && newData.child('createdAt').isNumber() && newData.child('updatedAt').isNumber() && newData.child('authorId').val() === auth.uid",
+          "cards": {
+            "$index": {
+              ".validate": "$index.matches(/^(0|[1-9][0-9]{0,2}|1[0-9]{3})$/) && newData.hasChildren(['id','term','definition','revision']) && newData.child('id').isString() && newData.child('term').isString() && newData.child('term').val().length > 0 && newData.child('term').val().length <= 4000 && newData.child('definition').isString() && newData.child('definition').val().length > 0 && newData.child('definition').val().length <= 4000 && newData.child('revision').isNumber() && newData.child('revision').val() >= 1",
+              "termAliases": {
+                ".validate": "newData.hasChildren()",
+                "$i": {
+                  ".validate": "$i.matches(/^(0|[1-9]|1[01])$/) && newData.isString() && newData.val().length <= 4000"
+                }
+              },
+              "definitionAliases": {
+                ".validate": "newData.hasChildren()",
+                "$i": {
+                  ".validate": "$i.matches(/^(0|[1-9]|1[01])$/) && newData.isString() && newData.val().length <= 4000"
+                }
+              }
+            }
+          },
+          "description": {
+            ".validate": "newData.isString() && newData.val().length <= 2000"
+          },
+          "termLanguage": {
+            ".validate": "newData.isString() && newData.val().length <= 20"
+          },
+          "definitionLanguage": {
+            ".validate": "newData.isString() && newData.val().length <= 20"
+          },
+          "authorId": {
+            ".validate": "newData.isString() && newData.val().length <= 128"
+          },
+          "authorName": {
+            ".validate": "newData.isString() && newData.val().length <= 160"
+          },
+          "authorPhoto": {
+            ".validate": "newData.isString() && newData.val().length <= 2000"
+          },
+          "isPublic": {
+            ".validate": "newData.val() === true"
+          },
+          "deletedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "operations": {
+            "$op": {
+              ".validate": "newData.val() === true"
+            }
+          }
+        }
+      },
       "$uid": {
-        ".read": "auth != null && auth.uid === $uid",
-        ".write": "auth != null && auth.uid === $uid && !newData.exists()",
+        ".read": "auth != null && auth.uid === $uid && $uid !== 'publicSets'",
+        ".write": "auth != null && auth.uid === $uid && $uid !== 'publicSets' && !newData.exists()",
         "sets": {
           "$deck": {
             ".write": "auth != null && auth.uid === $uid",
@@ -34,6 +87,18 @@
             "definitionLanguage": {
               ".validate": "newData.isString() && newData.val().length <= 20"
             },
+            "authorId": {
+              ".validate": "newData.isString() && newData.val().length <= 128"
+            },
+            "authorName": {
+              ".validate": "newData.isString() && newData.val().length <= 160"
+            },
+            "authorPhoto": {
+              ".validate": "newData.isString() && newData.val().length <= 2000"
+            },
+            "isPublic": {
+              ".validate": "newData.isBoolean()"
+            },
             "deletedAt": {
               ".validate": "newData.isNumber()"
             },
@@ -46,7 +111,7 @@
         },
         "study": {
           "$deck": {
-            ".write": "auth != null && auth.uid === $uid && root.child('flashcard').child($uid).child('sets').child($deck).exists()",
+            ".write": "auth != null && auth.uid === $uid && (root.child('flashcard').child($uid).child('sets').child($deck).exists() || root.child('flashcard').child('publicSets').child($deck).exists())",
             "events": {
               "$event": {
                 ".validate": "newData.hasChildren(['id','kind','at']) && newData.child('id').val() === $event && newData.child('at').isNumber() && (newData.child('kind').val() === 'answer' || newData.child('kind').val() === 'flash' || newData.child('kind').val() === 'star' || newData.child('kind').val() === 'reset' || newData.child('kind').val() === 'override' || newData.child('kind').val() === 'repair') && (!data.exists() || (newData.child('kind').val() === data.child('kind').val() && newData.child('at').val() === data.child('at').val() && newData.child('correct').val() === data.child('correct').val() && newData.child('response').val() === data.child('response').val() && newData.child('cardId').val() === data.child('cardId').val() && newData.child('generation').val() === data.child('generation').val() && newData.child('revision').val() === data.child('revision').val() && newData.child('direction').val() === data.child('direction').val() && newData.child('sessionId').val() === data.child('sessionId').val() && newData.child('originalId').val() === data.child('originalId').val() && newData.child('value').val() === data.child('value').val() && newData.child('ordinal').val() === data.child('ordinal').val() && newData.child('initialStage').val() === data.child('initialStage').val() && newData.child('type').val() === data.child('type').val() && newData.child('responseTimeMs').val() === data.child('responseTimeMs').val())) && ((newData.child('kind').val() !== 'answer' && newData.child('kind').val() !== 'flash') || (newData.hasChildren(['cardId','direction','revision','correct','sessionId']) && newData.child('correct').isBoolean() && newData.child('revision').isNumber() && (newData.child('direction').val() === 'term' || newData.child('direction').val() === 'definition'))) && (newData.child('kind').val() !== 'override' || (newData.child('correct').isBoolean() && newData.parent().child(newData.child('originalId').val()).child('kind').val() === 'answer'))",

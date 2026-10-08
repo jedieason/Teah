@@ -31,6 +31,15 @@ test('exact ignores formatting, case and spaces without invoking a model or omit
     assert.equal((await grade('anything', '', 'relaxed', never)).reason, 'empty');
 });
 
+test('rigorous mode strips punctuation and allows omitting parenthesized content without requiring model inference', async () => {
+    const never = () => { throw new Error('Must not run inference for variant match'); };
+    assert.equal((await grade('Intradermal (melanocytic) nevus', 'Intradermal nevus', 'rigorous', never)).correct, true);
+    assert.equal((await grade('皮內痣（黑色素細胞痣）', '皮內痣', 'rigorous', never)).correct, true);
+    assert.equal((await grade('皮內痣（黑色素細胞痣）', '皮內痣。', 'rigorous', never)).correct, true);
+    assert.equal((await grade('皮內痣（黑色素細胞痣）', '皮內痣黑色素細胞痣', 'rigorous', never)).correct, true);
+    assert.equal((await grade('Type 1: Diabetes', 'Type 1 Diabetes', 'rigorous', never)).correct, true);
+});
+
 test('critical conflicts cannot be accepted even by a very confident model', async () => {
     const pairs = [['5 mg', '50 mg'], ['5 mg', '5 g'], ['.5 mg', '5 mg'], ['5 mg, 50 g', '50 mg, 5 g'], ['pH > 6.5', 'pH < 6.5'], ['32:1', '32/1'], ['CD4+', 'CD4-'], ['Na+', 'K+'], ['Na+ K-', 'Na- K+'], ['2*x*3', '2x3'], ['x^2', 'x2'], ['IgG', 'IgM'], ['T1', 'T2'], ['hyperkalemia', 'hypokalemia'], ['hypertrophy', 'hyperplasia'], ['ileum', 'ilium'], ['agonist', 'antagonist'], ['acute inflammation', 'chronic inflammation'], ['benign tumor', 'malignant tumor'], ['activation', 'no activation'], ['陽性', '陰性'], ['血鉀升高', '血鉀降低']];
     for (const [reference, response] of pairs) {

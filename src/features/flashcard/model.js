@@ -13,7 +13,7 @@ const isCJK = ch => /[\u4e00-\u9fa5\u3040-\u30ff]/.test(ch);
 
 export function expandParentheses(text) {
     const raw = String(text ?? '');
-    const regex = /\([^()]*\)|（[^（）]*）|\[[^\[\]]*\]|【[^【】]*】/g;
+    const regex = /\([^()]*\)|（[^（）]*）|\[[^\[\]]*\]|【[^【】]*】|\{[^{}]*\}|｛[^｛｝]*｝|〔[^〔〕]*〕|〖[^〖〗]*〗/g;
     const matches = [...raw.matchAll(regex)];
     if (!matches.length) return [raw];
     let variants = [''];
@@ -41,7 +41,7 @@ export function expandParentheses(text) {
 export function answerKey(value) {
     let s = normalize(plainText(value));
     s = s.replace(/["'“”‘’`「」『』]/g, '');
-    s = s.replace(/[，,、;；…~～—–\(\)（）\[\]【】《》!?！？]/g, ' ');
+    s = s.replace(/[，,、;；…~～—–\(\)（）\[\]【】\{\}｛｝〔〕〖〗《》!?！？]/g, ' ');
     s = s.replace(/(?<!\d):|:(?!\d)|：/g, ' ');
     s = s.replace(/\.(?!\d)|。/g, ' ');
     s = s.replace(/(?<=\p{L})[-—–_](?=\p{L})/gu, ' ');
@@ -49,17 +49,17 @@ export function answerKey(value) {
     return s.replace(/\s+/g, ' ').trim();
 }
 export function gradeAnswer(input, answers, grading = 'strict') {
-    if (grading === 'exact') {
-        const key = answerKey(input).replace(/\s/g, '');
-        return !!key && (answers || []).some(a => answerKey(a).replace(/\s/g, '') === key);
-    }
-    const inputKeys = expandParentheses(input).map(answerKey).filter(Boolean);
+    const inputKeys = expandParentheses(input).map(answerKey).map(k => k.replace(/\s/g, '')).filter(Boolean);
     if (!inputKeys.length) return false;
     const allExpected = (answers || []).flatMap(expandParentheses);
+    if (grading === 'exact') {
+        return inputKeys.some(key => allExpected.some(a => answerKey(a).replace(/\s/g, '') === key));
+    }
     return inputKeys.some(key => {
         return allExpected.some(answer => {
             const expected = answerKey(answer);
-            if (key === expected) return true;
+            const expectedKey = expected.replace(/\s/g, '');
+            if (key === expectedKey) return true;
             if (grading !== 'moderate' || /[\d+−=<>/]/.test(expected) || /[^a-zÀ-ž\s-]/i.test(expected)) return false;
             const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
             const a = strip(key), b = strip(expected);
@@ -196,8 +196,27 @@ export function prepareDeck(draft, previous, now = Date.now()) {
         next.revision = prev ? prev.revision + (['term', 'definition', 'termAliases', 'definitionAliases'].some(k => JSON.stringify(next[k]) !== JSON.stringify(prev[k] || [])) ? 1 : 0) : 1;
         return next;
     });
-    return { id: previous?.id || draft.id || id(), title: draft.title.trim(), description: (draft.description || '').slice(0, 2000), termLanguage: draft.termLanguage || 'en-US', definitionLanguage: draft.definitionLanguage || 'zh-TW', cards,
-        revision: (previous?.revision || 0) + 1, createdAt: previous?.createdAt || now, updatedAt: now };
+    const deck = {
+        id: previous?.id || draft.id || id(),
+        title: draft.title.trim(),
+        description: (draft.description || '').slice(0, 2000),
+        termLanguage: draft.termLanguage || 'en-US',
+        definitionLanguage: draft.definitionLanguage || 'zh-TW',
+        cards,
+        revision: (previous?.revision || 0) + 1,
+        createdAt: previous?.createdAt || now,
+        updatedAt: now
+    };
+    if (draft.isPublic != null || previous?.isPublic != null) {
+        deck.isPublic = !!(draft.isPublic ?? previous?.isPublic);
+    }
+    const authorId = draft.authorId || previous?.authorId;
+    if (authorId) deck.authorId = String(authorId).slice(0, 128);
+    const authorName = draft.authorName || previous?.authorName;
+    if (authorName) deck.authorName = String(authorName).slice(0, 160);
+    const authorPhoto = draft.authorPhoto ?? previous?.authorPhoto;
+    if (authorPhoto) deck.authorPhoto = String(authorPhoto).slice(0, 2000);
+    return deck;
 }
 export function shuffled(values, random = Math.random) {
     const list = [...values];

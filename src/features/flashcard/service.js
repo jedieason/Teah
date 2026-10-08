@@ -28,8 +28,25 @@ registerOutboxHandler('flashcard', async item => {
             if (!result.committed && !result.snapshot.val()?.operations?.[item.id]) {
                 const error = new Error('其他裝置已修改這組字卡。請保留本機版本為新字卡集，或重新載入雲端版本。'); error.code = 'flashcard/conflict'; throw error;
             }
+            const publicPath = ref(database, `flashcard/publicSets/${p.deck.id}`);
+            if (p.deck.isPublic && !p.deck.deletedAt) {
+                const publicDeck = { ...p.deck, authorId: p.deck.authorId || uid };
+                await runTransaction(publicPath, previous => {
+                    if (previous?.operations?.[item.id]) return;
+                    return { ...publicDeck, operations: { ...previous?.operations, [item.id]: true } };
+                }, { applyLocally: false });
+            } else {
+                try {
+                    const snap = await get(publicPath);
+                    if (snap.exists() && snap.val()?.authorId === uid) {
+                        await runTransaction(publicPath, () => null, { applyLocally: false });
+                    }
+                } catch {}
+            }
         } else {
-            const deck = (await get(ref(database, `flashcard/${uid}/sets/${p.deckId}`))).val(); ensure(uid);
+            const userDeck = (await get(ref(database, `flashcard/${uid}/sets/${p.deckId}`))).val();
+            const deck = userDeck || (await get(ref(database, `flashcard/publicSets/${p.deckId}`)).catch(() => null))?.val();
+            ensure(uid);
             if (!deck || deck.deletedAt) return; // A deleted set must never be recreated by late queued answers.
             await runTransaction(ref(database, `flashcard/${uid}/study/${p.deckId}`), previous => {
                 const value = mergeStudy(previous, p.event, p.session);
@@ -44,22 +61,48 @@ registerOutboxHandler('flashcard', async item => {
     }
 });
 export async function loadDecks() {
-    const uid = owner(); let decks = await readCache(uid, 'sets') || {}, remote = false, error = '';
+    const uid = owner(); let userDecks = await readCache(uid, 'sets') || {}, publicDecks = await readCache(uid, 'publicSets') || {}, remote = false, error = '';
     try {
-        const snapshot = await get(ref(database, `flashcard/${uid}/sets`)); ensure(uid);
-        decks = snapshot.val() || {}; remote = true;
+        const [userSnap, publicSnap] = await Promise.all([
+            get(ref(database, `flashcard/${uid}/sets`)),
+            get(ref(database, 'flashcard/publicSets')).catch(() => null)
+        ]);
+        ensure(uid);
+        if (userSnap) { userDecks = userSnap.val() || {}; remote = true; }
+        if (publicSnap && publicSnap.exists()) { publicDecks = publicSnap.val() || {}; }
     } catch (e) { error = /permission/i.test(e.code || e.message) ? 'Firebase 尚未允許 Flashcard 存取；目前使用此裝置的資料。' : '目前使用此裝置的資料。'; }
     ensure(uid);
     const items = await pending(uid); ensure(uid);
-    for (const item of items) if (item.payload.op === 'deck') decks[item.payload.deck.id] = item.payload.deck;
-    await cache(uid, 'sets', decks); ensure(uid);
-    return { decks, remote, error, pending: items.length };
+    for (const item of items) {
+        if (item.payload.op === 'deck') {
+            const d = item.payload.deck;
+            userDecks[d.id] = d;
+            if (d.isPublic && !d.deletedAt) publicDecks[d.id] = d;
+            else delete publicDecks[d.id];
+        }
+    }
+    await cache(uid, 'sets', userDecks);
+    await cache(uid, 'publicSets', publicDecks);
+    ensure(uid);
+    const combined = { ...publicDecks, ...userDecks };
+    return { decks: combined, remote, error, pending: items.length };
 }
 export async function saveDeck(draft, previous) {
-    const uid = owner(), deck = prepareDeck(draft, previous), decks = await readCache(uid, 'sets') || {}; ensure(uid);
+    const uid = owner(), user = auth.currentUser;
+    const authorFields = {
+        authorId: draft.authorId || previous?.authorId || uid,
+        authorName: draft.authorName || previous?.authorName || user?.displayName || user?.email?.split('@')[0] || '使用者',
+        authorPhoto: draft.authorPhoto ?? previous?.authorPhoto ?? user?.photoURL ?? ''
+    };
+    const deck = prepareDeck({ ...authorFields, ...draft }, previous), decks = await readCache(uid, 'sets') || {}; ensure(uid);
     // Queue first: a failed local storage operation must not falsely report a successful save.
     await enqueue('flashcard', uid, { op: 'deck', deck, baseRevision: previous?.revision || 0 }); ensure(uid);
-    decks[deck.id] = deck; await cache(uid, 'sets', decks); ensure(uid);
+    decks[deck.id] = deck; await cache(uid, 'sets', decks);
+    const publicDecks = await readCache(uid, 'publicSets') || {};
+    if (deck.isPublic && !deck.deletedAt) publicDecks[deck.id] = deck;
+    else delete publicDecks[deck.id];
+    await cache(uid, 'publicSets', publicDecks);
+    ensure(uid);
     return deck;
 }
 export async function changeDeleted(deck, deleted) {
@@ -67,7 +110,12 @@ export async function changeDeleted(deck, deleted) {
     if (deleted) next.deletedAt = next.updatedAt; else delete next.deletedAt;
     await enqueue('flashcard', uid, { op: 'deck', deck: next, baseRevision: deck.revision }); ensure(uid);
     const decks = await readCache(uid, 'sets') || {}; decks[deck.id] = next;
-    await cache(uid, 'sets', decks); return next;
+    await cache(uid, 'sets', decks);
+    const publicDecks = await readCache(uid, 'publicSets') || {};
+    if (next.isPublic && !deleted) publicDecks[next.id] = next;
+    else delete publicDecks[next.id];
+    await cache(uid, 'publicSets', publicDecks);
+    return next;
 }
 export async function loadStudy(deckId) {
     const uid = owner(); let study = await readCache(uid, `study:${deckId}`) || {};
