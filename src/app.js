@@ -18,6 +18,7 @@ import { createNotebook } from './features/mistakes/notebook.js';
 import { markdown, validateQuiz } from './shared/content.js';
 import { streamGemini } from './services/gemini-stream.js';
 import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
+import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -191,6 +192,7 @@ async function initQuiz() {
     libraryLocations[libraryPage].scroll = window.scrollY;
     if (['library', 'archive'].includes(libraryPage)) libraryLocations[libraryPage].query = document.getElementById('bankSearch').value;
     sessionId = crypto.randomUUID();
+    const isSkipRepeatMode = !!customSession?.isSkipRepeatMode;
     activeShuffleOptions = customSession ? customSession.shuffleOptions : shouldShuffleQuiz;
     sessionTimeLimit = customSession?.timeLimit ?? 15;
     sessionKind = customSession ? 'custom' : 'bank';
@@ -300,8 +302,9 @@ async function initQuiz() {
 
     // Update the quiz title with the current file name
     const fileName = selectedJson.split('/').pop().replace('.json', '');
-    document.querySelector('.quiz-title').innerText = `${fileName}`;
-    document.title = `${fileName} - 題矣`;
+    const titleText = isSkipRepeatMode ? `${fileName} · 非考古題` : `${fileName}`;
+    document.querySelector('.quiz-title').innerText = `${titleText}`;
+    document.title = `${titleText} - 題矣`;
 
     createProgressDots();
     renderQuestion(currentIndex);
@@ -3424,6 +3427,9 @@ async function startMistakePractice(items) {
     createProgressDots(); renderQuestion(0);
 }
 
+let currentQuizDedupResult = null;
+let quizDedupCheckToken = 0;
+
 async function openQuizActionModal(key, progress) {
     if (!learningDataReady) {
         await fetchUserProgressAndMistakes(auth.currentUser);
@@ -3435,8 +3441,14 @@ async function openQuizActionModal(key, progress) {
     const status = document.getElementById('quizActionStatus');
     const resumeBtn = document.getElementById('quizActionResumeBtn');
     const restartBtn = document.getElementById('quizActionRestartBtn');
+    const filterSection = document.getElementById('quizActionFilterSection');
+    const skipCheckbox = document.getElementById('skipPastExamRepeatsCheckbox');
+    const filterInfo = document.getElementById('quizActionFilterInfo');
 
     if (!modal) return;
+
+    currentQuizDedupResult = null;
+    const currentToken = ++quizDedupCheckToken;
 
     const label = quizLabel(key);
     title.textContent = label.title;
@@ -3463,9 +3475,86 @@ async function openQuizActionModal(key, progress) {
     restartBtn.querySelector('span').textContent = showResume ? '重新開始' : '開始測驗';
     restartBtn.querySelector('span:last-child').hidden = showResume;
     restartBtn.onclick = () => {
+        const isSkipping = skipCheckbox && skipCheckbox.checked && currentQuizDedupResult && currentQuizDedupResult.nonRepeatedQuestions;
+        const dedupData = currentQuizDedupResult;
         closeQuizActionModal();
-        startFreshQuiz(key);
+        if (isSkipping) {
+            startDedupQuiz(key, dedupData);
+        } else {
+            startFreshQuiz(key);
+        }
     };
+
+    const applyDedupMode = (isSkipping) => {
+        if (isSkipping && currentQuizDedupResult) {
+            const nrCount = currentQuizDedupResult.nonRepeatedCount;
+            status.textContent = '非考古題';
+            document.getElementById('quizActionCount').textContent = `${nrCount} 題`;
+            document.getElementById('quizActionTrack').hidden = true;
+            document.getElementById('quizActionOrder').textContent = `已排除 ${currentQuizDedupResult.rangeStr} 重複題目，共 ${nrCount} 題。`;
+            resumeBtn.hidden = true;
+            resumeBtn.style.display = 'none';
+            restartBtn.className = 'primary-button';
+            restartBtn.querySelector('span').textContent = '開始測驗';
+            restartBtn.querySelector('span:last-child').hidden = false;
+        } else {
+            status.textContent = complete ? '已完成' : showResume ? '上次進度' : '題目數';
+            document.getElementById('quizActionCount').textContent = showResume ? `${done} / ${total} 題` : `${total} 題`;
+            document.getElementById('quizActionTrack').hidden = !showResume;
+            document.getElementById('quizActionOrder').textContent = showResume
+                ? complete ? '可查看本次作答，或重新練習。' : '從上次作答的位置繼續。'
+                : shouldShuffleQuiz ? '隨機題序與選項' : '依題庫順序作答';
+            resumeBtn.hidden = !showResume;
+            resumeBtn.style.display = showResume ? 'flex' : 'none';
+            resumeBtn.querySelector('span').textContent = complete ? '查看作答紀錄' : '繼續測驗';
+            restartBtn.className = showResume ? 'secondary-button' : 'primary-button';
+            restartBtn.querySelector('span').textContent = showResume ? '重新開始' : '開始測驗';
+            restartBtn.querySelector('span:last-child').hidden = showResume;
+        }
+    };
+
+    if (filterSection && skipCheckbox && filterInfo) {
+        skipCheckbox.checked = false;
+        skipCheckbox.disabled = true;
+        skipCheckbox.onchange = () => {
+            applyDedupMode(skipCheckbox.checked);
+        };
+
+        const subsequent = findSubsequentQuizzes(key, catalogPaths);
+        if (!subsequent || subsequent.length === 0) {
+            filterSection.style.display = 'none';
+        } else {
+            filterSection.style.display = 'block';
+            filterInfo.textContent = '比對後續年份中…';
+
+            getPastExamComparisonInfo(key, catalogPaths, readBank)
+                .then(result => {
+                    if (currentToken !== quizDedupCheckToken) return;
+                    currentQuizDedupResult = result;
+                    if (!result.hasLaterExams || result.laterKeys.length === 0) {
+                        filterSection.style.display = 'none';
+                        return;
+                    }
+
+                    if (result.nonRepeatedCount === 0) {
+                        filterInfo.textContent = `無非考古題（全卷皆在 ${result.rangeStr} 重複出現）`;
+                        skipCheckbox.disabled = true;
+                    } else {
+                        filterInfo.textContent = `非考古題共 ${result.nonRepeatedCount} 題（比對 ${result.rangeStr}）`;
+                        skipCheckbox.disabled = false;
+                    }
+
+                    if (skipCheckbox.checked) {
+                        applyDedupMode(true);
+                    }
+                })
+                .catch(err => {
+                    if (currentToken !== quizDedupCheckToken) return;
+                    console.error('Failed to compute exam dedup info:', err);
+                    filterSection.style.display = 'none';
+                });
+        }
+    }
 
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -3478,6 +3567,34 @@ function closeQuizActionModal() {
         modal.style.display = 'none';
         document.body.style.overflow = '';
     }
+    currentQuizDedupResult = null;
+    quizDedupCheckToken++;
+    const skipCheckbox = document.getElementById('skipPastExamRepeatsCheckbox');
+    if (skipCheckbox) {
+        skipCheckbox.checked = false;
+        skipCheckbox.disabled = true;
+        skipCheckbox.onchange = null;
+    }
+}
+
+function startDedupQuiz(key, dedupResult) {
+    if (!learningDataReady) { showCustomAlert('學習紀錄尚未載入，請重新整理後再試。'); return; }
+    isMistakePracticeMode = false;
+    selectedJson = key;
+    customSession = {
+        questions: dedupResult.nonRepeatedQuestions,
+        mode: 'study',
+        shuffleOptions: false,
+        timeLimit: 0,
+        isSkipRepeatMode: true,
+        compareRange: dedupResult.rangeStr
+    };
+    initQuiz().catch(error => {
+        selectedJson = null;
+        document.querySelector('.start-screen').style.display = 'flex';
+        showCustomAlert('題庫載入失敗，請重試。');
+        console.error(error);
+    });
 }
 
 function startFreshQuiz(key) {
