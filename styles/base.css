@@ -74,9 +74,14 @@
     width: 100%;
     padding: 12px 16px;
     font-size: 1.1rem;
+    font-family: inherit;
+    line-height: 1.5;
     border: 2px solid #ccc;
     border-radius: 8px;
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 54px;
 }
 
 .fillblank-input:focus,
@@ -91,6 +96,22 @@
 
 .fillblank-input.incorrect {
     border-color: #cc4e00;
+}
+
+.fillblank-input.score-tier-excellent {
+    border-color: #18ae79 !important;
+}
+
+.fillblank-input.score-tier-good {
+    border-color: #0b57d0 !important;
+}
+
+.fillblank-input.score-tier-fair {
+    border-color: #d97706 !important;
+}
+
+.fillblank-input.score-tier-poor {
+    border-color: #d93025 !important;
 }
 
 .progress-container {
@@ -1850,6 +1871,200 @@ p {
 .chat-status-badge.interrupted {
     color: #747775;
     font-style: italic;
+}
+
+/* ==========================================================================
+   AI SHORT ANSWER GRADING & EXPLANATION DISPLAY
+   ========================================================================== */
+
+.ai-grade-card {
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s ease;
+}
+
+.ai-grade-card.score-tier-excellent {
+    border-color: #a3e6cb;
+    background: #f0faf5;
+    --score-color: #18ae79;
+    --score-bg: #e6f7f0;
+}
+
+.ai-grade-card.score-tier-good {
+    border-color: #c2e7ff;
+    background: #f4f8fe;
+    --score-color: #0b57d0;
+    --score-bg: #e8f0fe;
+}
+
+.ai-grade-card.score-tier-fair {
+    border-color: #fde68a;
+    background: #fffdf5;
+    --score-color: #d97706;
+    --score-bg: #fef3c7;
+}
+
+.ai-grade-card.score-tier-poor {
+    border-color: #f8b4af;
+    background: #fdf5f4;
+    --score-color: #d93025;
+    --score-bg: #fce8e6;
+}
+
+.ai-grade-card.loading {
+    border-color: #e0e0e0;
+    background: #f8f9fa;
+}
+
+.ai-grade-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.ai-grade-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--score-bg, #f1f3f4);
+    border: 1px solid var(--score-color, #5f6368);
+    flex-shrink: 0;
+}
+
+.ai-grade-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--score-color, #202124);
+    line-height: 1;
+}
+
+.ai-grade-max {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #5f6368;
+}
+
+.ai-grade-tier-tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--score-color, #5f6368);
+    color: #ffffff;
+    margin-left: 4px;
+}
+
+.ai-grade-meter {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ai-grade-track {
+    width: 100%;
+    height: 10px;
+    background: #e8eaed;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ai-grade-fill {
+    height: 100%;
+    background: var(--score-color, #0b57d0);
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ai-grade-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #80868b;
+    padding: 0 2px;
+}
+
+.ai-grade-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #5f6368;
+    letter-spacing: 0.3px;
+    margin-bottom: 6px;
+}
+
+.ai-grade-feedback {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 12px;
+}
+
+.ai-grade-feedback-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #202124;
+}
+
+.ai-grade-feedback-content p {
+    margin: 0;
+}
+
+.original-explanation-section {
+    margin-top: 16px;
+}
+
+.original-explanation-content {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #202124;
+}
+
+.ai-grade-loading-spinner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    color: #5f6368;
+}
+
+.ai-grade-error-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #fce8e6;
+    border: 1px solid #f8b4af;
+    color: #c5221f;
+    margin-bottom: 12px;
+}
+
+.ai-grade-retry-btn {
+    appearance: none;
+    border: none;
+    background: #c5221f;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    flex-shrink: 0;
+}
+
+.ai-grade-retry-btn:hover {
+    background: #a51d24;
 }
 
 .option-button.missing {

@@ -21,10 +21,30 @@ await context.route('**/src/services/firebase.js', route => route.fulfill({ cont
 await context.route(/firebasedatabase|firebaseio|googleapis.com\/identity|gstatic.com\/firebasejs/, route => route.abort());
 let reviewRequests = 0;
 await context.route('https://generativelanguage.googleapis.com/**', async route => {
-    reviewRequests++;
-    if (reviewRequests === 1) return route.fulfill({ status: 503, body: '{}' });
     const request = route.request().postDataJSON();
     assert.equal(request.generationConfig.responseMimeType, 'application/json');
+    const promptText = request.contents?.[0]?.parts?.[0]?.text || '';
+    if (promptText.includes('【學生作答】') || request.systemInstruction?.parts?.[0]?.text?.includes('醫學考試閱卷評分助理')) {
+        return route.fulfill({
+            contentType: 'application/json',
+            body: JSON.stringify({
+                candidates: [{
+                    finishReason: 'STOP',
+                    content: {
+                        parts: [{
+                            text: JSON.stringify({
+                                score: 0,
+                                feedback: '計算錯誤，Ct 差距 5 循環應為 32 倍差距（2^5），而非 16:1。'
+                            })
+                        }]
+                    }
+                }]
+            })
+        });
+    }
+
+    reviewRequests++;
+    if (reviewRequests === 1) return route.fulfill({ status: 503, body: '{}' });
     const input = JSON.parse(request.contents[0].parts[0].text);
     assert.equal(input.length, 2);
     assert.equal(input[0].lastSelection, 'A');

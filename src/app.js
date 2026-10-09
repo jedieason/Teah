@@ -17,6 +17,7 @@ import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quiz
 import { createNotebook } from './features/mistakes/notebook.js';
 import { markdown, validateQuiz } from './shared/content.js';
 import { streamGemini } from './services/gemini-stream.js';
+import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -414,11 +415,17 @@ function renderQuestion(index) {
 
     const questionDiv = document.getElementById('question');
     const questionHtml = markdown(q.question);
-    if (q.isMultiSelect) {
-        const labelText = q.isFillBlank ? '句' : '多';
+    if (q.isFillBlank) {
         questionDiv.innerHTML = `
             <div class="question-wrapper">
-                <div class="multi-label">${labelText}</div>
+                <div class="multi-label">簡</div>
+                <div class="question-text">${questionHtml}</div>
+            </div>
+        `;
+    } else if (q.isMultiSelect) {
+        questionDiv.innerHTML = `
+            <div class="question-wrapper">
+                <div class="multi-label">多</div>
                 <div class="question-text">${questionHtml}</div>
             </div>
         `;
@@ -436,12 +443,16 @@ function renderQuestion(index) {
         fillblankInput.disabled = true;
 
         if (q.isConfirmed && revealAnswer) {
+            if (q.aiGrade && !q.aiGrade.error) {
+                const tier = getScoreTier(q.aiGrade.score);
+                fillblankInput.classList.add(tier.className);
+            }
             if (q.isCorrect) {
                 fillblankInput.classList.add('correct');
             } else {
                 fillblankInput.classList.add('incorrect');
             }
-        } else if (index === currentIndex) {
+        } else if (index === currentIndex && !q.aiGradeLoading) {
             fillblankInput.disabled = false;
         }
     } else {
@@ -647,13 +658,64 @@ modalConfirmBtn.addEventListener('click', () => {
     }
 });
 
-// 修改確認按鈕函數
-// 修改確認按鈕函數
-function confirmAnswer() {
+let isGradingAnswer = false;
+
+async function retryGrading(q) {
+    if (!q || isGradingAnswer) return;
+    isGradingAnswer = true;
+    q.aiGradeLoading = true;
+    renderChatDisplay(q);
+
+    let fallbackKey = '';
+    try {
+        const keySnap = await get(ref(database, 'API_KEY'));
+        fallbackKey = typeof keySnap.val() === 'string' ? keySnap.val().trim() : '';
+    } catch {}
+
+    const prevCorrect = q.isCorrect;
+    try {
+        const gradeResult = await gradeShortAnswer({
+            question: q.question,
+            answer: q.answer,
+            explanation: q.explanation,
+            response: q.userSelection,
+            apiKey: fallbackKey,
+        });
+        q.aiGrade = gradeResult;
+        q.aiGradeLoading = false;
+        q.isCorrect = gradeResult.score >= 6;
+
+        if (prevCorrect !== q.isCorrect) {
+            if (q.isCorrect) {
+                correct += 1;
+                wrong = Math.max(0, wrong - 1);
+            } else {
+                wrong += 1;
+                correct = Math.max(0, correct - 1);
+            }
+            document.getElementById('correct').innerText = correct;
+            document.getElementById('wrong').innerText = wrong;
+        }
+    } catch (err) {
+        console.error('Retry AI grading failed', err);
+        q.aiGradeLoading = false;
+        q.aiGrade = {
+            error: true,
+            message: 'AI 評分連線中斷或服務未就緒。',
+        };
+    } finally {
+        isGradingAnswer = false;
+        q.aiGradeLoading = false;
+        renderQuestion(currentIndex);
+        saveProgress();
+    }
+}
+
+async function confirmAnswer() {
     const active = allQuestions[currentIndex];
     if (active && !active.isAnswered) active.responseTimeMs = Math.max(0, Date.now() - questionStartedAt);
     const q = allQuestions[currentIndex];
-    if (!q || q.isAnswered || viewingIndex !== currentIndex) return;
+    if (!q || q.isAnswered || viewingIndex !== currentIndex || isGradingAnswer) return;
 
     if (q.isFillBlank) {
         const userInput = fillblankInput.value.trim();
@@ -663,16 +725,63 @@ function confirmAnswer() {
         }
         stopTimer();
 
-        const sentence = userInput.toLowerCase();
-        const required = Array.isArray(q.answer) ? q.answer : [q.answer];
-        const allMatch = required.every(keyword => sentence.includes(keyword.toLowerCase()));
-
-        q.isCorrect = allMatch;
         q.userSelection = userInput;
         q.isAnswered = true;
-        q.isConfirmed = true;
+        q.aiGradeLoading = true;
+        isGradingAnswer = true;
 
-        if (allMatch) {
+        const confirmBtn = document.getElementById('confirm-btn');
+        if (confirmBtn) {
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = '評分中…';
+        }
+        fillblankInput.disabled = true;
+
+        const reveal = sessionMode !== 'exam' || isTestCompleted;
+        if (reveal) {
+            const explanationEl = document.getElementById('explanation');
+            if (explanationEl) explanationEl.style.display = 'block';
+            renderChatDisplay(q);
+        }
+
+        let fallbackKey = '';
+        try {
+            const keySnap = await get(ref(database, 'API_KEY'));
+            fallbackKey = typeof keySnap.val() === 'string' ? keySnap.val().trim() : '';
+        } catch {}
+
+        try {
+            const gradeResult = await gradeShortAnswer({
+                question: q.question,
+                answer: q.answer,
+                explanation: q.explanation,
+                response: userInput,
+                apiKey: fallbackKey,
+            });
+            q.aiGrade = gradeResult;
+            q.aiGradeLoading = false;
+            q.isCorrect = gradeResult.score >= 6;
+        } catch (err) {
+            console.error('AI grading failed', err);
+            q.aiGradeLoading = false;
+            q.aiGrade = {
+                error: true,
+                message: 'AI 評分連線中斷或服務未就緒。',
+            };
+            const sentence = userInput.toLowerCase();
+            const required = Array.isArray(q.answer) ? q.answer : [q.answer];
+            q.isCorrect = required.length > 0 && required.every(kw => sentence.includes(String(kw).toLowerCase()));
+        } finally {
+            isGradingAnswer = false;
+            q.aiGradeLoading = false;
+            q.isConfirmed = true;
+            if (confirmBtn) {
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = '確認';
+            }
+        }
+
+        if (q.isCorrect) {
             updateCorrect();
         } else {
             updateWrong();
@@ -1094,8 +1203,12 @@ document.addEventListener('keydown', function (event) {
         if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA') && event.isComposing) {
             return;
         }
+        if (activeEl === fillblankInput && event.shiftKey) {
+            return;
+        }
 
         if (!isConfirmed) {
+            event.preventDefault();
             confirmAnswer();
         } else {
             loadNewQuestion();
@@ -1782,8 +1895,83 @@ function renderChatDisplay(target = currentQuestion) {
     const display = document.getElementById('explanation-text');
     if (!display || !target) return;
     const baseExplanation = markdown(target.explanation || '尚無詳解');
+
+    let baseHtml = '';
+    if (target.isFillBlank) {
+        if (target.aiGradeLoading) {
+            baseHtml = `
+                <div class="ai-grade-card loading">
+                    <div class="ai-grade-loading-spinner">
+                        <span class="chat-spinner-dot"></span>
+                        <span>AI 評分中…</span>
+                    </div>
+                </div>
+                <div class="original-explanation-section">
+                    <div class="ai-grade-section-title">原始詳解</div>
+                    <div class="original-explanation-content">${baseExplanation}</div>
+                </div>
+            `;
+        } else if (target.aiGrade && !target.aiGrade.error) {
+            const score = target.aiGrade.score;
+            const tier = getScoreTier(score);
+            const feedbackHtml = markdown(target.aiGrade.feedback || '評分完成。');
+            baseHtml = `
+                <div class="ai-grade-card ${tier.className}">
+                    <div class="ai-grade-header">
+                        <div class="ai-grade-badge">
+                            <span class="ai-grade-score">${score}</span>
+                            <span class="ai-grade-max">/ 10 分</span>
+                            <span class="ai-grade-tier-tag">${tier.label}</span>
+                        </div>
+                        <div class="ai-grade-meter">
+                            <div class="ai-grade-track">
+                                <div class="ai-grade-fill" style="width: ${score * 10}%;"></div>
+                            </div>
+                            <div class="ai-grade-scale">
+                                <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ai-grade-feedback">
+                        <div class="ai-grade-section-title">評分說明</div>
+                        <div class="ai-grade-feedback-content">${feedbackHtml}</div>
+                    </div>
+                </div>
+                <hr class="explanation-divider">
+                <div class="original-explanation-section">
+                    <div class="ai-grade-section-title">原始詳解</div>
+                    <div class="original-explanation-content">${baseExplanation}</div>
+                </div>
+            `;
+        } else if (target.aiGrade && target.aiGrade.error) {
+            baseHtml = `
+                <div class="ai-grade-error-box">
+                    <span>${target.aiGrade.message || 'AI 評分暫時無法取得。'}</span>
+                    <button class="ai-grade-retry-btn" id="retryGradeBtn" type="button">重試評分</button>
+                </div>
+                <div class="original-explanation-section">
+                    <div class="ai-grade-section-title">原始詳解</div>
+                    <div class="original-explanation-content">${baseExplanation}</div>
+                </div>
+            `;
+        } else {
+            baseHtml = `
+                <div class="original-explanation-section">
+                    <div class="ai-grade-section-title">原始詳解</div>
+                    <div class="original-explanation-content">${baseExplanation}</div>
+                </div>
+            `;
+        }
+    } else {
+        baseHtml = baseExplanation;
+    }
+
     if (!target.aiMessages || target.aiMessages.length === 0) {
-        display.innerHTML = baseExplanation;
+        display.innerHTML = baseHtml;
+        const retryBtn = display.querySelector('#retryGradeBtn');
+        if (retryBtn) {
+            retryBtn.onclick = () => retryGrading(target);
+        }
         try { renderLatex(display); } catch {}
         return;
     }
@@ -1822,7 +2010,11 @@ function renderChatDisplay(target = currentQuestion) {
         }
     }
 
-    display.innerHTML = `${baseExplanation}<hr class="explanation-divider"><div class="chat-thread">${chatHtml}</div>`;
+    display.innerHTML = `${baseHtml}<hr class="explanation-divider"><div class="chat-thread">${chatHtml}</div>`;
+    const retryBtn = display.querySelector('#retryGradeBtn');
+    if (retryBtn) {
+        retryBtn.onclick = () => retryGrading(target);
+    }
     try { renderLatex(display); } catch {}
 }
 
