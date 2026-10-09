@@ -1,5 +1,7 @@
 import { normalize } from './model.js';
+import { canonicalQuestion } from '../mistakes/model.js';
 
+export const FLASHCARD_GLOSSARY_INSTRUCTIONS = '製作名詞解釋字卡。每張字卡的 term 必須是專有名詞、醫學名詞或核心詞彙，不可是完整句子或問答題；definition 必須是該詞彙的詳細解釋與定義。title 請命名為該測驗的名詞解釋。';
 export const MAX_GENERATION_SOURCES = 30;
 export const MAX_GENERATION_INSTRUCTIONS = 4000;
 export function sourceQuestions(items) {
@@ -8,6 +10,20 @@ export function sourceQuestions(items) {
     return items.map((m, i) => ({ id: `s${i + 1}`, questionId: m.questionId || '', revision: m.revision || 1,
         question: m.question, options: m.options || null, answer: m.answer, explanation: m.explanation || '',
         source: m.origin || m.title || m.quizKey || '' }));
+}
+export function prepareMistakeFlashcardSources(questions, source = '') {
+    const wrong = (Array.isArray(questions) ? questions : []).filter(q => q.isAnswered && !q.isCorrect);
+    if (!wrong.length) throw new Error('沒有錯題可製作 Flashcard。');
+    const items = wrong.slice(0, MAX_GENERATION_SOURCES).map(q => {
+        const canonical = canonicalQuestion(q);
+        const origin = q.origin || (source || '').replace(/^_Archive_/, '').replace(/\.json$/, '') || '測驗錯題';
+        return {
+            ...canonical,
+            origin,
+            sourcePath: q.sourcePath || source || origin
+        };
+    });
+    return sourceQuestions(items);
 }
 export function generationRequest(sources, instructions = '') {
     if (!Array.isArray(sources) || !sources.length) throw new Error('請選擇待複習的錯題。');

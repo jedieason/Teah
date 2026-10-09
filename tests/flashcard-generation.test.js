@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { sourceQuestions, generationRequest, parseGeneratedDeck } from '../src/features/flashcard/generation.js';
+import { sourceQuestions, generationRequest, parseGeneratedDeck, FLASHCARD_GLOSSARY_INSTRUCTIONS, prepareMistakeFlashcardSources } from '../src/features/flashcard/generation.js';
 import { prepareDeck } from '../src/features/flashcard/model.js';
 const sources = sourceQuestions([{ questionId: 'q1', question: 'Ct 相差 5？', answer: '32:1', explanation: '理想倍增為 2⁵。', origin: '檢驗學' }]);
 const card = { term: 'Ct 相差 5 次，起始量比為何？', definition: '32:1', termAliases: [], definitionAliases: ['32 to 1'], sourceIds: ['s1'] };
@@ -40,3 +40,29 @@ test('malformed, incomplete, duplicate and unlinked generated decks cannot be sa
     assert.throws(() => parseGeneratedDeck('broken JSON', sources));
     assert.throws(() => parse(deck, []));
 });
+test('prepareMistakeFlashcardSources extracts answered wrong questions and FLASHCARD_GLOSSARY_INSTRUCTIONS specifies noun term definitions', () => {
+    assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /名詞解釋/);
+    assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /term/);
+    assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /definition/);
+
+    const questions = [
+        { questionId: 'q1', question: '題目一', answer: 'A', isAnswered: true, isCorrect: true },
+        { questionId: 'q2', question: '題目二', options: { A: '選項甲', B: '選項乙' }, answer: 'B', userSelection: 'A', explanation: '詳解二', isAnswered: true, isCorrect: false, reverseLabelMapping: { A: 'B', B: 'A' } },
+        { questionId: 'q3', question: '題目三', answer: 'C', isAnswered: false, isCorrect: null }
+    ];
+
+    const extracted = prepareMistakeFlashcardSources(questions, '檢驗醫學區段一｜B09 考古.json');
+    assert.equal(extracted.length, 1);
+    assert.equal(extracted[0].questionId, 'q2');
+    assert.equal(extracted[0].question, '題目二');
+    assert.equal(extracted[0].answer, 'A', 'canonical answer should be restored');
+    assert.equal(extracted[0].source, '檢驗醫學區段一｜B09 考古');
+
+    const req = generationRequest(extracted, FLASHCARD_GLOSSARY_INSTRUCTIONS);
+    const parsedReq = JSON.parse(req.contents[0].parts[0].text);
+    assert.equal(parsedReq.instructions, FLASHCARD_GLOSSARY_INSTRUCTIONS);
+
+    assert.throws(() => prepareMistakeFlashcardSources([]), /沒有錯題/);
+    assert.throws(() => prepareMistakeFlashcardSources([{ isAnswered: true, isCorrect: true }]), /沒有錯題/);
+});
+

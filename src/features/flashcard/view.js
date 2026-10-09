@@ -4,7 +4,7 @@ import { resetEquivalence } from './equivalence-client.js';
 import { auth } from '../../services/firebase.js';
 import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
 import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, generateDeck, editDeckWithAI } from './service.js';
-import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS } from './generation.js';
+import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS, FLASHCARD_GLOSSARY_INSTRUCTIONS } from './generation.js';
 import { editingBatches } from './editing.js';
 import { isMobileFlash, bindMobileFlashSwipe, animateMobileFlashExit, resetMobileFlashSwipe } from './mobile-swipe.js';
 const node = (tag, text, parent, className) => {
@@ -1399,6 +1399,51 @@ export function mountFlashcard({ host, activate }) {
                 this.resetForUser(uid);
             }
             safeOwner(); generationDialog(sources);
+        },
+        async createFromMistakes(items, { instructions = FLASHCARD_GLOSSARY_INSTRUCTIONS, signal } = {}) {
+            if (!auth.currentUser) throw new Error('請先登入。');
+            const uid = auth.currentUser.uid, sources = clone(sourceQuestions(items));
+            if (uid !== owner) {
+                this.resetForUser(uid);
+            }
+            safeOwner();
+            const controller = new AbortController();
+            const abort = () => controller.abort();
+            if (signal) {
+                if (signal.aborted) throw new DOMException('已取消製作。', 'AbortError');
+                signal.addEventListener('abort', abort, { once: true });
+            }
+            const timeout = setTimeout(() => controller.abort(), 90000);
+            try {
+                const generated = await generateDeck(sources, instructions, controller.signal);
+                const result = await loadDecks();
+                safeOwner(); controller.signal.throwIfAborted();
+                const next = await saveDeck(generated);
+                safeOwner();
+                decks = result.decks;
+                decks[next.id] = next;
+                return next;
+            } finally {
+                clearTimeout(timeout);
+                if (signal) signal.removeEventListener('abort', abort);
+            }
+        },
+        async openDeck(deckId) {
+            const ticket = ++operation;
+            owner = auth.currentUser?.uid || null;
+            activate();
+            if (!owner) { phase = 'list'; render(); return; }
+            try {
+                const result = await loadDecks();
+                safeOwner();
+                if (ticket !== operation) return;
+                decks = result.decks;
+                if (deckId && decks[deckId]) {
+                    await openDeck(deckId);
+                } else {
+                    phase = 'list'; render();
+                }
+            } catch (e) { report(e.message); }
         },
         resetForUser(uid) { if (uid === owner) return; operation++; resetEquivalence(); generation?.abort(); generation = null; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
     };

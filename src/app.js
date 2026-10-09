@@ -3,6 +3,7 @@ import { mountQuestionSearch } from './features/search/view.js';
 import { normalizeSearchText } from './features/search/model.js';
 import { mountSidebar } from './shared/sidebar.js';
 import { mountFlashcard } from './features/flashcard/view.js';
+import { FLASHCARD_GLOSSARY_INSTRUCTIONS } from './features/flashcard/generation.js';
 import { mountEditorial } from './features/learning/editorial.js';
 import { normalizeQuestion } from './features/learning/model.js';
 import { loadLearning, recordLearning, readBank } from './services/learning.js';
@@ -812,6 +813,7 @@ function showEndScreen() {
         redoBtn.hidden = true;
     }
     redoBtn.addEventListener('click', () => {
+        flashcardAbortController?.abort();
         const wrongListToRedo = allQuestions.filter(q => q.isAnswered && !q.isCorrect);
         if (wrongListToRedo.length === 0) return;
 
@@ -863,6 +865,83 @@ function showEndScreen() {
     });
     actionArea.appendChild(redoBtn);
 
+    // Make Flashcard Button
+    const flashcardBtn = document.createElement('button');
+    flashcardBtn.className = 'secondary-button';
+    flashcardBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="6" width="16" height="15" rx="2"></rect>
+            <path d="M7 3h10M9 11h6M9 16h4"></path>
+        </svg>
+        <span>製作 Flashcard</span>
+    `;
+    if (wrongList.length === 0) {
+        flashcardBtn.hidden = true;
+    }
+    let generatedDeckId = null;
+    let isGeneratingFlashcard = false;
+    let flashcardAbortController = null;
+
+    flashcardBtn.addEventListener('click', async () => {
+        if (generatedDeckId) {
+            returnHome();
+            await vocabulary.openDeck(generatedDeckId);
+            return;
+        }
+
+        if (!auth.currentUser) {
+            showCustomAlert('登入後即可建立 Flashcard。');
+            return;
+        }
+
+        const wrongListToMake = allQuestions.filter(q => q.isAnswered && !q.isCorrect);
+        if (wrongListToMake.length === 0) {
+            showCustomAlert('沒有錯題可製作 Flashcard。');
+            return;
+        }
+
+        if (isGeneratingFlashcard) return;
+        isGeneratingFlashcard = true;
+        flashcardBtn.disabled = true;
+        const btnSpan = flashcardBtn.querySelector('span');
+        const originalText = btnSpan.textContent;
+        btnSpan.textContent = '製作中…';
+
+        flashcardAbortController = new AbortController();
+
+        try {
+            const canonicalItems = wrongListToMake.slice(0, 30).map(q => ({
+                ...canonicalQuestion(q),
+                origin: q.origin || (selectedJson || '').replace(/^_Archive_/, '').replace(/\.json$/, ''),
+                sourcePath: q.sourcePath || selectedJson
+            }));
+
+            const deck = await vocabulary.createFromMistakes(canonicalItems, {
+                instructions: FLASHCARD_GLOSSARY_INSTRUCTIONS,
+                signal: flashcardAbortController.signal
+            });
+
+            generatedDeckId = deck.id;
+            flashcardBtn.disabled = false;
+            btnSpan.textContent = '查看 Flashcard';
+            showCustomAlert(`已製作 ${deck.cards.length} 張名詞解釋字卡。`, () => {
+                returnHome();
+                vocabulary.openDeck(deck.id);
+            });
+        } catch (e) {
+            console.error('[FlashcardGen] 製作 Flashcard 失敗：', e);
+            if (!flashcardAbortController?.signal.aborted) {
+                btnSpan.textContent = originalText;
+                flashcardBtn.disabled = false;
+                showCustomAlert(e.message || '製作 Flashcard 失敗，請重試。');
+            }
+        } finally {
+            isGeneratingFlashcard = false;
+            flashcardAbortController = null;
+        }
+    });
+    actionArea.appendChild(flashcardBtn);
+
     // Reselect Quiz Button
     const resetBtn = document.createElement('button');
     resetBtn.className = wrongList.length ? 'secondary-button' : 'primary-button';
@@ -874,6 +953,7 @@ function showEndScreen() {
     `;
     resetBtn.querySelector('span').textContent = isMistakePracticeMode ? '返回錯題本' : '返回題庫';
     resetBtn.addEventListener('click', () => {
+        flashcardAbortController?.abort();
         const wasPractice = isMistakePracticeMode;
         returnHome();
         if (wasPractice) openMistakeView();
