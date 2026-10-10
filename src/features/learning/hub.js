@@ -71,18 +71,6 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
     button('學習總覽', nav, async () => {
         if (!requireUser()) return; await loadLearning(); const body = open('學習總覽'); const now = Date.now();
         overview(body, learningState, now);
-        const plan = section(body, '讀書計畫');
-        const planStatus = el('p', '', plan); planStatus.setAttribute('role', 'status');
-        const planProgress = progress(plan, 0, 1, '今日目標完成進度'); planProgress.hidden = true;
-        const form = el('form', null, plan); form.className = 'learning-form';
-        const inputs = {};
-        for (const [key, label, type] of [['title', '目標名稱', 'text'], ['examDate', '考試日期', 'date'], ['daily', '每日目標題數', 'number'], ['remaining', '剩餘待完成題數', 'number']]) {
-            const input = el('input', null, el('label', label, form)); input.type = type; input.required = true; if (type === 'number') input.min = 1;
-            input.value = learningState.plan?.[key] || ''; inputs[key] = input;
-        }
-        const save = el('button', '儲存計畫', form); save.type = 'submit'; save.className = 'primary-button';
-        const describe = () => { const p = learningState.plan; if (p) { const days = Math.max(1, Math.ceil((new Date(p.examDate + 'T23:59:59') - now) / DAY)); const today = new Date(); today.setHours(0, 0, 0, 0); const n = summarize(learningState.attempts, +today).count; planStatus.textContent = `${p.title}：今日 ${n}/${p.daily} 題；剩 ${days} 天，依目前剩餘題數建議每日 ${Math.ceil(Number(p.remaining) / days)} 題。剩餘題數可隨進度更新。`; planProgress.hidden = false; planProgress.max = Math.max(1, Number(p.daily)); planProgress.value = n; planProgress.setAttribute('aria-label', `今日已完成 ${n} 題，目標 ${p.daily} 題`); } else { planStatus.textContent = '尚未設定計畫'; } };
-        describe(); form.onsubmit = async e => { e.preventDefault(); try { await savePreference('plan', Object.fromEntries(Object.entries(inputs).map(([k, i]) => [k, i.value]))); describe(); } catch (error) { planStatus.textContent = error.message; } };
     }, 'quiet-button');
     const openPrivacy = async () => {
         const body = open('資料與隱私');
