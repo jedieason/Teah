@@ -374,20 +374,40 @@
 
       <!-- Prompt container -->
       <div class="prompt-box-card">
+        <div class="prompt-mode-header">
+          <div class="prompt-mode-tabs" role="tablist">
+            <button type="button" class="prompt-mode-tab active" id="promptModeFull" role="tab" aria-selected="true">整本題本（多年份）</button>
+            <button type="button" class="prompt-mode-tab" id="promptModeSingle" role="tab" aria-selected="false">單一題庫（指定單元）</button>
+          </div>
+        </div>
         <div class="prompt-box-header">
           <div class="prompt-box-title">
             <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="currentColor">
               <path d="M480-120 200-400h120v-240h320v240h120L480-120Zm0-170 126-170h-66v-240H420v240h-66l126 170Z"/>
             </svg>
-            <span>AI 題庫整理 Prompt（雙 PDF 多年份通用）</span>
+            <span id="promptBoxTitle">AI 題庫整理 Prompt（整本題本多年份）</span>
           </div>
-          <button id="copyPromptBtn" class="copy-prompt-button" type="button" title="點擊複製完整 Prompt">
+          <button id="copyPromptBtn" class="copy-prompt-button" type="button" title="點擊複製 Prompt">
             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 24 24" width="15" fill="currentColor">
               <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
             </svg>
-            <span class="copy-label">複製 Prompt</span>
+            <span id="copyPromptLabel" class="copy-label">複製整本 Prompt</span>
           </button>
         </div>
+
+        <!-- Single Unit Toolbar (shown only in single mode) -->
+        <div id="promptSingleToolbar" class="prompt-single-toolbar" style="display: none;">
+          <label for="promptUnitInput" class="prompt-single-label">指定考卷／單元：</label>
+          <div class="prompt-single-input-row">
+            <input type="text" id="promptUnitInput" class="prompt-single-input" placeholder="例如：B12 考古" value="B12 考古" autocomplete="off" spellcheck="false">
+            <div class="prompt-single-chips">
+              <button type="button" class="prompt-chip" data-unit="B12 考古">B12 考古</button>
+              <button type="button" class="prompt-chip" data-unit="B11 考古">B11 考古</button>
+              <button type="button" class="prompt-chip" data-unit="112 區段考">112 區段考</button>
+            </div>
+          </div>
+        </div>
+
         <div class="prompt-code-wrap">
           <pre><code id="promptCodeBlock"></code></pre>
         </div>
