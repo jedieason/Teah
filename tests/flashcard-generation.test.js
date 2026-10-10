@@ -66,3 +66,21 @@ test('prepareMistakeFlashcardSources extracts answered wrong questions and FLASH
     assert.throws(() => prepareMistakeFlashcardSources([{ isAnswered: true, isCorrect: true }]), /沒有錯題/);
 });
 
+test('generated cards merge cleanly into an existing deck draft without losing properties', () => {
+    const existing = prepareDeck({ title: '現有字卡集', cards: [{ term: '原單字', definition: '原解釋' }] });
+    const parsed = parse();
+    const newCards = parsed.cards.map(c => ({
+        id: crypto.randomUUID(),
+        term: c.term.trim(),
+        definition: c.definition.trim(),
+        termAliases: c.termAliases || [],
+        definitionAliases: c.definitionAliases || []
+    }));
+    const merged = prepareDeck({ ...existing, cards: [...existing.cards, ...newCards] }, existing);
+    assert.equal(merged.cards.length, 2);
+    assert.equal(merged.cards[0].term, '原單字');
+    assert.equal(merged.cards[1].term, card.term);
+    assert.equal(merged.revision, 2);
+});
+
+

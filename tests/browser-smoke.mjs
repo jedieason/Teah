@@ -46,18 +46,30 @@ await context.route('https://generativelanguage.googleapis.com/**', async route 
     reviewRequests++;
     if (reviewRequests === 1) return route.fulfill({ status: 503, body: '{}' });
     const input = JSON.parse(request.contents[0].parts[0].text);
-    assert.equal(input.length, 2);
-    assert.equal(input[0].lastSelection, 'A');
-    const overview = {
-        summary: '先補強檢驗數據的判讀邏輯：區分診斷線索與確診依據，再釐清 Ct 差值與起始量的關係。',
-        studyAreas: [{ unit: '檢驗醫學', title: '從檢驗數據推回臨床意義',
-            blindSpot: '可能直接將單一檢驗結果對應診斷，或把 Ct 差值當成起始量的線性差異。',
-            studyFocus: '複習胸水分析中各指標的意義，以及 real-time PCR 的 Ct 與起始模板量換算。',
-            questionIds: input.map(q => q.questionId) }],
-        remember: [{ concept: '胸水判讀需整合線索', rule: '單一細胞變化不足以直接確認胸水病因。', distinction: '嗜酸性球增加不等同乳糜胸，需結合其他檢驗與臨床資訊。' },
-            { concept: 'Ct 與起始量呈反向關係', rule: '理想倍增條件下，Ct 相差 5，起始量相差 32 倍。', distinction: 'Ct 較低的一組起始量較多；不是 5 倍。' }], uncertainty: ''
+    assert.equal(input.sources.length, 2);
+    const flashcardDeck = {
+        title: '檢驗醫學錯題字卡',
+        description: '依測驗錯題整理',
+        termLanguage: 'zh-TW',
+        definitionLanguage: 'zh-TW',
+        cards: [
+            {
+                term: 'PCR Ct 相差 5 循環',
+                definition: '理想倍增條件下，起始模板量相差 32 倍。',
+                termAliases: [],
+                definitionAliases: [],
+                sourceIds: [input.sources[0].id]
+            },
+            {
+                term: '胸水細胞學判讀',
+                definition: '單一細胞變化不足以確認病因，嗜酸性球增加不等於乳糜胸。',
+                termAliases: [],
+                definitionAliases: [],
+                sourceIds: [input.sources[1].id]
+            }
+        ]
     };
-    return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text: JSON.stringify(overview) }] } }] }) });
+    return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text: JSON.stringify(flashcardDeck) }] } }] }) });
 });
 const page = await context.newPage();
 const errors = [];
@@ -147,16 +159,18 @@ try {
     await page.locator('#next-btn').click();
     await page.locator('.results-container').waitFor();
     assert.ok((await page.locator('.results-actions button').first().boundingBox()).height >= 48);
-    await page.getByRole('button', { name: '重新生成觀念回顧' }).waitFor({ state: 'visible' });
-    await page.getByRole('button', { name: '重新生成觀念回顧' }).click();
-    await page.locator('.concept-area').waitFor();
-    assert.equal(await page.locator('.concept-area').count(), 1);
-    assert.equal(await page.locator('.concept-memory').count(), 2);
-    assert.equal(reviewRequests, 2, 'one overview request per attempt, not one per question');
-    assert.match(await page.locator('.concept-status').innerText(), /2 題錯題 → 1 個複習方向/);
-    assert.equal(await page.locator('.concept-evidence[open]').count(), 0);
+    assert.equal(await page.locator('.results-actions').getByText('製作 Flashcard').count(), 0);
+    assert.equal(await page.locator('.results-container').getByText('觀念回顧').count(), 0);
+    await page.getByRole('button', { name: '重新生成字卡' }).waitFor({ state: 'visible' });
+    await page.getByRole('button', { name: '重新生成字卡' }).click();
+    await page.locator('.review-flashcard-item').first().waitFor();
+    assert.equal(await page.locator('.review-flashcard-item').count(), 2);
+    assert.equal(reviewRequests, 2, 'one generation request per attempt, not one per question');
+    assert.match(await page.locator('.review-flashcards-status').innerText(), /2 張重點字卡/);
+    assert.equal(await page.getByRole('button', { name: '加入字卡集' }).isVisible(), true);
+    assert.equal(await page.getByRole('button', { name: '併入既有字卡' }).isVisible(), true);
     assert.equal(await page.locator('.results-container').evaluate(n => n.scrollWidth > n.clientWidth), false);
-    await page.locator('.concept-area').scrollIntoViewIfNeeded();
+    await page.locator('.review-flashcard-item').first().scrollIntoViewIfNeeded();
     await page.screenshot({ path: 'artifacts/qa/results-mobile.png', fullPage: true });
     await page.evaluate(() => document.documentElement.classList.add('dark-mode'));
     await page.screenshot({ path: 'artifacts/qa/results-dark-mobile.png', fullPage: true });
