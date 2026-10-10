@@ -8,7 +8,7 @@
 .vocab-heading { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:24px; }
 .vocab-heading h1,.vocab-heading h2 { flex:1; min-width:150px; }
 .vocab-heading .vocab-back { flex-basis:100%; text-align:left; width:max-content; padding:0; background:none; border:0; color:var(--v-muted); }
-.vocab-button { border:1px solid var(--v-line); background:var(--surface-color,#fff); color:inherit; border-radius:9px; padding:10px 17px; font:600 14px/1.5 var(--ui-font); cursor:pointer; transition:background .15s,border-color .15s,transform .06s ease; min-height:42px; overflow-wrap:anywhere; user-select:none; -webkit-user-select:none; }
+.vocab-button { border:1px solid var(--v-line); background:var(--surface-color,#fff); color:inherit; border-radius:10px; padding:0 17px; font:600 14px/1.4 var(--ui-font); cursor:pointer; transition:background .15s,border-color .15s,transform .06s ease; min-height:42px; height:42px; display:inline-flex; align-items:center; justify-content:center; overflow-wrap:anywhere; user-select:none; -webkit-user-select:none; box-sizing:border-box; }
 .vocab-button:hover { background:var(--v-soft); border-color:#aba7ee; }
 .vocab-button:active:not(:disabled) { transform:scale(0.985); }
 .vocab-button:focus { outline:none; }
@@ -19,8 +19,8 @@
 .vocab-field input:focus, .vocab-field input:focus-visible, .vocab-field textarea:focus, .vocab-field textarea:focus-visible, .vocab-field select:focus, .vocab-field select:focus-visible { outline:none !important; border-color:var(--v-accent,#6366f1) !important; }
 .vocab-button.vocab-primary { background:var(--v-accent); color:#fff; border-color:var(--v-accent); }
 .vocab-button.vocab-primary:hover { background:#443aca; }
-.vocab-button.vocab-link { border:0; background:none; padding-left:0; color:var(--v-accent); }
-.vocab-icon { padding:6px 10px; min-width:40px; font-size:20px; min-height:40px; border:0; background:none; }
+.vocab-button.vocab-link { border:0; background:none; padding-left:0; color:var(--v-accent); height:auto; min-height:0; display:inline; }
+.vocab-icon { padding:6px 10px; min-width:40px; font-size:20px; min-height:40px; height:auto; border:0; background:none; }
 .vocab-icon.starred { color:#f59e0b; }
 .vocab-icon.starred svg { fill:currentColor; }
 .vocab-status { margin:0 0 16px; color:var(--v-muted); font-size:13px; overflow-wrap:anywhere; }
@@ -37,13 +37,13 @@
 .vocab-empty { padding:60px 20px; text-align:center; color:var(--v-muted); grid-column:1/-1; }
 .vocab-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; margin-top:24px; }
 .vocab-deck { border:1px solid var(--v-line); border-radius:14px; padding:24px; background:var(--surface-color,#fff); min-width:0; box-shadow:0 2px 5px #162a4910; display:flex; flex-direction:column; align-items:start; }
-.vocab-deck-title { border:0; padding:0; background:none; text-align:left; font-size:20px; font-weight:600; }
+.vocab-deck-title { border:0; padding:0; background:none; text-align:left; font-size:20px; font-weight:600; height:auto; min-height:0; display:block; }
 .vocab-deck-preview { display:grid; gap:8px; width:100%; margin:6px 0 16px; }
 .vocab-deck-preview > div { display:grid; grid-template-columns:1fr 1fr; gap:12px; border-top:1px solid var(--v-line); padding-top:10px; font-size:13px; }
 .vocab-deck-preview > div > div { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .vocab-deck > .vocab-link { margin-top:auto; }
 .vocab-modes { display:flex; gap:14px; margin:26px 0; flex-wrap:wrap; }
-.vocab-mode { min-width:155px; min-height:64px; font-size:18px; flex:1; text-align:center; }
+.vocab-mode { min-width:155px; min-height:64px; height:auto; font-size:18px; flex:1; text-align:center; }
 .vocab-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:24px 0 14px; }
 .vocab-stat { display:flex; flex-direction:column; gap:3px; padding:16px; border-radius:10px; background:var(--v-soft); }
 .vocab-stat strong { font-size:29px; font-weight:650; }
@@ -306,9 +306,11 @@ html.dark-mode .vocab-dropdown-trigger:hover { background:#3b404a; }
 html.dark-mode .vocab-dropdown-menu { box-shadow:0 8px 30px #00000060; }
 html.dark-mode .vocab-dropdown-item:hover { background:var(--v-soft); }
 html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
-.vocab-toolbar .vocab-dropdown, .vocab-import-controls .vocab-dropdown { width:100%; }
-.vocab-toolbar .vocab-dropdown-trigger, .vocab-import-controls .vocab-dropdown-trigger { width:100%; border-radius:10px; }
+.vocab-toolbar .vocab-dropdown, .vocab-import-controls .vocab-dropdown { width:100%; display:block; }
+.vocab-toolbar .vocab-dropdown-trigger, .vocab-import-controls .vocab-dropdown-trigger { width:100%; height:42px; min-height:42px; padding:0 16px; border-radius:10px; display:inline-flex; align-items:center; justify-content:space-between; box-sizing:border-box; }
 .vocab-toolbar .vocab-dropdown-menu, .vocab-import-controls .vocab-dropdown-menu { left:0; right:auto; min-width:100%; }
+.vocab-toolbar .vocab-button, .vocab-import-controls .vocab-button { height:42px; min-height:42px; padding:0 17px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; box-sizing:border-box; }
+.vocab-toolbar input, .vocab-toolbar select, .vocab-toolbar .vocab-field input, .vocab-toolbar .vocab-field select, .vocab-import-controls input, .vocab-import-controls select, .vocab-import-controls .vocab-field input, .vocab-import-controls .vocab-field select { height:42px; min-height:42px; padding:0 14px; border-radius:10px; font:400 14px/normal var(--ui-font); box-sizing:border-box; }
 .vocab-setting-content .vocab-field:not(.vocab-toggle), .vocab-quick-options .vocab-field { display:flex; align-items:center; justify-content:space-between; gap:16px; font-size:15px; }
 .vocab-shortcuts { padding:22px 0; border-block:1px solid var(--v-line); }.vocab-shortcuts summary { cursor:pointer; font-weight:600; }.vocab-shortcuts dl { display:grid; grid-template-columns:1fr auto 1fr auto; gap:14px 20px; font-size:13px; }.vocab-shortcuts dd { margin:0; padding:0 6px; border:1px solid #a2abc0; border-radius:4px; }
 .vocab-danger { color:#df3b42; background:none; border:0; text-align:left; }
