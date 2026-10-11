@@ -1,4 +1,5 @@
 #mistakeView { position: fixed; inset: 0; z-index: 2000; display: none; flex-direction: column; width: 100%; height: 100dvh; background: #fff; color: #1f1f1f; font-family: var(--ui-font); text-align: left; }
+.notebook-top { width: 100%; background: #fff; border-bottom: 1px solid var(--ui-border); flex-shrink: 0; }
 .notebook-header, .notebook-controls, .notebook-bottom { width: 100%; max-width: 980px; margin-inline: auto; box-sizing: border-box; padding-inline: 32px; flex-shrink: 0; }
 .notebook-header { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .notebook-heading { display: flex; align-items: baseline; gap: 16px; }
@@ -16,7 +17,7 @@
 .notebook-filters select:focus, .notebook-filters select:focus-visible { outline: none !important; border-color: var(--primary, #0b57d0) !important; }
 #mistakeSort { margin-left: auto; }
 .notebook-summary { font-size: 12px; line-height: 1.6; color: var(--ui-muted); margin: 14px 0 0; }
-.notebook-scroll { overflow-y: auto; flex: 1; min-height: 0; overscroll-behavior: contain; background: #fafbfc; border-block: 1px solid var(--ui-border); scrollbar-gutter: stable; }
+.notebook-scroll { overflow-y: auto; flex: 1; min-height: 0; overscroll-behavior: contain; background: #fafbfc; scrollbar-gutter: stable; }
 #mistakeListContent { max-width: 980px; margin: 0 auto; padding: 24px 32px 40px; box-sizing: border-box; }
 .review-card { padding: 24px 28px 16px; border: 1px solid var(--ui-border); border-radius: 14px; background: white; margin-bottom: 16px; overflow-wrap: anywhere; }
 .review-meta { display: flex; gap: 10px; align-items: center; font-size: 12px; line-height: 1.6; margin-bottom: 16px; color: var(--ui-muted); }
@@ -42,7 +43,7 @@
 .review-card pre, .review-card table, .review-card .katex-display { max-width: 100%; overflow-x: auto; }
 .review-card table { display: block; border-collapse: collapse; }
 .review-card th, .review-card td { border: 1px solid var(--ui-border); padding: 8px; }
-.notebook-bottom { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-height: 78px; padding-top: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom)); font-size: 13px; background: white; }
+.notebook-bottom { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-height: 78px; padding-top: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom)); font-size: 13px; background: white; border-top: 1px solid var(--ui-border); }
 .notebook-select-all { display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
 #mistakeSelection { color: var(--ui-muted); white-space: nowrap; }
 #mistakePracticeBtn { margin-left: auto; white-space: nowrap; }

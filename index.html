@@ -326,27 +326,31 @@
 
   <!-- Mistake notebook: all controls stay outside the answering interface. -->
   <section id="mistakeView" class="full-screen-view" role="dialog" aria-modal="true" aria-labelledby="mistakeViewTitle">
-    <header class="notebook-header">
-      <div class="notebook-heading"><h2 id="mistakeViewTitle">錯題本</h2><span>複習紀錄</span></div>
-      <button id="closeMistakeViewBtn" class="quiet-button" aria-label="關閉錯題本">關閉</button>
-    </header>
-    <div class="notebook-controls">
-      <div class="notebook-toolbar">
-        <div class="notebook-tabs" role="group" aria-label="複習狀態">
-          <button data-mistake-status="active" aria-pressed="true">待複習</button>
-          <button data-mistake-status="mastered" aria-pressed="false">已熟悉</button>
-          <button data-mistake-status="all" aria-pressed="false">全部</button>
+    <div id="mistakeScrollContainer" class="notebook-scroll">
+      <div class="notebook-top">
+        <header class="notebook-header">
+          <div class="notebook-heading"><h2 id="mistakeViewTitle">錯題本</h2><span>複習紀錄</span></div>
+          <button id="closeMistakeViewBtn" class="quiet-button" aria-label="關閉錯題本">關閉</button>
+        </header>
+        <div class="notebook-controls">
+          <div class="notebook-toolbar">
+            <div class="notebook-tabs" role="group" aria-label="複習狀態">
+              <button data-mistake-status="active" aria-pressed="true">待複習</button>
+              <button data-mistake-status="mastered" aria-pressed="false">已熟悉</button>
+              <button data-mistake-status="all" aria-pressed="false">全部</button>
+            </div>
+            <input id="mistakeSearch" type="search" placeholder="搜尋題目、出處或關鍵字" aria-label="搜尋錯題">
+          </div>
+          <div class="notebook-filters">
+            <select id="mistakeSubject" multiple aria-label="篩選科目"><option value="">全部科目</option></select>
+            <select id="mistakeQuiz" aria-label="篩選題庫"><option value="">全部題庫</option></select>
+            <select id="mistakeSort" aria-label="排序錯題"><option value="recent">最近答錯</option><option value="frequent">錯誤最多</option><option value="oldest">最久未回顧</option></select>
+          </div>
+          <p id="mistakeSummary" class="notebook-summary" role="status"></p>
         </div>
-        <input id="mistakeSearch" type="search" placeholder="搜尋題目、出處或關鍵字" aria-label="搜尋錯題">
       </div>
-      <div class="notebook-filters">
-        <select id="mistakeSubject" multiple aria-label="篩選科目"><option value="">全部科目</option></select>
-        <select id="mistakeQuiz" aria-label="篩選題庫"><option value="">全部題庫</option></select>
-        <select id="mistakeSort" aria-label="排序錯題"><option value="recent">最近答錯</option><option value="frequent">錯誤最多</option><option value="oldest">最久未回顧</option></select>
-      </div>
-      <p id="mistakeSummary" class="notebook-summary" role="status"></p>
+      <div id="mistakeListContent"></div>
     </div>
-    <div id="mistakeScrollContainer" class="notebook-scroll"><div id="mistakeListContent"></div></div>
     <footer class="notebook-bottom">
       <label class="notebook-select-all"><input id="mistakeSelectAll" type="checkbox">全選</label>
       <span id="mistakeSelection" role="status"></span>
