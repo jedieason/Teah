@@ -119,6 +119,16 @@ try {
     assert.equal(await page.locator('.review-card').count(), 1);
     await page.locator('#mistakeSearch').fill('');
     await page.locator('.review-answer summary').first().click();
+    const starBtn = page.locator('.review-card .review-star-btn').first();
+    assert.equal(await starBtn.getAttribute('aria-label'), '標記星號');
+    await starBtn.click();
+    await page.waitForFunction(() => document.querySelector('.review-card .review-star-btn')?.classList.contains('active'));
+    assert.equal(await starBtn.getAttribute('aria-label'), '取消星號');
+    assert.equal(await page.evaluate(() => window.__testDatabase?.progress?.['test-user']?.starred?.length), 1);
+    await starBtn.click();
+    await page.waitForFunction(() => !document.querySelector('.review-card .review-star-btn')?.classList.contains('active'));
+    assert.equal(await starBtn.getAttribute('aria-label'), '標記星號');
+    assert.equal(await page.evaluate(() => window.__testDatabase?.progress?.['test-user']?.starred?.length), 0);
     await page.screenshot({ path: 'artifacts/qa/notebook-desktop.png', fullPage: true });
     // Status changes move the row without deleting history; reversing is available.
     await page.locator('.review-footer button').first().click();
@@ -268,6 +278,7 @@ try {
     await sidebar.waitFor({ state: 'visible' });
     const home = page.locator('.start-screen');
     const resizer = page.locator('#sidebarResizer');
+    await page.waitForFunction(() => !document.querySelector('.start-screen')?.classList.contains('sidebar-animating') && (document.querySelector('#sidebarResizer')?.getBoundingClientRect().width ?? 0) > 0);
     const resizerBox = await resizer.boundingBox();
     assert.ok(resizerBox && resizerBox.y <= 0, 'resizer must extend to the top of the viewport');
     const resizerCenterX = Math.round(resizerBox.x + resizerBox.width / 2);

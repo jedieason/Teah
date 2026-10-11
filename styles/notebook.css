@@ -24,6 +24,10 @@
 .review-meta input, .notebook-select-all input { accent-color: var(--primary); width: 17px; height: 17px; flex-shrink: 0; margin: 0; cursor: pointer; }
 .review-source { flex: 1; }
 .review-count { flex-shrink: 0; padding: 3px 8px; border-radius: 6px; background: #fff5f0; color: #a94c21; }
+.review-star-btn { appearance: none; background: transparent; border: 0; padding: 2px; margin: 0; cursor: pointer; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; color: #9aa0a6; flex-shrink: 0; line-height: 1; transition: background 0.15s ease, color 0.15s ease; }
+.review-star-btn:hover { background: #f1f3f5; color: #fbbc04; }
+.review-star-btn.active { color: #fbbc04; }
+.review-star-btn:focus-visible { outline: 2px solid var(--primary, #0b57d0); outline-offset: 1px; }
 .review-question { font-size: 16px; line-height: 1.85; color: #25292d; }
 .review-card p { margin: 0 0 10px; }
 .review-card p:last-child { margin-bottom: 0; }
@@ -65,6 +69,7 @@
     .review-question { font-size: 15px; }
     .review-meta { gap: 8px; align-items: start; }
     .review-meta input { margin-top: 3px; }
+    .review-star-btn { margin-top: 1px; }
     .review-footer { align-items: center; }
     .notebook-bottom { gap: 8px; padding-inline: 16px; }
     #mistakeFlashcardsBtn, #mistakePracticeBtn { flex: 1; min-width: 140px; font-size: 13px; }

@@ -10,7 +10,7 @@ const el = (tag, className, text) => {
 };
 const date = value => value ? new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' }).format(value) : '日期未記錄';
 
-export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert }) {
+export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert, isStarred, toggleStar }) {
     let filters = { query: '', subject: [], quiz: '', status: 'active', sort: 'recent' };
     let selected = new Set();
     let limit = 30;
@@ -89,6 +89,30 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         checkbox.setAttribute('aria-label', `選取：${m.question.slice(0, 60)}`);
         checkbox.onchange = () => { checkbox.checked ? selected.add(m.id) : selected.delete(m.id); updateSelection(); };
         meta.append(checkbox, el('span', 'review-source', `${m.subject} / ${m.title}`), el('span', 'review-count', `答錯 ${m.count || 1} 次`));
+        if (typeof isStarred === 'function' && typeof toggleStar === 'function') {
+            const starBtn = el('button', 'review-star-btn star-btn');
+            starBtn.type = 'button';
+            starBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" aria-hidden="true"><path class="star-fill" d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149Z"/><path class="star-outline" d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/></svg>`;
+            const applyState = active => {
+                starBtn.classList.toggle('active', active);
+                starBtn.setAttribute('aria-label', active ? '取消星號' : '標記星號');
+                starBtn.title = active ? '取消星號' : '標記星號';
+            };
+            applyState(Boolean(isStarred(m)));
+            starBtn.onclick = async e => {
+                e.stopPropagation();
+                starBtn.disabled = true;
+                try {
+                    const next = await toggleStar(m);
+                    applyState(next);
+                } catch {
+                    alert('星號狀態未儲存，請重試。');
+                } finally {
+                    starBtn.disabled = false;
+                }
+            };
+            meta.append(starBtn);
+        }
         const question = el('div', 'review-question');
         question.innerHTML = markdown(m.question);
         card.append(meta, question);

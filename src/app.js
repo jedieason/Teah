@@ -2466,6 +2466,7 @@ onAuthStateChanged(auth, async (user) => {
     } else {
         userProgressCache = {};
         userMistakesCache = {};
+        userStarredCache = [];
         learningDataReady = false;
         await loadLearning();
         closeMistakeView();
@@ -2916,6 +2917,8 @@ async function handleArchiveQuiz(oldName) {
 // Initialize shuffle state label in menu on load
 updateShuffleUI();
 
+let userStarredCache = [];
+
 function setStarState(isFilled) {
     if (!starBtn) return;
     if (isFilled) {
@@ -2925,7 +2928,12 @@ function setStarState(isFilled) {
     }
 }
 
-function sameStar(a, b) { return a.question === b.question && (a.source || '') === (b.source || ''); }
+function sameStar(a, b) {
+    if (a.questionId && b.questionId && a.questionId === b.questionId) return true;
+    const aSrc = getQuizStorageName(a.source || '');
+    const bSrc = getQuizStorageName(b.source || '');
+    return a.question === b.question && aSrc === bSrc;
+}
 async function updateStarIcon() {
     if (!starBtn) return;
     const question = currentQuestion;
@@ -2934,20 +2942,24 @@ async function updateStarIcon() {
     if (!auth.currentUser) return;
     try {
         const snap = await get(ref(database, `progress/${auth.currentUser.uid}/starred`));
-        if (currentQuestion === question) setStarState((snap.val() || []).some(q => sameStar(q, { ...question, source })));
+        const list = Array.isArray(snap.val()) ? snap.val() : [];
+        userStarredCache = list;
+        if (currentQuestion === question) setStarState(list.some(q => sameStar(q, { ...question, source })));
     } catch (error) { console.error('讀取收藏失敗', error); }
 }
 async function toggleStarCurrentQuestion() {
     if (!auth.currentUser) { showCustomAlert('登入後即可收藏題目。'); return; }
     const question = currentQuestion;
-    const entry = { ...canonicalQuestion(question), source: getQuizStorageName(question.sourcePath || selectedJson) };
+    const entry = { ...canonicalQuestion(question), questionId: question.questionId || null, source: getQuizStorageName(question.sourcePath || selectedJson) };
     starBtn.disabled = true;
     try {
         const result = await runTransaction(ref(database, `progress/${auth.currentUser.uid}/starred`), value => {
             const list = Array.isArray(value) ? value : [];
             return list.some(q => sameStar(q, entry)) ? list.filter(q => !sameStar(q, entry)) : [...list, entry];
         }, { applyLocally: false });
-        if (currentQuestion === question) setStarState((result.snapshot.val() || []).some(q => sameStar(q, entry)));
+        const list = Array.isArray(result.snapshot.val()) ? result.snapshot.val() : [];
+        userStarredCache = list;
+        if (currentQuestion === question) setStarState(list.some(q => sameStar(q, entry)));
     } catch (error) { showCustomAlert('收藏未儲存，請重試。'); }
     finally { starBtn.disabled = false; }
 }
@@ -3284,8 +3296,14 @@ notebook = createNotebook({
     refresh: async () => {
         const uid = auth.currentUser?.uid;
         await flushOutbox();
-        const snap = await get(ref(database, `mistakes/${uid}`));
-        if (auth.currentUser?.uid === uid) userMistakesCache = snap.val() || {};
+        const [mistakesSnap, starredSnap] = await Promise.all([
+            get(ref(database, `mistakes/${uid}`)),
+            get(ref(database, `progress/${uid}/starred`))
+        ]);
+        if (auth.currentUser?.uid === uid) {
+            userMistakesCache = mistakesSnap.val() || {};
+            userStarredCache = Array.isArray(starredSnap.val()) ? starredSnap.val() : [];
+        }
     },
     setStatus: async (m, status) => {
         const uid = auth.currentUser.uid;
@@ -3293,6 +3311,28 @@ notebook = createNotebook({
             ...value, status, correctStreak: status === 'active' ? 0 : value.correctStreak || 0, statusUpdated: Date.now()
         } : undefined, { applyLocally: false });
         if (result.committed && auth.currentUser?.uid === uid) cacheMistake(m.quizKey, m.recordPath, result.snapshot.val());
+    },
+    isStarred: m => {
+        const source = getQuizStorageName(m.sourcePath || m.quizKey || m.origin || '');
+        return userStarredCache.some(q => sameStar(q, { question: m.question, questionId: m.questionId, source }));
+    },
+    toggleStar: async m => {
+        const uid = auth.currentUser?.uid;
+        if (!uid) throw new Error('請先登入。');
+        const source = getQuizStorageName(m.sourcePath || m.quizKey || m.origin || '');
+        const entry = { ...canonicalQuestion(m), questionId: m.questionId || null, source };
+        const result = await runTransaction(ref(database, `progress/${uid}/starred`), value => {
+            const list = Array.isArray(value) ? value : [];
+            return list.some(q => sameStar(q, entry)) ? list.filter(q => !sameStar(q, entry)) : [...list, entry];
+        }, { applyLocally: false });
+        const list = Array.isArray(result.snapshot.val()) ? result.snapshot.val() : [];
+        if (auth.currentUser?.uid === uid) userStarredCache = list;
+        const isNowStarred = list.some(q => sameStar(q, entry));
+        if (currentQuestion) {
+            const curSource = getQuizStorageName(currentQuestion.sourcePath || selectedJson);
+            if (sameStar({ ...currentQuestion, source: curSource }, entry)) setStarState(isNowStarred);
+        }
+        return isNowStarred;
     },
     makeCards: items => vocabulary.generate(items),
     practice: startMistakePractice, renderMath: renderLatex, alert: showCustomAlert
@@ -3539,14 +3579,16 @@ async function fetchUserProgressAndMistakes(user) {
             }
         }
 
-        const [progressSnap, mistakesSnap] = await Promise.all([
+        const [progressSnap, mistakesSnap, starredSnap] = await Promise.all([
             get(ref(database, `progress/${user.uid}/quizzes`)),
-            get(ref(database, `mistakes/${user.uid}`))
+            get(ref(database, `mistakes/${user.uid}`)),
+            get(ref(database, `progress/${user.uid}/starred`))
         ]);
 
         if (auth.currentUser?.uid !== user.uid) return;
         userProgressCache = progressSnap.exists() ? progressSnap.val() : {};
         userMistakesCache = mistakesSnap.exists() ? mistakesSnap.val() : {};
+        userStarredCache = Array.isArray(starredSnap.val()) ? starredSnap.val() : [];
         for (const item of await storage('cache', 'getAll')) if (item.uid === user.uid && item.quizKey && (!userProgressCache[item.quizKey] || userProgressCache[item.quizKey].lastUpdated < item.value.lastUpdated)) userProgressCache[item.quizKey] = item.value;
         learningDataReady = true;
         window.dispatchEvent(new Event('teah-auth-ready'));
