@@ -2403,7 +2403,7 @@ if (controlsMenuBtn && controlsMenu) {
     });
     document.addEventListener('click', (e) => {
         // Close if clicking outside
-        if (!controlsMenu.contains(e.target) && e.target !== controlsMenuBtn) {
+        if (!controlsMenu.contains(e.target) && !controlsMenuBtn?.contains(e.target)) {
             if (controlsMenu.classList.contains('open')) {
                 closeControlsMenu();
             }
@@ -2430,11 +2430,16 @@ function syncControlsUser(user) {
         closeControlsMenu();
     }
 
+    const sidebarUserName = document.getElementById('sidebarUserName');
+    const sidebarUserSub = document.getElementById('sidebarUserSub');
+
     if (user) {
         controlsAvatar.src = user.photoURL || 'Images/logo.png';
         menuAvatar.src = user.photoURL || 'Images/logo.png';
         menuDisplayName.textContent = user.displayName || user.email || 'Google 帳號';
         menuEmail.textContent = user.email || '';
+        if (sidebarUserName) sidebarUserName.textContent = user.displayName || user.email || 'Google 帳號';
+        if (sidebarUserSub) sidebarUserSub.textContent = user.email || '已登入';
         controlsMenuBtn.setAttribute('title', menuDisplayName.textContent);
     } else {
         // Not strictly necessary to update content if hidden, but good for state consistency
@@ -2442,6 +2447,8 @@ function syncControlsUser(user) {
         menuAvatar.src = 'Images/logo.png';
         menuDisplayName.textContent = '尚未登入';
         menuEmail.textContent = '';
+        if (sidebarUserName) sidebarUserName.textContent = '尚未登入';
+        if (sidebarUserSub) sidebarUserSub.textContent = 'Google 帳號';
         controlsMenuBtn.setAttribute('title', 'Google 登入');
     }
 }
@@ -2515,6 +2522,16 @@ function showLibraryPage(page) {
     for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive'], ['homeFlashcard', 'flashcard']]) {
         const button = document.getElementById(id);
         if (page === name) button?.setAttribute('aria-current', 'page'); else button?.removeAttribute('aria-current');
+    }
+    const tabLibrary = document.getElementById('tabLibrary');
+    const tabFlashcard = document.getElementById('tabFlashcard');
+    if (tabLibrary && tabFlashcard) {
+        const isLib = page === 'library';
+        const isFlash = page === 'flashcard';
+        tabLibrary.classList.toggle('active', isLib);
+        tabLibrary.setAttribute('aria-selected', String(isLib));
+        tabFlashcard.classList.toggle('active', isFlash);
+        tabFlashcard.setAttribute('aria-selected', String(isFlash));
     }
     if (['library', 'archive'].includes(page)) {
         viewArchiveMode = page === 'archive';
@@ -3639,4 +3656,6 @@ const vocabulary = mountFlashcard({ host: document.getElementById('flashcardPage
     showLibraryPage('flashcard');
 } });
 document.getElementById('homeFlashcard').onclick = () => vocabulary.open();
+document.getElementById('tabLibrary')?.addEventListener('click', () => showLibraryPage('library'));
+document.getElementById('tabFlashcard')?.addEventListener('click', () => vocabulary.open());
 mountSidebar();

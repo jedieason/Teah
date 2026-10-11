@@ -40,6 +40,27 @@ export function mountSidebar() {
     }
     setCollapsed(mobile.matches || stored());
     toggle.onclick = () => { home.classList.add('sidebar-animating'); setCollapsed(isExpanded(), true); };
+    if (sidebar) {
+        sidebar.addEventListener('click', e => {
+            if (!mobile.matches && home.classList.contains('sidebar-collapsed')) {
+                if (!e.target.closest('.library-shortcuts button, #controlsMenuBtn, #signInBtn')) {
+                    home.classList.add('sidebar-animating');
+                    setCollapsed(false, true);
+                }
+            }
+        });
+    }
+    const topbarSidebarHeader = document.querySelector('.topbar-sidebar-header');
+    if (topbarSidebarHeader) {
+        topbarSidebarHeader.addEventListener('click', e => {
+            if (!mobile.matches && home.classList.contains('sidebar-collapsed')) {
+                if (!e.target.closest('#sidebarToggle, a')) {
+                    home.classList.add('sidebar-animating');
+                    setCollapsed(false, true);
+                }
+            }
+        });
+    }
     backdrop.onclick = () => { home.classList.add('sidebar-animating'); setCollapsed(true); toggle.focus(); };
     nav.addEventListener('click', e => { if (mobile.matches && e.target.closest('button')) { home.classList.add('sidebar-animating'); setCollapsed(true); } });
     home.addEventListener('keydown', e => {
