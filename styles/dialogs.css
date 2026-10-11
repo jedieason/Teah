@@ -37,8 +37,8 @@
 #quizActionFill { height: 100%; background: var(--primary); border-radius: inherit; }
 .quiz-entry-order { margin-top: 12px; color: #87909b; font-size: 12px; line-height: 1.5; }
 .quiz-entry-filter { padding: 14px 18px; border: 1px solid #e9edf1; border-radius: 12px; background: #fafbfc; transition: border-color 0.15s ease, background-color 0.15s ease; }
-.quiz-entry-filter-toggle { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; user-select: none; }
-.quiz-entry-filter-toggle input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--primary); flex-shrink: 0; }
+.quiz-entry-filter-toggle { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+.quiz-entry-filter-toggle input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; accent-color: var(--primary); flex-shrink: 0; }
 .quiz-entry-filter-toggle input[type="checkbox"]:disabled { opacity: 0.5; cursor: not-allowed; }
 .quiz-entry-filter-toggle input[type="checkbox"]:disabled ~ .filter-toggle-content { opacity: 0.6; cursor: not-allowed; }
 .filter-toggle-content { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
