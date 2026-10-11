@@ -52,7 +52,11 @@ export function mountSidebar() {
         if (save && !mobile.matches) try { localStorage.setItem('teah-sidebar-collapsed', String(collapsed)); } catch {}
     }
     setCollapsed(mobile.matches || stored());
-    toggle.onclick = () => { home.classList.add('sidebar-animating'); setCollapsed(isExpanded(), true); };
+    toggle.onclick = e => {
+        e?.stopPropagation();
+        home.classList.add('sidebar-animating');
+        setCollapsed(isExpanded(), true);
+    };
     if (sidebar) {
         sidebar.addEventListener('click', e => {
             if (!mobile.matches && home.classList.contains('sidebar-collapsed')) {
@@ -66,6 +70,7 @@ export function mountSidebar() {
     const topbarSidebarHeader = document.querySelector('.topbar-sidebar-header');
     if (topbarSidebarHeader) {
         topbarSidebarHeader.addEventListener('click', e => {
+            if (e.target.closest('#sidebarToggle')) return;
             if (!mobile.matches && home.classList.contains('sidebar-collapsed')) {
                 e.preventDefault();
                 home.classList.add('sidebar-animating');

@@ -264,7 +264,25 @@ try {
     assert.equal(await page.locator('#sidebarBackdrop').isVisible(), true, 'backdrop must be visible when expanded');
     await page.locator('#sidebarBackdrop').click();
     await sidebar.waitFor({ state: 'hidden' });
-    assert.equal(await sidebar.isVisible(), false, 'sidebar must close when clicking backdrop');
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await sidebar.waitFor({ state: 'visible' });
+    const home = page.locator('.start-screen');
+    const resizer = page.locator('#sidebarResizer');
+    const resizerBox = await resizer.boundingBox();
+    assert.ok(resizerBox && resizerBox.y <= 0, 'resizer must extend to the top of the viewport');
+    const resizerCenterX = Math.round(resizerBox.x + resizerBox.width / 2);
+    assert.equal(await page.evaluate(x => document.elementFromPoint(x, 20)?.id, resizerCenterX), 'sidebarResizer', 'resizer must be draggable at the top');
+    await page.mouse.move(resizerCenterX, 20);
+    await page.mouse.down();
+    await page.mouse.move(280, 20);
+    await page.mouse.up();
+    assert.equal(await home.evaluate(el => getComputedStyle(el).getPropertyValue('--sidebar-width')), '280px', 'dragging from the top should resize sidebar');
+    await page.locator('#sidebarToggle').click();
+    assert.equal(await home.evaluate(el => el.classList.contains('sidebar-collapsed')), true, 'sidebar must collapse when clicking toggle');
+    assert.equal(await home.evaluate(el => getComputedStyle(el).getPropertyValue('--sidebar-width')), '68px');
+    await page.locator('.topbar-sidebar-header').click();
+    assert.equal(await home.evaluate(el => el.classList.contains('sidebar-collapsed')), false, 'sidebar must expand when clicking collapsed header');
+    assert.equal(await home.evaluate(el => getComputedStyle(el).getPropertyValue('--sidebar-width')), '280px');
     assert.deepEqual(errors, []);
-    console.log('Browser checks passed: filters, hidden answers, reversible status, selection, mobile overflow, mobile drawer sidebar, mixed-bank practice, duplicate confirmation, progress isolation, resume, offline retry, mastery and catalog rename.');
+    console.log('Browser checks passed: filters, hidden answers, reversible status, selection, mobile overflow, mobile drawer sidebar, desktop sidebar toggle and top resizer, mixed-bank practice, duplicate confirmation, progress isolation, resume, offline retry, mastery and catalog rename.');
 } finally { await browser.close(); }
