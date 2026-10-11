@@ -76,29 +76,41 @@ registerOutboxHandler('flashcard', async item => {
     }
 });
 export async function loadDecks() {
-    const uid = owner(); let userDecks = await readCache(uid, 'sets') || {}, publicDecks = await readCache(uid, 'publicSets') || {}, remote = false, error = '';
-    try {
-        const [userSnap, publicSnap] = await Promise.all([
-            get(ref(database, `flashcard/${uid}/sets`)),
-            get(ref(database, 'flashcard/publicSets')).catch(() => null)
-        ]);
+    const uid = auth.currentUser?.uid;
+    let userDecks = {}, publicDecks = {}, remote = false, error = '', items = [];
+    if (uid) {
+        userDecks = await readCache(uid, 'sets') || {};
+        publicDecks = await readCache(uid, 'publicSets') || {};
+        try {
+            const [userSnap, publicSnap] = await Promise.all([
+                get(ref(database, `flashcard/${uid}/sets`)),
+                get(ref(database, 'flashcard/publicSets')).catch(() => null)
+            ]);
+            ensure(uid);
+            if (userSnap) { userDecks = userSnap.val() || {}; remote = true; }
+            if (publicSnap && publicSnap.exists()) { publicDecks = publicSnap.val() || {}; }
+        } catch (e) { error = /permission/i.test(e.code || e.message) ? 'Firebase 尚未允許 Flashcard 存取；目前使用此裝置的資料。' : '目前使用此裝置的資料。'; }
         ensure(uid);
-        if (userSnap) { userDecks = userSnap.val() || {}; remote = true; }
-        if (publicSnap && publicSnap.exists()) { publicDecks = publicSnap.val() || {}; }
-    } catch (e) { error = /permission/i.test(e.code || e.message) ? 'Firebase 尚未允許 Flashcard 存取；目前使用此裝置的資料。' : '目前使用此裝置的資料。'; }
-    ensure(uid);
-    const items = await pending(uid); ensure(uid);
-    for (const item of items) {
-        if (item.payload.op === 'deck') {
-            const d = item.payload.deck;
-            userDecks[d.id] = d;
-            if (d.isPublic && !d.deletedAt) publicDecks[d.id] = d;
-            else delete publicDecks[d.id];
+        items = await pending(uid); ensure(uid);
+        for (const item of items) {
+            if (item.payload.op === 'deck') {
+                const d = item.payload.deck;
+                userDecks[d.id] = d;
+                if (d.isPublic && !d.deletedAt) publicDecks[d.id] = d;
+                else delete publicDecks[d.id];
+            }
         }
+        await cache(uid, 'sets', userDecks);
+        await cache(uid, 'publicSets', publicDecks);
+        ensure(uid);
+    } else {
+        publicDecks = await readCache('public', 'publicSets') || {};
+        try {
+            const publicSnap = await get(ref(database, 'flashcard/publicSets')).catch(() => null);
+            if (publicSnap && publicSnap.exists()) { publicDecks = publicSnap.val() || {}; remote = true; }
+        } catch {}
+        await cache('public', 'publicSets', publicDecks);
     }
-    await cache(uid, 'sets', userDecks);
-    await cache(uid, 'publicSets', publicDecks);
-    ensure(uid);
     const combined = { ...publicDecks, ...userDecks };
     return { decks: combined, remote, error, pending: items.length };
 }
@@ -133,7 +145,9 @@ export async function changeDeleted(deck, deleted) {
     return next;
 }
 export async function loadStudy(deckId) {
-    const uid = owner(); let study = await readCache(uid, `study:${deckId}`) || {};
+    const uid = auth.currentUser?.uid;
+    if (!uid) return (await readCache('public', `study:${deckId}`)) || {};
+    let study = await readCache(uid, `study:${deckId}`) || {};
     try { const snapshot = await get(ref(database, `flashcard/${uid}/study/${deckId}`)); ensure(uid); study = snapshot.val() || {}; } catch { /* Durable local snapshot and pending operations remain usable. */ }
     ensure(uid);
     for (const item of await pending(uid)) if (item.payload.op === 'study' && item.payload.deckId === deckId) study = mergeStudy(study, item.payload.event, item.payload.session);
@@ -142,10 +156,15 @@ export async function loadStudy(deckId) {
     await cache(uid, `study:${deckId}`, study); return study;
 }
 export async function saveStudy(deckId, study, event = null, session = null) {
-    const uid = owner(), next = mergeStudy(study, event, session);
+    const uid = auth.currentUser?.uid;
+    const next = mergeStudy(study, event, session);
+    if (!uid) {
+        await cache('public', `study:${deckId}`, next);
+        return next;
+    }
+    ensure(uid);
     await enqueue('flashcard', uid, { op: 'study', deckId, event, session }); ensure(uid);
-    await cache(uid, `study:${deckId}`, next); ensure(uid);
-    return next;
+    await cache(uid, `study:${deckId}`, next); return next;
 }
 let lastEventAt = 0;
 export const newEvent = (kind, fields = {}) => ({ id: id(), kind, at: (lastEventAt = Math.max(Date.now(), lastEventAt + 1)), ...fields });

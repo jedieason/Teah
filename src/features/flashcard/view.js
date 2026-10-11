@@ -30,7 +30,7 @@ export function mountFlashcard({ host, activate }) {
     let owner = null, decks = {}, deck = null, study = {}, phase = 'list', draft = null, session = null, flash = null;
     let message = '', conflict = false, operation = 0, busy = false, timer = null, speechTimer = null, draftTimer = null, questionAt = Date.now(), trash = false;
     let preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }, direction = 'term', search = '';
-    let screen = '', termFilter = 'all', termQuery = '';
+    let screen = '', termFilter = 'all', termQuery = '', deckScope = 'all';
     let audioContext, progressWidths = [], questionKey = '', symbolsKey = '', symbols = [];
     let speechGeneration = 0, pendingVoiceLoad = null, speechError = '';
     let generation = null, savingGeneration = false;
@@ -239,7 +239,10 @@ export function mountFlashcard({ host, activate }) {
     }
     function heading(title, back) {
         const h = node('header', null, host, 'vocab-heading');
-        if (back) button('‹ ' + back.label, h, back.action, 'vocab-back');
+        if (back) {
+            const backWrap = node('div', null, h, 'vocab-heading-back');
+            button('‹ ' + back.label, backWrap, back.action, 'vocab-back');
+        }
         const titleNode = node('h1', title, h); titleNode.tabIndex = -1;
         return h;
     }
@@ -303,7 +306,11 @@ export function mountFlashcard({ host, activate }) {
                 const result = await loadDecks(); decks = result.decks; deck = null; message = ''; phase = 'list'; render();
             });
         }
-        if (!owner) { heading('Flashcard'); node('p', '登入後即可建立字卡集與保存學習進度。', host, 'vocab-empty'); return; }
+        if (!owner && phase === 'editor') {
+            heading('建立字卡集', { label: 'Flashcard', action: () => { phase = 'list'; render(); } });
+            node('p', '請先登入帳號以建立或編輯字卡集。', host, 'vocab-empty');
+            return;
+        }
         if (phase === 'list') renderList();
         if (phase === 'detail') renderDetail();
         if (phase === 'editor') renderEditor();
@@ -314,31 +321,52 @@ export function mountFlashcard({ host, activate }) {
         if (changedScreen || phase === 'learn' && host.querySelector('.vocab-question.is-entering')) { host.scrollTop = 0; window.scrollTo(0, 0); }
     }
     function renderList() {
-        const h = heading('Flashcard'); button('＋ 建立字卡集', h, () => edit(null), 'vocab-primary');
+        const isLogged = !!owner;
+        const h = heading('Flashcard');
+        if (isLogged) {
+            button('＋ 建立字卡集', h, () => edit(null), 'vocab-primary');
+        } else {
+            button('登入以建立字卡集', h, () => document.getElementById('signInBtn')?.click(), 'vocab-primary');
+        }
         const toolbar = node('div', null, host, 'vocab-toolbar');
         const query = field('搜尋字卡集', toolbar, search); query.type = 'search'; query.placeholder = '字卡集名稱或內容';
-        button(trash ? '返回字卡集' : '已刪除', toolbar, () => { trash = !trash; render(); });
-        button('重新同步', toolbar, async () => { await flushOutbox(); const result = await loadDecks(); decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); });
+        const scopeSelect = select('可見範圍', toolbar, [
+            ['all', '全部字卡集'],
+            ['mine', '我的字卡集'],
+            ['public', '公開字卡集']
+        ], deckScope);
+        scopeSelect.onchange = () => { deckScope = scopeSelect.value; list(); };
+        if (isLogged) {
+            button(trash ? '返回字卡集' : '已刪除', toolbar, () => { trash = !trash; render(); });
+            button('重新同步', toolbar, async () => { await flushOutbox(); const result = await loadDecks(); decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); });
+        }
         const grid = node('div', null, host, 'vocab-grid');
         function list() {
-            grid.replaceChildren(); const filtered = Object.values(decks).filter(d => !!d.deletedAt === trash && normalize(d.title + ' ' + (d.authorName || '') + ' ' + d.description + ' ' + d.cards.map(c => c.term + ' ' + c.definition).join(' ')).includes(normalize(search))).sort((a, b) => b.updatedAt - a.updatedAt);
-            if (!filtered.length) node('p', trash ? '沒有已刪除字卡集' : search ? '沒有符合的字卡集' : '尚無字卡集', grid, 'vocab-empty');
+            grid.replaceChildren();
+            const filtered = Object.values(decks).filter(d => {
+                if (trash) return !!d.deletedAt;
+                if (d.deletedAt) return false;
+                if (deckScope === 'mine' && (!isLogged || d.authorId !== owner)) return false;
+                if (deckScope === 'public' && !d.isPublic) return false;
+                return normalize(d.title + ' ' + (d.authorName || '') + ' ' + d.description + ' ' + d.cards.map(c => c.term + ' ' + c.definition).join(' ')).includes(normalize(search));
+            }).sort((a, b) => b.updatedAt - a.updatedAt);
+            if (!filtered.length) {
+                node('p', trash ? '沒有已刪除字卡集' : search ? '沒有符合的字卡集' : deckScope === 'mine' ? (isLogged ? '您尚未建立字卡集' : '登入後可查看您的私人字卡集') : deckScope === 'public' ? '尚無公開字卡集' : '尚無字卡集', grid, 'vocab-empty');
+            }
             for (const d of filtered) {
                 const card = node('article', null, grid, 'vocab-deck');
                 const open = button(d.title, card, () => openDeck(d.id), 'vocab-deck-title'); if (trash) open.disabled = true;
-                if (d.authorName || d.isPublic) {
-                    const authorRow = node('div', null, card, 'vocab-deck-author');
-                    if (d.authorPhoto) {
-                        const avatar = node('img', null, authorRow, 'vocab-author-avatar');
-                        avatar.src = d.authorPhoto;
-                        avatar.alt = d.authorName || '作者';
-                        avatar.onerror = () => { avatar.style.display = 'none'; };
-                    } else if (d.authorName) {
-                        node('span', d.authorName.slice(0, 1).toUpperCase(), authorRow, 'vocab-author-avatar vocab-author-initial');
-                    }
-                    if (d.authorName) node('span', d.authorName, authorRow, 'vocab-author-name');
-                    if (d.isPublic) node('span', '公開', authorRow, 'vocab-pill vocab-pill-public');
+                const authorRow = node('div', null, card, 'vocab-deck-author');
+                if (d.authorPhoto) {
+                    const avatar = node('img', null, authorRow, 'vocab-author-avatar');
+                    avatar.src = d.authorPhoto;
+                    avatar.alt = d.authorName || '作者';
+                    avatar.onerror = () => { avatar.style.display = 'none'; };
+                } else if (d.authorName) {
+                    node('span', d.authorName.slice(0, 1).toUpperCase(), authorRow, 'vocab-author-avatar vocab-author-initial');
                 }
+                if (d.authorName) node('span', d.authorName, authorRow, 'vocab-author-name');
+                node('span', d.isPublic ? '公開' : '私人', authorRow, `vocab-pill ${d.isPublic ? 'vocab-pill-public' : 'vocab-pill-private'}`);
                 node('p', `${d.cards.length} 張字卡`, card, 'vocab-muted');
                 if (d.description) node('p', d.description, card, 'vocab-description');
                 const preview = node('div', null, card, 'vocab-deck-preview');
@@ -351,7 +379,7 @@ export function mountFlashcard({ host, activate }) {
     }
     async function openDeck(deckId) {
         const ticket = ++operation; if (deck?.id !== deckId) { termFilter = 'all'; termQuery = ''; } deck = decks[deckId]; if (!deck) return;
-        study = await loadStudy(deckId); safeOwner(); if (ticket !== operation) return;
+        study = await loadStudy(deckId); if (ticket !== operation) return;
         phase = 'detail'; preferred = study.sessions?.learn?.options || preferred; message = ''; render();
     }
     function stats(parent, counts, written = false) {
@@ -363,25 +391,23 @@ export function mountFlashcard({ host, activate }) {
     async function star(card) { const value = !projectStudy(study).stars[card.id]; study = await saveStudy(deck.id, study, newEvent('star', { cardId: card.id, value })); render(); }
     function starButton(card, parent) { const starred = !!projectStudy(study).stars[card.id]; const b = studyIcon('star', starred ? '取消星號' : '標記星號', parent, () => star(card)); b.classList.toggle('starred', starred); b.setAttribute('aria-pressed', String(starred)); return b; }
     function renderDetail() {
-        const isAuthor = !deck.authorId || deck.authorId === owner;
+        const isAuthor = !deck.authorId || (owner && deck.authorId === owner);
         const h = heading(deck.title, { label: 'Flashcard', action: () => { phase = 'list'; deck = null; render(); } });
         if (isAuthor) {
             button('編輯字卡集', h, () => edit(deck));
             button('AI 編輯字卡', h, async () => { await edit(deck); editingDialog(); });
         }
-        if (deck.authorName || deck.isPublic) {
-            const authorBar = node('div', null, host, 'vocab-detail-author');
-            if (deck.authorPhoto) {
-                const avatar = node('img', null, authorBar, 'vocab-author-avatar');
-                avatar.src = deck.authorPhoto;
-                avatar.alt = deck.authorName || '作者';
-                avatar.onerror = () => { avatar.style.display = 'none'; };
-            } else if (deck.authorName) {
-                node('span', deck.authorName.slice(0, 1).toUpperCase(), authorBar, 'vocab-author-avatar vocab-author-initial');
-            }
-            if (deck.authorName) node('span', `作者：${deck.authorName}`, authorBar, 'vocab-author-name');
-            if (deck.isPublic) node('span', '公開字卡集', authorBar, 'vocab-pill vocab-pill-public');
+        const authorBar = node('div', null, host, 'vocab-detail-author');
+        if (deck.authorPhoto) {
+            const avatar = node('img', null, authorBar, 'vocab-author-avatar');
+            avatar.src = deck.authorPhoto;
+            avatar.alt = deck.authorName || '作者';
+            avatar.onerror = () => { avatar.style.display = 'none'; };
+        } else if (deck.authorName) {
+            node('span', deck.authorName.slice(0, 1).toUpperCase(), authorBar, 'vocab-author-avatar vocab-author-initial');
         }
+        if (deck.authorName) node('span', `作者：${deck.authorName}`, authorBar, 'vocab-author-name');
+        node('span', deck.isPublic ? '公開字卡集' : '私人字卡集', authorBar, `vocab-pill ${deck.isPublic ? 'vocab-pill-public' : 'vocab-pill-private'}`);
         if (deck.description) node('p', deck.description, host, 'vocab-description');
         const projected = projectStudy(study), counts = progressCounts(deck, projected, direction);
         const studyModes = node('div', null, host, 'vocab-modes');
@@ -394,6 +420,14 @@ export function mountFlashcard({ host, activate }) {
         dir.onchange = () => { direction = dir.value; render(); };
         button('匯出文字', controls, () => exportText());
         if (isAuthor) {
+            button(deck.isPublic ? '設為私人' : '設為公開', controls, async () => {
+                const nextIsPublic = !deck.isPublic;
+                const updated = await saveDeck({ ...deck, isPublic: nextIsPublic }, deck);
+                deck = updated;
+                decks[updated.id] = updated;
+                message = nextIsPublic ? '已設為公開，所有人皆可查看。' : '已設為私人，僅自己可見。';
+                render();
+            });
             button('刪除字卡集', controls, async () => { decks[deck.id] = await changeDeleted(deck, true); message = '字卡集已移至「已刪除」，可隨時復原。'; deck = null; phase = 'list'; render(); });
         }
         stats(host, counts);
@@ -475,8 +509,17 @@ export function mountFlashcard({ host, activate }) {
             if (key === 'title') { input.required = true; requiredField(input, key); }
             input.oninput = () => { draft[key] = input.value; if (attemptedSave) validate(); queueDraft(); };
         }
-        const publicToggleWrap = node('div', null, meta, 'vocab-public-toggle-wrap');
-        toggle('公開字卡集', publicToggleWrap, !!draft.isPublic, checked => { draft.isPublic = checked; queueDraft(); });
+        const visibilityWrap = node('div', null, meta, 'vocab-field vocab-visibility-field');
+        const visSelect = select('可見度 (Visibility)', visibilityWrap, [
+            ['private', '私人 (Private) — 僅自己可見'],
+            ['public', '公開 (Public) — 所有人皆可看見（大家都看得到）']
+        ], draft.isPublic ? 'public' : 'private');
+        const visHint = node('p', draft.isPublic ? '公開字卡集：所有人皆可查看與學習。' : '私人字卡集：僅您本人可查看與練習。', visibilityWrap, 'vocab-description vocab-visibility-hint');
+        visSelect.onchange = () => {
+            draft.isPublic = visSelect.value === 'public';
+            visHint.textContent = draft.isPublic ? '公開字卡集：所有人皆可查看與學習。' : '私人字卡集：僅您本人可查看與練習。';
+            queueDraft();
+        };
         const langs = node('div', null, host, 'vocab-toolbar');
         for (const [key, label] of [['termLanguage', '單字語言'], ['definitionLanguage', '解釋語言']]) { const s = select(label, langs, languages, draft[key]); s.onchange = () => { draft[key] = s.value; queueDraft(); }; }
         const toolbar = node('div', null, host, 'vocab-toolbar');
@@ -1381,10 +1424,9 @@ export function mountFlashcard({ host, activate }) {
     return {
         async open() {
             const ticket = ++operation; owner = auth.currentUser?.uid || null; activate();
-            if (!owner) { phase = 'list'; render(); return; }
             if (phase !== 'list' && deck && decks[deck.id]) { render(); return; }
             phase = 'list'; message = '載入字卡集…'; render();
-            try { const result = await loadDecks(); safeOwner(); if (ticket !== operation) return; decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); } catch (e) { report(e.message); }
+            try { const result = await loadDecks(); if (ticket !== operation) return; decks = result.decks; message = result.error || (result.pending ? `${result.pending} 筆等待同步` : ''); render(); } catch (e) { report(e.message); }
         },
         async generate(items) {
             console.log('[FlashcardGen] vocabulary.generate 執行', {
@@ -1432,10 +1474,8 @@ export function mountFlashcard({ host, activate }) {
             const ticket = ++operation;
             owner = auth.currentUser?.uid || null;
             activate();
-            if (!owner) { phase = 'list'; render(); return; }
             try {
                 const result = await loadDecks();
-                safeOwner();
                 if (ticket !== operation) return;
                 decks = result.decks;
                 if (deckId && decks[deckId]) {
@@ -1445,6 +1485,6 @@ export function mountFlashcard({ host, activate }) {
                 }
             } catch (e) { report(e.message); }
         },
-        resetForUser(uid) { if (uid === owner) return; operation++; resetEquivalence(); generation?.abort(); generation = null; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
+        resetForUser(uid) { if (uid === owner) return; operation++; resetEquivalence(); generation?.abort(); generation = null; stop(); clearTimeout(draftTimer); dialog.close(); owner = uid || null; decks = {}; deck = null; study = {}; session = null; flash = null; draft = null; phase = 'list'; message = ''; conflict = false; preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }; direction = 'term'; search = ''; termFilter = 'all'; termQuery = ''; deckScope = 'all'; screen = ''; questionKey = ''; symbolsKey = ''; symbols = []; if (!host.hidden) void this.open(); }
     };
 }

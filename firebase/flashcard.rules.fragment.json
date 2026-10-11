@@ -2,7 +2,7 @@
   "rules": {
     "flashcard": {
       "publicSets": {
-        ".read": "auth != null",
+        ".read": true,
         "$deck": {
           ".write": "auth != null && (!data.exists() || data.child('authorId').val() === auth.uid) && (!newData.exists() || newData.child('authorId').val() === auth.uid)",
           ".validate": "newData.hasChildren(['id','title','cards','revision','createdAt','updatedAt','termLanguage','definitionLanguage','authorId']) && newData.child('id').val() === $deck && newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('title').val().length <= 160 && newData.child('revision').isNumber() && newData.child('revision').val() >= 1 && newData.child('cards').hasChild('0') && newData.child('createdAt').isNumber() && newData.child('updatedAt').isNumber() && newData.child('authorId').val() === auth.uid",

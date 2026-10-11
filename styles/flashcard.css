@@ -7,7 +7,9 @@
 .vocab-page h3 { font-size:17px; font-weight:600; }
 .vocab-heading { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:24px; }
 .vocab-heading h1,.vocab-heading h2 { flex:1; min-width:150px; }
-.vocab-heading .vocab-back { flex-basis:100%; text-align:left; width:max-content; padding:0; background:none; border:0; color:var(--v-muted); }
+.vocab-heading-back { flex-basis:100%; width:100%; display:flex; justify-content:flex-start; margin-bottom:4px; }
+.vocab-heading .vocab-back { flex-basis:auto; width:auto; max-width:max-content; height:34px; min-height:34px; padding:0 12px; border-radius:8px; border:1px solid transparent; background:none; color:var(--v-muted); font-size:14px; font-weight:500; display:inline-flex; align-items:center; justify-content:flex-start; cursor:pointer; transition:background .15s ease, color .15s ease, border-color .15s ease; }
+.vocab-heading .vocab-back:hover { background:var(--v-soft); border-color:var(--v-line); color:var(--on-surface); }
 .vocab-button { border:1px solid var(--v-line); background:var(--surface-color,#fff); color:inherit; border-radius:10px; padding:0 17px; font:600 14px/1.4 var(--ui-font); cursor:pointer; transition:background .15s,border-color .15s,transform .06s ease; min-height:42px; height:42px; display:inline-flex; align-items:center; justify-content:center; overflow-wrap:anywhere; user-select:none; -webkit-user-select:none; box-sizing:border-box; }
 .vocab-button:hover { background:var(--v-soft); border-color:#aba7ee; }
 .vocab-button:active:not(:disabled) { transform:scale(0.985); }
@@ -472,10 +474,14 @@ html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
 .vocab-author-initial { display:inline-flex; align-items:center; justify-content:center; background:var(--v-soft); color:var(--v-accent); font-weight:600; font-size:11px; width:22px; height:22px; border-radius:50%; border:1px solid var(--v-line); }
 .vocab-author-name { font-weight:500; color:inherit; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:140px; }
 .vocab-pill-public { background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:11px; padding:2px 7px; border-radius:6px; font-weight:600; }
+.vocab-pill-private { background:#f3f4f6; color:#4b5563; border:1px solid #e5e7eb; font-size:11px; padding:2px 7px; border-radius:6px; font-weight:600; }
 .vocab-pill-self { background:var(--v-soft); color:var(--v-muted); font-size:11px; padding:2px 7px; border-radius:6px; }
-.vocab-detail-author { display:flex; align-items:center; gap:10px; margin:4px 0 16px; font-size:14px; color:var(--v-muted); }
+.vocab-detail-author { display:flex; align-items:center; gap:10px; margin:4px 0 16px; font-size:14px; color:var(--v-muted); flex-wrap:wrap; }
 .vocab-detail-author .vocab-author-avatar { width:28px; height:28px; }
 .vocab-detail-author .vocab-author-initial { width:28px; height:28px; font-size:13px; }
 .vocab-public-toggle-wrap { display:flex; align-items:center; margin:4px 0 10px; }
+.vocab-visibility-field { margin:4px 0 12px; }
+.vocab-visibility-hint { margin:2px 0 0; font-size:12.5px; color:var(--v-muted); }
 html.dark-mode .vocab-pill-public { background:#064e3b33; color:#6ee7b7; border-color:#065f46; }
+html.dark-mode .vocab-pill-private { background:#37415133; color:#9ca3af; border-color:#4b5563; }
 
