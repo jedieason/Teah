@@ -26,11 +26,24 @@ export function mountSidebar() {
         const text = document.createElement('span'); text.className = 'sidebar-label'; text.textContent = label;
         button.replaceChildren(icon, text);
     }
+    const getStoredWidth = () => {
+        try {
+            const w = parseInt(localStorage.getItem('teah-sidebar-custom-width'), 10);
+            return w >= 180 && w <= 600 ? w : 240;
+        } catch {
+            return 240;
+        }
+    };
     const stored = () => { try { return localStorage.getItem('teah-sidebar-collapsed') === 'true'; } catch { return false; } };
     const isExpanded = () => mobile.matches ? home.classList.contains('sidebar-open') : !home.classList.contains('sidebar-collapsed');
     function setCollapsed(collapsed, save = false) {
         home.classList.toggle('sidebar-collapsed', collapsed);
         home.classList.toggle('sidebar-open', !collapsed && mobile.matches);
+        if (collapsed) {
+            home.style.removeProperty('--sidebar-width');
+        } else if (!mobile.matches) {
+            home.style.setProperty('--sidebar-width', `${getStoredWidth()}px`);
+        }
         toggle.setAttribute('aria-expanded', String(!collapsed));
         toggle.setAttribute('aria-label', collapsed ? '展開側邊導覽' : '收合側邊導覽');
         toggle.title = collapsed ? '展開導覽' : '收合導覽';
@@ -43,7 +56,7 @@ export function mountSidebar() {
     if (sidebar) {
         sidebar.addEventListener('click', e => {
             if (!mobile.matches && home.classList.contains('sidebar-collapsed')) {
-                if (!e.target.closest('.library-shortcuts button, #controlsMenuBtn, #signInBtn')) {
+                if (!e.target.closest('.library-shortcuts button, #controlsMenuBtn, #signInBtn, .sidebar-resizer')) {
                     home.classList.add('sidebar-animating');
                     setCollapsed(false, true);
                 }
@@ -54,12 +67,52 @@ export function mountSidebar() {
     if (topbarSidebarHeader) {
         topbarSidebarHeader.addEventListener('click', e => {
             if (!mobile.matches && home.classList.contains('sidebar-collapsed')) {
-                if (!e.target.closest('#sidebarToggle, a')) {
-                    home.classList.add('sidebar-animating');
-                    setCollapsed(false, true);
-                }
+                e.preventDefault();
+                home.classList.add('sidebar-animating');
+                setCollapsed(false, true);
             }
         });
+    }
+    const resizer = document.getElementById('sidebarResizer');
+    if (resizer) {
+        let isDragging = false;
+        resizer.addEventListener('pointerdown', e => {
+            if (mobile.matches || e.button !== 0) return;
+            isDragging = true;
+            document.body.classList.add('sidebar-resizing');
+            resizer.setPointerCapture(e.pointerId);
+            e.preventDefault();
+        });
+        resizer.addEventListener('pointermove', e => {
+            if (!isDragging) return;
+            const x = e.clientX;
+            if (x < 130) {
+                if (!home.classList.contains('sidebar-collapsed')) {
+                    setCollapsed(true, true);
+                }
+            } else {
+                if (home.classList.contains('sidebar-collapsed')) {
+                    setCollapsed(false, true);
+                }
+                const maxW = Math.min(Math.round(window.innerWidth * 0.5), 500);
+                const w = Math.min(Math.max(x, 180), maxW);
+                home.style.setProperty('--sidebar-width', `${w}px`);
+            }
+        });
+        const stopDrag = e => {
+            if (!isDragging) return;
+            isDragging = false;
+            document.body.classList.remove('sidebar-resizing');
+            try { resizer.releasePointerCapture(e.pointerId); } catch {}
+            if (!home.classList.contains('sidebar-collapsed')) {
+                const currentW = parseInt(getComputedStyle(home).getPropertyValue('--sidebar-width'), 10);
+                if (currentW >= 180) {
+                    try { localStorage.setItem('teah-sidebar-custom-width', String(currentW)); } catch {}
+                }
+            }
+        };
+        resizer.addEventListener('pointerup', stopDrag);
+        resizer.addEventListener('pointercancel', stopDrag);
     }
     backdrop.onclick = () => { home.classList.add('sidebar-animating'); setCollapsed(true); toggle.focus(); };
     nav.addEventListener('click', e => { if (mobile.matches && e.target.closest('button')) { home.classList.add('sidebar-animating'); setCollapsed(true); } });
