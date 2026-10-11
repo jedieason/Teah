@@ -44,6 +44,8 @@ test('prepareMistakeFlashcardSources extracts answered wrong questions and FLASH
     assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /名詞解釋/);
     assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /term/);
     assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /definition/);
+    assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /原始/);
+    assert.match(FLASHCARD_GLOSSARY_INSTRUCTIONS, /嚴禁擅自翻譯成中文/);
 
     const questions = [
         { questionId: 'q1', question: '題目一', answer: 'A', isAnswered: true, isCorrect: true },
