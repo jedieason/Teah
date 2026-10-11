@@ -43,9 +43,9 @@ export const CONTRIBUTE_FULL_PROMPT = `<?xml version="1.0" encoding="UTF-8"?>
 
     ### 4. 詳解與 AI 校正機制（嚴禁在 JSON 外部寫註解）
     * 每題均須配對對應的 \`explanation\`。
-    * **題矣註記機制**：當你發現原題的詳解有誤、答案有爭議、或是你有更精準的醫學解釋時，**請直接寫在該題的 \`explanation\` 欄位內部最後面**。
+    * **Gemini 註記機制**：當你發現原題的詳解有誤、答案有爭議、或是你有更精準的醫學解釋時，**請直接寫在該題的 \`explanation\` 欄位內部最後面**。
     * 若修改了錯誤答案，\`answer\` 欄位請放上你認為的正確答案，並在 \`explanation\` 內容的最末端，自動換行並加上以下標記：
-      \`\\n\\n**題矣註記：[在此輸入你認為更詳細的補充、正確答案或修正後的詳解]**\`
+      \`\\n\\n**Gemini：[在此輸入你認為更詳細的補充、正確答案或修正後的詳解]**\`
   </constraints>
 
   <output_schema>
@@ -94,7 +94,7 @@ export const CONTRIBUTE_FULL_PROMPT = `<?xml version="1.0" encoding="UTF-8"?>
     "origin": "出自 B11 考古第 4 題",
     "question": "在慢性骨髓性白血病（CML）中，常見由 t(9;22) 染色體易位形成的費城染色體融合基因是 ______。",
     "answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"],
-    "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**題矣註記：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
+    "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**Gemini：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
   }
 ]
 \`\`\`
@@ -169,9 +169,9 @@ export function buildSingleUnitPrompt(targetUnitRaw) {
 
     ### 4. 詳解與 AI 校正機制（嚴禁在 JSON 外部寫註解）
     * 每題均須配對對應的 \`explanation\`。
-    * **題矣註記機制**：當你發現原題的詳解有誤、答案有爭議、或是你有更精準的醫學解釋時，**請直接寫在該題的 \`explanation\` 欄位內部最後面**。
+    * **Gemini 註記機制**：當你發現原題的詳解有誤、答案有爭議、或是你有更精準的醫學解釋時，**請直接寫在該題的 \`explanation\` 欄位內部最後面**。
     * 若修改了錯誤答案，\`answer\` 欄位請放上你認為的正確答案，並在 \`explanation\` 內容的最末端，自動換行並加上以下標記：
-      \`\\n\\n**題矣註記：[在此輸入你認為更詳細的補充、正確答案或修正後的詳解]**\`
+      \`\\n\\n**Gemini：[在此輸入你認為更詳細的補充、正確答案或修正後的詳解]**\`
   </constraints>
 
   <output_schema>
@@ -220,7 +220,7 @@ export function buildSingleUnitPrompt(targetUnitRaw) {
     "origin": "出自 ${targetUnit} 第 4 題",
     "question": "在慢性骨髓性白血病（CML）中，常見由 t(9;22) 染色體易位形成的費城染色體融合基因是 ______。",
     "answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"],
-    "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**題矣註記：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
+    "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**Gemini：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
   }
 ]
 \`\`\`

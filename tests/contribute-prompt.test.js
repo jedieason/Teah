@@ -34,5 +34,5 @@ test('buildSingleUnitPrompt handles user requested B12 考古題 pattern', () =>
     assert.ok(prompt.includes('### 檢驗醫學區段一｜B12 考古題'));
     assert.ok(prompt.includes('"origin": "出自 B12 考古題 第 1 題"'));
     assert.ok(prompt.includes('四大題型欄位規範'));
-    assert.ok(prompt.includes('題矣註記機制'));
+    assert.ok(prompt.includes('Gemini 註記機制'));
 });
