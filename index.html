@@ -492,11 +492,11 @@
         </div>
 
         <div class="spec-tab-panel" id="tab-fill" style="display: none;">
-          <p class="tab-desc"><strong>填空題 / 簡答題</strong>：<strong>絕對不可包含 options 欄位（省略 options）</strong>。<code>answer</code> 為字串陣列，列出所有可被接受的答案、同義詞或縮寫；若需修正詳解或補充，可於 explanation 內換行加上 <code>**Gemini：說明**</code>。</p>
+          <p class="tab-desc"><strong>填空題 / 簡答題</strong>：<strong>絕對不可包含 options 欄位（省略 options）</strong>。<code>answer</code> 為字串陣列，提供標準答案或核心關鍵字（供 Gemini 準確判讀對錯即可，不需窮舉所有同義詞與縮寫）；若需修正詳解或補充，可於 explanation 內換行加上 <code>**Gemini：說明**</code>。</p>
           <pre class="json-code"><code>[
   {
     "question": "在慢性骨髓性白血病（CML）中，常見由 t(9;22) 染色體易位形成的融合基因是 ______。",
-    "answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"],
+    "answer": ["BCR-ABL"],
     "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合。\n\n**Gemini：臨床首選標靶為酪胺酸激酶抑制劑（如 Imatinib）。**",
     "origin": "出自 110學年度 簡答題 第 1 題"
   }

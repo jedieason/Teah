@@ -39,7 +39,7 @@ export const CONTRIBUTE_FULL_PROMPT = `<?xml version="1.0" encoding="UTF-8"?>
       * \`answer\`：必須使用 **JSON Array 格式**，包含所有正確選項代號，例如 \`"answer": ["A", "C"]\` 或 \`"answer": ["A", "B", "D"]\`。一個引號內嚴禁出現多個字母（禁止 \`"A/D"\` 或 \`"A, B"\`）。
     * **【填空題 / 簡答題】**（無選項之問答、名詞解釋或填空）：
       * \`options\`：**絕對不要建立 options 欄位（請在 JSON 中直接省略 options）**。
-      * \`answer\`：必須使用 **JSON Array 格式**，列出所有可被接受的正確答案、同義詞、全稱與縮寫（作答比對時命中其中任一項即算正確）。例如：\`"answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"]\` 或 \`"answer": ["現金股利", "股價"]\`。
+      * \`answer\`：必須使用 **JSON Array 格式**，提供足以讓 Gemini 正確判讀作答對錯的標準答案或核心關鍵字即可（本系統由 Gemini 進行語意閱卷與評分，無需刻意窮舉所有同義詞、全稱或縮寫）。例如：\`"answer": ["BCR-ABL"]\` 或 \`"answer": ["現金股利"]\`。
 
     ### 4. 詳解與 AI 校正機制（嚴禁在 JSON 外部寫註解）
     * 每題均須配對對應的 \`explanation\`。
@@ -93,7 +93,7 @@ export const CONTRIBUTE_FULL_PROMPT = `<?xml version="1.0" encoding="UTF-8"?>
   {
     "origin": "出自 B11 考古第 4 題",
     "question": "在慢性骨髓性白血病（CML）中，常見由 t(9;22) 染色體易位形成的費城染色體融合基因是 ______。",
-    "answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"],
+    "answer": ["BCR-ABL"],
     "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**Gemini：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
   }
 ]
@@ -165,7 +165,7 @@ export function buildSingleUnitPrompt(targetUnitRaw) {
       * \`answer\`：必須使用 **JSON Array 格式**，包含所有正確選項代號，例如 \`"answer": ["A", "C"]\` 或 \`"answer": ["A", "B", "D"]\`。一個引號內嚴禁出現多個字母（禁止 \`"A/D"\` 或 \`"A, B"\`）。
     * **【填空題 / 簡答題】**（無選項之問答、名詞解釋或填空）：
       * \`options\`：**絕對不要建立 options 欄位（請在 JSON 中直接省略 options）**。
-      * \`answer\`：必須使用 **JSON Array 格式**，列出所有可被接受的正確答案、同義詞、全稱與縮寫（作答比對時命中其中任一項即算正確）。例如：\`"answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"]\` 或 \`"answer": ["現金股利", "股價"]\`。
+      * \`answer\`：必須使用 **JSON Array 格式**，提供足以讓 Gemini 正確判讀作答對錯的標準答案或核心關鍵字即可（本系統由 Gemini 進行語意閱卷與評分，無需刻意窮舉所有同義詞、全稱或縮寫）。例如：\`"answer": ["BCR-ABL"]\` 或 \`"answer": ["現金股利"]\`。
 
     ### 4. 詳解與 AI 校正機制（嚴禁在 JSON 外部寫註解）
     * 每題均須配對對應的 \`explanation\`。
@@ -219,7 +219,7 @@ export function buildSingleUnitPrompt(targetUnitRaw) {
   {
     "origin": "出自 ${targetUnit} 第 4 題",
     "question": "在慢性骨髓性白血病（CML）中，常見由 t(9;22) 染色體易位形成的費城染色體融合基因是 ______。",
-    "answer": ["BCR-ABL", "BCR-ABL1", "BCR/ABL"],
+    "answer": ["BCR-ABL"],
     "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**Gemini：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
   }
 ]

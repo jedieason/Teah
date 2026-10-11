@@ -7,6 +7,7 @@ test('CONTRIBUTE_FULL_PROMPT contains multi-year instructions and markdown heade
     assert.ok(CONTRIBUTE_FULL_PROMPT.includes('【每一屆數/年份必須獨立成一個獨立的 JSON Array】'));
     assert.ok(CONTRIBUTE_FULL_PROMPT.includes('### 檢驗醫學區段一｜B11 考古'));
     assert.ok(CONTRIBUTE_FULL_PROMPT.includes('### 檢驗醫學區段一｜B10 考古'));
+    assert.ok(CONTRIBUTE_FULL_PROMPT.includes('提供足以讓 Gemini 正確判讀作答對錯的標準答案或核心關鍵字即可'));
 });
 
 test('buildSingleUnitPrompt defaults to B12 考古 when empty', () => {
@@ -35,4 +36,5 @@ test('buildSingleUnitPrompt handles user requested B12 考古題 pattern', () =>
     assert.ok(prompt.includes('"origin": "出自 B12 考古題 第 1 題"'));
     assert.ok(prompt.includes('四大題型欄位規範'));
     assert.ok(prompt.includes('Gemini 註記機制'));
+    assert.ok(prompt.includes('提供足以讓 Gemini 正確判讀作答對錯的標準答案或核心關鍵字即可'));
 });
