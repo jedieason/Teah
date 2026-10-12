@@ -398,22 +398,29 @@
       <div class="prompt-box-card">
         <div class="prompt-mode-header">
           <div class="prompt-mode-tabs" role="tablist">
-            <button type="button" class="prompt-mode-tab active" id="promptModeFull" role="tab" aria-selected="true">整本題本（多年份）</button>
+            <button type="button" class="prompt-mode-tab active" id="promptModeFull" role="tab" aria-selected="true">多單元／多年份</button>
             <button type="button" class="prompt-mode-tab" id="promptModeSingle" role="tab" aria-selected="false">單一題庫（指定單元）</button>
           </div>
+        </div>
+        <div id="promptSubjectToolbar" class="prompt-single-toolbar">
+          <label for="promptSubjectInput" class="prompt-single-label">科目名稱</label>
+          <div class="prompt-single-input-row">
+            <input type="text" id="promptSubjectInput" class="prompt-single-input" placeholder="例如：藥理學" autocomplete="off" spellcheck="false" required aria-describedby="promptSubjectHint">
+          </div>
+          <p id="promptSubjectHint" class="import-hint">題庫會依 PDF 目錄命名為「科目｜年份 考古」或「科目｜單元」。</p>
         </div>
         <div class="prompt-box-header">
           <div class="prompt-box-title">
             <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="currentColor">
               <path d="M480-120 200-400h120v-240h320v240h120L480-120Zm0-170 126-170h-66v-240H420v240h-66l126 170Z"/>
             </svg>
-            <span id="promptBoxTitle">AI 題庫整理 Prompt（整本題本多年份）</span>
+            <span id="promptBoxTitle">AI 題庫整理 Prompt（多份題庫）</span>
           </div>
           <button id="copyPromptBtn" class="copy-prompt-button" type="button" title="點擊複製 Prompt">
             <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 24 24" width="15" fill="currentColor">
               <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
             </svg>
-            <span id="copyPromptLabel" class="copy-label">複製整本 Prompt</span>
+            <span id="copyPromptLabel" class="copy-label">複製多份題庫 Prompt</span>
           </button>
         </div>
 
@@ -510,7 +517,11 @@
           <div class="rules-list">
             <div class="rule-item">
               <span class="rule-badge">命名格式</span>
-              <div>建議格式為 <code>科目區段｜學年度 考卷名稱</code>（例如：<code>檢驗醫學區段一｜B10 考古</code>、<code>藥理區段一｜B11 期末</code>）。</div>
+              <div>依 PDF 目錄分組：年份考卷使用 <code>科目｜年份 考卷名稱</code>（例如：<code>藥理學｜B11 考古</code>）；單元使用 <code>科目｜單元名稱</code>（例如：<code>藥理學｜抗生素</code>）。</div>
+            </div>
+            <div class="rule-item">
+              <span class="rule-badge">多份匯入</span>
+              <div>複製包含所有題庫標題與題目的完整 JSON，貼上後確認各份題數、編輯標題，再一次建立。</div>
             </div>
             <div class="rule-item">
               <span class="rule-badge warning">字元禁制</span>
@@ -561,7 +572,7 @@
       <!-- Helper Text or Instructions can go here -->
 
       <!-- Name Input -->
-      <div class="md3-input-wrapper">
+      <div class="md3-input-wrapper" id="uploadNameWrapper">
         <input type="text" id="uploadNameInput" class="md3-input" placeholder=" ">
         <label for="uploadNameInput" id="uploadNameLabel" class="md3-floating-label">題庫名稱</label>
       </div>
@@ -572,6 +583,7 @@
           <textarea id="pasteJson" class="md3-textarea" placeholder=" "></textarea>
           <label for="pasteJson" class="md3-floating-label">JSON 內容</label>
         </div>
+        <p class="import-hint">可貼上單份題目陣列，或包含 banks、title、questions 的多份題庫 JSON。</p>
       </div>
 
       <!-- Drop Zone -->
@@ -584,8 +596,12 @@
           </svg>
           <p id="dropZoneLabel">點擊或拖曳 JSON 檔案至此 (支援多選)</p>
         </div>
-        <div id="fileSelectedList" class="file-selected-list" style="display:none;"></div>
       </div>
+      <section id="uploadPreview" aria-label="匯入題庫清單" hidden>
+        <p id="uploadSummary" class="import-summary" role="status"></p>
+        <div id="uploadBankList" class="import-bank-list"></div>
+      </section>
+      <p id="uploadError" class="import-error" role="status" hidden></p>
     </div>
 
     <div class="md3-dialog-actions">

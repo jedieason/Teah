@@ -17,6 +17,9 @@
 .md3-filled-btn { color: white; background: var(--primary, #0b57d0); border: 1px solid transparent; box-shadow: 0 1px 2px rgba(11, 87, 208, 0.15); transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease; }
 .md3-filled-btn:hover { background: #0848ac; transform: translateY(-1px); box-shadow: 0 3px 8px rgba(11, 87, 208, 0.25); }
 .md3-filled-btn:active { transform: scale(0.98); box-shadow: none; }
+#uploadModal .md3-dialog { overflow: hidden; }
+#uploadModal .md3-dialog-header, #uploadModal .md3-dialog-actions { flex-shrink: 0; }
+#uploadModal .md3-dialog-body { overflow-y: auto; min-height: 0; padding: 2px; }
 #uploadModal .md3-segmented-btn-group { border: 0; border-radius: 10px; background: #f2f4f6; padding: 4px; margin: 0; width: fit-content; }
 #uploadModal .md3-segmented-btn span { border: 0; padding: 9px 16px; border-radius: 7px; color: #66707b; background: transparent; font-size: 13px; }
 #uploadModal .md3-segmented-btn input:checked + span { background: white; color: #202833; box-shadow: 0 1px 3px #1f293714; }
@@ -26,6 +29,17 @@
 #uploadModal #pasteJson { min-height: 160px; resize: vertical; }
 #uploadModal .md3-floating-label { color: #6a737e; font-size: 13px; }
 #uploadModal #uploadNameInput:focus, #uploadModal #pasteJson:focus, #uploadModal #uploadNameInput:focus-visible, #uploadModal #pasteJson:focus-visible { outline: none !important; border-color: var(--primary); }
+.import-hint { margin: 6px 0 0; color: #6a7380; font: 12px/1.6 var(--ui-font); overflow-wrap: anywhere; }
+.import-summary { margin: 0 0 10px; font: 600 14px/1.6 var(--ui-font); }
+.import-bank-list { display: flex; flex-direction: column; gap: 10px; }
+.import-bank-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; }
+.import-bank-row label { grid-column: 1 / -1; color: #6a7380; font-size: 12px; }
+.import-bank-row input { width: 100%; min-width: 0; box-sizing: border-box; padding: 9px 10px; border: 1px solid #cbd5e1; border-radius: 7px; background: white; color: #25292f; font: 14px/1.6 var(--ui-font); }
+.import-bank-row input:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+.import-bank-row span { overflow-wrap: anywhere; font-size: 13px; }
+.import-bank-count { color: #6a7380; white-space: nowrap; }
+.import-error { margin: 0; color: #a33225; font: 13px/1.6 var(--ui-font); overflow-wrap: anywhere; }
+#uploadModal .md3-filled-btn:disabled, .copy-prompt-button:disabled { opacity: .5; cursor: default; transform: none; box-shadow: none; }
 .quiz-entry-dialog { max-width: 440px; gap: 26px; padding: 32px; }
 .quiz-entry-heading { padding-right: 32px; }
 .dialog-eyebrow { color: #757e8a; font: 13px/1.6 var(--ui-font); margin: 0 0 7px; }

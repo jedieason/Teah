@@ -14,6 +14,7 @@
     "test:learning": "node tests/learning-browser.mjs",
     "test:rules": "node scripts/test-rules.mjs",
     "test:editorial": "node tests/editorial-browser.mjs",
+    "test:quiz-import": "node tests/quiz-import-browser.mjs",
     "test:flashcards": "node tests/flashcard-generation-browser.mjs",
     "test:flashcard-ai-edit": "node tests/flashcard-ai-edit-browser.mjs",
     "test:vocabulary": "node tests/flashcard-browser.mjs",

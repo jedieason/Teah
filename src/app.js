@@ -14,11 +14,12 @@ import { readCatalog, writeBanks, validBankName, bankExists } from './services/c
 import { database, auth, googleProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, onAuthStateChanged, signOut } from './services/firebase.js';
 import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quizLabel } from './features/mistakes/model.js';
 import { createNotebook } from './features/mistakes/notebook.js';
-import { markdown, validateQuiz } from './shared/content.js';
+import { markdown } from './shared/content.js';
 import { streamGemini } from './services/gemini-stream.js';
 import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
-import { CONTRIBUTE_FULL_PROMPT, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
+import { buildMultiUnitPrompt, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
+import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -1543,259 +1544,192 @@ async function fetchQuizList() {
 
 window.addEventListener('DOMContentLoaded', fetchQuizList);
 
-// Quiz upload handling (modal-based)
+// Quiz upload handling: preview and validate every bank before one atomic write.
 const uploadModal = document.getElementById('uploadModal');
 const uploadNameInput = document.getElementById('uploadNameInput');
 const uploadNameLabel = document.getElementById('uploadNameLabel');
+const uploadNameWrapper = document.getElementById('uploadNameWrapper');
 const uploadConfirmBtn = document.getElementById('uploadConfirmBtn');
-let pendingFiles = [];
-// Removed standalone addQuizBtn logic; use controls menu item instead
 const uploadInput = document.getElementById('uploadJson');
 const pasteJson = document.getElementById('pasteJson');
 const fileDropZone = document.getElementById('fileDropZone');
 const dropZoneLabel = document.getElementById('dropZoneLabel');
-const fileSelectedList = document.getElementById('fileSelectedList');
+const uploadPreview = document.getElementById('uploadPreview');
+const uploadSummary = document.getElementById('uploadSummary');
+const uploadBankList = document.getElementById('uploadBankList');
+const uploadError = document.getElementById('uploadError');
 const uploadModeRadios = uploadModal.querySelectorAll('input[name="upload-mode"]');
+let pendingFiles = [];
+let pendingPaste = null;
+let fileHasBatch = false;
+let pasteError = '';
+let isUploading = false;
+const uploadMode = () => Array.from(uploadModeRadios).find(r => r.checked)?.value || 'paste';
+const activeImportBanks = () => uploadMode() === 'paste' ? pendingPaste?.banks || [] : pendingFiles;
+const importHasTitles = () => uploadMode() === 'paste' ? !!pendingPaste?.isBatch : fileHasBatch;
+const editableImportTitles = () => importHasTitles() || (uploadMode() === 'file' && pendingFiles.length > 1);
 
-function updateNameLabel() {
-    if (!uploadNameLabel) return;
-    const mode = Array.from(uploadModeRadios).find(r => r.checked)?.value || 'paste';
-    if (mode === 'paste') {
-        uploadNameLabel.textContent = '題庫名稱 (可使用 科目｜單元名稱 格式)';
-    } else {
-        if (!pendingFiles || pendingFiles.length === 0) {
-            uploadNameLabel.textContent = '題庫名稱 (可留空，預設使用檔名)';
-        } else if (pendingFiles.length === 1) {
-            uploadNameLabel.textContent = `題庫名稱 (留空預設：${pendingFiles[0].quizName})`;
-        } else {
-            uploadNameLabel.textContent = `題庫名稱 (留空直接使用個別檔名，共 ${pendingFiles.length} 份)`;
-        }
+function importBanksWithTitles() {
+    const customName = uploadNameInput.value.trim();
+    return activeImportBanks().map(bank => ({
+        ...bank,
+        title: editableImportTitles() ? bank.title : customName || (uploadMode() === 'file' ? bank.title : '')
+    }));
+}
+
+function validateImportPreview() {
+    let error = uploadMode() === 'paste' ? pasteError : '';
+    const banks = importBanksWithTitles();
+    if (!error && banks.length) {
+        try { buildImportChanges(banks, validBankName); } catch (err) { error = err.message; }
     }
+    uploadError.textContent = error;
+    uploadError.hidden = !error;
+    uploadConfirmBtn.disabled = isUploading || !!error || !banks.length;
+    uploadConfirmBtn.textContent = isUploading ? '建立中…' : banks.length > 1 ? `建立 ${banks.length} 份題庫` : '建立';
+}
+
+function renderImportPreview() {
+    const mode = uploadMode();
+    uploadNameWrapper.hidden = importHasTitles();
+    uploadNameLabel.textContent = mode === 'paste' ? '題庫名稱（科目｜單元名稱）'
+        : pendingFiles.length > 1 ? '科目前綴（可留空）' : '題庫名稱（留空使用檔名）';
+    const banks = importBanksWithTitles();
+    uploadPreview.hidden = !banks.length;
+    uploadSummary.textContent = `共 ${banks.length} 份題庫，${banks.reduce((sum, bank) => sum + bank.questions.length, 0)} 題`;
+    uploadBankList.replaceChildren();
+    banks.forEach((bank, index) => {
+        const row = document.createElement('div');
+        row.className = 'import-bank-row';
+        if (editableImportTitles()) {
+            const label = document.createElement('label');
+            label.htmlFor = `importBankTitle${index}`;
+            label.textContent = `第 ${index + 1} 份題庫標題`;
+            const input = document.createElement('input');
+            input.id = label.htmlFor; input.type = 'text'; input.value = bank.title;
+            input.addEventListener('input', () => {
+                activeImportBanks()[index].title = input.value;
+                validateImportPreview();
+            });
+            row.append(label, input);
+        } else {
+            const title = document.createElement('span');
+            title.textContent = bank.title || '尚未輸入題庫名稱';
+            row.appendChild(title);
+        }
+        const count = document.createElement('span');
+        count.className = 'import-bank-count'; count.textContent = `${bank.questions.length} 題`;
+        row.appendChild(count); uploadBankList.appendChild(row);
+    });
+    validateImportPreview();
 }
 
 function updateFileDropZoneUI() {
-    if (!dropZoneLabel) return;
-    if (!pendingFiles || pendingFiles.length === 0) {
-        dropZoneLabel.innerText = '點擊或拖曳 JSON 檔案至此 (支援多選)';
-        if (fileSelectedList) {
-            fileSelectedList.innerHTML = '';
-            fileSelectedList.style.display = 'none';
-        }
-    } else if (pendingFiles.length === 1) {
-        dropZoneLabel.innerText = `${pendingFiles[0].fileName}（${pendingFiles[0].count} 題）`;
-        if (fileSelectedList) {
-            fileSelectedList.innerHTML = '';
-            fileSelectedList.style.display = 'none';
-        }
-    } else {
-        const totalQ = pendingFiles.reduce((acc, f) => acc + f.count, 0);
-        dropZoneLabel.innerText = `已選取 ${pendingFiles.length} 個 JSON 檔案（共 ${totalQ} 題）`;
-        if (fileSelectedList) {
-            fileSelectedList.innerHTML = '';
-            pendingFiles.forEach(f => {
-                const item = document.createElement('div');
-                item.className = 'file-selected-item';
-                item.innerHTML = `<span class="file-name" title="${f.quizName}">${f.quizName}</span><span class="file-count">${f.count} 題</span>`;
-                fileSelectedList.appendChild(item);
-            });
-            fileSelectedList.style.display = 'flex';
-        }
-    }
-    updateNameLabel();
+    dropZoneLabel.textContent = pendingFiles.length
+        ? `已選取 ${new Set(pendingFiles.map(bank => bank.fileName)).size} 個 JSON 檔案（${pendingFiles.length} 份題庫）`
+        : '點擊或拖曳 JSON 檔案至此（支援多選）';
+    renderImportPreview();
 }
 
 async function processUploadedFiles(fileList) {
-    const files = Array.from(fileList || []);
-    if (files.length === 0) return;
-    const jsonFiles = files.filter(f => f.name.toLowerCase().endsWith('.json'));
-    if (jsonFiles.length === 0) {
-        showCustomAlert('請提供 .json 格式的檔案');
-        return;
-    }
-
-    const loaded = [];
-    const errors = [];
-    for (const file of jsonFiles) {
+    if (isUploading) return;
+    if (!fileList?.length) return;
+    const files = Array.from(fileList || []).filter(file => file.name.toLowerCase().endsWith('.json'));
+    if (!files.length) { showCustomAlert('請提供 .json 格式的檔案'); return; }
+    const loaded = [], errors = [];
+    let hasBatch = false;
+    for (const file of files) {
         try {
-            const text = await file.text();
-            const parsed = JSON.parse(text);
-            if (!parsed) throw new Error('檔案為空');
-            const count = Array.isArray(parsed) ? parsed.length : (typeof parsed === 'object' ? Object.keys(parsed).length : 1);
-            const quizName = file.name.replace(/\.json$/i, '');
-            loaded.push({
-                file,
-                fileName: file.name,
-                quizName,
-                data: parsed,
-                count
-            });
-        } catch (err) {
-            errors.push(`${file.name} (${err.message || 'JSON 格式錯誤'})`);
-        }
+            const parsed = parseQuizImport(await file.text(), file.name.replace(/\.json$/i, ''));
+            hasBatch ||= parsed.isBatch;
+            loaded.push(...parsed.banks.map(bank => ({ ...bank, fileName: file.name, originalTitle: bank.title })));
+        } catch (err) { errors.push(`${file.name}（${err.message}）`); }
     }
-
-    if (errors.length > 0) {
+    if (errors.length) {
         showCustomAlert(`部分檔案解析錯誤：\n${errors.join('\n')}`);
-        if (loaded.length === 0) return;
+        if (!loaded.length) return;
     }
-
-    pendingFiles = loaded;
+    pendingFiles = loaded; fileHasBatch = hasBatch;
     uploadNameInput.value = '';
-    uploadModeRadios.forEach(r => r.checked = r.value === 'file');
+    uploadModeRadios.forEach(radio => radio.checked = radio.value === 'file');
     document.getElementById('pasteSection').style.display = 'none';
-    fileDropZone.style.display = 'block';
-    uploadModal.style.display = 'flex';
+    fileDropZone.style.display = 'block'; uploadModal.style.display = 'flex';
     updateFileDropZoneUI();
 }
 
 function openUploadModal(defaultMode = 'paste') {
-    if (!uploadModal || !pasteJson || !fileDropZone || !uploadNameInput) return;
+    if (isUploading) return;
     uploadModal.style.display = 'flex';
-    uploadModeRadios.forEach(r => r.checked = r.value === defaultMode);
-    if (defaultMode === 'file') {
-        document.getElementById('pasteSection').style.display = 'none';
-        fileDropZone.style.display = 'block';
-    } else {
-        document.getElementById('pasteSection').style.display = 'block';
-        fileDropZone.style.display = 'none';
-    }
-    pasteJson.value = '';
-    uploadNameInput.value = '';
-    uploadInput.value = '';
-    pendingFiles = [];
+    uploadModeRadios.forEach(radio => radio.checked = radio.value === defaultMode);
+    document.getElementById('pasteSection').style.display = defaultMode === 'paste' ? 'block' : 'none';
+    fileDropZone.style.display = defaultMode === 'file' ? 'block' : 'none';
+    pasteJson.value = ''; uploadNameInput.value = ''; uploadInput.value = '';
+    pendingFiles = []; pendingPaste = null; fileHasBatch = false; pasteError = '';
     updateFileDropZoneUI();
-    updateNameLabel();
 }
 
-// The upload modal is opened via controls menu item (menuAddQuiz)
-
-// Upload mode switching logic
-uploadModeRadios.forEach(radio => {
-    radio.addEventListener('change', e => {
-        if (e.target.value === 'file') {
-            document.getElementById('pasteSection').style.display = 'none';
-            fileDropZone.style.display = 'block';
-        } else {
-            document.getElementById('pasteSection').style.display = 'block';
-            fileDropZone.style.display = 'none';
-        }
-        updateNameLabel();
-    });
+pasteJson.addEventListener('input', () => {
+    pendingPaste = null; pasteError = '';
+    if (pasteJson.value.trim()) {
+        try { pendingPaste = parseQuizImport(pasteJson.value); } catch (err) { pasteError = err.message; }
+    }
+    renderImportPreview();
 });
-
-// Click to open file selector
-fileDropZone.addEventListener('click', (e) => {
-    if (e.target.closest('#fileSelectedList')) return;
-    uploadInput.click();
+uploadNameInput.addEventListener('input', () => {
+    if (uploadMode() === 'file' && pendingFiles.length > 1 && !fileHasBatch) {
+        const prefix = uploadNameInput.value.trim();
+        pendingFiles.forEach(bank => {
+            bank.title = !prefix || bank.originalTitle.startsWith(prefix) ? bank.originalTitle
+                : prefix.endsWith('｜') ? prefix + bank.originalTitle : `${prefix}｜${bank.originalTitle}`;
+        });
+    }
+    renderImportPreview();
 });
-
-// Prevent default for drag events
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt => {
-    fileDropZone.addEventListener(evt, e => {
-        e.preventDefault();
-        e.stopPropagation();
-    });
-});
-
-// Highlight on dragover
+uploadModeRadios.forEach(radio => radio.addEventListener('change', () => {
+    document.getElementById('pasteSection').style.display = uploadMode() === 'paste' ? 'block' : 'none';
+    fileDropZone.style.display = uploadMode() === 'file' ? 'block' : 'none';
+    renderImportPreview();
+}));
+fileDropZone.addEventListener('click', () => uploadInput.click());
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => fileDropZone.addEventListener(event, e => {
+    e.preventDefault(); e.stopPropagation();
+}));
 fileDropZone.addEventListener('dragover', () => fileDropZone.classList.add('dragover'));
 fileDropZone.addEventListener('dragleave', () => fileDropZone.classList.remove('dragover'));
-
-// Handle drop
 fileDropZone.addEventListener('drop', async e => {
     fileDropZone.classList.remove('dragover');
-    if (e.dataTransfer && e.dataTransfer.files) {
-        await processUploadedFiles(e.dataTransfer.files);
-    }
+    if (e.dataTransfer?.files) await processUploadedFiles(e.dataTransfer.files);
 });
-
-// When files are selected via file input
-uploadInput.addEventListener('change', async (e) => {
-    if (e.target.files) {
-        await processUploadedFiles(e.target.files);
-    }
+uploadInput.addEventListener('change', async e => {
+    if (e.target.files) await processUploadedFiles(e.target.files);
 });
-
-// Confirm upload: handle according to mode
 uploadConfirmBtn.addEventListener('click', async () => {
-    const mode = Array.from(uploadModeRadios).find(r => r.checked)?.value || 'paste';
-    const customName = uploadNameInput.value.trim();
-    const updates = {};
-
-    if (mode === 'paste') {
-        if (!customName) {
-            showCustomAlert('請輸入題庫名稱');
-            return;
-        }
-        let quizData = null;
-        try {
-            quizData = JSON.parse(pasteJson.value);
-        } catch {
-            showCustomAlert('請貼上正確的 JSON 內容');
-            return;
-        }
-        updates[customName] = quizData;
-    } else {
-        if (!pendingFiles || pendingFiles.length === 0) {
-            showCustomAlert('請選擇 JSON 檔案');
-            return;
-        }
-
-        if (pendingFiles.length === 1) {
-            const finalName = customName || pendingFiles[0].quizName;
-            updates[finalName] = pendingFiles[0].data;
-        } else {
-            pendingFiles.forEach(pf => {
-                let finalName;
-                if (!customName) {
-                    finalName = pf.quizName;
-                } else if (customName.endsWith('｜')) {
-                    finalName = customName + pf.quizName;
-                } else if (pf.quizName.startsWith(customName)) {
-                    finalName = pf.quizName;
-                } else {
-                    finalName = `${customName}｜${pf.quizName}`;
-                }
-                updates[finalName] = pf.data;
-            });
-        }
-    }
-
+    if (isUploading) return;
     try {
-        for (const [name, data] of Object.entries(updates)) {
-            if (!validBankName(name)) throw new Error('題庫名稱不可包含 . # $ [ ] / 或使用系統名稱。');
-            validateQuiz(data);
+        const updates = buildImportChanges(importBanksWithTitles(), validBankName);
+        isUploading = true;
+        uploadModal.querySelector('.md3-dialog-body').inert = true;
+        validateImportPreview();
+        for (const name of Object.keys(updates)) {
             if (await bankExists(name)) throw new Error(`「${name}」已存在，請使用其他名稱。`);
         }
         await writeBanks(updates);
-        const count = Object.keys(updates).length;
-        if (count === 1) {
-            showCustomAlert('題庫已新增：' + Object.keys(updates)[0]);
-        } else {
-            showCustomAlert(`成功新增 ${count} 份題庫！`);
-        }
-        fetchQuizList();
-        uploadModal.style.display = 'none';
-        pendingFiles = [];
-        uploadInput.value = '';
-        pasteJson.value = '';
-        uploadNameInput.value = '';
+        const names = Object.keys(updates);
+        showCustomAlert(names.length === 1 ? '題庫已新增：' + names[0] : `已新增 ${names.length} 份題庫。`);
+        fetchQuizList(); uploadModal.style.display = 'none';
+        pendingFiles = []; pendingPaste = null; pasteError = ''; fileHasBatch = false;
+        uploadInput.value = ''; pasteJson.value = ''; uploadNameInput.value = '';
         updateFileDropZoneUI();
     } catch (err) {
         console.error(err);
         showCustomAlert(err.message || '建立失敗，請確認題庫格式與寫入權限。');
+    } finally {
+        isUploading = false;
+        uploadModal.querySelector('.md3-dialog-body').inert = false;
+        validateImportPreview();
     }
 });
-
-// On page load: default to paste mode
-window.addEventListener('DOMContentLoaded', () => {
-    // Check elements exist
-    if (document.getElementById('pasteSection')) {
-        document.getElementById('pasteSection').style.display = 'block';
-        fileDropZone.style.display = 'none';
-    }
-});
-
+renderImportPreview();
 
 // Helper function to render LaTeX in an element
 function renderLatex(element) {
@@ -2560,8 +2494,6 @@ if (menuAddQuiz) menuAddQuiz.addEventListener('click', () => {
 });
 
 // Contribute Quiz Modal Logic
-const CONTRIBUTE_AI_PROMPT = CONTRIBUTE_FULL_PROMPT;
-
 const contributeModal = document.getElementById('contributeModal');
 const copyPromptBtn = document.getElementById('copyPromptBtn');
 const copyPromptLabel = document.getElementById('copyPromptLabel');
@@ -2572,6 +2504,8 @@ const promptModeFull = document.getElementById('promptModeFull');
 const promptModeSingle = document.getElementById('promptModeSingle');
 const promptSingleToolbar = document.getElementById('promptSingleToolbar');
 const promptUnitInput = document.getElementById('promptUnitInput');
+const promptSubjectInput = document.getElementById('promptSubjectInput');
+const promptSubjectToolbar = document.getElementById('promptSubjectToolbar');
 
 let currentPromptMode = 'full';
 
@@ -2580,20 +2514,24 @@ function getCurrentPromptText() {
         const val = promptUnitInput ? promptUnitInput.value : '';
         return buildSingleUnitPrompt(val);
     }
-    return CONTRIBUTE_FULL_PROMPT;
+    return buildMultiUnitPrompt(promptSubjectInput.value);
 }
 
 function updatePromptDisplay() {
-    if (promptCodeBlock) {
+    try {
         promptCodeBlock.textContent = getCurrentPromptText();
+        copyPromptBtn.disabled = false;
+    } catch (error) {
+        promptCodeBlock.textContent = error.message;
+        copyPromptBtn.disabled = true;
     }
     if (currentPromptMode === 'single') {
         const unitName = (promptUnitInput?.value || '').trim() || 'B12 考古';
         if (promptBoxTitle) promptBoxTitle.textContent = `AI 題庫整理 Prompt（單一題庫：${unitName}）`;
         if (copyPromptLabel) copyPromptLabel.textContent = '複製單一題庫 Prompt';
     } else {
-        if (promptBoxTitle) promptBoxTitle.textContent = 'AI 題庫整理 Prompt（整本題本多年份）';
-        if (copyPromptLabel) copyPromptLabel.textContent = '複製整本 Prompt';
+        if (promptBoxTitle) promptBoxTitle.textContent = 'AI 題庫整理 Prompt（多份題庫）';
+        if (copyPromptLabel) copyPromptLabel.textContent = '複製多份題庫 Prompt';
     }
 }
 
@@ -2605,7 +2543,10 @@ if (promptModeFull && promptModeSingle) {
         promptModeSingle.classList.remove('active');
         promptModeSingle.setAttribute('aria-selected', 'false');
         if (promptSingleToolbar) promptSingleToolbar.style.display = 'none';
+        promptSubjectToolbar.style.display = 'flex';
+        promptSubjectInput.required = true;
         updatePromptDisplay();
+        promptSubjectInput.focus();
     });
 
     promptModeSingle.addEventListener('click', () => {
@@ -2615,10 +2556,16 @@ if (promptModeFull && promptModeSingle) {
         promptModeFull.classList.remove('active');
         promptModeFull.setAttribute('aria-selected', 'false');
         if (promptSingleToolbar) promptSingleToolbar.style.display = 'flex';
+        promptSubjectToolbar.style.display = 'none';
+        promptSubjectInput.required = false;
         updatePromptDisplay();
         promptUnitInput?.focus();
     });
 }
+
+promptSubjectInput.addEventListener('input', () => {
+    if (currentPromptMode === 'full') updatePromptDisplay();
+});
 
 if (promptUnitInput) {
     promptUnitInput.addEventListener('input', () => {
@@ -2649,6 +2596,7 @@ if (menuContribute) {
     menuContribute.addEventListener('click', () => {
         closeControlsMenu();
         if (contributeModal) contributeModal.style.display = 'flex';
+        if (currentPromptMode === 'full') promptSubjectInput.focus();
     });
 }
 
@@ -2661,6 +2609,7 @@ if (contributeGoUploadBtn) {
 
 if (copyPromptBtn) {
     copyPromptBtn.addEventListener('click', async () => {
+        if (copyPromptBtn.disabled) return;
         const textToCopy = getCurrentPromptText();
         try {
             await navigator.clipboard.writeText(textToCopy);
@@ -2674,11 +2623,10 @@ if (copyPromptBtn) {
         }
         copyPromptBtn.classList.add('copied');
         const label = copyPromptLabel || copyPromptBtn.querySelector('.copy-label');
-        const originalText = label ? label.textContent : '';
         if (label) label.textContent = '已複製 ✓';
         setTimeout(() => {
             copyPromptBtn.classList.remove('copied');
-            if (label) label.textContent = originalText;
+            updatePromptDisplay();
         }, 2000);
     });
 }

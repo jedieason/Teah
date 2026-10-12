@@ -23,6 +23,7 @@ npx playwright install chromium
 npm run dev
 # 另一個終端機
 npm run test:browser
+npm run test:quiz-import  # 科目 Prompt、批次貼上、標題編輯與匯入相容性
 ```
 
 若使用現有 Chrome，可設定 `CHROME_PATH`；`PLAYWRIGHT_MODULE` 可指定已安裝的 Playwright 模組路徑。測試截圖輸出至 `artifacts/qa/`。
@@ -68,6 +69,7 @@ Images/、fonts/               既有品牌素材
 - 連續答對兩次會標為已熟悉，再答錯會移回待複習；狀態也可手動往返調整。
 - 點題庫先提供續答或重新開始；進度以實際已作答題數顯示。
 - 收藏使用交易更新；AI 回覆不再覆寫原詳解；匯入前檢查資料格式與同名題庫。
+- 多單元／多年份 Prompt 先指定科目，按 PDF 目錄產生「科目｜年份 考古」或「科目｜單元」標題。輸出單一 `{"banks":[{"title":"題庫標題","questions":[題目物件]}]}` JSON，貼上後可檢查題庫總數、各份題數與修改標題，再一次新增全部題庫。亦支援批次 JSON 檔與原有單份題目陣列；重複標題、同名題庫或無效題目會阻止建立。
 - 同步失敗會提示並在恢復連線時重試。學習紀錄與進度使用 IndexedDB 重試佇列；其他管理操作仍需要連線。
 - 新增獨立 Flashcard 單字題庫：自訂分隔符批次匯入、雙欄編輯、翻卡／分類、Learn 小組練習、錯題重現、書寫／複選／聽寫、持久續答與離線重送。
 

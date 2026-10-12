@@ -1,13 +1,35 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { CONTRIBUTE_FULL_PROMPT, buildSingleUnitPrompt } from '../src/shared/contribute-prompts.js';
+import { buildMultiUnitPrompt, buildSingleUnitPrompt } from '../src/shared/contribute-prompts.js';
 
-test('CONTRIBUTE_FULL_PROMPT contains multi-year instructions and markdown headers', () => {
-    assert.ok(CONTRIBUTE_FULL_PROMPT.includes('<role>'));
-    assert.ok(CONTRIBUTE_FULL_PROMPT.includes('【每一屆數/年份必須獨立成一個獨立的 JSON Array】'));
-    assert.ok(CONTRIBUTE_FULL_PROMPT.includes('### 檢驗醫學區段一｜B11 考古'));
-    assert.ok(CONTRIBUTE_FULL_PROMPT.includes('### 檢驗醫學區段一｜B10 考古'));
-    assert.ok(CONTRIBUTE_FULL_PROMPT.includes('提供足以讓 Gemini 正確判讀作答對錯的標準答案或核心關鍵字即可'));
+test('multi-bank prompt uses subject titles and one complete importable JSON block', () => {
+    const prompt = buildMultiUnitPrompt('  藥理學  ');
+    assert.ok(prompt.includes('<subject>藥理學</subject>'));
+    assert.ok(prompt.includes('依原文件的分組模式'));
+    assert.ok(prompt.includes('同一組題目只收錄一次'));
+    assert.ok(prompt.includes('單元中的題目即使來自多個年份'));
+    assert.ok(prompt.includes('即使有 10 份或更多'));
+    assert.ok(prompt.includes('禁止輸出多個 Code Block'));
+    assert.ok(prompt.includes('title 與 origin 都不可將 B09 改寫為 B9'));
+    assert.ok(prompt.includes('依題本原文定義屆數'));
+    const blocks = [...prompt.matchAll(/```json\n([\s\S]*?)\n```/g)];
+    assert.equal(blocks.length, 1);
+    const value = JSON.parse(blocks[0][1]);
+    assert.deepEqual(value.banks.map(bank => bank.title), ['藥理學｜B11 考古', '藥理學｜B10 考古', '藥理學｜抗生素']);
+    assert.ok(value.banks.every(bank => Array.isArray(bank.questions) && bank.questions.length));
+    assert.ok(prompt.includes('四大題型欄位規範'));
+    assert.ok(prompt.includes('提供足以讓 Gemini 正確判讀作答對錯的標準答案或核心關鍵字即可'));
+    assert.ok(!prompt.includes('每一年的 Code Block'));
+    assert.ok(!prompt.includes('只能包含 Markdown 題庫標題'));
+});
+
+test('multi-bank prompt requires a subject and safely includes custom names', () => {
+    assert.throws(() => buildMultiUnitPrompt(''), /科目名稱/);
+    assert.throws(() => buildMultiUnitPrompt(' .#[$] / '), /科目名稱/);
+    const prompt = buildMultiUnitPrompt(' 藥理.學#[$] / & <臨床> "進階" ');
+    assert.ok(prompt.includes('<subject>藥理學  &amp; &lt;臨床&gt; "進階"</subject>'));
+    const value = JSON.parse(prompt.match(/```json\n([\s\S]*?)\n```/)[1]);
+    assert.equal(value.banks[0].title, '藥理學  & <臨床> "進階"｜B11 考古');
 });
 
 test('buildSingleUnitPrompt defaults to B12 考古 when empty', () => {
