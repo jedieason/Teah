@@ -103,11 +103,12 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-prompt { font-size:23px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; padding:8px 0 48px; min-height:150px; }
 .vocab-question-hint { font-size:14px; font-weight:600; margin:0 0 18px; }
 .vocab-choices { display:grid; grid-template-columns:1fr 1fr; gap:22px 14px; }
-.vocab-choice { display:flex; align-items:center; text-align:left; gap:15px; width:100%; min-height:76px; border:2px solid var(--v-line); padding:16px; font-weight:400; font-size:16px; background:var(--surface-color,#fff); color:inherit; border-radius:8px; cursor:pointer; user-select:none; -webkit-user-select:none; outline:none; transition:transform .06s ease, border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+.vocab-choice { display:flex; align-items:center; justify-content:flex-start; text-align:left; gap:15px; width:100%; height:auto; min-height:76px; border:2px solid var(--v-line); padding:16px; font-weight:400; font-size:16px; background:var(--surface-color,#fff); color:inherit; border-radius:8px; cursor:pointer; user-select:none; -webkit-user-select:none; outline:none; transition:transform .06s ease, border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
 .vocab-choice:hover:not(:disabled) { border-color:var(--v-accent, #6366f1); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
 .vocab-choice:active:not(:disabled) { transform:scale(0.985); }
 .vocab-choice:focus, .vocab-choice:focus-visible { outline:none; border-color:var(--v-accent, #6366f1); }
-.vocab-choice > div { white-space:pre-wrap; overflow-wrap:anywhere; min-width:0; }
+.vocab-choice > div, .vocab-choice-text { flex:1; text-align:left; white-space:pre-wrap; overflow-wrap:anywhere; min-width:0; }
+.vocab-question[data-type="truefalse"] .vocab-choice { justify-content:center; text-align:center; }
 .vocab-choice-key { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; font-size:13px; line-height:1; background:var(--v-soft); color:var(--v-muted); flex-shrink:0; }
 .vocab-choice-key svg { display:block; width:22px; height:22px; }
 .vocab-choice.correct-option { border-color:var(--v-success); border-style:dashed; background:#f6fbf8; opacity:1; color:inherit; animation:vocab-correct .35s ease; }.vocab-choice.correct-option .vocab-choice-key { color:var(--v-success); background:none; font-size:23px; line-height:1; }
@@ -152,7 +153,6 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 @media(max-width:900px) { .vocab-page { padding:28px 24px 60px; }.vocab-question { padding:24px; }.vocab-term { grid-template-columns:1fr 1.3fr auto; gap:12px; }.vocab-term .vocab-pill { grid-row:2; }.vocab-term .vocab-icon { grid-column:3; grid-row:1/3; } }
 @media(max-width:600px) { .vocab-page { padding:24px 14px 50px; }.vocab-page h1 { font-size:23px; }.vocab-heading { gap:10px; }.vocab-heading h1 { flex-basis:calc(100% - 85px); }.vocab-grid { grid-template-columns:1fr; }.vocab-deck { padding:20px; }.vocab-mode { min-width:120px; }.vocab-choices { grid-template-columns:1fr; gap:10px; }.vocab-choice { min-height:62px; padding:12px; font-size:15px; }.vocab-question { padding:18px; }.vocab-prompt { font-size:21px; min-height:125px; padding-bottom:32px; }.vocab-stats { gap:8px; }.vocab-stat { padding:12px; }.vocab-stat strong { font-size:25px; }.vocab-stat span { font-size:11px; }.vocab-term { padding:15px; grid-template-columns:minmax(0,1fr) auto; }.vocab-term-definition { grid-row:2; border:0; padding:0; }.vocab-term .vocab-pill { grid-row:3; }.vocab-term .vocab-icon { grid-column:2; grid-row:1/3; }.vocab-edit-sides { grid-template-columns:1fr; padding:18px; gap:18px; }.vocab-toolbar { align-items:stretch; }.vocab-import-controls { grid-template-columns:1fr; }.vocab-dialog { padding:20px; }.vocab-flip { height:350px; }.vocab-face { padding:48px 22px; font-size:24px; }.vocab-ratings { gap:10px; }.vocab-ratings button { min-width:0; flex:1; padding:10px 8px; }.vocab-checkpoint { padding:24px 18px; }.vocab-answer-form > .vocab-primary { width:100%; }.vocab-round-state { text-align:left; }.vocab-missed > div { grid-template-columns:1fr; gap:4px; }.vocab-flash-top { gap:6px; font-size:12px; }.vocab-flash-controls { gap:6px; }.vocab-key-help { font-size:11px; } }
 @media(prefers-reduced-motion:reduce) { .vocab-page *, .vocab-dialog * { animation:none!important; transition:none!important; }.vocab-flip.swipe-known,.vocab-flip.swipe-learning { transform:none; } }
-.vocab-choices.long-choices { grid-template-columns:1fr; }
 .vocab-choice.selected-correct { border-style:solid; background:var(--surface-color,#fff); }
 .vocab-icon svg { display:block; }
 .vocab-round-terms { text-align:left; margin-top:20px; }.vocab-round-terms summary { cursor:pointer; font-size:14px; font-weight:600; }
@@ -330,8 +330,7 @@ html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
 .vocab-page[data-phase="learn"] .vocab-question-top > span { margin-right:0; }.vocab-page[data-phase="learn"] .vocab-question-top > .vocab-icon:last-child { margin-left:auto; }
 .vocab-page[data-phase="learn"] .vocab-prompt { font-size:22px; line-height:1.65; min-height:128px; padding:0 0 32px; }
 .vocab-page[data-phase="learn"] .vocab-choices { grid-template-columns:1fr 1fr; gap:14px; }
-.vocab-page[data-phase="learn"] .vocab-choices.long-choices { grid-template-columns:1fr; }
-.vocab-page[data-phase="learn"] .vocab-choice { min-height:72px; padding:16px; font-size:18px; font-weight:400; }
+.vocab-page[data-phase="learn"] .vocab-choice { height:auto; min-height:72px; padding:16px; font-size:18px; font-weight:400; justify-content:flex-start; text-align:left; }
 .vocab-page[data-phase="learn"] .vocab-choice:disabled:not(.wrong-option) { color:#a7aebe; opacity:1; }.vocab-page[data-phase="learn"] .vocab-choice.correct-option { background:none; color:inherit; }.vocab-page[data-phase="learn"] .vocab-choice.wrong-option { border-color:#ffbf90; }
 .vocab-answer-area { min-width:0; scroll-margin-block:16px; }
 .vocab-question-actions { display:flex; align-items:center; justify-content:end; gap:16px; margin-top:22px; flex-wrap:wrap; }

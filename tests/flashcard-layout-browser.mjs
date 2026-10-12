@@ -130,9 +130,11 @@ try {
     await page.setViewportSize({ width: 1440, height: 1024 });
     await view.getByRole('button', { name: longAnswers.title, exact: true }).click(); await configure('選擇題');
     const columns = await view.locator('.vocab-choices').evaluate(e => getComputedStyle(e).gridTemplateColumns.split(' ').length);
-    assert.equal(columns, 1, 'long desktop answers use the full readable width');
+    assert.equal(columns, 2, 'choices maintain a 2x2 grid on desktop');
+    const textAlign = await view.locator('.vocab-choice-text').first().evaluate(e => getComputedStyle(e).textAlign);
+    assert.equal(textAlign, 'left', 'choice text is left aligned');
     await page.screenshot({ path: 'artifacts/qa/learn-long-answers-desktop.png' });
     assert.deepEqual(errors, []);
-    console.log('Study layout passed: recorded medical content, mobile reading and actions, keyboard viewport, readable results, unknown reveals, scroll reset, draft/star stability, fullscreen cancelable options, narrow/dark/reduced-motion screens and long desktop choices.');
+    console.log('Study layout passed: recorded medical content, mobile reading and actions, keyboard viewport, readable results, unknown reveals, scroll reset, draft/star stability, fullscreen cancelable options, narrow/dark/reduced-motion screens and 2x2 desktop choices.');
 } catch (error) { await page.screenshot({ path: 'artifacts/qa/flashcard-layout-failure.png' }); throw error; }
 finally { await browser.close(); }

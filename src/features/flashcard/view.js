@@ -959,7 +959,6 @@ export function mountFlashcard({ host, activate }) {
         if (actions) button('不知道', actions, () => answer(q.type === 'multi' ? [] : q.type === 'truefalse' ? !q.truth : q.type === 'flash' ? false : '', true), 'vocab-dontknow');
         if (q.type === 'choice') {
             const choices = node('div', null, result, 'vocab-choices');
-            if (q.choices.some(value => value.length > 65)) choices.classList.add('long-choices');
             q.choices.forEach((value, i) => {
                 const correctOption = gradeAnswer(value, [q.choiceAnswer]), selected = feedback?.response === value;
                 const b = button('', choices, () => feedback ? correctOption && nextLearn() : answer(value), 'vocab-choice');
@@ -971,12 +970,12 @@ export function mountFlashcard({ host, activate }) {
                 } else {
                     key.textContent = i + 1;
                 }
-                text(value, b);
+                text(value, b, 'vocab-choice-text');
                 if (feedback) { b.classList.toggle('correct-option', correctOption); b.classList.toggle('selected-correct', feedback.correct && selected); b.classList.toggle('wrong-option', !feedback.correct && selected); b.disabled = !correctOption; }
             });
         } else if (q.type === 'multi') {
             const choices = node('div', null, result, 'vocab-choices'); const selected = new Set();
-            q.choices.forEach((value, i) => { const correct = q.correctAnswers.includes(value); const l = node('label', null, choices, `vocab-choice ${feedback && correct ? 'correct-option' : ''}`); const c = node('input', null, l); c.type = 'checkbox'; c.disabled = !!feedback; c.setAttribute('aria-label', value); node('span', i + 1, l, 'vocab-choice-key'); text(value, l); c.onchange = () => c.checked ? selected.add(value) : selected.delete(value); if (feedback) c.checked = JSON.parse(feedback.response || '[]').includes(value); });
+            q.choices.forEach((value, i) => { const correct = q.correctAnswers.includes(value); const l = node('label', null, choices, `vocab-choice ${feedback && correct ? 'correct-option' : ''}`); const c = node('input', null, l); c.type = 'checkbox'; c.disabled = !!feedback; c.setAttribute('aria-label', value); node('span', i + 1, l, 'vocab-choice-key'); text(value, l, 'vocab-choice-text'); c.onchange = () => c.checked ? selected.add(value) : selected.delete(value); if (feedback) c.checked = JSON.parse(feedback.response || '[]').includes(value); });
             if (!feedback) { const confirm = button('確認答案', actions, () => answer([...selected]), 'vocab-primary'); confirm.disabled = true; choices.addEventListener('change', () => { confirm.disabled = selected.size === 0; }); }
         } else if (q.type === 'written' || q.type === 'spell') {
             if (!feedback) {
