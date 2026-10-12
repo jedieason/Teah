@@ -78,7 +78,8 @@ export function activityHeatmap(parent, attempts, now) {
         }
     }
 
-    const summaryRow = node('div', null, card, 'panel-heatmap-summary');
+    const layout = node('div', null, card, 'panel-heatmap-layout');
+    const summaryRow = node('div', null, layout, 'panel-heatmap-summary');
     const stat = (label, val, desc) => {
         const box = node('div', null, summaryRow, 'panel-heatmap-stat');
         node('span', label, box, 'panel-muted');
@@ -89,8 +90,9 @@ export function activityHeatmap(parent, attempts, now) {
     stat('目前連續天數', `${currentStreak} 天`, activeDays ? (days[days.length - 1].count > 0 ? '今日已作答' : '今日未作答') : '尚無紀錄');
     stat('單日最高作答', `${maxCount} 題`, maxCount ? '單日最高紀錄' : '無作答');
 
-    const wrap = node('div', null, card, 'panel-heatmap-wrap');
-    const weekdays = ['週一', '週二', '週三', '週四', '週五', '週六', '週日'];
+    const content = node('div', null, layout, 'panel-heatmap-content');
+    const wrap = node('div', null, content, 'panel-heatmap-wrap');
+    const weekdays = ['一', '二', '三', '四', '五', '六', '日'];
     const weekdayHeader = node('div', null, wrap, 'panel-heatmap-header');
     for (const wd of weekdays) {
         node('span', wd, weekdayHeader, 'panel-heatmap-weekday');
@@ -131,7 +133,7 @@ export function activityHeatmap(parent, attempts, now) {
         blank.setAttribute('aria-hidden', 'true');
     }
 
-    const footer = node('div', null, card, 'panel-heatmap-footer');
+    const footer = node('div', null, content, 'panel-heatmap-footer');
     const detail = node('div', '', footer, 'panel-heatmap-detail');
     const defaultText = `移至方格查看各日作答明細 · 過去 30 天共作答 ${totalCount} 題`;
     detail.textContent = defaultText;

@@ -28,7 +28,7 @@ async function setup(level, score = .99, behaviour = 'score') {
     const page = await context.newPage(), errors = [];
     page.on('pageerror', error => { errors.push(error.message); console.error(error.message); }); page.setDefaultTimeout(15000);
     await page.goto(process.env.TEST_BASE_URL || 'http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
+    await page.locator('#tabFlashcard').click();
     const view = page.locator('#flashcardPage');
     await view.getByRole('button', { name: deck.title, exact: true }).click();
     await view.getByRole('button', { name: 'Learn', exact: true }).click();

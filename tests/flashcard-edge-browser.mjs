@@ -47,12 +47,12 @@ async function expandLearnSettings() {
 await mkdir('artifacts/qa', { recursive: true });
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
+    await page.locator('#tabFlashcard').click();
     await view.getByRole('button', { name: 'Synonyms', exact: true }).click();
     await view.getByRole('button', { name: 'Flashcards', exact: true }).click(); await idle();
     await page.evaluate(() => sessionStorage.setItem('edge-db', JSON.stringify(window.__testDatabase)));
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click(); await view.getByRole('button', { name: 'Synonyms', exact: true }).click();
+    await page.locator('#tabFlashcard').click(); await view.getByRole('button', { name: 'Synonyms', exact: true }).click();
     await view.getByRole('button', { name: 'Flashcards', exact: true }).click(); await idle();
     assert.equal(await view.locator('.vocab-flip').count(), 1); await page.keyboard.press('Space'); await view.locator('.flipped').waitFor();
     await view.getByRole('button', { name: '‹ Synonyms', exact: true }).click();
@@ -126,7 +126,7 @@ try {
     assert.equal(spellBeforeReload.writeCredits[spellBeforeReload.current.key], 0);
     await page.evaluate(() => sessionStorage.setItem('edge-db', JSON.stringify(window.__testDatabase)));
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click(); await view.getByRole('button', { name: 'Synonyms', exact: true }).click();
+    await page.locator('#tabFlashcard').click(); await view.getByRole('button', { name: 'Synonyms', exact: true }).click();
     await view.getByRole('button', { name: '繼續 Spell', exact: true }).click(); await idle();
     const spellAfterReload = await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id].sessions.learn, synonyms.id);
     assert.equal(spellAfterReload.current.key, spellBeforeReload.current.key);

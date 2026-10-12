@@ -2517,7 +2517,7 @@ function showLibraryPage(page) {
     document.getElementById('collectionPage').hidden = page !== 'collection';
     document.getElementById('flashcardPage').hidden = page !== 'flashcard';
     closeControlsMenu();
-    for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive'], ['homeFlashcard', 'flashcard']]) {
+    for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive']]) {
         const button = document.getElementById(id);
         if (page === name) button?.setAttribute('aria-current', 'page'); else button?.removeAttribute('aria-current');
     }
@@ -3694,7 +3694,6 @@ const vocabulary = mountFlashcard({ host: document.getElementById('flashcardPage
     if (mistakeView.style.display === 'flex') closeMistakeView();
     showLibraryPage('flashcard');
 } });
-document.getElementById('homeFlashcard').onclick = () => vocabulary.open();
 document.getElementById('tabLibrary')?.addEventListener('click', () => showLibraryPage('library'));
 document.getElementById('tabFlashcard')?.addEventListener('click', () => vocabulary.open());
 mountSidebar();

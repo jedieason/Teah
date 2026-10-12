@@ -29,7 +29,7 @@ async function advanced() {
 await mkdir('artifacts/qa', { recursive: true });
 try {
     await page.goto(process.env.TEST_BASE_URL || 'http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
+    await page.locator('#tabFlashcard').click();
     await view.getByRole('button', { name: deck.title, exact: true }).click();
     await view.getByRole('button', { name: 'Flashcards', exact: true }).click(); await idle();
     await centered('.vocab-flip');
@@ -68,7 +68,7 @@ try {
     await page.keyboard.press('Space'); await view.locator('.vocab-flip.flipped').waitFor(); await idle();
     await page.evaluate(() => sessionStorage.setItem('study-db', JSON.stringify(window.__testDatabase)));
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click(); await view.getByRole('button', { name: deck.title, exact: true }).click();
+    await page.locator('#tabFlashcard').click(); await view.getByRole('button', { name: deck.title, exact: true }).click();
     await view.getByRole('button', { name: 'Flashcards', exact: true }).click(); await idle();
     await view.locator('.vocab-flip.flipped').waitFor(); assert.equal((await study()).sessions.flash.index, 1);
     await page.setViewportSize({ width: 390, height: 844 }); await centered('.vocab-flip');

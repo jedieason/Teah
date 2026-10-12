@@ -22,7 +22,7 @@ async function expandLearnSettings() {
 await mkdir('artifacts/qa', { recursive: true });
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' }); console.log('Loaded page');
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
+    await page.locator('#tabFlashcard').click();
     await view.getByText('尚無字卡集', { exact: true }).waitFor(); console.log('Opened vocabulary');
     assert.equal(await page.locator('.home-content').isVisible(), false);
     await view.getByRole('button', { name: '＋ 建立字卡集', exact: true }).click();
@@ -126,7 +126,7 @@ try {
     await page.waitForFunction(() => Object.values(window.__testDatabase.flashcard['test-user'].study)[0].sessions.learn.ordinal === 1);
     await page.evaluate(() => sessionStorage.setItem('vocab-db', JSON.stringify(window.__testDatabase)));
     await page.reload({ waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
+    await page.locator('#tabFlashcard').click();
     await view.getByRole('button', { name: '水果單字', exact: true }).click();
     await view.getByRole('button', { name: '繼續 Learn', exact: true }).click();
     const state = async () => {

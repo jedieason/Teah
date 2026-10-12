@@ -70,7 +70,7 @@ try {
     await page.waitForFunction(() => document.getElementById('flashcardPage').getAttribute('aria-busy') !== 'true');
     await page.keyboard.press('Space'); await view.locator('.vocab-flip.flipped').waitFor(); await page.keyboard.press('Escape');
     await persist(); await page.reload({ waitUntil: 'networkidle' });
-    await page.locator('#homeFlashcard').click(); await view.getByRole('button', { name: '我的 PCR 字卡', exact: true }).click();
+    await page.locator('#tabFlashcard').click(); await view.getByRole('button', { name: '我的 PCR 字卡', exact: true }).click();
     await view.getByRole('button', { name: '編輯字卡集', exact: true }).click();
     assert.equal(await view.getByLabel('解釋 1', { exact: true }).inputValue(), '32 倍');
     await view.getByRole('button', { name: '‹ 字卡集', exact: true }).click();
@@ -83,7 +83,7 @@ try {
     assert.equal(requests.at(-1).sources.length, 1); assert.equal(requests.at(-1).instructions, ''); assert.equal(await view.isVisible(), false);
     await dialog.getByRole('button', { name: '取消', exact: true }).click(); await releasePending(); releasePending = null;
     assert.equal(await page.locator('#mistakeView').isVisible(), true); await persist(); assert.equal(await countDecks(), 1);
-    await page.locator('#closeMistakeViewBtn').click(); await page.locator('#homeFlashcard').click();
+    await page.locator('#closeMistakeViewBtn').click(); await page.locator('#tabFlashcard').click();
     if (await view.getByRole('button', { name: '‹ Flashcard', exact: true }).isVisible()) await view.getByRole('button', { name: '‹ Flashcard', exact: true }).click();
     assert.equal(await view.getByRole('button', { name: 'AI 生成字卡', exact: true }).count(), 0);
     // Generation on mobile still uses the selected mistake and keeps the notebook open until success.

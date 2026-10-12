@@ -25,7 +25,7 @@ page.setDefaultTimeout(12000); page.on('pageerror', e => errors.push(e.message))
 const stored = () => page.evaluate(id => window.__testDatabase.flashcard['test-user'].sets[id], deck.id);
 async function submit() { batch = 0; await dialog.getByRole('button', { name: '套用 AI 編輯', exact: true }).click(); }
 try {
-    await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' }); await page.locator('#homeFlashcard').click();
+    await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' }); await page.locator('#tabFlashcard').click();
     assert.equal(await view.getByRole('button', { name: 'AI 生成字卡', exact: true }).count(), 0);
     await view.getByRole('button', { name: deck.title, exact: true }).click();
     await view.getByRole('button', { name: 'AI 編輯字卡', exact: true }).click();
@@ -58,7 +58,7 @@ try {
     const updated = await stored(); assert.equal(updated.revision, 2); assert.equal(updated.cards.length, 31);
     assert.deepEqual(updated.cards.map(c => c.id), deck.cards.map(c => c.id)); assert.equal(updated.cards[0].revision, 2); assert.equal(updated.cards[0].term, 'the1');
     assert.equal(updated.definitionLanguage, 'zh-TW'); assert.match(updated.cards[0].definition, /\*\*解釋 1\*\*/);
-    await page.reload({ waitUntil: 'networkidle' }); await page.locator('#sidebarToggle').click(); await page.locator('#homeFlashcard').click();
+    await page.reload({ waitUntil: 'networkidle' }); await page.locator('#sidebarToggle').click(); await page.locator('#tabFlashcard').click();
     await view.getByRole('button', { name: deck.title, exact: true }).click();
     await view.locator('.vocab-term').first().scrollIntoViewIfNeeded();
     assert.equal(await view.locator('.vocab-term-definition strong').first().textContent(), '解釋 1');

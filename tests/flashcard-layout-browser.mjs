@@ -48,7 +48,7 @@ async function configure(type) {
 await mkdir('artifacts/qa', { recursive: true });
 try {
     await page.goto(process.env.TEST_BASE_URL || 'http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
+    await page.locator('#tabFlashcard').click();
     await view.getByRole('button', { name: medical.title, exact: true }).click();
     await page.setViewportSize({ width: 390, height: 844 }); await configure('書寫／填空題');
     const input = view.getByLabel('你的答案', { exact: true });

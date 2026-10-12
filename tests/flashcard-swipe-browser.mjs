@@ -51,7 +51,7 @@ async function mobileLayout(width, height) {
 await mkdir('artifacts/qa', { recursive: true });
 try {
     await page.goto(process.env.TEST_BASE_URL || 'http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
-    await page.getByRole('button', { name: 'Flashcard', exact: true }).click();
+    await page.locator('#tabFlashcard').click();
     await view.getByRole('button', { name: deck.title, exact: true }).click();
     await view.getByRole('button', { name: 'Flashcards', exact: true }).click(); await idle();
     await view.locator('.vocab-flash-controls').getByLabel('追蹤進度', { exact: true }).check(); await idle();
