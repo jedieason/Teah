@@ -277,6 +277,14 @@ export function mountFlashcard({ host, activate }) {
     window.visualViewport?.addEventListener('resize', updateStudyViewport);
     window.visualViewport?.addEventListener('scroll', updateStudyViewport);
     window.addEventListener('resize', updateStudyViewport);
+    function renderStatus() {
+        const existing = host.querySelector('.vocab-status');
+        if (existing) return existing;
+        const status = node('p', message, host, 'vocab-status');
+        status.setAttribute('role', 'status');
+        status.setAttribute('aria-live', 'polite');
+        return status;
+    }
     function render() {
         const nextScreen = `${phase}:${deck?.id || ''}:${phase === 'learn' ? `${session?.id}:${session?.current?.key || ''}:${session?.round}:${!!session?.checkpoint}:${!!session?.completed}` : ''}`;
         const changedScreen = screen !== nextScreen;
@@ -292,7 +300,6 @@ export function mountFlashcard({ host, activate }) {
         host.dataset.feedback = nextFeedback;
         host.dataset.skipped = String(phase === 'learn' && !!session?.feedback?.skipped);
         host.dataset.currentKey = phase === 'learn' ? session?.current?.key || '' : '';
-        const status = node('p', message, host, 'vocab-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
         if (conflict) {
             const resolve = node('div', null, host, 'vocab-conflict');
             button('立即同步至雲端', resolve, async () => {
@@ -309,6 +316,7 @@ export function mountFlashcard({ host, activate }) {
         }
         if (!owner && phase === 'editor') {
             heading('建立字卡集', { label: 'Flashcard', action: () => { phase = 'list'; render(); } });
+            renderStatus();
             node('p', '請先登入帳號以建立或編輯字卡集。', host, 'vocab-empty');
             return;
         }
@@ -317,6 +325,7 @@ export function mountFlashcard({ host, activate }) {
         if (phase === 'editor') renderEditor();
         if (phase === 'learn') renderLearn(feedbackChanged);
         if (phase === 'flash') renderFlash();
+        renderStatus();
         const roundTerms = host.querySelector('.vocab-round-terms');
         if (roundTerms && roundTermsOpen !== undefined) roundTerms.open = roundTermsOpen;
         if (changedScreen || phase === 'learn' && host.querySelector('.vocab-question.is-entering')) { host.scrollTop = 0; window.scrollTo(0, 0); }
@@ -329,6 +338,7 @@ export function mountFlashcard({ host, activate }) {
         } else {
             button('登入以建立字卡集', h, () => document.getElementById('signInBtn')?.click(), 'vocab-primary');
         }
+        renderStatus();
         const toolbar = node('div', null, host, 'vocab-toolbar');
         const query = field('搜尋字卡集', toolbar, search); query.type = 'search'; query.placeholder = '字卡集名稱或內容';
         const scopeSelect = select('可見範圍', toolbar, [
@@ -398,6 +408,7 @@ export function mountFlashcard({ host, activate }) {
             button('編輯字卡集', h, () => edit(deck));
             button('AI 編輯字卡', h, async () => { await edit(deck); editingDialog(); });
         }
+        renderStatus();
         const authorBar = node('div', null, host, 'vocab-detail-author');
         if (deck.authorPhoto) {
             const avatar = node('img', null, authorBar, 'vocab-author-avatar');
@@ -466,6 +477,7 @@ export function mountFlashcard({ host, activate }) {
     function renderEditor() {
         const h = heading(deck ? '編輯字卡集' : '建立字卡集', { label: deck ? '字卡集' : 'Flashcard', action: async () => { clearTimeout(draftTimer); await saveDraft(deck?.id, clone(draft)); phase = deck ? 'detail' : 'list'; render(); } });
         h.classList.add('vocab-editor-heading');
+        renderStatus();
         const fields = new Map(); let attemptedSave = false, invalidFields = new Set();
         const summary = node('p', '', h, 'vocab-editor-errors'); summary.setAttribute('role', 'alert'); summary.hidden = true;
         function requiredField(input, key) {
@@ -938,6 +950,7 @@ export function mountFlashcard({ host, activate }) {
     async function nextLearn() { const next = advanceSession(session, deck); if (next === session) return; await persist(null, next); session = next; render(); }
     function renderLearn(feedbackChanged = false) {
         studyHeader(session.options.practice ? '持續練習' : activityName(session), () => quickSettings());
+        renderStatus();
         if (session.options.practice) node('p', `已作答 ${session.ordinal} 題`, host, 'vocab-round-state'); else learnProgress();
         if (session.completed || session.checkpoint) { renderCheckpoint(); return; }
         const q = session.current, card = deck.cards.find(c => c.id === q.cardId), feedback = session.feedback;
@@ -1304,6 +1317,7 @@ export function mountFlashcard({ host, activate }) {
     }
     function renderFlash() {
         const header = studyHeader('Flashcards', () => flashSettings());
+        renderStatus();
         const progress = node('div', null, header, 'vocab-flash-progress');
         const visited = Math.min(flash.index, flash.order.length), fraction = visited / flash.order.length;
         progress.setAttribute('role', 'progressbar'); progress.setAttribute('aria-label', '字卡瀏覽進度');
