@@ -32,6 +32,7 @@ export function mountFlashcard({ host, activate }) {
     let preferred = { ...DEFAULT_OPTIONS, defaultLanguage: navigator.language || 'zh-TW' }, direction = 'term', search = '';
     let screen = '', termFilter = 'all', termQuery = '', deckScope = 'all';
     let audioContext, progressWidths = [], questionKey = '', symbolsKey = '', symbols = [];
+    let flashProgress = null;
     let speechGeneration = 0, pendingVoiceLoad = null, speechError = '';
     let generation = null, savingGeneration = false;
     const backgroundInert = new Map();
@@ -1197,6 +1198,17 @@ export function mountFlashcard({ host, activate }) {
         }, 'vocab-primary');
     }
     async function saveFlash() { flash.updatedAt = Date.now(); await persist(null, flash); }
+    async function showNextFlash(next, shift) {
+        flash = next; render();
+        const stage = host.querySelector('.vocab-flip');
+        if (!stage || isMobileFlash() || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const direction = Math.sign(shift);
+        const animation = stage.animate([
+            { transform: `translateX(${direction * 18}%) rotateY(${direction * -14}deg)` },
+            { transform: 'translateX(0) rotateY(0deg)' }
+        ], { duration: 280, easing: 'cubic-bezier(.16,1,.3,1)' });
+        try { await animation.finished; } catch { /* Leaving the screen may cancel the animation. */ }
+    }
     async function flip() {
         if (flash.options.showBoth) return;
         flash.flipped = !flash.flipped;
@@ -1257,7 +1269,7 @@ export function mountFlashcard({ host, activate }) {
             if (mobile) await Promise.all([persist(event, next), animation]);
             else { await persist(event, next); await new Promise(resolve => setTimeout(resolve, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 210)); }
         } catch (error) { resetMobileFlashSwipe(stage); stage?.classList.remove('swipe-known', 'swipe-learning'); throw error; }
-        flash = next; render();
+        await showNextFlash(next, 1);
     }
     async function undoFlash() {
         const last = flash.history?.at(-1); if (!last) return;
@@ -1267,7 +1279,7 @@ export function mountFlashcard({ host, activate }) {
         const original = study.events[last.eventId];
         // A compensating flash event preserves the immutable history and works with existing Firebase rules.
         await persist(newEvent('flash', { cardId: original.cardId, direction: original.direction, revision: original.revision, correct: original.correct, sessionId: flash.id, originalId: original.id, value: false }), next);
-        flash = next; render();
+        await showNextFlash(next, -1);
     }
     async function moveFlash(shift, swipeDirection = -Math.sign(shift)) {
         const stage = host.querySelector('.vocab-flip'), dest = flash.index + shift;
@@ -1276,7 +1288,7 @@ export function mountFlashcard({ host, activate }) {
         updateFlashPreview(shift);
         try { await Promise.all([persist(null, next), animateMobileFlashExit(stage, swipeDirection, false)]); }
         catch (error) { resetMobileFlashSwipe(stage); throw error; }
-        flash = next; render();
+        await showNextFlash(next, shift);
     }
     async function shuffleFlash() {
         await startFlash({ ...flash.options, shuffle: true }, true);
@@ -1291,7 +1303,17 @@ export function mountFlashcard({ host, activate }) {
         if (flash.options.showBoth) text(answerFor(card, flash.options.direction), preview, 'vocab-preview-face');
     }
     function renderFlash() {
-        studyHeader('Flashcards', () => flashSettings());
+        const header = studyHeader('Flashcards', () => flashSettings());
+        const progress = node('div', null, header, 'vocab-flash-progress');
+        const visited = Math.min(flash.index, flash.order.length), fraction = visited / flash.order.length;
+        progress.setAttribute('role', 'progressbar'); progress.setAttribute('aria-label', '字卡瀏覽進度');
+        progress.setAttribute('aria-valuemin', '0'); progress.setAttribute('aria-valuemax', String(flash.order.length));
+        progress.setAttribute('aria-valuenow', String(visited));
+        const fill = node('i', null, progress); fill.style.transform = `scaleX(${fraction})`;
+        if (flashProgress?.id === flash.id && flashProgress.fraction !== fraction && !isMobileFlash() && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            fill.animate([{ transform: `scaleX(${flashProgress.fraction})` }, { transform: `scaleX(${fraction})` }], { duration: 280, easing: 'ease-out' });
+        }
+        flashProgress = { id: flash.id, fraction };
         const known = Object.values(flash.ratings).filter(Boolean).length, learning = Object.values(flash.ratings).filter(v => !v).length;
         if (flash.completed) {
             const panel = node('section', null, host, 'vocab-checkpoint'); node('h2', '本輪字卡完成', panel); node('p', flash.options.track ? `知道了 ${known} 張 · 還在學習 ${learning} 張` : `已瀏覽 ${flash.order.length} 張字卡`, panel);
