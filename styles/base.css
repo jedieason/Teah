@@ -2214,17 +2214,15 @@ p {
 }
 
 .sign-in-button {
-    position: absolute;
-    height: 40px;
-    top: 20px;
-    right: 20px;
+    position: relative;
+    height: 44px;
     padding: 0 16px 0 12px;
     font-size: 0.875rem;
     font-weight: 500;
     background-color: #FFFFFF;
     color: #3c4043;
     border: 1px solid #dadce0;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
     transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
@@ -4416,6 +4414,7 @@ html.dark-mode video,
 html.dark-mode iframe,
 html.dark-mode .avatar-button img,
 html.dark-mode .menu-avatar,
+html.dark-mode .sign-in-button svg,
 html.dark-mode .exclude-invert {
     filter: invert(1) hue-rotate(180deg);
 }
