@@ -92,7 +92,7 @@ textarea:focus-visible {
 .sidebar-toggle-btn svg { width:20px; height:20px; }
 .topbar-center { flex:1; display:flex; align-items:center; justify-content:center; padding:0 20px; min-width:0; }
 .top-nav-tabs { display:inline-flex; align-items:center; background:var(--ui-hover,#f0f2f5); padding:3px; border-radius:9999px; gap:2px; }
-.top-nav-tab { appearance:none; border:none; background:transparent; color:var(--ui-muted,#6a7380); font-family:var(--ui-font); font-size:14px; font-weight:500; padding:6px 18px; border-radius:9999px; cursor:pointer; transition:background .18s ease, color .18s ease, box-shadow .18s ease; white-space:nowrap; user-select:none; }
+.top-nav-tab { appearance:none; border:none; background:transparent; color:var(--ui-muted,#6a7380); font-family:var(--ui-font); font-size:15px; font-weight:500; padding:6px 18px; border-radius:9999px; cursor:pointer; transition:background .18s ease, color .18s ease, box-shadow .18s ease; white-space:nowrap; user-select:none; }
 .top-nav-tab:hover { color:var(--on-surface,#1f2328); }
 .top-nav-tab.active { background:#ffffff; color:var(--on-surface,#1f2328); font-weight:600; box-shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04); }
 
@@ -214,7 +214,7 @@ body.sidebar-resizing, body.sidebar-resizing * { cursor:col-resize !important; u
  .sidebar-collapsed .topbar-sidebar-header .sidebar-toggle-btn,
  .topbar-sidebar-header .sidebar-toggle-btn { display:inline-flex; }
  .topbar-center { padding:0 8px; }
- .top-nav-tab { padding:5px 12px; font-size:13px; }
+ .top-nav-tab { padding:5px 14px; font-size:15px; }
  .sidebar-resizer { display:none; }
  .site-sidebar {
    width:var(--sidebar-width);
