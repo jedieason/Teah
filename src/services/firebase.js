@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
 import { getDatabase, ref, get, update, set, remove, runTransaction } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, deleteUser, reauthenticateWithPopup } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithCredential, onAuthStateChanged, signOut, deleteUser, reauthenticateWithPopup, setPersistence, indexedDBLocalPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
 const currentHost = window.location.hostname;
 const defaultAuthDomain = "stock-market-ntumed.firebaseapp.com";
@@ -26,9 +26,14 @@ try { if (localStorage.getItem('teah-analytics-consent') !== 'no') getAnalytics(
 const database = getDatabase(app);
 // Firebase Auth
 const auth = getAuth(app);
+try {
+    setPersistence(auth, indexedDBLocalPersistence).catch(() => {
+        setPersistence(auth, browserLocalPersistence).catch(() => {});
+    });
+} catch (_) {}
 const googleProvider = new GoogleAuthProvider();
 
-export { database, auth, googleProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, onAuthStateChanged, signOut, deleteUser, reauthenticateWithPopup };
+export { database, auth, googleProvider, GoogleAuthProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithCredential, onAuthStateChanged, signOut, deleteUser, reauthenticateWithPopup, setPersistence, indexedDBLocalPersistence, browserLocalPersistence };
 
 if (typeof window !== 'undefined') {
     window.auth = auth;

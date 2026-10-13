@@ -3,6 +3,9 @@ const user = { uid: 'test-user', displayName: '測試帳號', email: 'student@ex
 export const auth = { currentUser: user };
 export const database = {};
 export const googleProvider = {};
+export const GoogleAuthProvider = {
+    credential: (idToken, accessToken) => ({ providerId: 'google.com', idToken, accessToken })
+};
 const db = window.__testDatabase;
 const clone = v => v == null ? null : JSON.parse(JSON.stringify(v));
 const read = path => path.split('/').filter(Boolean).reduce((value, key) => value?.[key], db) ?? null;
@@ -25,7 +28,13 @@ export async function runTransaction(path, callback) {
 }
 export function onAuthStateChanged(_, callback) { setTimeout(() => callback(user), 0); }
 export async function signInWithPopup() { return { user }; }
+export async function signInWithRedirect() {}
+export async function getRedirectResult() { return null; }
+export async function signInWithCredential(authInstance, credential) { auth.currentUser = user; return { user }; }
 export async function signOut() { auth.currentUser = null; }
 
 export async function deleteUser() { auth.currentUser = null; }
 export async function reauthenticateWithPopup() {}
+export async function setPersistence() {}
+export const indexedDBLocalPersistence = {};
+export const browserLocalPersistence = {};

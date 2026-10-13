@@ -11,7 +11,7 @@ import { mountLearningHub } from './features/learning/hub.js';
 import { mountReviewFlashcards } from './features/flashcard/review-flashcards.js';
 import { installDialogBehavior } from './shared/dialogs.js';
 import { readCatalog, writeBanks, validBankName, bankExists } from './services/catalog.js';
-import { database, auth, googleProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, onAuthStateChanged, signOut } from './services/firebase.js';
+import { database, auth, googleProvider, GoogleAuthProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithCredential, onAuthStateChanged, signOut } from './services/firebase.js';
 import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quizLabel } from './features/mistakes/model.js';
 import { createNotebook } from './features/mistakes/notebook.js';
 import { markdown } from './shared/content.js';
@@ -20,6 +20,7 @@ import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
 import { buildMultiUnitPrompt, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
 import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
+import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage } from './services/auth-helper.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -2241,9 +2242,62 @@ function updateSignInButton(user) {
 
 // Auth UI sync will be wired after controls menu elements are initialized
 
-function isInAppBrowser() {
-    const ua = navigator.userAgent || navigator.vendor || window.opera;
-    return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Line") > -1) || (ua.indexOf("Instagram") > -1);
+const GOOGLE_CLIENT_ID = '1032461117274-4norhm66l02foocbd94rr53kqbglnflg.apps.googleusercontent.com';
+
+function handleSignInError(error) {
+    showCustomAlert(formatSignInErrorMessage(error));
+}
+
+function initGoogleIdentityServices() {
+    if (typeof window === 'undefined' || !window.google?.accounts?.id) return;
+    try {
+        window.google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: async (response) => {
+                if (!response?.credential) {
+                    showCustomAlert('Google 登入失敗：未取得憑證。');
+                    return;
+                }
+                try {
+                    console.log('透過 Google Identity 憑證登入 Firebase...');
+                    const credential = GoogleAuthProvider.credential(response.credential);
+                    const result = await signInWithCredential(auth, credential);
+                    console.log('GIS 登入成功，使用者:', result.user);
+                    showCustomAlert('登入成功！');
+                } catch (err) {
+                    console.error('GIS signInWithCredential 失敗:', err);
+                    handleSignInError(err);
+                }
+            },
+            auto_select: false,
+            cancel_on_tap_outside: true
+        });
+    } catch (e) {
+        console.warn('GIS 初始化失敗:', e);
+    }
+}
+
+async function fallbackIosSignIn() {
+    try {
+        console.log('iOS PWA 嘗試使用 Popup 登入...');
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log('Google Sign-In success, user:', result.user);
+        showCustomAlert('登入成功！');
+    } catch (error) {
+        console.error('iOS PWA Popup 登入失敗:', error);
+        if (error?.code === 'auth/popup-blocked' || error?.code === 'auth/operation-not-supported-in-this-environment') {
+            console.log('Popup 被阻擋或不支援，改用 Redirect...');
+            try {
+                await signInWithRedirect(auth, googleProvider);
+                return;
+            } catch (redirectErr) {
+                console.error('Redirect 登入失敗:', redirectErr);
+                handleSignInError(redirectErr);
+                return;
+            }
+        }
+        handleSignInError(error);
+    }
 }
 
 async function handleGoogleSignIn() {
@@ -2251,6 +2305,31 @@ async function handleGoogleSignIn() {
         showCustomAlert('偵測到您正在使用 LINE、Facebook 或 Instagram 內建瀏覽器。\n\n這些環境會限制儲存空間，導致 Google 登入失敗（或顯示 "missing initial state" 錯誤）。\n\n建議點擊畫面右上角選單，選擇「在瀏覽器中開啟」或使用 Safari / Chrome 開啟此網頁進行登入。');
         return;
     }
+
+    if (isIosStandalone()) {
+        console.log('偵測到 iOS 主畫面獨立 Web App 環境');
+        if (window.google?.accounts?.id) {
+            try {
+                initGoogleIdentityServices();
+                let prompted = false;
+                window.google.accounts.id.prompt((notification) => {
+                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                        console.log('GIS prompt 未顯示或略過，原因:', notification.getNotDisplayedReason?.());
+                        if (!prompted) {
+                            prompted = true;
+                            fallbackIosSignIn();
+                        }
+                    }
+                });
+                return;
+            } catch (e) {
+                console.warn('GIS 觸發失敗，改用備用流程:', e);
+            }
+        }
+        await fallbackIosSignIn();
+        return;
+    }
+
     try {
         console.log('Starting Google Sign-In with Popup...');
         const result = await signInWithPopup(auth, googleProvider);
@@ -2258,11 +2337,32 @@ async function handleGoogleSignIn() {
         showCustomAlert('登入成功！');
     } catch (error) {
         console.error('Google 登入失敗:', error);
-        let msg = 'Google 登入失敗，請稍後再試。';
-        if (error && error.code === 'auth/popup-closed-by-user') {
-            msg = '已關閉登入視窗。';
+        handleSignInError(error);
+    }
+}
+
+// 監聽重定向結果與初始化 Google Identity Services
+try {
+    getRedirectResult(auth).then((result) => {
+        if (result?.user) {
+            console.log('Google 重定向登入成功，使用者:', result.user);
+            showCustomAlert('登入成功！');
         }
-        showCustomAlert(msg);
+    }).catch((error) => {
+        console.error('Google 重定向登入失敗:', error);
+        handleSignInError(error);
+    });
+} catch (e) {
+    console.warn('getRedirectResult 執行異常:', e);
+}
+
+if (typeof window !== 'undefined') {
+    if (window.google?.accounts?.id) {
+        initGoogleIdentityServices();
+    } else {
+        window.addEventListener('load', () => {
+            if (window.google?.accounts?.id) initGoogleIdentityServices();
+        });
     }
 }
 
