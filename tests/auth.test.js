@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage } from '../src/services/auth-helper.js';
+import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl } from '../src/services/auth-helper.js';
 
 test('isIosStandalone correctly detects iPhone standalone mode', () => {
     const iphoneNav = { userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X)', standalone: true };
@@ -40,10 +40,41 @@ test('isInAppBrowser detects embedded webviews and passes normal browsers', () =
     assert.equal(isInAppBrowser({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36' }), false);
 });
 
+test('parseAuthHash extracts ID token and errors correctly', () => {
+    const successHash = '#id_token=sample_jwt_token_123&token_type=Bearer&expires_in=3599';
+    const parsedSuccess = parseAuthHash(successHash);
+    assert.equal(parsedSuccess.idToken, 'sample_jwt_token_123');
+    assert.equal(parsedSuccess.error, null);
+
+    const errorHash = '#error=redirect_uri_mismatch&error_description=The+redirect+URI+does+not+match';
+    const parsedError = parseAuthHash(errorHash);
+    assert.equal(parsedError.error, 'redirect_uri_mismatch');
+    assert.equal(parsedError.errorDescription, 'The redirect URI does not match');
+
+    assert.deepEqual(parseAuthHash(''), {});
+    assert.deepEqual(parseAuthHash(null), {});
+});
+
+test('buildGoogleAuthUrl constructs valid OIDC implicit request', () => {
+    const url = buildGoogleAuthUrl({
+        clientId: 'client-123.apps.googleusercontent.com',
+        redirectUri: 'https://jedieason.github.io/Teah/',
+        nonce: 'test-nonce-456'
+    });
+    assert.ok(url.startsWith('https://accounts.google.com/o/oauth2/v2/auth?'));
+    assert.ok(url.includes('client_id=client-123.apps.googleusercontent.com'));
+    assert.ok(url.includes('response_type=id_token'));
+    assert.ok(url.includes('nonce=test-nonce-456'));
+    assert.ok(url.includes('redirect_uri=https%3A%2F%2Fjedieason.github.io%2FTeah%2F'));
+});
+
 test('formatSignInErrorMessage formats error codes descriptively', () => {
     assert.match(formatSignInErrorMessage({ code: 'auth/popup-closed-by-user' }), /已關閉登入視窗/);
+    assert.match(formatSignInErrorMessage({ type: 'popup_closed' }), /已關閉登入視窗/);
     assert.match(formatSignInErrorMessage({ code: 'auth/popup-blocked' }), /彈出視窗/);
+    assert.match(formatSignInErrorMessage({ type: 'popup_failed_to_open' }), /彈出視窗/);
     assert.match(formatSignInErrorMessage({ code: 'auth/unauthorized-domain' }), /授權網域/);
+    assert.match(formatSignInErrorMessage({ code: 'redirect_uri_mismatch' }), /重新導向 URI 不符合/);
     assert.match(formatSignInErrorMessage({ code: 'auth/network-request-failed' }), /網路連線/);
     const customErr = formatSignInErrorMessage({ code: 'auth/internal-error', message: 'Unknown error occurred' });
     assert.match(customErr, /auth\/internal-error/);

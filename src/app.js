@@ -20,7 +20,7 @@ import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
 import { buildMultiUnitPrompt, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
 import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
-import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage } from './services/auth-helper.js';
+import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl } from './services/auth-helper.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -2258,11 +2258,7 @@ function initGoogleTokenClient() {
             callback: async (tokenResponse) => {
                 if (tokenResponse.error) {
                     console.error('Google OAuth 回傳錯誤:', tokenResponse);
-                    if (tokenResponse.error === 'popup_closed_by_user') {
-                        showCustomAlert('已關閉登入視窗。');
-                    } else {
-                        showCustomAlert(`Google 登入失敗：${tokenResponse.error}`);
-                    }
+                    handleSignInError(tokenResponse);
                     return;
                 }
                 try {
@@ -2275,6 +2271,10 @@ function initGoogleTokenClient() {
                     console.error('GIS signInWithCredential 失敗:', err);
                     handleSignInError(err);
                 }
+            },
+            error_callback: (nonOAuthErr) => {
+                console.error('GIS 視窗或非 OAuth 錯誤:', nonOAuthErr);
+                handleSignInError(nonOAuthErr);
             }
         });
     } catch (e) {
@@ -2324,15 +2324,64 @@ function setupGoogleServices() {
 }
 setupGoogleServices();
 
-async function handleGoogleSignIn() {
-    if (isInAppBrowser()) {
-        showCustomAlert('偵測到您正在使用 LINE、Facebook 或 Instagram 內建瀏覽器。\n\n這些環境會限制儲存空間，導致 Google 登入失敗（或顯示 "missing initial state" 錯誤）。\n\n建議點擊畫面右上角選單，選擇「在瀏覽器中開啟」或使用 Safari / Chrome 開啟此網頁進行登入。');
+// 處理自 Google OAuth 原生重定向返回的 ID Token（特別針對 iOS Standalone PWA 模式）
+async function handleOAuthRedirectResult() {
+    if (typeof window === 'undefined') return;
+    const hash = window.location.hash;
+    if (!hash || (!hash.includes('id_token=') && !hash.includes('error='))) return;
+
+    const { idToken, error, errorDescription } = parseAuthHash(hash);
+    try {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+    } catch {}
+
+    if (error) {
+        console.error('Google OAuth 重定向回傳錯誤:', error, errorDescription);
+        handleSignInError({ code: error, message: errorDescription });
         return;
     }
 
-    // 優先使用 Google Token Client（GIS OAuth2 原生視窗）
-    // 直接由 accounts.google.com 發起授權，完全不經由 firebaseapp.com 的跨網域 handler，
-    // 從根本上避免 Safari 儲存分割（Storage Partitioning）導致的 "missing initial state" 錯誤！
+    if (idToken) {
+        try {
+            console.log('接收到 Google ID Token，進行 Firebase 登入...');
+            const credential = GoogleAuthProvider.credential(idToken);
+            const result = await signInWithCredential(auth, credential);
+            console.log('Google 重定向登入成功，使用者:', result.user);
+            showCustomAlert('登入成功！');
+        } catch (err) {
+            console.error('透過 Google ID Token 登入 Firebase 失敗:', err);
+            handleSignInError(err);
+        }
+    }
+}
+handleOAuthRedirectResult();
+
+async function handleGoogleSignIn() {
+    if (isInAppBrowser()) {
+        showCustomAlert('偵測到您正在使用 LINE、Facebook 或 Instagram 內建瀏覽器。\n\n這些環境會限制儲存空間，導致 Google 登入失敗。\n\n建議點擊畫面右上角選單，選擇「在瀏覽器中開啟」或使用 Safari / Chrome 開啟此網頁進行登入。');
+        return;
+    }
+
+    // 若在 iOS 主畫面 standalone PWA 模式下，因 WebKit 容器嚴重限制彈出視窗與多視窗通訊，
+    // 直接發起原生 Google OpenID Connect 重定向流程（回到 jedieason.github.io/Teah，完全不經由 firebaseapp.com）：
+    if (isIosStandalone()) {
+        try {
+            console.log('iOS Standalone PWA 模式：發起原生 Google OpenID Connect 重定向...');
+            const nonce = Math.random().toString(36).substring(2) + Date.now().toString(36);
+            const redirectUri = window.location.origin + window.location.pathname;
+            const authUrl = buildGoogleAuthUrl({
+                clientId: GOOGLE_CLIENT_ID,
+                redirectUri,
+                nonce
+            });
+            window.location.href = authUrl;
+            return;
+        } catch (e) {
+            console.warn('原生 Google 重定向構建失敗，改用備用流程:', e);
+        }
+    }
+
+    // 一般瀏覽器環境：優先使用 Google Token Client（GIS OAuth2 視窗）
     if (!googleTokenClient && window.google?.accounts?.oauth2) {
         initGoogleTokenClient();
     }
@@ -2347,7 +2396,7 @@ async function handleGoogleSignIn() {
         }
     }
 
-    // 備用方案：在當前點擊事件同步觸發 Firebase Popup（絕不自動跳轉 Redirect，避免 cross-domain 儲存隔離錯誤）
+    // 備用方案：在當前點擊事件同步觸發 Firebase Popup（絕不自動跳轉 Firebase Redirect，避免 cross-domain 儲存隔離錯誤）
     try {
         console.log('Starting Google Sign-In with Popup...');
         const result = await signInWithPopup(auth, googleProvider);
@@ -2359,7 +2408,7 @@ async function handleGoogleSignIn() {
     }
 }
 
-// 監聽重定向結果（若曾有舊重定向）
+// 監聽 Firebase 舊重定向結果（若曾有舊重定向）
 try {
     getRedirectResult(auth).then((result) => {
         if (result?.user) {
