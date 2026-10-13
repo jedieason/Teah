@@ -2243,9 +2243,43 @@ function updateSignInButton(user) {
 // Auth UI sync will be wired after controls menu elements are initialized
 
 const GOOGLE_CLIENT_ID = '1032461117274-4norhm66l02foocbd94rr53kqbglnflg.apps.googleusercontent.com';
+let googleTokenClient = null;
 
 function handleSignInError(error) {
     showCustomAlert(formatSignInErrorMessage(error));
+}
+
+function initGoogleTokenClient() {
+    if (typeof window === 'undefined' || !window.google?.accounts?.oauth2) return;
+    try {
+        googleTokenClient = window.google.accounts.oauth2.initTokenClient({
+            client_id: GOOGLE_CLIENT_ID,
+            scope: 'openid email profile',
+            callback: async (tokenResponse) => {
+                if (tokenResponse.error) {
+                    console.error('Google OAuth 回傳錯誤:', tokenResponse);
+                    if (tokenResponse.error === 'popup_closed_by_user') {
+                        showCustomAlert('已關閉登入視窗。');
+                    } else {
+                        showCustomAlert(`Google 登入失敗：${tokenResponse.error}`);
+                    }
+                    return;
+                }
+                try {
+                    console.log('透過 Google OAuth Token 登入 Firebase...');
+                    const credential = GoogleAuthProvider.credential(null, tokenResponse.access_token);
+                    const result = await signInWithCredential(auth, credential);
+                    console.log('GIS 登入成功，使用者:', result.user);
+                    showCustomAlert('登入成功！');
+                } catch (err) {
+                    console.error('GIS signInWithCredential 失敗:', err);
+                    handleSignInError(err);
+                }
+            }
+        });
+    } catch (e) {
+        console.warn('initGoogleTokenClient 失敗:', e);
+    }
 }
 
 function initGoogleIdentityServices() {
@@ -2254,15 +2288,12 @@ function initGoogleIdentityServices() {
         window.google.accounts.id.initialize({
             client_id: GOOGLE_CLIENT_ID,
             callback: async (response) => {
-                if (!response?.credential) {
-                    showCustomAlert('Google 登入失敗：未取得憑證。');
-                    return;
-                }
+                if (!response?.credential) return;
                 try {
-                    console.log('透過 Google Identity 憑證登入 Firebase...');
+                    console.log('透過 Google ID Token 憑證登入 Firebase...');
                     const credential = GoogleAuthProvider.credential(response.credential);
                     const result = await signInWithCredential(auth, credential);
-                    console.log('GIS 登入成功，使用者:', result.user);
+                    console.log('GIS ID Token 登入成功:', result.user);
                     showCustomAlert('登入成功！');
                 } catch (err) {
                     console.error('GIS signInWithCredential 失敗:', err);
@@ -2277,28 +2308,21 @@ function initGoogleIdentityServices() {
     }
 }
 
-async function fallbackIosSignIn() {
-    try {
-        console.log('iOS PWA 嘗試使用 Popup 登入...');
-        const result = await signInWithPopup(auth, googleProvider);
-        console.log('Google Sign-In success, user:', result.user);
-        showCustomAlert('登入成功！');
-    } catch (error) {
-        console.error('iOS PWA Popup 登入失敗:', error);
-        if (error?.code === 'auth/popup-blocked' || error?.code === 'auth/operation-not-supported-in-this-environment') {
-            console.log('Popup 被阻擋或不支援，改用 Redirect...');
-            try {
-                await signInWithRedirect(auth, googleProvider);
-                return;
-            } catch (redirectErr) {
-                console.error('Redirect 登入失敗:', redirectErr);
-                handleSignInError(redirectErr);
-                return;
+function setupGoogleServices() {
+    if (typeof window === 'undefined') return;
+    if (window.google?.accounts) {
+        initGoogleTokenClient();
+        initGoogleIdentityServices();
+    } else {
+        window.addEventListener('load', () => {
+            if (window.google?.accounts) {
+                initGoogleTokenClient();
+                initGoogleIdentityServices();
             }
-        }
-        handleSignInError(error);
+        });
     }
 }
+setupGoogleServices();
 
 async function handleGoogleSignIn() {
     if (isInAppBrowser()) {
@@ -2306,30 +2330,24 @@ async function handleGoogleSignIn() {
         return;
     }
 
-    if (isIosStandalone()) {
-        console.log('偵測到 iOS 主畫面獨立 Web App 環境');
-        if (window.google?.accounts?.id) {
-            try {
-                initGoogleIdentityServices();
-                let prompted = false;
-                window.google.accounts.id.prompt((notification) => {
-                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                        console.log('GIS prompt 未顯示或略過，原因:', notification.getNotDisplayedReason?.());
-                        if (!prompted) {
-                            prompted = true;
-                            fallbackIosSignIn();
-                        }
-                    }
-                });
-                return;
-            } catch (e) {
-                console.warn('GIS 觸發失敗，改用備用流程:', e);
-            }
-        }
-        await fallbackIosSignIn();
-        return;
+    // 優先使用 Google Token Client（GIS OAuth2 原生視窗）
+    // 直接由 accounts.google.com 發起授權，完全不經由 firebaseapp.com 的跨網域 handler，
+    // 從根本上避免 Safari 儲存分割（Storage Partitioning）導致的 "missing initial state" 錯誤！
+    if (!googleTokenClient && window.google?.accounts?.oauth2) {
+        initGoogleTokenClient();
     }
 
+    if (googleTokenClient) {
+        try {
+            console.log('使用 Google Token Client 啟動登入...');
+            googleTokenClient.requestAccessToken({ prompt: '' });
+            return;
+        } catch (e) {
+            console.warn('Google Token Client 觸發失敗，改用 Firebase Popup:', e);
+        }
+    }
+
+    // 備用方案：在當前點擊事件同步觸發 Firebase Popup（絕不自動跳轉 Redirect，避免 cross-domain 儲存隔離錯誤）
     try {
         console.log('Starting Google Sign-In with Popup...');
         const result = await signInWithPopup(auth, googleProvider);
@@ -2341,7 +2359,7 @@ async function handleGoogleSignIn() {
     }
 }
 
-// 監聽重定向結果與初始化 Google Identity Services
+// 監聽重定向結果（若曾有舊重定向）
 try {
     getRedirectResult(auth).then((result) => {
         if (result?.user) {
@@ -2350,20 +2368,9 @@ try {
         }
     }).catch((error) => {
         console.error('Google 重定向登入失敗:', error);
-        handleSignInError(error);
     });
 } catch (e) {
     console.warn('getRedirectResult 執行異常:', e);
-}
-
-if (typeof window !== 'undefined') {
-    if (window.google?.accounts?.id) {
-        initGoogleIdentityServices();
-    } else {
-        window.addEventListener('load', () => {
-            if (window.google?.accounts?.id) initGoogleIdentityServices();
-        });
-    }
 }
 
 if (signInBtn) {
