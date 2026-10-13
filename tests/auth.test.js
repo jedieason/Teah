@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl } from '../src/services/auth-helper.js';
+import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl, getCanonicalRedirectUri } from '../src/services/auth-helper.js';
 
 test('isIosStandalone correctly detects iPhone standalone mode', () => {
     const iphoneNav = { userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X)', standalone: true };
@@ -66,6 +66,13 @@ test('buildGoogleAuthUrl constructs valid OIDC implicit request', () => {
     assert.ok(url.includes('response_type=id_token'));
     assert.ok(url.includes('nonce=test-nonce-456'));
     assert.ok(url.includes('redirect_uri=https%3A%2F%2Fjedieason.github.io%2FTeah%2F'));
+});
+
+test('getCanonicalRedirectUri returns normalized path ending with slash', () => {
+    assert.equal(getCanonicalRedirectUri({ origin: 'https://jedieason.github.io', pathname: '/Teah' }), 'https://jedieason.github.io/Teah/');
+    assert.equal(getCanonicalRedirectUri({ origin: 'https://jedieason.github.io', pathname: '/Teah/' }), 'https://jedieason.github.io/Teah/');
+    assert.equal(getCanonicalRedirectUri({ origin: 'https://jedieason.github.io', pathname: '/Teah/index.html' }), 'https://jedieason.github.io/Teah/');
+    assert.equal(getCanonicalRedirectUri(null), 'https://jedieason.github.io/Teah/');
 });
 
 test('formatSignInErrorMessage formats error codes descriptively', () => {

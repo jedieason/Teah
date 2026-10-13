@@ -13,6 +13,17 @@ export function isInAppBrowser(nav = (typeof navigator !== 'undefined' ? navigat
     return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Line") > -1) || (ua.indexOf("Instagram") > -1);
 }
 
+export function getCanonicalRedirectUri(loc = (typeof window !== 'undefined' ? window.location : null)) {
+    if (!loc) return 'https://jedieason.github.io/Teah/';
+    const origin = loc.origin || 'https://jedieason.github.io';
+    let pathname = loc.pathname || '/';
+    pathname = pathname.replace(/\/[^/]+\.html$/, '/');
+    if (!pathname.endsWith('/')) {
+        pathname += '/';
+    }
+    return origin + pathname;
+}
+
 export function parseAuthHash(hash) {
     if (!hash || typeof hash !== 'string') return {};
     const cleanHash = hash.startsWith('#') ? hash.slice(1) : hash;

@@ -20,7 +20,7 @@ import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
 import { buildMultiUnitPrompt, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
 import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
-import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl } from './services/auth-helper.js';
+import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl, getCanonicalRedirectUri } from './services/auth-helper.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -2368,7 +2368,7 @@ async function handleGoogleSignIn() {
         try {
             console.log('iOS Standalone PWA 模式：發起原生 Google OpenID Connect 重定向...');
             const nonce = Math.random().toString(36).substring(2) + Date.now().toString(36);
-            const redirectUri = window.location.origin + window.location.pathname;
+            const redirectUri = getCanonicalRedirectUri();
             const authUrl = buildGoogleAuthUrl({
                 clientId: GOOGLE_CLIENT_ID,
                 redirectUri,
