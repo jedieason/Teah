@@ -3,7 +3,7 @@ import { gradingLevel, gradingOptions } from './grading-options.js';
 export const MAX_CARDS = 2000;
 export const LEARN_VERSION = 3;
 export const RECOGNITION_WINDOW = 10;
-export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'standard', defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
+export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'standard', defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioSide: 'term', audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
 export const id = () => crypto.randomUUID();
 export const clone = value => JSON.parse(JSON.stringify(value));
 export const normalize = value => String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase().replace(/\s+/g, ' ');
@@ -181,6 +181,130 @@ export function parseImport(text, options = { term: 'tab', row: 'newline' }) {
     for (const c of cards) { const key = normalize(c.term) + '\u0000' + normalize(c.definition); if (seen.has(key)) duplicates++; seen.add(key); }
     return { cards, errors, duplicates };
 }
+export function detectLanguage(samples, fallback = 'en-US') {
+    const list = Array.isArray(samples) ? samples : [samples];
+    const text = list.map(s => String(s ?? '')).join(' ').trim();
+    if (!text) return fallback;
+
+    if (/[\uac00-\ud7af\u1100-\u11ff\u3130-\u318f]/.test(text)) return 'ko-KR';
+    if (/[\u3040-\u309f\u30a0-\u30ff]/.test(text)) return 'ja-JP';
+
+    const cjkMatches = text.match(/[\u4e00-\u9fff\u3400-\u4dbf]/g) || [];
+    const latinMatches = text.match(/[A-Za-z]/g) || [];
+    if (cjkMatches.length > 0 && cjkMatches.length >= latinMatches.length * 0.35) {
+        return 'zh-TW';
+    }
+
+    const mathCmds = (text.match(/\\(frac|sum|int|sqrt|alpha|beta|gamma|Delta|theta|pi|sigma|omega|pm|times|div|approx|neq|leq|geq|partial|infty)\b/gi) || []).length;
+    const mathSymbols = (text.match(/[=+\-*/^_{}\\]|[\u0370-\u03ff\u2190-\u22ff\u2a00-\u2aff]/g) || []).length;
+    const chemicalPatterns = (text.match(/\b([A-Z][a-z]?\d*)+(\^?[+-]\d*)?\b/g) || []).filter(w => /(?:H2O|CO2|NaCl|Ca2\+|Fe[23]\+|SO4|CH4|O2|N2|HCl|NaOH|H2SO4|KNO3)/i.test(w)).length;
+    if (mathCmds >= 1 || chemicalPatterns >= 1 || (mathSymbols >= 3 && latinMatches.length < 10)) {
+        return 'math';
+    }
+
+    let deScore = 0, frScore = 0, esScore = 0, itScore = 0, msScore = 0, laScore = 0, enScore = 0;
+
+    if (/[äöüßÄÖÜ]/.test(text)) deScore += 8;
+    if (/[œæçŒÆÇ]/.test(text)) frScore += 8;
+    if (/[ñÑ¡¿]/.test(text)) esScore += 8;
+    if (/\b(?:qu'|d'|c'|j'|l'|m'|n'|s'|t')/i.test(text)) frScore += 6;
+
+    const words = text.toLowerCase().match(/\b[\p{L}\p{M}'-]+\b/gu) || [];
+    const msWords = new Set([
+        'yang', 'dan', 'di', 'ke', 'dari', 'ini', 'itu', 'untuk', 'dengan', 'saya', 'anda', 'mereka',
+        'kita', 'kami', 'tidak', 'ada', 'pada', 'oleh', 'sudah', 'telah', 'akan', 'boleh', 'lebih',
+        'seperti', 'kata', 'orang', 'hari', 'tahun', 'apa', 'siapa', 'mana', 'bagaimana', 'mengapa',
+        'kerana', 'adalah', 'ialah', 'assalamualaikum', 'terima', 'kasih', 'selamat', 'pagi', 'malam',
+        'petang', 'buku', 'makan', 'minum', 'tidur', 'rumah', 'jalan', 'besar', 'kecil', 'bagus',
+        'baik', 'cantik', 'sedap', 'nama', 'bapa', 'ibu', 'kawan', 'guru', 'murid', 'sekolah',
+        'bahasa', 'melayu', 'epal', 'air', 'ya', 'bukan', 'jangan', 'khabar', 'tengah', 'semalam',
+        'esok', 'sekarang', 'semua', 'sedikit', 'banyak', 'sangat', 'paling', 'satu', 'dua', 'tiga'
+    ]);
+
+    const deWords = new Set([
+        'der', 'die', 'das', 'ein', 'eine', 'einer', 'eines', 'einem', 'einen', 'und', 'in', 'zu',
+        'den', 'dem', 'nicht', 'von', 'mit', 'sich', 'auf', 'für', 'ist', 'im', 'ja', 'als', 'wie',
+        'aber', 'oder', 'wir', 'sie', 'er', 'es', 'auch', 'an', 'so', 'nach', 'bei', 'noch', 'um',
+        'du', 'nur', 'doch', 'vor', 'ihr', 'bis', 'mehr', 'durch', 'man', 'sein', 'wurde', 'haben',
+        'hat', 'werden', 'wird', 'kann', 'können', 'danke', 'bitte', 'hallo', 'guten', 'morgen', 'tag', 'abend', 'apfel'
+    ]);
+
+    const frWords = new Set([
+        'le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'et', 'en', 'à', 'est', 'dans', 'pour',
+        'avec', 'sur', 'pas', 'que', 'qui', 'ce', 'cette', 'ces', 'ne', 'se', 'par', 'ou', 'mais',
+        'sont', 'plus', 'nous', 'vous', 'ils', 'elles', 'tout', 'faire', 'bonjour', 'merci', 'oui', 'non', 'pomme'
+    ]);
+
+    const esWords = new Set([
+        'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'en', 'de', 'que', 'es', 'por',
+        'para', 'con', 'no', 'se', 'su', 'al', 'lo', 'como', 'más', 'pero', 'del', 'o', 'si', 'me',
+        'ya', 'le', 'todo', 'hola', 'gracias', 'adiós', 'buenos', 'días', 'noches', 'tardes', 'niño', 'niña'
+    ]);
+
+    const itWords = new Set([
+        'il', 'lo', 'la', 'i', 'gli', 'le', 'un', 'uno', 'una', 'e', 'di', 'a', 'da', 'in', 'con',
+        'su', 'per', 'tra', 'fra', 'non', 'che', 'sono', 'perche', 'perché', 'questo', 'questa',
+        'questi', 'queste', 'quello', 'quella', 'come', 'ma', 'se', 'anche', 'ci', 'si', 'ciao',
+        'grazie', 'buongiorno', 'sera', 'notte', 'molto', 'bene'
+    ]);
+
+    const laWords = new Set([
+        'et', 'in', 'non', 'ad', 'ut', 'cum', 'per', 'sed', 'ab', 'ex', 'si', 'de', 'sub', 'pro',
+        'inter', 'contra', 'ante', 'post', 'sine', 'trans', 'super', 'apud', 'ergo', 'autem', 'enim',
+        'nam', 'tamen', 'itaque', 'quia', 'quoniam', 'quam', 'sic', 'ita', 'tam', 'nunc', 'tunc',
+        'semper', 'saepe', 'iterum', 'bene', 'male', 'multum', 'minime', 'magnus', 'parvus', 'bonus',
+        'malus', 'novus', 'vetus', 'omnis', 'totus', 'solus', 'unus', 'duo', 'tres', 'deus', 'homo',
+        'corpus', 'mors', 'vita', 'terra', 'caelum', 'lux', 'nox', 'dies', 'annus', 'tempus', 'res',
+        'sunt', 'erat', 'fuit', 'est', 'populusque', 'senatus', 'romanorum', 'romanus'
+    ]);
+
+    const enWords = new Set([
+        'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'it', 'for', 'not', 'on', 'with',
+        'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say',
+        'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what',
+        'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make',
+        'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'year',
+        'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look',
+        'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how',
+        'our', 'work', 'first', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these',
+        'give', 'day', 'most', 'us', 'water', 'car', 'apple', 'hello', 'fruit'
+    ]);
+
+    for (const w of words) {
+        if (msWords.has(w)) msScore += 3;
+        if (deWords.has(w)) deScore += 3;
+        if (frWords.has(w)) frScore += 3;
+        if (esWords.has(w)) esScore += 3;
+        if (itWords.has(w)) itScore += 3;
+        if (laWords.has(w)) laScore += 3;
+        if (enWords.has(w)) enScore += 3;
+
+        if (/^(?:meng|mem|men|ber|ter|per)[\p{L}]{3,}/u.test(w) || /[\p{L}]{3,}(?:kan|nya|lah)$/u.test(w)) msScore += 1;
+        if (/[\p{L}]{3,}(?:ibus|orum|arum|atus|atis|oque|aque)$/u.test(w)) laScore += 2;
+        if (/[\p{L}]{3,}(?:zione|zioni|mento|mente)$/u.test(w)) itScore += 2;
+        if (/[\p{L}]{3,}(?:ción|ciones|mente)$/u.test(w)) esScore += 2;
+        if (/[\p{L}]{3,}(?:tion|tions|ment|ments|eur|euse)$/u.test(w)) frScore += 1;
+        if (/[\p{L}]{3,}(?:ung|ungen|heit|keit|schaft)$/u.test(w)) deScore += 2;
+        if (/[\p{L}]{3,}(?:ing|tion|ed|ness|ful|less)$/u.test(w)) enScore += 1;
+    }
+
+    const scores = [
+        { lang: 'ms-MY', score: msScore },
+        { lang: 'de-DE', score: deScore },
+        { lang: 'fr-FR', score: frScore },
+        { lang: 'es-ES', score: esScore },
+        { lang: 'it-IT', score: itScore },
+        { lang: 'la', score: laScore },
+        { lang: 'en-US', score: enScore }
+    ];
+
+    scores.sort((a, b) => b.score - a.score);
+    if (scores[0].score > 0) return scores[0].lang;
+
+    if (cjkMatches.length > 0) return 'zh-TW';
+
+    return fallback;
+}
 export function prepareDeck(draft, previous, now = Date.now()) {
     if (!draft.title?.trim() || draft.title.length > 160) throw new Error('請填寫字卡集名稱（最多 160 字）。');
     if (!draft.cards?.length || draft.cards.length > MAX_CARDS) throw new Error(`請加入 1–${MAX_CARDS} 張字卡。`);
@@ -314,6 +438,7 @@ export function createSession(deck, study = {}, input = {}, now = Date.now(), ra
     if (!['learn', 'write', 'spell'].includes(options.activity)) options.activity = 'learn';
     if (options.activity !== 'learn') { options.goal = 'master'; options.types = [options.activity === 'spell' ? 'spell' : 'written']; }
     options.audioRate = options.audioRate === 0.65 ? 0.65 : 0.9;
+    options.audioSide = ['term', 'definition', 'both'].includes(options.audioSide) ? options.audioSide : 'term';
     options.chunkSize = Math.max(3, Math.min(20, Number(options.chunkSize) || 7));
     options.types = [...new Set(options.types)].filter(t => ['choice', 'multi', 'written', 'truefalse', 'flash', 'spell'].includes(t));
     if (!options.types.length) throw new Error('請至少選擇一種題型。');

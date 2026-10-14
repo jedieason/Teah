@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DEFAULT_OPTIONS, parseImport, parseImportJson, FLASHCARD_IMPORT_PROMPT, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor } from '../src/features/flashcard/model.js';
+import { DEFAULT_OPTIONS, parseImport, parseImportJson, detectLanguage, FLASHCARD_IMPORT_PROMPT, prepareDeck, gradeAnswer, createSession, submitAnswer, advanceSession, continueRound, overrideCorrect, projectStudy, mergeStudy, sessionProgress, hydrateSession, writingHint, writingSymbols, spellingFeedback, defaultGrading, gradingFor } from '../src/features/flashcard/model.js';
 const deck = (n = 17) => prepareDeck({ title: 'Test', cards: Array.from({ length: n }, (_, i) => ({ term: `word${i}`, definition: `解釋${i}` })) });
 function response(s, d) { const c = d.cards.find(c => c.id === s.current.cardId); return s.current.type === 'multi' ? s.current.correctAnswers : s.current.direction === 'term' ? c.term : c.definition; }
 function step(s, d, input, at = 1000) { const answered = submitAnswer(s, d, input, at); return advanceSession(answered, d, at + 1, () => .4); }
@@ -252,12 +252,35 @@ test('choice options and heard spelling cannot use written typo tolerance or sem
     const overridden = overrideCorrect(submitAnswer(spell, d, 'wrong', 100), 5000);
     assert.equal(overridden.facts[overridden.current.key].lastAt, 100, 'correction time must not become retrieval time');
 });
-test('audio and audioAnswer preferences are preserved in session options', () => {
+test('audio, audioAnswer and audioSide preferences are preserved in session options', () => {
     assert.equal(DEFAULT_OPTIONS.audio, false);
     assert.equal(DEFAULT_OPTIONS.audioAnswer, false);
-    const s = createSession(deck(2), {}, { audio: true, audioAnswer: true });
+    assert.equal(DEFAULT_OPTIONS.audioSide, 'term');
+    const s = createSession(deck(2), {}, { audio: true, audioAnswer: true, audioSide: 'definition' });
     assert.equal(s.options.audio, true);
     assert.equal(s.options.audioAnswer, true);
+    assert.equal(s.options.audioSide, 'definition');
+    const s2 = createSession(deck(2), {}, { audioSide: 'both' });
+    assert.equal(s2.options.audioSide, 'both');
+    const sInvalid = createSession(deck(2), {}, { audioSide: 'unknown' });
+    assert.equal(sInvalid.options.audioSide, 'term');
+});
+
+test('detectLanguage automatically detects languages and falls back gracefully', () => {
+    assert.equal(detectLanguage(['Assalamualaikum', 'epal', 'air']), 'ms-MY');
+    assert.equal(detectLanguage(['terima kasih', 'selamat pagi']), 'ms-MY');
+    assert.equal(detectLanguage(['apple', 'banana', 'computer']), 'en-US');
+    assert.equal(detectLanguage(['願你平安（伊斯蘭教問候語）', '蘋果']), 'zh-TW');
+    assert.equal(detectLanguage(['こんにちは', '桜', 'さくら']), 'ja-JP');
+    assert.equal(detectLanguage(['안녕하세요', '감사합니다']), 'ko-KR');
+    assert.equal(detectLanguage(['Guten Morgen', 'Apfel', 'schöne Straße']), 'de-DE');
+    assert.equal(detectLanguage(['bonjour', 'merci beaucoup', 'pomme']), 'fr-FR');
+    assert.equal(detectLanguage(['buenos días', 'muchas gracias', 'niño']), 'es-ES');
+    assert.equal(detectLanguage(['buongiorno', 'grazie mille', 'ciao']), 'it-IT');
+    assert.equal(detectLanguage(['Senatus Populusque Romanus', 'corpus delicti']), 'la');
+    assert.equal(detectLanguage(['\\int f(x) dx', 'E = mc^2', 'H2O']), 'math');
+    assert.equal(detectLanguage([], 'fr-FR'), 'fr-FR');
+    assert.equal(detectLanguage([''], 'en-US'), 'en-US');
 });
 
 test('undoing flash classifications restores the previous rating without contributing Learn credit', () => {

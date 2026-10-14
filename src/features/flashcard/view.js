@@ -2,7 +2,7 @@ import { gradeEquivalence } from './equivalence.js';
 import { GRADING_LEVELS, gradingOptions, gradingLevel } from './grading-options.js';
 import { resetEquivalence } from './equivalence-client.js';
 import { auth } from '../../services/firebase.js';
-import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
+import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, detectLanguage, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer } from './model.js';
 import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, generateDeck, editDeckWithAI } from './service.js';
 import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS, FLASHCARD_GLOSSARY_INSTRUCTIONS } from './generation.js';
 import { editingBatches } from './editing.js';
@@ -710,7 +710,14 @@ export function mountFlashcard({ host, activate }) {
         copyBtn.onclick = copyPrompt;
         const term = separators('單字與解釋之間', 'vocab-import-term', [['tab', 'Tab'], ['comma', 'Comma']], 'tab', '自訂單字分隔符');
         const row = separators('字卡與字卡之間', 'vocab-import-row', [['newline', '換行'], ['semicolon', '分號 ;']], 'newline', '自訂字卡分隔符');
-        const jsonHint = node('p', '支援換行（\\n），可將 AI 生成的 JSON 直接貼上。', controls, 'vocab-import-json-hint'); jsonHint.hidden = true;
+        const jsonHint = node('p', '支援換行（\n），可將 AI 生成的 JSON 直接貼上。', controls, 'vocab-import-json-hint'); jsonHint.hidden = true;
+        const langGroup = node('fieldset', null, controls, 'vocab-import-separators vocab-import-lang-group');
+        node('legend', '語言設定', langGroup);
+        const termLangSelect = select('單字語言', langGroup, languages, draft.termLanguage);
+        const defLangSelect = select('解釋語言', langGroup, languages, draft.definitionLanguage);
+        let termLangManual = false, defLangManual = false;
+        termLangSelect.onchange = () => { termLangManual = true; };
+        defLangSelect.onchange = () => { defLangManual = true; };
         const previewHeading = node('div', null, body, 'vocab-preview-heading'); node('h3', '預覽', previewHeading); const count = node('span', '0 張字卡', previewHeading, 'vocab-muted');
         const status = node('p', '', body, 'vocab-import-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite'); status.id = 'vocab-import-status'; input.setAttribute('aria-describedby', status.id);
         const empty = node('p', '尚無預覽內容', body, 'vocab-import-empty');
@@ -720,6 +727,8 @@ export function mountFlashcard({ host, activate }) {
             if (!parsed?.cards.length || parsed.errors.length) return;
             const keep = draft.cards.filter(c => c.term.trim() || c.definition.trim());
             if (keep.length + parsed.cards.length > MAX_CARDS) { status.textContent = `加上現有字卡後超過 ${MAX_CARDS} 張。`; confirm.disabled = true; return; }
+            draft.termLanguage = termLangSelect.value;
+            draft.definitionLanguage = defLangSelect.value;
             draft.cards = [...keep, ...parsed.cards.map(c => ({ ...c, id: id() }))]; queueDraft(); dialog.close(); message = `已匯入 ${parsed.cards.length} 張字卡。`; render();
             host.querySelector(`[data-index="${keep.length}"] textarea`)?.focus();
         }, 'vocab-primary');
@@ -735,6 +744,16 @@ export function mountFlashcard({ host, activate }) {
             preview.replaceChildren();
             try {
                 parsed = parseImport(input.value, options);
+                if (parsed?.cards?.length) {
+                    const terms = parsed.cards.map(c => c.term).filter(Boolean);
+                    const defs = parsed.cards.map(c => c.definition).filter(Boolean);
+                    if (!termLangManual && terms.length) {
+                        termLangSelect.value = detectLanguage(terms, draft.termLanguage);
+                    }
+                    if (!defLangManual && defs.length) {
+                        defLangSelect.value = detectLanguage(defs, draft.definitionLanguage);
+                    }
+                }
                 const overLimit = draft.cards.filter(c => c.term.trim() || c.definition.trim()).length + parsed.cards.length > MAX_CARDS;
                 confirm.disabled = !parsed.cards.length || parsed.errors.length > 0 || overLimit;
                 count.textContent = `${parsed.cards.length} 張字卡`;
@@ -817,6 +836,7 @@ export function mountFlashcard({ host, activate }) {
         const updateNotice = () => { semanticNotice.hidden = grading.value === 'exact'; }; grading.onchange = updateNotice; updateNotice();
         const retype = check('答錯後重打正解', gradingBody, options.retype); retype.parentElement.classList.add('vocab-toggle');
         const audioBody = section('語音');
+        const audioSide = select('播放音頻', audioBody, [['term', '單字'], ['definition', '解釋'], ['both', '單字與解釋']], options.audioSide || 'term');
         const audio = check('朗讀題目', audioBody, options.audio), audioAnswer = check('朗讀答案', audioBody, options.audioAnswer);
         for (const input of [audio, audioAnswer]) input.parentElement.classList.add('vocab-toggle');
         const audioRate = select('朗讀速度', audioBody, [['0.9', '一般'], ['0.65', '慢速']], String(options.audioRate || 0.9));
@@ -824,7 +844,7 @@ export function mountFlashcard({ host, activate }) {
         const error = node('p', '', body, 'vocab-settings-error'); error.setAttribute('role', 'alert');
         function selected(activity = options.activity || 'learn') {
             const learnTypes = Object.keys(types).filter(k => types[k].checked);
-            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
+            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioSide: audioSide.value, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
         }
         async function begin(activity, restart = false) { try { await beginLearn(selected(activity), restart); } catch (e) { error.textContent = e.message; error.scrollIntoView({ block: 'nearest' }); } }
         button('Write', modes, () => begin('write'), 'vocab-link'); button('Spell', modes, () => begin('spell'), 'vocab-link');
@@ -853,6 +873,11 @@ export function mountFlashcard({ host, activate }) {
         const grading = select('批改方式', group, GRADING_LEVELS, gradingLevel(options.grading));
         grading.onchange = () => void action(async () => {
             try { await update({ grading: grading.value }); }
+            catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; }
+        });
+        const audioSide = select('播放音頻', group, [['term', '單字'], ['definition', '解釋'], ['both', '單字與解釋']], options.audioSide || 'term');
+        audioSide.onchange = () => void action(async () => {
+            try { await update({ audioSide: audioSide.value }); }
             catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; }
         });
         const error = node('p', '', popover, 'vocab-settings-error'); error.setAttribute('role', 'alert');
@@ -961,7 +986,14 @@ export function mountFlashcard({ host, activate }) {
         panel.dataset.type = q.type;
         const top = node('div', null, panel, 'vocab-question-top'); node('span', q.direction === 'term' ? '解釋' : '單字', top, 'vocab-muted');
         if (!feedback && session.facts[q.key].wrong && !session.facts[q.key].streak) node('span', '再次練習', top, 'vocab-retry-label');
-        icon('◖))', q.type === 'spell' ? '朗讀答案' : '朗讀題目', top, () => speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'));
+        const speakSide = session.options.audioSide || 'term';
+        const speakLabel = q.type === 'spell' ? '朗讀答案' : speakSide === 'definition' ? '朗讀解釋' : speakSide === 'both' ? '朗讀單字與解釋' : '朗讀單字';
+        icon('◖))', speakLabel, top, () => {
+            if (q.type === 'spell') speak(answerFor(card, q.direction), q.direction);
+            else if (speakSide === 'definition') speak(card.definition, 'definition');
+            else if (speakSide === 'both') speakBoth(card.term, card.definition);
+            else speak(card.term, 'term');
+        });
         starButton(card, top);
         text(promptFor(card, q.direction), panel, 'vocab-prompt');
         const area = node('div', null, panel, 'vocab-answer-area');
@@ -1051,7 +1083,7 @@ export function mountFlashcard({ host, activate }) {
                 node('p', feedback.correct ? '原始答案' : '正確答案', result, 'vocab-answer-label vocab-muted');
                 const expected = node('div', null, result, 'vocab-expected-answer');
                 if (q.type === 'spell' && !feedback.correct) { spellText(spellingFeedback(feedback.response, feedback.expected).expected, expected, 'vocab-correct-answer'); button('逐字拼讀', expected, () => speakSpelling(feedback.expected, q.direction)); }
-                else text(feedback.expected, expected, 'vocab-correct-answer');
+                else { text(feedback.expected, expected, 'vocab-correct-answer'); icon('◖))', '朗讀答案', expected, () => speak(feedback.expected, q.direction)); }
             }
             if (feedback.gradingReason === 'model-unavailable') node('p', '智慧判讀模型無法載入，請核對正確答案或切換為絕對相同。', result, 'vocab-muted');
             const footer = node('div', null, result, 'vocab-feedback');
@@ -1090,7 +1122,17 @@ export function mountFlashcard({ host, activate }) {
                 result.scrollIntoView({ block: result.offsetHeight > host.clientHeight - 32 ? 'start' : 'nearest' });
             });
         }
-        if (!feedback && (session.options.audio || q.type === 'spell')) speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speak(q.type === 'spell' ? answerFor(card, q.direction) : promptFor(card, q.direction), q.type === 'spell' ? q.direction : q.direction === 'term' ? 'definition' : 'term'); }, 120);
+        if (!feedback && (session.options.audio || q.type === 'spell')) speechTimer = setTimeout(() => {
+            if (!host.hidden && !dialog.open) {
+                if (q.type === 'spell') speak(answerFor(card, q.direction), q.direction);
+                else {
+                    const side = session.options.audioSide || 'term';
+                    if (side === 'definition') speak(card.definition, 'definition');
+                    else if (side === 'both') speakBoth(card.term, card.definition);
+                    else speak(card.term, 'term');
+                }
+            }
+        }, 120);
         if (feedback && !feedback.correct && session.options.activity === 'spell') speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speakSpelling(feedback.expected, q.direction); }, 120);
         else if (feedback && session.options.audioAnswer) speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speak(answerFor(card, q.direction), q.direction); }, 120);
     }
@@ -1151,6 +1193,45 @@ export function mountFlashcard({ host, activate }) {
             reportSpeechError(base === 'ms' ? '馬來文語音無法播放，請檢查系統語音設定後重試。' : '語音無法播放，請檢查系統語音設定後重試。');
         };
         synthesis.speak(utterance);
+    }
+    async function speakBoth(termText, defText) {
+        const synthesis = window.speechSynthesis;
+        if (!synthesis) { reportSpeechError('此瀏覽器不支援朗讀。'); return; }
+        stopSpeech(); const generation = speechGeneration;
+        const rate = phase === 'learn' ? session.options.audioRate || 0.9 : 0.9;
+        let voices = synthesis.getVoices?.() || [];
+        if (!voices.length && synthesis.getVoices && synthesis.addEventListener) voices = await new Promise(resolve => {
+            let timeout, finished = false;
+            const finish = () => {
+                if (finished) return; finished = true; clearTimeout(timeout); synthesis.removeEventListener('voiceschanged', loaded);
+                if (pendingVoiceLoad === finish) pendingVoiceLoad = null;
+                resolve(synthesis.getVoices());
+            };
+            const loaded = () => { if (synthesis.getVoices().length) finish(); };
+            pendingVoiceLoad = finish; synthesis.addEventListener('voiceschanged', loaded); timeout = setTimeout(finish, 1000); loaded();
+        });
+        if (generation !== speechGeneration || host.hidden) return;
+        const voiceFor = lang => {
+            const code = lang.toLowerCase().replaceAll('_', '-'), base = code.split('-')[0];
+            const voiceCode = voice => voice.lang.toLowerCase().replaceAll('_', '-');
+            return voices.find(v => voiceCode(v) === code) || voices.find(v => voiceCode(v).split('-')[0] === base);
+        };
+        const u1 = new SpeechSynthesisUtterance(termText);
+        u1.lang = deck.termLanguage; u1.rate = rate;
+        const v1 = voiceFor(deck.termLanguage); if (v1) u1.voice = v1;
+        const u2 = new SpeechSynthesisUtterance(defText);
+        u2.lang = deck.definitionLanguage; u2.rate = rate;
+        const v2 = voiceFor(deck.definitionLanguage); if (v2) u2.voice = v2;
+        u1.onerror = event => {
+            if (generation !== speechGeneration || ['canceled', 'interrupted'].includes(event.error)) return;
+            reportSpeechError('語音無法播放，請檢查系統語音設定後重試。');
+        };
+        u2.onerror = event => {
+            if (generation !== speechGeneration || ['canceled', 'interrupted'].includes(event.error)) return;
+            reportSpeechError('語音無法播放，請檢查系統語音設定後重試。');
+        };
+        synthesis.speak(u1);
+        synthesis.speak(u2);
     }
     function speakSpelling(value, side) { speak(Array.from(value).join(' . '), side); }
     function soundFeedback(correct) {
