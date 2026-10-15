@@ -13,7 +13,7 @@ const isCJK = ch => /[\u4e00-\u9fa5\u3040-\u30ff]/.test(ch);
 
 export function expandParentheses(text) {
     const raw = String(text ?? '');
-    const regex = /\([^()]*\)|（[^（）]*）|\[[^\[\]]*\]|【[^【】]*】|\{[^{}]*\}|｛[^｛｝]*｝|〔[^〔〕]*〕|〖[^〖〗]*〗/g;
+    const regex = /\([^()]*\)|（[^（）]*）|\[[^\[\]]*\]|【[^【】]*】|\{[^{}]*\}|｛[^｛｝]*｝|〔[^〔〕]*〕|〖[^〖〗]*〗|〈[^〈〉]*〉/g;
     const matches = [...raw.matchAll(regex)];
     if (!matches.length) return [raw];
     let variants = [''];
@@ -40,11 +40,14 @@ export function expandParentheses(text) {
 
 export function answerKey(value) {
     let s = normalize(plainText(value));
-    s = s.replace(/["'“”‘’`「」『』]/g, '');
-    s = s.replace(/[，,、;；…~～—–\(\)（）\[\]【】\{\}｛｝〔〕〖〗《》!?！？]/g, ' ');
+    s = s.replace(/["'“”‘’`「」『』‚„]/g, '');
+    s = s.replace(/[，,、;；…~～〜—–·・•〈〉‹›«»\(\)（）\[\]【】\{\}｛｝〔〕〖〗《》!?！？]/g, ' ');
     s = s.replace(/(?<!\d):|:(?!\d)|：/g, ' ');
+    s = s.replace(/(?<!\d)\/|\/(?!\d)|／/g, ' ');
     s = s.replace(/\.(?!\d)|。/g, ' ');
     s = s.replace(/(?<=\p{L})[-—–_](?=\p{L})/gu, ' ');
+    s = s.replace(/\s+[-—–_]\s+/g, ' ');
+    s = s.replace(/^[-—–_]\s*|\s*[-—–_]$/g, '');
     s = s.replace(/(?<=[\u4e00-\u9fa5\u3040-\u30ff])\s+(?=[\u4e00-\u9fa5\u3040-\u30ff])/g, '');
     return s.replace(/\s+/g, ' ').trim();
 }

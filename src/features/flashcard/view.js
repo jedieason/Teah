@@ -1112,7 +1112,70 @@ export function mountFlashcard({ host, activate }) {
                     }
                     const check = node('button', '確認訂正', form, 'vocab-button vocab-primary'); check.type = 'submit';
                     const status = node('p', '', form); status.setAttribute('role', 'status');
-                    form.onsubmit = e => { e.preventDefault(); void action(async () => { if (!gradeAnswer(correction.value, q.type === 'spell' ? [answerFor(card, q.direction)] : answersFor(card, q.direction))) { status.textContent = '請輸入畫面上的正確答案。'; return; } const next = clone(session); next.feedback.retyped = true; next.updatedAt = Date.now(); await persist(newEvent('repair', { cardId: card.id, direction: q.direction, originalId: feedback.eventId }), next); session = next; await nextLearn(); }); };
+                    form.onsubmit = e => {
+                        e.preventDefault();
+                        if (!correction.value.trim()) return;
+                        void action(async () => {
+                            let correct = false;
+                            if (q.type === 'written') {
+                                const accepted = answersFor(card, q.direction);
+                                if (gradeAnswer(correction.value, accepted, gradingFor(session) === 'exact' ? 'exact' : 'strict')) {
+                                    correct = true;
+                                } else {
+                                    const activeSession = session, activeDeck = deck, activeOperation = operation;
+                                    form.querySelectorAll('input,textarea,select,button').forEach(el => { el.disabled = true; });
+                                    let cancelled = false;
+                                    const controller = new AbortController();
+                                    const cancel = node('button', '取消判讀', form, 'vocab-button vocab-link'); cancel.type = 'button';
+                                    cancel.onclick = () => {
+                                        cancelled = true;
+                                        cancel.disabled = true;
+                                        controller.abort();
+                                        resetEquivalence();
+                                        form.querySelectorAll('input,textarea,select,button').forEach(el => { el.disabled = false; });
+                                        cancel.remove();
+                                        check.textContent = '確認訂正';
+                                        if (!mobileStudy()) correction.focus({ preventScroll: true });
+                                    };
+                                    check.textContent = '判讀中…'; check.disabled = true;
+                                    let judgement = null;
+                                    try {
+                                        judgement = await gradeEquivalence({
+                                            prompt: promptFor(card, q.direction),
+                                            expected: answerFor(card, q.direction),
+                                            response: String(correction.value),
+                                            aliases: accepted.slice(1),
+                                            grading: gradingFor(session),
+                                            signal: controller.signal,
+                                            onProgress: progress => {
+                                                status.textContent = progress.status === 'terminology' ? '載入詞彙資料中…' : progress.status === 'inference' ? '智慧判讀中…' : progress.status === 'progress' && Number.isFinite(progress.progress) ? `下載模型中… ${Math.floor(progress.progress)}%` : '載入智慧判讀模型中…';
+                                            }
+                                        });
+                                    } catch {}
+                                    if (cancelled) return;
+                                    safeOwner();
+                                    if (operation !== activeOperation || session !== activeSession || deck !== activeDeck || phase !== 'learn') return;
+                                    form.querySelectorAll('input,textarea,select,button').forEach(el => { el.disabled = false; });
+                                    cancel.remove();
+                                    check.textContent = '確認訂正';
+                                    correct = judgement?.correct === true;
+                                }
+                            } else {
+                                correct = gradeAnswer(correction.value, [answerFor(card, q.direction)], 'strict');
+                            }
+                            if (!correct) {
+                                status.textContent = '請輸入畫面上的正確答案。';
+                                if (!mobileStudy()) correction.focus({ preventScroll: true });
+                                return;
+                            }
+                            const next = clone(session);
+                            next.feedback.retyped = true;
+                            next.updatedAt = Date.now();
+                            await persist(newEvent('repair', { cardId: card.id, direction: q.direction, originalId: feedback.eventId }), next);
+                            session = next;
+                            await nextLearn();
+                        });
+                    };
                     if (!mobileStudy()) correction.focus({ preventScroll: true });
                 }
             }

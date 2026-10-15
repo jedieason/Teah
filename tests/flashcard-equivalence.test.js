@@ -38,6 +38,9 @@ test('rigorous mode strips punctuation and allows omitting parenthesized content
     assert.equal((await grade('皮內痣（黑色素細胞痣）', '皮內痣。', 'rigorous', never)).correct, true);
     assert.equal((await grade('皮內痣（黑色素細胞痣）', '皮內痣黑色素細胞痣', 'rigorous', never)).correct, true);
     assert.equal((await grade('Type 1: Diabetes', 'Type 1 Diabetes', 'rigorous', never)).correct, true);
+    assert.equal((await grade('Type 1 - Diabetes', 'Type 1 Diabetes', 'exact', never)).correct, true);
+    assert.equal((await grade('急性/慢性', '急性 慢性', 'exact', never)).correct, true);
+    assert.equal((await grade('阿茲海默・帕金森', '阿茲海默 帕金森', 'exact', never)).correct, true);
 });
 
 test('critical conflicts cannot be accepted even by a very confident model', async () => {

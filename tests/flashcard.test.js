@@ -74,7 +74,15 @@ test('grading handles explicit aliases and formatting but never equates meaningf
     assert.equal(gradeAnswer('皮內痣黑色素細胞痣', ['皮內痣（黑色素細胞痣）']), true);
     assert.equal(gradeAnswer('Endocarditis infective', ['Endocarditis, infective']), true);
     assert.equal(gradeAnswer('Type 1 Diabetes', ['Type 1: Diabetes']), true);
+    assert.equal(gradeAnswer('Type 1 Diabetes', ['Type 1 - Diabetes']), true);
     assert.equal(gradeAnswer('Non Hodgkin lymphoma', ['Non-Hodgkin lymphoma']), true);
+    assert.equal(gradeAnswer('阿茲海默 帕金森', ['阿茲海默・帕金森']), true);
+    assert.equal(gradeAnswer('阿茲海默帕金森', ['阿茲海默·帕金森']), true);
+    assert.equal(gradeAnswer('急性 慢性', ['急性/慢性']), true);
+    assert.equal(gradeAnswer('急性/慢性', ['急性 慢性']), true);
+    assert.equal(gradeAnswer('急性／慢性', ['急性 慢性']), true);
+    assert.equal(gradeAnswer('皮內痣', ['皮內痣〈黑色素細胞痣〉']), true);
+    assert.equal(gradeAnswer('apple banana', ['apple〜banana']), true);
 });
 test('Learn spaces recognition misses and reaches recall mastery through bounded windows', () => {
     const d = deck(); let s = createSession(d, {}, { shuffle: false, types: ['choice', 'written'], retype: false }, 0, () => .4);
@@ -103,6 +111,15 @@ test('retyping is a repair, not a graded retrieval; manual override counts only 
     const next = advanceSession(corrected, d); assert.equal(next.facts[key].stage, 0);
     const override = overrideCorrect(s); assert.equal(override.facts[key].correct, 1); assert.equal(override.facts[key].wrong, 0); assert.equal(override.ordinal, 1);
     const rejected = overrideCorrect(override, 2000, false); assert.equal(rejected.facts[key].correct, 0); assert.equal(rejected.facts[key].wrong, 1); assert.equal(rejected.ordinal, 1); assert.equal(rejected.feedback.retyped, false);
+});
+test('answer grading and retyping repair ignores punctuation, middle dots, slashes and angle brackets', () => {
+    const card = { id: 'c1', term: '阿茲海默・帕金森', definition: '急性/慢性（神經系統） - 退化', revision: 1 };
+    assert.equal(gradeAnswer('阿茲海默 帕金森', [card.term]), true);
+    assert.equal(gradeAnswer('阿茲海默帕金森', [card.term]), true);
+    assert.equal(gradeAnswer('急性 慢性 退化', [card.definition]), true);
+    assert.equal(gradeAnswer('急性/慢性 退化', [card.definition]), true);
+    assert.equal(gradeAnswer('急性／慢性 - 退化', [card.definition]), true);
+    assert.equal(gradeAnswer('急性 慢性 神經系統 退化', [card.definition]), true);
 });
 test('ten new terms precede recall; a failed recall retains credit and is prioritized in the next mixed round', () => {
     const d = deck(); let s = createSession(d, {}, { types: ['choice', 'written'], retype: false });

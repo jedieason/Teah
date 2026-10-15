@@ -29,7 +29,7 @@ export function criticalConflict(reference, candidate) {
     if (sorted(numbers(r)) !== sorted(numbers(c))) return 'number';
     // Preserve scientific operators, charge, decimal points, ratios and units.
     const signs = text => text.match(/[+\-−±=<>≤≥×÷/^]|(?<=\d):(?=\d)/g) || [];
-    const signText = text => text.replace(/(?<=\p{L})-(?=\p{L})/gu, ' ');
+    const signText = text => text.replace(/(?<=\p{L})-(?=\p{L})|\s+[-—–_]\s+/gu, ' ').replace(/(?<!\d)\/|\/(?!\d)/g, ' ');
     if (sorted(signs(signText(r))) !== sorted(signs(signText(c)))) return 'symbol';
     const units = text => [...text.matchAll(/\d\s*(μg|µg|ug|mg|kg|g|ml|μl|µl|ul|l|mmol|mol|cm|mm|km|m|ms|s|hz|khz|mhz|pa|kpa|mmhg|%)(?![a-z])/g)].map(m => m[1].replace(/[μµ]/g, 'u'));
     if (sorted(units(r)) !== sorted(units(c))) return 'unit';
