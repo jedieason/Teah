@@ -829,7 +829,7 @@ export function mountFlashcard({ host, activate }) {
         starred.onchange = () => { scope.value = starred.checked ? 'starred' : 'all'; }; scope.onchange = () => { starred.checked = scope.value === 'starred'; };
         const goal = select('這次學習的目標', answerWith, [['master', '記熟全部'], ['quick', '快速熟悉']], options.goal);
         const familiarity = select('對這組單字的熟悉程度', answerWith, [['new', '剛開始學'], ['familiar', '已經看過']], options.familiarity);
-        const chunk = select('每組單字數', answerWith, [['7', '7 張'], ['5', '5 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
+        const chunk = select('每組單字數', answerWith, [['1', '1 張'], ['2', '2 張'], ['3', '3 張'], ['4', '4 張'], ['5', '5 張'], ['6', '6 張'], ['7', '7 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
         const gradingBody = section('批改方式');
         const grading = select('批改方式', gradingBody, GRADING_LEVELS, gradingLevel(options.grading));
         const semanticNotice = node('p', '智慧判讀在此裝置執行；首次使用會下載詞彙資料，需要語意模型時另下載約 380 MB。', gradingBody, 'vocab-muted');

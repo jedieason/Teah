@@ -442,7 +442,7 @@ export function createSession(deck, study = {}, input = {}, now = Date.now(), ra
     if (options.activity !== 'learn') { options.goal = 'master'; options.types = [options.activity === 'spell' ? 'spell' : 'written']; }
     options.audioRate = options.audioRate === 0.65 ? 0.65 : 0.9;
     options.audioSide = ['term', 'definition', 'both'].includes(options.audioSide) ? options.audioSide : 'term';
-    options.chunkSize = Math.max(3, Math.min(20, Number(options.chunkSize) || 7));
+    options.chunkSize = Math.max(1, Math.min(20, Number(options.chunkSize) || 7));
     options.types = [...new Set(options.types)].filter(t => ['choice', 'multi', 'written', 'truefalse', 'flash', 'spell'].includes(t));
     if (!options.types.length) throw new Error('請至少選擇一種題型。');
     const projected = projectStudy(study), facts = {}, scope = [];

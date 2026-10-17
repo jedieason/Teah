@@ -345,4 +345,13 @@ test('public deck toggle and author metadata are preserved and bounded in prepar
     assert.equal(updated.revision, 2);
 });
 
+test('Learn session supports smaller chunk sizes from 1 to 6', () => {
+    const d = deck();
+    for (let size = 1; size <= 6; size++) {
+        const session = createSession(d, {}, { activity: 'learn', chunkSize: size });
+        assert.equal(session.options.chunkSize, size);
+        assert.equal(session.active.length, size);
+    }
+});
+
 
