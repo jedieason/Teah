@@ -36,9 +36,6 @@
 .site-sidebar button[aria-current=page] { background:#edf4ff; color:var(--primary); }
 .site-sidebar button[aria-current=page] .sidebar-label,.site-sidebar button[aria-current=page] .sidebar-icon { color:var(--primary); }
 .archive-page #continue-section { display:none !important; }
-.archive-page .unit-card:has(.archive-restore) { padding-bottom:70px; }
-.archive-page .archive-restore { display:flex; top:auto; bottom:16px; right:16px; width:auto; height:36px; padding:8px 12px; border-radius:8px; font:13px var(--ui-font); box-shadow:none; }
-.archive-page .archive-restore:hover { transform:none; }
 @media(max-width:900px) {
  .collection-workspace.has-preview { grid-template-columns:1fr; }
  .collection-workspace.has-preview .collection-list { display:none; }

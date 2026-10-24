@@ -1,6 +1,6 @@
 import { createCollection } from './features/collections/view.js';
 import { mountQuestionSearch } from './features/search/view.js';
-import { normalizeSearchText } from './features/search/model.js';
+import { mountBankLibrary } from './features/library/view.js';
 import { mountSidebar } from './shared/sidebar.js';
 import { mountFlashcard } from './features/flashcard/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
@@ -1250,7 +1250,7 @@ function stopTimer() {
     // Do not hide, keeps usage visible
 }
 
-// 從 Firebase 讀取可用的題庫清單並建立按鈕
+// Catalog loading is separate from bank navigation and management state.
 async function fetchQuizList() {
     const request = ++catalogRequest, uid = auth.currentUser?.uid, page = libraryPage;
     try {
@@ -1258,279 +1258,7 @@ async function fetchQuizList() {
         if (request !== catalogRequest || uid !== auth.currentUser?.uid || page !== libraryPage) return;
         catalogData = data;
         catalogPaths = Object.keys(data);
-        const snapshot = { exists: () => catalogPaths.length > 0, val: () => data };
-        // Target new grid container
-        const gridContainer = document.getElementById('units-grid');
-        const breadcrumbContainer = document.getElementById('folder-breadcrumb');
-
-        if (gridContainer) gridContainer.innerHTML = '';
-
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            const allKeys = Object.keys(data || {});
-
-            // Track all archived quiz keys globally
-            globalArchivedQuizKeys.clear();
-            allKeys.forEach(k => {
-                if (k.startsWith('_Archive_')) {
-                    globalArchivedQuizKeys.add(getQuizStorageName(k));
-                }
-            });
-
-            const quizKeys = allKeys.filter(k => k !== 'progress' && k !== 'API_KEY' && k !== 'mistakes' && k !== 'mistake' && (viewArchiveMode ? k.startsWith('_Archive_') : !k.startsWith('_Archive_')));
-            const groups = {};
-            quizKeys.forEach(k => {
-                let cleanKey = k;
-                if (cleanKey.startsWith('_Archive_')) cleanKey = cleanKey.substring(9);
-                const idx = cleanKey.indexOf('｜');
-                const groupName = idx !== -1 ? cleanKey.slice(0, idx) : '其他';
-                if (!groups[groupName]) groups[groupName] = [];
-                groups[groupName].push(k);
-            });
-            globalQuizGroups = groups;
-
-            const sortGroups = (names) => names.sort((a, b) => {
-                if (a === '其他' && b !== '其他') return 1;
-                if (b === '其他' && a !== '其他') return -1;
-                return a.localeCompare(b, 'zh-Hant');
-            });
-
-            const renderFolderTiles = () => {
-                currentActiveFolder = null;
-                if (gridContainer) {
-                    gridContainer.innerHTML = '';
-                    gridContainer.className = 'units-grid' + (isEditMode ? ' edit-mode' : ''); // Reset class but keep edit-mode if active
-                }
-
-                sortGroups(Object.keys(groups)).forEach(groupName => {
-                    const count = (groups[groupName] || []).length;
-
-                    // Create Unit Card
-                    const card = document.createElement('div');
-                    card.className = 'unit-card';
-
-                    const iconBox = document.createElement('div');
-                    iconBox.className = 'unit-icon-box';
-                    iconBox.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"/></svg>';
-
-                    const infoDiv = document.createElement('div');
-                    infoDiv.className = 'unit-info';
-
-                    const title = document.createElement('div');
-                    title.className = 'unit-title';
-                    title.textContent = groupName;
-
-                    const subtitle = document.createElement('div');
-                    subtitle.className = 'unit-subtitle';
-                    subtitle.textContent = `${count} 份習題`;
-
-                    infoDiv.appendChild(title);
-                    infoDiv.appendChild(subtitle);
-
-                    card.appendChild(iconBox);
-                    card.appendChild(infoDiv);
-
-                    card.onclick = () => {
-                        if (!auth.currentUser) {
-                            showCustomAlert('請先登入後再開始測驗！');
-                            return;
-                        }
-                        renderFolderView(groupName);
-                    };
-
-                    gridContainer.appendChild(card);
-                });
-
-                if (breadcrumbContainer) breadcrumbContainer.innerHTML = ''; // Clear header in tile view
-                if (!Object.keys(groups).length) gridContainer.innerHTML = `<p class="empty-state">${viewArchiveMode ? '尚無典藏題庫' : '目前沒有題庫'}</p>`;
-            };
-
-            const renderFolderView = (groupName, clearSearch = true) => {
-                currentActiveFolder = groupName;
-                if (clearSearch) { document.getElementById('bankSearch').value = ''; questionSearch.refresh(); }
-                if (gridContainer) gridContainer.innerHTML = '';
-
-                // Render Breadcrumb
-                if (breadcrumbContainer) {
-                    breadcrumbContainer.innerHTML = '';
-                    breadcrumbContainer.className = 'folder-toolbar'; // Re-use or style differently
-
-                    const headerDiv = document.createElement('div');
-                    headerDiv.className = 'folder-header';
-                    // Horizontal layout for breadcrumb
-                    headerDiv.style.flexDirection = 'row';
-                    headerDiv.style.writingMode = 'horizontal-tb';
-
-                    const backBtn = document.createElement('button');
-                    backBtn.className = 'folder-back';
-                    backBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>';
-                    backBtn.style.writingMode = 'horizontal-tb';
-                    backBtn.setAttribute('aria-label', '返回全部科目');
-                    backBtn.onclick = () => { document.getElementById('bankSearch').value = ''; renderFolderTiles(); questionSearch.refresh(); };
-
-                    const title = document.createElement('span');
-                    title.className = 'folder-title';
-                    title.textContent = groupName;
-                    title.style.writingMode = 'horizontal-tb';
-
-                    headerDiv.appendChild(backBtn);
-                    headerDiv.appendChild(title);
-                    breadcrumbContainer.appendChild(headerDiv);
-                }
-
-                (groups[groupName] || []).sort((a, b) => a.localeCompare(b, 'zh-Hant')).forEach((key, index) => {
-                    // Render individual quiz items as cards
-                    const card = document.createElement('div');
-                    card.className = 'unit-card';
-                    card.dataset.json = key;
-                    if (isEditMode && selectedQuizzesForBatch.includes(key)) {
-                        card.classList.add('batch-selected');
-                    }
-
-                    const iconBox = document.createElement('div');
-                    iconBox.className = 'unit-icon-box';
-                    iconBox.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm320-520v-200H240v640h480v-440H560ZM240-800v200-200 640-640Z"/></svg>';
-
-                    // Edit Icon (Pen) Logic
-                    const editIcon = document.createElement('button');
-                    editIcon.className = 'quiz-edit-btn';
-                    editIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
-                    editIcon.title = '重新命名';
-                    editIcon.onclick = (e) => {
-                        e.stopPropagation(); // Prevent opening quiz
-                        handleRenameQuiz(key);
-                    };
-                    card.appendChild(editIcon);
-
-                    const infoDiv = document.createElement('div');
-                    infoDiv.className = 'unit-info';
-
-                    const title = document.createElement('div');
-                    title.className = 'unit-title';
-                    let displayTitle = key;
-                    if (displayTitle.startsWith('_Archive_')) displayTitle = displayTitle.substring(9);
-                    title.textContent = quizLabel(displayTitle).title;
-
-                    // Archive Icon Logic
-                    const archiveIcon = document.createElement('button');
-                    archiveIcon.className = 'quiz-archive-btn';
-                    archiveIcon.innerHTML = viewArchiveMode
-                        ? `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M480-520 680-320H560v200H400v-200H280L480-520ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Z"/></svg>`
-                        : `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M480-320 280-520h120v-200h160v200h120L480-320ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Z"/></svg>`;
-                    archiveIcon.title = viewArchiveMode ? '還原至題庫' : '典藏題庫';
-                    archiveIcon.setAttribute('aria-label', archiveIcon.title);
-                    if (viewArchiveMode) { archiveIcon.classList.add('archive-restore'); archiveIcon.textContent = '還原至題庫'; }
-                    archiveIcon.onclick = (e) => {
-                        e.stopPropagation();
-                        handleArchiveQuiz(key);
-                    };
-                    card.appendChild(archiveIcon);
-
-                    infoDiv.appendChild(title);
-
-                    // Add progress indicator to card if cache has progress
-                    const quizStorageName = getQuizStorageName(key);
-                    const p = userProgressCache[quizStorageName];
-                    let progressText = '';
-                    let isCompleted = false;
-                    let percent = 0;
-
-                    if (p) {
-                        const total = p.allQuestions ? p.allQuestions.length : 0;
-                        const done = p.allQuestions ? p.allQuestions.filter(q => q.isAnswered).length : p.currentIndex || 0;
-                        if (total > 0) {
-                            percent = Math.min(100, Math.round(done / total * 100));
-                            if (done >= total) {
-                                isCompleted = true;
-                                progressText = '已完成';
-                            } else if (done > 0) {
-                                progressText = `進度：${done}/${total}`;
-                            }
-                        }
-                    }
-
-                    const subtitle = document.createElement('div');
-                    subtitle.className = 'unit-subtitle';
-                    const qCount = data[key]?.count || 0;
-
-                    const countSpan = document.createElement('span');
-                    countSpan.textContent = `共 ${qCount} 題`;
-                    subtitle.appendChild(countSpan);
-
-                    if (isCompleted) {
-                        const badge = document.createElement('span');
-                        badge.className = 'unit-progress-text completed';
-                        badge.style.display = 'inline-flex';
-                        badge.style.alignItems = 'center';
-                        badge.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor" style="margin-right: 2px; transform: translateY(1px);">
-                                <path d="m382-320 338-338-57-57-281 281-123-122-57 57 180 180Z"/>
-                            </svg>已完成
-                        `;
-                        subtitle.appendChild(badge);
-                        card.classList.add('completed');
-                    }
-                    // Add progress bar inline if active progress
-                    if (!isCompleted && percent > 0) {
-                        const progressContainer = document.createElement('div');
-                        progressContainer.className = 'unit-progress-container inline-progress';
-                        progressContainer.innerHTML = `
-                            <span class="unit-progress-text">${progressText}</span>
-                            <div class="unit-progress-bar">
-                                <div class="unit-progress-fill" style="width: ${percent}%"></div>
-                            </div>
-                        `;
-                        subtitle.appendChild(progressContainer);
-                    }
-                    infoDiv.appendChild(subtitle);
-
-                    card.appendChild(iconBox);
-                    card.appendChild(infoDiv);
-
-                    // Add staggered animation delay if desired
-                    card.style.animation = `fadeInk 0.5s ease-out forwards ${index * 0.05}s`;
-                    card.style.opacity = '0'; // Init hidden for keyframe
-
-                    card.onclick = () => {
-                        if (!auth.currentUser) {
-                            showCustomAlert('請先登入後再開始測驗！');
-                            return;
-                        }
-                        if (isEditMode) {
-                            card.classList.toggle('batch-selected');
-                            const idx = selectedQuizzesForBatch.indexOf(key);
-                            if (idx > -1) {
-                                selectedQuizzesForBatch.splice(idx, 1);
-                            } else {
-                                selectedQuizzesForBatch.push(key);
-                            }
-                            updateBatchActionFloatingBar();
-                            return;
-                        }
-
-                        openQuizActionModal(key, userProgressCache[getQuizStorageName(key)]);
-                    };
-
-                    gridContainer.appendChild(card);
-
-                    // Double click rename logic (preserved from previous feature request if relevant)
-                    let tapTimeout;
-                    card.addEventListener('click', (e) => {
-                        // Logic handled above
-                    });
-                });
-            };
-
-            // Initial render - preserve folder view if active
-            if (currentActiveFolder && groups[currentActiveFolder]) {
-                renderFolderView(currentActiveFolder, false);
-            } else {
-                renderFolderTiles();
-            }
-
-        } else {
-            document.getElementById('units-grid').innerHTML = '<p class="empty-state">目前沒有題庫。</p>';
-        }
+        bankLibrary.render(data, { archived: viewArchiveMode, folder: currentActiveFolder });
         questionSearch.setCatalog(data);
     } catch (error) {
         if (request !== catalogRequest || uid !== auth.currentUser?.uid || page !== libraryPage) return;
@@ -1541,7 +1269,6 @@ async function fetchQuizList() {
         document.getElementById('retryCatalog').onclick = fetchQuizList;
     }
 }
-
 
 window.addEventListener('DOMContentLoaded', fetchQuizList);
 
@@ -2548,6 +2275,7 @@ onAuthStateChanged(auth, async (user) => {
     collection.resetForUser(user?.uid);
     vocabulary.resetForUser(user?.uid);
     questionSearch.resetForUser(user?.uid);
+    bankLibrary.resetForUser();
     if (user) {
         await fetchUserProgressAndMistakes(user);
     } else {
@@ -2592,14 +2320,13 @@ if (menuLogout) menuLogout.addEventListener('click', async () => {
 
 // Edit Quiz Name from controls menu
 const menuEditQuizName = document.getElementById('menuEditQuizName');
-let isEditMode = false;
 let viewArchiveMode = false;
 let currentActiveFolder = null;
 let libraryPage = 'library';
 const libraryLocations = { library: { folder: null, scroll: 0, query: '' }, archive: { folder: null, scroll: 0, query: '' }, collection: { scroll: 0 }, flashcard: { scroll: 0 } };
 function showLibraryPage(page) {
     const old = libraryLocations[libraryPage];
-    if (page !== libraryPage) { old.scroll = window.scrollY; isEditMode = false; toggleEditModeUI(); }
+    if (page !== libraryPage) { old.scroll = window.scrollY; bankLibrary.stopManaging(); }
     if (['library', 'archive'].includes(libraryPage)) { old.folder = currentActiveFolder; old.query = document.getElementById('bankSearch').value; }
     libraryPage = page;
     questionSearch.cancel();
@@ -2633,13 +2360,10 @@ function showLibraryPage(page) {
         fetchQuizList().then(() => { if (libraryPage === requested) window.scrollTo(0, libraryLocations[page].scroll); });
     } else window.scrollTo(0, libraryLocations[page].scroll);
 }
-let selectedQuizzesForBatch = [];
-let globalQuizGroups = {};
-let globalArchivedQuizKeys = new Set();
 
 if (menuEditQuizName) menuEditQuizName.addEventListener('click', () => {
-    isEditMode = !isEditMode;
-    toggleEditModeUI();
+    if (!['library', 'archive'].includes(libraryPage)) showLibraryPage('library');
+    bankLibrary.toggleManage();
     closeControlsMenu();
 });
 
@@ -2805,215 +2529,6 @@ if (contributeModal) {
         });
     });
 }
-
-function toggleEditModeUI() {
-    const grid = document.getElementById('units-grid');
-    if (grid && menuEditQuizName) {
-        const label = menuEditQuizName.querySelector('.item-label');
-        if (isEditMode) {
-            grid.classList.add('edit-mode');
-            if (label) label.textContent = '停止編輯題庫';
-        } else {
-            grid.classList.remove('edit-mode');
-            if (label) label.textContent = '編輯題庫';
-            selectedQuizzesForBatch = [];
-            const cards = document.querySelectorAll('.unit-card');
-            cards.forEach(card => card.classList.remove('batch-selected'));
-            updateBatchActionFloatingBar();
-        }
-    }
-}
-
-function updateBatchActionFloatingBar() {
-    let bar = document.getElementById('batch-action-bar');
-    if (selectedQuizzesForBatch.length === 0) {
-        if (bar) {
-            bar.classList.remove('show');
-            setTimeout(() => {
-                if (selectedQuizzesForBatch.length === 0 && bar && bar.parentNode) {
-                    bar.parentNode.removeChild(bar);
-                }
-            }, 300);
-        }
-        return;
-    }
-
-    if (!bar) {
-        bar = document.createElement('div');
-        bar.id = 'batch-action-bar';
-        bar.className = 'batch-action-bar';
-        document.body.appendChild(bar);
-        bar.offsetHeight;
-        bar.classList.add('show');
-    }
-
-    const actionText = viewArchiveMode ? '還原至題庫' : '移至典藏';
-    const count = selectedQuizzesForBatch.length;
-
-    bar.innerHTML = `
-        <div class="batch-bar-content">
-            <span class="batch-count">已選擇 ${count} 份習題</span>
-            <div class="batch-actions">
-                <button class="batch-btn select-all-btn">全選</button>
-                <button class="batch-btn execute-btn">${actionText}</button>
-                <button class="batch-btn cancel-btn">取消</button>
-            </div>
-        </div>
-    `;
-
-    bar.querySelector('.select-all-btn').onclick = () => {
-        if (currentActiveFolder && globalQuizGroups[currentActiveFolder]) {
-            const currentQuizzes = globalQuizGroups[currentActiveFolder];
-            const allSelected = currentQuizzes.every(k => selectedQuizzesForBatch.includes(k));
-            if (allSelected) {
-                selectedQuizzesForBatch = selectedQuizzesForBatch.filter(k => !currentQuizzes.includes(k));
-            } else {
-                currentQuizzes.forEach(k => {
-                    if (!selectedQuizzesForBatch.includes(k)) {
-                        selectedQuizzesForBatch.push(k);
-                    }
-                });
-            }
-            const cards = document.querySelectorAll('.unit-card');
-            cards.forEach(card => {
-                const key = card.dataset.json;
-                if (key) {
-                    if (selectedQuizzesForBatch.includes(key)) {
-                        card.classList.add('batch-selected');
-                    } else {
-                        card.classList.remove('batch-selected');
-                    }
-                }
-            });
-            updateBatchActionFloatingBar();
-        }
-    };
-
-    bar.querySelector('.execute-btn').onclick = async () => {
-        const actionName = viewArchiveMode ? '還原至題庫' : '典藏';
-        if (confirm(`確定要將這 ${count} 份習題${actionName}嗎？`)) {
-            try {
-                const updates = {};
-                for (const oldName of selectedQuizzesForBatch) {
-                    const isUnarchiving = oldName.startsWith('_Archive_');
-                    const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
-
-                    if (await bankExists(newName)) throw new Error(`「${newName}」已存在，無法覆蓋。`);
-                    const snapshot = await get(ref(database, oldName));
-                    if (snapshot.exists()) {
-                        const data = snapshot.val();
-                        updates[oldName] = null;
-                        updates[newName] = data;
-                    }
-                }
-                await writeBanks(updates);
-                showCustomAlert(`已完成 ${count} 份習題的${actionName}！`);
-                selectedQuizzesForBatch = [];
-                updateBatchActionFloatingBar();
-                fetchQuizList();
-            } catch (e) {
-                console.error('Batch archive failed:', e);
-                showCustomAlert('批量操作失敗');
-            }
-        }
-    };
-
-    bar.querySelector('.cancel-btn').onclick = () => {
-        selectedQuizzesForBatch = [];
-        const cards = document.querySelectorAll('.unit-card');
-        cards.forEach(card => card.classList.remove('batch-selected'));
-        updateBatchActionFloatingBar();
-    };
-}
-
-async function handleRenameQuiz(oldName) {
-    let cleanOldName = oldName;
-    if (cleanOldName.startsWith('_Archive_')) cleanOldName = cleanOldName.substring(9);
-
-    let newName = prompt(`請輸入「${cleanOldName}」的新名稱:`, cleanOldName);
-    if (newName && newName.trim() !== '' && newName !== cleanOldName) {
-        newName = newName.trim();
-        if (oldName.startsWith('_Archive_')) newName = `_Archive_${newName}`;
-
-        try {
-            if (!validBankName(newName)) throw new Error('題庫名稱格式不正確');
-            if (await bankExists(newName)) { showCustomAlert('此名稱已存在，請使用其他名稱。'); return; }
-            // Get old data
-            const snapshot = await get(ref(database, oldName));
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                const updates = {};
-                updates[oldName] = null; // Delete old
-                updates[newName] = data; // Set new
-
-                await writeBanks(updates);
-                if (selectedJson === oldName) {
-                    selectedJson = newName;
-                }
-                showCustomAlert('已重新命名！');
-                fetchQuizList(); // Refresh list
-            } else {
-                showCustomAlert('找不到原題庫資料');
-            }
-        } catch (e) {
-            console.error('Rename failed:', e);
-            showCustomAlert('重新命名失敗，權限不足？');
-        }
-    }
-}
-
-let archiveCallback = null;
-const archiveConfirmModal = document.getElementById('archiveConfirmModal');
-const archiveConfirmTitle = document.getElementById('archiveConfirmTitle');
-const archiveConfirmMessage = document.getElementById('archiveConfirmMessage');
-const archiveCancelBtn = document.getElementById('archiveCancelBtn');
-const archiveActionBtn = document.getElementById('archiveActionBtn');
-
-if (archiveCancelBtn) archiveCancelBtn.addEventListener('click', () => {
-    archiveConfirmModal.style.display = 'none';
-    archiveCallback = null;
-});
-
-if (archiveActionBtn) archiveActionBtn.addEventListener('click', async () => {
-    if (archiveCallback) {
-        archiveConfirmModal.style.display = 'none';
-        await archiveCallback();
-    }
-});
-
-async function handleArchiveQuiz(oldName) {
-    const isUnarchiving = oldName.startsWith('_Archive_');
-    const newName = isUnarchiving ? oldName.substring(9) : `_Archive_${oldName}`;
-    const actionName = isUnarchiving ? '還原至題庫' : '典藏';
-    const displayOldName = isUnarchiving ? oldName.substring(9) : oldName;
-
-    if (archiveConfirmTitle) archiveConfirmTitle.textContent = isUnarchiving ? '還原至題庫' : '典藏題庫';
-    if (archiveConfirmMessage) archiveConfirmMessage.textContent = `確定要${actionName}「${displayOldName}」嗎？`;
-    if (archiveConfirmModal) archiveConfirmModal.style.display = 'flex';
-
-    archiveCallback = async () => {
-        try {
-            if (await bankExists(newName)) { showCustomAlert('目的題庫已存在，無法覆蓋。'); return; }
-            const snapshot = await get(ref(database, oldName));
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                const updates = {};
-                updates[oldName] = null;
-                updates[newName] = data;
-                await writeBanks(updates);
-                showCustomAlert(`已${actionName}！`);
-                if (selectedJson === oldName) {
-                    selectedJson = newName;
-                }
-                fetchQuizList();
-            }
-        } catch (e) {
-            console.error('Archive failed:', e);
-            showCustomAlert(`${actionName}失敗`);
-        }
-    };
-}
-
 
 // Initialize shuffle state label in menu on load
 updateShuffleUI();
@@ -3713,18 +3228,26 @@ if (quizActionCloseBtn) quizActionCloseBtn.addEventListener('click', () => {
 // Home shortcuts keep frequently used collections out of the account menu.
 document.getElementById('homeMistakes').onclick = () => openMistakeView();
 document.getElementById('homeStarred').onclick = () => openCollectionPage();
-// Div-based legacy cards retain their nested edit controls and gain keyboard access.
 const unitsGrid = document.getElementById('units-grid');
-new MutationObserver(() => {
-    unitsGrid.querySelectorAll('.unit-card').forEach(card => { card.tabIndex = 0; card.setAttribute('role', 'button'); });
-}).observe(unitsGrid, { childList: true, subtree: true });
-unitsGrid.addEventListener('keydown', e => {
-    if (e.target.matches('.unit-card') && ['Enter', ' '].includes(e.key)) { e.preventDefault(); e.target.click(); }
+const bankLibrary = mountBankLibrary({
+    grid: unitsGrid, navigation: document.getElementById('folder-breadcrumb'), input: document.getElementById('bankSearch'),
+    getUser: () => auth.currentUser?.uid,
+    getProgress: key => userProgressCache[key], getStorageKey: getQuizStorageName,
+    onFolder: folder => { currentActiveFolder = folder; },
+    onOpen: key => openQuizActionModal(key, userProgressCache[getQuizStorageName(key)]),
+    onManage: managing => { const label = menuEditQuizName?.querySelector('.item-label'); if (label) label.textContent = managing ? '完成管理' : '編輯題庫'; },
+    refreshSearch: () => questionSearch.refresh(),
+    onChanged: async changes => {
+        if (selectedJson && changes[selectedJson] === null) selectedJson = null;
+        await fetchQuizList();
+        await updateRestorePreview(auth.currentUser);
+    }
 });
+document.getElementById('libraryAdd').onclick = () => openUploadModal('paste');
 const questionSearch = mountQuestionSearch({
     input: document.getElementById('bankSearch'), host: document.getElementById('questionSearch'), readBank,
     getUser: () => auth.currentUser?.uid, getScope: () => libraryPage, renderMath: renderLatex,
-    filterBanks: query => unitsGrid.querySelectorAll('.unit-card').forEach(card => { card.hidden = !normalizeSearchText(card.querySelector('.unit-title')?.textContent).includes(query); }),
+    filterBanks: query => bankLibrary.filter(query),
     practice: async q => {
         customSession = { questions: [q], mode: 'study', shuffleOptions: false, timeLimit: 0 }; selectedJson = q.sourcePath;
         await initQuiz(); document.querySelector('.quiz-title').textContent = '搜尋練習';
@@ -3771,6 +3294,7 @@ mountEditorial();
 
 const menuArchive = document.getElementById('menuArchive');
 if (menuArchive) menuArchive.onclick = () => showLibraryPage('archive');
+document.getElementById('homeArchive').onclick = () => showLibraryPage('archive');
 document.getElementById('homeLibrary').onclick = () => showLibraryPage('library');
 document.getElementById('homeLibrary').setAttribute('aria-current', 'page');
 const collection = createCollection({

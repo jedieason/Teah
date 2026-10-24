@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 
   <link rel="stylesheet" href="styles/learning.css">
+  <link rel="stylesheet" href="styles/bank-library.css">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#4c6259">
 </head>
@@ -56,6 +57,7 @@
         <button id="homeLibrary" class="quiet-button">題庫</button>
         <button id="homeMistakes" class="quiet-button">錯題本</button>
         <button id="homeStarred" class="quiet-button">已收藏</button>
+        <button id="homeArchive" class="quiet-button">典藏庫</button>
       </nav>
 
       <div class="site-account sidebar-footer">
@@ -188,12 +190,29 @@
 
       <div class="section-header">
         <h2 id="libraryPageTitle" class="section-title">題庫</h2>
+        <div class="library-header-actions">
+          <button id="libraryManage" class="quiet-button" type="button" aria-pressed="false">管理題庫</button>
+          <button id="libraryAdd" class="primary-button" type="button"><span aria-hidden="true">＋</span> 新增題庫</button>
+        </div>
+      </div>
+      <div class="bank-search-field">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
         <input id="bankSearch" class="library-search" type="search" placeholder="搜尋題庫、題目或選項" aria-label="搜尋題庫、題目或選項" aria-controls="units-grid questionSearch" autocomplete="off">
       </div>
 
-      <!-- Folder/Unit Navigation logic will render here -->
-      <div id="folder-breadcrumb" class="folder-breadcrumb"></div> <!-- Replaces folder-toolbar -->
-      <div id="units-grid" class="units-grid"><p class="empty-state" role="status">載入題庫中…</p></div> <!-- Replaces button-row -->
+      <div id="folder-breadcrumb" class="bank-navigation"></div>
+      <div id="bankSelectionBar" class="bank-selection-bar" role="region" aria-label="題庫批次操作" hidden>
+        <label class="bank-select-all"><input id="bankSelectAll" type="checkbox" aria-label="選取目前顯示的全部題庫"><span>全選</span></label>
+        <span id="bankSelectionCount" role="status" aria-live="polite">已選取 0 份</span>
+        <div class="bank-selection-actions">
+          <button id="bankBatchRename" class="bank-text-button" type="button" disabled>重新命名</button>
+          <button id="bankBatchArchive" class="bank-text-button" type="button" disabled>移至典藏</button>
+          <button id="bankBatchDelete" class="bank-text-button bank-danger" type="button" disabled>刪除</button>
+          <button id="bankSelectionClear" class="bank-text-button" type="button" disabled>清除選取</button>
+        </div>
+      </div>
+      <div id="units-grid" class="units-grid bank-library-grid" aria-label="題庫清單"><p class="empty-state" role="status">載入題庫中…</p></div>
+      <p id="bankLibraryStatus" class="bank-library-status" role="status" aria-live="polite"></p>
       <section id="questionSearch" class="question-search" aria-label="題目搜尋結果" hidden></section>
     </main>
 
@@ -611,20 +630,26 @@
   </div>
 </div>
 
-<!-- Archive Confirm Modal (Material 3) -->
-<div id="archiveConfirmModal" class="md3-modal-overlay" style="display: none;">
-  <div class="md3-dialog">
+<!-- Shared bank management dialog: rename, archive, restore and delete. -->
+<div id="archiveConfirmModal" class="md3-modal-overlay" style="display: none;" aria-describedby="archiveConfirmMessage">
+  <form id="bankActionForm" class="md3-dialog bank-action-dialog">
     <div class="md3-dialog-header">
       <h3 class="md3-dialog-title" id="archiveConfirmTitle">典藏題庫</h3>
     </div>
-    <div class="md3-dialog-body" style="padding-top: 10px;">
-      <p id="archiveConfirmMessage" style="margin: 0; font-size: 1rem; color: #444746;">確定要典藏這份題庫嗎？</p>
+    <div class="md3-dialog-body">
+      <p id="archiveConfirmMessage"></p>
+      <ul id="bankActionList" class="bank-action-list" aria-label="操作題庫"></ul>
+      <div id="bankRenameFields" hidden>
+        <label class="bank-dialog-field" for="bankRenameSubject">科目<input id="bankRenameSubject" type="text" placeholder="其他" autocomplete="off"></label>
+        <label class="bank-dialog-field" for="bankRenameTitle">題庫名稱<input id="bankRenameTitle" type="text" autocomplete="off"></label>
+      </div>
+      <p id="bankActionError" class="bank-action-error" role="alert" hidden></p>
     </div>
-    <div class="md3-dialog-actions" style="margin-top: 24px;">
-      <button class="md3-text-btn" id="archiveCancelBtn">取消</button>
-      <button class="md3-filled-btn" id="archiveActionBtn">確認</button>
+    <div class="md3-dialog-actions">
+      <button class="md3-text-btn" id="archiveCancelBtn" type="button">取消</button>
+      <button class="md3-filled-btn" id="archiveActionBtn" type="submit">確認</button>
     </div>
-  </div>
+  </form>
 </div>
 
 <!-- Quiz entry shares the same dialog shell as editing tools. -->

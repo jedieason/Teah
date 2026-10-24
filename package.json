@@ -11,6 +11,7 @@
     "build": "node scripts/build.mjs",
     "test:browser": "node tests/browser-smoke.mjs",
     "test:collections": "node tests/collections-browser.mjs",
+    "test:library": "node tests/library-browser.mjs",
     "test:learning": "node tests/learning-browser.mjs",
     "test:rules": "node scripts/test-rules.mjs",
     "test:editorial": "node tests/editorial-browser.mjs",

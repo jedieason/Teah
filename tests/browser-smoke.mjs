@@ -272,7 +272,8 @@ try {
     await sidebar.waitFor({ state: 'visible' });
     assert.equal(await sidebar.isVisible(), true, 'sidebar must expand when clicking toggle');
     assert.equal(await page.locator('#sidebarBackdrop').isVisible(), true, 'backdrop must be visible when expanded');
-    await page.locator('#sidebarBackdrop').click();
+    const backdropBox = await page.locator('#sidebarBackdrop').boundingBox();
+    await page.locator('#sidebarBackdrop').click({ position: { x: backdropBox.width - 12, y: 20 } });
     await sidebar.waitFor({ state: 'hidden' });
     await page.setViewportSize({ width: 1280, height: 900 });
     await sidebar.waitFor({ state: 'visible' });

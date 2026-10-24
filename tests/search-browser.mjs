@@ -95,7 +95,8 @@ try {
     assert.equal(await cards.count(), 1); assert.match(await cards.first().innerText(), /典藏專屬受體/);
     await input.fill('');
     await page.locator('#units-grid .unit-card').filter({ hasText: '舊題庫' }).click();
-    await page.getByRole('button', { name: '還原至題庫', exact: true }).click(); await page.locator('#archiveActionBtn').click();
+    await page.locator('.bank-more').click();
+    await page.getByRole('menuitem', { name: '還原至題庫', exact: true }).click(); await page.locator('#archiveActionBtn').click();
     await page.getByText('尚無典藏題庫', { exact: true }).waitFor(); await find('archive-only', 0);
     await nav('題庫'); await find('archive-only', 1);
     assert.equal(await cards.first().locator('details').getAttribute('open'), null);

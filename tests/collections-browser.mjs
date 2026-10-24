@@ -64,9 +64,10 @@ try {
     await page.locator('#units-grid .unit-card').filter({ hasText: '舊題庫' }).click();
     await openSidebarNav('題庫');
     await openSidebarNav('典藏庫');
-    await page.getByRole('button', { name: '還原至題庫', exact: true }).waitFor();
+    await page.getByRole('button', { name: '練習的更多操作', exact: true }).click();
+    await page.getByRole('menuitem', { name: '還原至題庫', exact: true }).waitFor();
     await page.screenshot({ path: 'artifacts/qa/archive-mobile.png' });
-    await page.getByRole('button', { name: '還原至題庫', exact: true }).click();
+    await page.getByRole('menuitem', { name: '還原至題庫', exact: true }).click();
     await page.locator('#archiveActionBtn').click();
     await page.waitForFunction(() => !!window.__testDatabase['舊題庫｜練習'] && !window.__testDatabase['_Archive_舊題庫｜練習']);
     await page.getByText('尚無典藏題庫', { exact: true }).waitFor();
