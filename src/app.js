@@ -20,6 +20,7 @@ import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
 import { buildMultiUnitPrompt, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
 import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
+import { diagnoseJson, autoRepairJson, mergeContinuation } from './shared/json-diagnostics.js';
 import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl, getCanonicalRedirectUri } from './services/auth-helper.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
@@ -1286,6 +1287,16 @@ const uploadPreview = document.getElementById('uploadPreview');
 const uploadSummary = document.getElementById('uploadSummary');
 const uploadBankList = document.getElementById('uploadBankList');
 const uploadError = document.getElementById('uploadError');
+const importSyntaxIssue = document.getElementById('importSyntaxIssue');
+const importIssueTitle = document.getElementById('importIssueTitle');
+const importAutoRepairBtn = document.getElementById('importAutoRepairBtn');
+const importIssueSnippet = document.getElementById('importIssueSnippet');
+const importTruncationPanel = document.getElementById('importTruncationPanel');
+const importCopyPromptBtn = document.getElementById('importCopyPromptBtn');
+const importRepairPrompt = document.getElementById('importRepairPrompt');
+const importContinuationInput = document.getElementById('importContinuationInput');
+const importMergeBtn = document.getElementById('importMergeBtn');
+const importMergeStatus = document.getElementById('importMergeStatus');
 const uploadModeRadios = uploadModal.querySelectorAll('input[name="upload-mode"]');
 let pendingFiles = [];
 let pendingPaste = null;
@@ -1385,6 +1396,47 @@ async function processUploadedFiles(fileList) {
     updateFileDropZoneUI();
 }
 
+function clearPasteIssuePanels() {
+    if (importSyntaxIssue) importSyntaxIssue.hidden = true;
+    if (importTruncationPanel) importTruncationPanel.hidden = true;
+    if (importContinuationInput) importContinuationInput.value = '';
+    if (importMergeStatus) {
+        importMergeStatus.textContent = '';
+        importMergeStatus.classList.remove('error');
+    }
+}
+
+function handlePasteJsonInput() {
+    pendingPaste = null;
+    pasteError = '';
+    clearPasteIssuePanels();
+    const rawText = pasteJson.value.trim();
+    if (rawText) {
+        try {
+            pendingPaste = parseQuizImport(pasteJson.value);
+        } catch (err) {
+            pasteError = err.message;
+            const diag = diagnoseJson(pasteJson.value);
+            if (diag.isTruncated) {
+                if (importTruncationPanel && diag.repairPrompt) {
+                    importTruncationPanel.hidden = false;
+                    importRepairPrompt.textContent = diag.repairPrompt;
+                }
+            } else if (!diag.isValid) {
+                if (importSyntaxIssue) {
+                    importSyntaxIssue.hidden = false;
+                    importIssueTitle.textContent = diag.message || err.message;
+                    importIssueSnippet.textContent = diag.snippet || '';
+                    if (importAutoRepairBtn) {
+                        importAutoRepairBtn.hidden = !diag.canAutoRepair;
+                    }
+                }
+            }
+        }
+    }
+    renderImportPreview();
+}
+
 function openUploadModal(defaultMode = 'paste') {
     if (isUploading) return;
     uploadModal.style.display = 'flex';
@@ -1393,15 +1445,60 @@ function openUploadModal(defaultMode = 'paste') {
     fileDropZone.style.display = defaultMode === 'file' ? 'block' : 'none';
     pasteJson.value = ''; uploadNameInput.value = ''; uploadInput.value = '';
     pendingFiles = []; pendingPaste = null; fileHasBatch = false; pasteError = '';
+    clearPasteIssuePanels();
     updateFileDropZoneUI();
 }
 
-pasteJson.addEventListener('input', () => {
-    pendingPaste = null; pasteError = '';
-    if (pasteJson.value.trim()) {
-        try { pendingPaste = parseQuizImport(pasteJson.value); } catch (err) { pasteError = err.message; }
+pasteJson.addEventListener('input', handlePasteJsonInput);
+
+importAutoRepairBtn?.addEventListener('click', () => {
+    const repaired = autoRepairJson(pasteJson.value);
+    if (repaired && repaired !== pasteJson.value) {
+        pasteJson.value = repaired;
+        handlePasteJsonInput();
     }
-    renderImportPreview();
+});
+
+importCopyPromptBtn?.addEventListener('click', async () => {
+    const promptText = importRepairPrompt.textContent;
+    if (!promptText) return;
+    try {
+        await navigator.clipboard.writeText(promptText);
+        const originalText = importCopyPromptBtn.textContent;
+        importCopyPromptBtn.textContent = '已複製';
+        setTimeout(() => {
+            importCopyPromptBtn.textContent = originalText;
+        }, 2000);
+    } catch {
+        importRepairPrompt.focus();
+    }
+});
+
+function performMergeContinuation() {
+    const continuation = importContinuationInput.value.trim();
+    if (!continuation) {
+        importMergeStatus.textContent = '請輸入或貼上接續內容。';
+        importMergeStatus.classList.add('error');
+        return;
+    }
+    const result = mergeContinuation(pasteJson.value, continuation);
+    if (result.success && result.mergedText) {
+        pasteJson.value = result.mergedText;
+        importContinuationInput.value = '';
+        importMergeStatus.textContent = '已成功整合接續內容。';
+        importMergeStatus.classList.remove('error');
+        handlePasteJsonInput();
+    } else {
+        importMergeStatus.textContent = result.error || '接續內容格式不正確，無法整合。';
+        importMergeStatus.classList.add('error');
+    }
+}
+importMergeBtn?.addEventListener('click', performMergeContinuation);
+importContinuationInput?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        performMergeContinuation();
+    }
 });
 uploadNameInput.addEventListener('input', () => {
     if (uploadMode() === 'file' && pendingFiles.length > 1 && !fileHasBatch) {
@@ -1447,6 +1544,7 @@ uploadConfirmBtn.addEventListener('click', async () => {
         fetchQuizList(); uploadModal.style.display = 'none';
         pendingFiles = []; pendingPaste = null; pasteError = ''; fileHasBatch = false;
         uploadInput.value = ''; pasteJson.value = ''; uploadNameInput.value = '';
+        clearPasteIssuePanels();
         updateFileDropZoneUI();
     } catch (err) {
         console.error(err);

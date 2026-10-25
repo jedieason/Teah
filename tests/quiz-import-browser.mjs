@@ -109,6 +109,96 @@ try {
     await page.getByLabel('第 2 份題庫標題', { exact: true }).fill('病理學｜發炎');
     await page.locator('#uploadConfirmBtn').click();
     await page.waitForFunction(() => window.__testDatabase['病理學｜發炎']);
+
+    // Test truncated JSON repair prompt and continuation merging
+    await openImport();
+    const truncatedText = `{
+  "banks": [
+    {
+      "title": "病理學區段二｜B11 考古",
+      "questions": [
+        {
+          "origin": "出自 B11 考古第 1 題",
+          "question": "下列何者是細胞主要的能量載體？",
+          "options": {
+            "A": "DNA",
+            "B": "ATP",
+            "C": "RNA",
+            "D": "NADH"
+          },
+          "answer": "B",
+          "explanation": "ATP 是細胞主要的能量載體。"
+        }
+      ]
+    },
+    {
+      "title": "病理學區段二｜B10 考古",
+      "questions": [
+        {
+          "origin": "出自 B10 考古第 1 題",
+          "question": "下列何者是細胞主要的能量載體？",
+          "options": {
+            "A": "DNA",
+            "B": "ATP",
+            "C": "RNA",
+            "D": "NADH"
+          },
+          "answ`;
+    await page.locator('#pasteJson').fill(truncatedText);
+    assert.equal(await page.locator('#importTruncationPanel').isVisible(), true);
+    const repairPrompt = await page.locator('#importRepairPrompt').innerText();
+    assert.ok(repairPrompt.includes('從 {'));
+    assert.ok(repairPrompt.includes('出自 B10 考古第 1 題'));
+    assert.ok(repairPrompt.endsWith('"answ 接續'));
+    await page.locator('#importCopyPromptBtn').click();
+    const copiedPrompt = await page.evaluate(() => navigator.clipboard.readText());
+    assert.equal(copiedPrompt, repairPrompt);
+    await page.locator('#importContinuationInput').fill(`er": "B",
+          "explanation": "ATP 是細胞主要的能量載體。"
+        }
+      ]
+    }
+  ]
+}`);
+    await page.locator('#importMergeBtn').click();
+    await page.waitForFunction(() => document.querySelector('#uploadSummary')?.textContent.includes('共 2 份題庫'));
+    assert.equal(await page.locator('#importTruncationPanel').isVisible(), false);
+    assert.equal(await page.locator('#uploadConfirmBtn').isEnabled(), true);
+    await page.locator('#uploadConfirmBtn').click();
+    await page.waitForFunction(() => window.__testDatabase['病理學區段二｜B10 考古']);
+
+    // Test malformed JSON diagnostics and auto-repair
+    await openImport();
+    const malformedText = `'''json
+{
+  "banks": [
+    {
+      "title": "病理學｜自動修復測試",
+      "questions": [
+        {
+          "question": "下列何者是細胞主要的能量載體？",
+          "options": {
+            "A": "DNA",
+            "B": "ATP"
+          }
+          "answer": "B"
+        }
+      ]
+    }
+  ]
+}
+'''`;
+    await page.locator('#pasteJson').fill(malformedText);
+    assert.equal(await page.locator('#importSyntaxIssue').isVisible(), true);
+    assert.equal(await page.locator('#importAutoRepairBtn').isVisible(), true);
+    assert.ok((await page.locator('#importIssueSnippet').innerText()).includes('^'));
+    await page.locator('#importAutoRepairBtn').click();
+    await page.waitForFunction(() => document.querySelector('#uploadSummary')?.textContent.includes('共 1 份題庫'));
+    assert.equal(await page.locator('#importSyntaxIssue').isVisible(), false);
+    assert.equal(await page.locator('#uploadConfirmBtn').isEnabled(), true);
+    await page.locator('#uploadConfirmBtn').click();
+    await page.waitForFunction(() => window.__testDatabase['病理學｜自動修復測試']);
+
     assert.deepEqual(errors, []);
-    console.log('Quiz import browser passed: subject + copied batch schema, 10 banks/40 questions, mobile title edits, validation, collision retry, legacy arrays and multi-file imports.');
+    console.log('Quiz import browser passed: subject + copied batch schema, 10 banks/40 questions, mobile title edits, validation, collision retry, legacy arrays and multi-file imports, truncated repair prompt continuation, and auto-repair.');
 } finally { await browser.close(); }

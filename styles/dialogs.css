@@ -39,6 +39,20 @@
 .import-bank-row span { overflow-wrap: anywhere; font-size: 13px; }
 .import-bank-count { color: #6a7380; white-space: nowrap; }
 .import-error { margin: 0; color: #a33225; font: 13px/1.6 var(--ui-font); overflow-wrap: anywhere; }
+.import-issue-panel { margin-top: 12px; padding: 14px; border-radius: 10px; border: 1px solid #fed7aa; background: #fffaf5; display: flex; flex-direction: column; gap: 10px; }
+.import-issue-panel.truncation-panel { border-color: #bfdbfe; background: #f8faff; }
+.import-issue-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.import-issue-title { font: 600 13px/1.4 var(--ui-font); color: #9a3412; }
+.truncation-panel .import-issue-title { color: #1e40af; }
+.import-repair-btn, .import-copy-btn { min-height: 32px; padding: 6px 12px; font-size: 12px; border-radius: 6px; }
+.import-issue-snippet, .import-prompt-box { margin: 0; padding: 10px 12px; border-radius: 8px; background: #ffffff; border: 1px solid #fed7aa; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: #374151; overflow-x: auto; white-space: pre-wrap; word-break: break-all; max-height: 140px; }
+.import-prompt-box { border-color: #bfdbfe; }
+.continuation-wrapper { margin-top: 4px; }
+#uploadModal .continuation-textarea { min-height: 90px; }
+.import-merge-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.import-merge-btn { min-height: 34px; padding: 6px 16px; font-size: 13px; border-radius: 6px; }
+.import-merge-status { font: 12px/1.5 var(--ui-font); color: #059669; }
+.import-merge-status.error { color: #a33225; }
 #uploadModal .md3-filled-btn:disabled, .copy-prompt-button:disabled { opacity: .5; cursor: default; transform: none; box-shadow: none; }
 .quiz-entry-dialog { max-width: 440px; gap: 26px; padding: 32px; }
 .quiz-entry-heading { padding-right: 32px; }
