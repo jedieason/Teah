@@ -6,12 +6,12 @@ export function parseQuizImport(text, fallbackTitle = '') {
     let value;
     try { value = JSON.parse(raw); } catch { throw new Error('JSON 格式錯誤，請貼上完整的 JSON 內容。'); }
     const isBatch = !Array.isArray(value) && value !== null && typeof value === 'object' && Object.hasOwn(value, 'banks');
-    if (isBatch && (!Array.isArray(value.banks) || !value.banks.length)) throw new Error('banks 必須是非空的題庫陣列。');
+    if (isBatch && (!Array.isArray(value.banks) || !value.banks.length)) throw Object.assign(new Error('banks 必須是非空的題庫陣列。'), { path: ['banks'] });
     if (!isBatch) return { isBatch, banks: [{ title: fallbackTitle, questions: validateQuiz(value) }] };
     const banks = value.banks.map((bank, index) => {
-        if (!bank || typeof bank.title !== 'string') throw new Error(`第 ${index + 1} 份題庫缺少 title 標題。`);
+        if (!bank || typeof bank.title !== 'string') throw Object.assign(new Error(`第 ${index + 1} 份題庫缺少 title 標題。`), { path: ['banks', index, 'title'] });
         try { validateQuiz(bank.questions); } catch (error) {
-            throw new Error(`第 ${index + 1} 份題庫「${bank.title}」：${error.message}`);
+            throw Object.assign(new Error(`第 ${index + 1} 份題庫「${bank.title}」：${error.message}`), { path: ['banks', index, 'questions', ...(error.path || [])] });
         }
         return { title: bank.title.trim(), questions: bank.questions };
     });

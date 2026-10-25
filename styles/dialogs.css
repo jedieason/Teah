@@ -17,7 +17,7 @@
 .md3-filled-btn { color: white; background: var(--primary, #0b57d0); border: 1px solid transparent; box-shadow: 0 1px 2px rgba(11, 87, 208, 0.15); transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease; }
 .md3-filled-btn:hover { background: #0848ac; transform: translateY(-1px); box-shadow: 0 3px 8px rgba(11, 87, 208, 0.25); }
 .md3-filled-btn:active { transform: scale(0.98); box-shadow: none; }
-#uploadModal .md3-dialog { overflow: hidden; }
+#uploadModal .md3-dialog { overflow: hidden; max-width: 680px; }
 #uploadModal .md3-dialog-header, #uploadModal .md3-dialog-actions { flex-shrink: 0; }
 #uploadModal .md3-dialog-body { overflow-y: auto; min-height: 0; padding: 2px; }
 #uploadModal .md3-segmented-btn-group { border: 0; border-radius: 10px; background: #f2f4f6; padding: 4px; margin: 0; width: fit-content; }
@@ -26,7 +26,18 @@
 #uploadModal .md3-segmented-btn input:focus-visible + span { outline: 2px solid var(--primary); outline-offset: -2px; }
 #uploadModal .md3-input-wrapper { margin: 0; }
 #uploadModal #uploadNameInput, #uploadModal #pasteJson { box-sizing: border-box; border: 1px solid #dce1e6; border-radius: 10px; background: #fff; padding: 14px; margin: 0; font: 14px/1.6 var(--ui-font); transition: border-color .15s ease; }
-#uploadModal #pasteJson { min-height: 160px; resize: vertical; }
+#uploadModal #pasteJson { height: 240px; min-height: 160px; resize: vertical; position: relative; display: block; font: 13px/22px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; tab-size: 4; white-space: pre; overflow: auto; }
+#uploadModal .json-editor { padding-top: 0; background: white; }
+.json-editor-backdrop { position: absolute; inset: 1px; overflow: hidden; border-radius: 9px; pointer-events: none; }
+.json-editor-backdrop pre { margin: 0; padding: 13px; min-height: 100%; box-sizing: border-box; font: 13px/22px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; tab-size: 4; white-space: pre; color: #2d3436; width: max-content; min-width: 100%; }
+.json-editor-backdrop mark { background: #fee2e2; color: #b91c1c; outline: 1px solid #f87171; border-radius: 2px; }
+.json-error-line { display: inline-block; min-width: 100%; color: #b91c1c; background: #fef2f2; box-shadow: inset 3px 0 #dc2626; }
+#uploadModal #pasteJson.has-json-issue { color: transparent; caret-color: #25292f; background: transparent; border-color: #dc2626; }
+#uploadModal #pasteJson.has-json-issue:focus { border-color: #dc2626; }
+#pasteJson.has-json-issue::selection { background: #2563eb33; }
+.import-editor-toolbar { display: flex; justify-content: space-between; align-items: center; color: #b91c1c; font: 12px/1.5 var(--ui-font); min-width: 0; }
+.import-editor-toolbar:has([hidden]):not(:has(:not([hidden]))) { display: none; }
+.import-editor-toolbar .md3-text-btn { min-height: 32px; padding: 4px 10px; color: #b91c1c; font-size: 12px; }
 #uploadModal .md3-floating-label { color: #6a737e; font-size: 13px; }
 #uploadModal #uploadNameInput:focus, #uploadModal #pasteJson:focus, #uploadModal #uploadNameInput:focus-visible, #uploadModal #pasteJson:focus-visible { outline: none !important; border-color: var(--primary); }
 .import-hint { margin: 6px 0 0; color: #6a7380; font: 12px/1.6 var(--ui-font); overflow-wrap: anywhere; }
@@ -39,16 +50,20 @@
 .import-bank-row span { overflow-wrap: anywhere; font-size: 13px; }
 .import-bank-count { color: #6a7380; white-space: nowrap; }
 .import-error { margin: 0; color: #a33225; font: 13px/1.6 var(--ui-font); overflow-wrap: anywhere; }
-.import-issue-panel { margin-top: 12px; padding: 14px; border-radius: 10px; border: 1px solid #fed7aa; background: #fffaf5; display: flex; flex-direction: column; gap: 10px; }
+.import-issue-panel { margin-top: 12px; padding: 14px; border-radius: 10px; border: 1px solid #fecaca; background: #fff7f7; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .import-issue-panel.truncation-panel { border-color: #bfdbfe; background: #f8faff; }
 .import-issue-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-.import-issue-title { font: 600 13px/1.4 var(--ui-font); color: #9a3412; }
+.import-issue-title { font: 600 13px/1.4 var(--ui-font); color: #b91c1c; overflow-wrap: anywhere; }
 .truncation-panel .import-issue-title { color: #1e40af; }
 .import-repair-btn, .import-copy-btn { min-height: 32px; padding: 6px 12px; font-size: 12px; border-radius: 6px; }
-.import-issue-snippet, .import-prompt-box { margin: 0; padding: 10px 12px; border-radius: 8px; background: #ffffff; border: 1px solid #fed7aa; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: #374151; overflow-x: auto; white-space: pre-wrap; word-break: break-all; max-height: 140px; }
-.import-prompt-box { border-color: #bfdbfe; }
+.import-prompt-box { margin: 0; padding: 10px 12px; border-radius: 8px; background: #ffffff; border: 1px solid #bfdbfe; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: #374151; overflow-x: auto; white-space: pre-wrap; word-break: break-all; max-height: 140px; }
+.import-issue-panel details { min-width: 0; }
+.import-issue-panel summary { cursor: pointer; color: #475569; font: 12px/1.5 var(--ui-font); }
+.import-issue-panel details[open] .import-prompt-box { margin-top: 8px; }
+.import-repair-mode { display: flex; align-items: center; gap: 12px; font: 13px/1.5 var(--ui-font); }
+.import-repair-mode select { min-width: 0; flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; background: white; color: #25292f; font: inherit; }
 .continuation-wrapper { margin-top: 4px; }
-#uploadModal .continuation-textarea { min-height: 90px; }
+#uploadModal .continuation-textarea { min-height: 110px; padding: 12px; font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
 .import-merge-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .import-merge-btn { min-height: 34px; padding: 6px 16px; font-size: 13px; border-radius: 6px; }
 .import-merge-status { font: 12px/1.5 var(--ui-font); color: #059669; }

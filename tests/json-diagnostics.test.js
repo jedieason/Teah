@@ -7,7 +7,10 @@ import {
     buildRepairPrompt,
     autoRepairJson,
     diagnoseJson,
-    mergeContinuation
+    mergeContinuation,
+    locateJsonPath,
+    locateJsonError,
+    buildJsonRepairPrompt
 } from '../src/shared/json-diagnostics.js';
 import { parseQuizImport } from '../src/shared/quiz-import.js';
 
@@ -233,4 +236,51 @@ test('autoRepairJson fixes trailing comma before closing brace', () => {
     const repaired = autoRepairJson(trailingComma);
     const parsed = parseQuizImport(repaired);
     assert.equal(parsed.banks[0].questions[0].answer, 'A');
+});
+
+
+test('schema errors locate the exact bank/question even with repeated content and fences', () => {
+    const q = { question: '重複題目 \"引號\"', answer: 'A' };
+    const banks = Array.from({ length: 13 }, (_, i) => ({ title: `題庫 ${i + 1}`, questions: [{ ...q }, { ...q }, { ...q }] }));
+    delete banks[12].questions[2].question;
+    const text = '  \n```json\n' + JSON.stringify({ banks }, null, 2) + '\n```\n';
+    let error;
+    try { parseQuizImport(text); } catch (err) { error = err; }
+    assert.deepEqual(error.path, ['banks', 12, 'questions', 2, 'question']);
+    const location = locateJsonPath(text, error.path);
+    assert.equal(text[location.position], '{');
+    assert.ok(text.slice(location.position).startsWith('{\n          "answer": "A"'));
+    assert.equal(location.line, text.slice(0, location.position).split('\n').length);
+    const prompt = buildJsonRepairPrompt(text, error.message, location, error.path);
+    assert.ok(prompt.includes('$.banks[12].questions[2].question'));
+    assert.ok(prompt.includes(error.message));
+    assert.ok(prompt.endsWith(text));
+});
+
+test('locates existing invalid fields, null questions and empty roots', () => {
+    for (const value of [[{ question: '', answer: 'A' }], [null], []]) {
+        const text = JSON.stringify(value);
+        let error;
+        try { parseQuizImport(text); } catch (err) { error = err; }
+        const location = locateJsonPath(text, error.path);
+        const marked = text.slice(location.position, location.end);
+        assert.equal(marked, !value.length ? '[' : value[0] === null ? 'null' : '\"\"');
+    }
+});
+
+test('syntax locations preserve leading whitespace, Unicode and line/column positions', () => {
+    const text = '\n  [\n {"question":"中文 🧬", "answer":}\n]';
+    const diag = diagnoseJson(text);
+    assert.equal(text[diag.location.position], '}');
+    assert.equal(diag.hasMarkdownFences, false);
+    const location = locateJsonError('a\nbc', { message: 'error (line 2 column 2)' });
+    assert.deepEqual(location, { line: 2, col: 2, position: 3 });
+});
+
+test('punctuation repair preserves all string payloads', () => {
+    const q = { question: '保留 ,} 、 }{ 與 ,] 及 \"引號\"', answer: 'A', explanation: 'line 1\nline 2' };
+    const valid = JSON.stringify([q]);
+    assert.equal(autoRepairJson(valid), valid);
+    const invalid = valid.replace(/}\]$/, '},]');
+    assert.deepEqual(JSON.parse(autoRepairJson(invalid)), [q]);
 });

@@ -20,7 +20,8 @@ import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
 import { buildMultiUnitPrompt, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
 import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
-import { diagnoseJson, autoRepairJson, mergeContinuation } from './shared/json-diagnostics.js';
+import { diagnoseJson, autoRepairJson, mergeContinuation, locateJsonPath, buildJsonRepairPrompt, stripMarkdownFences } from './shared/json-diagnostics.js';
+import { mountJsonErrorEditor } from './shared/json-editor.js';
 import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl, getCanonicalRedirectUri } from './services/auth-helper.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
@@ -1290,13 +1291,19 @@ const uploadError = document.getElementById('uploadError');
 const importSyntaxIssue = document.getElementById('importSyntaxIssue');
 const importIssueTitle = document.getElementById('importIssueTitle');
 const importAutoRepairBtn = document.getElementById('importAutoRepairBtn');
-const importIssueSnippet = document.getElementById('importIssueSnippet');
 const importTruncationPanel = document.getElementById('importTruncationPanel');
 const importCopyPromptBtn = document.getElementById('importCopyPromptBtn');
 const importRepairPrompt = document.getElementById('importRepairPrompt');
 const importContinuationInput = document.getElementById('importContinuationInput');
 const importMergeBtn = document.getElementById('importMergeBtn');
 const importMergeStatus = document.getElementById('importMergeStatus');
+const importRepairMode = document.getElementById('importRepairMode');
+const importRepairModeWrapper = document.getElementById('importRepairModeWrapper');
+const importRepairInputLabel = document.getElementById('importRepairInputLabel');
+const importRepairStatus = document.getElementById('importRepairStatus');
+const jsonErrorEditor = mountJsonErrorEditor(pasteJson, document.getElementById('importJsonBackdrop'),
+    document.getElementById('importErrorLocation'), document.getElementById('importJumpToErrorBtn'));
+let currentRepairIssue = null;
 const uploadModeRadios = uploadModal.querySelectorAll('input[name="upload-mode"]');
 let pendingFiles = [];
 let pendingPaste = null;
@@ -1323,7 +1330,7 @@ function validateImportPreview() {
         try { buildImportChanges(banks, validBankName); } catch (err) { error = err.message; }
     }
     uploadError.textContent = error;
-    uploadError.hidden = !error;
+    uploadError.hidden = !error || (uploadMode() === 'paste' && !!pasteError);
     uploadConfirmBtn.disabled = isUploading || !!error || !banks.length;
     uploadConfirmBtn.textContent = isUploading ? '建立中…' : banks.length > 1 ? `建立 ${banks.length} 份題庫` : '建立';
 }
@@ -1378,11 +1385,22 @@ async function processUploadedFiles(fileList) {
     const loaded = [], errors = [];
     let hasBatch = false;
     for (const file of files) {
+        let text;
         try {
-            const parsed = parseQuizImport(await file.text(), file.name.replace(/\.json$/i, ''));
+            text = await file.text();
+            const parsed = parseQuizImport(text, file.name.replace(/\.json$/i, ''));
             hasBatch ||= parsed.isBatch;
             loaded.push(...parsed.banks.map(bank => ({ ...bank, fileName: file.name, originalTitle: bank.title })));
-        } catch (err) { errors.push(`${file.name}（${err.message}）`); }
+        } catch (err) {
+            if (files.length === 1 && text !== undefined) {
+                openUploadModal('paste');
+                uploadNameInput.value = file.name.replace(/\.json$/i, '');
+                pasteJson.value = text;
+                handlePasteJsonInput();
+                return;
+            }
+            errors.push(`${file.name}（${err.message}）`);
+        }
     }
     if (errors.length) {
         showCustomAlert(`部分檔案解析錯誤：\n${errors.join('\n')}`);
@@ -1397,6 +1415,11 @@ async function processUploadedFiles(fileList) {
 }
 
 function clearPasteIssuePanels() {
+    currentRepairIssue = null;
+    jsonErrorEditor.setIssue(null);
+    importRepairStatus.hidden = true;
+    importRepairStatus.textContent = '';
+    importCopyPromptBtn.textContent = '複製 repair prompt';
     if (importSyntaxIssue) importSyntaxIssue.hidden = true;
     if (importTruncationPanel) importTruncationPanel.hidden = true;
     if (importContinuationInput) importContinuationInput.value = '';
@@ -1417,21 +1440,18 @@ function handlePasteJsonInput() {
         } catch (err) {
             pasteError = err.message;
             const diag = diagnoseJson(pasteJson.value);
-            if (diag.isTruncated) {
-                if (importTruncationPanel && diag.repairPrompt) {
-                    importTruncationPanel.hidden = false;
-                    importRepairPrompt.textContent = diag.repairPrompt;
-                }
-            } else if (!diag.isValid) {
-                if (importSyntaxIssue) {
-                    importSyntaxIssue.hidden = false;
-                    importIssueTitle.textContent = diag.message || err.message;
-                    importIssueSnippet.textContent = diag.snippet || '';
-                    if (importAutoRepairBtn) {
-                        importAutoRepairBtn.hidden = !diag.canAutoRepair;
-                    }
-                }
-            }
+            const isSchemaError = Array.isArray(err.path);
+            const location = isSchemaError ? locateJsonPath(pasteJson.value, err.path) : diag.location;
+            currentRepairIssue = { diag, location, message: err.message, path: err.path || [] };
+            importSyntaxIssue.hidden = false;
+            importIssueTitle.textContent = isSchemaError ? err.message : diag.message;
+            // Balancing an unfinished document can silently omit questions.
+            importAutoRepairBtn.hidden = isSchemaError || !diag.canAutoRepair || diag.isTruncated;
+            importTruncationPanel.hidden = false;
+            importRepairModeWrapper.hidden = !diag.isTruncated;
+            importRepairMode.value = diag.isTruncated ? 'continuation' : 'replace';
+            updateRepairMode();
+            jsonErrorEditor.setIssue(location);
         }
     }
     renderImportPreview();
@@ -1451,12 +1471,37 @@ function openUploadModal(defaultMode = 'paste') {
 
 pasteJson.addEventListener('input', handlePasteJsonInput);
 
+function updateRepairMode() {
+    if (!currentRepairIssue) return;
+    const { diag, location, message, path } = currentRepairIssue;
+    const continuing = importRepairMode.value === 'continuation';
+    importRepairPrompt.textContent = continuing ? diag.repairPrompt
+        : buildJsonRepairPrompt(pasteJson.value, message, location, path);
+    importRepairInputLabel.textContent = continuing ? '接續內容' : '完整修補 JSON';
+    importMergeBtn.textContent = continuing ? '整合接續並檢查' : '套用修補並檢查';
+    importCopyPromptBtn.textContent = '複製 repair prompt';
+    importMergeStatus.textContent = '';
+    importMergeStatus.classList.remove('error');
+}
+importRepairMode.addEventListener('change', updateRepairMode);
+
+function applyRepairedImport(text) {
+    // Keep the original editor and pasted response intact if either syntax or schema fails.
+    try { parseQuizImport(text); } catch (error) {
+        importMergeStatus.textContent = `修補未套用：${error.message} 原始 JSON 已保留。`;
+        importMergeStatus.classList.add('error');
+        return false;
+    }
+    pasteJson.value = text;
+    handlePasteJsonInput();
+    importRepairStatus.textContent = '修補已套用，題庫格式檢查通過。';
+    importRepairStatus.hidden = false;
+    return true;
+}
+
 importAutoRepairBtn?.addEventListener('click', () => {
     const repaired = autoRepairJson(pasteJson.value);
-    if (repaired && repaired !== pasteJson.value) {
-        pasteJson.value = repaired;
-        handlePasteJsonInput();
-    }
+    if (repaired && repaired !== pasteJson.value) applyRepairedImport(repaired);
 });
 
 importCopyPromptBtn?.addEventListener('click', async () => {
@@ -1464,30 +1509,33 @@ importCopyPromptBtn?.addEventListener('click', async () => {
     if (!promptText) return;
     try {
         await navigator.clipboard.writeText(promptText);
-        const originalText = importCopyPromptBtn.textContent;
         importCopyPromptBtn.textContent = '已複製';
-        setTimeout(() => {
-            importCopyPromptBtn.textContent = originalText;
-        }, 2000);
     } catch {
+        importRepairPrompt.closest('details').open = true;
         importRepairPrompt.focus();
+        const range = document.createRange();
+        range.selectNodeContents(importRepairPrompt);
+        const selection = window.getSelection();
+        selection.removeAllRanges(); selection.addRange(range);
+        importMergeStatus.textContent = '無法存取剪貼簿，請複製已選取的 repair prompt。';
+        importMergeStatus.classList.add('error');
     }
 });
 
 function performMergeContinuation() {
-    const continuation = importContinuationInput.value.trim();
-    if (!continuation) {
-        importMergeStatus.textContent = '請輸入或貼上接續內容。';
+    const response = importContinuationInput.value.trim();
+    if (!response) {
+        importMergeStatus.textContent = '請貼上修補結果。';
         importMergeStatus.classList.add('error');
         return;
     }
-    const result = mergeContinuation(pasteJson.value, continuation);
+    if (importRepairMode.value === 'replace') {
+        applyRepairedImport(stripMarkdownFences(response));
+        return;
+    }
+    const result = mergeContinuation(pasteJson.value, response);
     if (result.success && result.mergedText) {
-        pasteJson.value = result.mergedText;
-        importContinuationInput.value = '';
-        importMergeStatus.textContent = '已成功整合接續內容。';
-        importMergeStatus.classList.remove('error');
-        handlePasteJsonInput();
+        applyRepairedImport(result.mergedText);
     } else {
         importMergeStatus.textContent = result.error || '接續內容格式不正確，無法整合。';
         importMergeStatus.classList.add('error');

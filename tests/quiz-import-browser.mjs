@@ -89,7 +89,7 @@ try {
     await openImport();
     await page.locator('#pasteJson').fill(JSON.stringify({ banks: [{ title: '無效題庫', questions: [{ ...question, answer: 'C' }] }] }));
     assert.equal(await page.locator('#uploadConfirmBtn').isDisabled(), true);
-    assert.match(await page.locator('#uploadError').innerText(), /第 1 份.*第 1 題/);
+    assert.match(await page.locator('#importIssueTitle').innerText(), /第 1 份.*第 1 題/);
     await page.locator('#pasteJson').fill(JSON.stringify([question]));
     await page.locator('#uploadNameInput').fill('單份陣列');
     await page.locator('#uploadConfirmBtn').click();
@@ -109,6 +109,99 @@ try {
     await page.getByLabel('第 2 份題庫標題', { exact: true }).fill('病理學｜發炎');
     await page.locator('#uploadConfirmBtn').click();
     await page.waitForFunction(() => window.__testDatabase['病理學｜發炎']);
+
+    // Reproduce the reported bank 13 / question 3 schema error with repeated data.
+    await openImport();
+    const brokenBatch = { banks: Array.from({ length: 13 }, (_, i) => ({ title: `定位測試 ${i + 1}`, questions: [{ ...question }, { ...question }, { ...question }] })) };
+    delete brokenBatch.banks[12].questions[2].question;
+    const brokenSource = '\n  ```json\n' + JSON.stringify(brokenBatch, null, 2) + '\n```';
+    await page.locator('#pasteJson').fill(brokenSource);
+    assert.match(await page.locator('#importIssueTitle').innerText(), /第 13 份.*第 3 題缺少題目/);
+    assert.equal(await page.locator('#importTruncationPanel').isVisible(), true);
+    assert.equal(await page.locator('#pasteJson').getAttribute('aria-invalid'), 'true');
+    assert.equal(await page.locator('#importJsonBackdrop mark').innerText(), '{');
+    await page.locator('#importJumpToErrorBtn').click();
+    const highlighted = await page.evaluate(() => {
+        const input = document.querySelector('#pasteJson');
+        const backdrop = document.querySelector('#importJsonBackdrop');
+        const mark = backdrop.querySelector('mark').getBoundingClientRect();
+        const box = input.getBoundingClientRect();
+        return { scroll: input.scrollTop, mirrorScroll: backdrop.scrollTop, visible: mark.top >= box.top && mark.bottom <= box.bottom,
+            selection: input.value.slice(input.selectionStart, input.selectionStart + 30), color: getComputedStyle(backdrop.querySelector('mark')).color };
+    });
+    assert.ok(highlighted.scroll > 0);
+    assert.equal(highlighted.scroll, highlighted.mirrorScroll);
+    assert.equal(highlighted.visible, true);
+    assert.match(highlighted.selection, /^{\n\s+"options"/);
+    assert.equal(highlighted.color, 'rgb(185, 28, 28)');
+    await page.locator('#importCopyPromptBtn').click();
+    const schemaPrompt = await page.evaluate(() => navigator.clipboard.readText());
+    assert.ok(schemaPrompt.includes('$.banks[12].questions[2].question'));
+    assert.ok(schemaPrompt.endsWith(brokenSource));
+    await page.evaluate(() => {
+        window.__clipboardWrite = navigator.clipboard.writeText.bind(navigator.clipboard);
+        navigator.clipboard.writeText = async () => { throw new Error('denied'); };
+    });
+    await page.locator('#importCopyPromptBtn').click();
+    await page.waitForFunction(() => document.querySelector('#importMergeStatus').textContent.includes('無法存取剪貼簿'));
+    assert.equal(await page.evaluate(() => window.getSelection().toString()), schemaPrompt);
+    await page.evaluate(() => { navigator.clipboard.writeText = window.__clipboardWrite; });
+    await page.locator('#importTruncationPanel summary').click();
+    await page.locator('#importContinuationInput').fill('[]');
+    await page.locator('#importMergeBtn').click();
+    assert.equal(await page.locator('#pasteJson').inputValue(), brokenSource);
+    assert.match(await page.locator('#importMergeStatus').innerText(), /修補未套用.*原始 JSON 已保留/);
+    assert.equal(await page.locator('#importContinuationInput').inputValue(), '[]');
+    await page.locator('#importContinuationInput').fill('{');
+    await page.locator('#importMergeBtn').click();
+    assert.equal(await page.locator('#pasteJson').inputValue(), brokenSource);
+    await page.locator('#importContinuationInput').fill('');
+    await page.screenshot({ path: 'artifacts/qa/import-repair-desktop.png', fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#importJumpToErrorBtn').click();
+    for (const selector of ['#pasteJson', '#importTruncationPanel', '#importMergeBtn', '#uploadConfirmBtn']) {
+        const box = await page.locator(selector).boundingBox();
+        assert.ok(box.x >= 0 && box.x + box.width <= 390, selector + ' overflows mobile width');
+    }
+    await page.screenshot({ path: 'artifacts/qa/import-repair-mobile.png', fullPage: true });
+    brokenBatch.banks[12].questions[2].question = question.question;
+    await page.locator('#importContinuationInput').fill('```json\n' + JSON.stringify(brokenBatch) + '\n```');
+    await page.locator('#importMergeBtn').click();
+    assert.equal(await page.locator('#importTruncationPanel').isVisible(), false);
+    assert.equal(await page.locator('#importJsonBackdrop').isVisible(), false);
+    assert.equal(await page.locator('#pasteJson').getAttribute('aria-invalid'), 'false');
+    assert.equal(await page.locator('#importRepairStatus').isVisible(), true);
+    assert.equal(await page.locator('#uploadConfirmBtn').isEnabled(), true);
+    await page.locator('#uploadModal .dialog-close').click();
+    await page.setViewportSize({ width: 1280, height: 900 });
+
+    // A failed file import opens the same repair editor and retains its file title.
+    await openImport();
+    await page.locator('#uploadJson').setInputFiles({ name: '待修補.json', mimeType: 'application/json', buffer: Buffer.from('[{"answer":"A"}]') });
+    assert.equal(await page.locator('#pasteJson').isVisible(), true);
+    await page.waitForFunction(() => document.querySelector('#uploadNameInput').value === '待修補');
+    assert.equal(await page.locator('#importTruncationPanel').isVisible(), true);
+    await page.locator('#importContinuationInput').fill(JSON.stringify([question]));
+    await page.locator('#importMergeBtn').click();
+    assert.equal(await page.locator('#uploadConfirmBtn').isEnabled(), true);
+    await page.locator('#uploadModal .dialog-close').click();
+
+    // A syntax error in minified JSON scrolls horizontally to its red marker.
+    await openImport();
+    const longSyntax = '  [{"question":' + JSON.stringify('中文 🧬 '.repeat(150)) + ',"answer":}]';
+    await page.locator('#pasteJson').fill(longSyntax);
+    await page.locator('#importJumpToErrorBtn').click();
+    const horizontal = await page.evaluate(() => {
+        const input = document.querySelector('#pasteJson');
+        const mark = document.querySelector('#importJsonBackdrop mark').getBoundingClientRect();
+        const box = input.getBoundingClientRect();
+        return { scroll: input.scrollLeft, visible: mark.left >= box.left && mark.right <= box.right };
+    });
+    assert.ok(horizontal.scroll > 0);
+    assert.equal(horizontal.visible, true);
+    await page.locator('#pasteJson').fill(JSON.stringify([question]));
+    assert.equal(await page.locator('#importJumpToErrorBtn').isVisible(), false);
+    await page.locator('#uploadModal .dialog-close').click();
 
     // Test truncated JSON repair prompt and continuation merging
     await openImport();
@@ -146,10 +239,14 @@ try {
           "answ`;
     await page.locator('#pasteJson').fill(truncatedText);
     assert.equal(await page.locator('#importTruncationPanel').isVisible(), true);
-    const repairPrompt = await page.locator('#importRepairPrompt').innerText();
+    const repairPrompt = await page.locator('#importRepairPrompt').textContent();
     assert.ok(repairPrompt.includes('從 {'));
     assert.ok(repairPrompt.includes('出自 B10 考古第 1 題'));
     assert.ok(repairPrompt.endsWith('"answ 接續'));
+    await page.locator('#importRepairMode').selectOption('replace');
+    assert.ok((await page.locator('#importRepairPrompt').textContent()).includes('完整 JSON'));
+    assert.equal(await page.locator('#importRepairInputLabel').innerText(), '完整修補 JSON');
+    await page.locator('#importRepairMode').selectOption('continuation');
     await page.locator('#importCopyPromptBtn').click();
     const copiedPrompt = await page.evaluate(() => navigator.clipboard.readText());
     assert.equal(copiedPrompt, repairPrompt);
@@ -191,7 +288,7 @@ try {
     await page.locator('#pasteJson').fill(malformedText);
     assert.equal(await page.locator('#importSyntaxIssue').isVisible(), true);
     assert.equal(await page.locator('#importAutoRepairBtn').isVisible(), true);
-    assert.ok((await page.locator('#importIssueSnippet').innerText()).includes('^'));
+    assert.equal(await page.locator('#importJsonBackdrop mark').isVisible(), true);
     await page.locator('#importAutoRepairBtn').click();
     await page.waitForFunction(() => document.querySelector('#uploadSummary')?.textContent.includes('共 1 份題庫'));
     assert.equal(await page.locator('#importSyntaxIssue').isVisible(), false);
@@ -200,5 +297,5 @@ try {
     await page.waitForFunction(() => window.__testDatabase['病理學｜自動修復測試']);
 
     assert.deepEqual(errors, []);
-    console.log('Quiz import browser passed: subject + copied batch schema, 10 banks/40 questions, mobile title edits, validation, collision retry, legacy arrays and multi-file imports, truncated repair prompt continuation, and auto-repair.');
+    console.log('Quiz import browser passed: batch/legacy/file imports, bank 13 schema location, red highlighting and scrolling, mobile layout, repair copy/fallback, failed repair preservation, full replacement, continuation, and auto-repair.');
 } finally { await browser.close(); }

@@ -598,8 +598,13 @@
 
       <!-- Paste Area -->
       <div id="pasteSection" class="input-section">
-        <div class="md3-input-wrapper textarea-wrapper">
-          <textarea id="pasteJson" class="md3-textarea" placeholder=" "></textarea>
+        <div class="import-editor-toolbar">
+          <span id="importErrorLocation" hidden></span>
+          <button id="importJumpToErrorBtn" type="button" class="md3-text-btn" hidden>前往錯誤</button>
+        </div>
+        <div class="md3-input-wrapper textarea-wrapper json-editor">
+          <div id="importJsonBackdrop" class="json-editor-backdrop" aria-hidden="true" hidden><pre></pre></div>
+          <textarea id="pasteJson" class="md3-textarea" placeholder=" " wrap="off" spellcheck="false" aria-describedby="importErrorLocation importIssueTitle"></textarea>
           <label for="pasteJson" class="md3-floating-label">JSON 內容</label>
         </div>
         <p class="import-hint">可貼上單份題目陣列，或包含 banks、title、questions 的多份題庫 JSON。</p>
@@ -610,25 +615,32 @@
             <span id="importIssueTitle" class="import-issue-title">格式不完整或語法錯誤</span>
             <button id="importAutoRepairBtn" type="button" class="md3-text-btn import-repair-btn" hidden>自動修復格式</button>
           </div>
-          <pre id="importIssueSnippet" class="import-issue-snippet"></pre>
         </div>
 
         <!-- Truncation / Repair Prompt & Continuation Panel -->
         <div id="importTruncationPanel" class="import-issue-panel truncation-panel" hidden>
           <div class="import-issue-header">
-            <span class="import-issue-title">內容未完成（已截斷）</span>
-            <button id="importCopyPromptBtn" type="button" class="md3-text-btn import-copy-btn">複製接續提示詞</button>
+            <span class="import-issue-title">修補 JSON</span>
+            <button id="importCopyPromptBtn" type="button" class="md3-text-btn import-copy-btn">複製 repair prompt</button>
           </div>
-          <pre id="importRepairPrompt" class="import-prompt-box"></pre>
+          <details><summary>查看 repair prompt</summary><pre id="importRepairPrompt" class="import-prompt-box" tabindex="0"></pre></details>
+          <div id="importRepairModeWrapper" class="import-repair-mode" hidden>
+            <label for="importRepairMode">修補方式</label>
+            <select id="importRepairMode">
+              <option value="continuation">接續截斷內容</option>
+              <option value="replace">完整修補 JSON</option>
+            </select>
+          </div>
           <div class="md3-input-wrapper textarea-wrapper continuation-wrapper">
-            <textarea id="importContinuationInput" class="md3-textarea continuation-textarea" placeholder="在此貼上 AI 接續生成的內容…"></textarea>
-            <label for="importContinuationInput" class="md3-floating-label">接續內容</label>
+            <textarea id="importContinuationInput" class="md3-textarea continuation-textarea" placeholder=" " spellcheck="false" aria-describedby="importMergeStatus"></textarea>
+            <label id="importRepairInputLabel" for="importContinuationInput" class="md3-floating-label">完整修補 JSON</label>
           </div>
           <div class="import-merge-actions">
-            <button id="importMergeBtn" type="button" class="md3-filled-btn import-merge-btn">整合接續內容</button>
+            <button id="importMergeBtn" type="button" class="md3-filled-btn import-merge-btn">套用修補並檢查</button>
             <span id="importMergeStatus" class="import-merge-status" role="status"></span>
           </div>
         </div>
+        <p id="importRepairStatus" class="import-merge-status" role="status" hidden></p>
       </div>
 
       <!-- Drop Zone -->
