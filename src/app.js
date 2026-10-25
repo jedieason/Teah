@@ -1300,6 +1300,7 @@ const importMergeStatus = document.getElementById('importMergeStatus');
 const importRepairMode = document.getElementById('importRepairMode');
 const importRepairModeWrapper = document.getElementById('importRepairModeWrapper');
 const importRepairInputLabel = document.getElementById('importRepairInputLabel');
+const importRepairInputHint = document.getElementById('importRepairInputHint');
 const importRepairStatus = document.getElementById('importRepairStatus');
 const jsonErrorEditor = mountJsonErrorEditor(pasteJson, document.getElementById('importJsonBackdrop'),
     document.getElementById('importErrorLocation'), document.getElementById('importJumpToErrorBtn'));
@@ -1480,7 +1481,8 @@ function updateRepairMode() {
     const continuing = importRepairMode.value === 'continuation';
     importRepairPrompt.textContent = continuing ? diag.repairPrompt
         : buildJsonRepairPrompt(pasteJson.value, message, location, path);
-    importRepairInputLabel.textContent = continuing ? '接續內容' : '完整修補 JSON';
+    importRepairInputLabel.textContent = continuing ? '接續修補檔' : '完整修補 JSON';
+    importRepairInputHint.textContent = continuing ? '可貼上包含 banks 的完整修補檔，系統會從截斷題接回並保留前文。' : '貼上包含全部題庫的完整 JSON，通過檢查後取代原文。';
     importMergeBtn.textContent = continuing ? '整合接續並檢查' : '套用修補並檢查';
     importCopyPromptBtn.textContent = '複製 repair prompt';
     importMergeStatus.textContent = '';
@@ -1488,7 +1490,7 @@ function updateRepairMode() {
 }
 importRepairMode.addEventListener('change', updateRepairMode);
 
-function applyRepairedImport(text) {
+function applyRepairedImport(text, summary = '') {
     // Keep the original editor and pasted response intact if either syntax or schema fails.
     try { parseQuizImport(text); } catch (error) {
         importMergeStatus.textContent = `修補未套用：${error.message} 原始 JSON 已保留。`;
@@ -1498,7 +1500,7 @@ function applyRepairedImport(text) {
     }
     pasteJson.value = text;
     handlePasteJsonInput();
-    importRepairStatus.textContent = '修補已套用，題庫格式檢查通過。';
+    importRepairStatus.textContent = summary ? `修補已套用。${summary}` : '修補已套用，題庫格式檢查通過。';
     importRepairStatus.hidden = false;
     importRepairStatus.scrollIntoView({ block: 'nearest' });
     return true;
@@ -1541,7 +1543,7 @@ function performMergeContinuation() {
     }
     const result = mergeContinuation(pasteJson.value, response, parseQuizImport);
     if (result.success && result.mergedText) {
-        applyRepairedImport(result.mergedText);
+        applyRepairedImport(result.mergedText, result.summary);
     } else {
         importMergeStatus.textContent = result.error || '接續內容格式不正確，無法整合。';
         importMergeStatus.classList.add('error');

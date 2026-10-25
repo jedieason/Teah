@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import { readFile, mkdir } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import { originalCutoff, originalImport, originalBank, cutoffPrefix, repairResponse } from './fixtures/quiz-repair.js';
 
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || undefined });
 const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, permissions: ['clipboard-read', 'clipboard-write'] });
@@ -150,6 +151,41 @@ try {
     await page.locator('#uploadModal .dialog-close').click();
     await page.setViewportSize({ width: 1280, height: 900 });
 
+    // Actual supplied question: a banks repair with a formatting-different title/source.
+    await openImport();
+    await page.locator('#pasteJson').fill(originalCutoff);
+    await page.locator('#importCopyPromptBtn').click();
+    const actualPrompt = await page.evaluate(() => navigator.clipboard.readText());
+    assert.ok(actualPrompt.includes(JSON.stringify(originalBank.title)));
+    assert.ok(actualPrompt.includes(cutoffPrefix));
+    assert.ok(actualPrompt.includes('第 13 份題庫，第 3 題'));
+    const actualResponse = repairResponse();
+    actualResponse.banks[0].questions[0].answer = 'A';
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#importContinuationInput').fill(JSON.stringify(actualResponse, null, 2));
+    await page.locator('#importMergeBtn').click();
+    assert.match(await page.locator('#importMergeStatus').innerText(), /answer.*不一致/);
+    assert.equal(await page.locator('#pasteJson').inputValue(), originalCutoff);
+    const failureBox = await page.locator('#importMergeStatus').boundingBox();
+    assert.ok(failureBox.y >= 0 && failureBox.y + failureBox.height <= 844);
+    await page.screenshot({ path: 'artifacts/qa/import-fit-conflict-mobile.png', fullPage: true });
+    actualResponse.banks[0].questions[0].answer = 'C';
+    actualResponse.banks[0].title = '病理學區段二 | 鄭永銘老師—腫瘤學 (Neoplasm) (一)';
+    actualResponse.banks[0].questions[0].origin = '鄭永銘老師 ／ 腫瘤學(一) 第3題';
+    await page.locator('#importContinuationInput').fill('```json\n' + JSON.stringify(actualResponse, null, 2) + '\n```');
+    await page.locator('#importMergeBtn').click();
+    assert.deepEqual(JSON.parse(await page.locator('#pasteJson').inputValue()), originalImport);
+    assert.match(await page.locator('#importRepairStatus').innerText(), /第 13 份題庫.*第 3 題.*前 12 份題庫.*前 2 題/);
+    assert.equal(await page.locator('#uploadConfirmBtn').isEnabled(), true);
+    const repairedDialogBox = await page.locator('#uploadModal .md3-dialog').boundingBox();
+    const repairedConfirmBox = await page.locator('#uploadConfirmBtn').boundingBox();
+    assert.ok(repairedConfirmBox.y >= repairedDialogBox.y && repairedConfirmBox.y + repairedConfirmBox.height <= repairedDialogBox.y + repairedDialogBox.height,
+        JSON.stringify({ repairedDialogBox, repairedConfirmBox }));
+    await page.screenshot({ path: 'artifacts/qa/import-fit-success-mobile.png' });
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.screenshot({ path: 'artifacts/qa/import-fit-success-desktop.png' });
+    await page.locator('#uploadModal .dialog-close').click();
+
     // Reproduce the reported bank 13 / question 3 schema error with repeated data.
     await openImport();
     const brokenBatch = { banks: Array.from({ length: 13 }, (_, i) => ({ title: `定位測試 ${i + 1}`, questions: [{ ...question }, { ...question }, { ...question }] })) };
@@ -281,9 +317,9 @@ try {
     await page.locator('#pasteJson').fill(truncatedText);
     assert.equal(await page.locator('#importTruncationPanel').isVisible(), true);
     const repairPrompt = await page.locator('#importRepairPrompt').textContent();
-    assert.ok(repairPrompt.includes('從 {'));
+    assert.ok(repairPrompt.includes('可獨立 JSON.parse'));
     assert.ok(repairPrompt.includes('出自 B10 考古第 1 題'));
-    assert.ok(repairPrompt.endsWith('"answ 接續'));
+    assert.ok(repairPrompt.endsWith('"answ'));
     await page.locator('#importRepairMode').selectOption('replace');
     assert.ok((await page.locator('#importRepairPrompt').textContent()).includes('完整 JSON'));
     assert.equal(await page.locator('#importRepairInputLabel').innerText(), '完整修補 JSON');

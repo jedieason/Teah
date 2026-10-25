@@ -632,9 +632,10 @@
             </select>
           </div>
           <div class="md3-input-wrapper textarea-wrapper continuation-wrapper">
-            <textarea id="importContinuationInput" class="md3-textarea continuation-textarea" placeholder=" " spellcheck="false" aria-describedby="importMergeStatus"></textarea>
+            <textarea id="importContinuationInput" class="md3-textarea continuation-textarea" placeholder=" " spellcheck="false" aria-describedby="importRepairInputHint importMergeStatus"></textarea>
             <label id="importRepairInputLabel" for="importContinuationInput" class="md3-floating-label">完整修補 JSON</label>
           </div>
+          <p id="importRepairInputHint" class="import-hint"></p>
           <div class="import-merge-actions">
             <button id="importMergeBtn" type="button" class="md3-filled-btn import-merge-btn">套用修補並檢查</button>
             <span id="importMergeStatus" class="import-merge-status" role="status"></span>

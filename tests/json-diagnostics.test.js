@@ -64,9 +64,9 @@ test('diagnoses truncated multi-bank JSON and produces expected repair prompt an
     assert.ok(diag.truncationAnchor.snippet.includes('"origin": "出自 B10 考古第 1 題"'));
     assert.ok(diag.truncationAnchor.snippet.endsWith('"answ'));
 
-    // Verify repair prompt format: 從 { ... "answ 接續
-    assert.ok(diag.repairPrompt.includes('從 {'));
-    assert.ok(diag.repairPrompt.endsWith('"answ 接續'));
+    assert.ok(diag.repairPrompt.includes('可獨立 JSON.parse'));
+    assert.ok(diag.repairPrompt.includes('病理學區段二｜B10 考古'));
+    assert.ok(diag.repairPrompt.endsWith('"answ'));
 });
 
 test('diagnoses truncated single-chapter question array', () => {
@@ -86,7 +86,7 @@ test('diagnoses truncated single-chapter question array', () => {
     const diag = diagnoseJson(singleTruncated);
     assert.equal(diag.isTruncated, true);
     assert.ok(diag.repairPrompt.includes('出自 第 2 題') || diag.repairPrompt.includes('"origin": "第 2 題"'));
-    assert.ok(diag.repairPrompt.endsWith('"answ 接續'));
+    assert.ok(diag.repairPrompt.endsWith('"answ'));
 });
 
 test('mergeContinuation merges direct splice seamlessly', () => {
