@@ -94,8 +94,8 @@ export function findTruncationAnchor(text) {
         // If cut off inside options, question, explanation, etc., anchor from the start of the question
         for (let i = openBraces.length - 1; i >= 0; i--) {
             const candidate = openBraces[i];
-            const slice = raw.slice(candidate.index);
-            if (/"question"\s*:|"origin"\s*:/i.test(slice)) {
+            const keys = objectKeys(raw.slice(candidate.index));
+            if (keys.has('question') || keys.has('origin') || keys.has('questionId')) {
                 startIndex = candidate.index;
                 break;
             }
@@ -127,9 +127,23 @@ export function findTruncationAnchor(text) {
     };
 }
 
+function objectKeys(text) {
+    const keys = new Set();
+    let depth = 0;
+    for (const token of text.matchAll(/"(?:\\[\s\S]|[^"\\])*"|[{}\[\]]/g)) {
+        if (token[0] === '{' || token[0] === '[') depth++;
+        else if (token[0] === '}' || token[0] === ']') depth--;
+        else if (depth === 1 && /^\s*:/.test(text.slice(token.index + token[0].length))) {
+            try { keys.add(JSON.parse(token[0])); } catch {}
+        }
+    }
+    return keys;
+}
+
 export function buildRepairPrompt(snippet) {
     const trimmed = String(snippet || '').trim();
-    return `從 ${trimmed} 接續`;
+    return `請補完被截斷的題庫 JSON。從下方這一題的 { 開始，完整重寫該題，再接續後續題目與題庫，並補上原本外層的 ]、}。只回傳 JSON 接續內容，不要重複前面已完成的題目；缺失內容請依原始題目資料補回，不要編造。
+從 ${trimmed} 接續`;
 }
 
 export function autoRepairJson(text) {
@@ -358,30 +372,18 @@ export function diagnoseJson(text) {
         };
     }
 
-    let parsed = null;
-    let syntaxError = null;
-
+    const stripped = stripMarkdownFences(raw);
+    const hasMarkdownFences = raw.trim() !== stripped;
+    let syntaxError;
     try {
-        parsed = JSON.parse(raw);
-    } catch (err) {
-        syntaxError = err;
-    }
-
-    if (!syntaxError) {
         return {
             isValid: true,
-            value: parsed,
-            cleanedText: raw,
-            hasMarkdownFences: false
+            value: JSON.parse(stripped),
+            cleanedText: stripped,
+            hasMarkdownFences,
+            canAutoRepair: false
         };
-    }
-
-    const stripped = stripMarkdownFences(raw);
-    const hasMarkdownFences = (raw.trim() !== stripped);
-    let contentError = syntaxError;
-    if (hasMarkdownFences) {
-        try { JSON.parse(stripped); contentError = null; } catch (error) { contentError = error; }
-    }
+    } catch (error) { syntaxError = error; }
     const scan = scanJson(stripped);
     const isTruncated = scan.isTruncated || /unexpected end of json|unexpected end of input/i.test(syntaxError.message);
 
@@ -403,17 +405,12 @@ export function diagnoseJson(text) {
         } catch {}
     }
 
-    let location = locateJsonError(raw, syntaxError);
-    if (hasMarkdownFences && contentError) {
-        const position = raw.indexOf(stripped) + locateJsonError(stripped, contentError).position;
-        location = { ...getLineColFromPosition(raw, position), position };
-    }
+    const position = raw.indexOf(stripped) + locateJsonError(stripped, syntaxError).position;
+    const location = { ...getLineColFromPosition(raw, position), position };
     const snippet = formatErrorSnippet(raw, location.line, location.col);
 
     let friendlyMessage = 'JSON 語法格式不正確。';
-    if (hasMarkdownFences) {
-        friendlyMessage = '貼上的內容包含 Markdown 標記（如 ```json 或 \'\'\'json）。';
-    } else if (isTruncated) {
+    if (isTruncated) {
         friendlyMessage = 'JSON 內容未完成（中途中斷截斷）。';
     } else if (/unexpected token ','|expected/i.test(syntaxError.message)) {
         friendlyMessage = `第 ${location.line} 行附近語法錯誤，可能缺少逗號或引號未閉合。`;
@@ -436,7 +433,127 @@ export function diagnoseJson(text) {
     };
 }
 
-export function mergeContinuation(baseText, continuationText) {
+// Complete only the surrounding containers of a known prefix; never invent a
+// missing string/value. This retains all completed questions before the cutoff.
+function completePrefix(text) {
+    const prefix = text.trimEnd().replace(/,\s*$/, '');
+    const scan = scanJson(prefix);
+    if (scan.inString || scan.stack.some(item => item.unexpected)) return null;
+    const closers = scan.stack.slice().reverse().map(item => item.char === '{' ? '}' : ']').join('');
+    try { return JSON.parse(prefix + closers); } catch { return null; }
+}
+
+function readContinuationValue(text) {
+    if (!['{', '['].includes(text[0])) return null;
+    let depth = 0, inString = false, escaped = false;
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (inString) {
+            if (escaped) escaped = false;
+            else if (char === '\\') escaped = true;
+            else if (char === '"') inString = false;
+        } else if (char === '"') inString = true;
+        else if (char === '{' || char === '[') depth++;
+        else if (char === '}' || char === ']') {
+            depth--;
+            if (depth === 0) {
+                // AI may repeat one whole bank, followed by the original outer closers.
+                if (!/^[\s,}\]]*$/.test(text.slice(i + 1))) return null;
+                try { return JSON.parse(text.slice(0, i + 1)); } catch { return null; }
+            }
+        }
+    }
+    return null;
+}
+
+function sameQuestion(a, b) {
+    if (!a || !b) return false;
+    if (a.questionId && b.questionId) return a.questionId === b.questionId;
+    if (a.origin && b.origin) return a.origin === b.origin && a.question === b.question;
+    const options = q => Object.entries(q.options || {}).sort(([a], [b]) => a.localeCompare(b));
+    return a.question === b.question && JSON.stringify(a.answer) === JSON.stringify(b.answer)
+        && JSON.stringify(options(a)) === JSON.stringify(options(b));
+}
+
+function appendQuestions(original, incoming, pending) {
+    const pendingIndex = pending && (pending.questionId || pending.origin)
+        ? incoming.findIndex(q => q && (pending.questionId ? q.questionId === pending.questionId : q.origin === pending.origin)) : -1;
+    if (pendingIndex >= 0) return [...original, ...incoming.slice(pendingIndex)];
+    let overlap = Math.min(original.length, incoming.length);
+    while (overlap > 0 && !original.slice(-overlap).every((q, i) => sameQuestion(q, incoming[i]))) overlap--;
+    // An identical question can legitimately occur again at the cutoff.
+    if (pending && incoming.length === 1 && pending.question === incoming[0]?.question) overlap = 0;
+    return [...original, ...incoming.slice(overlap)];
+}
+
+function containsPending(questions, pending) {
+    if (!pending) return true;
+    if (!questions.length) return false;
+    if (pending.questionId) return questions.some(q => q?.questionId === pending.questionId);
+    if (pending.origin) return questions.some(q => q?.origin === pending.origin);
+    if (pending.question) return questions.some(q => typeof q?.question === 'string' && q.question.startsWith(pending.question));
+    return true;
+}
+
+function pendingQuestion(snippet) {
+    // Keep already complete identity fields even when the final key is cut at "answ.
+    try { return JSON.parse(autoRepairJson(snippet)); } catch {}
+    let depth = 0;
+    const boundaries = [];
+    for (const token of snippet.matchAll(/"(?:\\[\s\S]|[^"\\])*"|[{}\[\],]/g)) {
+        if (token[0] === '{' || token[0] === '[') depth++;
+        else if (token[0] === '}' || token[0] === ']') depth--;
+        else if (token[0] === ',' && depth === 1) boundaries.push(token.index);
+    }
+    for (const end of boundaries.reverse()) {
+        const metadata = completePrefix(snippet.slice(0, end));
+        if (metadata) return metadata;
+    }
+    return {};
+}
+
+function structuredContinuation(base, response, anchor) {
+    const keys = anchor ? objectKeys(anchor.snippet) : new Set();
+    const openQuestion = keys.has('question') || keys.has('origin') || keys.has('questionId');
+    let original = openQuestion ? completePrefix(base.slice(0, anchor.startIndex)) : completePrefix(base);
+    let pending = null;
+    if (openQuestion) pending = pendingQuestion(anchor.snippet);
+    if (!original && anchor) original = completePrefix(base.slice(0, anchor.startIndex));
+    if (!original) return null;
+    const isBank = bank => bank && typeof bank.title === 'string' && Array.isArray(bank.questions);
+    const incomingBanks = Array.isArray(response.banks) ? response.banks
+        : isBank(response) ? [response]
+            : Array.isArray(response) && response.length && response.every(isBank) ? response : null;
+    const incomingQuestions = incomingBanks ? null : Array.isArray(response) ? response
+        : typeof response.question === 'string' ? [response] : null;
+    if (Array.isArray(original)) {
+        return incomingQuestions && containsPending(incomingQuestions, pending)
+            ? JSON.stringify(appendQuestions(original, incomingQuestions, pending), null, 2) : null;
+    }
+    if (!Array.isArray(original.banks)) return null;
+    const banks = original.banks.map(bank => ({ ...bank }));
+    const current = banks[banks.length - 1];
+    if (incomingBanks) {
+        // A repeated bank must contain the unfinished bank, otherwise the cut-off
+        // question would silently disappear while the result still passed validation.
+        if (pending && current && !incomingBanks.some(bank => bank.title === current.title)) return null;
+        for (const bank of incomingBanks) {
+            if (!isBank(bank)) return null;
+            const index = banks.findIndex(saved => saved.title === bank.title);
+            if (index < 0) banks.push(bank);
+            else if (banks[index] === current) {
+                if (!containsPending(bank.questions, pending)) return null;
+                banks[index] = { ...bank, ...banks[index], questions: appendQuestions(banks[index].questions || [], bank.questions, pending) };
+            }
+        }
+    } else if (incomingQuestions && current) {
+        if (!containsPending(incomingQuestions, pending)) return null;
+        current.questions = appendQuestions(current.questions || [], incomingQuestions, pending);
+    } else return null;
+    return JSON.stringify({ ...original, banks }, null, 2);
+}
+
+export function mergeContinuation(baseText, continuationText, validateCandidate = () => {}) {
     if (!baseText || !continuationText) {
         return { success: false, error: '缺少原有內容或接續內容。' };
     }
@@ -449,7 +566,17 @@ export function mergeContinuation(baseText, continuationText) {
     cleanCont = stripMarkdownFences(cleanCont).trim();
 
     const anchor = findTruncationAnchor(cleanBase);
+    const failure = {
+        success: false,
+        error: '無法將接續內容對應到原始題庫。請貼上從截斷題目開始的完整接續內容，或切換「完整修補 JSON」貼上全部題庫；原始 JSON 已保留。'
+    };
     const candidates = [];
+    const response = readContinuationValue(cleanCont);
+    const structured = response ? structuredContinuation(cleanBase, response, anchor) : null;
+    // Do not retry an unrelated complete object as a textual splice: it could
+    // validate successfully while silently replacing the unfinished question.
+    if (response && !structured) return failure;
+    if (structured) candidates.push(structured);
 
     // Candidate 1: Direct concatenation
     candidates.push(cleanBase + cleanCont);
@@ -488,7 +615,8 @@ export function mergeContinuation(baseText, continuationText) {
     const allCandidates = [];
     for (const c of candidates) {
         allCandidates.push(c);
-        const repaired = autoRepairJson(c);
+        // A response cut off inside a string still needs its missing content.
+        const repaired = scanJson(c).inString ? null : autoRepairJson(c);
         if (repaired && repaired !== c) {
             allCandidates.push(repaired);
         }
@@ -497,6 +625,7 @@ export function mergeContinuation(baseText, continuationText) {
     for (const candidate of allCandidates) {
         try {
             const parsed = JSON.parse(candidate);
+            validateCandidate(candidate);
             return {
                 success: true,
                 mergedText: candidate,
@@ -505,18 +634,5 @@ export function mergeContinuation(baseText, continuationText) {
         } catch {}
     }
 
-    const fallback = autoRepairJson(cleanBase + '\n' + cleanCont);
-    try {
-        const parsed = JSON.parse(fallback);
-        return {
-            success: true,
-            mergedText: fallback,
-            parsed
-        };
-    } catch {
-        return {
-            success: false,
-            error: '接續內容無法成功整合為正確的 JSON 格式，請確認貼上的接續文字。'
-        };
-    }
+    return failure;
 }

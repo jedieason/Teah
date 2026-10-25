@@ -1,8 +1,9 @@
 import { validateQuiz } from './content.js';
+import { stripMarkdownFences } from './json-diagnostics.js';
 
 // A batch carries its own titles; legacy question arrays still use the form/file name.
 export function parseQuizImport(text, fallbackTitle = '') {
-    const raw = String(text || '').trim().replace(/^```(?:json)?\s*\n?([\s\S]*?)\n?```$/i, '$1').trim();
+    const raw = stripMarkdownFences(String(text || ''));
     let value;
     try { value = JSON.parse(raw); } catch { throw new Error('JSON 格式錯誤，請貼上完整的 JSON 內容。'); }
     const isBatch = !Array.isArray(value) && value !== null && typeof value === 'object' && Object.hasOwn(value, 'banks');

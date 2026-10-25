@@ -110,12 +110,53 @@ try {
     await page.locator('#uploadConfirmBtn').click();
     await page.waitForFunction(() => window.__testDatabase['病理學｜發炎']);
 
+    // Fences alone are removed automatically and never open the repair panel.
+    await openImport();
+    const wrappedQuestions = [{ ...question, explanation: "保留內容中的 '''json 與 ```json" }];
+    const plainQuestions = JSON.stringify(wrappedQuestions);
+    for (const fence of ["'''json", '```json']) {
+        await page.locator('#pasteJson').fill(fence + '\n' + plainQuestions + '\n' + fence.slice(0, 3));
+        assert.equal(await page.locator('#pasteJson').inputValue(), plainQuestions);
+        assert.equal(await page.locator('#importSyntaxIssue').isVisible(), false);
+        assert.equal(await page.locator('#importTruncationPanel').isVisible(), false);
+    }
+    await page.locator('#uploadNameInput').fill('移除外層標記');
+    assert.equal(await page.locator('#uploadConfirmBtn').isEnabled(), true);
+    await page.locator('#uploadModal .dialog-close').click();
+
+    // Screenshot regression: explanation is cut off; AI repeats the bank from q3.
+    await openImport();
+    const completedBanks = Array.from({ length: 12 }, (_, i) => ({ title: `接續前置 ${i + 1}`, questions: [question] }));
+    const completedQuestions = Array.from({ length: 4 }, (_, i) => ({ ...question, origin: `腫瘤學 第 ${i + 1} 題`, explanation: `第${i + 1}題詳解完整內容` }));
+    const repeatedBank = { title: '病理學區段二｜腫瘤學（一）', questions: completedQuestions };
+    const expectedRepair = { banks: [...completedBanks, repeatedBank] };
+    const completeText = JSON.stringify(expectedRepair, null, 2);
+    const cutText = completeText.slice(0, completeText.indexOf('第3題詳解完整內容') + 5);
+    await page.locator('#pasteJson').fill("'''json\n" + cutText);
+    assert.equal(await page.locator('#pasteJson').inputValue(), cutText);
+    assert.match(await page.locator('#importIssueTitle').innerText(), /JSON 內容未完成/);
+    assert.doesNotMatch(await page.locator('#importIssueTitle').innerText(), /Markdown/);
+    assert.equal(await page.locator('#importRepairMode').inputValue(), 'continuation');
+    await page.locator('#importContinuationInput').fill("'''json\n" + JSON.stringify({ ...repeatedBank, questions: completedQuestions.slice(2) }, null, 2) + "\n]}\n'''");
+    await page.screenshot({ path: 'artifacts/qa/import-bank-continuation-desktop.png', fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#importMergeBtn').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: 'artifacts/qa/import-bank-continuation-mobile.png', fullPage: true });
+    await page.locator('#importMergeBtn').click();
+    assert.equal(await page.locator('#importTruncationPanel').isVisible(), false);
+    assert.equal(await page.locator('#uploadSummary').innerText(), '共 13 份題庫，16 題');
+    assert.deepEqual(JSON.parse(await page.locator('#pasteJson').inputValue()), expectedRepair);
+    assert.equal(await page.locator('#uploadConfirmBtn').isEnabled(), true);
+    await page.locator('#uploadModal .dialog-close').click();
+    await page.setViewportSize({ width: 1280, height: 900 });
+
     // Reproduce the reported bank 13 / question 3 schema error with repeated data.
     await openImport();
     const brokenBatch = { banks: Array.from({ length: 13 }, (_, i) => ({ title: `定位測試 ${i + 1}`, questions: [{ ...question }, { ...question }, { ...question }] })) };
     delete brokenBatch.banks[12].questions[2].question;
-    const brokenSource = '\n  ```json\n' + JSON.stringify(brokenBatch, null, 2) + '\n```';
-    await page.locator('#pasteJson').fill(brokenSource);
+    const brokenSource = JSON.stringify(brokenBatch, null, 2);
+    await page.locator('#pasteJson').fill('\n  ```json\n' + brokenSource + '\n```');
+    assert.equal(await page.locator('#pasteJson').inputValue(), brokenSource);
     assert.match(await page.locator('#importIssueTitle').innerText(), /第 13 份.*第 3 題缺少題目/);
     assert.equal(await page.locator('#importTruncationPanel').isVisible(), true);
     assert.equal(await page.locator('#pasteJson').getAttribute('aria-invalid'), 'true');
@@ -288,6 +329,8 @@ try {
     await page.locator('#pasteJson').fill(malformedText);
     assert.equal(await page.locator('#importSyntaxIssue').isVisible(), true);
     assert.equal(await page.locator('#importAutoRepairBtn').isVisible(), true);
+    assert.doesNotMatch(await page.locator('#importIssueTitle').innerText(), /Markdown/);
+    assert.ok((await page.locator('#pasteJson').inputValue()).startsWith('{'));
     assert.equal(await page.locator('#importJsonBackdrop mark').isVisible(), true);
     await page.locator('#importAutoRepairBtn').click();
     await page.waitForFunction(() => document.querySelector('#uploadSummary')?.textContent.includes('共 1 份題庫'));

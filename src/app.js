@@ -1433,6 +1433,9 @@ function handlePasteJsonInput() {
     pendingPaste = null;
     pasteError = '';
     clearPasteIssuePanels();
+    // Wrappers are presentation, even when the JSON inside is still incomplete.
+    const cleaned = stripMarkdownFences(pasteJson.value);
+    if (cleaned !== pasteJson.value.trim()) pasteJson.value = cleaned;
     const rawText = pasteJson.value.trim();
     if (rawText) {
         try {
@@ -1490,12 +1493,14 @@ function applyRepairedImport(text) {
     try { parseQuizImport(text); } catch (error) {
         importMergeStatus.textContent = `修補未套用：${error.message} 原始 JSON 已保留。`;
         importMergeStatus.classList.add('error');
+        importMergeStatus.scrollIntoView({ block: 'nearest' });
         return false;
     }
     pasteJson.value = text;
     handlePasteJsonInput();
     importRepairStatus.textContent = '修補已套用，題庫格式檢查通過。';
     importRepairStatus.hidden = false;
+    importRepairStatus.scrollIntoView({ block: 'nearest' });
     return true;
 }
 
@@ -1527,18 +1532,20 @@ function performMergeContinuation() {
     if (!response) {
         importMergeStatus.textContent = '請貼上修補結果。';
         importMergeStatus.classList.add('error');
+        importMergeStatus.scrollIntoView({ block: 'nearest' });
         return;
     }
     if (importRepairMode.value === 'replace') {
         applyRepairedImport(stripMarkdownFences(response));
         return;
     }
-    const result = mergeContinuation(pasteJson.value, response);
+    const result = mergeContinuation(pasteJson.value, response, parseQuizImport);
     if (result.success && result.mergedText) {
         applyRepairedImport(result.mergedText);
     } else {
         importMergeStatus.textContent = result.error || '接續內容格式不正確，無法整合。';
         importMergeStatus.classList.add('error');
+        importMergeStatus.scrollIntoView({ block: 'nearest' });
     }
 }
 importMergeBtn?.addEventListener('click', performMergeContinuation);

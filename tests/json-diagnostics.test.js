@@ -65,7 +65,7 @@ test('diagnoses truncated multi-bank JSON and produces expected repair prompt an
     assert.ok(diag.truncationAnchor.snippet.endsWith('"answ'));
 
     // Verify repair prompt format: 從 { ... "answ 接續
-    assert.ok(diag.repairPrompt.startsWith('從 {'));
+    assert.ok(diag.repairPrompt.includes('從 {'));
     assert.ok(diag.repairPrompt.endsWith('"answ 接續'));
 });
 
@@ -185,7 +185,8 @@ test('autoRepairJson fixes markdown code blocks like \'\'\'json', () => {
 }
 '''`;
     const diag = diagnoseJson(textWithTripleQuotes);
-    assert.equal(diag.canAutoRepair, true);
+    assert.equal(diag.isValid, true);
+    assert.equal(diag.canAutoRepair, false);
     assert.ok(diag.hasMarkdownFences);
     const repaired = autoRepairJson(textWithTripleQuotes);
     const parsed = parseQuizImport(repaired);
@@ -283,4 +284,74 @@ test('punctuation repair preserves all string payloads', () => {
     assert.equal(autoRepairJson(valid), valid);
     const invalid = valid.replace(/}\]$/, '},]');
     assert.deepEqual(JSON.parse(autoRepairJson(invalid)), [q]);
+});
+
+test('Markdown wrappers are ignored for parsing, diagnostics and real error positions', () => {
+    const q = { question: "題目保留 '''json 與 ```json", answer: 'A' };
+    for (const opening of ['```json', "'''json", '```JSON', "'''"]) {
+        const closing = opening.slice(0, 3);
+        const text = opening + '\n' + JSON.stringify([q]) + '\n' + closing;
+        assert.deepEqual(parseQuizImport(text).banks[0].questions, [q]);
+        assert.equal(diagnoseJson(text).isValid, true);
+        const incomplete = opening + '\n[{"question":"測試", "answer":"A", "explanation":"卵巢癌';
+        const diag = diagnoseJson(incomplete);
+        assert.equal(diag.isTruncated, true);
+        assert.match(diag.message, /中途中斷截斷/);
+        assert.doesNotMatch(diag.message, /Markdown/);
+        assert.equal(diag.location.position, incomplete.length);
+        const bad = opening + '\n[{"question":"測試", "answer":}]\n' + closing;
+        assert.equal(bad[diagnoseJson(bad).location.position], '}');
+    }
+});
+
+const repeatQuestion = n => ({ origin: `來源 第 ${n} 題`, question: '相同題幹', options: { A: '甲', B: '乙' }, answer: 'A', explanation: `第 ${n} 題完整詳解` });
+const previousBanks = Array.from({ length: 12 }, (_, i) => ({ title: `已完成題庫 ${i + 1}`, questions: [repeatQuestion(100 + i)] }));
+const currentBank = { title: '病理學區段二｜腫瘤學（一）', questions: [repeatQuestion(1), repeatQuestion(2), repeatQuestion(3), repeatQuestion(4)] };
+const allBanks = { banks: [...previousBanks, currentBank] };
+const fullSource = JSON.stringify(allBanks, null, 2);
+const cutSource = fullSource.slice(0, fullSource.indexOf('第 3 題完整詳解') + 5);
+
+test('bank-level continuation repairs the screenshot case without losing earlier banks/questions', () => {
+    const responses = [
+        JSON.stringify({ ...currentBank, questions: currentBank.questions.slice(2) }),
+        JSON.stringify({ ...currentBank, questions: currentBank.questions.slice(2) }) + '\n]\n}',
+        JSON.stringify(currentBank),
+        JSON.stringify([currentBank]),
+        JSON.stringify({ banks: [currentBank] }),
+        JSON.stringify(allBanks),
+        JSON.stringify(currentBank.questions.slice(2)),
+    ];
+    for (const response of responses) {
+        const result = mergeContinuation("'''json\n" + cutSource, "'''json\n" + response + "\n'''", parseQuizImport);
+        assert.equal(result.success, true, response);
+        assert.deepEqual(JSON.parse(result.mergedText), allBanks);
+    }
+});
+
+test('a repeated question or bank replaces the unfinished question even if its last field has not started', () => {
+    const text = fullSource.slice(0, fullSource.indexOf('"explanation": "第 3 題完整詳解"'));
+    for (const response of [JSON.stringify({ ...currentBank, questions: currentBank.questions.slice(2) }),
+        JSON.stringify(currentBank.questions.slice(2)).slice(1, -1) + '] } ] }']) {
+        const result = mergeContinuation(text, response, parseQuizImport);
+        assert.equal(result.success, true);
+        assert.deepEqual(JSON.parse(result.mergedText), allBanks);
+    }
+});
+
+test('continuation between questions retains the complete prefix and avoids duplicate repeats', () => {
+    const q = [repeatQuestion(1), repeatQuestion(2), repeatQuestion(3)];
+    const base = JSON.stringify(q.slice(0, 2)).slice(0, -1) + ',';
+    for (const response of [JSON.stringify([q[2]]), JSON.stringify(q)]) {
+        const result = mergeContinuation(base, response, parseQuizImport);
+        assert.equal(result.success, true);
+        assert.deepEqual(JSON.parse(result.mergedText), q);
+    }
+});
+
+test('unrelated bank or still-truncated repair is rejected instead of closing missing content', () => {
+    for (const response of [JSON.stringify({ title: '無關題庫', questions: [repeatQuestion(9)] }),
+        JSON.stringify({ title: currentBank.title, questions: [repeatQuestion(4)] }), JSON.stringify(repeatQuestion(4)), '[]',
+        '{"origin":"來源 第 3 題","question":"相同題幹","answer":"A","explanation":"未完成']) {
+        assert.equal(mergeContinuation(cutSource, response, parseQuizImport).success, false);
+    }
 });
