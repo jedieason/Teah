@@ -23,6 +23,7 @@ import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
 import { diagnoseJson, autoRepairJson, mergeContinuation, locateJsonPath, buildJsonRepairPrompt, stripMarkdownFences } from './shared/json-diagnostics.js';
 import { mountJsonErrorEditor } from './shared/json-editor.js';
 import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl, getCanonicalRedirectUri } from './services/auth-helper.js';
+import { buildQuizRecord, downloadQuizRecord } from './shared/quiz-record.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -982,6 +983,26 @@ function showEndScreen() {
         saveProgress();
     });
     actionArea.appendChild(redoBtn);
+
+    // Download Record Button
+    const downloadBtn = document.createElement('button');
+    downloadBtn.className = 'secondary-button';
+    downloadBtn.id = 'downloadRecordBtn';
+    downloadBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
+            <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-280 200Zm-320 160q-33 0-56.5-23.5T80-240v-120h80v120h640v-120h80v120q0 33-23.5 56.5T800-160H160Z"/>
+        </svg>
+        <span>下載答題紀錄</span>
+    `;
+    downloadBtn.addEventListener('click', () => {
+        const record = buildQuizRecord(allQuestions, {
+            selectedJson,
+            isMistakePracticeMode,
+            sessionKind
+        });
+        downloadQuizRecord(record);
+    });
+    actionArea.appendChild(downloadBtn);
 
     // Reselect Quiz Button
     const resetBtn = document.createElement('button');

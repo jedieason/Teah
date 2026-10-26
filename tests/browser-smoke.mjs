@@ -171,6 +171,22 @@ try {
     assert.ok((await page.locator('.results-actions button').first().boundingBox()).height >= 48);
     assert.equal(await page.locator('.results-actions').getByText('製作 Flashcard').count(), 0);
     assert.equal(await page.locator('.results-container').getByText('觀念回顧').count(), 0);
+    const downloadBtn = page.locator('#downloadRecordBtn');
+    assert.equal(await downloadBtn.isVisible(), true);
+    assert.ok((await downloadBtn.boundingBox()).height >= 48);
+    const [recordDownload] = await Promise.all([
+        page.waitForEvent('download'),
+        downloadBtn.click()
+    ]);
+    assert.equal(recordDownload.suggestedFilename(), '錯題複習.json');
+    const downloadChunks = [];
+    for await (const chunk of await recordDownload.createReadStream()) downloadChunks.push(chunk);
+    const downloadedJson = JSON.parse(Buffer.concat(downloadChunks).toString('utf8'));
+    assert.equal(downloadedJson.title, '錯題複習');
+    assert.ok(downloadedJson.questions.length >= 2);
+    assert.ok('isCorrect' in downloadedJson.questions[0]);
+    assert.ok('userAnswer' in downloadedJson.questions[0]);
+    assert.ok('correctAnswer' in downloadedJson.questions[0]);
     await page.getByRole('button', { name: '重新生成字卡' }).waitFor({ state: 'visible' });
     await page.getByRole('button', { name: '重新生成字卡' }).click();
     await page.locator('.review-flashcard-item').first().waitFor();
