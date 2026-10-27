@@ -18,7 +18,7 @@ import { markdown, getOrderedOptionEntries, normalizeQuestionOptions } from './s
 import { streamGemini } from './services/gemini-stream.js';
 import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
-import { buildMultiUnitPrompt, buildSingleUnitPrompt } from './shared/contribute-prompts.js';
+import { buildCategorizedPrompt, buildMultiUnitPrompt, buildSingleUnitPrompt, parseCustomUnits } from './shared/contribute-prompts.js';
 import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
 import { diagnoseJson, autoRepairJson, mergeContinuation, locateJsonPath, buildJsonRepairPrompt, stripMarkdownFences } from './shared/json-diagnostics.js';
 import { mountJsonErrorEditor } from './shared/json-editor.js';
@@ -2575,9 +2575,12 @@ const promptBoxTitle = document.getElementById('promptBoxTitle');
 const promptCodeBlock = document.getElementById('promptCodeBlock');
 const contributeGoUploadBtn = document.getElementById('contributeGoUploadBtn');
 const promptModeFull = document.getElementById('promptModeFull');
+const promptModeCategorized = document.getElementById('promptModeCategorized');
 const promptModeSingle = document.getElementById('promptModeSingle');
 const promptSingleToolbar = document.getElementById('promptSingleToolbar');
+const promptCategorizedToolbar = document.getElementById('promptCategorizedToolbar');
 const promptUnitInput = document.getElementById('promptUnitInput');
+const promptCustomUnitsInput = document.getElementById('promptCustomUnitsInput');
 const promptSubjectInput = document.getElementById('promptSubjectInput');
 const promptSubjectToolbar = document.getElementById('promptSubjectToolbar');
 
@@ -2587,6 +2590,11 @@ function getCurrentPromptText() {
     if (currentPromptMode === 'single') {
         const val = promptUnitInput ? promptUnitInput.value : '';
         return buildSingleUnitPrompt(val);
+    }
+    if (currentPromptMode === 'categorized') {
+        const subject = promptSubjectInput ? promptSubjectInput.value : '';
+        const units = promptCustomUnitsInput ? promptCustomUnitsInput.value : '';
+        return buildCategorizedPrompt(subject, units);
     }
     return buildMultiUnitPrompt(promptSubjectInput.value);
 }
@@ -2603,43 +2611,76 @@ function updatePromptDisplay() {
         const unitName = (promptUnitInput?.value || '').trim() || 'B12 考古';
         if (promptBoxTitle) promptBoxTitle.textContent = `AI 題庫整理 Prompt（單一題庫：${unitName}）`;
         if (copyPromptLabel) copyPromptLabel.textContent = '複製單一題庫 Prompt';
+    } else if (currentPromptMode === 'categorized') {
+        const units = parseCustomUnits(promptCustomUnitsInput ? promptCustomUnitsInput.value : '');
+        const countText = units.length ? `：共 ${units.length} 個單元` : '';
+        if (promptBoxTitle) promptBoxTitle.textContent = `AI 題庫整理 Prompt（依單元分類${countText}）`;
+        if (copyPromptLabel) copyPromptLabel.textContent = '複製依單元分類 Prompt';
     } else {
         if (promptBoxTitle) promptBoxTitle.textContent = 'AI 題庫整理 Prompt（多份題庫）';
         if (copyPromptLabel) copyPromptLabel.textContent = '複製多份題庫 Prompt';
     }
 }
 
-if (promptModeFull && promptModeSingle) {
-    promptModeFull.addEventListener('click', () => {
-        currentPromptMode = 'full';
-        promptModeFull.classList.add('active');
-        promptModeFull.setAttribute('aria-selected', 'true');
-        promptModeSingle.classList.remove('active');
-        promptModeSingle.setAttribute('aria-selected', 'false');
-        if (promptSingleToolbar) promptSingleToolbar.style.display = 'none';
-        promptSubjectToolbar.style.display = 'flex';
-        promptSubjectInput.required = true;
-        updatePromptDisplay();
-        promptSubjectInput.focus();
+function setPromptMode(mode) {
+    currentPromptMode = mode;
+    const modeTabs = [
+        { el: promptModeFull, name: 'full' },
+        { el: promptModeCategorized, name: 'categorized' },
+        { el: promptModeSingle, name: 'single' }
+    ];
+    modeTabs.forEach(({ el, name }) => {
+        if (!el) return;
+        const isActive = name === mode;
+        el.classList.toggle('active', isActive);
+        el.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
 
-    promptModeSingle.addEventListener('click', () => {
-        currentPromptMode = 'single';
-        promptModeSingle.classList.add('active');
-        promptModeSingle.setAttribute('aria-selected', 'true');
-        promptModeFull.classList.remove('active');
-        promptModeFull.setAttribute('aria-selected', 'false');
+    const subjectHint = document.getElementById('promptSubjectHint');
+
+    if (mode === 'full') {
+        if (promptSingleToolbar) promptSingleToolbar.style.display = 'none';
+        if (promptCategorizedToolbar) promptCategorizedToolbar.style.display = 'none';
+        if (promptSubjectToolbar) promptSubjectToolbar.style.display = 'flex';
+        if (promptSubjectInput) promptSubjectInput.required = true;
+        if (subjectHint) subjectHint.textContent = '題庫會依 PDF 目錄命名為「科目｜年份 考古」或「科目｜單元」。';
+        updatePromptDisplay();
+        promptSubjectInput?.focus();
+    } else if (mode === 'categorized') {
+        if (promptSingleToolbar) promptSingleToolbar.style.display = 'none';
+        if (promptCategorizedToolbar) promptCategorizedToolbar.style.display = 'flex';
+        if (promptSubjectToolbar) promptSubjectToolbar.style.display = 'flex';
+        if (promptSubjectInput) promptSubjectInput.required = true;
+        if (subjectHint) subjectHint.textContent = '題庫會命名為「科目｜單元名稱」，做為所有單元題庫的固定前綴。';
+        updatePromptDisplay();
+        if (!promptSubjectInput?.value?.trim()) {
+            promptSubjectInput?.focus();
+        } else {
+            promptCustomUnitsInput?.focus();
+        }
+    } else if (mode === 'single') {
         if (promptSingleToolbar) promptSingleToolbar.style.display = 'flex';
-        promptSubjectToolbar.style.display = 'none';
-        promptSubjectInput.required = false;
+        if (promptCategorizedToolbar) promptCategorizedToolbar.style.display = 'none';
+        if (promptSubjectToolbar) promptSubjectToolbar.style.display = 'none';
+        if (promptSubjectInput) promptSubjectInput.required = false;
         updatePromptDisplay();
         promptUnitInput?.focus();
-    });
+    }
 }
 
-promptSubjectInput.addEventListener('input', () => {
-    if (currentPromptMode === 'full') updatePromptDisplay();
+if (promptModeFull) promptModeFull.addEventListener('click', () => setPromptMode('full'));
+if (promptModeCategorized) promptModeCategorized.addEventListener('click', () => setPromptMode('categorized'));
+if (promptModeSingle) promptModeSingle.addEventListener('click', () => setPromptMode('single'));
+
+promptSubjectInput?.addEventListener('input', () => {
+    if (currentPromptMode === 'full' || currentPromptMode === 'categorized') updatePromptDisplay();
 });
+
+if (promptCustomUnitsInput) {
+    promptCustomUnitsInput.addEventListener('input', () => {
+        if (currentPromptMode === 'categorized') updatePromptDisplay();
+    });
+}
 
 if (promptUnitInput) {
     promptUnitInput.addEventListener('input', () => {
@@ -2670,7 +2711,15 @@ if (menuContribute) {
     menuContribute.addEventListener('click', () => {
         closeControlsMenu();
         if (contributeModal) contributeModal.style.display = 'flex';
-        if (currentPromptMode === 'full') promptSubjectInput.focus();
+        if (currentPromptMode === 'full' || currentPromptMode === 'categorized') {
+            if (!promptSubjectInput?.value?.trim()) {
+                promptSubjectInput?.focus();
+            } else if (currentPromptMode === 'categorized') {
+                promptCustomUnitsInput?.focus();
+            }
+        } else if (currentPromptMode === 'single') {
+            promptUnitInput?.focus();
+        }
     });
 }
 

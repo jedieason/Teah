@@ -418,6 +418,7 @@
         <div class="prompt-mode-header">
           <div class="prompt-mode-tabs" role="tablist">
             <button type="button" class="prompt-mode-tab active" id="promptModeFull" role="tab" aria-selected="true">多單元／多年份</button>
+            <button type="button" class="prompt-mode-tab" id="promptModeCategorized" role="tab" aria-selected="false">依單元分類</button>
             <button type="button" class="prompt-mode-tab" id="promptModeSingle" role="tab" aria-selected="false">單一題庫（指定單元）</button>
           </div>
         </div>
@@ -427,6 +428,16 @@
             <input type="text" id="promptSubjectInput" class="prompt-single-input" placeholder="例如：藥理學" autocomplete="off" spellcheck="false" required aria-describedby="promptSubjectHint">
           </div>
           <p id="promptSubjectHint" class="import-hint">題庫會依 PDF 目錄命名為「科目｜年份 考古」或「科目｜單元」。</p>
+        </div>
+        <div id="promptCategorizedToolbar" class="prompt-categorized-toolbar" style="display: none;">
+          <label for="promptCustomUnitsInput" class="prompt-single-label">分類單元清單</label>
+          <textarea id="promptCustomUnitsInput" class="prompt-custom-units-input" rows="5" placeholder="每行輸入一個單元名稱，例如：&#10;自泌素&#10;抗生素、Steroid&#10;NSAID、抗黴菌、抗病毒&#10;免疫療法&#10;寄生蟲&#10;抗腫瘤" spellcheck="false" aria-describedby="promptCategorizedHint">自泌素
+抗生素、Steroid
+NSAID、抗黴菌、抗病毒
+免疫療法
+寄生蟲
+抗腫瘤</textarea>
+          <p id="promptCategorizedHint" class="import-hint">AI 會將各年份考題逐題映射到上述單元，並依年份新到舊整理成 JSON。</p>
         </div>
         <div class="prompt-box-header">
           <div class="prompt-box-title">

@@ -1,6 +1,24 @@
 const cleanName = value => String(value || '').trim().replace(/[.#$\[\]\/\x00-\x1f\x7f]/g, '').trim();
 const xmlText = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+export function parseCustomUnits(input) {
+    if (!input) return [];
+    const text = typeof input === 'string' ? input : Array.isArray(input) ? input.join('\n') : String(input);
+    const lines = text.split(/\r?\n/).flatMap(line => {
+        const trimmed = line.trim();
+        return trimmed ? [trimmed] : [];
+    });
+    const units = [];
+    for (const rawLine of lines) {
+        const stripped = rawLine.replace(/^(?:\d+[\.、\)\s]+|[一二三四五六七八九十]+[\.、\s]+|[-*•]\s*|\(\d+\)\s*)/, '').trim();
+        const cleaned = cleanName(stripped);
+        if (cleaned && !units.includes(cleaned)) {
+            units.push(cleaned);
+        }
+    }
+    return units;
+}
+
 export function buildMultiUnitPrompt(subjectRaw) {
     const subject = cleanName(subjectRaw);
     if (!subject) throw new Error('請輸入科目名稱');
@@ -183,6 +201,120 @@ export function buildSingleUnitPrompt(targetUnitRaw) {
     "explanation": "費城染色體造成 9 號染色體 ABL 與 22 號染色體 BCR 融合形成 BCR-ABL 融合基因。\\n\\n**Gemini：臨床上首選標靶藥物為酪胺酸激酶抑制劑（如 Imatinib）。**"
   }
 ]
+\`\`\`
+  </output_schema>
+</prompt>`;
+}
+
+export function buildCategorizedPrompt(subjectRaw, unitsRaw) {
+    const subject = cleanName(subjectRaw);
+    if (!subject) throw new Error('請輸入科目名稱');
+    const units = parseCustomUnits(unitsRaw);
+    if (units.length === 0) throw new Error('請至少輸入一個分類單元');
+
+    const u1 = units[0];
+    const u2 = units[1] || units[0];
+    const bank1Questions = [
+        {
+            origin: '出自 B11 考古第 3 題',
+            question: '下列何者是細胞主要的能量載體？',
+            options: { A: 'DNA', B: 'ATP', C: 'RNA', D: 'NADH' },
+            answer: 'B',
+            explanation: 'ATP 是細胞主要的能量載體。'
+        },
+        {
+            origin: '出自 B10 考古第 12 題',
+            question: '下列關於有氧呼吸代謝途徑的敘述何者正確？',
+            options: { A: '糖解作用在粒線體內進行', B: '克氏循環產生多數 NADH', C: '電子傳遞鏈不需氧氣參與', D: '乳酸發酵產生最多 ATP' },
+            answer: 'B',
+            explanation: '克氏循環氧化乙醯輔酶 A 並產生大量還原當量（NADH、FADH2）。'
+        }
+    ];
+    const bank2Questions = [
+        {
+            origin: '出自 B11 考古第 8 題',
+            question: 'β-lactam 類抗生素主要抑制哪項細胞結構的合成？',
+            answer: ['細胞壁'],
+            explanation: '此類抗生素抑制細菌細胞壁合成。'
+        }
+    ];
+    const sampleBanks = [
+        { title: `${subject}｜${u1}`, questions: bank1Questions }
+    ];
+    if (units.length > 1) {
+        sampleBanks.push({ title: `${subject}｜${u2}`, questions: bank2Questions });
+    }
+    const schema = JSON.stringify({ banks: sampleBanks }, null, 2);
+
+    const unitsListXml = units.map((u, i) => `    ${i + 1}. ${xmlText(u)}`).join('\n');
+    const exampleTitles = units.slice(0, 3).map(u => `「${xmlText(subject)}｜${xmlText(u)}」`).join('、');
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<prompt>
+  <role>你是醫學與資訊學科題庫資料結構化專家。將跨年份題目文本或 PDF 題目卷與詳解卷精準配對，並依指定單元逐題分類映射，轉換為可一次匯入多份題庫的 JSON。</role>
+  <task>
+    使用者指定的科目名稱：<subject>${xmlText(subject)}</subject>。這是所有題庫標題的固定前綴。
+    本次整理的核心任務：【依指定單元分類映射】。
+    請閱讀提供資料中的所有年份與考卷（例如 B11、B10、B09...），不要按原考卷年份建立題庫，而是將【每一道題目】根據其學科核心概念、機制、病理或藥物主題，逐題精準映射分類到下列指定的單元之中。
+
+    【目標單元清單】：
+    <target_units>
+${unitsListXml}
+    </target_units>
+
+    1. **題庫建立與命名**：針對上述有對應題目的指定單元建立題庫，title 格式統一為「科目｜單元名稱」，例如 ${exampleTitles}。title 不可重複或包含 . # $ [ ] / 或控制字元。
+    2. **逐題映射與零遺漏（重要）**：輸入資料中跨所有年份的題目都必須完整處理。所有題目都必須映射至上述某一單元中，嚴禁遺漏任何一題；若題目跨領域，請歸入關聯度最高的主要單元。若某指定單元在輸入資料中完全沒有對應題目，則該單元不要輸出空題庫（每份題庫 questions 必須為非空陣列）。
+    3. **單元內年份整理與排序**：在每個單元題庫的 questions 陣列內：
+       - 請將各年份題目由新到舊排列（例如 B11、B10、B09... 依序往下整理）。
+       - 同一年份內的題目，統一依原始考卷題號遞增排列（第 1 題到最後一題）。
+       - 依題本原文定義屆數，保留原始年份／屆數及前導零，不自行換算；title 與 origin 都不可將 B09 改寫為 B9，也不可把屆數編成 B1、B2 等流水號。
+       - origin 欄位必須明確保留每題原始的出處年份與題號，例如 "出自 B11 考古第 1 題" 或 "出自 111學年度 區段考第 5 題"。請將原題幹開頭的題號序號刪除。
+    4. **輸出格式**：輸出【一個 Markdown JSON Code Block】，其中只有【一個 JSON 物件】，格式為 {"banks":[{"title":"題庫標題","questions":[題目物件]}]}。所有單元題庫都放在同一個 banks 陣列，讓使用者只需複製一次。
+    5. **純淨輸出**：title 必須在 JSON 內；禁止在 JSON 外另列 Markdown 標題，禁止輸出多個 Code Block，也禁止只輸出未含標題的題目陣列。不要輸出範例中來源沒有的單元，不要輸出省略號、註解、佔位文字或截斷的 JSON。
+  </task>
+
+  <constraints>
+    ### 1. 資料處理、配對與排序
+    * **資料完整性與無遺漏映射**：請務必完整處理使用者輸入的所有年份題目，逐題完成單元歸類，【嚴禁因為題數過多而擅自中斷、精簡或漏失任何題目】。若個別題目或答案完全缺失，請跳過該題。
+    * **雙文件（題目卷 + 詳解卷）交叉核對**：詳解卷與題目卷之題號可能跨頁或順序微調，請務必根據「題目核心文字」與「年份題號」雙向核對，確保題目、選項與詳解完全對齊。若詳解卷中某題無解析，\`explanation\` 請填寫空字串 \`""\`，不可遺漏題目。
+    * **排序規則**：單元內各年份題目由新到舊排列（例如 B11、B10、B09）；在同一年份的題目中，統一依試卷題號由第 1 題遞增排序到最後一題。
+    * **內容保留**：禁止擅自修改或精簡題幹與詳解內容，但請自動「刪除句中多餘的連續空白與換行雜訊」。
+    * **連續性題組**：若遇到連續性題組（共同題幹），必須在每題的 \`question\` 欄位開頭自動補上該題組的「共同背景描述」，確保單看該題也能明確理解題意。
+    * **圖表與特殊符號**：若原題包含圖表或影像，請在 \`question\` 內以 \`[圖表：描述]\` 或 \`[圖片]\` 標記其相對位置。
+
+    ### 2. 格式與排版規範
+    * **純淨輸出**：整個輸出結果中【只能包含一個 JSON Code Block，內含完整的 banks 物件】。嚴禁在 Code Block 之外寫下任何「好的，以下是為您整理的...」或「注意：我修正了...」等任何人類對話或註解。
+    * **中文標點**：題目與詳解若為中文，請統一使用全形標點符號（如：，、？）。
+    * **上標與下標**：若出現化學式、生物標記或數學公式，請嚴格使用 LaTeX 語法包裹（例如：$CD4^+$、$T_{FH}$、\\text{pH} < 6.5）。
+    * **特殊符號替換**：禁止使用「~」符號，請一律轉換為文字，如「2到3」或「2 to 3」，避免 Markdown 渲染錯誤。
+
+    ### 3. 四大題型欄位規範（單選、是非 TF、多選、填空）
+    * **欄位切割**：嚴禁將解釋/詳解寫到題目中，亦不得將題目內容移至解釋中。
+    * **origin（出處）**：必須明確擷取並寫出原始考卷的「哪一年」的「哪一題」，例如 \`"出自 B11 考古第 1 題"\` 或 \`"出自 111學年度 區段考第 5 題"\`。請將原題幹開頭的題號序號刪除。
+    * **【單選題】**：
+      * \`options\`：若原始選項帶有 \`(1)(2)(3)(4)\` 或 \`1.2.3.4.\`，請一律**刪除這些前綴數字**，統一對應到大寫字母鍵值（\`"A"\`, \`"B"\`, \`"C"\`, \`"D"\`，若有第五選項為 \`"E"\`）。
+      * \`answer\`：必須為**單一字串**（嚴禁中括號或引號內多字母），且必須為 \`options\` 中的某一鍵。例如：\`"answer": "B"\`。
+    * **【是非題】**：
+      * \`options\`：欄位必須嚴格固定為 \`{"T": "True", "F": "False"}\`。若原題使用 \`(O)(X)\`，請自動在題目與詳解中更正為 \`(T)(F)\`。
+      * \`answer\`：必須為單一字串 \`"answer": "T"\` 或 \`"answer": "F"\`。
+    * **【多選題】**（題目註記多選，或官方答案包含兩個以上選項）：
+      * \`options\`：物件，包含 2 個以上選項（\`"A"\`, \`"B"\`, \`"C"\`...）。
+      * \`answer\`：必須使用 **JSON Array 格式**，包含所有正確選項代號，例如 \`"answer": ["A", "C"]\` 或 \`"answer": ["A", "B", "D"]\`。一個引號內嚴禁出現多個字母（禁止 \`"A/D"\` 或 \`"A, B"\`）。
+    * **【填空題 / 簡答題】**（無選項之問答、名詞解釋或填空）：
+      * \`options\`：**絕對不要建立 options 欄位（請在 JSON 中直接省略 options）**。
+      * \`answer\`：必須使用 **JSON Array 格式**，提供足以讓 Gemini 正確判讀作答對錯的標準答案或核心關鍵字即可（本系統由 Gemini 進行語意閱卷與評分，無需刻意窮舉所有同義詞、全稱或縮寫）。例如：\`"answer": ["BCR-ABL"]\` 或 \`"answer": ["現金股利"]\`。
+
+    ### 4. 詳解與 AI 校正機制（嚴禁在 JSON 外部寫註解）
+    * 每題均須配對對應的 \`explanation\`。
+    * **Gemini 註記機制**：當你發現原題的詳解有誤、答案有爭議、或是你有更精準的醫學解釋時，**請直接寫在該題的 \`explanation\` 欄位內部最後面**。
+    * 若修改了錯誤答案，\`answer\` 欄位請放上你認為的正確答案，並在 \`explanation\` 內容的最末端，自動換行並加上以下標記：
+      \`\\n\\n**Gemini：[在此輸入你認為更詳細的補充、正確答案或修正後的詳解]**\`
+  </constraints>
+
+  <output_schema>
+    以下示範依單元分類整理的結構。每個 banks 物件代表一個指定單元，單元內題目依來源年份由新到舊排列（例如 B11、B10...），請完整映射輸入資料的所有題目：
+\`\`\`json
+${schema}
 \`\`\`
   </output_schema>
 </prompt>`;
