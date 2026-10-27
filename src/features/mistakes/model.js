@@ -79,6 +79,8 @@ export function preparePractice(m, original) {
     if (q.options) {
         if (Array.isArray(q.answer) && q.answer.length === 1) q.answer = q.answer[0];
         q.options = normalizeQuestionOptions(q.options);
+    } else {
+        delete q.options;
     }
     return { ...q, isFillBlank: !q.options, isMultiSelect: !!q.options && Array.isArray(q.answer) && q.answer.length > 1,
         isAnswered: false, isConfirmed: false, isCorrect: null, userSelection: null,

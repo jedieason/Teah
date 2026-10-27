@@ -5,9 +5,18 @@ export function normalizeQuestion(q, source = '', index = 0) {
     // Legacy fallback is deterministic until the export migration is uploaded.
     let hash = 2166136261;
     for (const c of `${source}:${index}:${q.question}`) hash = Math.imul(hash ^ c.charCodeAt(0), 16777619);
-    const options = q.options ? normalizeQuestionOptions(q.options) : q.options;
-    return { ...q, options, questionId: q.questionId || `legacy_${(hash >>> 0).toString(16)}`, revision: q.revision || 1,
-        taxonomy: { subject: source.replace(/^_Archive_/, '').split(/[｜|/]/)[0] || '未分類', system: '', topic: '', subtopic: '', competency: '', difficulty: '', year: '', tags: [], ...q.taxonomy } };
+    const normalized = {
+        ...q,
+        questionId: q.questionId || `legacy_${(hash >>> 0).toString(16)}`,
+        revision: q.revision || 1,
+        taxonomy: { subject: source.replace(/^_Archive_/, '').split(/[｜|/]/)[0] || '未分類', system: '', topic: '', subtopic: '', competency: '', difficulty: '', year: '', tags: [], ...q.taxonomy }
+    };
+    if (q.options) {
+        normalized.options = normalizeQuestionOptions(q.options);
+    } else {
+        delete normalized.options;
+    }
+    return normalized;
 }
 export function schedule(previous, event) {
     const streak = event.isCorrect ? (previous?.streak || 0) + 1 : 0;

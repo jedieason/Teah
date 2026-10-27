@@ -1948,6 +1948,7 @@ function saveProgress() {
     if (!auth.currentUser || !selectedJson) return;
     allQuestions.forEach(q => {
         if (q.options) q.options = normalizeQuestionOptions(q.options);
+        else delete q.options;
     });
     const uid = auth.currentUser.uid;
     const quizName = sessionKind === 'custom' || isMistakePracticeMode || allQuestions.some(q => q.sourcePath && q.sourcePath !== selectedJson) ? `session_${sessionId}` : getQuizStorageName(selectedJson);
@@ -1964,6 +1965,7 @@ function updateProgressBar(isCorrect = null) {
 function rebuildMappingsAfterRestore() {
     allQuestions.forEach(q => {
         if (q.options) q.options = normalizeQuestionOptions(q.options);
+        else delete q.options;
     });
     if (!questions || questions.length === 0) return;
     allQuestions.forEach(q => {
@@ -2091,6 +2093,8 @@ function restoreProgress(quizName = null) {
         allQuestions.forEach(q => {
             if (q.options) {
                 q.options = normalizeQuestionOptions(q.options);
+            } else {
+                delete q.options;
             }
         });
 
@@ -3162,6 +3166,7 @@ async function startMistakePractice(items) {
         const index = stableIndex >= 0 ? stableIndex : source?.questions[m.originalIndex]?.question === m.question ? m.originalIndex : source?.questions.findIndex(q => q.question === m.question) ?? -1;
         const prep = preparePractice({ ...m, sourcePath: source?.path || m.sourcePath || m.quizKey, originalIndex: index }, index >= 0 ? source.questions[index] : null);
         if (prep.options) prep.options = normalizeQuestionOptions(prep.options);
+        else delete prep.options;
         return prep;
     });
     selectedJson = allQuestions[0].sourcePath;

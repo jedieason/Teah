@@ -35,3 +35,24 @@ test('analytics consent defaults to enabled and can be explicitly disabled', () 
     fakeStorage.set('teah-analytics-consent', 'no');
     assert.equal(isConsentGiven(fakeStorage), false);
 });
+
+test('normalizeQuestion for short answer fill-in question does not produce undefined options property', () => {
+    const shortAnswer = {
+        question: '自泌素（autacoid）的代表性物質包括組織胺與血清素，請問肥大細胞釋放的主要自泌素為何？',
+        answer: 'Histamine',
+        explanation: '肥大細胞主要顆粒成分為組織胺。'
+    };
+    const normalized = normalizeQuestion(shortAnswer, '病理學區段二｜自泌素', 44);
+    assert.equal('options' in normalized, false);
+    assert.equal(normalized.options, undefined);
+
+    // Verify recursive check that no property is undefined (Firebase update requirement)
+    function checkNoUndefined(obj, path = '') {
+        for (const [k, v] of Object.entries(obj)) {
+            const currentPath = path ? `${path}.${k}` : k;
+            assert.notEqual(v, undefined, `Property ${currentPath} must not be undefined`);
+            if (v && typeof v === 'object') checkNoUndefined(v, currentPath);
+        }
+    }
+    checkNoUndefined(normalized, '病理學區段二｜自泌素.44');
+});
