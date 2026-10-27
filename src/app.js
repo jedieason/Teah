@@ -14,7 +14,7 @@ import { readCatalog, writeBanks, validBankName, bankExists } from './services/c
 import { database, auth, googleProvider, GoogleAuthProvider, ref, get, update, set, remove, runTransaction, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithCredential, onAuthStateChanged, signOut } from './services/firebase.js';
 import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quizLabel } from './features/mistakes/model.js';
 import { createNotebook } from './features/mistakes/notebook.js';
-import { markdown } from './shared/content.js';
+import { markdown, getOrderedOptionEntries, normalizeQuestionOptions } from './shared/content.js';
 import { streamGemini } from './services/gemini-stream.js';
 import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
@@ -281,7 +281,7 @@ async function initQuiz() {
                 }
             }
 
-            q.options = newOptions;
+            q.options = normalizeQuestionOptions(newOptions);
             q.answer = newAnswer;
             q.explanation = updateExplanationOptions(q.explanation, labelMapping);
         }
@@ -468,7 +468,9 @@ function renderQuestion(index) {
         fillblankContainer.style.display = 'none';
         optionsContainer.innerHTML = '';
 
-        Object.entries(q.options).forEach(([key, value]) => {
+        if (q.options) q.options = normalizeQuestionOptions(q.options);
+
+        getOrderedOptionEntries(q.options).forEach(([key, value]) => {
             const button = document.createElement('button');
             button.classList.add('option-button');
             button.dataset.option = key;
@@ -1048,7 +1050,7 @@ function copyQuestion() {
     }
     let textToCopy = '';
     textToCopy += 'Question:\n' + currentQuestion.question + '\n';
-    for (let [optionKey, optionText] of Object.entries(currentQuestion.options)) {
+    for (let [optionKey, optionText] of getOrderedOptionEntries(currentQuestion.options)) {
         if (currentQuestion.isMultiSelect) {
             if (currentQuestion.answer.includes(optionKey)) {
                 textToCopy += optionKey + ': ' + optionText + ' (Correct)\n';
@@ -1944,6 +1946,9 @@ userQuestionInput.addEventListener('keydown', function (event) {
 
 function saveProgress() {
     if (!auth.currentUser || !selectedJson) return;
+    allQuestions.forEach(q => {
+        if (q.options) q.options = normalizeQuestionOptions(q.options);
+    });
     const uid = auth.currentUser.uid;
     const quizName = sessionKind === 'custom' || isMistakePracticeMode || allQuestions.some(q => q.sourcePath && q.sourcePath !== selectedJson) ? `session_${sessionId}` : getQuizStorageName(selectedJson);
     const progress = JSON.parse(JSON.stringify({ allQuestions, currentIndex, selectedJson, sessionId, sessionMode, sessionKind, sessionTimeLimit, lastUpdated: Date.now() }));
@@ -1957,6 +1962,9 @@ function updateProgressBar(isCorrect = null) {
 }
 
 function rebuildMappingsAfterRestore() {
+    allQuestions.forEach(q => {
+        if (q.options) q.options = normalizeQuestionOptions(q.options);
+    });
     if (!questions || questions.length === 0) return;
     allQuestions.forEach(q => {
         if (q.originalIndex === undefined || q.originalIndex === -1) {
@@ -2079,6 +2087,12 @@ function restoreProgress(quizName = null) {
             currentIndex = p.questionHistory ? p.questionHistory.length : 0;
             selectedJson = p.selectedJson;
         }
+
+        allQuestions.forEach(q => {
+            if (q.options) {
+                q.options = normalizeQuestionOptions(q.options);
+            }
+        });
 
         selectedJson = catalogPaths.find(path => getQuizStorageName(path) === getQuizStorageName(selectedJson)) || selectedJson;
         await loadQuestions();
@@ -2788,7 +2802,7 @@ function openErrataModal() {
         list.className = 'errata-options-list';
         const currentAnsList = Array.isArray(currentQuestion.answer) ? currentQuestion.answer : [currentQuestion.answer];
 
-        Object.entries(currentQuestion.options).forEach(([key, value]) => {
+        getOrderedOptionEntries(currentQuestion.options).forEach(([key, value]) => {
             const label = document.createElement('label');
             label.className = 'errata-option-item';
             if (currentAnsList.includes(key)) {
@@ -2815,7 +2829,7 @@ function openErrataModal() {
         list.className = 'errata-options-list';
         const currentAns = currentQuestion.answer;
 
-        Object.entries(currentQuestion.options).forEach(([key, value]) => {
+        getOrderedOptionEntries(currentQuestion.options).forEach(([key, value]) => {
             const label = document.createElement('label');
             label.className = 'errata-option-item';
             if (currentAns === key) {
@@ -3146,7 +3160,9 @@ async function startMistakePractice(items) {
         const source = sources.get(m.sourcePath || m.quizKey);
         const stableIndex = m.questionId ? source?.questions.findIndex(q => q.questionId === m.questionId) : -1;
         const index = stableIndex >= 0 ? stableIndex : source?.questions[m.originalIndex]?.question === m.question ? m.originalIndex : source?.questions.findIndex(q => q.question === m.question) ?? -1;
-        return preparePractice({ ...m, sourcePath: source?.path || m.sourcePath || m.quizKey, originalIndex: index }, index >= 0 ? source.questions[index] : null);
+        const prep = preparePractice({ ...m, sourcePath: source?.path || m.sourcePath || m.quizKey, originalIndex: index }, index >= 0 ? source.questions[index] : null);
+        if (prep.options) prep.options = normalizeQuestionOptions(prep.options);
+        return prep;
     });
     selectedJson = allQuestions[0].sourcePath;
     questions = sources.get(items[0].sourcePath || items[0].quizKey)?.questions || [];

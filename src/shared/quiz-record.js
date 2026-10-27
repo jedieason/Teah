@@ -1,4 +1,7 @@
 import { canonicalQuestion } from '../features/mistakes/model.js';
+import { isTrueFalseOptions, sortOptionKeys, getOrderedOptionEntries, normalizeQuestionOptions } from './content.js';
+
+export { isTrueFalseOptions, sortOptionKeys, getOrderedOptionEntries, normalizeQuestionOptions };
 
 export function resolveQuizTitle({ selectedJson = '', isMistakePracticeMode = false, sessionKind = 'bank', defaultTitle = '測驗' } = {}) {
     if (isMistakePracticeMode) return '錯題複習';
@@ -10,12 +13,6 @@ export function resolveQuizTitle({ selectedJson = '', isMistakePracticeMode = fa
 export function sanitizeFilename(name = '', fallback = '答題紀錄') {
     const clean = String(name || '').trim().replace(/[\\/:*?"<>|]/g, '_');
     return clean || fallback;
-}
-
-function sortOptionKeys(a, b) {
-    if (a === 'T' && b === 'F') return -1;
-    if (a === 'F' && b === 'T') return 1;
-    return a.localeCompare(b, 'zh-Hant');
 }
 
 function resolveOptionText(options, answer) {

@@ -1,6 +1,6 @@
 import { auth, database, ref, get, runTransaction } from '../../services/firebase.js';
 import { quizLabel } from '../mistakes/model.js';
-import { markdown } from '../../shared/content.js';
+import { markdown, getOrderedOptionEntries } from '../../shared/content.js';
 const node = (tag, text, parent, cls) => { const n = document.createElement(tag); if (text != null) n.textContent = text; if (cls) n.className = cls; parent?.append(n); return n; };
 const button = (label, parent, action, cls = 'secondary-button') => { const b = node('button', label, parent, cls); b.type = 'button'; b.onclick = action; return b; };
 const identity = q => JSON.stringify([q.source || '', q.question]);
@@ -52,7 +52,7 @@ export function createCollection({ host, activate, practice, renderMath, onRemov
         const close = button('關閉詳情', header, closePreview); close.focus();
         node('p', getSourceLabel(q.source) || '未分類', detail, 'collection-muted');
         node('div', null, detail, 'collection-question').innerHTML = markdown(q.question);
-        if (q.options) { const options = node('div', null, detail, 'collection-options'); for (const [key, value] of Object.entries(q.options)) node('div', null, options).innerHTML = markdown(`${key}. ${value}`); }
+        if (q.options) { const options = node('div', null, detail, 'collection-options'); for (const [key, value] of getOrderedOptionEntries(q.options)) node('div', null, options).innerHTML = markdown(`${key}. ${value}`); }
         const answer = node('details', null, detail, 'collection-answer');
         node('summary', '答案與詳解', answer);
         node('div', null, answer).innerHTML = markdown(`**答案：** ${Array.isArray(q.answer) ? q.answer.join('、') : q.answer || '未提供'}`);

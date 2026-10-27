@@ -2,6 +2,34 @@ export function markdown(value) {
     return DOMPurify.sanitize(marked.parse(String(value ?? '')), { ADD_ATTR: ['target'], FORBID_TAGS: ['style', 'iframe', 'form'] });
 }
 
+export function isTrueFalseOptions(options) {
+    if (!options || typeof options !== 'object') return false;
+    const keys = Object.keys(options);
+    return keys.length === 2 && keys.includes('T') && keys.includes('F');
+}
+
+export function sortOptionKeys(a, b) {
+    if (a === 'T' && b === 'F') return -1;
+    if (a === 'F' && b === 'T') return 1;
+    return a.localeCompare(b, 'zh-Hant');
+}
+
+export function getOrderedOptionEntries(options) {
+    if (!options || typeof options !== 'object') return [];
+    if (isTrueFalseOptions(options)) {
+        return [['T', options.T], ['F', options.F]];
+    }
+    return Object.entries(options);
+}
+
+export function normalizeQuestionOptions(options) {
+    if (!options || typeof options !== 'object') return options;
+    if (isTrueFalseOptions(options)) {
+        return { T: options.T, F: options.F };
+    }
+    return options;
+}
+
 export function validateQuiz(data) {
     const fail = (message, path) => { throw Object.assign(new Error(message), { path }); };
     if (!Array.isArray(data) || !data.length) fail('題庫必須是非空的題目陣列。', []);

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveQuizTitle, sanitizeFilename, buildQuizRecord } from '../src/shared/quiz-record.js';
+import { resolveQuizTitle, sanitizeFilename, buildQuizRecord, isTrueFalseOptions, sortOptionKeys, getOrderedOptionEntries, normalizeQuestionOptions } from '../src/shared/quiz-record.js';
 
 test('resolveQuizTitle correctly extracts bank name, handles archives, custom sessions and mistake practice', () => {
     assert.equal(resolveQuizTitle({ selectedJson: '檢驗醫學區段一｜B04 考古.json' }), '檢驗醫學區段一｜B04 考古');
@@ -153,4 +153,51 @@ test('buildQuizRecord generates complete answer record with correct, wrong and u
     const parsed = JSON.parse(jsonStr);
     assert.equal(parsed.title, '檢驗醫學區段一｜B04 考古');
     assert.equal(parsed.questions.length, 5);
+});
+
+test('True/False options always maintain True before False even when restored with False first', () => {
+    // 1. isTrueFalseOptions
+    assert.equal(isTrueFalseOptions({ T: 'True', F: 'False' }), true);
+    assert.equal(isTrueFalseOptions({ F: 'False', T: 'True' }), true);
+    assert.equal(isTrueFalseOptions({ A: '甲', B: '乙' }), false);
+    assert.equal(isTrueFalseOptions(null), false);
+    assert.equal(isTrueFalseOptions({ T: 'True' }), false);
+
+    // 2. sortOptionKeys
+    assert.equal(sortOptionKeys('T', 'F'), -1);
+    assert.equal(sortOptionKeys('F', 'T'), 1);
+    assert.equal(sortOptionKeys('A', 'B') < 0, true);
+    assert.equal(sortOptionKeys('B', 'A') > 0, true);
+
+    // 3. getOrderedOptionEntries with reversed options (as returned by Firebase)
+    const reversed = { F: 'False', T: 'True' };
+    const ordered = getOrderedOptionEntries(reversed);
+    assert.deepEqual(ordered, [['T', 'True'], ['F', 'False']]);
+
+    // 4. normalizeQuestionOptions
+    const normalized = normalizeQuestionOptions(reversed);
+    assert.deepEqual(Object.keys(normalized), ['T', 'F']);
+    assert.deepEqual(Object.entries(normalized), [['T', 'True'], ['F', 'False']]);
+    assert.equal(normalized.T, 'True');
+    assert.equal(normalized.F, 'False');
+
+    // 5. Preserving multiple choice options order
+    const mc = { B: '二', A: '一', C: '三' };
+    assert.deepEqual(getOrderedOptionEntries(mc), [['B', '二'], ['A', '一'], ['C', '三']]);
+    assert.deepEqual(Object.keys(normalizeQuestionOptions(mc)), ['B', 'A', 'C']);
+
+    // 6. buildQuizRecord with True/False question
+    const tfQuestion = {
+        question: '為避免病人不讓我做身體診察，我在病人面前要自稱為實習醫師',
+        options: { F: 'False', T: 'True' }, // Firebase / resumed progress order
+        answer: 'F',
+        explanation: '不必隱瞞醫學生身分。',
+        isAnswered: true,
+        isCorrect: true,
+        userSelection: 'F'
+    };
+    const tfRecord = buildQuizRecord([tfQuestion], { title: '病史詢問' });
+    const recordQ = tfRecord.questions[0];
+    assert.deepEqual(Object.keys(recordQ.options), ['T', 'F']);
+    assert.deepEqual(Object.entries(recordQ.options), [['T', 'True'], ['F', 'False']]);
 });

@@ -1,6 +1,6 @@
 import { createSelectMenu } from '../../shared/select-menu.js';
 import { flattenMistakes, filterMistakes } from './model.js';
-import { markdown } from '../../shared/content.js';
+import { markdown, sortOptionKeys } from '../../shared/content.js';
 
 const el = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -118,7 +118,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         card.append(meta, question);
         if (m.options) {
             const list = el('div', 'review-options');
-            Object.entries(m.options).sort(([a], [b]) => a.localeCompare(b)).forEach(([key, text]) => {
+            Object.entries(m.options).sort(([a], [b]) => sortOptionKeys(a, b)).forEach(([key, text]) => {
                 const row = el('div', 'review-option');
                 row.append(el('span', 'review-option-label', key));
                 const value = el('div'); value.innerHTML = markdown(text); row.append(value); list.append(row);

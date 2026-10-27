@@ -1,9 +1,12 @@
+import { normalizeQuestionOptions } from '../../shared/content.js';
+
 export const DAY = 86400000;
 export function normalizeQuestion(q, source = '', index = 0) {
     // Legacy fallback is deterministic until the export migration is uploaded.
     let hash = 2166136261;
     for (const c of `${source}:${index}:${q.question}`) hash = Math.imul(hash ^ c.charCodeAt(0), 16777619);
-    return { ...q, questionId: q.questionId || `legacy_${(hash >>> 0).toString(16)}`, revision: q.revision || 1,
+    const options = q.options ? normalizeQuestionOptions(q.options) : q.options;
+    return { ...q, options, questionId: q.questionId || `legacy_${(hash >>> 0).toString(16)}`, revision: q.revision || 1,
         taxonomy: { subject: source.replace(/^_Archive_/, '').split(/[｜|/]/)[0] || '未分類', system: '', topic: '', subtopic: '', competency: '', difficulty: '', year: '', tags: [], ...q.taxonomy } };
 }
 export function schedule(previous, event) {

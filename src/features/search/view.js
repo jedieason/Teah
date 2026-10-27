@@ -1,4 +1,4 @@
-import { markdown } from '../../shared/content.js';
+import { markdown, getOrderedOptionEntries } from '../../shared/content.js';
 import { quizLabel } from '../mistakes/model.js';
 import { normalizeSearchText } from './model.js';
 import { createSearchLoader } from './loader.js';
@@ -74,7 +74,7 @@ export function mountQuestionSearch({ input, host, readBank, getUser, getScope, 
             const question = node('div', null, card, 'question-search-question'); question.innerHTML = markdown(q.question); renderMath(question); highlight(question, query);
             if (q.options) {
                 const options = node('ol', null, card, 'question-search-options'); options.setAttribute('aria-label', '選項');
-                for (const [key, value] of Object.entries(q.options)) {
+                for (const [key, value] of getOrderedOptionEntries(q.options)) {
                     const option = node('li', null, options); node('span', key, option, 'question-search-option-key');
                     const content = node('div', null, option); content.innerHTML = markdown(value); renderMath(content); highlight(content, query);
                 }

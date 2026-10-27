@@ -1,3 +1,5 @@
+import { normalizeQuestionOptions } from '../../shared/content.js';
+
 // Pure helpers shared by the notebook, practice sessions and persistence.
 export function quizLabel(key = '') {
     const clean = key.replace(/^_Archive_/, '').replace(/\.json$/, '');
@@ -41,7 +43,8 @@ export function filterMistakes(items, { query = '', subject = '', subjects = nul
 export function canonicalQuestion(question) {
     const mapping = question.reverseLabelMapping || {};
     const mapAnswer = value => Array.isArray(value) ? value.map(v => mapping[v] || v) : mapping[value] || value;
-    const options = question.options ? Object.fromEntries(Object.entries(question.options).map(([k, v]) => [mapping[k] || k, v])) : null;
+    const rawOptions = question.options ? Object.fromEntries(Object.entries(question.options).map(([k, v]) => [mapping[k] || k, v])) : null;
+    const options = rawOptions ? normalizeQuestionOptions(rawOptions) : null;
     const explanation = typeof question.explanation === 'string' ? question.explanation.replace(/[（(]\s*([A-L])\s*[）)]/g,
         (match, letter) => mapping[letter] ? `(${mapping[letter]})` : match) : '';
     return {
@@ -73,7 +76,10 @@ export function applyAttempt(previous, snapshot, { correct, eventId, now }) {
 export function preparePractice(m, original) {
     const snapshot = canonicalQuestion(m);
     const q = original ? { ...snapshot, ...original } : snapshot;
-    if (q.options && Array.isArray(q.answer) && q.answer.length === 1) q.answer = q.answer[0];
+    if (q.options) {
+        if (Array.isArray(q.answer) && q.answer.length === 1) q.answer = q.answer[0];
+        q.options = normalizeQuestionOptions(q.options);
+    }
     return { ...q, isFillBlank: !q.options, isMultiSelect: !!q.options && Array.isArray(q.answer) && q.answer.length > 1,
         isAnswered: false, isConfirmed: false, isCorrect: null, userSelection: null,
         reverseLabelMapping: null, mistakeQuizKey: m.quizKey, mistakeRecordPath: m.recordPath,
