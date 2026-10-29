@@ -1,6 +1,7 @@
 import { createCollection } from './features/collections/view.js';
 import { mountQuestionSearch } from './features/search/view.js';
 import { mountBankLibrary } from './features/library/view.js';
+import { mountContentEditor } from './features/library/content-editor.js';
 import { mountSidebar } from './shared/sidebar.js';
 import { mountFlashcard } from './features/flashcard/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
@@ -3369,6 +3370,14 @@ async function openQuizActionModal(key, progress) {
         }
     }
 
+    const editContentBtn = document.getElementById('quizActionEditContentBtn');
+    if (editContentBtn) {
+        editContentBtn.onclick = () => {
+            closeQuizActionModal();
+            contentEditor?.open(key);
+        };
+    }
+
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     (showResume ? resumeBtn : restartBtn).focus();
@@ -3481,14 +3490,25 @@ if (quizActionCloseBtn) quizActionCloseBtn.addEventListener('click', () => {
 document.getElementById('homeMistakes').onclick = () => openMistakeView();
 document.getElementById('homeStarred').onclick = () => openCollectionPage();
 const unitsGrid = document.getElementById('units-grid');
+let questionSearch;
+const contentEditor = mountContentEditor({
+    readBank, writeBanks,
+    getUser: () => auth.currentUser?.uid,
+    onChanged: async changes => {
+        await fetchQuizList();
+        if (questionSearch) questionSearch.refresh();
+        await updateRestorePreview(auth.currentUser);
+    }
+});
 const bankLibrary = mountBankLibrary({
     grid: unitsGrid, navigation: document.getElementById('folder-breadcrumb'), input: document.getElementById('bankSearch'),
     getUser: () => auth.currentUser?.uid,
     getProgress: key => userProgressCache[key], getStorageKey: getQuizStorageName,
     onFolder: folder => { currentActiveFolder = folder; },
     onOpen: key => openQuizActionModal(key, userProgressCache[getQuizStorageName(key)]),
+    onEditContent: (key, idx) => contentEditor.open(key, idx),
     onManage: managing => { const label = menuEditQuizName?.querySelector('.item-label'); if (label) label.textContent = managing ? '完成管理' : '管理題庫'; },
-    refreshSearch: () => questionSearch.refresh(),
+    refreshSearch: () => questionSearch?.refresh(),
     onChanged: async changes => {
         if (selectedJson && changes[selectedJson] === null) selectedJson = null;
         await fetchQuizList();
@@ -3497,10 +3517,11 @@ const bankLibrary = mountBankLibrary({
 });
 const libraryAddBtn = document.getElementById('libraryAdd');
 if (libraryAddBtn) libraryAddBtn.onclick = () => openUploadModal('paste');
-const questionSearch = mountQuestionSearch({
+questionSearch = mountQuestionSearch({
     input: document.getElementById('bankSearch'), host: document.getElementById('questionSearch'), readBank,
     getUser: () => auth.currentUser?.uid, getScope: () => libraryPage, renderMath: renderLatex,
     filterBanks: query => bankLibrary.filter(query),
+    editQuestion: (path, idx) => contentEditor.open(path, idx),
     practice: async q => {
         customSession = { questions: [q], mode: 'study', shuffleOptions: false, timeLimit: 0 }; selectedJson = q.sourcePath;
         await initQuiz(); document.querySelector('.quiz-title').textContent = '搜尋練習';

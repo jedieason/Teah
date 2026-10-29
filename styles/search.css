@@ -6,6 +6,7 @@
 .question-search-list { display:grid; gap:16px; margin:16px 0; }
 .question-search-card { border:1px solid var(--ui-border); border-radius:var(--ui-radius); background:var(--surface-color); padding:24px; min-width:0; overflow-wrap:anywhere; }
 .question-search-card-header { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.question-search-card-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
 .question-search-card-header h4 { margin:0; color:var(--ui-muted); font:500 13px/1.7 var(--ui-font); min-width:0; }
 .question-search-card-header button { flex-shrink:0; }
 .question-search-question { font:16px/1.8 var(--ui-font); margin:16px 0; }

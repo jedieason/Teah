@@ -201,6 +201,7 @@
         <label class="bank-select-all"><input id="bankSelectAll" type="checkbox" aria-label="選取目前顯示的全部題庫"><span>全選</span></label>
         <span id="bankSelectionCount" role="status" aria-live="polite">已選取 0 份</span>
         <div class="bank-selection-actions">
+          <button id="bankBatchEditContent" class="bank-text-button" type="button" disabled>編輯題目</button>
           <button id="bankBatchRename" class="bank-text-button" type="button" disabled>重新命名</button>
           <button id="bankBatchArchive" class="bank-text-button" type="button" disabled>移至典藏</button>
           <button id="bankBatchDelete" class="bank-text-button bank-danger" type="button" disabled>刪除</button>
@@ -698,6 +699,49 @@ NSAID、抗黴菌、抗病毒
   </form>
 </div>
 
+<!-- Bank content JSON editor dialog: edit entire bank or single question -->
+<div id="bankContentEditModal" class="md3-modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="bankContentEditTitle">
+  <div class="md3-dialog bank-content-edit-dialog">
+    <div class="md3-dialog-header">
+      <div class="dialog-header-text">
+        <p id="bankContentEditSubject" class="dialog-eyebrow"></p>
+        <h3 class="md3-dialog-title" id="bankContentEditTitle">編輯題目內容</h3>
+      </div>
+      <button class="dialog-close modal-close" id="bankContentEditCloseBtn" type="button" aria-label="關閉">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg>
+      </button>
+    </div>
+    <div class="md3-dialog-body">
+      <div class="bank-edit-scope-bar">
+        <div class="bank-edit-scope-tabs" role="tablist" aria-label="編輯範圍">
+          <button type="button" role="tab" id="bankEditScopeAll" class="bank-edit-tab active" aria-selected="true">整個單元</button>
+          <button type="button" role="tab" id="bankEditScopeSingle" class="bank-edit-tab" aria-selected="false">單一題目</button>
+        </div>
+        <div id="bankEditQuestionPickerWrap" class="bank-edit-picker-wrap" hidden>
+          <label for="bankEditQuestionSelect" class="bank-edit-label">題號：</label>
+          <select id="bankEditQuestionSelect" class="bank-edit-select" aria-label="選擇題目"></select>
+        </div>
+      </div>
+      <div class="bank-edit-toolbar">
+        <span id="bankEditMetaInfo" class="bank-edit-meta">共 0 題</span>
+        <div class="bank-edit-tools">
+          <button type="button" id="bankEditCopyBtn" class="bank-text-button" title="複製 JSON 至剪貼簿">複製 JSON</button>
+          <button type="button" id="bankEditFormatBtn" class="bank-text-button" title="重新排版 JSON">排版格式</button>
+        </div>
+      </div>
+      <div class="bank-edit-textarea-wrapper">
+        <textarea id="bankContentEditTextarea" class="bank-edit-textarea" placeholder="載入題目中…" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+      </div>
+      <p id="bankContentEditError" class="bank-action-error" role="alert" hidden></p>
+      <p id="bankContentEditStatus" class="bank-edit-status" role="status" aria-live="polite" hidden></p>
+    </div>
+    <div class="md3-dialog-actions">
+      <button class="md3-text-btn" id="bankContentEditCancelBtn" type="button">取消</button>
+      <button class="md3-filled-btn" id="bankContentEditSaveBtn" type="button">儲存</button>
+    </div>
+  </div>
+</div>
+
 <!-- Quiz entry shares the same dialog shell as editing tools. -->
 <div id="quizActionModal" class="md3-modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="quizActionTitle">
   <div class="md3-dialog quiz-entry-dialog">
@@ -723,6 +767,7 @@ NSAID、抗黴菌、抗病毒
       </label>
     </div>
     <div class="quiz-action-options">
+      <button id="quizActionEditContentBtn" class="secondary-button" type="button">編輯題目</button>
       <button id="quizActionResumeBtn" class="primary-button"><span>繼續測驗</span><span aria-hidden="true">→</span></button>
       <button id="quizActionRestartBtn" class="primary-button"><span>開始測驗</span><span aria-hidden="true">→</span></button>
     </div>

@@ -41,7 +41,7 @@ function highlight(root, query) {
     }
 }
 
-export function mountQuestionSearch({ input, host, readBank, getUser, getScope, renderMath, practice, filterBanks }) {
+export function mountQuestionSearch({ input, host, readBank, getUser, getScope, renderMath, practice, editQuestion, filterBanks }) {
     const loader = createSearchLoader({ readBank, plainText });
     let request = 0, timer, composing = false, catalogReady = false;
     let results = [], limit = 20;
@@ -63,7 +63,15 @@ export function mountQuestionSearch({ input, host, readBank, getUser, getScope, 
             const header = node('header', null, card, 'question-search-card-header');
             const label = quizLabel(q.sourcePath.replace(/^_Archive_/, ''));
             node('h4', `${label.subject} · ${label.title} · 第 ${q.originalIndex + 1} 題`, header);
-            const go = button('練習此題', header, async () => {
+            const actions = node('div', null, header, 'question-search-card-actions');
+            if (editQuestion) {
+                button('編輯此題', actions, () => {
+                    const uid = getUser();
+                    if (!uid) { status.textContent = '請先登入。'; return; }
+                    editQuestion(q.sourcePath, q.originalIndex);
+                });
+            }
+            const go = button('練習此題', actions, async () => {
                 go.disabled = true; const uid = getUser();
                 try { if (!uid) throw new Error('請先登入。'); await practice(q); }
                 catch (error) { if (uid === getUser()) status.textContent = error.message || '無法開始練習，請重試。'; }

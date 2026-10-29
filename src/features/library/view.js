@@ -24,7 +24,7 @@ export function bankLabel(key) {
     return split < 0 ? { subject: '其他', title: clean } : { subject: clean.slice(0, split), title: clean.slice(split + 1) };
 }
 
-export function mountBankLibrary({ grid, navigation, input, getUser, getProgress, getStorageKey, onFolder, onOpen, onChanged, onManage, refreshSearch }) {
+export function mountBankLibrary({ grid, navigation, input, getUser, getProgress, getStorageKey, onFolder, onOpen, onEditContent, onChanged, onManage, refreshSearch }) {
     const $ = id => document.getElementById(id);
     let catalog = {}, archived = false, folder = null, query = '', managing = false;
     let selection = new Set(), visibleKeys = [], menu = null, menuTrigger = null;
@@ -58,6 +58,8 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         selectAll.indeterminate = visibleKeys.some(key => selection.has(key)) && !selectAll.checked;
         selectAll.disabled = !visibleKeys.length;
         $('bankBatchRename').disabled = count !== 1;
+        const editContentBtn = $('bankBatchEditContent');
+        if (editContentBtn) editContentBtn.disabled = count !== 1;
         $('bankBatchArchive').disabled = $('bankBatchDelete').disabled = $('bankSelectionClear').disabled = count === 0;
         $('bankBatchArchive').textContent = archived ? '還原至題庫' : '移至典藏';
         for (const card of grid.querySelectorAll('[data-json]')) {
@@ -96,11 +98,18 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         menu = node('div', null, document.body, 'bank-action-menu'); menu.id = 'bankActionMenu';
         menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', `${bankLabel(key).title}的操作`);
         trigger.setAttribute('aria-controls', menu.id);
-        for (const [label, action] of [['選取', 'select'], ['重新命名', 'rename'], [archived ? '還原至題庫' : '移至典藏', 'archive'], ['刪除題庫', 'delete']]) {
+        for (const [label, action] of [
+            ['選取', 'select'],
+            ['編輯題目', 'editContent'],
+            ['重新命名', 'rename'],
+            [archived ? '還原至題庫' : '移至典藏', 'archive'],
+            ['刪除題庫', 'delete']
+        ]) {
             const item = button(label, menu, () => {
                 closeMenu(true);
                 if (!requireUser()) return;
                 if (action === 'select') { if (!managing) setManaging(true); toggle(key); }
+                else if (action === 'editContent') { onEditContent?.(key); }
                 else openAction(action, [key]);
             }, action === 'delete' ? 'bank-menu-item bank-danger' : 'bank-menu-item');
             item.setAttribute('role', 'menuitem');
@@ -268,6 +277,8 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
     if (libraryManageBtn) libraryManageBtn.onclick = () => setManaging(!managing);
     selectAll.onchange = () => { selection = selectAll.checked ? new Set(visibleKeys) : new Set(); updateSelection(); };
     $('bankSelectionClear').onclick = () => { selection.clear(); updateSelection(); selectAll.focus(); };
+    const batchEditContentBtn = $('bankBatchEditContent');
+    if (batchEditContentBtn) batchEditContentBtn.onclick = () => { if (selection.size === 1) onEditContent?.([...selection][0]); };
     for (const [id, action] of [['bankBatchRename', 'rename'], ['bankBatchArchive', 'archive'], ['bankBatchDelete', 'delete']]) $(id).onclick = () => openAction(action, [...selection]);
     document.addEventListener('pointerdown', event => { if (menu && !menu.contains(event.target) && event.target !== menuTrigger && !menuTrigger?.contains(event.target)) closeMenu(); });
     document.addEventListener('focusin', event => { if (menu && !menu.contains(event.target) && event.target !== menuTrigger) closeMenu(); });
