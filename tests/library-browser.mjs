@@ -28,6 +28,18 @@ const menuAction = async (title, action) => {
     await page.getByRole('button', { name: `${title}的更多操作`, exact: true }).click();
     await page.getByRole('menuitem', { name: action, exact: true }).click();
 };
+const toggleManage = async () => {
+    const isMobile = await page.evaluate(() => innerWidth <= 700);
+    if (isMobile && await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'false') {
+        await page.locator('#sidebarToggle').click();
+        await page.locator('#siteSidebar').waitFor({ state: 'visible' });
+    }
+    await page.locator('#controlsMenuBtn').click();
+    await page.locator('#menuEditQuizName').click();
+    if (isMobile && await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'true') {
+        await page.locator('#sidebarToggle').click();
+    }
+};
 const navigate = async name => {
     if (await page.evaluate(() => innerWidth <= 700) && await page.locator('#sidebarToggle').getAttribute('aria-expanded') === 'false') await page.locator('#sidebarToggle').click();
     await page.getByRole('button', { name, exact: true }).click();
@@ -49,7 +61,7 @@ try {
     assert.equal(await page.locator('.bank-list').count(), 1);
     await page.getByLabel('題庫排序', { exact: true }).selectOption('count');
     assert.match(await cards.first().innerText(), /NSAID, Steroid/);
-    await page.locator('#libraryManage').click();
+    await toggleManage();
     assert.equal(await page.locator('#bankBatchDelete').isDisabled(), true);
     const check = name => page.getByRole('checkbox', { name: `選取 ${name}`, exact: true });
     await check('免疫療法').check();
@@ -60,12 +72,7 @@ try {
     assert.equal(await page.locator('.bank-card.is-selected').count(), 2);
     await page.locator('#bankSelectAll').check(); assert.equal(await page.locator('.bank-card.is-selected').count(), 15);
     await page.locator('#bankSelectionClear').click();
-    await check('抗生素').check();
-    await page.locator('#bankSearch').fill('免疫');
-    assert.equal(await cards.count(), 1); assert.match(await page.locator('#bankSelectionCount').innerText(), /0 份/);
-    await page.locator('#bankSelectAll').check();
-    assert.match(await page.locator('#bankSelectionCount').innerText(), /1 份/);
-    await page.locator('#bankSearch').fill(''); assert.match(await page.locator('#bankSelectionCount').innerText(), /0 份/);
+    assert.match(await page.locator('#bankSelectionCount').innerText(), /0 份/);
     await check('免疫療法').check(); await check('抗生素').check();
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: 'artifacts/qa/library-selection-desktop.png', fullPage: true });
@@ -89,7 +96,7 @@ try {
     assert.equal(await page.evaluate(() => window.__testDatabase.progress['test-user'].starred.length), 1);
     await page.waitForFunction(() => document.querySelectorAll('.bank-card').length === 13);
     await settled();
-    await page.locator('#libraryManage').click();
+    await toggleManage();
     // Rename validation and collision failure preserve the original content and identity.
     await menuAction('寄生蟲藥物', '重新命名');
     await page.locator('#bankRenameTitle').fill(''); await page.locator('#archiveActionBtn').click();
@@ -100,7 +107,7 @@ try {
     await page.waitForFunction(() => !!window.__testDatabase.quizCatalog['藥理區段一｜寄生蟲藥物（新版）']);
     await settled();
     assert.equal(await page.evaluate(() => window.__testDatabase.quizCatalog['藥理區段一｜寄生蟲藥物（新版）'].storageKey), keys[4]);
-    await page.locator('#libraryManage').click(); await check('B03 考古').check(); await check('B04 考古').check();
+    await toggleManage(); await check('B03 考古').check(); await check('B04 考古').check();
     await page.locator('#bankBatchArchive').click(); await page.locator('#archiveActionBtn').click();
     await page.waitForFunction(key => !!window.__testDatabase[`_Archive_${key}`] && !window.__testDatabase[key], keys[5]);
     assert.equal(await page.evaluate(key => window.__testDatabase.quizCatalog[`_Archive_${key}`].storageKey, keys[6]), keys[6]);
@@ -116,7 +123,7 @@ try {
     await page.locator('#bankBatchDelete').click();
     const actionBox = await page.locator('#archiveActionBtn').boundingBox(); assert.ok(actionBox.y >= 0 && actionBox.y + actionBox.height <= 844);
     await page.screenshot({ path: 'artifacts/qa/library-delete-mobile.png', fullPage: true }); await page.keyboard.press('Escape');
-    await page.locator('#libraryManage').click(); await cards.first().locator('.bank-more').click();
+    await toggleManage(); await cards.first().locator('.bank-more').click();
     const menuBox = await page.locator('#bankActionMenu').boundingBox(); assert.ok(menuBox.x >= 0 && menuBox.x + menuBox.width <= 390);
     await page.keyboard.press('Escape');
     await page.evaluate(() => document.documentElement.classList.add('dark-mode'));

@@ -2545,11 +2545,17 @@ function showLibraryPage(page) {
     if (['library', 'archive'].includes(page)) {
         viewArchiveMode = page === 'archive';
         currentActiveFolder = libraryLocations[page].folder;
-        document.getElementById('libraryPageTitle').textContent = viewArchiveMode ? '典藏庫' : '題庫';
+        const pageTitle = document.getElementById('libraryPageTitle');
+        const sectionHeader = document.getElementById('librarySectionHeader');
+        if (pageTitle) pageTitle.textContent = viewArchiveMode ? '典藏庫' : '';
+        if (sectionHeader) sectionHeader.hidden = !viewArchiveMode;
         document.querySelector('.home-content').classList.toggle('archive-page', viewArchiveMode);
         const search = document.getElementById('bankSearch');
-        search.placeholder = viewArchiveMode ? '搜尋典藏題庫、題目或選項' : '搜尋題庫、題目或選項';
-        search.value = libraryLocations[page].query;
+        if (search) {
+            search.placeholder = viewArchiveMode ? '搜尋典藏題目或選項' : '搜尋題目或選項';
+            search.setAttribute('aria-label', search.placeholder);
+            search.value = libraryLocations[page].query;
+        }
         const requested = page;
         fetchQuizList().then(() => { if (libraryPage === requested) window.scrollTo(0, libraryLocations[page].scroll); });
     } else window.scrollTo(0, libraryLocations[page].scroll);
@@ -3481,7 +3487,7 @@ const bankLibrary = mountBankLibrary({
     getProgress: key => userProgressCache[key], getStorageKey: getQuizStorageName,
     onFolder: folder => { currentActiveFolder = folder; },
     onOpen: key => openQuizActionModal(key, userProgressCache[getQuizStorageName(key)]),
-    onManage: managing => { const label = menuEditQuizName?.querySelector('.item-label'); if (label) label.textContent = managing ? '完成管理' : '編輯題庫'; },
+    onManage: managing => { const label = menuEditQuizName?.querySelector('.item-label'); if (label) label.textContent = managing ? '完成管理' : '管理題庫'; },
     refreshSearch: () => questionSearch.refresh(),
     onChanged: async changes => {
         if (selectedJson && changes[selectedJson] === null) selectedJson = null;
@@ -3489,7 +3495,8 @@ const bankLibrary = mountBankLibrary({
         await updateRestorePreview(auth.currentUser);
     }
 });
-document.getElementById('libraryAdd').onclick = () => openUploadModal('paste');
+const libraryAddBtn = document.getElementById('libraryAdd');
+if (libraryAddBtn) libraryAddBtn.onclick = () => openUploadModal('paste');
 const questionSearch = mountQuestionSearch({
     input: document.getElementById('bankSearch'), host: document.getElementById('questionSearch'), readBank,
     getUser: () => auth.currentUser?.uid, getScope: () => libraryPage, renderMath: renderLatex,

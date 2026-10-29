@@ -53,6 +53,7 @@ export function mountQuestionSearch({ input, host, readBank, getUser, getScope, 
     function cancel() {
         request++; clearTimeout(timer); host.hidden = true; host.setAttribute('aria-busy', 'false');
         list.replaceChildren(); results = []; more.hidden = true; retry.hidden = true;
+        filterBanks?.('');
     }
     function renderResults(append = false) {
         if (!append) list.replaceChildren();

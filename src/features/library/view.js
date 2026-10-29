@@ -72,8 +72,12 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         if (busy) return;
         if (value && !requireUser()) return;
         managing = value; selection.clear(); closeMenu();
-        $('libraryManage').textContent = value ? '完成管理' : '管理題庫';
-        $('libraryManage').setAttribute('aria-pressed', String(value)); onManage(value);
+        const manageBtn = $('libraryManage');
+        if (manageBtn) {
+            manageBtn.textContent = value ? '完成管理' : '管理題庫';
+            manageBtn.setAttribute('aria-pressed', String(value));
+        }
+        onManage(value);
         render();
     }
     function toggle(key) {
@@ -120,7 +124,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
             button(archived ? '典藏庫' : '全部科目', location, () => navigate(null));
             node('span', '／', location, 'bank-muted');
             node('h3', folder, location, 'folder-title');
-        } else node('h3', query ? '符合的題庫' : managing ? '全部題庫' : '全部科目', location, 'folder-title');
+        } else node('h3', managing ? '全部題庫' : '全部科目', location, 'folder-title');
         node('span', `${keys.length} 份 · ${keys.reduce((sum, key) => sum + (catalog[key]?.count || 0), 0)} 題`, location, 'bank-summary');
         const controls = node('div', null, navigation, 'bank-view-controls');
         const sortLabel = node('label', '排序', controls, 'bank-sort-label');
@@ -140,14 +144,17 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
     }
     function render() {
         closeMenu();
+        const searching = Boolean(query);
+        navigation.hidden = searching;
+        grid.hidden = searching;
+        if (bar) bar.hidden = searching || !managing;
         const keys = Object.keys(catalog).filter(key => key.startsWith('_Archive_') === archived);
-        const scoped = keys.filter(key => (!folder || bankLabel(key).subject === folder) &&
-            (!query || normalizeSearchText(key.replace(/^_Archive_/, '')).includes(query)));
+        const scoped = keys.filter(key => !folder || bankLabel(key).subject === folder);
         scoped.sort((a, b) => (sort === 'count' ? (catalog[b]?.count || 0) - (catalog[a]?.count || 0) :
             sort === 'progress' ? progress(b).percent - progress(a).percent : 0) || a.localeCompare(b, 'zh-Hant', { numeric: true }));
         visibleKeys = scoped;
         renderNavigation(scoped);
-        const folders = !folder && !query && !managing;
+        const folders = !folder && !managing;
         grid.className = `units-grid bank-library-grid ${layout === 'list' ? 'bank-list' : ''} ${managing ? 'is-managing' : ''} ${folders ? 'bank-folders' : ''}`;
         grid.replaceChildren();
         if (folders) {
@@ -187,8 +194,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         }
         if (!scoped.length) {
             const empty = node('div', null, grid, 'empty-state');
-            node('p', query ? '沒有符合的題庫' : archived ? '尚無典藏題庫' : '目前沒有題庫', empty);
-            if (query) button('清除搜尋', empty, () => { input.value = ''; refreshSearch(); input.focus(); });
+            node('p', archived ? '尚無典藏題庫' : '目前沒有題庫', empty);
         }
         updateSelection();
     }
@@ -247,7 +253,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
                     catalog[key] = { count: value.length, storageKey: previous[source]?.storageKey || getStorageKey(source) };
                 }
             }
-            render(); $('libraryManage').focus({ preventScroll: true });
+            render(); $('libraryManage')?.focus({ preventScroll: true });
             await onChanged(changes);
         } catch (cause) {
             error.textContent = /permission/i.test(`${cause.code || ''} ${cause.message}`)
@@ -258,7 +264,8 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
             form.setAttribute('aria-busy', 'false'); confirm.textContent = label;
         }
     };
-    $('libraryManage').onclick = () => setManaging(!managing);
+    const libraryManageBtn = $('libraryManage');
+    if (libraryManageBtn) libraryManageBtn.onclick = () => setManaging(!managing);
     selectAll.onchange = () => { selection = selectAll.checked ? new Set(visibleKeys) : new Set(); updateSelection(); };
     $('bankSelectionClear').onclick = () => { selection.clear(); updateSelection(); selectAll.focus(); };
     for (const [id, action] of [['bankBatchRename', 'rename'], ['bankBatchArchive', 'archive'], ['bankBatchDelete', 'delete']]) $(id).onclick = () => openAction(action, [...selection]);
@@ -276,15 +283,27 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
     document.addEventListener('scroll', () => positionMenu(), true);
     return {
         render(data, options) {
-            if (owner !== getUser() || archived !== options.archived) { selection.clear(); managing = false; $('libraryManage').textContent = '管理題庫'; $('libraryManage').setAttribute('aria-pressed', 'false'); onManage(false); }
+            if (owner !== getUser() || archived !== options.archived) {
+                selection.clear(); managing = false;
+                const manageBtn = $('libraryManage');
+                if (manageBtn) { manageBtn.textContent = '管理題庫'; manageBtn.setAttribute('aria-pressed', 'false'); }
+                onManage(false);
+            }
             owner = getUser(); catalog = { ...data }; archived = options.archived; folder = options.folder;
             selection = new Set([...selection].filter(key => catalog[key]));
             if (folder && !Object.keys(catalog).some(key => key.startsWith('_Archive_') === archived && bankLabel(key).subject === folder)) { folder = null; onFolder(null); }
             query = normalizeSearchText(input.value); render();
         },
-        filter(value) { if (query === value) return; query = value; selection.clear(); render(); },
+        filter(value) {
+            if (query === value) return;
+            query = value; selection.clear();
+            const searching = Boolean(value);
+            navigation.hidden = searching;
+            grid.hidden = searching;
+            if (bar) bar.hidden = searching || !managing;
+        },
         toggleManage() { setManaging(!managing); },
         stopManaging() { setManaging(false); },
-        resetForUser() { selection.clear(); setManaging(false); dismiss(); status.textContent = ''; },
+        resetForUser() { selection.clear(); setManaging(false); dismiss(); status.textContent = ''; navigation.hidden = false; grid.hidden = false; },
     };
 }
