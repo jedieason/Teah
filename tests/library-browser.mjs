@@ -129,7 +129,25 @@ try {
     await page.evaluate(() => document.documentElement.classList.add('dark-mode'));
     await page.screenshot({ path: 'artifacts/qa/library-dark-mobile.png', fullPage: true });
     await page.evaluate(() => document.documentElement.classList.remove('dark-mode'));
+    // Return to root and test archiving an entire unit in managing mode
+    await page.locator('.folder-back').click();
+    await toggleManage();
+    const pathologyCheck = page.getByRole('checkbox', { name: '選取 病理區段一 單元', exact: true });
+    await pathologyCheck.check();
+    assert.match(await page.locator('#bankSelectionCount').innerText(), /1 個單元/);
+    await page.locator('#bankBatchArchive').click();
+    assert.match(await page.locator('#archiveConfirmTitle').innerText(), /移至典藏/);
+    await page.locator('#archiveActionBtn').click();
+    await page.waitForFunction(() => !!window.__testDatabase['_Archive_病理區段一｜細胞'] && !window.__testDatabase['病理區段一｜細胞']);
+    await settled();
+    await toggleManage();
     await navigate('典藏庫');
+    // Test restoring an entire unit from the folder more menu
+    await page.getByRole('button', { name: '病理區段一單元的更多操作', exact: true }).click();
+    await page.getByRole('menuitem', { name: '還原整個單元', exact: true }).click();
+    await page.locator('#archiveActionBtn').click();
+    await page.waitForFunction(() => !!window.__testDatabase['病理區段一｜細胞'] && !window.__testDatabase['_Archive_病理區段一｜細胞']);
+    await settled();
     await page.locator('.bank-folder').filter({ hasText: '藥理區段一' }).click();
     await menuAction('B03 考古', '還原至題庫'); await page.locator('#archiveActionBtn').click();
     await page.waitForFunction(key => !!window.__testDatabase[key] && !window.__testDatabase[`_Archive_${key}`], keys[5]);

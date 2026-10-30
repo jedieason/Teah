@@ -53,7 +53,13 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
     function updateSelection() {
         bar.hidden = !managing;
         const count = selection.size;
-        $('bankSelectionCount').textContent = `已選取 ${count} 份${count ? ` · ${[...selection].reduce((sum, key) => sum + (catalog[key]?.count || 0), 0)} 題` : ''}`;
+        const totalQuestions = [...selection].reduce((sum, key) => sum + (catalog[key]?.count || 0), 0);
+        if (!folder && count > 0) {
+            const selectedSubjects = new Set([...selection].map(k => bankLabel(k).subject));
+            $('bankSelectionCount').textContent = `已選取 ${selectedSubjects.size} 個單元（共 ${count} 份 · ${totalQuestions} 題）`;
+        } else {
+            $('bankSelectionCount').textContent = `已選取 ${count} 份${count ? ` · ${totalQuestions} 題` : ''}`;
+        }
         selectAll.checked = visibleKeys.length > 0 && visibleKeys.every(key => selection.has(key));
         selectAll.indeterminate = visibleKeys.some(key => selection.has(key)) && !selectAll.checked;
         selectAll.disabled = !visibleKeys.length;
@@ -65,9 +71,31 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         for (const card of grid.querySelectorAll('[data-json]')) {
             const selected = selection.has(card.dataset.json);
             card.classList.toggle('is-selected', selected);
-            card.querySelector('.bank-checkbox').checked = selected;
+            const cb = card.querySelector('.bank-checkbox');
+            if (cb) cb.checked = selected;
             const open = card.querySelector('.bank-open');
-            if (managing) open.setAttribute('aria-pressed', String(selected)); else open.removeAttribute('aria-pressed');
+            if (open) {
+                if (managing) open.setAttribute('aria-pressed', String(selected));
+                else open.removeAttribute('aria-pressed');
+            }
+        }
+        for (const card of grid.querySelectorAll('[data-subject]')) {
+            const subject = card.dataset.subject;
+            const unitBanks = visibleKeys.filter(k => bankLabel(k).subject === subject);
+            const selectedCount = unitBanks.filter(k => selection.has(k)).length;
+            const allSelected = unitBanks.length > 0 && selectedCount === unitBanks.length;
+            const someSelected = selectedCount > 0 && !allSelected;
+            card.classList.toggle('is-selected', allSelected);
+            const cb = card.querySelector('.bank-checkbox');
+            if (cb) {
+                cb.checked = allSelected;
+                cb.indeterminate = someSelected;
+            }
+            const open = card.querySelector('.bank-open');
+            if (open) {
+                if (managing) open.setAttribute('aria-pressed', String(allSelected));
+                else open.removeAttribute('aria-pressed');
+            }
         }
     }
     function setManaging(value) {
@@ -86,10 +114,44 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         if (selection.has(key)) selection.delete(key); else selection.add(key);
         updateSelection();
     }
+    function toggleUnit(subject, banks) {
+        const allSelected = banks.length > 0 && banks.every(k => selection.has(k));
+        if (allSelected) {
+            for (const k of banks) selection.delete(k);
+        } else {
+            for (const k of banks) selection.add(k);
+        }
+        updateSelection();
+    }
     function navigate(next) {
         folder = next; query = ''; input.value = ''; selection.clear();
         onFolder(next); render(); refreshSearch();
         (navigation.querySelector('.folder-back') || grid.querySelector('button'))?.focus({ preventScroll: true });
+    }
+    function openFolderMenu(trigger, subject, banks) {
+        if (busy) return;
+        const same = menuTrigger === trigger; closeMenu(); if (same) return;
+        menuTrigger = trigger; trigger.setAttribute('aria-expanded', 'true');
+        menu = node('div', null, document.body, 'bank-action-menu'); menu.id = 'bankActionMenu';
+        menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', `${subject}單元的操作`);
+        trigger.setAttribute('aria-controls', menu.id);
+        for (const [label, action] of [
+            ['選取單元', 'select'],
+            [archived ? '還原整個單元' : '典藏整個單元', 'archive'],
+            ['刪除單元', 'delete']
+        ]) {
+            const item = button(label, menu, () => {
+                closeMenu(true);
+                if (!requireUser()) return;
+                if (action === 'select') {
+                    if (!managing) setManaging(true);
+                    toggleUnit(subject, banks);
+                } else openAction(action, banks);
+            }, action === 'delete' ? 'bank-menu-item bank-danger' : 'bank-menu-item');
+            item.setAttribute('role', 'menuitem');
+        }
+        positionMenu();
+        menu.querySelector('button').focus({ preventScroll: true });
     }
     function openMenu(trigger, key) {
         if (busy) return;
@@ -133,7 +195,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
             button(archived ? '典藏庫' : '全部科目', location, () => navigate(null));
             node('span', '／', location, 'bank-muted');
             node('h3', folder, location, 'folder-title');
-        } else node('h3', managing ? '全部題庫' : '全部科目', location, 'folder-title');
+        } else node('h3', archived ? '典藏庫' : '全部科目', location, 'folder-title');
         node('span', `${keys.length} 份 · ${keys.reduce((sum, key) => sum + (catalog[key]?.count || 0), 0)} 題`, location, 'bank-summary');
         const controls = node('div', null, navigation, 'bank-view-controls');
         const sortLabel = node('label', '排序', controls, 'bank-sort-label');
@@ -163,18 +225,56 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
             sort === 'progress' ? progress(b).percent - progress(a).percent : 0) || a.localeCompare(b, 'zh-Hant', { numeric: true }));
         visibleKeys = scoped;
         renderNavigation(scoped);
-        const folders = !folder && !managing;
+        const folders = !folder;
         grid.className = `units-grid bank-library-grid ${layout === 'list' ? 'bank-list' : ''} ${managing ? 'is-managing' : ''} ${folders ? 'bank-folders' : ''}`;
         grid.replaceChildren();
         if (folders) {
             const groups = new Map();
             for (const key of scoped) { const subject = bankLabel(key).subject; if (!groups.has(subject)) groups.set(subject, []); groups.get(subject).push(key); }
             for (const [subject, banks] of [...groups].sort(([a], [b]) => (a === '其他') - (b === '其他') || a.localeCompare(b, 'zh-Hant'))) {
-                const card = button(null, grid, () => navigate(subject), 'unit-card bank-folder');
-                const box = node('span', null, card, 'unit-icon-box'); box.innerHTML = icon('folder');
-                const info = node('span', null, card, 'unit-info'); node('span', subject, info, 'unit-title');
-                node('span', `${banks.length} 份題庫 · ${banks.reduce((sum, key) => sum + (catalog[key]?.count || 0), 0)} 題`, info, 'unit-subtitle');
-                node('span', '›', card, 'bank-folder-arrow').setAttribute('aria-hidden', 'true');
+                const unitQuestions = banks.reduce((sum, key) => sum + (catalog[key]?.count || 0), 0);
+                const allSelected = banks.length > 0 && banks.every(k => selection.has(k));
+                const someSelected = !allSelected && banks.some(k => selection.has(k));
+                const card = node('article', null, grid, 'unit-card bank-folder');
+                card.dataset.subject = subject;
+                if (allSelected) card.classList.add('is-selected');
+
+                const checkLabel = node('label', null, card, 'bank-check-target');
+                const checkbox = node('input', null, checkLabel, 'bank-checkbox');
+                checkbox.type = 'checkbox';
+                checkbox.checked = allSelected;
+                checkbox.indeterminate = someSelected;
+                checkbox.setAttribute('aria-label', `選取 ${subject} 單元`);
+                checkbox.onchange = () => toggleUnit(subject, banks);
+
+                const open = button(null, card, event => {
+                    if (!requireUser()) return;
+                    if (managing) {
+                        if (event.target.closest('.bank-folder-arrow')) {
+                            navigate(subject);
+                        } else {
+                            toggleUnit(subject, banks);
+                        }
+                    } else {
+                        navigate(subject);
+                    }
+                }, 'bank-open bank-folder-open');
+                if (managing) open.setAttribute('aria-pressed', String(allSelected));
+
+                const box = node('span', null, open, 'unit-icon-box');
+                box.innerHTML = icon('folder');
+                const info = node('span', null, open, 'unit-info');
+                node('span', subject, info, 'unit-title');
+                node('span', `${banks.length} 份題庫 · ${unitQuestions} 題`, info, 'unit-subtitle');
+                const arrow = node('span', '›', open, 'bank-folder-arrow');
+                arrow.setAttribute('aria-hidden', 'true');
+                arrow.title = `進入 ${subject} 單元`;
+
+                const more = button(null, card, () => openFolderMenu(more, subject, banks), 'bank-more bank-icon-button');
+                more.innerHTML = icon('more');
+                more.setAttribute('aria-label', `${subject}單元的更多操作`);
+                more.setAttribute('aria-haspopup', 'menu');
+                more.setAttribute('aria-expanded', 'false');
             }
         } else for (const key of scoped) {
             const label = bankLabel(key), p = progress(key);
