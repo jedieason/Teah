@@ -472,11 +472,40 @@ function renderQuestion(index) {
         if (q.options) q.options = normalizeQuestionOptions(q.options);
 
         getOrderedOptionEntries(q.options).forEach(([key, value]) => {
-            const button = document.createElement('button');
+            const button = document.createElement('div');
+            button.setAttribute('role', 'button');
+            button.setAttribute('tabindex', '0');
             button.classList.add('option-button');
             button.dataset.option = key;
             button.innerHTML = markdown(`${key}: ${value}`);
             renderLatex(button);
+
+            let pointerDownPos = null;
+            button.addEventListener('pointerdown', (e) => {
+                pointerDownPos = { x: e.clientX, y: e.clientY };
+                button._isDragging = false;
+            });
+            button.addEventListener('pointermove', (e) => {
+                if (pointerDownPos && Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y) > 6) {
+                    button._isDragging = true;
+                }
+            });
+            button.addEventListener('pointerup', (e) => {
+                if (pointerDownPos && Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y) > 6) {
+                    button._isDragging = true;
+                }
+                pointerDownPos = null;
+            });
+            button.addEventListener('pointercancel', () => {
+                pointerDownPos = null;
+                button._isDragging = false;
+            });
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
+                }
+            });
 
             if (q.isConfirmed && revealAnswer) {
                 if (q.isMultiSelect) {
@@ -590,9 +619,16 @@ function updateExplanationOptions(explanation, labelMapping) {
 
 // 選擇選項
 function selectOption(event) {
+    const btn = event.currentTarget;
+    if (btn._isDragging) {
+        btn._isDragging = false;
+        return;
+    }
+    if (event.detail > 1 && window.getSelection()?.toString().trim().length > 0) {
+        return;
+    }
     if (currentQuestion.userSelection || selectedOption || selectedOptions.length) currentQuestion.changedAnswer = true;
     if (!acceptingAnswers) return;
-    const btn = event.currentTarget;
     const option = btn.dataset.option;
     if (currentQuestion.isMultiSelect) {
         // 多選題：切換選取狀態，不會清除其他選項

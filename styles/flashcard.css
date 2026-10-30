@@ -103,7 +103,8 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-prompt { font-size:23px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; padding:8px 0 48px; min-height:150px; }
 .vocab-question-hint { font-size:14px; font-weight:600; margin:0 0 18px; }
 .vocab-choices { display:grid; grid-template-columns:1fr 1fr; gap:22px 14px; }
-.vocab-choice { display:flex; align-items:center; justify-content:flex-start; text-align:left; gap:15px; width:100%; height:auto; min-height:76px; border:2px solid var(--v-line); padding:16px; font-weight:400; font-size:16px; background:var(--surface-color,#fff); color:inherit; border-radius:8px; cursor:pointer; user-select:none; -webkit-user-select:none; outline:none; transition:transform .06s ease, border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+.vocab-choice { display:flex; align-items:center; justify-content:flex-start; text-align:left; gap:15px; width:100%; height:auto; min-height:76px; border:2px solid var(--v-line); padding:16px; font-weight:400; font-size:16px; background:var(--surface-color,#fff); color:inherit; border-radius:8px; cursor:pointer; user-select:text; -webkit-user-select:text; outline:none; transition:transform .06s ease, border-color .15s ease, background-color .15s ease, box-shadow .15s ease; }
+.vocab-choice * { user-select:text; -webkit-user-select:text; }
 .vocab-choice:hover:not(:disabled) { border-color:var(--v-accent, #6366f1); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
 .vocab-choice:active:not(:disabled) { transform:scale(0.985); }
 .vocab-choice:focus, .vocab-choice:focus-visible { outline:none; border-color:var(--v-accent, #6366f1); }

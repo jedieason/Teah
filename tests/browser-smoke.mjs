@@ -157,6 +157,14 @@ try {
     await page.evaluate(() => { document.documentElement.classList.remove('dark-mode'); document.body.classList.remove('dark-mode'); });
     await page.locator('#mistakePracticeBtn').click();
     await page.locator('.quiz-container').waitFor({ state: 'visible' });
+    const optABox = await page.locator('.option-button[data-option="A"]').boundingBox();
+    await page.mouse.move(optABox.x + 10, optABox.y + optABox.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(optABox.x + optABox.width - 10, optABox.y + optABox.height / 2);
+    await page.mouse.up();
+    const draggedText = await page.evaluate(() => window.getSelection().toString());
+    assert.ok(draggedText.length > 0);
+    assert.equal(await page.locator('.option-button[data-option="A"]').evaluate(el => el.classList.contains('selected')), false);
     await page.locator('.option-button[data-option="A"]').click();
     await page.locator('#confirm-btn').click();
     // A second programmatic click must not change counters or the Firebase record.

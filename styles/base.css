@@ -939,9 +939,14 @@ p {
     transition: all 0.2s ease, transform 0.05s ease;
     text-align: left;
     box-shadow: none;
-    user-select: none;
-    -webkit-user-select: none;
+    user-select: text;
+    -webkit-user-select: text;
     outline: none;
+}
+
+.option-button * {
+    user-select: text;
+    -webkit-user-select: text;
 }
 
 .option-button:hover {
