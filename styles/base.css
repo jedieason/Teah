@@ -936,7 +936,7 @@ p {
 
     border-radius: 20px;
     cursor: pointer;
-    transition: all 0.2s ease, transform 0.05s ease;
+    transition: all 0.2s ease;
     text-align: left;
     box-shadow: none;
     user-select: text;
@@ -957,7 +957,7 @@ p {
 }
 
 .option-button:active:not(:disabled) {
-    transform: scale(0.985);
+    transform: none;
 }
 
 .option-button:focus,
