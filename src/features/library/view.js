@@ -377,6 +377,11 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
     if (libraryManageBtn) libraryManageBtn.onclick = () => setManaging(!managing);
     selectAll.onchange = () => { selection = selectAll.checked ? new Set(visibleKeys) : new Set(); updateSelection(); };
     $('bankSelectionClear').onclick = () => { selection.clear(); updateSelection(); selectAll.focus(); };
+    const selectionCancelBtn = $('bankSelectionCancel');
+    if (selectionCancelBtn) selectionCancelBtn.onclick = () => {
+        setManaging(false);
+        (grid.querySelector('.bank-open') || navigation.querySelector('button') || document.body).focus?.({ preventScroll: true });
+    };
     const batchEditContentBtn = $('bankBatchEditContent');
     if (batchEditContentBtn) batchEditContentBtn.onclick = () => { if (selection.size === 1) onEditContent?.([...selection][0]); };
     for (const [id, action] of [['bankBatchRename', 'rename'], ['bankBatchArchive', 'archive'], ['bankBatchDelete', 'delete']]) $(id).onclick = () => openAction(action, [...selection]);

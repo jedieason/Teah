@@ -119,7 +119,7 @@ try {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: 'artifacts/qa/library-selection-mobile.png', fullPage: true });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-    for (const id of ['bankBatchRename', 'bankBatchArchive', 'bankBatchDelete', 'bankSelectionClear']) assert.ok((await page.locator(`#${id}`).boundingBox()).height >= 40);
+    for (const id of ['bankBatchRename', 'bankBatchArchive', 'bankBatchDelete', 'bankSelectionClear', 'bankSelectionCancel']) assert.ok((await page.locator(`#${id}`).boundingBox()).height >= 40);
     await page.locator('#bankBatchDelete').click();
     const actionBox = await page.locator('#archiveActionBtn').boundingBox(); assert.ok(actionBox.y >= 0 && actionBox.y + actionBox.height <= 844);
     await page.screenshot({ path: 'artifacts/qa/library-delete-mobile.png', fullPage: true }); await page.keyboard.press('Escape');
@@ -131,6 +131,12 @@ try {
     await page.evaluate(() => document.documentElement.classList.remove('dark-mode'));
     // Return to root and test archiving an entire unit in managing mode
     await page.locator('.folder-back').click();
+    await toggleManage();
+    assert.equal(await page.locator('#bankSelectionBar').isVisible(), true);
+    assert.equal(await page.locator('#bankSelectionCancel').isEnabled(), true);
+    await page.locator('#bankSelectionCancel').click();
+    assert.equal(await page.locator('#bankSelectionBar').isVisible(), false);
+    assert.equal(await page.locator('.units-grid.is-managing').count(), 0);
     await toggleManage();
     const pathologyCheck = page.getByRole('checkbox', { name: '選取 病理區段一 單元', exact: true });
     await pathologyCheck.check();
