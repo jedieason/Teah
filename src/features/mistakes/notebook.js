@@ -1,5 +1,5 @@
 import { createSelectMenu } from '../../shared/select-menu.js';
-import { flattenMistakes, filterMistakes } from './model.js';
+import { flattenMistakes, filterMistakes, getArchivedBankKeys, isArchivedMistake } from './model.js';
 import { markdown, sortOptionKeys } from '../../shared/content.js';
 
 const el = (tag, className, text) => {
@@ -10,7 +10,7 @@ const el = (tag, className, text) => {
 };
 const date = value => value ? new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' }).format(value) : '日期未記錄';
 
-export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert, isStarred, toggleStar }) {
+export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert, isStarred, toggleStar, getCatalog }) {
     let filters = { query: '', subject: [], quiz: '', status: 'active', sort: 'recent' };
     let selected = new Set();
     let limit = 30;
@@ -31,6 +31,12 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     const selection = root.querySelector('#mistakeSelection');
     const selectAll = root.querySelector('#mistakeSelectAll');
     const clear = root.querySelector('#mistakeClearSelection');
+
+    function getActiveMistakes() {
+        const catalog = typeof getCatalog === 'function' ? getCatalog() : getCatalog;
+        const archived = getArchivedBankKeys(catalog);
+        return flattenMistakes(getCache()).filter(m => !isArchivedMistake(m, archived));
+    }
 
     function options(node, entries, label, value) {
         const isMultiple = node.multiple;
@@ -53,12 +59,12 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
             node.value = typeof value === 'string' ? value : '';
         }
     }
-    function updateFilters() {
-        const all = flattenMistakes(getCache());
+    function updateFilters(all = getActiveMistakes()) {
         options(subjects, [...new Set(all.map(m => m.subject))].sort().map(s => [s, s]), '全部科目', filters.subject);
         const subjectList = Array.isArray(filters.subject) ? filters.subject : (filters.subject ? [filters.subject] : []);
         const subjectSet = subjectList.length ? new Set(subjectList) : null;
         const scoped = all.filter(m => !subjectSet || subjectSet.has(m.subject));
+        if (filters.quiz && !scoped.some(m => m.quizKey === filters.quiz)) filters.quiz = '';
         options(quizzes, [...new Map(scoped.map(m => [m.quizKey, m.title])).entries()].sort((a, b) => a[1].localeCompare(b[1], 'zh-Hant')), '全部題庫', filters.quiz);
         root.querySelectorAll('[data-mistake-status]').forEach(button => {
             const status = button.dataset.mistakeStatus;
@@ -149,9 +155,10 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         return card;
     }
     function render() {
-        updateFilters();
+        const all = getActiveMistakes();
+        updateFilters(all);
         menus.forEach(menu => menu.refresh());
-        visible = filterMistakes(flattenMistakes(getCache()), filters);
+        visible = filterMistakes(all, filters);
         selected = new Set([...selected].filter(id => visible.some(m => m.id === id)));
         content.replaceChildren();
         const hasSubject = Array.isArray(filters.subject) ? filters.subject.length > 0 : Boolean(filters.subject);
@@ -223,7 +230,10 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     async function open(quizKey = null) {
         const token = ++request;
         if (root.style.display !== 'flex') { opener = document.activeElement; previousScrollY = window.scrollY; }
-        filters.quiz = quizKey || ''; filters.subject = []; filters.query = ''; search.value = '';
+        const catalog = typeof getCatalog === 'function' ? getCatalog() : getCatalog;
+        const archived = getArchivedBankKeys(catalog);
+        filters.quiz = (quizKey && !isArchivedMistake(quizKey, archived)) ? quizKey : '';
+        filters.subject = []; filters.query = ''; search.value = '';
         selected.clear(); limit = 30;
         root.style.display = 'flex'; window.scrollTo(0, 0); document.body.style.overflow = 'hidden';
         root.querySelector('#mistakeScrollContainer').scrollTop = 0;

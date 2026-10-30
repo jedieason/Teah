@@ -3159,13 +3159,19 @@ function recordAttempt(isCorrect) {
 
 notebook = createNotebook({
     root: mistakeView, getCache: () => userMistakesCache,
+    getCatalog: () => catalogData,
     refresh: async () => {
         const uid = auth.currentUser?.uid;
         await flushOutbox();
-        const [mistakesSnap, starredSnap] = await Promise.all([
+        const [mistakesSnap, starredSnap, catalog] = await Promise.all([
             get(ref(database, `mistakes/${uid}`)),
-            get(ref(database, `progress/${uid}/starred`))
+            get(ref(database, `progress/${uid}/starred`)),
+            readCatalog().catch(() => catalogData)
         ]);
+        if (catalog && typeof catalog === 'object') {
+            catalogData = catalog;
+            catalogPaths = Object.keys(catalog);
+        }
         if (auth.currentUser?.uid === uid) {
             userMistakesCache = mistakesSnap.val() || {};
             userStarredCache = Array.isArray(starredSnap.val()) ? starredSnap.val() : [];

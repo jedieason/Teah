@@ -11,9 +11,11 @@ const questions = [
     { question: 'In real-time PCR, samples A and B have Ct values of 25 and 30. What is the ratio A:B?', answer: ['32:1'], explanation: '每次 PCR 循環，DNA 量加倍，差距為 $2^5 = 32$ 倍。', origin: 'B10 區段考 第 2 題' }
 ];
 const bank = '檢驗醫學區段一｜B10 考古'; const bank2 = '藥理區段一｜B09 考古';
+const archivedBank = '生理學實驗｜B09';
 const db = { API_KEY: 'test-only', [bank]: questions, [bank2]: [{ question: '選出正確的敘述。', options: { A: '第一項', B: '第二項', C: '第三項' }, answer: ['A', 'B'] }],
-    quizCatalog: { [bank]: { count: 2 }, [bank2]: { count: 1 } },
-    mistakes: { 'test-user': { [bank]: { old: { ...questions[0], originalIndex: 0, count: 3, lastMistake: 1788681600000, lastSelection: 'A' }, fill: { ...questions[1], originalIndex: 1, count: 1, lastMistake: 1788595200000 } }, [bank2]: { multi: { question: '選出正確的敘述。', options: { A: '第一項', B: '第二項', C: '第三項' }, answer: ['A', 'B'], originalIndex: 0, count: 2, lastMistake: 1788508800000 } } } },
+    ['_Archive_' + archivedBank]: [{ question: '這是典藏題庫的題目', answer: 'A' }],
+    quizCatalog: { [bank]: { count: 2 }, [bank2]: { count: 1 }, ['_Archive_' + archivedBank]: { count: 1, storageKey: archivedBank } },
+    mistakes: { 'test-user': { [bank]: { old: { ...questions[0], originalIndex: 0, count: 3, lastMistake: 1788681600000, lastSelection: 'A' }, fill: { ...questions[1], originalIndex: 1, count: 1, lastMistake: 1788595200000 } }, [bank2]: { multi: { question: '選出正確的敘述。', options: { A: '第一項', B: '第二項', C: '第三項' }, answer: ['A', 'B'], originalIndex: 0, count: 2, lastMistake: 1788508800000 } }, [archivedBank]: { arch: { question: '這是典藏題庫的題目', count: 5, lastMistake: 1788400000000 } } } },
     progress: { 'test-user': { quizzes: { [bank]: { selectedJson: bank, currentIndex: 0, lastUpdated: 100, allQuestions: questions.map((q, i) => ({ ...q, originalIndex: i, isAnswered: i === 0, isConfirmed: i === 0, isCorrect: i === 0, isFillBlank: !q.options, userSelection: i === 0 ? 'B' : null })) } } } } };
 await context.addInitScript(value => { window.__testDatabase = value; }, db);
 await context.route('**/src/services/firebase.js', route => route.fulfill({ contentType: 'text/javascript', body: fixture }));
@@ -114,6 +116,8 @@ try {
     assert.equal(await page.locator('#mistakeView').isVisible(), true);
     await page.locator('#mistakeSortTrigger').click();
     await page.getByRole('option', { name: '最近答錯', exact: true }).click();
+    assert.equal(await page.locator('.review-card').count(), 3);
+    assert.equal(await page.locator('.review-card', { hasText: '這是典藏題庫的題目' }).count(), 0);
     assert.equal(await page.locator('.review-answer[open]').count(), 0);
     await page.locator('#mistakeSearch').fill('PCR');
     assert.equal(await page.locator('.review-card').count(), 1);
@@ -142,6 +146,7 @@ try {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({ path: 'artifacts/qa/notebook-mobile.png', fullPage: true });
     await page.locator('#mistakeQuizTrigger').click();
+    assert.equal(await page.locator('#mistakeQuizListbox [role="option"]', { hasText: '生理學實驗' }).count(), 0);
     const popupBox = await page.locator('#mistakeQuizListbox').boundingBox();
     assert.ok(popupBox.x >= 0 && popupBox.x + popupBox.width <= 390);
     await page.screenshot({ path: 'artifacts/qa/notebook-menu-mobile.png', fullPage: true });

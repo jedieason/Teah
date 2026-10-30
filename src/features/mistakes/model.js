@@ -23,12 +23,72 @@ export function flattenMistakes(cache = {}) {
     return result;
 }
 
-export function filterMistakes(items, { query = '', subject = '', subjects = null, quiz = '', status = 'active', sort = 'recent' } = {}) {
+export function getArchivedBankKeys(catalog = {}) {
+    const archived = new Set();
+    if (!catalog) return archived;
+    const entries = Array.isArray(catalog) ? catalog.map(k => [k, {}])
+        : catalog instanceof Set ? [...catalog].map(k => [k, {}])
+        : Object.entries(catalog);
+
+    const activeKeys = new Set();
+    for (const [key, value] of entries) {
+        if (typeof key !== 'string') continue;
+        if (!key.startsWith('_Archive_')) {
+            activeKeys.add(key);
+            const clean = key.replace(/\.json$/, '');
+            activeKeys.add(clean);
+            activeKeys.add(clean.replace(/[.$#[\]/]/g, '_'));
+            if (value?.storageKey) {
+                activeKeys.add(value.storageKey);
+                activeKeys.add(value.storageKey.replace(/[.$#[\]/]/g, '_'));
+            }
+        }
+    }
+
+    for (const [key, value] of entries) {
+        if (typeof key !== 'string') continue;
+        if (key.startsWith('_Archive_')) {
+            archived.add(key);
+            const clean = key.replace(/^_Archive_/, '').replace(/\.json$/, '');
+            if (!activeKeys.has(clean)) {
+                archived.add(clean);
+                archived.add(clean.replace(/[.$#[\]/]/g, '_'));
+            }
+            if (value?.storageKey && !activeKeys.has(value.storageKey)) {
+                archived.add(value.storageKey);
+                archived.add(value.storageKey.replace(/[.$#[\]/]/g, '_'));
+            }
+        }
+    }
+    return archived;
+}
+
+export function isArchivedMistake(m, catalog = null) {
+    if (!m) return false;
+    const quizKey = typeof m === 'string' ? m : m.quizKey || '';
+    const sourcePath = typeof m === 'object' ? m.sourcePath || '' : '';
+    const origin = typeof m === 'object' ? m.origin || '' : '';
+    if (quizKey.startsWith('_Archive_') || sourcePath.startsWith('_Archive_') || origin.startsWith('_Archive_')) return true;
+    if (catalog) {
+        const archived = catalog instanceof Set ? catalog : getArchivedBankKeys(catalog);
+        if (quizKey && archived.has(quizKey)) return true;
+        if (sourcePath && archived.has(sourcePath)) return true;
+        const cleanQuizKey = quizKey.replace(/^_Archive_/, '').replace(/\.json$/, '');
+        if (cleanQuizKey && archived.has(cleanQuizKey)) return true;
+        const cleanSource = sourcePath.replace(/^_Archive_/, '').replace(/\.json$/, '');
+        if (cleanSource && archived.has(cleanSource)) return true;
+    }
+    return false;
+}
+
+export function filterMistakes(items, { query = '', subject = '', subjects = null, quiz = '', status = 'active', sort = 'recent', catalog = null, excludeArchived = false } = {}) {
     const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
     const rawSubjects = subjects ?? subject;
     const subjectList = (Array.isArray(rawSubjects) ? rawSubjects : [rawSubjects]).filter(Boolean);
     const subjectSet = subjectList.length ? new Set(subjectList) : null;
-    return items.filter(m => (!subjectSet || subjectSet.has(m.subject)) && (!quiz || m.quizKey === quiz)
+    const archived = excludeArchived ? (catalog instanceof Set ? catalog : getArchivedBankKeys(catalog)) : null;
+    return items.filter(m => (!archived || !isArchivedMistake(m, archived))
+        && (!subjectSet || subjectSet.has(m.subject)) && (!quiz || m.quizKey === quiz)
         && (status === 'all' || (status === 'mastered' ? m.status === 'mastered' : m.status !== 'mastered'))
         && words.every(word => [m.question, m.title, m.subject, m.origin, ...Object.values(m.options || {})]
             .join(' ').toLocaleLowerCase().includes(word)))

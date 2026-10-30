@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { flattenMistakes, filterMistakes, canonicalQuestion, applyAttempt, preparePractice } from '../src/features/mistakes/model.js';
+import { flattenMistakes, filterMistakes, canonicalQuestion, applyAttempt, preparePractice, getArchivedBankKeys, isArchivedMistake } from '../src/features/mistakes/model.js';
 import { validateQuiz } from '../src/shared/content.js';
 
 test('legacy nested paths remain addressable without changing Firebase keys', () => {
@@ -70,4 +70,105 @@ test('malformed banks are rejected before upload', () => {
     assert.throws(() => validateQuiz([{ question: 'Q', options: { A: '1', B: '2' }, answer: 'C' }]));
     assert.throws(() => validateQuiz([{ question: 'Q', answer: [] }]));
     assert.equal(validateQuiz([{ question: 'Q', answer: ['BCR'] }]).length, 1);
+});
+
+test('getArchivedBankKeys and isArchivedMistake detect archived bank mistakes accurately', () => {
+    const catalog = {
+        '_Archive_生理學實驗｜B09': { count: 28, storageKey: '生理學實驗｜B09' },
+        '_Archive_神經解剖學｜B08 期末.json': { count: 10, storageKey: '神經解剖學｜B08 期末' },
+        '檢驗醫學區段一｜B04 考古': { count: 50, storageKey: '檢驗醫學區段一｜B04 考古' }
+    };
+    const archivedKeys = getArchivedBankKeys(catalog);
+    assert.ok(archivedKeys.has('_Archive_生理學實驗｜B09'));
+    assert.ok(archivedKeys.has('生理學實驗｜B09'));
+    assert.ok(archivedKeys.has('神經解剖學｜B08 期末'));
+    assert.ok(!archivedKeys.has('檢驗醫學區段一｜B04 考古'));
+
+    // Directly prefixed mistakes
+    assert.ok(isArchivedMistake({ quizKey: '_Archive_隨意科目｜T01' }));
+    assert.ok(isArchivedMistake({ quizKey: '隨意科目｜T01', sourcePath: '_Archive_隨意科目｜T01.json' }));
+    assert.ok(isArchivedMistake({ quizKey: '隨意科目｜T01', origin: '_Archive_隨意科目｜T01' }));
+
+    // Storage key in catalog
+    assert.ok(isArchivedMistake({ quizKey: '生理學實驗｜B09' }, catalog));
+    assert.ok(isArchivedMistake({ quizKey: '神經解剖學｜B08 期末' }, catalog));
+
+    // Active bank in catalog
+    assert.ok(!isArchivedMistake({ quizKey: '檢驗醫學區段一｜B04 考古' }, catalog));
+});
+
+test('filterMistakes excludes archived bank questions when excludeArchived is true', () => {
+    const catalog = {
+        '_Archive_生理學實驗｜B09': { count: 28, storageKey: '生理學實驗｜B09' },
+        '檢驗醫學區段一｜B04 考古': { count: 50, storageKey: '檢驗醫學區段一｜B04 考古' }
+    };
+    const rows = flattenMistakes({
+        '生理學實驗｜B09': { a: { question: 'Archived mistake Q1' } },
+        '_Archive_神經解剖學｜B08': { b: { question: 'Direct archived Q2' } },
+        '檢驗醫學區段一｜B04 考古': { c: { question: 'Active mistake Q3' } }
+    });
+
+    const filtered = filterMistakes(rows, { catalog, excludeArchived: true });
+    assert.equal(filtered.length, 1);
+    assert.equal(filtered[0].question, 'Active mistake Q3');
+    assert.equal(filtered[0].quizKey, '檢驗醫學區段一｜B04 考古');
+});
+
+test('filterMistakes combines active status, query, subjects, and excludeArchived correctly', () => {
+    const catalog = {
+        '_Archive_生理學實驗｜B09': { count: 28, storageKey: '生理學實驗｜B09' },
+        '_Archive_神經解剖學｜B08': { count: 15, storageKey: '神經解剖學｜B08' },
+        '檢驗醫學區段一｜B04 考古': { count: 50, storageKey: '檢驗醫學區段一｜B04 考古' },
+        '藥理區段一｜B10 考古': { count: 40, storageKey: '藥理區段一｜B10 考古' }
+    };
+    const rows = flattenMistakes({
+        '生理學實驗｜B09': {
+            a: { question: 'Archived mistake Q1 (active status)', status: 'active', count: 1, lastMistake: 10 }
+        },
+        '_Archive_神經解剖學｜B08': {
+            b: { question: 'Direct archived Q2 (mastered)', status: 'mastered', count: 2, lastMistake: 20 }
+        },
+        '檢驗醫學區段一｜B04 考古': {
+            c: { question: 'Active mistake Q3 (PCR test)', status: 'active', count: 3, lastMistake: 30 }
+        },
+        '藥理區段一｜B10 考古': {
+            d: { question: 'Active mistake Q4 (PCR drug)', status: 'mastered', count: 4, lastMistake: 40 }
+        }
+    });
+
+    // Default excludeArchived: false includes all rows
+    assert.equal(filterMistakes(rows, { status: 'all' }).length, 4);
+
+    // excludeArchived: true filters out both archived items
+    const nonArchivedAll = filterMistakes(rows, { catalog, excludeArchived: true, status: 'all' });
+    assert.equal(nonArchivedAll.length, 2);
+    assert.deepEqual(nonArchivedAll.map(m => m.quizKey).sort(), ['檢驗醫學區段一｜B04 考古', '藥理區段一｜B10 考古']);
+
+    // Combine excludeArchived with status: 'active'
+    const nonArchivedActive = filterMistakes(rows, { catalog, excludeArchived: true, status: 'active' });
+    assert.equal(nonArchivedActive.length, 1);
+    assert.equal(nonArchivedActive[0].question, 'Active mistake Q3 (PCR test)');
+
+    // Combine excludeArchived with query
+    const queried = filterMistakes(rows, { catalog, excludeArchived: true, status: 'all', query: 'PCR' });
+    assert.equal(queried.length, 2);
+
+    // Combine excludeArchived with subject
+    const subjectFiltered = filterMistakes(rows, { catalog, excludeArchived: true, status: 'all', subject: '藥理區段一' });
+    assert.equal(subjectFiltered.length, 1);
+    assert.equal(subjectFiltered[0].quizKey, '藥理區段一｜B10 考古');
+});
+
+test('getArchivedBankKeys prioritizes active catalog bank if name collision occurs', () => {
+    // If an active bank exists with name X, X should not be treated as archived even if an old archive existed
+    const catalog = {
+        '_Archive_微生物｜期中考': { count: 20, storageKey: '微生物｜期中考' },
+        '微生物｜期中考': { count: 25, storageKey: '微生物｜期中考' }
+    };
+    const archivedKeys = getArchivedBankKeys(catalog);
+    assert.ok(archivedKeys.has('_Archive_微生物｜期中考'));
+    assert.ok(!archivedKeys.has('微生物｜期中考'));
+
+    assert.ok(isArchivedMistake({ quizKey: '_Archive_微生物｜期中考' }, catalog));
+    assert.ok(!isArchivedMistake({ quizKey: '微生物｜期中考' }, catalog));
 });
