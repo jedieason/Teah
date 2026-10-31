@@ -250,17 +250,10 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
                 checkbox.setAttribute('aria-label', `選取 ${subject} 單元`);
                 checkbox.onchange = () => toggleUnit(subject, banks);
 
-                const open = button(null, card, event => {
+                const open = button(null, card, () => {
                     if (!requireUser()) return;
-                    if (managing) {
-                        if (event.target.closest('.bank-folder-arrow')) {
-                            navigate(subject);
-                        } else {
-                            toggleUnit(subject, banks);
-                        }
-                    } else {
-                        navigate(subject);
-                    }
+                    if (managing) toggleUnit(subject, banks);
+                    else navigate(subject);
                 }, 'bank-open bank-folder-open');
                 if (managing) open.setAttribute('aria-pressed', String(allSelected));
 
@@ -269,9 +262,6 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
                 const info = node('span', null, open, 'unit-info');
                 node('span', subject, info, 'unit-title');
                 node('span', `${banks.length} 份題庫 · ${unitQuestions} 題`, info, 'unit-subtitle');
-                const arrow = node('span', '›', open, 'bank-folder-arrow');
-                arrow.setAttribute('aria-hidden', 'true');
-                arrow.title = `進入 ${subject} 單元`;
 
                 const more = button(null, card, () => openFolderMenu(more, subject, banks), 'bank-more bank-icon-button');
                 more.innerHTML = icon('more');
@@ -354,7 +344,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         try {
             const changes = await changeBanks(state.action, state.keys, renamed);
             selection.clear();
-            status.textContent = state.action === 'rename' ? '已儲存題庫名稱。' : state.action === 'delete' ? `已刪除 ${state.keys.length} 份題庫。` : `已${archived ? '還原' : '典藏'} ${state.keys.length} 份題庫。`;
+            status.textContent = '';
             dialog.style.display = 'none'; dialogState = null;
             // Reflect the acknowledged write immediately, even if refreshing the catalog fails.
             const previous = { ...catalog };
