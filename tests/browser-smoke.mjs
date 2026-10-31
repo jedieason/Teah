@@ -200,6 +200,10 @@ try {
     assert.ok('isCorrect' in downloadedJson.questions[0]);
     assert.ok('userAnswer' in downloadedJson.questions[0]);
     assert.ok('correctAnswer' in downloadedJson.questions[0]);
+    const makeCardsBtn = page.getByRole('button', { name: '製作字卡' });
+    assert.equal(await makeCardsBtn.isVisible(), true);
+    assert.equal(reviewRequests, 0, 'flashcards should not generate automatically until button clicked');
+    await makeCardsBtn.click();
     await page.getByRole('button', { name: '重新生成字卡' }).waitFor({ state: 'visible' });
     await page.getByRole('button', { name: '重新生成字卡' }).click();
     await page.locator('.review-flashcard-item').first().waitFor();
@@ -208,6 +212,7 @@ try {
     assert.match(await page.locator('.review-flashcards-status').innerText(), /2 張重點字卡/);
     assert.equal(await page.getByRole('button', { name: '加入字卡集' }).isVisible(), true);
     assert.equal(await page.getByRole('button', { name: '併入既有字卡' }).isVisible(), true);
+    assert.equal(await makeCardsBtn.isVisible(), false);
     assert.equal(await page.locator('.results-container').evaluate(n => n.scrollWidth > n.clientWidth), false);
     await page.locator('.review-flashcard-item').first().scrollIntoViewIfNeeded();
     await page.screenshot({ path: 'artifacts/qa/results-mobile.png', fullPage: true });

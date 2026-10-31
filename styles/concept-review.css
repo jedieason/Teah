@@ -48,6 +48,7 @@
 .review-flashcards-header h2 { font: 600 22px/1.5 var(--ui-font); letter-spacing: -.5px; margin: 0; }
 .review-flashcards-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .review-flashcards-actions button { min-height: 40px; padding: 0 16px; font-size: 13.5px; }
+.review-btn-generate { min-height: 40px; padding: 0 16px; font-size: 13.5px; }
 .review-flashcards-status { color: var(--ui-muted); font-size: 13px; line-height: 1.6; margin: 8px 0 16px; padding: 10px 14px; background: var(--ui-hover); border-radius: 10px; }
 .review-flashcards-status:empty { display: none; }
 .review-btn-retry { min-height: 44px; margin-bottom: 16px; }

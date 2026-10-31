@@ -48,6 +48,9 @@ export function mountReviewFlashcards(parent, { questions, source, vocabulary, g
     const header = el('div', 'review-flashcards-header');
     header.append(el('h2', '', '重點字卡'));
 
+    const generateBtn = el('button', 'primary-button review-btn-generate', '製作字卡');
+    generateBtn.type = 'button';
+
     const actionsBar = el('div', 'review-flashcards-actions');
     actionsBar.hidden = true;
 
@@ -58,7 +61,7 @@ export function mountReviewFlashcards(parent, { questions, source, vocabulary, g
     mergeBtn.type = 'button';
 
     actionsBar.append(addBtn, mergeBtn);
-    header.append(actionsBar);
+    header.append(generateBtn, actionsBar);
 
     const status = el('p', 'review-flashcards-status');
     status.setAttribute('role', 'status');
@@ -250,6 +253,7 @@ export function mountReviewFlashcards(parent, { questions, source, vocabulary, g
     async function generate() {
         if (running || controller.signal.aborted) return;
         running = true;
+        generateBtn.hidden = true;
         retryBtn.hidden = true;
         actionsBar.hidden = true;
         cardList.replaceChildren();
@@ -325,8 +329,8 @@ export function mountReviewFlashcards(parent, { questions, source, vocabulary, g
         }
     }
 
+    generateBtn.onclick = generate;
     retryBtn.onclick = generate;
-    void generate();
 
     return { abort: () => controller.abort() };
 }
