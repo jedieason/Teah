@@ -19,6 +19,40 @@ export function validateQuestionPayload(raw, mode) {
         parsed = raw;
     }
 
+    if (mode === 'bank' || mode === 'batch') {
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+            throw new Error('整個題庫內容必須是包含 banks 陣列的 JSON 物件（{ "banks": [...] }）。');
+        }
+        let banksList;
+        if (Array.isArray(parsed.banks)) {
+            banksList = parsed.banks;
+        } else {
+            // Support key-value map { "題庫標題": [ ... ] }
+            const entries = Object.entries(parsed);
+            if (!entries.length) throw new Error('題庫列表不可為空。');
+            banksList = entries.map(([title, questions]) => ({ title, questions }));
+        }
+
+        if (!banksList.length) throw new Error('題庫列表不可為空。');
+        const seenTitles = new Set();
+        const validatedBanks = banksList.map((b, i) => {
+            if (!b || typeof b !== 'object') throw new Error(`第 ${i + 1} 份題庫格式不正確。`);
+            const title = typeof b.title === 'string' ? b.title.trim() : '';
+            if (!title) throw new Error(`第 ${i + 1} 份題庫缺少標題。`);
+            if (/[.#$\[\]/\x00-\x1f\x7f]/.test(title)) throw new Error(`第 ${i + 1} 份題庫標題「${title}」不可包含 . # $ [ ] / 或控制字元。`);
+            if (seenTitles.has(title)) throw new Error(`題庫標題「${title}」重複。`);
+            seenTitles.add(title);
+            if (!Array.isArray(b.questions)) throw new Error(`第 ${i + 1} 份題庫「${title}」缺少題目陣列。`);
+            try {
+                validateQuiz(b.questions);
+            } catch (err) {
+                throw new Error(`第 ${i + 1} 份題庫「${title}」題目格式不正確：${err.message}`);
+            }
+            return { title, questions: b.questions };
+        });
+        return { banks: validatedBanks };
+    }
+
     if (mode === 'unit') {
         if (!Array.isArray(parsed)) throw new Error('整個單元內容必須為題目 JSON 陣列（以 [ 開頭）。');
         validateQuiz(parsed);
@@ -58,7 +92,7 @@ export function mergeQuestionEdit(allQuestions, updatedQuestion, index) {
     return nextList;
 }
 
-export function mountContentEditor({ readBank, writeBanks, onChanged, getUser }) {
+export function mountContentEditor({ readBank, writeBanks, readCatalog, onChanged, getUser }) {
     const $ = id => document.getElementById(id);
     const modal = $('bankContentEditModal');
     if (!modal) return { open: () => {}, close: () => {} };
@@ -70,8 +104,11 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
     const saveBtn = $('bankContentEditSaveBtn');
     const copyBtn = $('bankEditCopyBtn');
     const formatBtn = $('bankEditFormatBtn');
+    const tabBank = $('bankEditScopeBank');
     const tabAll = $('bankEditScopeAll');
     const tabSingle = $('bankEditScopeSingle');
+    const unitPickerWrap = $('bankEditUnitPickerWrap');
+    const unitSelect = $('bankEditUnitSelect');
     const pickerWrap = $('bankEditQuestionPickerWrap');
     const questionSelect = $('bankEditQuestionSelect');
     const textarea = $('bankContentEditTextarea');
@@ -79,10 +116,12 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
     const errorEl = $('bankContentEditError');
     const statusEl = $('bankContentEditStatus');
 
-    let currentBankKey = null;
-    let currentQuestions = [];
-    let currentMode = 'unit'; // 'unit' | 'single'
+    let currentBanks = [];
+    let originalBankKeys = [];
+    let currentBankIndex = 0;
     let currentQuestionIndex = 0;
+    let currentMode = 'unit'; // 'bank' | 'unit' | 'single'
+    let currentSubject = '';
     let isSaving = false;
 
     function showError(msg) {
@@ -107,10 +146,25 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         }
     }
 
+    function updateUnitPicker() {
+        if (!unitSelect) return;
+        unitSelect.replaceChildren();
+        currentBanks.forEach((b, i) => {
+            const opt = document.createElement('option');
+            opt.value = String(i);
+            const label = parseBankLabel(b.title);
+            opt.textContent = `${label.title || b.title} (${(b.questions || []).length} 題)`;
+            unitSelect.append(opt);
+        });
+        unitSelect.value = String(currentBankIndex);
+    }
+
     function updateQuestionPicker() {
         if (!questionSelect) return;
         questionSelect.replaceChildren();
-        currentQuestions.forEach((q, i) => {
+        const curBank = currentBanks[currentBankIndex] || { questions: [] };
+        const questions = curBank.questions || [];
+        questions.forEach((q, i) => {
             const opt = document.createElement('option');
             opt.value = String(i);
             const snippet = (q.question || '').replace(/\s+/g, ' ').slice(0, 32);
@@ -121,25 +175,98 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
     }
 
     function syncTextarea() {
-        if (currentMode === 'unit') {
-            textarea.value = formatQuestionJson(currentQuestions);
-            if (metaInfo) metaInfo.textContent = `共 ${currentQuestions.length} 題`;
+        if (!currentBanks.length) {
+            currentBanks = [{ title: currentSubject || '新題庫', questions: [] }];
+        }
+        if (currentBankIndex < 0 || currentBankIndex >= currentBanks.length) {
+            currentBankIndex = 0;
+        }
+        const curBank = currentBanks[currentBankIndex];
+        const questions = curBank?.questions || [];
+        if (currentQuestionIndex < 0 || (questions.length > 0 && currentQuestionIndex >= questions.length)) {
+            currentQuestionIndex = 0;
+        }
+
+        if (currentMode === 'bank') {
+            textarea.value = formatQuestionJson({ banks: currentBanks });
+            const totalQ = currentBanks.reduce((sum, b) => sum + (b.questions?.length || 0), 0);
+            if (metaInfo) metaInfo.textContent = `共 ${currentBanks.length} 份題庫 · ${totalQ} 題`;
+            tabBank?.classList.add('active');
+            tabBank?.setAttribute('aria-selected', 'true');
+            tabAll?.classList.remove('active');
+            tabAll?.setAttribute('aria-selected', 'false');
+            tabSingle?.classList.remove('active');
+            tabSingle?.setAttribute('aria-selected', 'false');
+            if (unitPickerWrap) unitPickerWrap.hidden = true;
+            if (pickerWrap) pickerWrap.hidden = true;
+        } else if (currentMode === 'unit') {
+            textarea.value = formatQuestionJson(questions);
+            if (metaInfo) metaInfo.textContent = `共 ${questions.length} 題`;
+            tabBank?.classList.remove('active');
+            tabBank?.setAttribute('aria-selected', 'false');
             tabAll?.classList.add('active');
             tabAll?.setAttribute('aria-selected', 'true');
             tabSingle?.classList.remove('active');
             tabSingle?.setAttribute('aria-selected', 'false');
+            if (unitPickerWrap) {
+                unitPickerWrap.hidden = currentBanks.length <= 1;
+                updateUnitPicker();
+            }
             if (pickerWrap) pickerWrap.hidden = true;
         } else {
-            const q = currentQuestions[currentQuestionIndex] || {};
+            const q = questions[currentQuestionIndex] || {};
             textarea.value = formatQuestionJson(q);
-            if (metaInfo) metaInfo.textContent = `第 ${currentQuestionIndex + 1} / ${currentQuestions.length} 題`;
-            tabSingle?.classList.add('active');
-            tabSingle?.setAttribute('aria-selected', 'true');
+            if (metaInfo) metaInfo.textContent = `第 ${questions.length ? currentQuestionIndex + 1 : 0} / ${questions.length} 題`;
+            tabBank?.classList.remove('active');
+            tabBank?.setAttribute('aria-selected', 'false');
             tabAll?.classList.remove('active');
             tabAll?.setAttribute('aria-selected', 'false');
-            if (pickerWrap) pickerWrap.hidden = false;
-            updateQuestionPicker();
+            tabSingle?.classList.add('active');
+            tabSingle?.setAttribute('aria-selected', 'true');
+            if (unitPickerWrap) {
+                unitPickerWrap.hidden = currentBanks.length <= 1;
+                updateUnitPicker();
+            }
+            if (pickerWrap) {
+                pickerWrap.hidden = false;
+                updateQuestionPicker();
+            }
         }
+    }
+
+    function commitTextareaChanges() {
+        if (currentMode === 'bank') {
+            const parsed = validateQuestionPayload(textarea.value, 'bank');
+            currentBanks = parsed.banks;
+        } else if (currentMode === 'unit') {
+            const parsed = validateQuestionPayload(textarea.value, 'unit');
+            if (!currentBanks[currentBankIndex]) {
+                currentBanks[currentBankIndex] = { title: currentSubject || '新題庫', questions: [] };
+            }
+            currentBanks[currentBankIndex].questions = parsed;
+        } else {
+            const parsed = validateQuestionPayload(textarea.value, 'single');
+            if (!currentBanks[currentBankIndex]) {
+                currentBanks[currentBankIndex] = { title: currentSubject || '新題庫', questions: [] };
+            }
+            currentBanks[currentBankIndex].questions = mergeQuestionEdit(currentBanks[currentBankIndex].questions, parsed, currentQuestionIndex);
+        }
+    }
+
+    function switchMode(nextMode) {
+        if (currentMode === nextMode) return;
+        try {
+            commitTextareaChanges();
+            showError('');
+        } catch (e) {
+            showError(`切換模式前請先確認目前 JSON 格式正確：${e.message}`);
+            return;
+        }
+        currentMode = nextMode;
+        if (currentBankIndex >= currentBanks.length) currentBankIndex = 0;
+        const curQCount = (currentBanks[currentBankIndex]?.questions || []).length;
+        if (currentQuestionIndex >= curQCount) currentQuestionIndex = 0;
+        syncTextarea();
     }
 
     function close() {
@@ -148,20 +275,20 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         modal.setAttribute('aria-hidden', 'true');
         showError('');
         showStatus('');
-        currentBankKey = null;
-        currentQuestions = [];
+        currentBanks = [];
+        originalBankKeys = [];
+        currentBankIndex = 0;
+        currentQuestionIndex = 0;
+        currentSubject = '';
     }
 
-    async function open(bankKey, questionIndex = null) {
+    async function open(target, questionIndex = null, options = {}) {
         const uid = getUser?.();
         if (!uid) {
             alert('請先登入後再編輯題庫。');
             return;
         }
-        currentBankKey = bankKey;
-        const label = parseBankLabel(bankKey);
-        if (subjectEl) subjectEl.textContent = label.subject;
-        if (titleEl) titleEl.textContent = `編輯題目內容 - ${label.title}`;
+
         showError('');
         showStatus('');
         if (textarea) {
@@ -172,19 +299,117 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         modal.style.display = 'flex';
         modal.setAttribute('aria-hidden', 'false');
 
-        try {
-            const list = await readBank(bankKey);
-            currentQuestions = Array.isArray(list) ? list.map(q => ({ ...q })) : [];
-            if (textarea) textarea.disabled = false;
-            if (saveBtn) saveBtn.disabled = false;
+        let bankKeysToLoad = [];
+        let initialMode = 'unit';
+        let targetBankKey = null;
 
-            if (questionIndex != null && Number.isInteger(questionIndex) && questionIndex >= 0 && questionIndex < currentQuestions.length) {
-                currentMode = 'single';
+        if (typeof target === 'object' && target !== null) {
+            currentSubject = target.subject || '';
+            bankKeysToLoad = Array.isArray(target.banks) ? target.banks : [];
+            initialMode = target.mode || (bankKeysToLoad.length > 1 ? 'bank' : 'unit');
+            targetBankKey = target.bankKey || bankKeysToLoad[0] || null;
+        } else if (options?.isFolder) {
+            currentSubject = target;
+            bankKeysToLoad = Array.isArray(options.banks) ? options.banks : [];
+            initialMode = options.mode || 'bank';
+            targetBankKey = bankKeysToLoad[0] || null;
+        } else if (typeof target === 'string' && Array.isArray(questionIndex)) {
+            currentSubject = target;
+            bankKeysToLoad = questionIndex;
+            initialMode = 'bank';
+            targetBankKey = bankKeysToLoad[0] || null;
+        } else {
+            targetBankKey = target;
+            const label = parseBankLabel(targetBankKey);
+            currentSubject = label.subject;
+            bankKeysToLoad = options?.banks || [targetBankKey];
+            if (questionIndex != null && Number.isInteger(questionIndex) && questionIndex >= 0) {
+                initialMode = 'single';
                 currentQuestionIndex = questionIndex;
+            } else {
+                initialMode = options?.mode || 'unit';
+            }
+        }
+
+        if (subjectEl) subjectEl.textContent = currentSubject;
+        if (titleEl) {
+            titleEl.textContent = initialMode === 'bank' || !targetBankKey
+                ? `編輯題目內容 - ${currentSubject}`
+                : `編輯題目內容 - ${parseBankLabel(targetBankKey).title}`;
+        }
+
+        currentMode = initialMode;
+        if (currentMode === 'bank') {
+            tabBank?.classList.add('active'); tabBank?.setAttribute('aria-selected', 'true');
+            tabAll?.classList.remove('active'); tabAll?.setAttribute('aria-selected', 'false');
+            tabSingle?.classList.remove('active'); tabSingle?.setAttribute('aria-selected', 'false');
+        } else if (currentMode === 'single') {
+            tabBank?.classList.remove('active'); tabBank?.setAttribute('aria-selected', 'false');
+            tabAll?.classList.remove('active'); tabAll?.setAttribute('aria-selected', 'false');
+            tabSingle?.classList.add('active'); tabSingle?.setAttribute('aria-selected', 'true');
+        } else {
+            tabBank?.classList.remove('active'); tabBank?.setAttribute('aria-selected', 'false');
+            tabAll?.classList.add('active'); tabAll?.setAttribute('aria-selected', 'true');
+            tabSingle?.classList.remove('active'); tabSingle?.setAttribute('aria-selected', 'false');
+        }
+
+        try {
+            if (bankKeysToLoad.length === 1 && readCatalog) {
+                try {
+                    const catalog = await readCatalog();
+                    if (catalog) {
+                        const isArch = targetBankKey.startsWith('_Archive_');
+                        const sisterKeys = Object.keys(catalog).filter(k =>
+                            k.startsWith('_Archive_') === isArch &&
+                            parseBankLabel(k).subject === currentSubject
+                        );
+                        if (sisterKeys.length > 1) {
+                            bankKeysToLoad = sisterKeys;
+                        }
+                    }
+                } catch {}
+            }
+
+            let loadedBanks;
+            try {
+                loadedBanks = await Promise.all(bankKeysToLoad.map(async key => {
+                    const list = await readBank(key);
+                    return {
+                        title: key,
+                        questions: Array.isArray(list) ? list.map(q => ({ ...q })) : []
+                    };
+                }));
+            } catch (err) {
+                if (targetBankKey && bankKeysToLoad.length > 1) {
+                    const list = await readBank(targetBankKey);
+                    loadedBanks = [{
+                        title: targetBankKey,
+                        questions: Array.isArray(list) ? list.map(q => ({ ...q })) : []
+                    }];
+                } else {
+                    throw err;
+                }
+            }
+
+            currentBanks = loadedBanks && loadedBanks.length > 0 ? loadedBanks : [{ title: targetBankKey || currentSubject, questions: [] }];
+            originalBankKeys = currentBanks.map(b => b.title);
+
+            let targetIdx = currentBanks.findIndex(b => b.title === targetBankKey);
+            currentBankIndex = targetIdx >= 0 ? targetIdx : 0;
+
+            if (initialMode === 'single') {
+                currentMode = 'single';
+                currentQuestionIndex = (questionIndex != null && Number.isInteger(questionIndex)) ? questionIndex : 0;
+            } else if (initialMode === 'bank') {
+                currentMode = 'bank';
+                currentQuestionIndex = 0;
             } else {
                 currentMode = 'unit';
                 currentQuestionIndex = 0;
             }
+
+            if (textarea) textarea.disabled = false;
+            if (saveBtn) saveBtn.disabled = false;
             syncTextarea();
         } catch (e) {
             if (textarea) textarea.value = '';
@@ -192,44 +417,31 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         }
     }
 
-    // Switch to 'unit' mode
-    tabAll?.addEventListener('click', () => {
-        if (currentMode === 'unit') return;
+    tabBank?.addEventListener('click', () => switchMode('bank'));
+    tabAll?.addEventListener('click', () => switchMode('unit'));
+    tabSingle?.addEventListener('click', () => switchMode('single'));
+
+    unitSelect?.addEventListener('change', () => {
+        const nextIdx = parseInt(unitSelect.value, 10);
+        if (Number.isNaN(nextIdx) || nextIdx === currentBankIndex) return;
         try {
-            const parsed = validateQuestionPayload(textarea.value, 'single');
-            currentQuestions = mergeQuestionEdit(currentQuestions, parsed, currentQuestionIndex);
+            commitTextareaChanges();
             showError('');
         } catch (e) {
-            showError(`切換模式前請先確認目前題目 JSON 格式正確：${e.message}`);
+            showError(`切換單元時目前編輯內容格式不正確：${e.message}`);
+            unitSelect.value = String(currentBankIndex);
             return;
         }
-        currentMode = 'unit';
+        currentBankIndex = nextIdx;
+        currentQuestionIndex = 0;
         syncTextarea();
     });
 
-    // Switch to 'single' mode
-    tabSingle?.addEventListener('click', () => {
-        if (currentMode === 'single') return;
-        try {
-            const parsed = validateQuestionPayload(textarea.value, 'unit');
-            currentQuestions = parsed;
-            showError('');
-        } catch (e) {
-            showError(`切換模式前請先確認整個單元 JSON 格式正確：${e.message}`);
-            return;
-        }
-        currentMode = 'single';
-        if (currentQuestionIndex >= currentQuestions.length) currentQuestionIndex = 0;
-        syncTextarea();
-    });
-
-    // Select different question in 'single' mode
     questionSelect?.addEventListener('change', () => {
         const nextIdx = parseInt(questionSelect.value, 10);
         if (Number.isNaN(nextIdx) || nextIdx === currentQuestionIndex) return;
         try {
-            const parsed = validateQuestionPayload(textarea.value, 'single');
-            currentQuestions = mergeQuestionEdit(currentQuestions, parsed, currentQuestionIndex);
+            commitTextareaChanges();
             showError('');
         } catch (e) {
             showError(`切換題目時目前編輯內容格式不正確：${e.message}`);
@@ -240,7 +452,6 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         syncTextarea();
     });
 
-    // Format JSON
     formatBtn?.addEventListener('click', () => {
         try {
             const parsed = validateQuestionPayload(textarea.value, currentMode);
@@ -251,7 +462,6 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         }
     });
 
-    // Copy JSON to clipboard
     copyBtn?.addEventListener('click', async () => {
         const orig = copyBtn.textContent;
         try {
@@ -266,22 +476,31 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         }
     });
 
-    // Save
     saveBtn?.addEventListener('click', async () => {
-        if (isSaving || !currentBankKey) return;
+        if (isSaving || !currentBanks.length) return;
         showError('');
         showStatus('');
-        let finalQuestions;
         try {
-            if (currentMode === 'unit') {
-                finalQuestions = validateQuestionPayload(textarea.value, 'unit');
-            } else {
-                const parsed = validateQuestionPayload(textarea.value, 'single');
-                finalQuestions = mergeQuestionEdit(currentQuestions, parsed, currentQuestionIndex);
-            }
+            commitTextareaChanges();
         } catch (e) {
             showError(e.message);
             return;
+        }
+
+        const changes = {};
+        if (currentMode === 'bank') {
+            const newTitles = new Set(currentBanks.map(b => b.title));
+            for (const oldKey of originalBankKeys) {
+                if (!newTitles.has(oldKey)) {
+                    changes[oldKey] = null;
+                }
+            }
+            for (const b of currentBanks) {
+                changes[b.title] = b.questions;
+            }
+        } else {
+            const curBank = currentBanks[currentBankIndex];
+            changes[curBank.title] = curBank.questions;
         }
 
         isSaving = true;
@@ -290,9 +509,9 @@ export function mountContentEditor({ readBank, writeBanks, onChanged, getUser })
         showStatus('正在儲存題庫至伺服器…');
 
         try {
-            await writeBanks({ [currentBankKey]: finalQuestions });
+            await writeBanks(changes);
             showStatus('儲存成功！');
-            await onChanged?.({ [currentBankKey]: finalQuestions });
+            await onChanged?.(changes);
             setTimeout(() => {
                 isSaving = false;
                 saveBtn.disabled = false;

@@ -115,8 +115,51 @@ try {
     await page.locator('#bankContentEditCloseBtn').click();
     await modal.waitFor({ state: 'hidden' });
 
+    // Test folder level three-dots: "編輯整個題庫"
+    // Navigate back to folder level
+    await page.locator('.folder-back').click();
+    await page.locator('.bank-folder').waitFor({ state: 'visible' });
+
+    const folderCard = page.locator('.bank-folder').filter({ hasText: '藥理區段一' });
+    await folderCard.locator('.bank-more').click();
+
+    const editBankMenuItem = page.getByRole('menuitem', { name: '編輯整個題庫' });
+    assert.equal(await editBankMenuItem.isVisible(), true);
+    await editBankMenuItem.click();
+
+    await modal.waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#bankEditScopeBank').getAttribute('aria-selected'), 'true');
+    await page.waitForFunction(() => {
+        const val = document.getElementById('bankContentEditTextarea')?.value;
+        return val && val.includes('免疫療法') && val.includes('抗生素');
+    });
+
+    const batchVal = await textarea.inputValue();
+    assert.match(batchVal, /"banks"/);
+    assert.match(batchVal, /免疫療法/);
+    assert.match(batchVal, /抗生素/);
+    assert.equal(await page.locator('#bankEditMetaInfo').textContent(), '共 2 份題庫 · 3 題');
+
+    // Switch to unit mode from folder batch
+    await page.locator('#bankEditScopeAll').click();
+    assert.equal(await page.locator('#bankEditUnitPickerWrap').isVisible(), true);
+    const unitSelectVal = await page.locator('#bankEditUnitSelect').inputValue();
+    assert.equal(unitSelectVal, '0');
+
+    // Switch back to bank mode, edit, and save
+    await page.locator('#bankEditScopeBank').click();
+    const modifiedBatch = JSON.parse(batchVal);
+    modifiedBatch.banks[0].questions[0].question = '受體作用機轉 (整個題庫編輯)';
+    await textarea.fill(JSON.stringify(modifiedBatch, null, 2));
+    await page.locator('#bankContentEditSaveBtn').click();
+    await modal.waitFor({ state: 'hidden' });
+
+    const finalUpdated = await page.evaluate(() => window.__lastUpdatedValues);
+    assert.ok(finalUpdated, 'Database update was called');
+    assert.equal(finalUpdated[keys[0]][0].question, '受體作用機轉 (整個題庫編輯)');
+
     assert.equal(errors.length, 0, `Page errors: ${errors.join(', ')}`);
-    console.log('Content editor browser test passed: modal open, unit/single switch, JSON edit, revision increment, and quizActionModal trigger.');
+    console.log('Content editor browser test passed: modal open, unit/single switch, JSON edit, revision increment, quizActionModal trigger, and folder-level entire bank edit.');
 } finally {
     await browser.close();
 }

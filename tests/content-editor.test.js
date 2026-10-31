@@ -125,3 +125,70 @@ test('mergeQuestionEdit preserves original questionId, taxonomy, and increments 
     assert.throws(() => mergeQuestionEdit(originalList, updatedQ0, -1), /序號超出範圍/);
     assert.throws(() => mergeQuestionEdit(originalList, updatedQ0, 5), /序號超出範圍/);
 });
+
+test('validateQuestionPayload for bank / batch mode', () => {
+    const validBatch = {
+        banks: [
+            {
+                title: '病理學｜單元一',
+                questions: [
+                    {
+                        question: '什麼是糖尿病的最常見型態？',
+                        options: { A: '第一型', B: '第二型' },
+                        answer: 'B'
+                    }
+                ]
+            },
+            {
+                title: '病理學｜單元二',
+                questions: [
+                    {
+                        question: '人體最大的實質器官是？',
+                        options: { A: '心臟', B: '肝臟' },
+                        answer: 'B'
+                    }
+                ]
+            }
+        ]
+    };
+
+    // Passes object directly
+    const res1 = validateQuestionPayload(validBatch, 'bank');
+    assert.deepEqual(res1, validBatch);
+
+    // Passes JSON string
+    const res2 = validateQuestionPayload(JSON.stringify(validBatch), 'bank');
+    assert.deepEqual(res2, validBatch);
+
+    // Supports key-value mapping { '病理學｜單元一': [ ... ] }
+    const resMap = validateQuestionPayload({
+        '病理學｜單元一': validBatch.banks[0].questions
+    }, 'bank');
+    assert.equal(resMap.banks.length, 1);
+    assert.equal(resMap.banks[0].title, '病理學｜單元一');
+
+    // Empty or non-object throws
+    assert.throws(() => validateQuestionPayload('', 'bank'), /內容不可為空/);
+    assert.throws(() => validateQuestionPayload([], 'bank'), /包含 banks 陣列/);
+    assert.throws(() => validateQuestionPayload({ banks: [] }, 'bank'), /題庫列表不可為空/);
+
+    // Missing title throws
+    assert.throws(() => validateQuestionPayload({
+        banks: [{ title: '', questions: validBatch.banks[0].questions }]
+    }, 'bank'), /缺少標題/);
+
+    // Invalid title characters throw
+    assert.throws(() => validateQuestionPayload({
+        banks: [{ title: '病理/單元', questions: validBatch.banks[0].questions }]
+    }, 'bank'), /不可包含/);
+
+    // Duplicate titles throw
+    assert.throws(() => validateQuestionPayload({
+        banks: [validBatch.banks[0], validBatch.banks[0]]
+    }, 'bank'), /重複/);
+
+    // Invalid questions inside bank throw
+    assert.throws(() => validateQuestionPayload({
+        banks: [{ title: '病理｜測試', questions: [{ question: '無答案' }] }]
+    }, 'bank'), /題目格式不正確/);
+});

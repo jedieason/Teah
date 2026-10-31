@@ -65,7 +65,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         selectAll.disabled = !visibleKeys.length;
         $('bankBatchRename').disabled = count !== 1;
         const editContentBtn = $('bankBatchEditContent');
-        if (editContentBtn) editContentBtn.disabled = count !== 1;
+        if (editContentBtn) editContentBtn.disabled = count === 0;
         $('bankBatchArchive').disabled = $('bankBatchDelete').disabled = $('bankSelectionClear').disabled = count === 0;
         $('bankBatchArchive').textContent = archived ? '還原至題庫' : '移至典藏';
         for (const card of grid.querySelectorAll('[data-json]')) {
@@ -137,6 +137,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         trigger.setAttribute('aria-controls', menu.id);
         for (const [label, action] of [
             ['選取單元', 'select'],
+            ['編輯整個題庫', 'editContent'],
             [archived ? '還原整個單元' : '典藏整個單元', 'archive'],
             ['刪除單元', 'delete']
         ]) {
@@ -146,6 +147,8 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
                 if (action === 'select') {
                     if (!managing) setManaging(true);
                     toggleUnit(subject, banks);
+                } else if (action === 'editContent') {
+                    onEditContent?.(subject, null, { isFolder: true, subject, banks, mode: 'bank' });
                 } else openAction(action, banks);
             }, action === 'delete' ? 'bank-menu-item bank-danger' : 'bank-menu-item');
             item.setAttribute('role', 'menuitem');
@@ -383,7 +386,15 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         (grid.querySelector('.bank-open') || navigation.querySelector('button') || document.body).focus?.({ preventScroll: true });
     };
     const batchEditContentBtn = $('bankBatchEditContent');
-    if (batchEditContentBtn) batchEditContentBtn.onclick = () => { if (selection.size === 1) onEditContent?.([...selection][0]); };
+    if (batchEditContentBtn) batchEditContentBtn.onclick = () => {
+        if (selection.size === 1) {
+            onEditContent?.([...selection][0]);
+        } else if (selection.size > 1) {
+            const selectedKeys = [...selection];
+            const subject = bankLabel(selectedKeys[0]).subject;
+            onEditContent?.(subject, null, { isFolder: true, subject, banks: selectedKeys, mode: 'bank' });
+        }
+    };
     for (const [id, action] of [['bankBatchRename', 'rename'], ['bankBatchArchive', 'archive'], ['bankBatchDelete', 'delete']]) $(id).onclick = () => openAction(action, [...selection]);
     document.addEventListener('pointerdown', event => { if (menu && !menu.contains(event.target) && event.target !== menuTrigger && !menuTrigger?.contains(event.target)) closeMenu(); });
     document.addEventListener('focusin', event => { if (menu && !menu.contains(event.target) && event.target !== menuTrigger) closeMenu(); });

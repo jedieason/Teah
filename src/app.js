@@ -3534,7 +3534,7 @@ document.getElementById('homeStarred').onclick = () => openCollectionPage();
 const unitsGrid = document.getElementById('units-grid');
 let questionSearch;
 const contentEditor = mountContentEditor({
-    readBank, writeBanks,
+    readBank, writeBanks, readCatalog,
     getUser: () => auth.currentUser?.uid,
     onChanged: async changes => {
         await fetchQuizList();
@@ -3548,7 +3548,7 @@ const bankLibrary = mountBankLibrary({
     getProgress: key => userProgressCache[key], getStorageKey: getQuizStorageName,
     onFolder: folder => { currentActiveFolder = folder; },
     onOpen: key => openQuizActionModal(key, userProgressCache[getQuizStorageName(key)]),
-    onEditContent: (key, idx) => contentEditor.open(key, idx),
+    onEditContent: (key, idx, opts) => contentEditor.open(key, idx, opts),
     onManage: managing => { const label = menuEditQuizName?.querySelector('.item-label'); if (label) label.textContent = managing ? '完成管理' : '管理題庫'; },
     refreshSearch: () => questionSearch?.refresh(),
     onChanged: async changes => {

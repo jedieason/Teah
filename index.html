@@ -715,8 +715,13 @@ NSAID、抗黴菌、抗病毒
     <div class="md3-dialog-body">
       <div class="bank-edit-scope-bar">
         <div class="bank-edit-scope-tabs" role="tablist" aria-label="編輯範圍">
+          <button type="button" role="tab" id="bankEditScopeBank" class="bank-edit-tab" aria-selected="false">整個題庫</button>
           <button type="button" role="tab" id="bankEditScopeAll" class="bank-edit-tab active" aria-selected="true">整個單元</button>
           <button type="button" role="tab" id="bankEditScopeSingle" class="bank-edit-tab" aria-selected="false">單一題目</button>
+        </div>
+        <div id="bankEditUnitPickerWrap" class="bank-edit-picker-wrap" hidden>
+          <label for="bankEditUnitSelect" class="bank-edit-label">單元：</label>
+          <select id="bankEditUnitSelect" class="bank-edit-select" aria-label="選擇單元"></select>
         </div>
         <div id="bankEditQuestionPickerWrap" class="bank-edit-picker-wrap" hidden>
           <label for="bankEditQuestionSelect" class="bank-edit-label">題號：</label>
