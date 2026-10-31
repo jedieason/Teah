@@ -46,7 +46,11 @@ const navigate = async name => {
 };
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' });
-    await page.locator('.bank-folder').filter({ hasText: '藥理區段一' }).click();
+    const pharmaFolder = page.locator('.bank-folder').filter({ hasText: '藥理區段一' });
+    assert.equal(await pharmaFolder.locator('.bank-progress').isVisible(), true);
+    assert.equal(await pharmaFolder.locator('.bank-progress-track').isVisible(), true);
+    assert.match(await pharmaFolder.locator('.bank-progress').textContent(), /已作答/);
+    await pharmaFolder.click();
     assert.equal(await cards.count(), 15);
     assert.equal(await page.locator('#bankSelectionBar').isVisible(), false);
     // Opening, menu keyboard navigation, dismissal and focus restoration are separate interactions.

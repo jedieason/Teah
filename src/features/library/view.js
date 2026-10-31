@@ -50,6 +50,15 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         const done = p?.allQuestions ? p.allQuestions.filter(q => q.isAnswered).length : p?.currentIndex || 0;
         return { percent: total ? Math.min(100, Math.round(done / total * 100)) : 0, total, done };
     }
+    function folderProgress(banks) {
+        let total = 0, done = 0;
+        for (const key of banks) {
+            const p = progress(key);
+            total += p.total;
+            done += p.done;
+        }
+        return { percent: total ? Math.min(100, Math.round(done / total * 100)) : 0, total, done };
+    }
     function updateSelection() {
         bar.hidden = !managing;
         const count = selection.size;
@@ -234,7 +243,19 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         if (folders) {
             const groups = new Map();
             for (const key of scoped) { const subject = bankLabel(key).subject; if (!groups.has(subject)) groups.set(subject, []); groups.get(subject).push(key); }
-            for (const [subject, banks] of [...groups].sort(([a], [b]) => (a === '其他') - (b === '其他') || a.localeCompare(b, 'zh-Hant'))) {
+            for (const [subject, banks] of [...groups].sort(([a, banksA], [b, banksB]) => {
+                if ((a === '其他') !== (b === '其他')) return (a === '其他') - (b === '其他');
+                if (sort === 'count') {
+                    const countA = banksA.reduce((sum, k) => sum + (catalog[k]?.count || 0), 0);
+                    const countB = banksB.reduce((sum, k) => sum + (catalog[k]?.count || 0), 0);
+                    if (countB !== countA) return countB - countA;
+                } else if (sort === 'progress') {
+                    const progA = folderProgress(banksA).percent;
+                    const progB = folderProgress(banksB).percent;
+                    if (progB !== progA) return progB - progA;
+                }
+                return a.localeCompare(b, 'zh-Hant');
+            })) {
                 const unitQuestions = banks.reduce((sum, key) => sum + (catalog[key]?.count || 0), 0);
                 const allSelected = banks.length > 0 && banks.every(k => selection.has(k));
                 const someSelected = !allSelected && banks.some(k => selection.has(k));
@@ -263,6 +284,14 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
                 node('span', subject, info, 'unit-title');
                 node('span', `${banks.length} 份題庫 · ${unitQuestions} 題`, info, 'unit-subtitle');
 
+                const p = folderProgress(banks);
+                const state = node('span', null, open, 'bank-progress');
+                node('span', p.percent >= 100 ? '已完成' : p.done ? `已作答 ${p.done}/${p.total} (${p.percent}%)` : '尚未作答', state, p.percent >= 100 ? 'bank-complete' : '');
+                if (p.done) {
+                    const track = node('span', null, state, 'bank-progress-track');
+                    const fill = node('span', null, track); fill.style.width = `${p.percent}%`;
+                }
+
                 const more = button(null, card, () => openFolderMenu(more, subject, banks), 'bank-more bank-icon-button');
                 more.innerHTML = icon('more');
                 more.setAttribute('aria-label', `${subject}單元的更多操作`);
@@ -285,7 +314,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
             node('span', label.title, info, 'unit-title');
             node('span', `${catalog[key]?.count || 0} 題`, info, 'unit-subtitle');
             const state = node('span', null, open, 'bank-progress');
-            node('span', p.percent >= 100 ? '已完成' : p.done ? `已作答 ${p.done}/${p.total}` : '尚未作答', state, p.percent >= 100 ? 'bank-complete' : '');
+            node('span', p.percent >= 100 ? '已完成' : p.done ? `已作答 ${p.done}/${p.total} (${p.percent}%)` : '尚未作答', state, p.percent >= 100 ? 'bank-complete' : '');
             if (p.done) {
                 const track = node('span', null, state, 'bank-progress-track');
                 const fill = node('span', null, track); fill.style.width = `${p.percent}%`;
