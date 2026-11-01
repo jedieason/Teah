@@ -166,13 +166,21 @@ try {
     assert.ok(draggedText.length > 0);
     assert.equal(await page.locator('.option-button[data-option="A"]').evaluate(el => el.classList.contains('selected')), false);
     await page.locator('.option-button[data-option="A"]').click();
-    await page.locator('#confirm-btn').click();
+    // Verify Enter does not switch to option B even if option B has focus
+    await page.locator('.option-button[data-option="B"]').focus();
+    await page.keyboard.press('Enter');
+    // Option A was confirmed, not B
+    assert.equal(await page.locator('.option-button[data-option="A"]').evaluate(el => el.classList.contains('selected')), true);
+    assert.equal(await page.locator('.option-button[data-option="B"]').evaluate(el => el.classList.contains('selected')), false);
     // A second programmatic click must not change counters or the Firebase record.
     await page.locator('#confirm-btn').dispatchEvent('click');
     await page.waitForFunction(bank => window.__testDatabase.mistakes['test-user'][bank].old.count === 4, bank);
     assert.equal(await page.locator('#wrong').innerText(), '1');
     await page.screenshot({ path: 'artifacts/qa/answer-mobile.png', fullPage: true });
-    await page.locator('#next-btn').click();
+    // Verify Enter on copy-btn does not trigger copy alert but proceeds to next question
+    await page.locator('#copy-btn').focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await page.locator('#customAlert').evaluate(el => el.classList.contains('show')), false);
     await page.locator('#fillblank-input').fill('16:1');
     await page.locator('#confirm-btn').click();
     await page.locator('#next-btn').click();

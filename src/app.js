@@ -501,7 +501,7 @@ function renderQuestion(index) {
                 button._isDragging = false;
             });
             button.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === ' ') {
                     e.preventDefault();
                     button.click();
                 }
@@ -646,6 +646,9 @@ function selectOption(event) {
         });
         btn.classList.add('selected');
         selectedOption = option;
+    }
+    if (btn && typeof btn.blur === 'function') {
+        btn.blur();
     }
 }
 
@@ -1081,6 +1084,8 @@ function showEndScreen() {
 }
 
 function copyQuestion() {
+    const copyBtn = document.getElementById('copy-btn');
+    if (copyBtn && typeof copyBtn.blur === 'function') copyBtn.blur();
     if (!currentQuestion.question) {
         alert('No question to copy.');
         return;
@@ -1119,11 +1124,23 @@ document.getElementById('startGame').addEventListener('click', () => {
         saveProgress();
     });
 });
-document.getElementById('confirm-btn').addEventListener('click', confirmAnswer);
-document.getElementById('next-btn').addEventListener('click', loadNewQuestion);
-document.getElementById('copy-btn').addEventListener('click', copyQuestion);
+document.getElementById('confirm-btn').addEventListener('click', (e) => {
+    e.currentTarget.blur();
+    confirmAnswer();
+});
+document.getElementById('next-btn').addEventListener('click', (e) => {
+    e.currentTarget.blur();
+    loadNewQuestion();
+});
+document.getElementById('copy-btn').addEventListener('click', (e) => {
+    e.currentTarget.blur();
+    copyQuestion();
+});
 const errataBtn = document.getElementById('errata-btn');
-if (errataBtn) errataBtn.addEventListener('click', openErrataModal);
+if (errataBtn) errataBtn.addEventListener('click', (e) => {
+    e.currentTarget.blur();
+    openErrataModal();
+});
 const errataCloseBtn = document.getElementById('errataCloseBtn');
 if (errataCloseBtn) errataCloseBtn.addEventListener('click', () => { errataModal.style.display = 'none'; });
 const errataCancelBtn = document.getElementById('errataCancelBtn');
@@ -1150,24 +1167,26 @@ document.getElementById('back-progress-btn-expl').addEventListener('click', () =
 document.addEventListener('keydown', function (event) {
     if (document.querySelector('dialog[open]')) return;
     if (event.isComposing || event.metaKey || event.ctrlKey || event.altKey) return;
-    if (event.target.closest('button, summary, select') || (event.target.matches('input, textarea, [contenteditable]') && event.target !== fillblankInput)) return;
-    if ([...document.querySelectorAll('.md3-modal-overlay, .modal, #mistakeView')].some(el => getComputedStyle(el).display !== 'none')) return;
-    if (quizContainer.style.display === 'none' || !allQuestions.length) return;
+    if (customAlert.classList.contains('show')) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            modalConfirmBtn.click();
+            return;
+        }
+    }
     if (document.querySelector('.start-screen').style.display !== 'none') {
         if (event.key === 'Enter') {
             if (!selectedJson) {
                 return;
             }
+            event.preventDefault();
             document.getElementById('startGame').click();
             return;
         }
     }
-    if (customAlert.classList.contains('show')) {
-        if (event.key === 'Enter') {
-            modalConfirmBtn.click();
-            return;
-        }
-    }
+    if (event.target.closest('summary, select') || (event.target.matches('input, textarea, [contenteditable]') && event.target !== fillblankInput)) return;
+    if ([...document.querySelectorAll('.md3-modal-overlay, .modal, #mistakeView')].some(el => getComputedStyle(el).display !== 'none')) return;
+    if (quizContainer.style.display === 'none' || !allQuestions.length) return;
     if (event.target === userQuestionInput) {
         return;
     }
@@ -1193,9 +1212,14 @@ document.addEventListener('keydown', function (event) {
     const validOptions = q && q.options ? Object.keys(q.options) : [];
 
     if (!isConfirmed && validOptions.includes(event.key.toUpperCase())) {
+        event.preventDefault();
+        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+            document.activeElement.blur();
+        }
         const optionButton = document.querySelector(`.option-button[data-option='${event.key.toUpperCase()}']`);
         if (optionButton) {
             optionButton.click();
+            optionButton.blur();
         }
     } else if (event.key === 'Enter') {
         const activeEl = document.activeElement;
@@ -1206,8 +1230,12 @@ document.addEventListener('keydown', function (event) {
             return;
         }
 
+        event.preventDefault();
+        if (activeEl && typeof activeEl.blur === 'function' && activeEl !== fillblankInput) {
+            activeEl.blur();
+        }
+
         if (!isConfirmed) {
-            event.preventDefault();
             confirmAnswer();
         } else {
             loadNewQuestion();
@@ -1850,7 +1878,8 @@ function flushChatRender(target) {
     }
 }
 
-weeGPTButton.addEventListener('click', () => {
+weeGPTButton.addEventListener('click', (e) => {
+    e.currentTarget.blur();
     if (sessionMode === 'exam' && !isTestCompleted) return;
     if (!currentQuestion.question || !currentQuestion.options) {
         showCustomAlert('There is currently no question available for analysis.');
@@ -2850,6 +2879,7 @@ async function updateStarIcon() {
     } catch (error) { console.error('讀取收藏失敗', error); }
 }
 async function toggleStarCurrentQuestion() {
+    if (starBtn && typeof starBtn.blur === 'function') starBtn.blur();
     if (!auth.currentUser) { showCustomAlert('登入後即可收藏題目。'); return; }
     const question = currentQuestion;
     const entry = { ...canonicalQuestion(question), questionId: question.questionId || null, source: getQuizStorageName(question.sourcePath || selectedJson) };
@@ -2867,6 +2897,7 @@ async function toggleStarCurrentQuestion() {
 }
 
 function openErrataModal() {
+    if (errataBtn && typeof errataBtn.blur === 'function') errataBtn.blur();
     if (!currentQuestion || !currentQuestion.question) {
         showCustomAlert('當前沒有可用的題目！');
         return;
@@ -3080,7 +3111,10 @@ async function openCollectionPage() {
     try { await collection.open(); } catch (error) { showCustomAlert(error.message); }
 }
 
-if (starBtn) starBtn.addEventListener('click', toggleStarCurrentQuestion);
+if (starBtn) starBtn.addEventListener('click', (e) => {
+    e.currentTarget.blur();
+    toggleStarCurrentQuestion();
+});
 if (showStarredBtn) showStarredBtn.addEventListener('click', openCollectionPage);
 // ========== 深色模式功能 ==========
 
