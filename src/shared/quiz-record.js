@@ -4,7 +4,7 @@ import { isTrueFalseOptions, sortOptionKeys, getOrderedOptionEntries, normalizeQ
 export { isTrueFalseOptions, sortOptionKeys, getOrderedOptionEntries, normalizeQuestionOptions };
 
 export function resolveQuizTitle({ selectedJson = '', isMistakePracticeMode = false, sessionKind = 'bank', defaultTitle = '測驗' } = {}) {
-    if (isMistakePracticeMode) return '錯題複習';
+    if (isMistakePracticeMode || sessionKind === 'mistake') return '錯題複習';
     if (sessionKind === 'custom') return '自訂測驗';
     const clean = (selectedJson || '').split('/').pop().replace(/^_Archive_/, '').replace(/\.json$/, '').trim();
     return clean || defaultTitle;

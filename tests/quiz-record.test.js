@@ -7,6 +7,7 @@ test('resolveQuizTitle correctly extracts bank name, handles archives, custom se
     assert.equal(resolveQuizTitle({ selectedJson: '_Archive_藥理區段一｜B03 考古.json' }), '藥理區段一｜B03 考古');
     assert.equal(resolveQuizTitle({ selectedJson: 'QuestionBank/臨床醫學區段一｜B08 考古.json' }), '臨床醫學區段一｜B08 考古');
     assert.equal(resolveQuizTitle({ isMistakePracticeMode: true }), '錯題複習');
+    assert.equal(resolveQuizTitle({ sessionKind: 'mistake' }), '錯題複習');
     assert.equal(resolveQuizTitle({ sessionKind: 'custom' }), '自訂測驗');
     assert.equal(resolveQuizTitle({ selectedJson: '' }), '測驗');
 });

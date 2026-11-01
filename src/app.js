@@ -24,7 +24,7 @@ import { parseQuizImport, buildImportChanges } from './shared/quiz-import.js';
 import { diagnoseJson, autoRepairJson, mergeContinuation, locateJsonPath, buildJsonRepairPrompt, stripMarkdownFences } from './shared/json-diagnostics.js';
 import { mountJsonErrorEditor } from './shared/json-editor.js';
 import { isIosStandalone, isInAppBrowser, formatSignInErrorMessage, parseAuthHash, buildGoogleAuthUrl, getCanonicalRedirectUri } from './services/auth-helper.js';
-import { buildQuizRecord, downloadQuizRecord } from './shared/quiz-record.js';
+import { buildQuizRecord, downloadQuizRecord, resolveQuizTitle } from './shared/quiz-record.js';
 const signInBtn = document.getElementById('signInBtn');
 const errataModal = document.getElementById('errataModal');
 const errataFormContainer = document.getElementById('errataFormContainer');
@@ -47,23 +47,21 @@ async function updateRestorePreview(user) {
         const lastActiveSnap = await get(ref(database, `progress/${user.uid}/lastActive`));
         let activeQuizName = null;
         let resolvedSelectedJson = null;
+        let maxTime = 0;
 
         if (lastActiveSnap.exists()) {
             const lastActive = lastActiveSnap.val();
             activeQuizName = lastActive.quizName;
             resolvedSelectedJson = lastActive.selectedJson;
-        } else {
-            // Find latest in cache
-            const keys = Object.keys(userProgressCache);
-            if (keys.length === 0) { hideSection(); return; }
-            let maxTime = 0;
-            for (const key of keys) {
-                const p = userProgressCache[key];
-                if (p.lastUpdated && p.lastUpdated > maxTime) {
-                    maxTime = p.lastUpdated;
-                    activeQuizName = key;
-                    resolvedSelectedJson = p.selectedJson;
-                }
+            maxTime = lastActive.lastUpdated || 0;
+        }
+
+        // Compare against local cache to ensure the most recent practice is used (even before Firebase sync)
+        for (const [key, cached] of Object.entries(userProgressCache)) {
+            if (cached && cached.lastUpdated && cached.lastUpdated > maxTime) {
+                maxTime = cached.lastUpdated;
+                activeQuizName = key;
+                resolvedSelectedJson = cached.selectedJson;
             }
         }
 
@@ -72,7 +70,8 @@ async function updateRestorePreview(user) {
         const p = userProgressCache[activeQuizName];
         if (!p) { hideSection(); return; }
 
-        const fileName = (p.sessionKind === 'custom' ? '自訂測驗' : p.selectedJson || '').split('/').pop().replace('.json', '') || '最近的中斷點';
+        const isMistake = p.sessionKind === 'mistake' || !!p.isMistakePracticeMode || (typeof activeQuizName === 'string' && activeQuizName.startsWith('session_') && !!p.isMistakePracticeMode);
+        const fileName = isMistake ? '錯題複習' : resolveQuizTitle({ selectedJson: p.selectedJson, sessionKind: p.sessionKind, defaultTitle: '最近的中斷點' });
 
         let total = 0;
         let done = 0;
@@ -85,8 +84,9 @@ async function updateRestorePreview(user) {
         }
 
         const percent = total > 0 ? Math.round(done / total * 100) : 0;
+        const isComplete = total > 0 && done >= total;
 
-        if (percent >= 100 || (percent <= 0 && done === 0)) { hideSection(); return; }
+        if (isComplete || (percent <= 0 && done === 0 && !isMistake)) { hideSection(); return; }
 
         if (continueSection) continueSection.style.display = 'block';
         if (titleText) titleText.textContent = fileName;
@@ -979,6 +979,7 @@ function showEndScreen() {
         if (wrongListToRedo.length === 0) return;
 
         isMistakePracticeMode = true;
+        sessionKind = 'mistake';
         sessionId = crypto.randomUUID(); sessionMode = 'study';
         document.body.classList.remove('exam-active');
         allQuestions = wrongListToRedo.map(q => {
@@ -2017,8 +2018,19 @@ function saveProgress() {
         else delete q.options;
     });
     const uid = auth.currentUser.uid;
-    const quizName = sessionKind === 'custom' || isMistakePracticeMode || allQuestions.some(q => q.sourcePath && q.sourcePath !== selectedJson) ? `session_${sessionId}` : getQuizStorageName(selectedJson);
-    const progress = JSON.parse(JSON.stringify({ allQuestions, currentIndex, selectedJson, sessionId, sessionMode, sessionKind, sessionTimeLimit, lastUpdated: Date.now() }));
+    const isMistake = isMistakePracticeMode || sessionKind === 'mistake';
+    const quizName = sessionKind === 'custom' || isMistake || allQuestions.some(q => q.sourcePath && q.sourcePath !== selectedJson) ? `session_${sessionId}` : getQuizStorageName(selectedJson);
+    const progress = JSON.parse(JSON.stringify({
+        allQuestions,
+        currentIndex,
+        selectedJson,
+        sessionId,
+        sessionMode,
+        sessionKind: isMistake ? 'mistake' : sessionKind,
+        isMistakePracticeMode: !!isMistake,
+        sessionTimeLimit,
+        lastUpdated: Date.now()
+    }));
     userProgressCache[quizName] = progress;
     storage('cache', 'put', { id: `progress:${uid}:${quizName}`, uid, quizKey: quizName, value: progress }).catch(() => {});
     enqueue('progress', uid, { quizKey: quizName, progress }).catch(() => showCustomAlert('此瀏覽器無法保存離線資料，請勿關頁並檢查儲存空間。'));
@@ -2054,7 +2066,6 @@ function rebuildMappingsAfterRestore() {
 }
 
 function restoreProgress(quizName = null) {
-    isMistakePracticeMode = false;
     if (!auth.currentUser) {
         showCustomAlert('請先登入才能恢復進度！');
         return;
@@ -2097,8 +2108,9 @@ function restoreProgress(quizName = null) {
         const p = snapshot.val();
         sessionId = p.sessionId || crypto.randomUUID();
         sessionMode = p.sessionMode || 'study';
-        sessionKind = p.sessionKind || 'bank';
+        sessionKind = p.sessionKind || (p.isMistakePracticeMode ? 'mistake' : 'bank');
         sessionTimeLimit = p.sessionTimeLimit ?? 15;
+        isMistakePracticeMode = !!(p.isMistakePracticeMode || sessionKind === 'mistake');
         document.body.classList.toggle('exam-active', sessionMode === 'exam');
 
         if (p.allQuestions) {
@@ -2164,10 +2176,11 @@ function restoreProgress(quizName = null) {
             }
         });
 
-        selectedJson = catalogPaths.find(path => getQuizStorageName(path) === getQuizStorageName(selectedJson)) || selectedJson;
-        await loadQuestions();
-        rebuildMappingsAfterRestore();
-        isMistakePracticeMode = false;
+        if (!isMistakePracticeMode) {
+            selectedJson = catalogPaths.find(path => getQuizStorageName(path) === getQuizStorageName(selectedJson)) || selectedJson;
+            await loadQuestions();
+            rebuildMappingsAfterRestore();
+        }
         isTestCompleted = currentIndex >= allQuestions.length;
 
         viewingIndex = currentIndex;
@@ -2180,9 +2193,9 @@ function restoreProgress(quizName = null) {
 
         document.querySelector('.start-screen').style.display = 'none';
         document.querySelector('.quiz-container').style.display = 'flex';
-        const fileName = selectedJson.split('/').pop().replace('.json', '');
-        document.querySelector('.quiz-title').innerText = `${fileName}`;
-        document.title = `${fileName} - 題矣`;
+        const titleText = isMistakePracticeMode ? '錯題複習' : resolveQuizTitle({ selectedJson, sessionKind });
+        document.querySelector('.quiz-title').innerText = `${titleText}`;
+        document.title = `${titleText} - 題矣`;
 
         let cCount = 0;
         let wCount = 0;
@@ -3288,6 +3301,8 @@ notebook = createNotebook({
 async function startMistakePractice(items) {
     if (!items.length) return;
     sessionId = crypto.randomUUID(); sessionMode = 'study';
+    sessionKind = 'mistake';
+    isMistakePracticeMode = true;
     document.body.classList.remove('exam-active');
     const sourceKeys = [...new Set(items.map(m => m.sourcePath || m.quizKey))];
     const sources = new Map();
@@ -3320,6 +3335,7 @@ async function startMistakePractice(items) {
     document.querySelector('.quiz-title').innerText = '錯題複習';
     document.title = '錯題複習 - 題矣';
     createProgressDots(); renderQuestion(0);
+    saveProgress();
 }
 
 let currentQuizDedupResult = null;
