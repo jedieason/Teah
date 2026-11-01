@@ -10,7 +10,6 @@ export function mountSidebar() {
         '典藏庫': '<rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v13h14V8M10 12h4"/>',
         '錯題本': '<path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3M8 3v5H3M12 5h9M12 9h6M8 14l5 5m0-5-5 5"/>',
         '已收藏': '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z"/>',
-        '自訂測驗': '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h4M8 16h6"/>',
         '學習總覽': '<path d="M4 3v17h17M8 16v-4m5 4V8m5 8V5"/>',
         '資料與隱私': '<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6Z"/><path d="m8 12 3 3 5-6"/>',
         'Flashcard': '<rect x="4" y="6" width="16" height="15" rx="2"/><path d="M7 3h10M9 11h6M9 16h4"/>',
@@ -22,7 +21,7 @@ export function mountSidebar() {
         button.setAttribute('aria-label', label); button.title = label;
         const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         for (const [key, value] of Object.entries({ class: 'sidebar-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.7', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' })) icon.setAttribute(key, value);
-        icon.innerHTML = icons[label] || icons['自訂測驗'];
+        icon.innerHTML = icons[label] || icons['題庫'];
         const text = document.createElement('span'); text.className = 'sidebar-label'; text.textContent = label;
         button.replaceChildren(icon, text);
     }

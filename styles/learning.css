@@ -33,6 +33,10 @@
 .explanation-buttons > .next-button,.explanation-buttons > .back-progress-button { margin-left:auto; }
 
 /* Browsing panels only; question, answer and flashcard sessions retain their layout. */
+.learning-page { width:100%; max-width:1080px; padding:36px 32px 64px; box-sizing:border-box; font:14px/1.6 var(--ui-font); color:var(--on-surface); text-align:left; margin:0 auto; }
+.learning-page .learning-page-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--ui-border); }
+.learning-page .learning-page-heading h2 { font-size:24px; font-weight:650; margin:0; }
+.learning-page .panel-body { padding:0; display:grid; gap:20px; }
 .learning-dialog.learning-panel { width:min(1000px,94vw); max-height:90dvh; padding:0; background:var(--panel-bg,#f7f8fa); color:var(--on-surface); border:1px solid var(--ui-border); border-radius:22px; font:14px/1.6 var(--ui-font); text-align:left; box-shadow:0 24px 80px #16243b26; }
 .learning-panel .learning-header { position:sticky; top:0; padding:20px 28px; border-bottom:1px solid var(--ui-border); background:var(--surface-color,#fff); z-index:2; }
 .learning-panel .learning-header h2 { margin:0; font-size:22px; font-weight:650; }
@@ -117,6 +121,8 @@ html.dark-mode .learning-panel [data-level="3"] { background:#2ba65c; color:#fff
 html.dark-mode .learning-panel [data-level="4"] { background:#38cf78; color:#0b321a; border-color:#59e493; }
 html.dark-mode .learning-panel .panel-heatmap-stat { background:var(--surface-color,#282b30); }
 @media(max-width:650px) {
+ .learning-page { padding:24px 16px 48px; }
+ .learning-page .learning-page-heading h2 { font-size:20px; }
  .learning-dialog.learning-panel { width:calc(100vw - 20px); max-height:94dvh; border-radius:18px; }
  .learning-panel .learning-header { padding:16px 18px; }
  .learning-panel .learning-header h2 { font-size:19px; }

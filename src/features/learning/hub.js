@@ -1,77 +1,48 @@
 import { overview, section, empty, metric, progress } from './panels.js';
 import { diagnosticReport } from '../../services/diagnostics.js';
 import { auth, database, ref, get, set, update, signOut, deleteUser, reauthenticateWithPopup, googleProvider } from '../../services/firebase.js';
-import { learningState, loadLearning, readBank, savePreference } from '../../services/learning.js';
+import { learningState, loadLearning, savePreference } from '../../services/learning.js';
 import { storage, clearAccountCache, suspendAccount, resumeAccount } from '../../services/outbox.js';
-import { selectQuestions, summarize, DAY } from './model.js';
 const el = (tag, text, parent) => { const node = document.createElement(tag); if (text != null) node.textContent = text; parent?.append(node); return node; };
 const button = (text, parent, action, className = 'secondary-button') => { const b = el('button', text, parent); b.type = 'button'; b.className = className; b.onclick = async () => { b.disabled = true; try { await action(); } catch (e) { window.alert(e.message || '操作失敗，請重試。'); } finally { b.disabled = false; } }; return b; };
 const download = (value, name) => { const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' })); const a = el('a'); a.href = url; a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); };
-export function mountLearningHub({ getCatalog, alert, current, start }) {
-    const nav = document.querySelector('.library-shortcuts');
+export function mountLearningHub({ host, activate, onNavigateHome, alert, current } = {}) {
     const sync = el('p', '', document.querySelector('.home-content')); sync.className = 'sync-status'; sync.setAttribute('role', 'status');
     window.addEventListener('sync-status', ({ detail }) => { sync.textContent = detail.error ? '資料已保存在此裝置，尚未同步；連線後會重試。' : detail.pending ? `${detail.pending} 筆紀錄等待同步` : ''; });
     const dialog = el('dialog', null, document.body); dialog.className = 'learning-dialog';
-    const open = title => { dialog.classList.toggle('learning-panel', ['學習總覽', '自訂測驗', '資料與隱私', '內容回報進度'].includes(title)); dialog.setAttribute('aria-label', title); dialog.replaceChildren(); const header = el('div', null, dialog); header.className = 'learning-header'; el('h2', title, header); button('關閉', header, () => dialog.close(), 'secondary-button'); dialog.showModal(); const body = el('div', null, dialog); body.className = 'panel-body'; return body; };
-    const requireUser = () => { if (!auth.currentUser) { alert('請先登入以使用學習紀錄。'); return false; } return true; };
-    button('自訂測驗', nav, async () => {
-        if (!requireUser()) return;
-        const body = open('自訂測驗');
-        const intro = section(body, '載入題庫');
-        const form = el('form', null, body); form.className = 'learning-form panel-card';
-        const fields = {};
-        const field = (name, label, options) => {
-            const l = el('label', label, form), input = el(options ? 'select' : 'input', null, l); fields[name] = input;
-            if (options) for (const [value, text] of options) { const o = el('option', text, input); o.value = value; }
-            return input;
-        };
-        const banks = Object.keys(getCatalog()).filter(k => !k.startsWith('_Archive_'));
-        const selected = field('bank', '題庫範圍', [['', '全部題庫'], ...banks.map(k => [k, k])]);
-        field('query', '搜尋題目或標籤');
-        for (const [key, title] of [['subject', '科目'], ['system', '系統'], ['topic', '主題'], ['difficulty', '難度'], ['year', '年份']]) field(key, title, [['', '全部']]);
-        field('status', '作答狀態', [['all', '全部'], ['new', '未作答'], ['wrong', '最近答錯'], ['due', '到期複習'], ['starred', '已收藏']]);
-        const count = field('count', '題數（最多 200）'); count.type = 'number'; count.min = 1; count.max = 200; count.value = 20;
-        field('order', '選題方式', [['adaptive', '優先到期與弱項'], ['random', '隨機'], ['original', '原始順序']]);
-        field('shuffleOptions', '選項順序', [['no', '原始順序'], ['yes', '隨機']]);
-        field('timeLimit', '每題提醒', [['0', '不設提醒'], ['30', '30 秒'], ['60', '60 秒'], ['90', '90 秒']]);
-        field('mode', '作答模式', [['study', '學習：逐題回饋'], ['exam', '考試：交卷後統一回饋']]);
-        const status = el('p', '先載入題目，再依分類組題。未標註分類的題目只出現在「全部」。', body); status.setAttribute('role', 'status');
-        let items = [], loaded = false;
-        selected.onchange = () => { loaded = false; items = []; status.textContent = '範圍已變更，請重新載入。'; };
-        const loadButton = button('載入題目', body, async () => {
-            const uid = auth.currentUser.uid, scope = selected.value;
-            const keys = scope ? [scope] : banks;
-            const stars = (await get(ref(database, `progress/${uid}/starred`))).val() || [];
-            items = []; loaded = false;
-            for (const key of keys) {
-                const rows = await readBank(key);
-                if (uid !== auth.currentUser?.uid) throw new Error('帳戶已切換，請重新開啟。');
-                items.push(...rows.map((q, i) => ({ ...q, originalIndex: i, sourcePath: key,
-                    starred: Object.values(stars).some(s => s.questionId === q.questionId || s.question === q.question && s.source === key) })));
-                status.textContent = `已載入 ${items.length} 題…`;
-            }
-            if (scope !== selected.value) { items = []; throw new Error('範圍已變更，請重新載入。'); }
-            for (const key of ['subject', 'system', 'topic', 'difficulty', 'year']) {
-                fields[key].replaceChildren();
-                for (const value of ['', ...new Set(items.map(q => q.taxonomy[key]).filter(Boolean))]) { const o = el('option', value || '全部', fields[key]); o.value = value; }
-            }
-            loaded = true; status.textContent = `可組題 ${items.length} 題。分類資料未經人工補註時，不會推測醫學主題或難度。`;
-        });
-        intro.append(status, loadButton);
-        const submit = el('button', '開始測驗', form); submit.type = 'submit'; submit.className = 'primary-button';
-        form.onsubmit = async event => {
-            event.preventDefault(); if (!loaded) { status.textContent = '請先載入題目。'; return; }
-            const filters = Object.fromEntries(Object.entries(fields).map(([k, input]) => [k, input.value]));
-            const chosen = selectQuestions(items, filters, learningState);
-            if (!chosen.length) { status.textContent = '沒有符合條件的題目，請調整篩選。'; return; }
-            submit.disabled = true;
-            try { await start(chosen, fields.mode.value, { shuffleOptions: fields.shuffleOptions.value === 'yes', timeLimit: Number(fields.timeLimit.value) }); dialog.close(); } catch (e) { status.textContent = e.message; } finally { submit.disabled = false; }
-        };
-    }, 'quiet-button');
-    button('學習總覽', nav, async () => {
-        if (!requireUser()) return; await loadLearning(); const body = open('學習總覽'); const now = Date.now();
-        overview(body, learningState, now);
-    }, 'quiet-button');
+    const open = title => { dialog.classList.toggle('learning-panel', ['資料與隱私', '內容回報進度'].includes(title)); dialog.setAttribute('aria-label', title); dialog.replaceChildren(); const header = el('div', null, dialog); header.className = 'learning-header'; el('h2', title, header); button('關閉', header, () => dialog.close(), 'secondary-button'); dialog.showModal(); const body = el('div', null, dialog); body.className = 'panel-body'; return body; };
+    const requireUser = () => { if (!auth.currentUser) { alert?.('請先登入以使用學習紀錄。'); return false; } return true; };
+
+    const renderPage = () => {
+        if (!host) return;
+        host.replaceChildren();
+        const heading = el('header', null, host);
+        heading.className = 'learning-page-heading';
+        const titleGroup = el('div', null, heading);
+        el('h2', '學習總覽', titleGroup);
+        const actions = el('div', null, heading);
+        button('返回題庫', actions, () => onNavigateHome?.(), 'secondary-button');
+
+        const body = el('div', null, host);
+        body.className = 'panel-body';
+
+        if (!auth.currentUser) {
+            empty(body, '尚未登入', '請先登入 Google 帳號以記錄作答進度與查看學習統計。');
+            return;
+        }
+        overview(body, learningState, Date.now());
+    };
+
+    const openLearning = async () => {
+        if (!requireUser()) {
+            renderPage();
+            activate?.();
+            return;
+        }
+        await loadLearning();
+        renderPage();
+        activate?.();
+    };
     const openPrivacy = async () => {
         const body = open('資料與隱私');
         const dataCard = section(body, '學習資料');
@@ -157,4 +128,6 @@ export function mountLearningHub({ getCatalog, alert, current, start }) {
         if (selectedText) button('加入選取的文字', actions, () => { input.value += `\n> ${selectedText}\n`; }, 'secondary-button');
         button('儲存筆記', actions, async () => { await savePreference(`note_${q.questionId}`, { text: input.value, questionId: q.questionId }); dialog.close(); }, 'primary-button');
     }); asIcon(notes, '個人筆記', '<rect x="5" y="3" width="15" height="18" rx="2"/><path d="M3 7h4M3 12h4M3 17h4M10 8h6M10 12h6M10 16h4"/>');
+
+    return { open: openLearning, render: renderPage };
 }

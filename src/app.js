@@ -2583,18 +2583,20 @@ const menuEditQuizName = document.getElementById('menuEditQuizName');
 let viewArchiveMode = false;
 let currentActiveFolder = null;
 let libraryPage = 'library';
-const libraryLocations = { library: { folder: null, scroll: 0, query: '' }, archive: { folder: null, scroll: 0, query: '' }, collection: { scroll: 0 }, flashcard: { scroll: 0 } };
+let learningHub = null;
+const libraryLocations = { library: { folder: null, scroll: 0, query: '' }, archive: { folder: null, scroll: 0, query: '' }, collection: { scroll: 0 }, flashcard: { scroll: 0 }, learning: { scroll: 0 } };
 function showLibraryPage(page) {
     const old = libraryLocations[libraryPage];
     if (page !== libraryPage) { old.scroll = window.scrollY; bankLibrary.stopManaging(); }
     if (['library', 'archive'].includes(libraryPage)) { old.folder = currentActiveFolder; old.query = document.getElementById('bankSearch').value; }
     libraryPage = page;
     questionSearch.cancel();
-    document.querySelector('.home-content').hidden = ['collection', 'flashcard'].includes(page);
+    document.querySelector('.home-content').hidden = ['collection', 'flashcard', 'learning'].includes(page);
     document.getElementById('collectionPage').hidden = page !== 'collection';
     document.getElementById('flashcardPage').hidden = page !== 'flashcard';
+    document.getElementById('learningPage').hidden = page !== 'learning';
     closeControlsMenu();
-    for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive']]) {
+    for (const [id, name] of [['homeLibrary', 'library'], ['homeStarred', 'collection'], ['homeArchive', 'archive'], ['homeLearning', 'learning']]) {
         const button = document.getElementById(id);
         if (page === name) button?.setAttribute('aria-current', 'page'); else button?.removeAttribute('aria-current');
     }
@@ -2608,7 +2610,10 @@ function showLibraryPage(page) {
         tabFlashcard.classList.toggle('active', isFlash);
         tabFlashcard.setAttribute('aria-selected', String(isFlash));
     }
-    if (['library', 'archive'].includes(page)) {
+    if (page === 'learning') {
+        learningHub?.render();
+        window.scrollTo(0, libraryLocations[page].scroll);
+    } else if (['library', 'archive'].includes(page)) {
         viewArchiveMode = page === 'archive';
         currentActiveFolder = libraryLocations[page].folder;
         const pageTitle = document.getElementById('libraryPageTitle');
@@ -3629,12 +3634,17 @@ quizTitleLink.addEventListener('keydown', event => {
 
 installDialogBehavior();
 
-mountLearningHub({ getCatalog: () => catalogData, alert: showCustomAlert, current: () => currentQuestion,
-    start: async (items, mode, options) => {
-        customSession = { questions: items, mode, ...options }; selectedJson = items[0].sourcePath;
-        await initQuiz(); document.querySelector('.quiz-title').textContent = mode === 'exam' ? '自訂測驗 · 考試' : '自訂測驗 · 學習';
-    }
+learningHub = mountLearningHub({
+    host: document.getElementById('learningPage'),
+    activate: () => {
+        if (mistakeView && mistakeView.style.display === 'flex') closeMistakeView();
+        showLibraryPage('learning');
+    },
+    onNavigateHome: () => showLibraryPage('library'),
+    alert: showCustomAlert,
+    current: () => currentQuestion
 });
+document.getElementById('homeLearning')?.addEventListener('click', () => learningHub.open());
 
 if ('serviceWorker' in navigator && !['localhost', '127.0.0.1'].includes(location.hostname)) {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
