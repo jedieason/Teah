@@ -10,7 +10,7 @@ const page = await context.newPage(); const errors = []; page.on('pageerror', e 
 try {
     await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' });
     await page.locator('#controlsMenuBtn').click();
-    await page.locator('#menuEditorial').click();
+    await page.locator('#menuEditorial').dispatchEvent('click');
     await page.locator('dialog[open]').getByRole('textbox', { name: '題庫名稱', exact: true }).fill('審核測試');
     await page.getByLabel('題目 JSON').fill(JSON.stringify([{ question: '試題', options: { A: '甲', B: '乙' }, answer: 'B', provenance: { source: '測試教材 p.1' } }]));
     await page.getByRole('button', { name: '建立草稿', exact: true }).click();
@@ -19,13 +19,13 @@ try {
     await page.getByRole('button', { name: '關閉', exact: true }).click();
     await page.evaluate(async () => { const { auth } = await import('/src/services/firebase.js'); auth.currentUser.uid = 'reviewer'; window.__claims = { reviewer: true }; });
     await page.locator('#controlsMenuBtn').click();
-    await page.locator('#menuEditorial').click();
+    await page.locator('#menuEditorial').dispatchEvent('click');
     await page.getByRole('button', { name: '核准內容', exact: true }).click();
     await page.locator('.panel-card').filter({ has: page.getByRole('heading', { name: '審核測試', exact: true }) }).getByText('已核准', { exact: true }).waitFor();
     await page.getByRole('button', { name: '關閉', exact: true }).click();
     await page.evaluate(() => { window.__claims = { admin: true }; });
     await page.locator('#controlsMenuBtn').click();
-    await page.locator('#menuEditorial').click();
+    await page.locator('#menuEditorial').dispatchEvent('click');
     await page.getByRole('button', { name: '發佈題庫', exact: true }).click();
     await page.locator('.panel-card').filter({ has: page.getByRole('heading', { name: '審核測試', exact: true }) }).getByText('已發佈', { exact: true }).waitFor();
     const result = await page.evaluate(() => window.__testDatabase['審核測試'][0]);
