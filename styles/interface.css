@@ -76,7 +76,7 @@ textarea:focus-visible {
 .quiz-title[role=button] { cursor: pointer; }
 .quiz-title[role=button]::before { content: '‹'; font-family: var(--ui-font); font-size: 22px; margin-right: 12px; color: #737a81; }
 /* Collapsible library navigation; studying keeps its existing full-width layout. */
-.start-screen { --sidebar-width:240px; padding-top:0; padding-left:var(--sidebar-width); transition:none; }
+.start-screen { --sidebar-width:240px; padding-top:0; padding-right:0; padding-left:var(--sidebar-width); transition:none; }
 .start-screen.sidebar-collapsed { --sidebar-width:68px; }
 .site-topbar { position:sticky; top:0; z-index:102; width:calc(100% + var(--sidebar-width)); margin-left:calc(-1 * var(--sidebar-width)); background:var(--surface-color); border-bottom:none; font-family:var(--ui-font); }
 .site-topbar-inner { min-height:64px; height:64px; padding:0; display:flex; align-items:center; box-sizing:border-box; }
@@ -206,7 +206,7 @@ body.sidebar-resizing, body.sidebar-resizing * { cursor:col-resize !important; u
 .sidebar-backdrop { display:none; }
 
 @media(max-width:700px) {
- .start-screen { padding-left:0; --sidebar-width:240px; }
+ .start-screen { padding-left:0; padding-right:0; --sidebar-width:240px; }
  .start-screen.sidebar-collapsed { --sidebar-width:240px; }
  .site-topbar { width:100%; margin-left:0; }
  .site-topbar-inner { padding:0 12px; }

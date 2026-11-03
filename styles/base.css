@@ -1703,12 +1703,6 @@ p {
         margin: 0px 0px 20px 0px;
     }
 
-    .start-screen {
-        padding: 16px;
-        padding-top: calc(env(safe-area-inset-top) + 16px);
-        padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
-    }
-
     .quiz-container {
         padding: 16px;
         width: 95%;
@@ -3409,10 +3403,6 @@ p {
 }
 
 @media (max-width: 768px) {
-    .start-screen {
-        padding-top: 70px;
-    }
-
     .start-title {
         font-size: 2.8rem;
         letter-spacing: 1px;
@@ -3518,10 +3508,6 @@ p {
 
     .home-content {
         padding: 0 12px 24px;
-    }
-
-    .start-screen {
-        padding-top: 60px;
     }
 
     .search-container {
