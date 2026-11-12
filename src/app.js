@@ -169,8 +169,12 @@ const quizContainer = document.querySelector('.quiz-container');
 const originalQuizDisplay = quizContainer.style.display || 'flex';
 let endScreenDiv = null;
 
-// 新增：洗牌偏好設定
-let shouldShuffleQuiz = localStorage.getItem('shuffleQuiz') === 'true'; // false: 固定順序 (JSON 順序), true: 隨機順序
+// 作答順序偏好設定：'sequential' | 'reverse' | 'shuffle'
+let quizOrderMode = localStorage.getItem('quizOrderMode');
+if (!['sequential', 'reverse', 'shuffle'].includes(quizOrderMode)) {
+    quizOrderMode = localStorage.getItem('shuffleQuiz') === 'true' ? 'shuffle' : 'sequential';
+}
+let shouldShuffleQuiz = quizOrderMode === 'shuffle';
 
 // 新增：歷史紀錄陣列
 let questionHistory = [];
@@ -199,7 +203,7 @@ async function initQuiz() {
     if (['library', 'archive'].includes(libraryPage)) libraryLocations[libraryPage].query = document.getElementById('bankSearch').value;
     sessionId = crypto.randomUUID();
     const isSkipRepeatMode = !!customSession?.isSkipRepeatMode;
-    activeShuffleOptions = customSession ? customSession.shuffleOptions : shouldShuffleQuiz;
+    activeShuffleOptions = customSession ? (customSession.shuffleOptions ?? (quizOrderMode === 'shuffle')) : (quizOrderMode === 'shuffle');
     sessionTimeLimit = customSession?.timeLimit ?? 15;
     sessionKind = customSession ? 'custom' : 'bank';
     sessionMode = customSession?.mode || 'study';
@@ -214,8 +218,12 @@ async function initQuiz() {
     allQuestions.forEach((q, idx) => {
         q.originalIndex = q.originalIndex ?? idx;
     });
-    if (sessionKind !== 'custom' && shouldShuffleQuiz) {
-        shuffle(allQuestions);
+    if (sessionKind !== 'custom' || isSkipRepeatMode) {
+        if (quizOrderMode === 'shuffle') {
+            shuffle(allQuestions);
+        } else if (quizOrderMode === 'reverse') {
+            allQuestions.reverse();
+        }
     }
 
     allQuestions.forEach(q => {
@@ -1260,10 +1268,47 @@ document.getElementById('button-row').addEventListener('click', function (event)
     }
 });
 
+function setQuizOrderMode(mode) {
+    if (!['sequential', 'reverse', 'shuffle'].includes(mode)) mode = 'sequential';
+    quizOrderMode = mode;
+    shouldShuffleQuiz = (mode === 'shuffle');
+    localStorage.setItem('quizOrderMode', mode);
+    localStorage.setItem('shuffleQuiz', String(shouldShuffleQuiz));
+    updateShuffleUI();
+    updateQuizOrderSelectorUI();
+}
+
+function updateQuizOrderSelectorUI() {
+    const selector = document.getElementById('quizActionOrderSelector');
+    if (!selector) return;
+    const buttons = selector.querySelectorAll('.quiz-order-btn');
+    buttons.forEach(btn => {
+        const isActive = btn.dataset.order === quizOrderMode;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-checked', String(isActive));
+    });
+}
+
+function initQuizOrderSelector() {
+    const selector = document.getElementById('quizActionOrderSelector');
+    if (!selector) return;
+    selector.querySelectorAll('.quiz-order-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const order = btn.dataset.order;
+            if (order) setQuizOrderMode(order);
+        });
+    });
+    updateQuizOrderSelectorUI();
+}
+
 function updateShuffleUI() {
     localStorage.setItem('shuffleQuiz', String(shouldShuffleQuiz));
     const st = document.getElementById('shuffleToggle');
-    if (st) st.title = shouldShuffleQuiz ? '順序：隨機' : '順序：固定';
+    if (st) {
+        st.title = shouldShuffleQuiz ? '順序：隨機' : '順序：固定';
+        st.classList.toggle('active', shouldShuffleQuiz);
+    }
     const menuShuffleEl = document.getElementById('menuShuffle');
     if (menuShuffleEl) {
         const label = menuShuffleEl.querySelector('.item-label');
@@ -1274,9 +1319,8 @@ function updateShuffleUI() {
 const shuffleToggle = document.getElementById('shuffleToggle');
 if (shuffleToggle) {
     shuffleToggle.addEventListener('click', () => {
-        shouldShuffleQuiz = !shouldShuffleQuiz;
-        shuffleToggle.classList.toggle('active');
-        updateShuffleUI();
+        const nextMode = shouldShuffleQuiz ? 'sequential' : 'shuffle';
+        setQuizOrderMode(nextMode);
     });
     // Set initial state tooltip
     updateShuffleUI();
@@ -2571,11 +2615,8 @@ syncControlsUser(auth.currentUser);
 
 // Controls item actions (text-only click)
 if (menuShuffle) menuShuffle.addEventListener('click', () => {
-    // toggle shuffle state same as clicking the slider
-    shouldShuffleQuiz = !shouldShuffleQuiz;
-    const st = document.getElementById('shuffleToggle');
-    if (st) st.classList.toggle('active');
-    updateShuffleUI();
+    const nextMode = shouldShuffleQuiz ? 'sequential' : 'shuffle';
+    setQuizOrderMode(nextMode);
 });
 if (menuTheme) menuTheme.addEventListener('click', () => {
     toggleTheme();
@@ -3375,7 +3416,8 @@ async function openQuizActionModal(key, progress) {
     document.getElementById('quizActionFill').style.width = `${total ? done / total * 100 : 0}%`;
     document.getElementById('quizActionOrder').textContent = showResume
         ? complete ? '可查看本次作答，或重新練習。' : '從上次作答的位置繼續。'
-        : shouldShuffleQuiz ? '隨機題序與選項' : '依題庫順序作答';
+        : '';
+    updateQuizOrderSelectorUI();
     resumeBtn.hidden = !showResume;
     resumeBtn.style.display = showResume ? 'flex' : 'none';
     resumeBtn.querySelector('span').textContent = complete ? '查看作答紀錄' : '繼續測驗';
@@ -3414,7 +3456,7 @@ async function openQuizActionModal(key, progress) {
             document.getElementById('quizActionTrack').hidden = !showResume;
             document.getElementById('quizActionOrder').textContent = showResume
                 ? complete ? '可查看本次作答，或重新練習。' : '從上次作答的位置繼續。'
-                : shouldShuffleQuiz ? '隨機題序與選項' : '依題庫順序作答';
+                : '';
             resumeBtn.hidden = !showResume;
             resumeBtn.style.display = showResume ? 'flex' : 'none';
             resumeBtn.querySelector('span').textContent = complete ? '查看作答紀錄' : '繼續測驗';
@@ -3422,6 +3464,7 @@ async function openQuizActionModal(key, progress) {
             restartBtn.querySelector('span').textContent = showResume ? '重新開始' : '開始測驗';
             restartBtn.querySelector('span:last-child').hidden = showResume;
         }
+        updateQuizOrderSelectorUI();
     };
 
     if (filterSection && skipCheckbox && filterInfo) {
@@ -3503,7 +3546,7 @@ function startDedupQuiz(key, dedupResult) {
     customSession = {
         questions: dedupResult.nonRepeatedQuestions,
         mode: 'study',
-        shuffleOptions: false,
+        shuffleOptions: quizOrderMode === 'shuffle',
         timeLimit: 0,
         isSkipRepeatMode: true,
         compareRange: dedupResult.rangeStr
@@ -3701,3 +3744,4 @@ const vocabulary = mountFlashcard({ host: document.getElementById('flashcardPage
 document.getElementById('tabLibrary')?.addEventListener('click', () => showLibraryPage('library'));
 document.getElementById('tabFlashcard')?.addEventListener('click', () => vocabulary.open());
 mountSidebar();
+initQuizOrderSelector();

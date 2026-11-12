@@ -764,6 +764,11 @@ NSAID、抗黴菌、抗病毒
       <div class="quiz-entry-progress-label"><span id="quizActionStatus"></span><span id="quizActionCount"></span></div>
       <div id="quizActionTrack" class="quiz-entry-track"><div id="quizActionFill"></div></div>
       <p id="quizActionOrder" class="quiz-entry-order"></p>
+      <div id="quizActionOrderSelector" class="quiz-order-selector" role="radiogroup" aria-label="作答順序">
+        <button type="button" class="quiz-order-btn active" data-order="sequential" role="radio" aria-checked="true">依順序</button>
+        <button type="button" class="quiz-order-btn" data-order="reverse" role="radio" aria-checked="false">倒過來作答</button>
+        <button type="button" class="quiz-order-btn" data-order="shuffle" role="radio" aria-checked="false">隨機作答</button>
+      </div>
     </div>
     <div id="quizActionFilterSection" class="quiz-entry-filter" style="display: none;">
       <label class="quiz-entry-filter-toggle">
