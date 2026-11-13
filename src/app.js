@@ -1274,7 +1274,6 @@ function setQuizOrderMode(mode) {
     shouldShuffleQuiz = (mode === 'shuffle');
     localStorage.setItem('quizOrderMode', mode);
     localStorage.setItem('shuffleQuiz', String(shouldShuffleQuiz));
-    updateShuffleUI();
     updateQuizOrderSelectorUI();
 }
 
@@ -1300,30 +1299,6 @@ function initQuizOrderSelector() {
         });
     });
     updateQuizOrderSelectorUI();
-}
-
-function updateShuffleUI() {
-    localStorage.setItem('shuffleQuiz', String(shouldShuffleQuiz));
-    const st = document.getElementById('shuffleToggle');
-    if (st) {
-        st.title = shouldShuffleQuiz ? '順序：隨機' : '順序：固定';
-        st.classList.toggle('active', shouldShuffleQuiz);
-    }
-    const menuShuffleEl = document.getElementById('menuShuffle');
-    if (menuShuffleEl) {
-        const label = menuShuffleEl.querySelector('.item-label');
-        if (label) label.textContent = '隨機順序（' + (shouldShuffleQuiz ? '亂序' : '照順序') + '）';
-    }
-}
-
-const shuffleToggle = document.getElementById('shuffleToggle');
-if (shuffleToggle) {
-    shuffleToggle.addEventListener('click', () => {
-        const nextMode = shouldShuffleQuiz ? 'sequential' : 'shuffle';
-        setQuizOrderMode(nextMode);
-    });
-    // Set initial state tooltip
-    updateShuffleUI();
 }
 
 
@@ -2500,7 +2475,6 @@ const controlsAvatar = document.getElementById('controlsAvatar');
 const menuAvatar = document.getElementById('menuAvatar');
 const menuDisplayName = document.getElementById('menuDisplayName');
 const menuEmail = document.getElementById('menuEmail');
-const menuShuffle = document.getElementById('menuShuffle');
 const menuTheme = document.getElementById('menuTheme');
 const menuLogout = document.getElementById('menuLogout');
 const menuContribute = document.getElementById('menuContribute');
@@ -2614,10 +2588,6 @@ updateSignInButton(auth.currentUser);
 syncControlsUser(auth.currentUser);
 
 // Controls item actions (text-only click)
-if (menuShuffle) menuShuffle.addEventListener('click', () => {
-    const nextMode = shouldShuffleQuiz ? 'sequential' : 'shuffle';
-    setQuizOrderMode(nextMode);
-});
 if (menuTheme) menuTheme.addEventListener('click', () => {
     toggleTheme();
 });
@@ -2903,9 +2873,6 @@ if (contributeModal) {
         });
     });
 }
-
-// Initialize shuffle state label in menu on load
-updateShuffleUI();
 
 let userStarredCache = [];
 
