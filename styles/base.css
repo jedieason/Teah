@@ -3483,14 +3483,22 @@ p {
     }
 
     .question-content {
-        font-size: 1.05rem;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
         margin-bottom: 20px;
         line-height: 1.55;
     }
 
     .option-button {
+        font-family: Arial, Helvetica, sans-serif;
         padding: 16px;
-        font-size: 1rem;
+        font-size: 20px;
+    }
+
+    .confirm-button,
+    .next-button {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
     }
 
     .controls-menu {
