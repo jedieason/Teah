@@ -354,10 +354,36 @@ function loadNewQuestion() {
     saveProgress();
 }
 
+function updateProgressMetrics(container, count) {
+    if (!container) return;
+    let maxWidth = 4.2, gap = 2, height = 15;
+    if (count <= 6) {
+        maxWidth = 16; gap = 10; height = 18;
+    } else if (count <= 12) {
+        maxWidth = 13; gap = 7.5; height = 18;
+    } else if (count <= 20) {
+        maxWidth = 10; gap = 5.5; height = 17;
+    } else if (count <= 32) {
+        maxWidth = 7.5; gap = 4; height = 16;
+    } else if (count <= 48) {
+        maxWidth = 5.5; gap = 2.8; height = 15;
+    } else if (count <= 70) {
+        maxWidth = 4.2; gap = 2; height = 15;
+    } else if (count <= 100) {
+        maxWidth = 3.2; gap = 1.6; height = 14;
+    } else {
+        maxWidth = 2.4; gap = 1.2; height = 14;
+    }
+    container.style.setProperty('--tick-max-width', `${maxWidth}px`);
+    container.style.setProperty('--tick-gap', `${gap}px`);
+    container.style.setProperty('--tick-height', `${height}px`);
+}
+
 function createProgressDots() {
     const container = document.getElementById('progressDots');
     if (!container) return;
     container.innerHTML = '';
+    updateProgressMetrics(container, allQuestions.length);
 
     allQuestions.forEach((_, i) => {
         const dot = document.createElement('div');

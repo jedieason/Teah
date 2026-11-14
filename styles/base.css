@@ -4004,7 +4004,7 @@ p {
 .progress-dots {
     display: flex;
     flex-wrap: nowrap;
-    gap: 2px;
+    gap: var(--tick-gap, 2px);
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -4016,13 +4016,13 @@ p {
 
 @media (max-width: 768px) {
     .progress-dots {
-        gap: 1.5px;
+        gap: min(var(--tick-gap, 2px), 6px);
     }
 }
 
 @media (max-width: 420px) {
     .progress-dots {
-        gap: 1px;
+        gap: min(var(--tick-gap, 1.5px), 4.5px);
     }
 }
 
@@ -4030,7 +4030,7 @@ p {
     position: relative;
     flex: 1 1 0px;
     min-width: 1px;
-    max-width: 6px;
+    max-width: var(--tick-max-width, 6px);
     height: 24px;
     display: flex;
     align-items: center;
@@ -4047,8 +4047,8 @@ p {
 
 .progress-dot .tick-bar {
     width: 100%;
-    min-width: 1.5px;
-    height: 15px;
+    min-width: 1px;
+    height: var(--tick-height, 15px);
     border-radius: 999px;
     background-color: var(--outline-variant, #dadce0);
     transition: background-color 0.2s ease, height 0.2s ease;
@@ -4069,8 +4069,8 @@ p {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: max(7px, 100% + 4px);
-    height: 21px;
+    width: max(7px, calc(100% + 4px));
+    height: calc(var(--tick-height, 15px) + 6px);
     border-radius: 999px;
     box-sizing: border-box;
     pointer-events: none;
