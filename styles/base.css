@@ -3496,9 +3496,38 @@ p {
     }
 
     .confirm-button,
-    .next-button {
+    .next-button,
+    .back-progress-button {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 20px;
+    }
+
+    .explanation,
+    .explanation-text,
+    .explanation-text p,
+    .explanation-text div,
+    .explanation-text span:not([class*="katex"]),
+    .origin-display,
+    .chat-msg-body,
+    .chat-user-msg,
+    .original-explanation-content,
+    .ai-grade-feedback-content,
+    #userQuestion {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .explanation-text,
+    .explanation-text p,
+    .original-explanation-content,
+    .ai-grade-feedback-content,
+    .chat-msg-body {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .origin-display {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
     }
 
     .controls-menu {
@@ -3548,8 +3577,9 @@ p {
     }
 
     .next-button {
-        padding: 14px;
-        font-size: 1rem;
+        padding: 10px 24px;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
     .gemini-btn {
