@@ -20,7 +20,7 @@
 .exam-active #explanation-text,.exam-active #WeeGPT,.exam-active #WeeGPTInputSection,.exam-active #correct,.exam-active #wrong,.exam-active #origin-display { display:none !important; }
 .exam-active .option-button.correct,.exam-active .option-button.incorrect,.exam-active .option-button.missing { background:transparent !important; color:inherit !important; border-color:#8886 !important; }
 .exam-active .fillblank-input { color:inherit !important; border-color:#8886 !important; }
-.exam-active .progress-dot { background:#8885 !important; }
+.exam-active .progress-dot,.exam-active .progress-dot .tick-bar { background:#8885 !important; }
 @media(max-width:520px) { .learning-form { grid-template-columns:1fr; } .learning-dialog { padding:18px; } }
 @media(prefers-color-scheme:dark) { .learning-dialog { background:#232326; color:#eee; } }
 .exam-active #copy-btn,.exam-active #errata-btn,.exam-active .question-note { display:none !important; }

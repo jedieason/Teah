@@ -364,12 +364,9 @@ function createProgressDots() {
         dot.className = 'progress-dot';
         dot.setAttribute('data-tooltip', `第 ${i + 1} 題`);
 
-        dot.innerHTML = `
-            <svg viewBox="0 0 18 18" width="18" height="18" class="progress-dot-svg">
-                <circle cx="9" cy="9" r="4" class="dot-fill" />
-                <circle cx="9" cy="9" r="5.5" stroke-width="1" fill="none" class="dot-stroke" />
-            </svg>
-        `;
+        const bar = document.createElement('div');
+        bar.className = 'tick-bar';
+        dot.appendChild(bar);
 
         dot.addEventListener('click', () => {
             renderQuestion(i);
