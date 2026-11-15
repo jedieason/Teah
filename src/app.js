@@ -355,27 +355,38 @@ function loadNewQuestion() {
 }
 
 function updateProgressMetrics(container, count) {
-    if (!container) return;
-    let maxWidth = 4.2, gap = 2, height = 15;
-    if (count <= 6) {
-        maxWidth = 16; gap = 10; height = 18;
-    } else if (count <= 12) {
-        maxWidth = 13; gap = 7.5; height = 18;
-    } else if (count <= 20) {
-        maxWidth = 10; gap = 5.5; height = 17;
-    } else if (count <= 32) {
-        maxWidth = 7.5; gap = 4; height = 16;
-    } else if (count <= 48) {
-        maxWidth = 5.5; gap = 2.8; height = 15;
-    } else if (count <= 70) {
-        maxWidth = 4.2; gap = 2; height = 15;
-    } else if (count <= 100) {
-        maxWidth = 3.2; gap = 1.6; height = 14;
+    if (!container || !count || count <= 0) return;
+
+    const w = container.clientWidth > 0 
+        ? container.clientWidth 
+        : (typeof window !== 'undefined' && window.innerWidth ? Math.min(window.innerWidth * 0.75, 960) : 800);
+    const u = w / count;
+
+    let gap, maxWidth, height;
+    if (u >= 40) {
+        gap = Math.min(24, Math.max(10, u * 0.28));
+        maxWidth = Math.min(36, u - gap);
+        height = 18;
+    } else if (u >= 20) {
+        gap = Math.min(12, Math.max(4, u * 0.22));
+        maxWidth = Math.min(22, u - gap);
+        height = 17;
+    } else if (u >= 10) {
+        gap = Math.min(5, Math.max(2.5, u * 0.2));
+        maxWidth = Math.min(14, u - gap);
+        height = 16;
+    } else if (u >= 5) {
+        gap = Math.min(3, Math.max(1.8, u * 0.2));
+        maxWidth = Math.min(10, u - gap);
+        height = 15;
     } else {
-        maxWidth = 2.4; gap = 1.2; height = 14;
+        gap = Math.min(2, Math.max(1.0, u * 0.2));
+        maxWidth = Math.max(1, Math.min(6, u - gap));
+        height = 14;
     }
-    container.style.setProperty('--tick-max-width', `${maxWidth}px`);
-    container.style.setProperty('--tick-gap', `${gap}px`);
+
+    container.style.setProperty('--tick-max-width', `${maxWidth.toFixed(2)}px`);
+    container.style.setProperty('--tick-gap', `${gap.toFixed(2)}px`);
     container.style.setProperty('--tick-height', `${height}px`);
 }
 
@@ -384,6 +395,16 @@ function createProgressDots() {
     if (!container) return;
     container.innerHTML = '';
     updateProgressMetrics(container, allQuestions.length);
+
+    if (typeof ResizeObserver !== 'undefined' && !container._hasProgressResizeObserver) {
+        container._hasProgressResizeObserver = true;
+        const ro = new ResizeObserver(() => {
+            if (allQuestions && allQuestions.length > 0) {
+                updateProgressMetrics(container, allQuestions.length);
+            }
+        });
+        ro.observe(container);
+    }
 
     allQuestions.forEach((_, i) => {
         const dot = document.createElement('div');
