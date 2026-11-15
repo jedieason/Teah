@@ -115,7 +115,7 @@
 }
 
 .progress-container {
-    margin-bottom: 24px;
+    margin-bottom: 10px;
 }
 
 .progress-counts {
@@ -3558,7 +3558,7 @@ p {
     }
 
     .progress-container {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .progress-count {
@@ -4096,31 +4096,31 @@ p {
 .progress-dot.viewing::after {
     content: '';
     position: absolute;
-    top: 50%;
+    top: calc(50% - var(--tick-height, 15px) / 2 - 4px);
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% + 6px);
-    height: calc(var(--tick-height, 15px) + 6px);
-    border-radius: 999px;
-    box-sizing: border-box;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
     pointer-events: none;
     z-index: 5;
+    transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
 .progress-dot.viewing::after {
-    border: 1.8px solid #70a6ff;
-    background: rgba(112, 166, 255, 0.12);
+    background-color: #70a6ff;
+    box-shadow: 0 0 0 1px rgba(112, 166, 255, 0.4);
 }
 
 .progress-dot.current-progress::after {
-    border: 1.8px solid var(--primary, #0b57d0);
-    background: rgba(11, 87, 208, 0.08);
+    background-color: var(--primary, #0b57d0);
+    box-shadow: 0 0 0 1px rgba(11, 87, 208, 0.4);
     animation: pulseProgress 2s infinite ease-in-out;
 }
 
 .progress-dot.current-progress.viewing::after {
-    border: 1.8px solid var(--primary, #0b57d0);
-    background: rgba(11, 87, 208, 0.12);
+    background-color: var(--primary, #0b57d0);
+    box-shadow: 0 0 0 2px #70a6ff;
 }
 
 @keyframes pulseProgress {
