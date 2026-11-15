@@ -4039,7 +4039,7 @@ p {
     align-items: center;
     width: 100%;
     max-width: 100%;
-    padding: 4px 0;
+    padding: 6px 0 4px;
     box-sizing: border-box;
     user-select: none;
 }
@@ -4096,7 +4096,7 @@ p {
 .progress-dot.viewing::after {
     content: '';
     position: absolute;
-    top: calc(50% - var(--tick-height, 15px) / 2 - 4px);
+    top: calc(50% - var(--tick-height, 15px) / 2 - 6px);
     left: 50%;
     transform: translate(-50%, -50%);
     width: 4px;
