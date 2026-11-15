@@ -364,24 +364,24 @@ function updateProgressMetrics(container, count) {
 
     let gap, maxWidth, height;
     if (u >= 40) {
-        gap = Math.min(24, Math.max(10, u * 0.28));
-        maxWidth = Math.min(36, u - gap);
-        height = 18;
+        gap = Math.min(18, Math.max(8, u * 0.22));
+        maxWidth = Math.min(26, u - gap);
+        height = 7;
     } else if (u >= 20) {
-        gap = Math.min(12, Math.max(4, u * 0.22));
-        maxWidth = Math.min(22, u - gap);
-        height = 17;
+        gap = Math.min(10, Math.max(4, u * 0.2));
+        maxWidth = Math.min(20, u - gap);
+        height = 8;
     } else if (u >= 10) {
         gap = Math.min(5, Math.max(2.5, u * 0.2));
-        maxWidth = Math.min(14, u - gap);
-        height = 16;
+        maxWidth = Math.min(12, u - gap);
+        height = 11;
     } else if (u >= 5) {
         gap = Math.min(3, Math.max(1.8, u * 0.2));
-        maxWidth = Math.min(10, u - gap);
-        height = 15;
+        maxWidth = Math.min(8, u - gap);
+        height = 14;
     } else {
         gap = Math.min(2, Math.max(1.0, u * 0.2));
-        maxWidth = Math.max(1, Math.min(6, u - gap));
+        maxWidth = Math.max(1, Math.min(5, u - gap));
         height = 14;
     }
 
