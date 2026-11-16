@@ -1,6 +1,6 @@
 #mistakeView { position: fixed; inset: 0; z-index: 2000; display: none; flex-direction: column; width: 100%; height: 100dvh; background: #fff; color: #1f1f1f; font-family: var(--ui-font); text-align: left; }
 .notebook-top { width: 100%; background: #fff; border-bottom: 1px solid var(--ui-border); flex-shrink: 0; }
-.notebook-header, .notebook-controls, .notebook-bottom { width: 100%; max-width: 980px; margin-inline: auto; box-sizing: border-box; padding-inline: 32px; flex-shrink: 0; }
+.notebook-header, .notebook-controls { width: 100%; max-width: 980px; margin-inline: auto; box-sizing: border-box; padding-inline: 32px; flex-shrink: 0; }
 .notebook-header { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .notebook-heading { display: flex; align-items: baseline; gap: 16px; }
 .notebook-heading h2 { font: 600 22px/1.5 var(--ui-font); margin: 0; letter-spacing: -.5px; }
@@ -18,7 +18,7 @@
 #mistakeSort { margin-left: auto; }
 .notebook-summary { font-size: 12px; line-height: 1.6; color: var(--ui-muted); margin: 14px 0 0; }
 .notebook-scroll { overflow-y: auto; flex: 1; min-height: 0; overscroll-behavior: contain; background: #fafbfc; scrollbar-gutter: stable; }
-#mistakeListContent { max-width: 980px; margin: 0 auto; padding: 24px 32px 40px; box-sizing: border-box; }
+#mistakeListContent { max-width: 980px; margin: 0 auto; padding: 24px 32px 100px; box-sizing: border-box; }
 .review-card { padding: 24px 28px 16px; border: 1px solid var(--ui-border); border-radius: 14px; background: white; margin-bottom: 16px; overflow-wrap: anywhere; }
 .review-meta { display: flex; gap: 10px; align-items: center; font-size: 12px; line-height: 1.6; margin-bottom: 16px; color: var(--ui-muted); }
 .review-meta input, .notebook-select-all input { accent-color: var(--primary); width: 17px; height: 17px; flex-shrink: 0; margin: 0; cursor: pointer; }
@@ -31,9 +31,13 @@
 .review-question { font-size: 16px; line-height: 1.85; color: #25292d; }
 .review-card p { margin: 0 0 10px; }
 .review-card p:last-child { margin-bottom: 0; }
-.review-options { margin: 16px 0; display: grid; gap: 10px; font-size: 14px; line-height: 1.75; color: #444b52; }
-.review-option { display: flex; gap: 12px; }
+.review-options { margin: 16px 0; display: grid; gap: 6px; font-size: 14px; line-height: 1.75; color: #444b52; }
+.review-option { display: flex; gap: 12px; align-items: baseline; padding: 6px 12px; margin-inline: -12px; border-radius: 8px; border: 1px solid transparent; box-sizing: border-box; transition: background-color .15s ease, color .15s ease, border-color .15s ease; }
 .review-option-label { color: #737a81; font-size: 13px; min-width: 18px; padding-top: 1px; }
+.notebook-show-answers .review-option.is-answer { background-color: #e8f0fe; color: #1967d2; border-color: #c2e7ff; font-weight: 500; }
+.notebook-show-answers .review-option.is-answer .review-option-label { color: #1967d2; font-weight: 600; }
+.review-inline-answer { display: none; padding: 6px 12px; margin: 12px 0; border-radius: 8px; background-color: #e8f0fe; color: #1967d2; border: 1px solid #c2e7ff; font-size: 14px; font-weight: 500; }
+.notebook-show-answers .review-inline-answer { display: block; }
 .review-answer { border-top: 1px solid #eff0f1; margin-top: 20px; }
 .review-answer summary { padding: 15px 0; color: var(--primary); font-size: 13px; cursor: pointer; min-height: 20px; }
 .review-answer-body { padding: 4px 0 18px; font-size: 14px; line-height: 1.9; }
@@ -47,24 +51,25 @@
 .review-card pre, .review-card table, .review-card .katex-display { max-width: 100%; overflow-x: auto; }
 .review-card table { display: block; border-collapse: collapse; }
 .review-card th, .review-card td { border: 1px solid var(--ui-border); padding: 8px; }
-.notebook-bottom { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-height: 78px; padding-top: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom)); font-size: 13px; background: white; border-top: 1px solid var(--ui-border); }
+.notebook-bottom { position: absolute; bottom: 0; left: 0; right: 0; width: 100%; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-height: 78px; padding-top: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom)); padding-inline: max(32px, calc((100% - 980px) / 2 + 32px)); font-size: 13px; background: white; border-top: 1px solid var(--ui-border); box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04); z-index: 100; transition: transform .28s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+.notebook-bottom.is-hidden { transform: translateY(100%); pointer-events: none; }
 .notebook-select-all { display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
 #mistakeSelection { color: var(--ui-muted); white-space: nowrap; }
 #mistakePracticeBtn { margin-left: auto; white-space: nowrap; }
 #mistakeClearSelection { font-size: 12px; padding-inline: 8px; }
 .load-more { display: flex; margin: 16px auto 0; }
 @media (max-width: 680px) {
-    .notebook-header, .notebook-controls, .notebook-bottom { padding-inline: 20px; }
+    .notebook-header, .notebook-controls { padding-inline: 20px; }
     .notebook-header { min-height: 72px; }
     .notebook-heading > span { display: none; }
     .notebook-toolbar { flex-direction: column; align-items: stretch; gap: 14px; margin-bottom: 12px; }
     .notebook-tabs { align-self: flex-start; }
     #mistakeSearch { box-sizing: border-box; width: 100%; }
-    .notebook-filters { gap: 6px; }
-    .notebook-filters select { padding-left: 8px; padding-right: 16px; flex: 1; max-width: 36%; font-size: 12px; }
+    .notebook-filters { gap: 6px; flex-wrap: wrap; }
+    .notebook-filters select { padding-left: 8px; padding-right: 16px; flex: 1; max-width: 48%; font-size: 12px; }
     .notebook-summary { font-size: 11px; }
     .notebook-controls { padding-bottom: 14px; }
-    #mistakeListContent { padding: 16px 16px 28px; }
+    #mistakeListContent { padding: 16px 16px 92px; }
     .review-card { padding: 18px 18px 10px; }
     .review-question { font-size: 15px; }
     .review-meta { gap: 8px; align-items: start; }

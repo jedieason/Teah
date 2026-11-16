@@ -119,6 +119,40 @@ try {
     assert.equal(await page.locator('.review-card').count(), 3);
     assert.equal(await page.locator('.review-card', { hasText: '這是典藏題庫的題目' }).count(), 0);
     assert.equal(await page.locator('.review-answer[open]').count(), 0);
+    // Auto-show answers and height stability
+    const optBefore = await page.locator('.review-card .review-option.is-answer').first().boundingBox();
+    assert.equal(await page.evaluate(() => document.querySelector('#mistakeView').classList.contains('notebook-show-answers')), false);
+    await page.locator('#mistakeShowAnswerTrigger').click();
+    await page.getByRole('option', { name: '自動顯示答案', exact: true }).click();
+    assert.equal(await page.evaluate(() => document.querySelector('#mistakeView').classList.contains('notebook-show-answers')), true);
+    await page.waitForFunction(() => {
+        const bg = getComputedStyle(document.querySelector('.review-card .review-option.is-answer')).backgroundColor;
+        return bg.includes('232') || bg.includes('rgb(232, 240, 254)');
+    });
+    const optAfter = await page.locator('.review-card .review-option.is-answer').first().boundingBox();
+    assert.equal(optAfter.height, optBefore.height);
+    const bg = await page.locator('.review-card .review-option.is-answer').first().evaluate(el => getComputedStyle(el).backgroundColor);
+    assert.match(bg, /232,\s*240,\s*254|#e8f0fe/);
+
+    // Test scroll auto-hide bottom bar
+    await page.evaluate(() => {
+        const sc = document.getElementById('mistakeScrollContainer');
+        sc.scrollTop = 200;
+        sc.dispatchEvent(new Event('scroll'));
+    });
+    assert.equal(await page.evaluate(() => document.querySelector('.notebook-bottom').classList.contains('is-hidden')), true);
+    await page.evaluate(() => {
+        const sc = document.getElementById('mistakeScrollContainer');
+        sc.scrollTop = 50;
+        sc.dispatchEvent(new Event('scroll'));
+    });
+    assert.equal(await page.evaluate(() => document.querySelector('.notebook-bottom').classList.contains('is-hidden')), false);
+
+    // Switch back to hidden
+    await page.locator('#mistakeShowAnswerTrigger').click();
+    await page.getByRole('option', { name: '隱藏答案', exact: true }).click();
+    assert.equal(await page.evaluate(() => document.querySelector('#mistakeView').classList.contains('notebook-show-answers')), false);
+
     await page.locator('#mistakeSearch').fill('PCR');
     assert.equal(await page.locator('.review-card').count(), 1);
     await page.locator('#mistakeSearch').fill('');

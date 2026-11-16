@@ -2,6 +2,16 @@
 .select-menu { position: relative; min-width: 0; width: 190px; font-family: var(--ui-font); }
 .select-menu[data-for=mistakeSubject] { width: 200px; }
 .select-menu[data-for=mistakeQuiz] { width: 240px; }
+.select-menu[data-for=mistakeShowAnswer] { width: 145px; }
+.notebook-show-answers .select-menu[data-for=mistakeShowAnswer] .select-menu-trigger {
+    border-color: var(--primary, #0b57d0);
+    color: var(--primary, #0b57d0);
+    background: #f0f6ff;
+}
+.notebook-show-answers .select-menu[data-for=mistakeShowAnswer] .select-menu-chevron {
+    border-right-color: var(--primary, #0b57d0);
+    border-bottom-color: var(--primary, #0b57d0);
+}
 .select-menu[data-for=mistakeSort] { margin-left: auto; width: 165px; }
 .select-menu-trigger { appearance: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 42px; padding: 10px 13px; border: 1px solid var(--ui-border); border-radius: 10px; color: #444b52; background: white; font: 13px/1.5 var(--ui-font); cursor: pointer; text-align: left; transition: border-color .15s ease, background .15s ease; }
 .select-menu-trigger > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -19,7 +29,9 @@
 .select-menu-check { visibility: hidden; font-size: 14px; flex-shrink: 0; }
 .select-menu-option[aria-selected=true] .select-menu-check { visibility: visible; }
 @media (max-width: 680px) {
-    .notebook-filters .select-menu { flex: 1; width: 0; }
+    .notebook-filters .select-menu { flex: 1 1 calc(50% - 6px); width: calc(50% - 6px); min-width: 0; }
     .select-menu-trigger { font-size: 12px; padding: 10px; gap: 7px; }
-    .select-menu[data-for=mistakeQuiz] .select-menu-list { left: 50%; transform: translateX(-50%); }
+    .select-menu[data-for=mistakeQuiz] .select-menu-list { left: auto; right: 0; transform: none; max-width: min(320px, calc(100vw - 32px)); }
+    .select-menu[data-for=mistakeSort] { margin-left: 0; }
+    .select-menu[data-for=mistakeSort] .select-menu-list { left: auto; right: 0; }
 }

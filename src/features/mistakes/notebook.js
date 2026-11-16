@@ -10,6 +10,24 @@ const el = (tag, className, text) => {
 };
 const date = value => value ? new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' }).format(value) : '日期未記錄';
 
+function isAnswerMatch(key, text, answer) {
+    if (answer == null) return false;
+    const strKey = String(key).trim().toUpperCase();
+    if (Array.isArray(answer)) {
+        return answer.some(a => {
+            const strA = String(a).trim();
+            if (strA.toUpperCase() === strKey) return true;
+            if (text && strA.toLowerCase() === text.trim().toLowerCase()) return true;
+            return false;
+        });
+    }
+    const strAns = String(answer).trim();
+    if (strAns.toUpperCase() === strKey) return true;
+    if (text && strAns.toLowerCase() === text.trim().toLowerCase()) return true;
+    const parts = strAns.split(/[,/、\s]+/).filter(Boolean).map(s => s.toUpperCase());
+    return parts.includes(strKey);
+}
+
 export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert, isStarred, toggleStar, getCatalog }) {
     let filters = { query: '', subject: [], quiz: '', status: 'active', sort: 'recent' };
     let selected = new Set();
@@ -18,12 +36,23 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     let opener;
     let previousScrollY = 0;
     let request = 0;
+    const scrollContainer = root.querySelector('#mistakeScrollContainer');
+    const bottomBar = root.querySelector('.notebook-bottom');
     const content = root.querySelector('#mistakeListContent');
     const search = root.querySelector('#mistakeSearch');
     const subjects = root.querySelector('#mistakeSubject');
     const quizzes = root.querySelector('#mistakeQuiz');
+    const showAnswer = root.querySelector('#mistakeShowAnswer');
     const sort = root.querySelector('#mistakeSort');
-    const menus = [subjects, quizzes, sort].map(createSelectMenu);
+    let autoShowAnswers = false;
+    try {
+        autoShowAnswers = localStorage.getItem('teah_mistake_show_answers') === 'true';
+    } catch {}
+    if (showAnswer) {
+        showAnswer.value = autoShowAnswers ? 'show' : 'hide';
+        root.classList.toggle('notebook-show-answers', autoShowAnswers);
+    }
+    const menus = [subjects, quizzes, showAnswer, sort].filter(Boolean).map(createSelectMenu);
     const cardsBtn = root.querySelector('#mistakeFlashcardsBtn');
     const eligibleCards = () => (selected.size ? visible.filter(m => selected.has(m.id)) : visible).filter(m => m.status !== 'mastered');
     const practiceBtn = root.querySelector('#mistakePracticeBtn');
@@ -31,6 +60,44 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     const selection = root.querySelector('#mistakeSelection');
     const selectAll = root.querySelector('#mistakeSelectAll');
     const clear = root.querySelector('#mistakeClearSelection');
+
+    let lastScrollTop = 0;
+    function setBottomBarHidden(hidden) {
+        bottomBar?.classList.toggle('is-hidden', hidden);
+    }
+
+    if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', () => {
+            const currentScrollTop = scrollContainer.scrollTop;
+            const scrollHeight = scrollContainer.scrollHeight;
+            const clientHeight = scrollContainer.clientHeight;
+            const maxScroll = scrollHeight - clientHeight;
+
+            if (currentScrollTop <= 30) {
+                setBottomBarHidden(false);
+                lastScrollTop = currentScrollTop;
+                return;
+            }
+
+            if (currentScrollTop >= maxScroll - 30) {
+                setBottomBarHidden(false);
+                lastScrollTop = currentScrollTop;
+                return;
+            }
+
+            const delta = currentScrollTop - lastScrollTop;
+            if (delta > 8) {
+                setBottomBarHidden(true);
+            } else if (delta < -8) {
+                setBottomBarHidden(false);
+            }
+            lastScrollTop = Math.max(0, currentScrollTop);
+        }, { passive: true });
+    }
+
+    bottomBar?.addEventListener('focusin', () => {
+        setBottomBarHidden(false);
+    });
 
     function getActiveMistakes() {
         const catalog = typeof getCatalog === 'function' ? getCatalog() : getCatalog;
@@ -85,6 +152,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         cardsBtn.disabled = !eligibleCards().length;
         cardsBtn.textContent = !selected.size && eligibleCards().length > 30 ? 'AI 一鍵製作字卡（前 30 題）' : 'AI 一鍵製作字卡';
         cardsBtn.title = '依所選待複習錯題製作；未勾選時按目前排序取前 30 題。每次最多 30 題。';
+        setBottomBarHidden(false);
     }
     function renderCard(m) {
         const card = el('article', 'review-card');
@@ -125,11 +193,17 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         if (m.options) {
             const list = el('div', 'review-options');
             Object.entries(m.options).sort(([a], [b]) => sortOptionKeys(a, b)).forEach(([key, text]) => {
-                const row = el('div', 'review-option');
+                const isCorrect = isAnswerMatch(key, text, m.answer);
+                const row = el('div', isCorrect ? 'review-option is-answer' : 'review-option');
+                if (isCorrect) row.dataset.answer = 'true';
                 row.append(el('span', 'review-option-label', key));
                 const value = el('div'); value.innerHTML = markdown(text); row.append(value); list.append(row);
             });
             card.append(list);
+        } else if (m.answer != null) {
+            const answerLine = el('div', 'review-inline-answer');
+            answerLine.textContent = `答案：${[].concat(m.answer).join('、')}`;
+            card.append(answerLine);
         }
         const details = el('details', 'review-answer');
         details.append(el('summary', '', '查看答案與詳解'));
@@ -182,10 +256,19 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         }
         updateSelection();
     }
-    function changed() { selected.clear(); limit = 30; render(); }
+    function changed() { selected.clear(); limit = 30; setBottomBarHidden(false); lastScrollTop = 0; render(); }
     search.oninput = () => { filters.query = search.value; changed(); };
     subjects.onchange = () => { filters.subject = [...subjects.selectedOptions].map(o => o.value).filter(Boolean); filters.quiz = ''; changed(); };
     quizzes.onchange = () => { filters.quiz = quizzes.value; changed(); };
+    if (showAnswer) {
+        showAnswer.onchange = () => {
+            autoShowAnswers = showAnswer.value === 'show';
+            root.classList.toggle('notebook-show-answers', autoShowAnswers);
+            try {
+                localStorage.setItem('teah_mistake_show_answers', autoShowAnswers ? 'true' : 'false');
+            } catch {}
+        };
+    }
     sort.onchange = () => { filters.sort = sort.value; changed(); };
     root.querySelectorAll('[data-mistake-status]').forEach(button => button.onclick = () => { filters.status = button.dataset.mistakeStatus; changed(); });
     selectAll.onchange = () => { selected = new Set(selectAll.checked ? visible.map(m => m.id) : []); render(); };
@@ -236,6 +319,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         filters.subject = []; filters.query = ''; search.value = '';
         selected.clear(); limit = 30;
         root.style.display = 'flex'; window.scrollTo(0, 0); document.body.style.overflow = 'hidden';
+        setBottomBarHidden(false); lastScrollTop = 0;
         root.querySelector('#mistakeScrollContainer').scrollTop = 0;
         render(); search.focus();
         root.setAttribute('aria-busy', 'true');
