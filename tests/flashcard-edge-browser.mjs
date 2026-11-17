@@ -63,7 +63,7 @@ try {
     await settings.getByRole('button', { name: '開始 Learn', exact: true }).click(); await idle();
     await view.getByRole('checkbox', { name: 'car', exact: true }).check(); await view.getByRole('checkbox', { name: 'automobile', exact: true }).check();
     await view.getByRole('button', { name: '確認答案', exact: true }).click();
-    await view.getByText('✓ 答對了', { exact: true }).waitFor(); await idle(); await view.getByRole('button', { name: '繼續', exact: true }).click({ force: true });
+    await view.locator('.vocab-question-hint.success').waitFor(); await idle(); await view.getByRole('button', { name: '繼續', exact: true }).click({ force: true });
     await view.getByRole('heading', { name: '本次學習完成', exact: true }).waitFor();
     await view.getByRole('button', { name: '返回字卡集', exact: true }).click(); await view.getByRole('button', { name: 'Learn', exact: true }).click(); await expandLearnSettings();
     await settings.getByLabel('這次學習的目標', { exact: true }).selectOption('master'); await settings.getByLabel('批改方式', { exact: true }).selectOption('relaxed');
@@ -79,7 +79,7 @@ try {
     assert.equal(await answer.inputValue(), 'μΜ', 'saving non-flow settings preserves an unfinished written answer');
     assert.equal(await page.evaluate(id => window.__testDatabase.flashcard['test-user'].study[id].sessions.learn.id, synonyms.id), writingSessionId);
     await answer.fill('an automobile'); await answer.press('Enter');
-    await view.getByText('✓ 答對了', { exact: true }).waitFor(); assert.equal(semanticCalls, 0); await idle();
+    await view.locator('.vocab-question-hint.success').waitFor(); assert.equal(semanticCalls, 0); await idle();
     await view.getByRole('button', { name: '我是錯的', exact: true }).waitFor();
     assert.equal(await view.locator('.vocab-correct-answer').count(), 2);
     assert.equal(await view.getByRole('progressbar', { name: 'Write 學習進度' }).getAttribute('aria-valuenow'), '0');
@@ -100,7 +100,7 @@ try {
     await view.getByRole('button', { name: '繼續練習', exact: true }).click(); await idle();
     assert.equal(await view.getByRole('progressbar').count(), 0);
     await view.getByRole('button', { name: '不知道', exact: true }).click(); await idle();
-    await view.getByText('已略過', { exact: true }).waitFor(); assert.equal(await view.locator('.vocab-correct-answer').count(), 1, 'Write reveals an unknown answer');
+    await view.getByText(/^(已略過|Study this one!)$/).waitFor(); assert.equal(await view.locator('.vocab-correct-answer').count(), 1, 'Write reveals an unknown answer');
     assert.equal(await view.getByRole('button', { name: '我的答案其實正確', exact: true }).count(), 0);
     await view.getByRole('button', { name: '繼續', exact: true }).click(); await idle();
     await view.getByLabel('你的答案', { exact: true }).waitFor();

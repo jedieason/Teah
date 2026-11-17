@@ -55,7 +55,7 @@ try {
     // MeSH handles terms before a model is loaded, including in rigorous mode.
     let t = await setup('rigorous');
     await t.submit('heart attack'); await t.idle();
-    await t.view.getByText('✓ 答對了', { exact: true }).waitFor();
+    await t.view.locator('.vocab-question-hint.success').waitFor();
     assert.equal(t.counts().modelLoads, 0);
     await t.view.getByRole('button', { name: '我是錯的', exact: true }).waitFor();
     await t.page.waitForTimeout(1100);
@@ -63,32 +63,30 @@ try {
     assert.equal(await t.view.evaluate(e => e.scrollWidth > e.clientWidth), false);
     await t.page.screenshot({ path: 'artifacts/qa/equivalence-concept-mobile.png', fullPage: true });
     await t.view.getByRole('button', { name: '我是錯的', exact: true }).click(); await t.idle();
-    await t.view.getByText('答錯了', { exact: true }).waitFor(); t.check(); await t.context.close();
+    await t.view.locator('.vocab-question.is-wrong .vocab-question-hint').waitFor(); t.check(); await t.context.close();
 
     for (const [level, correct] of [['relaxed', true], ['standard', false], ['rigorous', false]]) {
         t = await setup(level, .85);
         await t.submit('MI'); await t.idle();
-        await t.view.getByText(correct ? '✓ 答對了' : '無法確定，請核對正確答案', { exact: true }).waitFor();
+        await t.view.locator(correct ? '.vocab-question-hint.success' : '.vocab-question-hint.error').waitFor();
         assert.equal(t.counts().modelLoads, 1); assert.equal(t.counts().geminiCalls, 0);
         if (!correct) {
             await t.view.getByRole('button', { name: '我的答案其實正確', exact: true }).click(); await t.idle();
-            await t.view.getByText('✓ 答對了', { exact: true }).waitFor();
+            await t.view.locator('.vocab-question-hint.success').waitFor();
         }
         t.check(); await t.context.close();
     }
 
     t = await setup('exact');
     await t.submit('ＭＹＯＣＡＲＤＩＡＬinfarction!'); await t.idle();
-    await t.view.getByText('✓ 答對了', { exact: true }).waitFor();
+    await t.view.locator('.vocab-question-hint.success').waitFor();
     assert.equal(t.counts().modelLoads, 0);
-    await t.view.getByText('原始答案', { exact: true }).waitFor();
+    await t.view.getByRole('button', { name: '使用原始答案並繼續', exact: true }).waitFor();
     assert.equal((await t.view.locator('.vocab-expected-answer').innerText()).trim(), 'myocardial infarction');
     await t.view.getByRole('button', { name: '我是錯的', exact: true }).waitFor();
     await t.page.waitForTimeout(1100);
-    await t.page.keyboard.press('a'); await t.page.keyboard.press('Space');
-    assert.equal(await t.view.locator('.vocab-response').isVisible(), true, 'letters and Space do not confirm a different accepted answer');
-    await t.page.keyboard.press('Enter'); await t.idle();
-    assert.equal(await t.view.locator('.vocab-response').count(), 0, 'Enter confirms the original and continues');
+    await t.page.keyboard.press('a'); await t.idle();
+    assert.equal(await t.view.locator('.vocab-response').count(), 0, 'any key confirms the original and continues');
     t.check(); await t.context.close();
 
     t = await setup('standard', .99, 'offline');

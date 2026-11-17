@@ -402,6 +402,74 @@ html.dark-mode .vocab-retype-notice { background:#292211; border-color:#5c4418; 
 .vocab-feedback > form { grid-column:1/-1; }
 @keyframes vocab-study-enter { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
 @keyframes vocab-result-enter { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+/* Learn measurements use CSS pixels: the supplied desktop recording is at 150% zoom. */
+.vocab-page[data-phase="learn"]:not([hidden]) { --v-accent:#3649fd; --v-success:#10734c; --v-error:#c7571c; --v-line:#e5e9ed; --v-muted:#586380; --v-soft:#f2f4f7; color:#2e3856; --v-study-background:#fdfdfd; background:var(--v-study-background); font-family:"Avenir Next",Avenir,"Segoe UI",sans-serif; }
+.vocab-page[data-phase="learn"] .vocab-button { font-family:inherit; font-weight:500; }
+.vocab-page[data-phase="learn"] .vocab-study-header { min-height:64px; margin:0 -8px 16px 20px; }
+.vocab-page[data-phase="learn"] .vocab-study-title { color:var(--v-muted); }
+.vocab-page[data-phase="learn"] .vocab-mode-menu > summary { font-size:16px; gap:12px; }
+.vocab-page[data-phase="learn"] .vocab-study-actions { gap:12px; }
+.vocab-page[data-phase="learn"] .vocab-study-actions .vocab-icon { width:32px; min-width:32px; min-height:32px; padding:4px; }
+.vocab-page[data-phase="learn"] .vocab-progress-row { height:36px; margin:0 auto 24px; gap:8px; }
+.vocab-page[data-phase="learn"] .vocab-learn-progress { position:relative; align-items:center; gap:6px; height:36px; }
+.vocab-page[data-phase="learn"] .vocab-learn-progress > span { height:16px; background:#d2d7e4; }
+.vocab-page[data-phase="learn"] .vocab-learn-progress i { background:#14a26c; }
+.vocab-page[data-phase="learn"] .vocab-progress-count { width:36px; height:36px; background:#d2d7e4; color:#282e3e; font-size:16px; font-weight:600; }
+.vocab-page[data-phase="learn"] .vocab-progress-marker { position:absolute; top:0; transform:translateX(-50%); z-index:1; background:var(--v-success); color:white; }
+.vocab-page[data-phase="learn"] .vocab-round-state { display:none; }
+.vocab-page[data-phase="learn"] .vocab-question { border:2px solid var(--v-line); padding:24px 32px; background:transparent; }
+.vocab-page[data-phase="learn"] .vocab-question-top { height:32px; margin-bottom:24px; font-size:14px; font-weight:600; gap:20px; }
+.vocab-page[data-phase="learn"] .vocab-question-top .vocab-icon { width:24px; min-width:24px; min-height:24px; height:24px; padding:4px; color:var(--v-muted); }
+.vocab-page[data-phase="learn"] .vocab-question-top .vocab-icon svg { width:16px; height:16px; }
+.vocab-page[data-phase="learn"] .vocab-question-top > .vocab-icon:last-child { margin-left:0; }
+.vocab-page[data-phase="learn"] .vocab-question-top > .vocab-study-star { margin-left:auto; opacity:0; transition:opacity .15s; }
+.vocab-page[data-phase="learn"] .vocab-question-top > .vocab-study-star:is(:focus-visible,.starred),.vocab-page[data-phase="learn"] .vocab-question-top:hover > .vocab-study-star { opacity:1; }
+.vocab-page[data-phase="learn"] .vocab-prompt { font-size:20px; line-height:1.5; padding:0 0 32px; min-height:140px; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-prompt { min-height:142px; }
+.vocab-page[data-phase="learn"] .vocab-written-form .vocab-field { gap:20px; }
+.vocab-page[data-phase="learn"] .vocab-written-form .vocab-field > span { font-size:14px; line-height:20px; font-weight:600; color:var(--v-muted); }
+.vocab-page[data-phase="learn"] .vocab-written-form :is(input,textarea) { min-height:56px; height:56px; width:100%; padding:16px; border:2px solid #d9dde8; border-radius:8px; background:transparent; color:inherit; font-size:16px; font-weight:400; line-height:20px; font-family:inherit; resize:vertical; }
+.vocab-page[data-phase="learn"] .vocab-written-form textarea[rows]:not([rows="1"]) { height:auto; }
+.vocab-page[data-phase="learn"] .vocab-written-form :is(input,textarea)::placeholder { color:#8992ad; font-weight:500; opacity:1; }
+.vocab-page[data-phase="learn"] .vocab-written-form :is(input,textarea):focus { border-color:#a1adff!important; background:transparent; }
+.vocab-page[data-phase="learn"] .vocab-written-form :is(input,textarea):disabled { opacity:1; -webkit-text-fill-color:currentColor; }
+.vocab-page[data-phase="learn"] .vocab-question-actions { margin-top:24px; gap:24px; }
+.vocab-page[data-phase="learn"] :is(.vocab-dontknow,.vocab-hint-btn) { font-family:inherit; font-size:14px; min-height:40px; height:40px; padding:0 18px; }
+.vocab-page[data-phase="learn"] .vocab-hint-btn { background:var(--v-soft); color:var(--v-muted); }
+.vocab-page[data-phase="learn"] .vocab-dontknow { padding:0; }
+.vocab-page[data-phase="learn"] .vocab-question-actions > .vocab-primary { border-radius:999px; min-width:84px; min-height:40px; height:40px; padding:0 18px; }
+.vocab-page[data-phase="learn"] .vocab-primary:disabled { opacity:1; background:var(--v-soft); border-color:transparent; color:#d2d6e4; }
+.vocab-page[data-phase="learn"] .vocab-primary:hover:not(:disabled) { background:#323bd9; border-color:#323bd9; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"]:is(.is-correct,.is-wrong) { padding-bottom:56px; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"]:is(.is-correct,.is-wrong) .vocab-prompt { min-height:128px; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-answer-result { position:relative; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-question-hint { margin:0 0 16px; font-size:16px; line-height:24px; font-weight:600; padding-right:130px; }
+.vocab-page[data-phase="learn"] .vocab-override { position:absolute; right:0; top:0; padding:0; font-size:14px; line-height:24px; font-weight:600; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-response { border:2px solid currentColor; border-radius:8px; padding:16px; align-items:center; gap:16px; min-height:60px; }
+.vocab-page[data-phase="learn"] .vocab-response-glyph { margin:0; }
+.vocab-page[data-phase="learn"] .vocab-response-glyph svg { width:24px; height:24px; stroke-width:2.5; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-response > div { color:#2e3856; font-size:16px; line-height:24px; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"].is-correct .vocab-expected-header { height:0; margin:0; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-expected-answer { padding:16px; border:2px solid var(--v-line); margin-top:16px; border-radius:8px; }
+.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-expected-answer .vocab-correct-answer { color:inherit; font-size:16px; line-height:24px; }
+.vocab-page[data-phase="learn"] .vocab-expected-answer[role="button"] { cursor:pointer; }
+.vocab-page[data-phase="learn"] .vocab-expected-answer[role="button"]:focus-visible { border-color:#a1a4ff; outline:none; }
+.vocab-page[data-phase="learn"] > .vocab-written-footer { display:flex; width:min(100%,960px); margin:0 auto; padding:0 60px; scroll-margin-bottom:12px; min-height:56px; justify-content:space-between; align-items:center; gap:16px; flex-shrink:0; }
+.vocab-page[data-phase="learn"] > .vocab-written-footer .vocab-feedback-help { color:var(--v-muted); font-size:16px; line-height:24px; font-weight:600; }
+.vocab-page[data-phase="learn"] > .vocab-written-footer .vocab-primary { min-width:120px; min-height:48px; height:48px; padding:0 24px; font-size:16px; border-radius:999px; }
+@media(min-width:701px) {
+    .vocab-page[data-phase="learn"] .vocab-study-title { transform:translateX(-14px); }
+    .vocab-page[data-phase="learn"] .vocab-study-header { position:sticky; top:0; z-index:4; background:var(--v-study-background); }
+    .vocab-page[data-phase="learn"] .vocab-progress-row { position:sticky; top:80px; z-index:3; background:var(--v-study-background); box-shadow:0 24px var(--v-study-background),0 -16px var(--v-study-background); }
+    .vocab-page[data-phase="learn"] .vocab-question.is-entering { animation:vocab-learn-next .24s ease-out both; }
+    .vocab-page[data-phase="learn"] .vocab-answer-result.is-entering { animation:vocab-learn-result .24s ease-out both; }
+    .vocab-page[data-phase="learn"] .vocab-answer-result.is-entering .vocab-response-glyph { animation:vocab-learn-check .24s .08s ease-out both; }
+}
+@keyframes vocab-learn-next { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:translateX(0); } }
+@keyframes vocab-learn-result { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+@keyframes vocab-learn-check { from { opacity:0; transform:scale(.7); } to { opacity:1; transform:scale(1); } }
+html.dark-mode .vocab-page[data-phase="learn"] { --v-study-background:#10162b; --v-line:#363e56; --v-soft:#232b43; --v-muted:#b9c2d9; color:#f6f7fb; background:#10162b; }
+html.dark-mode .vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-response > div { color:#f6f7fb; }
 .vocab-quick-options { position:fixed; inset:76px 20px auto auto; margin:0; width:min(410px,calc(100vw - 32px)); max-height:calc(100dvh - 96px); overflow:auto; background:var(--surface-color,#fff); color:inherit; border:1px solid var(--v-line); border-radius:18px; padding:18px; box-shadow:0 6px 28px #18224414; }
 .vocab-quick-options > .vocab-link { display:block; width:100%; text-align:center; margin-top:12px; }
 .vocab-quick-options .vocab-setting-content { background:var(--v-soft); border-radius:12px; padding:18px; }
@@ -519,3 +587,15 @@ html.dark-mode .vocab-retype-notice { background:#292211; border-color:#5c4418; 
 html.dark-mode .vocab-pill-public { background:#064e3b33; color:#6ee7b7; border-color:#065f46; }
 html.dark-mode .vocab-pill-private { background:#37415133; color:#9ca3af; border-color:#4b5563; }
 
+
+@media(max-width:700px) {
+    .vocab-page[data-phase="learn"] .vocab-study-header { margin:0 0 8px; }
+    .vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-prompt { min-height:92px; }
+    .vocab-page[data-phase="learn"] .vocab-question[data-type="written"]:is(.is-correct,.is-wrong) { padding-bottom:16px; }
+    .vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-question-hint { font-size:14px; padding-right:0; }
+    .vocab-page[data-phase="learn"] .vocab-override { position:static; display:block; margin:12px 0 0; text-align:left; }
+    .vocab-page[data-phase="learn"] > .vocab-written-footer { padding:0; margin:12px auto 0; gap:12px; min-height:48px; }
+    .vocab-page[data-phase="learn"] .vocab-feedback > .vocab-link { order:2; }
+    .vocab-page[data-phase="learn"] .vocab-question-actions { gap:16px; }
+    .vocab-page[data-phase="learn"] .vocab-question-actions > .vocab-primary { min-width:84px; }
+}

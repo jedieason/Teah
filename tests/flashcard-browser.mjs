@@ -123,7 +123,7 @@ try {
     await settings.getByRole('button', { name: '開始 Learn', exact: true }).click();
     await view.locator('.vocab-choices').waitFor();
     await view.getByRole('button', { name: '不知道', exact: true }).click();
-    await view.getByText('已略過', { exact: true }).waitFor();
+    await view.getByText(/^(已略過|Study this one!)$/).waitFor();
     assert.equal(await view.locator('.correct-option').count(), 1);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-learn-wrong.png', fullPage: true });
     await view.getByRole('button', { name: '繼續', exact: true }).click({force:true});
@@ -177,7 +177,7 @@ try {
             const index = s.current.choices.findIndex(c => c.replace(/\*\*/g, '') === expected);
             assert.ok(index >= 0); await view.locator('.vocab-choice').nth(index).click();
         }
-        await view.getByText('✓ 答對了', { exact: true }).waitFor();
+        await view.locator('.vocab-question-hint.success').waitFor();
         if (guard === 5) await page.screenshot({ path: 'artifacts/qa/vocabulary-learn-correct.png', fullPage: true });
         if (!await view.getByRole('button', { name: '繼續', exact: true }).isVisible()) continue;
         await view.getByRole('button', { name: '繼續', exact: true }).click({force:true});
@@ -190,7 +190,7 @@ try {
     assert.equal(s.options.practice, true); assert.equal(s.completed, false); assert.equal(await view.locator('.vocab-learn-progress').count(), 0);
     const practicingCard = stored.cards.find(c => c.id === s.current.cardId);
     await view.getByLabel('你的答案', { exact: true }).fill(practicingCard.term.replace(/\*\*/g, ''));
-    await view.getByRole('button', { name: '確認答案', exact: true }).click(); await view.getByText('✓ 答對了', { exact: true }).waitFor();
+    await view.getByRole('button', { name: '確認答案', exact: true }).click(); await view.locator('.vocab-question-hint.success').waitFor();
     await view.getByRole('button', { name: '繼續', exact: true }).click({force:true}); s = await state(); assert.equal(s.ordinal, 1); assert.equal(s.completed, false);
     await page.screenshot({ path: 'artifacts/qa/vocabulary-practice.png', fullPage: true });
     await view.getByRole('button', { name: '‹ 水果單字', exact: true }).click();

@@ -76,7 +76,7 @@ try {
     });
     const visibleInput = await input.boundingBox(); assert.ok(visibleInput.y >= 100 && visibleInput.y + visibleInput.height <= 540, 'input and submit stay in the usable viewport');
     await page.evaluate(() => window.__setStudyViewport(844));
-    await input.press('Enter'); await view.getByText('答錯了', { exact: true }).waitFor(); await idle();
+    await input.press('Enter'); await view.locator('.vocab-question.is-wrong .vocab-question-hint').waitFor(); await idle();
     assert.equal(await view.getByRole('button', { name: '不知道', exact: true }).count(), 0, 'completed answers have no disabled unknown action');
     assert.equal(await view.locator('.vocab-incorrect-answer').evaluate(e => getComputedStyle(e).textDecorationLine), 'none', 'the original answer stays legible');
     assert.equal(await view.locator('.vocab-correct-answer').innerText(), 'Necrotizing enterocolitis');
