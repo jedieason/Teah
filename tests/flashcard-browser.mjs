@@ -164,6 +164,7 @@ try {
                 await page.screenshot({ path: 'artifacts/qa/vocabulary-hint.png', fullPage: true });
                 await input.fill('錯誤答案'); await input.press('Enter');
                 await view.getByLabel('重打正確答案', { exact: true }).waitFor();
+                await page.screenshot({ path: 'artifacts/qa/vocabulary-retype-layout.png' });
                 const correction = view.getByLabel('重打正確答案', { exact: true }); await correction.fill(expected); await correction.press('Enter');
                 repaired = true; continue;
             }

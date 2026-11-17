@@ -1113,7 +1113,7 @@ export function mountFlashcard({ host, activate }) {
                 button('我是錯的', footer, async () => { const next = overrideCorrect(session, Date.now(), false); await persist(newEvent('override', { originalId: feedback.eventId, correct: false }), next); session = next; render(); }, 'vocab-link');
             }
             if (!feedback.correct && ['written', 'spell'].includes(q.type)) {
-                if (!feedback.skipped) button('我的答案其實正確', footer, async () => { const next = overrideCorrect(session); await persist(newEvent('override', { originalId: feedback.eventId, correct: true }), next); session = next; render(); }, 'vocab-link');
+                if (feedback.retyped && !feedback.skipped) button('我的答案其實正確', footer, async () => { const next = overrideCorrect(session); await persist(newEvent('override', { originalId: feedback.eventId, correct: true }), next); session = next; render(); }, 'vocab-link');
                 if (!feedback.retyped) {
                     const targetText = answerFor(card, q.direction) || '';
                     const multiline = /\r?\n/.test(targetText) || answersFor(card, q.direction).some(a => /\r?\n/.test(a));
@@ -1132,8 +1132,10 @@ export function mountFlashcard({ host, activate }) {
                     } else {
                         correction.enterKeyHint = 'done';
                     }
-                    const check = node('button', '確認訂正', form, 'vocab-button vocab-primary'); check.type = 'submit';
-                    const status = node('div', null, form); status.setAttribute('role', 'status');
+                    const status = node('div', null, form, 'vocab-correction-status'); status.setAttribute('role', 'status');
+                    const actions = node('div', null, form, 'vocab-correction-actions');
+                    if (!feedback.skipped) button('我的答案其實正確', actions, async () => { const next = overrideCorrect(session); await persist(newEvent('override', { originalId: feedback.eventId, correct: true }), next); session = next; render(); }, 'vocab-link');
+                    const check = node('button', '確認訂正', actions, 'vocab-button vocab-primary'); check.type = 'submit';
                     form.onsubmit = e => {
                         e.preventDefault();
                         if (!correction.value.trim()) return;
@@ -1148,7 +1150,7 @@ export function mountFlashcard({ host, activate }) {
                                 form.querySelectorAll('input,textarea,select,button').forEach(el => { el.disabled = true; });
                                 let cancelled = false;
                                 const controller = new AbortController();
-                                const cancel = node('button', '取消判讀', form, 'vocab-button vocab-link'); cancel.type = 'button';
+                                const cancel = node('button', '取消判讀', actions, 'vocab-button vocab-link'); cancel.type = 'button'; cancel.disabled = false;
                                 cancel.onclick = () => {
                                     cancelled = true;
                                     cancel.disabled = true;

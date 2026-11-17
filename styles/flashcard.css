@@ -389,10 +389,16 @@ html.dark-mode .vocab-diff-amber, html.dark-mode mark.vocab-diff-amber { color:#
 html.dark-mode .vocab-diff-user mark { color:#fca5a5; background:#7f1d1d66; border-bottom-color:#ef4444; }
 html.dark-mode .vocab-correction-diff-box { background:#242629; border-color:#4b5058; }
 html.dark-mode .vocab-retype-notice { background:#292211; border-color:#5c4418; }
+.vocab-correction-form { display:flex; flex-direction:column; gap:10px; width:100%; }
+.vocab-correction-form .vocab-field { width:100%; flex:1 1 100%; min-width:0; margin:0; }
+.vocab-correction-form :is(input, textarea) { width:100%; box-sizing:border-box; }
+.vocab-correction-actions { display:flex; align-items:center; justify-content:space-between; width:100%; gap:12px; margin-top:2px; }
+.vocab-correction-actions .vocab-link { margin-right:auto; padding:6px 0; font-size:14px; font-weight:400; text-align:left; }
+.vocab-correction-actions .vocab-primary { margin-left:auto; border-radius:24px; min-width:120px; padding:10px 22px; }
 .vocab-page[data-phase="learn"] .vocab-feedback { display:grid; grid-template-columns:1fr auto; gap:12px; margin:20px 0 0; padding:0; min-height:0; }
 .vocab-feedback > .vocab-primary { grid-column:2; grid-row:1; border-radius:24px; min-width:140px; }
 .vocab-feedback > .vocab-feedback-help { grid-column:1; grid-row:1; align-self:center; margin:0; font-size:12px; }
-.vocab-feedback > .vocab-link { grid-column:1/-1; grid-row:2; justify-self:end; padding:4px 0; min-height:32px; font-size:13px; font-weight:400; }
+.vocab-feedback > .vocab-link { grid-column:1/-1; grid-row:2; justify-self:start; padding:4px 0; min-height:32px; font-size:13px; font-weight:400; }
 .vocab-feedback > form { grid-column:1/-1; }
 @keyframes vocab-study-enter { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
 @keyframes vocab-result-enter { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
@@ -469,7 +475,7 @@ html.dark-mode .vocab-retype-notice { background:#292211; border-color:#5c4418; 
     .vocab-page[data-phase="learn"] .vocab-feedback { display:flex; flex-direction:column; gap:12px; margin-top:18px; }
     .vocab-feedback > .vocab-primary { width:100%; order:0; }
     .vocab-feedback > .vocab-feedback-help { display:none; }
-    .vocab-feedback > .vocab-link { order:2; align-self:center; }
+    .vocab-feedback > .vocab-link { order:2; align-self:flex-start; }
     .vocab-feedback > form { width:100%; order:0; }
     .vocab-quick-options { inset:62px 16px auto; width:auto; max-height:calc(100dvh - 80px); }
     .vocab-options-dialog,.vocab-flash-options,.vocab-goal-dialog { padding:24px 20px; }.vocab-option-pills { flex-wrap:wrap; }.vocab-option-pills .vocab-check { min-width:90px; }.vocab-setting-section > summary { padding:20px; }.vocab-setting-content { padding:0 20px 20px; }.vocab-options-footer { gap:10px; }.vocab-options-dialog .vocab-options-footer { padding-bottom:0; }
