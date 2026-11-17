@@ -96,7 +96,8 @@ test('levels use both entailment directions and never accept spelling or morphol
     assert.equal((await grade('infarction', 'infarct', 'standard', async () => scores(.94))).correct, true);
     assert.equal((await grade('infarction', 'infarct', 'rigorous', async () => scores(.94))).correct, false);
     assert.equal((await grade('infarction', 'infarct', 'rigorous', async () => scores(.99))).correct, true);
-    assert.equal((await grade('thrombus', 'thrombi', 'relaxed', async () => scores(.1))).correct, false);
+    assert.equal((await grade('thrombus', 'thrombi', 'relaxed', async () => scores(.1))).correct, true);
+    assert.equal((await grade('thrombus', 'thrombi', 'rigorous', async () => scores(.1))).correct, false);
     assert.equal((await grade('infarction', 'ischemia', 'relaxed', async () => scores(.99, .6))).correct, false);
     assert.equal((await grade('renal failure', 'failure', 'relaxed', async () => ({ ...scores(.99), backward: { entailment: .1, contradiction: .01 } }))).correct, false);
 });
@@ -148,4 +149,48 @@ test('NLI labels come from model config and logits are normalized stably', () =>
     assert.ok(result.entailment > result.neutral && result.neutral > result.contradiction);
     assert.ok(Math.abs(Object.values(result).reduce((a, b) => a + b) - 1) < 1e-9);
     assert.throws(() => nliScores([1, 2, 3], {}));
+});
+
+test('relaxed and standard modes accept singular/plural, minor typos and ignore punctuation/parentheses', async () => {
+    const never = () => { throw new Error('Approximate match should resolve without model'); };
+    // Singular / Plural (s, es, ies, Latin plurals)
+    assert.equal((await grade('erythrocytes', 'erythrocyte', 'standard', never)).correct, true);
+    assert.equal((await grade('kidneys', 'kidney', 'standard', never)).correct, true);
+    assert.equal((await grade('kidney', 'kidneys', 'standard', never)).correct, true);
+    assert.equal((await grade('arteries', 'artery', 'standard', never)).correct, true);
+    assert.equal((await grade('artery', 'arteries', 'standard', never)).correct, true);
+    assert.equal((await grade('thrombus', 'thrombi', 'standard', never)).correct, true);
+    assert.equal((await grade('metastases', 'metastasis', 'standard', never)).correct, true);
+
+    // Minor spelling typos in standard mode (edit distance 1)
+    assert.equal((await grade('hemorrhage', 'hemorrage', 'standard', never)).correct, true);
+    assert.equal((await grade('mitochondria', 'mitochondra', 'standard', never)).correct, true);
+
+    // Relaxed mode accepts edit distance 2 and word order
+    assert.equal((await grade('hemorrhage', 'hemorage', 'relaxed', never)).correct, true);
+    assert.equal((await grade('myocardial infarction', 'infarction myocardial', 'relaxed', never)).correct, true);
+
+    // Punctuation and parentheses omission
+    assert.equal((await grade('Intradermal (melanocytic) nevus', 'Intradermal nevus.', 'standard', never)).correct, true);
+    assert.equal((await grade('皮內痣（黑色素細胞痣）', '皮內痣。', 'standard', never)).correct, true);
+
+    // Critical conflicts still strictly rejected even in relaxed mode
+    assert.equal((await grade('5 mg', '50 mg', 'relaxed', never)).correct, false);
+    assert.equal((await grade('良性腫瘤', '惡性腫瘤', 'relaxed', never)).correct, false);
+    assert.equal((await grade('CD4+', 'CD4-', 'relaxed', never)).correct, false);
+});
+
+test('retyping criteria uses session grading and spelling diff identifies mismatch', async () => {
+    const { gradeAnswer, findClosestAnswer, spellingFeedback } = await import('../src/features/flashcard/model.js');
+    assert.equal(gradeAnswer('erythrocyte', ['erythrocytes'], 'relaxed'), true);
+    assert.equal(gradeAnswer('erythrocyte', ['erythrocytes'], 'standard'), true);
+    assert.equal(gradeAnswer('erythrocyte', ['erythrocytes'], 'exact'), false);
+    assert.equal(gradeAnswer('hemorrage', ['hemorrhage'], 'standard'), true);
+    assert.equal(gradeAnswer('hemorrage', ['hemorrhage'], 'exact'), false);
+
+    const closest = findClosestAnswer('kidney', ['liver', 'kidneys']);
+    assert.equal(closest, 'kidneys');
+    const diff = spellingFeedback('kidney', closest);
+    assert.equal(diff.distance, 1);
+    assert.ok(diff.expected.some(p => p.incorrect && p.text === 's'));
 });

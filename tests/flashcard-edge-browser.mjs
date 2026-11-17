@@ -181,6 +181,7 @@ try {
         setTimeout(() => { window.__voices = [{ name: 'Malay Malaysia', lang: 'ms-MY' }]; window.speechSynthesis.dispatchEvent(new Event('voiceschanged')); }, 250);
     });
     await view.getByRole('button', { name: '朗讀答案', exact: true }).click(); await idle();
+    await page.waitForFunction(() => window.__utterances.at(-1)?.voice === 'ms-MY');
     assert.equal(await page.evaluate(() => window.__utterances.at(-1).voice), 'ms-MY', 'voices loaded after the click must still play');
     await view.getByRole('button', { name: '‹ 馬來文測試', exact: true }).click();
     await view.getByRole('button', { name: '‹ Flashcard', exact: true }).click();

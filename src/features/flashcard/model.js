@@ -51,35 +51,228 @@ export function answerKey(value) {
     s = s.replace(/(?<=[\u4e00-\u9fa5\u3040-\u30ff])\s+(?=[\u4e00-\u9fa5\u3040-\u30ff])/g, '');
     return s.replace(/\s+/g, ' ').trim();
 }
+
+export const exactKey = value => answerKey(value).replace(/\s/gu, '');
+const words = value => plainText(value).normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
+const oppositions = [
+    ['positive', 'negative'], ['increase', 'decrease'], ['increased', 'decreased'],
+    ['left', 'right'], ['proximal', 'distal'], ['afferent', 'efferent'],
+    ['agonist', 'antagonist'], ['benign', 'malignant'], ['acute', 'chronic'],
+    ['dominant', 'recessive'], ['inhibition', 'activation'], ['hyperplasia', 'hypertrophy'],
+    ['ileum', 'ilium'], ['陽性', '陰性'], ['增加', '減少'], ['升高', '降低'],
+    ['左', '右'], ['良性', '惡性'], ['急性', '慢性'], ['顯性', '隱性'], ['抑制', '活化']
+];
+const sorted = list => [...list].sort().join('|');
+
+export function criticalConflict(reference, candidate) {
+    const r = plainText(reference).normalize('NFKC').toLowerCase();
+    const c = plainText(candidate).normalize('NFKC').toLowerCase();
+    const rw = words(r), cw = words(c);
+    const numbers = text => text.match(/(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/g) || [];
+    if (sorted(numbers(r)) !== sorted(numbers(c))) return 'number';
+    // Preserve scientific operators, charge, decimal points, ratios and units.
+    const signs = text => text.match(/[+\-−±=<>≤≥×÷/^]|(?<=\d):(?=\d)/g) || [];
+    const signText = text => text.replace(/(?<=\p{L})-(?=\p{L})|\s+[-—–_]\s+/gu, ' ').replace(/(?<!\d)\/|\/(?!\d)/g, ' ');
+    if (sorted(signs(signText(r))) !== sorted(signs(signText(c)))) return 'symbol';
+    const units = text => [...text.matchAll(/\d\s*(μg|µg|ug|mg|kg|g|ml|μl|µl|ul|l|mmol|mol|cm|mm|km|m|ms|s|hz|khz|mhz|pa|kpa|mmhg|%)(?![a-z])/g)].map(m => m[1].replace(/[μµ]/g, 'u'));
+    if (sorted(units(r)) !== sorted(units(c))) return 'unit';
+    const quantities = text => [...text.matchAll(/((?:\d+(?:\.\d+)?|\.\d+))\s*(μg|µg|ug|mg|kg|g|ml|μl|µl|ul|l|mmol|mol|cm|mm|km|m|ms|s|hz|khz|mhz|pa|kpa|mmhg|%)(?![a-z])/g)].map(m => `${m[1]}:${m[2].replace(/[μµ]/g, 'u')}`);
+    if (sorted(quantities(r)) !== sorted(quantities(c))) return 'quantity';
+    const charges = text => [...text.matchAll(/\b(na|k|ca|cl|mg|cd\d+|ig[a-z])\s*([+−-])/g)].map(m => m[0].replace(/\s/g, ''));
+    if (sorted(charges(r)) !== sorted(charges(c))) return 'charge';
+    // Embedded multiplication must not disappear as apparent Markdown emphasis.
+    const multiplication = text => String(text).match(/(?<=[\p{L}\p{N}])\*(?=[\p{L}\p{N}])/gu) || [];
+    if (multiplication(reference).length !== multiplication(candidate).length) return 'symbol';
+    const has = (text, tokens, word) => /[\u3400-\u9fff]/.test(word) ? text.includes(word) : tokens.includes(word);
+    for (const [a, b] of oppositions) {
+        if (has(r, rw, a) && has(c, cw, b) && !has(r, rw, b) || has(r, rw, b) && has(c, cw, a) && !has(r, rw, a)) return 'opposition';
+    }
+    if (rw.some(a => cw.some(b => /^(hyper|hypo)/.test(a) && /^(hyper|hypo)/.test(b) && a.replace(/^(hyper|hypo)/, '') === b.replace(/^(hyper|hypo)/, '') && a !== b))) return 'polarity';
+    const negated = (text, tokens) => tokens.some(w => ['no', 'not', 'never', 'without', 'absent', 'non'].includes(w)) || /不|無|沒有|未/.test(text);
+    if (negated(r, rw) !== negated(c, cw)) return 'negation';
+    const entities = tokens => tokens.filter(w => /^(?:na|k|ca|cl|mg|igg|igm|iga|ige|igd)$/.test(w) || /^(?:cd|ig|t)\d+$/.test(w));
+    if (entities(rw).length && entities(cw).length && sorted(entities(rw)) !== sorted(entities(cw))) return 'entity';
+    return null;
+}
+
+export function isPluralOrSingularMatch(a, b) {
+    if (!a || !b) return false;
+    const w1 = String(a).toLowerCase().trim();
+    const w2 = String(b).toLowerCase().trim();
+    if (w1 === w2) return true;
+    const rules = [
+        [/(?:ies)$/u, 'y'],
+        [/(?:es|s)$/u, ''],
+        [/(?:i)$/u, 'us'],
+        [/(?:ae)$/u, 'a'],
+        [/(?:a)$/u, 'um'],
+        [/(?:a)$/u, 'on'],
+        [/(?:es)$/u, 'is'],
+        [/(?:ices)$/u, 'ex'],
+        [/(?:ices)$/u, 'ix']
+    ];
+    for (const [pat, rep] of rules) {
+        if (pat.test(w1) && w1.replace(pat, rep) === w2) return true;
+        if (pat.test(w2) && w2.replace(pat, rep) === w1) return true;
+        if (pat.test(w1) && pat.test(w2) && w1.replace(pat, rep) === w2.replace(pat, rep)) return true;
+    }
+    return false;
+}
+
+export function levenshteinDistance(s1, s2) {
+    if (s1 === s2) return 0;
+    const a = Array.from(String(s1 || ''));
+    const b = Array.from(String(s2 || ''));
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+    let prev = new Uint16Array(b.length + 1);
+    let curr = new Uint16Array(b.length + 1);
+    for (let j = 0; j <= b.length; j++) prev[j] = j;
+    for (let i = 1; i <= a.length; i++) {
+        curr[0] = i;
+        const charA = a[i - 1].toLowerCase();
+        for (let j = 1; j <= b.length; j++) {
+            const charB = b[j - 1].toLowerCase();
+            const cost = charA === charB ? 0 : 1;
+            curr[j] = Math.min(prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost);
+        }
+        prev.set(curr);
+    }
+    return curr[b.length];
+}
+
+export function approximateMatch(reference, candidate, grading = 'standard') {
+    const level = grading === 'moderate' ? 'standard' : gradingLevel(grading);
+    if (level === 'exact' || level === 'rigorous' || level === 'strict') return null;
+
+    const refNorm = normalize(plainText(reference));
+    const candNorm = normalize(plainText(candidate));
+    const refKey = answerKey(reference).replace(/\s/g, '');
+    const candKey = answerKey(candidate).replace(/\s/g, '');
+    if (!refKey || !candKey) return null;
+
+    if (criticalConflict(reference, candidate)) return null;
+    if (refKey === candKey) return { match: true, reason: 'exact' };
+
+    const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
+    const a = strip(refKey), b = strip(candKey);
+    if (a === b) return { match: true, reason: 'accent', discrepancy: true };
+
+    if (isPluralOrSingularMatch(a, b)) return { match: true, reason: 'plural-singular', discrepancy: true };
+
+    const rw = words(refNorm), cw = words(candNorm);
+    if (rw.length > 1 && rw.length === cw.length) {
+        if (rw.every((w, i) => isPluralOrSingularMatch(strip(w), strip(cw[i])))) {
+            return { match: true, reason: 'plural-singular', discrepancy: true };
+        }
+    }
+
+    const d = levenshteinDistance(a, b);
+    const maxLen = Math.max(a.length, b.length);
+
+    if (level === 'standard') {
+        if (a.length >= 4 && d === 1) {
+            return { match: true, reason: 'minor-typo', discrepancy: true };
+        }
+        if (Math.min(a.length, b.length) === 2 && Math.max(a.length, b.length) === 3 && d === 1) {
+            return { match: true, reason: 'minor-typo', discrepancy: true };
+        }
+        if (rw.length > 1 && rw.length === cw.length) {
+            let diffs = 0;
+            for (let i = 0; i < rw.length; i++) {
+                const sw1 = strip(rw[i]), sw2 = strip(cw[i]);
+                if (sw1 === sw2 || isPluralOrSingularMatch(sw1, sw2)) continue;
+                if (sw1.length >= 4 && levenshteinDistance(sw1, sw2) === 1) {
+                    diffs++;
+                } else {
+                    diffs = 999;
+                    break;
+                }
+            }
+            if (diffs === 1) {
+                return { match: true, reason: 'minor-typo', discrepancy: true };
+            }
+        }
+        return null;
+    }
+
+    if (level === 'relaxed') {
+        if (a.length >= 5 && d <= 2) {
+            return { match: true, reason: 'relaxed-spelling', discrepancy: true };
+        }
+        if (a.length >= 3 && d <= 1) {
+            return { match: true, reason: 'relaxed-spelling', discrepancy: true };
+        }
+        if (Math.min(a.length, b.length) === 2 && Math.max(a.length, b.length) === 3 && d === 1) {
+            return { match: true, reason: 'relaxed-spelling', discrepancy: true };
+        }
+        if (maxLen >= 5 && (1 - d / maxLen) >= 0.72) {
+            return { match: true, reason: 'relaxed-similarity', discrepancy: true };
+        }
+        if (rw.length >= 2 && cw.length >= 2) {
+            let matchedCount = 0;
+            for (const w of rw) {
+                const sw = strip(w);
+                if (cw.some(c => {
+                    const sc = strip(c);
+                    return sw === sc || isPluralOrSingularMatch(sw, sc) || (sw.length >= 4 && levenshteinDistance(sw, sc) <= 1);
+                })) {
+                    matchedCount++;
+                }
+            }
+            if (matchedCount / rw.length >= 0.70) {
+                return { match: true, reason: 'relaxed-tokens', discrepancy: true };
+            }
+        }
+        if (/[\u4e00-\u9fa5]/.test(refKey) && refKey.length >= 3 && d === 1) {
+            return { match: true, reason: 'relaxed-cjk', discrepancy: true };
+        }
+        return null;
+    }
+
+    return null;
+}
+
+export function findClosestAnswer(input, answers) {
+    const variants = (answers || []).flatMap(expandParentheses).filter(Boolean);
+    if (!variants.length) return '';
+    let best = variants[0], minD = Infinity;
+    const inpKey = answerKey(input).replace(/\s/g, '');
+    for (const v of variants) {
+        const expKey = answerKey(v).replace(/\s/g, '');
+        const d = levenshteinDistance(inpKey, expKey);
+        if (d < minD) {
+            minD = d;
+            best = v;
+        }
+    }
+    return best;
+}
+
 export function gradeAnswer(input, answers, grading = 'strict') {
-    const inputKeys = expandParentheses(input).map(answerKey).map(k => k.replace(/\s/g, '')).filter(Boolean);
-    if (!inputKeys.length) return false;
+    const level = grading === 'moderate' ? 'standard' : gradingLevel(grading);
+    const inputVariants = expandParentheses(input);
     const allExpected = (answers || []).flatMap(expandParentheses);
-    if (grading === 'exact') {
+
+    const inputKeys = inputVariants.map(answerKey).map(k => k.replace(/\s/g, '')).filter(Boolean);
+    if (!inputKeys.length) return false;
+
+    if (level === 'exact' || (grading === 'strict' && level !== 'standard')) {
         return inputKeys.some(key => allExpected.some(a => answerKey(a).replace(/\s/g, '') === key));
     }
-    return inputKeys.some(key => {
-        return allExpected.some(answer => {
-            const expected = answerKey(answer);
-            const expectedKey = expected.replace(/\s/g, '');
-            if (key === expectedKey) return true;
-            if (grading !== 'moderate' || /[\d+−=<>/]/.test(expected) || /[^a-zÀ-ž\s-]/i.test(expected)) return false;
-            const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
-            const a = strip(key), b = strip(expected);
-            if (a === b) return true;
-            // Short words accept an omitted/extra letter, but not a different same-length word.
-            if (b.length < 3 || a.length === b.length && b.length < 5) return false;
-            if (Math.abs(a.length - b.length) > 1) return false;
-            let i = 0, j = 0, errors = 0;
-            while (i < a.length && j < b.length) {
-                if (a[i] === b[j]) { i++; j++; continue; }
-                if (++errors > 1) return false;
-                if (a.length >= b.length) i++;
-                if (b.length >= a.length) j++;
-            }
-            return errors + (a.length - i) + (b.length - j) <= 1;
-        });
-    });
+
+    for (const exp of allExpected) {
+        for (const inp of inputVariants) {
+            const expKey = answerKey(exp).replace(/\s/g, '');
+            const inpKey = answerKey(inp).replace(/\s/g, '');
+            if (!expKey || !inpKey) continue;
+            if (expKey === inpKey && !criticalConflict(exp, inp)) return true;
+            if (level === 'strict' || level === 'rigorous') continue;
+            const res = approximateMatch(exp, inp, level);
+            if (res && res.match) return true;
+        }
+    }
+    return false;
 }
 export const FLASHCARD_IMPORT_PROMPT = `請將以下學習內容整理為單字卡 JSON 陣列。
 
@@ -499,7 +692,7 @@ export function spellingFeedback(response, expected) {
         return result;
     };
     // Bounded edit alignment keeps long pasted answers from allocating an unbounded matrix.
-    if (a.length > 256 || b.length > 256) return { response: parts(a, a.map(() => true)), expected: parts(b, b.map(() => true)) };
+    if (a.length > 256 || b.length > 256) return { response: parts(a, a.map(() => true)), expected: parts(b, b.map(() => true)), distance: 999 };
     const cost = Array.from({ length: a.length + 1 }, () => new Uint16Array(b.length + 1));
     for (let i = 0; i <= a.length; i++) cost[i][0] = i;
     for (let j = 0; j <= b.length; j++) cost[0][j] = j;
@@ -511,7 +704,7 @@ export function spellingFeedback(response, expected) {
         else if (i && cost[i][j] === cost[i - 1][j] + 1) wrongA[--i] = true;
         else wrongB[--j] = true;
     }
-    return { response: parts(a, wrongA), expected: parts(b, wrongB) };
+    return { response: parts(a, wrongA), expected: parts(b, wrongB), distance: cost[a.length][b.length] };
 }
 function planRound(session) {
     session.chunk++; session.chunkGoals = {}; session.roundSeen = [];

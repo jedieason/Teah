@@ -8,6 +8,10 @@ const db = { quizCatalog: { Demo: { count: 1 } }, Demo: [{ question: 'Existing',
 await context.addInitScript(data => { window.__testDatabase = JSON.parse(sessionStorage.getItem('vocab-db') || JSON.stringify(data)); }, db);
 await context.route('**/src/services/firebase.js', route => route.fulfill({ contentType: 'text/javascript', body: fixture }));
 await context.route(/firebasedatabase|firebaseio|googleapis.com\/identity|gstatic.com\/firebasejs/, route => route.abort());
+await context.route('**/src/features/flashcard/equivalence-worker.js', route => route.fulfill({ contentType: 'text/javascript', body: `
+self.onmessage = ({ data: { id } }) => {
+    self.postMessage({ id, result: { forward: { entailment: .001, contradiction: .99 }, backward: { entailment: .001, contradiction: .99 } } });
+};` }));
 const page = await context.newPage(), errors = [];
 page.setDefaultTimeout(12000); page.setDefaultNavigationTimeout(25000);
 page.on('pageerror', e => { errors.push(e.message); console.error('Page error:', e.message); });
