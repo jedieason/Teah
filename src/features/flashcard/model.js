@@ -3,7 +3,7 @@ import { gradingLevel, gradingOptions } from './grading-options.js';
 export const MAX_CARDS = 2000;
 export const LEARN_VERSION = 3;
 export const RECOGNITION_WINDOW = 10;
-export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'standard', defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioSide: 'term', audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false };
+export const DEFAULT_OPTIONS = { activity: 'learn', direction: 'term', scope: 'all', shuffle: false, goal: 'master', types: ['choice', 'multi', 'written'], grading: 'standard', defaultLanguage: 'zh-TW', retype: false, audio: false, audioAnswer: false, audioSide: 'term', audioRate: 0.9, sound: true, chunkSize: 7, familiarity: 'new', practice: false, repeatMode: 'chunk' };
 export const id = () => crypto.randomUUID();
 export const clone = value => JSON.parse(JSON.stringify(value));
 export const normalize = value => String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase().replace(/\s+/g, ' ');
@@ -652,11 +652,16 @@ export function createSession(deck, study = {}, input = {}, now = Date.now(), ra
     if (!scope.length) throw new Error('這個範圍沒有可練習的字卡。');
     const order = options.shuffle ? shuffled(scope.map(f => f.key), random) : scope.map(f => f.key);
     const flowQueue = [], goal = options.goal === 'quick' ? 1 : 2;
-    // Recognition and recall are interleaved in bounded windows, independently of seven-question checkpoints.
-    for (let i = 0; i < order.length; i += RECOGNITION_WINDOW) {
-        const window = order.slice(i, i + RECOGNITION_WINDOW);
-        flowQueue.push(...window.filter(key => creditOf(facts[key]) === 0).map(key => ({ key, target: 1 })));
-        if (goal === 2) flowQueue.push(...window.filter(key => creditOf(facts[key]) < 2).map(key => ({ key, target: 2 })));
+    if (options.repeatMode === 'all') {
+        flowQueue.push(...order.filter(key => creditOf(facts[key]) === 0).map(key => ({ key, target: 1 })));
+        if (goal === 2) flowQueue.push(...order.filter(key => creditOf(facts[key]) < 2).map(key => ({ key, target: 2 })));
+    } else {
+        // Recognition and recall are interleaved in bounded windows, independently of seven-question checkpoints.
+        for (let i = 0; i < order.length; i += RECOGNITION_WINDOW) {
+            const window = order.slice(i, i + RECOGNITION_WINDOW);
+            flowQueue.push(...window.filter(key => creditOf(facts[key]) === 0).map(key => ({ key, target: 1 })));
+            if (goal === 2) flowQueue.push(...window.filter(key => creditOf(facts[key]) < 2).map(key => ({ key, target: 2 })));
+        }
     }
     const session = { id: id(), version: LEARN_VERSION, mode: 'learn', deckId: deck.id, deckRevision: deck.revision, generation: projected.generation, options, scope, order, facts, flowQueue: options.activity === 'learn' ? flowQueue : [], writeCredits: Object.fromEntries(order.map(key => [key, 0])), passMisses: [], retryQueue: [], practiceQueue: [], roundSeen: [], roundRepair: false, active: [], chunk: 0, chunkTarget: 1, chunkGoals: {},
         ordinal: 0, round: 1, roundAnswers: [], lastKey: '', current: null, feedback: null, checkpoint: false, completed: false, createdAt: now, updatedAt: now };
@@ -721,6 +726,7 @@ function planRound(session) {
             if (creditOf(session.facts[step.key]) >= step.target) { queue.shift(); continue; }
             // Never reserve both recognition and recall of the same term in one round.
             if (session.active.includes(step.key)) break;
+            if (session.options.repeatMode === 'all' && step.target === 2 && session.order.some(k => creditOf(session.facts[k]) === 0)) break;
             queue.shift(); session.active.push(step.key); session.chunkGoals[step.key] = step.target;
         }
     };

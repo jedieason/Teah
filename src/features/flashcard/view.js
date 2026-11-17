@@ -795,7 +795,7 @@ export function mountFlashcard({ host, activate }) {
         createSession(deck, restart ? {} : study, options);
         if (restart) study = await saveStudy(deck.id, study, newEvent('reset', { generation: id() }));
         let next = createSession(deck, study, { ...options, freshStart: restart });
-        const flowKeys = ['activity', 'direction', 'scope', 'shuffle', 'goal', 'types', 'familiarity', 'chunkSize', 'practice'];
+        const flowKeys = ['activity', 'direction', 'scope', 'shuffle', 'goal', 'types', 'familiarity', 'chunkSize', 'practice', 'repeatMode'];
         if (!restart && phase === 'learn' && flowKeys.every(key => JSON.stringify(next.options[key]) === JSON.stringify(session.options[key]))) {
             next = { ...clone(session), options: next.options };
         }
@@ -831,6 +831,13 @@ export function mountFlashcard({ host, activate }) {
         const goal = select('這次學習的目標', answerWith, [['master', '記熟全部'], ['quick', '快速熟悉']], options.goal);
         const familiarity = select('對這組單字的熟悉程度', answerWith, [['new', '剛開始學'], ['familiar', '已經看過']], options.familiarity);
         const chunk = select('每組單字數', answerWith, [['1', '1 張'], ['2', '2 張'], ['3', '3 張'], ['4', '4 張'], ['5', '5 張'], ['6', '6 張'], ['7', '7 張'], ['10', '10 張'], ['15', '15 張']], String(options.chunkSize));
+        const repeatMode = select('二刷方式', answerWith, [
+            ['chunk', '做完第一輪就重複二刷'],
+            ['all', '刷完題目才從頭開始二刷']
+        ], options.repeatMode || 'chunk');
+        const updateRepeat = () => { repeatMode.hidden = goal.value === 'quick'; };
+        goal.onchange = updateRepeat;
+        updateRepeat();
         const gradingBody = section('批改方式');
         const grading = select('批改方式', gradingBody, GRADING_LEVELS, gradingLevel(options.grading));
         const semanticNotice = node('p', '智慧判讀在此裝置執行；首次使用會下載詞彙資料，需要語意模型時另下載約 380 MB。', gradingBody, 'vocab-muted');
@@ -845,7 +852,7 @@ export function mountFlashcard({ host, activate }) {
         const error = node('p', '', body, 'vocab-settings-error'); error.setAttribute('role', 'alert');
         function selected(activity = options.activity || 'learn') {
             const learnTypes = Object.keys(types).filter(k => types[k].checked);
-            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioSide: audioSide.value, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value) };
+            return { ...options, activity, goal: goal.value, familiarity: familiarity.value, direction: dir.value, scope: scope.value, types: learnTypes, learnTypes, grading: grading.value, retype: retype.checked, shuffle: shuffle.checked, audio: audio.checked, audioAnswer: audioAnswer.checked, audioSide: audioSide.value, audioRate: Number(audioRate.value), sound: sound.checked, chunkSize: Number(chunk.value), repeatMode: repeatMode.value };
         }
         async function begin(activity, restart = false) { try { await beginLearn(selected(activity), restart); } catch (e) { error.textContent = e.message; error.scrollIntoView({ block: 'nearest' }); } }
         button('Write', modes, () => begin('write'), 'vocab-link'); button('Spell', modes, () => begin('spell'), 'vocab-link');
@@ -874,6 +881,14 @@ export function mountFlashcard({ host, activate }) {
         const grading = select('批改方式', group, GRADING_LEVELS, gradingLevel(options.grading));
         grading.onchange = () => void action(async () => {
             try { await update({ grading: grading.value }); }
+            catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; }
+        });
+        const repeatMode = select('二刷方式', group, [
+            ['chunk', '做完第一輪就重複二刷'],
+            ['all', '刷完題目才從頭開始二刷']
+        ], options.repeatMode || 'chunk');
+        repeatMode.onchange = () => void action(async () => {
+            try { await update({ repeatMode: repeatMode.value }); }
             catch (e) { popover.querySelector('.vocab-settings-error').textContent = e.message; }
         });
         const audioSide = select('播放音頻', group, [['term', '單字'], ['definition', '解釋'], ['both', '單字與解釋']], options.audioSide || 'term');

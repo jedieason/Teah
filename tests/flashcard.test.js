@@ -354,4 +354,23 @@ test('Learn session supports smaller chunk sizes from 1 to 6', () => {
     }
 });
 
+test('repeatMode: "all" tests every term in the deck before beginning second pass from the start', () => {
+    const d = deck(15);
+    let s = createSession(d, {}, { repeatMode: 'all', types: ['choice', 'written'], shuffle: false, retype: false });
+    const pass1Cards = [];
+    for (let i = 0; i < 15; i++) {
+        if (s.checkpoint) s = continueRound(s, d);
+        assert.equal(s.current.type, 'choice', `card ${i} must be tested in choice in round 1`);
+        assert.equal(s.current.cardId, d.cards[i].id);
+        pass1Cards.push(s.current.cardId);
+        s = step(s, d, response(s, d));
+    }
+    assert.equal(pass1Cards.length, 15);
+    assert.equal(s.checkpoint, true);
+    s = continueRound(s, d);
+    assert.equal(s.current.cardId, d.cards[0].id);
+    assert.equal(s.current.type, 'written', 'second pass must test in written/recall mode starting from card 0');
+});
+
+
 
