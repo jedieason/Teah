@@ -1095,7 +1095,7 @@ export function mountFlashcard({ host, activate }) {
                 if (!feedback.retyped) {
                     const targetText = answerFor(card, q.direction) || '';
                     const multiline = /\r?\n/.test(targetText) || answersFor(card, q.direction).some(a => /\r?\n/.test(a));
-                    const form = node('form', null, footer, 'vocab-answer-form'); const correction = field('重打正確答案', form, '', multiline ? 'textarea' : 'input'); correction.autocomplete = 'off'; correction.spellcheck = false; correction.maxLength = 4000;
+                    const form = node('form', null, footer, 'vocab-answer-form vocab-correction-form'); const correction = field('重打正確答案', form, '', multiline ? 'textarea' : 'input'); correction.classList.add('vocab-correction-input'); correction.autocomplete = 'off'; correction.spellcheck = false; correction.maxLength = 4000;
                     if (multiline) {
                         correction.rows = Math.min(6, Math.max(2, (targetText.match(/\n/g) || []).length + 1));
                         correction.enterKeyHint = 'enter';
