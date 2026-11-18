@@ -120,7 +120,7 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-symbols { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; order:-1; }.vocab-symbols .vocab-symbol { min-width:36px; padding:6px 10px; border-radius:18px; background:var(--v-soft); border:0; }.vocab-written-hint { margin:16px 0 4px; color:var(--v-muted); font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; }
 .vocab-spelling { white-space:pre-wrap; overflow-wrap:anywhere; }.vocab-spelling.vocab-incorrect-answer { text-decoration:none; color:inherit; }.vocab-spelling mark { color:var(--v-error); background:#ffedd9; border-bottom:2px solid #c79873; border-radius:3px; padding:1px 2px; }
 .vocab-dontknow { display:block; border:0; color:var(--v-accent); background:none; margin:14px 0 0 auto; padding-right:0; }
-.vocab-feedback { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-top:20px; }.vocab-feedback .vocab-answer-form { flex-basis:100%; }.vocab-feedback .vocab-answer-form :is(input, textarea),.vocab-correction-form :is(input, textarea),.vocab-correction-input { font-size:18px; line-height:1.6; }
+.vocab-feedback { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-top:20px; }.vocab-feedback .vocab-answer-form { flex-basis:100%; }.vocab-feedback .vocab-answer-form :is(input, textarea),.vocab-correction-form :is(input, textarea),.vocab-correction-input { font-size:18px; line-height:1.6; font-family:inherit; }
 .vocab-correct-answer,.vocab-revealed-answer { color:var(--v-success); font-size:22px; white-space:pre-wrap; overflow-wrap:anywhere; }.vocab-incorrect-answer { color:var(--v-error); font-size:20px; white-space:pre-wrap; text-decoration:line-through; overflow-wrap:anywhere; }
 .vocab-statement { padding:20px; border:1px solid var(--v-line); border-radius:8px; font-size:20px; margin-bottom:20px; }
 .vocab-checkpoint { text-align:center; border:1px solid var(--v-line); background:var(--surface-color,#fff); padding:36px; border-radius:16px; animation:vocab-enter .3s ease; }.vocab-checkpoint > .vocab-button { margin:8px; }
@@ -455,10 +455,14 @@ html.dark-mode .vocab-retype-notice { background:#292211; border-color:#5c4418; 
 .vocab-page[data-phase="learn"] .vocab-response-glyph svg { width:24px; height:24px; stroke-width:2.5; }
 .vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-response > div { color:#2e3856; font-size:16px; line-height:24px; }
 .vocab-page[data-phase="learn"] .vocab-question[data-type="written"].is-correct .vocab-expected-header { height:0; margin:0; }
-.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-expected-answer { padding:16px; border:2px solid var(--v-line); margin-top:16px; border-radius:8px; }
-.vocab-page[data-phase="learn"] .vocab-question[data-type="written"] .vocab-expected-answer .vocab-correct-answer { color:inherit; font-size:16px; line-height:24px; }
+.vocab-page[data-phase="learn"] .vocab-expected-answer { padding:16px; border:2px solid var(--v-line); margin-top:16px; border-radius:8px; }
+.vocab-page[data-phase="learn"] .vocab-expected-answer .vocab-correct-answer { color:inherit; font-size:16px; line-height:24px; font-family:inherit; }
 .vocab-page[data-phase="learn"] .vocab-expected-answer[role="button"] { cursor:pointer; }
 .vocab-page[data-phase="learn"] .vocab-expected-answer[role="button"]:focus-visible { border-color:#a1a4ff; outline:none; }
+.vocab-page[data-phase="learn"] .vocab-correction-form :is(input, textarea),
+.vocab-page[data-phase="learn"] .vocab-correction-input { width:100%; padding:16px; border:2px solid var(--v-line); border-radius:8px; background:transparent; color:inherit; font-size:16px; font-weight:400; line-height:24px; font-family:inherit; box-sizing:border-box; }
+.vocab-page[data-phase="learn"] .vocab-correction-form textarea { resize:vertical; }
+.vocab-page[data-phase="learn"] .vocab-correction-form :is(input, textarea):focus { border-color:#a1adff !important; background:transparent; outline:none !important; }
 .vocab-page[data-phase="learn"] > .vocab-written-footer { display:flex; width:min(100%,960px); margin:0 auto; padding:0 60px; scroll-margin-bottom:12px; min-height:56px; justify-content:space-between; align-items:center; gap:16px; flex-shrink:0; }
 .vocab-page[data-phase="learn"] > .vocab-written-footer .vocab-feedback-help { color:var(--v-muted); font-size:16px; line-height:24px; font-weight:600; }
 .vocab-page[data-phase="learn"] > .vocab-written-footer .vocab-primary { min-width:120px; min-height:48px; height:48px; padding:0 24px; font-size:16px; border-radius:999px; }

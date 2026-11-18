@@ -164,6 +164,19 @@ try {
                 await page.screenshot({ path: 'artifacts/qa/vocabulary-hint.png', fullPage: true });
                 await input.fill('錯誤答案'); await input.press('Enter');
                 await view.getByLabel('重打正確答案', { exact: true }).waitFor();
+                const retypeStyles = await page.evaluate(() => {
+                    const exp = document.querySelector('.vocab-expected-answer .vocab-correct-answer');
+                    const cor = document.querySelector('.vocab-correction-input');
+                    const expS = window.getComputedStyle(exp);
+                    const corS = window.getComputedStyle(cor);
+                    return {
+                        expected: { fontSize: expS.fontSize, lineHeight: expS.lineHeight, fontFamily: expS.fontFamily },
+                        correction: { fontSize: corS.fontSize, lineHeight: corS.lineHeight, fontFamily: corS.fontFamily }
+                    };
+                });
+                assert.equal(retypeStyles.correction.fontSize, retypeStyles.expected.fontSize);
+                assert.equal(retypeStyles.correction.lineHeight, retypeStyles.expected.lineHeight);
+                assert.equal(retypeStyles.correction.fontFamily, retypeStyles.expected.fontFamily);
                 await page.screenshot({ path: 'artifacts/qa/vocabulary-retype-layout.png' });
                 const correction = view.getByLabel('重打正確答案', { exact: true }); await correction.fill(expected); await correction.press('Enter');
                 repaired = true; continue;
