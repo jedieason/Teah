@@ -758,26 +758,166 @@ export function writingSymbols(deck, direction) {
     return [...found].slice(0, 24);
 }
 export function spellingFeedback(response, expected) {
-    const a = Array.from(plainText(response).trim()), b = Array.from(plainText(expected).trim());
-    const parts = (chars, marks) => {
-        const result = [];
-        chars.forEach((text, i) => { const incorrect = !!marks[i]; if (result.at(-1)?.incorrect === incorrect) result.at(-1).text += text; else result.push({ text, incorrect }); });
-        return result;
-    };
-    // Bounded edit alignment keeps long pasted answers from allocating an unbounded matrix.
-    if (a.length > 256 || b.length > 256) return { response: parts(a, a.map(() => true)), expected: parts(b, b.map(() => true)), distance: 999 };
-    const cost = Array.from({ length: a.length + 1 }, () => new Uint16Array(b.length + 1));
-    for (let i = 0; i <= a.length; i++) cost[i][0] = i;
-    for (let j = 0; j <= b.length; j++) cost[0][j] = j;
-    const same = (i, j) => a[i].toLocaleLowerCase() === b[j].toLocaleLowerCase();
-    for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) cost[i][j] = Math.min(cost[i - 1][j] + 1, cost[i][j - 1] + 1, cost[i - 1][j - 1] + Number(!same(i - 1, j - 1)));
-    const wrongA = [], wrongB = []; let i = a.length, j = b.length;
-    while (i || j) {
-        if (i && j && cost[i][j] === cost[i - 1][j - 1] + Number(!same(i - 1, j - 1))) { if (!same(i - 1, j - 1)) { wrongA[i - 1] = true; wrongB[j - 1] = true; } i--; j--; }
-        else if (i && cost[i][j] === cost[i - 1][j] + 1) wrongA[--i] = true;
-        else wrongB[--j] = true;
+    const rawA = plainText(response).trim();
+    const rawB = plainText(expected).trim();
+    if (!rawA || !rawB) {
+        return {
+            response: rawA ? [{ text: rawA, incorrect: true }] : [],
+            expected: rawB ? [{ text: rawB, incorrect: true }] : [],
+            distance: Math.max(rawA.length, rawB.length)
+        };
     }
-    return { response: parts(a, wrongA), expected: parts(b, wrongB), distance: cost[a.length][b.length] };
+
+    const charDiff = (s1, s2) => {
+        const a = Array.from(s1), b = Array.from(s2);
+        const n = a.length, m = b.length;
+        const cost = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+        for (let i = 0; i <= n; i++) cost[i][0] = i;
+        for (let j = 0; j <= m; j++) cost[0][j] = j;
+        const same = (i, j) => a[i].toLocaleLowerCase() === b[j].toLocaleLowerCase();
+        for (let i = 1; i <= n; i++) {
+            for (let j = 1; j <= m; j++) {
+                cost[i][j] = Math.min(cost[i - 1][j] + 1, cost[i][j - 1] + 1, cost[i - 1][j - 1] + Number(!same(i - 1, j - 1)));
+            }
+        }
+        const wrongA = new Array(n).fill(false), wrongB = new Array(m).fill(false);
+        let i = n, j = m;
+        while (i || j) {
+            if (i && j && cost[i][j] === cost[i - 1][j - 1] + Number(!same(i - 1, j - 1))) {
+                if (!same(i - 1, j - 1)) { wrongA[i - 1] = true; wrongB[j - 1] = true; }
+                i--; j--;
+            } else if (i && cost[i][j] === cost[i - 1][j] + 1) {
+                wrongA[--i] = true;
+            } else {
+                wrongB[--j] = true;
+            }
+        }
+        const partsA = [], partsB = [];
+        a.forEach((text, idx) => {
+            const incorrect = wrongA[idx];
+            if (partsA.at(-1)?.incorrect === incorrect) partsA.at(-1).text += text;
+            else partsA.push({ text, incorrect });
+        });
+        b.forEach((text, idx) => {
+            const incorrect = wrongB[idx];
+            if (partsB.at(-1)?.incorrect === incorrect) partsB.at(-1).text += text;
+            else partsB.push({ text, incorrect });
+        });
+        return { partsA, partsB, distance: cost[n][m] };
+    };
+
+    if (rawA.length > 512 || rawB.length > 512) {
+        return {
+            response: [{ text: rawA, incorrect: true }],
+            expected: [{ text: rawB, incorrect: true }],
+            distance: 999
+        };
+    }
+
+    const splitTokens = text => text.match(/[\p{L}\p{N}]+|[^\S\r\n]+|\r?\n|[^\p{L}\p{N}\s]+/gu) || [];
+    const isWord = t => /[\p{L}\p{N}]/u.test(t);
+
+    const tokA = splitTokens(rawA);
+    const tokB = splitTokens(rawB);
+
+    if (tokA.length <= 1 && tokB.length <= 1) {
+        const cd = charDiff(rawA, rawB);
+        return { response: cd.partsA, expected: cd.partsB, distance: cd.distance };
+    }
+
+    const n = tokA.length, m = tokB.length;
+    const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+    const same = (t1, t2) => t1.toLowerCase() === t2.toLowerCase();
+
+    for (let i = 1; i <= n; i++) {
+        for (let j = 1; j <= m; j++) {
+            if (same(tokA[i - 1], tokB[j - 1])) {
+                const w = isWord(tokA[i - 1]) ? (tokA[i - 1].length * 10) : 1;
+                dp[i][j] = dp[i - 1][j - 1] + w;
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+
+    let i = n, j = m;
+    const matchA = new Array(n).fill(false);
+    const matchB = new Array(m).fill(false);
+    while (i > 0 && j > 0) {
+        const w = isWord(tokA[i - 1]) ? (tokA[i - 1].length * 10) : 1;
+        if (same(tokA[i - 1], tokB[j - 1]) && dp[i][j] === dp[i - 1][j - 1] + w) {
+            matchA[i - 1] = true;
+            matchB[j - 1] = true;
+            i--; j--;
+        } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+            i--;
+        } else {
+            j--;
+        }
+    }
+
+    let idxA = 0, idxB = 0;
+    const partsA = [], partsB = [];
+    let distance = 0;
+
+    const pushPart = (list, text, incorrect) => {
+        if (!text) return;
+        if (list.at(-1)?.incorrect === incorrect) list.at(-1).text += text;
+        else list.push({ text, incorrect });
+    };
+
+    while (idxA < n || idxB < m) {
+        if (idxA < n && idxB < m && matchA[idxA] && matchB[idxB]) {
+            pushPart(partsA, tokA[idxA], false);
+            pushPart(partsB, tokB[idxB], false);
+            idxA++; idxB++;
+            continue;
+        }
+        const unA = [], unB = [];
+        while (idxA < n && !matchA[idxA]) unA.push(tokA[idxA++]);
+        while (idxB < m && !matchB[idxB]) unB.push(tokB[idxB++]);
+
+        const wordsA = unA.filter(isWord);
+        const wordsB = unB.filter(isWord);
+
+        if (wordsA.length === 1 && wordsB.length === 1) {
+            const wA = wordsA[0], wB = wordsB[0];
+            const cd = charDiff(wA, wB);
+            if (cd.distance <= Math.max(2, Math.floor(Math.max(wA.length, wB.length) * 0.45))) {
+                const wIdxA = unA.indexOf(wA);
+                const wIdxB = unB.indexOf(wB);
+
+                const preA = unA.slice(0, wIdxA).join('');
+                const preB = unB.slice(0, wIdxB).join('');
+                if (preA) pushPart(partsA, preA, false);
+                if (preB) { pushPart(partsB, preB, preA !== preB); distance += preB.length; }
+
+                cd.partsA.forEach(p => pushPart(partsA, p.text, p.incorrect));
+                cd.partsB.forEach(p => pushPart(partsB, p.text, p.incorrect));
+                distance += cd.distance;
+
+                const postA = unA.slice(wIdxA + 1).join('');
+                const postB = unB.slice(wIdxB + 1).join('');
+                if (postA) pushPart(partsA, postA, false);
+                if (postB) { pushPart(partsB, postB, postA !== postB); distance += postB.length; }
+                continue;
+            }
+        }
+
+        if (unA.length === 1 && /^\s+$/.test(unA[0]) && unB.length >= 1 && !isWord(unB.join(''))) {
+            pushPart(partsA, unA[0], false);
+            pushPart(partsB, unB.join(''), true);
+            distance += unB.join('').length;
+            continue;
+        }
+
+        const strA = unA.join('');
+        const strB = unB.join('');
+        if (strA) { pushPart(partsA, strA, true); distance += strA.length; }
+        if (strB) { pushPart(partsB, strB, true); distance += strB.length; }
+    }
+
+    return { response: partsA, expected: partsB, distance };
 }
 function planRound(session) {
     session.chunk++; session.chunkGoals = {}; session.roundSeen = [];

@@ -1261,12 +1261,14 @@ export function mountFlashcard({ host, activate }) {
                                     const diff = spellingFeedback(correction.value, closest);
                                     const maxLen = Math.max(correction.value.length, closest.length);
                                     if (diff.distance <= Math.max(5, Math.ceil(maxLen * 0.55))) {
+                                        const isMulti = multiline || /\r?\n/.test(correction.value) || /\r?\n/.test(closest);
+                                        const rowCls = 'vocab-diff-row' + (isMulti ? ' is-multiline' : '');
                                         const hintBox = node('div', null, status, 'vocab-correction-diff-box');
                                         node('p', '拼寫有些微落差：', hintBox, 'vocab-diff-hint-title');
-                                        const userRow = node('div', null, hintBox, 'vocab-diff-row');
+                                        const userRow = node('div', null, hintBox, rowCls);
                                         node('span', '你的輸入：', userRow, 'vocab-diff-label');
                                         spellText(diff.response, userRow, 'vocab-diff-user');
-                                        const targetRow = node('div', null, hintBox, 'vocab-diff-row');
+                                        const targetRow = node('div', null, hintBox, rowCls);
                                         node('span', '正確答案：', targetRow, 'vocab-diff-label');
                                         spellTextWarning(diff.expected, targetRow, 'vocab-diff-target');
                                     } else {
@@ -1287,12 +1289,14 @@ export function mountFlashcard({ host, activate }) {
                             };
                             if (diff.distance > 0) {
                                 status.replaceChildren();
+                                const isMulti = multiline || /\r?\n/.test(correction.value) || /\r?\n/.test(closest);
+                                const rowCls = 'vocab-diff-row' + (isMulti ? ' is-multiline' : '');
                                 const notice = node('div', null, status, 'vocab-retype-notice');
                                 node('p', '訂正大致相符（注意拼寫細節）：', notice, 'vocab-diff-hint-title');
-                                const userRow = node('div', null, notice, 'vocab-diff-row');
+                                const userRow = node('div', null, notice, rowCls);
                                 node('span', '你的輸入：', userRow, 'vocab-diff-label');
                                 spellText(diff.response, userRow, 'vocab-diff-user');
-                                const targetRow = node('div', null, notice, 'vocab-diff-row');
+                                const targetRow = node('div', null, notice, rowCls);
                                 node('span', '正確答案：', targetRow, 'vocab-diff-label');
                                 spellTextWarning(diff.expected, targetRow, 'vocab-diff-target');
                                 check.textContent = '繼續 (Enter)';
@@ -1333,8 +1337,8 @@ export function mountFlashcard({ host, activate }) {
         if (feedback && !feedback.correct && session.options.activity === 'spell') speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speakSpelling(feedback.expected, q.direction); }, 120);
         else if (feedback && session.options.audioAnswer) speechTimer = setTimeout(() => { if (!host.hidden && !dialog.open) speak(answerFor(card, q.direction), q.direction); }, 120);
     }
-    function spellText(parts, parent, cls) { const e = node('div', null, parent, cls + ' vocab-spelling'); for (const part of parts) node(part.incorrect ? 'mark' : 'span', part.text, e); return e; }
-    function spellTextWarning(parts, parent, cls) { const e = node('div', null, parent, cls + ' vocab-spelling'); for (const part of parts) node(part.incorrect ? 'mark' : 'span', part.text, e, part.incorrect ? 'vocab-diff-amber' : ''); return e; }
+    function spellText(parts, parent, cls) { const e = node('div', null, parent, cls + ' vocab-spelling'); for (const part of parts) { const isBlank = !part.text || /^\s+$/.test(part.text); node(part.incorrect && !isBlank ? 'mark' : 'span', part.text, e); } return e; }
+    function spellTextWarning(parts, parent, cls) { const e = node('div', null, parent, cls + ' vocab-spelling'); for (const part of parts) { const isBlank = !part.text || /^\s+$/.test(part.text); node(part.incorrect && !isBlank ? 'mark' : 'span', part.text, e, part.incorrect && !isBlank ? 'vocab-diff-amber' : ''); } return e; }
     function renderCheckpoint() {
         const panel = node('section', null, host, 'vocab-checkpoint');
         const p = sessionProgress(session); const ring = node('div', `${p.percent}%`, panel, 'vocab-completion-ring'); ring.style.setProperty('--progress', `${p.percent * 3.6}deg`);
