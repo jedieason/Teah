@@ -2,7 +2,7 @@ import { gradeEquivalence } from './equivalence.js';
 import { GRADING_LEVELS, gradingOptions, gradingLevel } from './grading-options.js';
 import { resetEquivalence } from './equivalence-client.js';
 import { auth } from '../../services/firebase.js';
-import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, detectLanguage, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer, findClosestAnswer, criticalConflict, approximateMatch } from './model.js';
+import { DEFAULT_OPTIONS, LEARN_VERSION, MAX_CARDS, id, clone, normalize, parseImport, detectLanguage, FLASHCARD_IMPORT_PROMPT, shuffled, projectStudy, progressCounts, createSession, submitAnswer, overrideCorrect, advanceSession, continueRound, sessionProgress, roundDone, writingHint, writingSymbols, spellingFeedback, gradingFor, activityName, factKey, promptFor, answerFor, answersFor, gradeAnswer, findClosestAnswer, criticalConflict, approximateMatch, isPunctuationOrPluralMatch } from './model.js';
 import { loadDecks, saveDeck, loadStudy, saveStudy, newEvent, saveDraft, readDraft, clearDraft, changeDeleted, discardConflicts, flushOutbox, generateDeck, editDeckWithAI } from './service.js';
 import { sourceQuestions, MAX_GENERATION_INSTRUCTIONS, FLASHCARD_GLOSSARY_INSTRUCTIONS } from './generation.js';
 import { editingBatches } from './editing.js';
@@ -1111,13 +1111,13 @@ export function mountFlashcard({ host, activate }) {
                 const response = node('div', null, result, `vocab-response ${feedback.correct ? 'is-correct' : 'is-wrong'}`);
                 const glyph = node('span', null, response, 'vocab-response-glyph'); glyph.setAttribute('aria-hidden', 'true'); glyph.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${studyIcons[feedback.correct ? 'check' : 'close']}</svg>`;
                 if (q.type === 'spell' && !feedback.correct) spellText(spellingFeedback(feedback.response, feedback.expected).response, response, 'vocab-incorrect-answer');
-                else if (written) text(feedback.response, response, feedback.correct ? 'vocab-correct-answer' : 'vocab-incorrect-answer');
                 else if (feedback.correct && ['written', 'spell'].includes(q.type)) {
                     const closest = findClosestAnswer(feedback.response, answersFor(card, q.direction));
                     const diff = spellingFeedback(feedback.response, closest || feedback.expected);
                     if (diff.distance > 0) spellTextWarning(diff.response, response, 'vocab-correct-answer');
                     else text(feedback.response, response, 'vocab-correct-answer');
-                } else text(feedback.response, response, feedback.correct ? 'vocab-correct-answer' : 'vocab-incorrect-answer');
+                } else if (written) text(feedback.response, response, feedback.correct ? 'vocab-correct-answer' : 'vocab-incorrect-answer');
+                else text(feedback.response, response, feedback.correct ? 'vocab-correct-answer' : 'vocab-incorrect-answer');
             }
         } else if (q.type === 'truefalse') {
             text(q.statement, result, 'vocab-statement');
@@ -1147,14 +1147,14 @@ export function mountFlashcard({ host, activate }) {
                 if (q.type === 'spell' && !feedback.correct) {
                     spellText(spellingFeedback(feedback.response, feedback.expected).expected, expected, 'vocab-correct-answer');
                     button('逐字拼讀', expected, () => speakSpelling(feedback.expected, q.direction));
-                } else if (written) {
-                    text(feedback.expected, expected, 'vocab-correct-answer');
                 } else if (feedback.correct && ['written', 'spell'].includes(q.type)) {
                     const closest = findClosestAnswer(feedback.response, answersFor(card, q.direction));
                     const diff = spellingFeedback(feedback.response, closest || feedback.expected);
                     if (diff.distance > 0) spellTextWarning(diff.expected, expected, 'vocab-correct-answer');
                     else text(feedback.expected, expected, 'vocab-correct-answer');
                     icon('◖))', '朗讀答案', expected, () => speak(closest || feedback.expected, q.direction));
+                } else if (written) {
+                    text(feedback.expected, expected, 'vocab-correct-answer');
                 } else {
                     text(feedback.expected, expected, 'vocab-correct-answer');
                     icon('◖))', '朗讀答案', expected, () => speak(feedback.expected, q.direction));
@@ -1196,7 +1196,9 @@ export function mountFlashcard({ host, activate }) {
                             let correct = false;
                             const sessionGrading = gradingFor(session);
                             const accepted = q.type === 'written' ? answersFor(card, q.direction) : [answerFor(card, q.direction)];
-                            if (gradeAnswer(correction.value, accepted, sessionGrading)) {
+                            const closest = findClosestAnswer(correction.value, accepted);
+                            const conflict = criticalConflict(closest, correction.value);
+                            if (!conflict && (gradeAnswer(correction.value, accepted, sessionGrading) || isPunctuationOrPluralMatch(closest, correction.value) || gradeAnswer(correction.value, accepted, 'standard'))) {
                                 correct = true;
                             } else if (q.type === 'written') {
                                 const activeSession = session, activeDeck = deck, activeOperation = operation;
@@ -1235,14 +1237,15 @@ export function mountFlashcard({ host, activate }) {
                                 form.querySelectorAll('input,textarea,select,button').forEach(el => { el.disabled = false; });
                                 cancel.remove();
                                 check.textContent = '確認訂正';
-                                correct = judgement?.correct === true;
+                                correct = judgement?.correct === true || (!conflict && isPunctuationOrPluralMatch(closest, correction.value));
                             } else {
-                                correct = gradeAnswer(correction.value, accepted, 'strict');
+                                correct = !conflict && (gradeAnswer(correction.value, accepted, 'standard') || isPunctuationOrPluralMatch(closest, correction.value));
+                            }
+                            if (!correct && !conflict && isPunctuationOrPluralMatch(closest, correction.value)) {
+                                correct = true;
                             }
                             if (!correct) {
                                 status.replaceChildren();
-                                const closest = findClosestAnswer(correction.value, accepted);
-                                const conflict = criticalConflict(closest, correction.value);
                                 if (conflict) {
                                     const conflictMsgs = {
                                         number: '提示：數字不符，請確認數值是否正確。',
@@ -1273,7 +1276,6 @@ export function mountFlashcard({ host, activate }) {
                                 if (!mobileStudy()) correction.focus({ preventScroll: true });
                                 return;
                             }
-                            const closest = findClosestAnswer(correction.value, accepted);
                             const diff = spellingFeedback(correction.value, closest);
                             const advanceRetype = async () => {
                                 const next = clone(session);
@@ -1286,10 +1288,13 @@ export function mountFlashcard({ host, activate }) {
                             if (diff.distance > 0) {
                                 status.replaceChildren();
                                 const notice = node('div', null, status, 'vocab-retype-notice');
-                                node('p', '訂正正確（注意拼寫細節）：', notice, 'vocab-diff-hint-title');
-                                const row = node('div', null, notice, 'vocab-diff-row');
-                                node('span', '正確拼法：', row, 'vocab-diff-label');
-                                spellTextWarning(diff.expected, row, 'vocab-diff-target');
+                                node('p', '訂正大致相符（注意拼寫細節）：', notice, 'vocab-diff-hint-title');
+                                const userRow = node('div', null, notice, 'vocab-diff-row');
+                                node('span', '你的輸入：', userRow, 'vocab-diff-label');
+                                spellText(diff.response, userRow, 'vocab-diff-user');
+                                const targetRow = node('div', null, notice, 'vocab-diff-row');
+                                node('span', '正確答案：', targetRow, 'vocab-diff-label');
+                                spellTextWarning(diff.expected, targetRow, 'vocab-diff-target');
                                 check.textContent = '繼續 (Enter)';
                                 check.disabled = false;
                                 correction.disabled = true;

@@ -141,6 +141,69 @@ export function levenshteinDistance(s1, s2) {
     return curr[b.length];
 }
 
+export function isPunctuationOrPluralMatch(reference, candidate) {
+    if (!reference || !candidate) return false;
+    if (criticalConflict(reference, candidate)) return false;
+
+    const refNorm = normalize(plainText(reference));
+    const candNorm = normalize(plainText(candidate));
+    const rKey = answerKey(refNorm).replace(/\s/g, '');
+    const cKey = answerKey(candNorm).replace(/\s/g, '');
+    if (!rKey || !cKey) return false;
+    if (rKey === cKey) return true;
+
+    try {
+        const diff = spellingFeedback(candidate, reference);
+        const isPunctOrS = part => {
+            const text = part.text;
+            if (/^[^\p{L}\p{N}]+$/gu.test(text)) return true;
+            if (/^[^\p{L}\p{N}]*(?:s|es|ies)[^\p{L}\p{N}]*$/iu.test(text)) return true;
+            return false;
+        };
+        if (diff.response.filter(p => p.incorrect).every(isPunctOrS) &&
+            diff.expected.filter(p => p.incorrect).every(isPunctOrS)) {
+            return true;
+        }
+    } catch {}
+
+    const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
+    const stem = w => w.replace(/(?:ies)$/u, 'y').replace(/(?:es|s)$/u, '');
+
+    const rw = words(refNorm), cw = words(candNorm);
+    if (rw.length > 0 && rw.length === cw.length) {
+        if (rw.every((w, i) => {
+            const s1 = strip(w), s2 = strip(cw[i]);
+            return s1 === s2 || isPluralOrSingularMatch(s1, s2);
+        })) {
+            return true;
+        }
+    }
+
+    const rwStem = rw.map(w => stem(strip(w)));
+    const cwStem = cw.map(w => stem(strip(w)));
+    if (rwStem.length > 0 && rwStem.length === cwStem.length) {
+        if (rwStem.every((w, i) => w === cwStem[i] || isPluralOrSingularMatch(w, cwStem[i]))) {
+            return true;
+        }
+    }
+
+    const rJoined = rwStem.join('');
+    const cJoined = cwStem.join('');
+    if (rJoined && rJoined === cJoined) return true;
+
+    const rRaw = rw.map(strip).join('');
+    const cRaw = cw.map(strip).join('');
+    if (rRaw && cRaw) {
+        const d = levenshteinDistance(rRaw, cRaw);
+        const maxLen = Math.max(rRaw.length, cRaw.length);
+        if (d === 0) return true;
+        if (d <= 2 && maxLen >= 4) return true;
+        if (maxLen >= 20 && d <= Math.ceil(maxLen * 0.05)) return true;
+    }
+
+    return false;
+}
+
 export function approximateMatch(reference, candidate, grading = 'standard') {
     const level = grading === 'moderate' ? 'standard' : gradingLevel(grading);
     if (level === 'exact' || level === 'rigorous' || level === 'strict') return null;
@@ -159,6 +222,10 @@ export function approximateMatch(reference, candidate, grading = 'standard') {
     if (a === b) return { match: true, reason: 'accent', discrepancy: true };
 
     if (isPluralOrSingularMatch(a, b)) return { match: true, reason: 'plural-singular', discrepancy: true };
+
+    if (isPunctuationOrPluralMatch(reference, candidate)) {
+        return { match: true, reason: 'plural-singular', discrepancy: true };
+    }
 
     const rw = words(refNorm), cw = words(candNorm);
     if (rw.length > 1 && rw.length === cw.length) {
@@ -268,6 +335,7 @@ export function gradeAnswer(input, answers, grading = 'strict') {
             if (!expKey || !inpKey) continue;
             if (expKey === inpKey && !criticalConflict(exp, inp)) return true;
             if (level === 'strict' || level === 'rigorous') continue;
+            if (isPunctuationOrPluralMatch(exp, inp)) return true;
             const res = approximateMatch(exp, inp, level);
             if (res && res.match) return true;
         }

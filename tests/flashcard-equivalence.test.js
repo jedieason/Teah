@@ -181,16 +181,29 @@ test('relaxed and standard modes accept singular/plural, minor typos and ignore 
 });
 
 test('retyping criteria uses session grading and spelling diff identifies mismatch', async () => {
-    const { gradeAnswer, findClosestAnswer, spellingFeedback } = await import('../src/features/flashcard/model.js');
+    const { gradeAnswer, findClosestAnswer, spellingFeedback, isPunctuationOrPluralMatch } = await import('../src/features/flashcard/model.js');
     assert.equal(gradeAnswer('erythrocyte', ['erythrocytes'], 'relaxed'), true);
     assert.equal(gradeAnswer('erythrocyte', ['erythrocytes'], 'standard'), true);
     assert.equal(gradeAnswer('erythrocyte', ['erythrocytes'], 'exact'), false);
     assert.equal(gradeAnswer('hemorrage', ['hemorrhage'], 'standard'), true);
     assert.equal(gradeAnswer('hemorrage', ['hemorrhage'], 'exact'), false);
 
+    // Multiline medical text with punctuation and singular/plural s difference (user screenshot case)
+    const ref = 'Infiltrative growth, stromal invasion Uniform cells with pink cytoplasm, round to oval nuclei, "salt and pepper" chromatin Islands, nests, trabeculae, glands';
+    const cand = 'Infiltrative growth stromal invasion\nUniform cells with pink cytoplasm round to oval nuclei salt and pepper chromatin\nIsland nests trabeculae glands';
+    assert.equal(isPunctuationOrPluralMatch(ref, cand), true);
+    assert.equal(gradeAnswer(cand, [ref], 'standard'), true);
+
     const closest = findClosestAnswer('kidney', ['liver', 'kidneys']);
     assert.equal(closest, 'kidneys');
     const diff = spellingFeedback('kidney', closest);
     assert.equal(diff.distance, 1);
     assert.ok(diff.expected.some(p => p.incorrect && p.text === 's'));
+
+    const screenshotDiff = spellingFeedback(cand, ref);
+    assert.ok(screenshotDiff.distance > 0);
+    // Differences are only punctuation, newlines, and s
+    const isPunctOrS = part => /^[^\p{L}\p{N}]+$/gu.test(part.text) || /^[^\p{L}\p{N}]*(?:s|es|ies)[^\p{L}\p{N}]*$/iu.test(part.text);
+    assert.ok(screenshotDiff.response.filter(p => p.incorrect).every(isPunctOrS));
+    assert.ok(screenshotDiff.expected.filter(p => p.incorrect).every(isPunctOrS));
 });

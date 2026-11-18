@@ -1,4 +1,4 @@
-import { answerKey, plainText, expandParentheses, criticalConflict, approximateMatch, exactKey } from './model.js';
+import { answerKey, plainText, expandParentheses, criticalConflict, approximateMatch, exactKey, isPunctuationOrPluralMatch } from './model.js';
 import { gradingLevel } from './grading-options.js';
 import { inferEquivalence } from './equivalence-client.js';
 import { terminologyComparison } from './terminology.js';
