@@ -12,7 +12,9 @@ export const GRADING_THRESHOLDS = {
     rigorous: { entailment: 0.97, contradiction: 0.02 }
 };
 
-const words = value => plainText(value).normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
+const words = value => plainText(value)
+    .replace(/(?<=[\u4e00-\u9fa5])([與和及或、，；])(?=[\u4e00-\u9fa5])/gu, ' ')
+    .normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
 
 export function lexicalFeatures(reference, candidate) {
     const strip = text => exactKey(text).normalize('NFD').replace(/\p{M}/gu, '');

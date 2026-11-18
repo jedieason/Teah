@@ -53,7 +53,9 @@ export function answerKey(value) {
 }
 
 export const exactKey = value => answerKey(value).replace(/\s/gu, '');
-const words = value => plainText(value).normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
+export const words = value => plainText(value)
+    .replace(/(?<=[\u4e00-\u9fa5])([與和及或、，；])(?=[\u4e00-\u9fa5])/gu, ' ')
+    .normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
 const oppositions = [
     ['positive', 'negative'], ['increase', 'decrease'], ['increased', 'decreased'],
     ['left', 'right'], ['proximal', 'distal'], ['afferent', 'efferent'],
@@ -141,6 +143,25 @@ export function levenshteinDistance(s1, s2) {
     return curr[b.length];
 }
 
+export function matchTokens(tokensA, tokensB) {
+    const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
+    const used = new Set();
+    let matches = 0;
+    for (const a of tokensA) {
+        const sa = strip(a);
+        for (let j = 0; j < tokensB.length; j++) {
+            if (used.has(j)) continue;
+            const sb = strip(tokensB[j]);
+            if (sa === sb || isPluralOrSingularMatch(sa, sb) || (sa.length >= 4 && levenshteinDistance(sa, sb) <= 1)) {
+                used.add(j);
+                matches++;
+                break;
+            }
+        }
+    }
+    return { matches, totalA: tokensA.length, totalB: tokensB.length };
+}
+
 export function isPunctuationOrPluralMatch(reference, candidate) {
     if (!reference || !candidate) return false;
     if (criticalConflict(reference, candidate)) return false;
@@ -175,6 +196,10 @@ export function isPunctuationOrPluralMatch(reference, candidate) {
             const s1 = strip(w), s2 = strip(cw[i]);
             return s1 === s2 || isPluralOrSingularMatch(s1, s2);
         })) {
+            return true;
+        }
+        const mc = matchTokens(rw, cw);
+        if (mc.matches === rw.length && mc.matches === cw.length) {
             return true;
         }
     }
@@ -234,10 +259,46 @@ export function approximateMatch(reference, candidate, grading = 'standard') {
         }
     }
 
+    const mc = rw.length > 1 && cw.length > 1 ? matchTokens(rw, cw) : null;
+    if (mc && mc.matches === rw.length && mc.matches === cw.length) {
+        return { match: true, reason: 'reordered-tokens', discrepancy: true };
+    }
+
+    // Multiline / clause reordering check
+    const rLines = reference.split(/[\r\n]+|[;；]/).map(s => s.trim()).filter(Boolean);
+    const cLines = candidate.split(/[\r\n]+|[;；]/).map(s => s.trim()).filter(Boolean);
+    if (rLines.length > 1 && cLines.length > 1 && rLines.length === cLines.length) {
+        const usedLines = new Set();
+        let matchedLines = 0;
+        for (const rL of rLines) {
+            for (let j = 0; j < cLines.length; j++) {
+                if (usedLines.has(j)) continue;
+                const cL = cLines[j];
+                const rLK = answerKey(rL).replace(/\s/g, '');
+                const cLK = answerKey(cL).replace(/\s/g, '');
+                if (rLK === cLK || isPunctuationOrPluralMatch(rL, cL) || (approximateMatch(rL, cL, level)?.match)) {
+                    usedLines.add(j);
+                    matchedLines++;
+                    break;
+                }
+            }
+        }
+        if (matchedLines === rLines.length && matchedLines === cLines.length) {
+            return { match: true, reason: 'reordered-lines', discrepancy: true };
+        }
+    }
+
     const d = levenshteinDistance(a, b);
     const maxLen = Math.max(a.length, b.length);
 
     if (level === 'standard') {
+        if (mc && rw.length >= 4 && cw.length >= 4) {
+            const maxTokens = Math.max(rw.length, cw.length);
+            const ratio = mc.matches / maxTokens;
+            if (ratio >= 0.85 && mc.matches >= rw.length - 2 && mc.matches >= cw.length - 2) {
+                return { match: true, reason: 'token-overlap', discrepancy: true };
+            }
+        }
         if (a.length >= 4 && d === 1) {
             return { match: true, reason: 'minor-typo', discrepancy: true };
         }
@@ -264,6 +325,12 @@ export function approximateMatch(reference, candidate, grading = 'standard') {
     }
 
     if (level === 'relaxed') {
+        if (mc && rw.length >= 2 && cw.length >= 2) {
+            const ratio = mc.matches / Math.max(rw.length, cw.length);
+            if (ratio >= 0.70 || mc.matches / rw.length >= 0.70) {
+                return { match: true, reason: 'relaxed-tokens', discrepancy: true };
+            }
+        }
         if (a.length >= 5 && d <= 2) {
             return { match: true, reason: 'relaxed-spelling', discrepancy: true };
         }
@@ -275,21 +342,6 @@ export function approximateMatch(reference, candidate, grading = 'standard') {
         }
         if (maxLen >= 5 && (1 - d / maxLen) >= 0.72) {
             return { match: true, reason: 'relaxed-similarity', discrepancy: true };
-        }
-        if (rw.length >= 2 && cw.length >= 2) {
-            let matchedCount = 0;
-            for (const w of rw) {
-                const sw = strip(w);
-                if (cw.some(c => {
-                    const sc = strip(c);
-                    return sw === sc || isPluralOrSingularMatch(sw, sc) || (sw.length >= 4 && levenshteinDistance(sw, sc) <= 1);
-                })) {
-                    matchedCount++;
-                }
-            }
-            if (matchedCount / rw.length >= 0.70) {
-                return { match: true, reason: 'relaxed-tokens', discrepancy: true };
-            }
         }
         if (/[\u4e00-\u9fa5]/.test(refKey) && refKey.length >= 3 && d === 1) {
             return { match: true, reason: 'relaxed-cjk', discrepancy: true };

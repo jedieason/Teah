@@ -174,6 +174,13 @@ test('relaxed and standard modes accept singular/plural, minor typos and ignore 
     assert.equal((await grade('Intradermal (melanocytic) nevus', 'Intradermal nevus.', 'standard', never)).correct, true);
     assert.equal((await grade('皮內痣（黑色素細胞痣）', '皮內痣。', 'standard', never)).correct, true);
 
+    // Conjunction and item reordering in standard and relaxed modes
+    const atheromaRef = 'Fibrous cap with smooth muscle cells and collagen\nNecrotic core with cholesterol clefts and foam cells\nMacrophages and lymphocytes';
+    const atheromaCand = 'Fibrous cap with smooth muscle cells and collagen\nNecrotic core with foam cells and cholesterol clefts\nMacrophages and lymphocytes';
+    assert.equal((await grade(atheromaRef, atheromaCand, 'standard', never)).correct, true);
+    assert.equal((await grade(atheromaRef, atheromaCand, 'relaxed', never)).correct, true);
+    assert.equal((await grade('纖維帽（平滑肌細胞與膠原蛋白）', '纖維帽（膠原蛋白與平滑肌細胞）', 'standard', never)).correct, true);
+
     // Critical conflicts still strictly rejected even in relaxed mode
     assert.equal((await grade('5 mg', '50 mg', 'relaxed', never)).correct, false);
     assert.equal((await grade('良性腫瘤', '惡性腫瘤', 'relaxed', never)).correct, false);
@@ -193,6 +200,10 @@ test('retyping criteria uses session grading and spelling diff identifies mismat
     const cand = 'Infiltrative growth stromal invasion\nUniform cells with pink cytoplasm round to oval nuclei salt and pepper chromatin\nIsland nests trabeculae glands';
     assert.equal(isPunctuationOrPluralMatch(ref, cand), true);
     assert.equal(gradeAnswer(cand, [ref], 'standard'), true);
+
+    const atheromaRef = 'Fibrous cap with smooth muscle cells and collagen\nNecrotic core with cholesterol clefts and foam cells\nMacrophages and lymphocytes';
+    const atheromaCand = 'Fibrous cap with smooth muscle cells and collagen\nNecrotic core with foam cells and cholesterol clefts\nMacrophages and lymphocytes';
+    assert.equal(gradeAnswer(atheromaCand, [atheromaRef], 'standard'), true);
 
     const closest = findClosestAnswer('kidney', ['liver', 'kidneys']);
     assert.equal(closest, 'kidneys');
