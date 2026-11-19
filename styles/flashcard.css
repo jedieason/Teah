@@ -118,7 +118,7 @@ html.dark-mode .vocab-generation-dialog .vocab-primary { color:#231f44; }
 .vocab-answer-form { display:flex; gap:12px; align-items:end; flex-wrap:wrap; }.vocab-answer-form .vocab-field { flex:1; min-width:160px; }.vocab-answer-form :is(input, textarea) { min-height:50px; border:2px solid var(--v-line); }.vocab-answer-form textarea { resize:vertical; min-height:64px; line-height:1.5; font-family:inherit; }
 .vocab-answer-form > p { flex-basis:100%; margin:0; }
 .vocab-symbols { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; order:-1; }.vocab-symbols .vocab-symbol { min-width:36px; padding:6px 10px; border-radius:18px; background:var(--v-soft); border:0; }.vocab-written-hint { margin:16px 0 4px; color:var(--v-muted); font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; }
-.vocab-spelling { white-space:pre-wrap; overflow-wrap:anywhere; }.vocab-spelling.vocab-incorrect-answer { text-decoration:none; color:inherit; }.vocab-spelling mark { color:var(--v-error); background:#ffedd9; border-bottom:2px solid #c79873; border-radius:3px; padding:1px 2px; }
+.vocab-spelling { white-space:pre-wrap; overflow-wrap:anywhere; }.vocab-spelling.vocab-incorrect-answer { text-decoration:none; color:inherit; }.vocab-spelling mark { color:var(--v-error); background:#ffedd9; border-radius:3px; padding:1px 2px; }
 .vocab-dontknow { display:block; border:0; color:var(--v-accent); background:none; margin:14px 0 0 auto; padding-right:0; }
 .vocab-feedback { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-top:20px; }.vocab-feedback .vocab-answer-form { flex-basis:100%; }.vocab-feedback .vocab-answer-form :is(input, textarea),.vocab-correction-form :is(input, textarea),.vocab-correction-input { font-size:18px; line-height:1.6; font-family:inherit; }
 .vocab-correct-answer,.vocab-revealed-answer { color:var(--v-success); font-size:22px; white-space:pre-wrap; overflow-wrap:anywhere; }.vocab-incorrect-answer { color:var(--v-error); font-size:20px; white-space:pre-wrap; text-decoration:line-through; overflow-wrap:anywhere; }
@@ -377,8 +377,8 @@ html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
 .vocab-expected-answer.is-collapsed { display:none; }
 .vocab-expected-answer .vocab-correct-answer { font-size:18px; line-height:1.6; min-width:0; flex:1; }
 .vocab-expected-answer .vocab-icon { color:var(--v-muted); flex-shrink:0; }
-.vocab-diff-amber, mark.vocab-diff-amber { color:#b45309; background:#fef3c7; border-bottom:2px solid #f59e0b; border-radius:3px; padding:1px 2px; font-weight:600; }
-.vocab-diff-user mark { color:var(--v-error,#a35025); background:#fee2e2; border-bottom:2px solid #ef4444; border-radius:3px; padding:1px 2px; }
+.vocab-diff-amber, mark.vocab-diff-amber { color:#b45309; background:#fef3c7; border-radius:3px; padding:1px 2px; font-weight:600; }
+.vocab-diff-user mark { color:var(--v-error,#a35025); background:#fee2e2; border-radius:3px; padding:1px 2px; }
 .vocab-correction-diff-box { width:100%; box-sizing:border-box; align-self:stretch; margin:10px 0; padding:10px 14px; background:var(--v-soft,#f6f6fc); border:1px solid var(--v-line,#e3e4ec); border-radius:8px; font-size:14px; text-align:left; }
 .vocab-diff-hint-title { margin:0 0 6px; font-weight:600; color:#b45309; font-size:13px; text-align:left; }
 .vocab-diff-hint-error { margin:8px 0; color:var(--v-error,#a35025); font-size:13px; font-weight:500; text-align:left; }
@@ -389,8 +389,8 @@ html.dark-mode .vocab-dropdown-item.selected { background:var(--v-soft); }
 .vocab-diff-row.is-multiline .vocab-diff-label { font-weight:600; min-width:0; text-align:left; }
 .vocab-diff-row.is-multiline .vocab-spelling { width:100%; box-sizing:border-box; padding:8px 12px; background:var(--v-card,#ffffff); border:1px solid var(--v-line,#e2e8f0); border-radius:6px; line-height:1.6; white-space:pre-wrap; word-break:break-word; text-align:left; }
 .vocab-retype-notice { width:100%; box-sizing:border-box; align-self:stretch; margin:10px 0; padding:10px 14px; background:#fffbeb; border:1px solid #fde68a; border-radius:8px; font-size:14px; text-align:left; }
-html.dark-mode .vocab-diff-amber, html.dark-mode mark.vocab-diff-amber { color:#fde68a; background:#78350f66; border-bottom-color:#f59e0b; }
-html.dark-mode .vocab-diff-user mark { color:#fca5a5; background:#7f1d1d66; border-bottom-color:#ef4444; }
+html.dark-mode .vocab-diff-amber, html.dark-mode mark.vocab-diff-amber { color:#fde68a; background:#78350f66; }
+html.dark-mode .vocab-diff-user mark { color:#fca5a5; background:#7f1d1d66; }
 html.dark-mode .vocab-diff-row.is-multiline .vocab-spelling { background:#1e2023; border-color:#3f444c; }
 html.dark-mode .vocab-correction-diff-box { background:#242629; border-color:#4b5058; }
 html.dark-mode .vocab-retype-notice { background:#292211; border-color:#5c4418; }
