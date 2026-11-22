@@ -12,6 +12,17 @@ try {
     await assertSucceeds(get(ref(alice, 'API_KEY'))); // Explicit client-AI exception requested for this release.
     await assertFails(get(ref(anon, 'bank')));
     await assertSucceeds(get(ref(alice, 'bank')));
+    const adminDb = env.authenticatedContext('admin', { admin: true }).database();
+    const imagePath = 'questionImages/figure_1';
+    const image = { contentType: 'image/png', base64: 'AAAA' };
+    await assertFails(set(ref(alice, imagePath), image));
+    await assertFails(set(ref(adminDb, imagePath), { ...image, contentType: 'image/svg+xml' }));
+    await assertSucceeds(set(ref(adminDb, imagePath), image));
+    await assertFails(set(ref(adminDb, imagePath), { ...image, base64: 'BBBB' }));
+    await assertFails(get(ref(anon, imagePath)));
+    await assertSucceeds(get(ref(alice, imagePath)));
+    await assertFails(get(ref(alice, 'questionImages')));
+    await assertFails(get(ref(adminDb, 'questionImages')));
     await assertSucceeds(set(ref(alice, 'progress/alice/quizzes/test'), { currentIndex: 1 }));
     await assertFails(get(ref(bob, 'progress/alice')));
     await assertFails(set(ref(bob, 'mistakes/alice/x'), { count: 1 }));

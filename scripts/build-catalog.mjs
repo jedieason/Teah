@@ -5,7 +5,7 @@ if (!input || !output || input === output) {
     process.exit(1);
 }
 const data = JSON.parse(await readFile(input, 'utf8'));
-const reserved = new Set(['progress', 'mistakes', 'mistake', 'API_KEY', 'quizCatalog', 'quizAliases', 'config']);
+const reserved = new Set(['progress', 'mistakes', 'mistake', 'API_KEY', 'quizCatalog', 'quizAliases', 'config', 'questionImages']);
 const catalog = Object.fromEntries(Object.entries(data).filter(([key, value]) => !reserved.has(key) && Array.isArray(value))
     .map(([key, value]) => [key, { count: value.length, storageKey: data.quizCatalog?.[key]?.storageKey || key.replace(/^_Archive_/, '').replace(/\.json$/, '').replace(/[.$#[\]/]/g, '_') }]));
 if (!Object.keys(catalog).length) throw new Error('No root-level question bank arrays found; export the Realtime Database root.');

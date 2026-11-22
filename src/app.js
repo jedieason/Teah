@@ -16,6 +16,7 @@ import { database, auth, googleProvider, GoogleAuthProvider, ref, get, update, s
 import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quizLabel } from './features/mistakes/model.js';
 import { createNotebook } from './features/mistakes/notebook.js';
 import { markdown, getOrderedOptionEntries, normalizeQuestionOptions } from './shared/content.js';
+import { appendQuestionImage } from './shared/question-image.js';
 import { streamGemini } from './services/gemini-stream.js';
 import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
@@ -494,6 +495,7 @@ function renderQuestion(index) {
         questionDiv.innerHTML = `<div class="question-text">${questionHtml}</div>`;
     }
     renderLatex(questionDiv);
+    appendQuestionImage(questionDiv.querySelector('.question-text'), q.image);
 
     const optionsContainer = document.getElementById('options');
     if (q.isFillBlank) {
@@ -1218,7 +1220,7 @@ document.getElementById('back-progress-btn-expl').addEventListener('click', () =
 });
 
 document.addEventListener('keydown', function (event) {
-    if (document.querySelector('dialog[open]')) return;
+    if (document.querySelector('dialog[open]') || event.target.closest?.('.question-image-action')) return;
     if (event.isComposing || event.metaKey || event.ctrlKey || event.altKey) return;
     if (customAlert.classList.contains('show')) {
         if (event.key === 'Enter') {
@@ -3643,7 +3645,7 @@ document.getElementById('homeStarred').onclick = () => openCollectionPage();
 const unitsGrid = document.getElementById('units-grid');
 let questionSearch;
 const contentEditor = mountContentEditor({
-    readBank, writeBanks, readCatalog,
+    readBank, writeBanks, readCatalog, appendQuestionImage,
     getUser: () => auth.currentUser?.uid,
     onChanged: async changes => {
         await fetchQuizList();

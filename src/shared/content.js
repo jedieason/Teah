@@ -2,6 +2,12 @@ export function markdown(value) {
     return DOMPurify.sanitize(marked.parse(String(value ?? '')), { ADD_ATTR: ['target'], FORBID_TAGS: ['style', 'iframe', 'form'] });
 }
 
+export function isQuestionImage(image) {
+    return !!image && typeof image === 'object' && Object.keys(image).length === 2
+        && typeof image.path === 'string' && /^questionImages\/[A-Za-z0-9_-]{1,120}$/.test(image.path)
+        && typeof image.alt === 'string' && image.alt.trim().length > 0 && image.alt.length <= 300;
+}
+
 export function isTrueFalseOptions(options) {
     if (!options || typeof options !== 'object') return false;
     const keys = Object.keys(options);
@@ -39,6 +45,9 @@ export function validateQuiz(data) {
         if (q.questionId && (!/^[A-Za-z0-9_-]{1,120}$/.test(q.questionId) || ids.has(q.questionId))) fail(`第 ${index + 1} 題的永久題號無效或重複。`, [index, 'questionId']);
         if (q.questionId) ids.add(q.questionId);
         if (q.revision != null && (!Number.isInteger(q.revision) || q.revision < 1)) fail(`第 ${index + 1} 題的版本必須是正整數。`, [index, 'revision']);
+        if (q.image != null && !isQuestionImage(q.image)) {
+            fail(`第 ${index + 1} 題的 image 需要有效的 questionImages 路徑與替代文字。`, [index, 'image']);
+        }
         const answers = Array.isArray(q.answer) ? q.answer : [q.answer];
         if (!answers.length || answers.some(a => typeof a !== 'string' || !a.trim())) fail(`第 ${index + 1} 題的答案格式不正確。`, [index, 'answer']);
         if (q.options && (Array.isArray(q.options) || typeof q.options !== 'object' || Object.keys(q.options).length < 2

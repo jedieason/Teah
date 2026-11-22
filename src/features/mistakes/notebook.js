@@ -1,6 +1,7 @@
 import { createSelectMenu } from '../../shared/select-menu.js';
 import { flattenMistakes, filterMistakes, getArchivedBankKeys, isArchivedMistake } from './model.js';
 import { markdown, sortOptionKeys } from '../../shared/content.js';
+import { appendQuestionImage } from '../../shared/question-image.js';
 
 const el = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -189,6 +190,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         }
         const question = el('div', 'review-question');
         question.innerHTML = markdown(m.question);
+        appendQuestionImage(question, m.image, { deferred: true });
         card.append(meta, question);
         if (m.options) {
             const list = el('div', 'review-options');

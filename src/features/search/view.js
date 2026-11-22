@@ -1,4 +1,5 @@
 import { markdown, getOrderedOptionEntries } from '../../shared/content.js';
+import { appendQuestionImage } from '../../shared/question-image.js';
 import { quizLabel } from '../mistakes/model.js';
 import { normalizeSearchText } from './model.js';
 import { createSearchLoader } from './loader.js';
@@ -81,6 +82,7 @@ export function mountQuestionSearch({ input, host, readBank, getUser, getScope, 
             node('p', [fields.includes('question') ? '符合題目' : '', matched.length ? `符合選項 ${matched.join('、')}` : ''].filter(Boolean).join(' · '), card, 'question-search-match');
             if (q.origin) node('p', q.origin, card, 'question-search-origin');
             const question = node('div', null, card, 'question-search-question'); question.innerHTML = markdown(q.question); renderMath(question); highlight(question, query);
+            appendQuestionImage(question, q.image, { deferred: true });
             if (q.options) {
                 const options = node('ol', null, card, 'question-search-options'); options.setAttribute('aria-label', '選項');
                 for (const [key, value] of getOrderedOptionEntries(q.options)) {

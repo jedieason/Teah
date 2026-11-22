@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="styles/dialogs.css">
 <link rel="stylesheet" href="styles/select-menu.css">
 <link rel="stylesheet" href="styles/concept-review.css">
+<link rel="stylesheet" href="styles/question-image.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
@@ -727,6 +728,7 @@ NSAID、抗黴菌、抗病毒
       <div class="bank-edit-toolbar">
         <span id="bankEditMetaInfo" class="bank-edit-meta">共 0 題</span>
         <div class="bank-edit-tools">
+          <button type="button" id="bankEditImagePreviewBtn" class="bank-text-button" hidden>預覽題圖</button>
           <button type="button" id="bankEditCopyBtn" class="bank-text-button" title="複製 JSON 至剪貼簿">複製 JSON</button>
           <button type="button" id="bankEditFormatBtn" class="bank-text-button" title="重新排版 JSON">排版格式</button>
         </div>
@@ -734,6 +736,7 @@ NSAID、抗黴菌、抗病毒
       <div class="bank-edit-textarea-wrapper">
         <textarea id="bankContentEditTextarea" class="bank-edit-textarea" placeholder="載入題目中…" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
       </div>
+      <div id="bankEditImagePreview" hidden></div>
       <p id="bankContentEditError" class="bank-action-error" role="alert" hidden></p>
       <p id="bankContentEditStatus" class="bank-edit-status" role="status" aria-live="polite" hidden></p>
     </div>

@@ -31,6 +31,15 @@ test('legacy single-bank arrays and code fences still accept a form or file titl
     assert.deepEqual(buildImportChanges(parsed.banks, validName), { 單一題庫: [question] });
 });
 
+test('question image references survive import and reject inline or unrelated data', () => {
+    const image = { path: 'questionImages/figure_1', alt: '題圖' };
+    const parse = value => parseQuizImport(JSON.stringify([{ ...question, image: value }]), '題庫');
+    assert.deepEqual(parse(image).banks[0].questions[0].image, image);
+    for (const value of [{ ...image, path: 'progress/test' }, { ...image, alt: ' ' }, { ...image, base64: 'AAAA' }, 'data:image/png;base64,AAAA']) {
+        assert.throws(() => parse(value), { path: [0, 'image'] });
+    }
+});
+
 test('invalid or incomplete batches fail entirely with bank/question context', () => {
     for (const text of ['{"banks":', 'null', '{}', '[]', '{"banks":[]}', '{"banks":{}}', '{"banks":[{}]}']) {
         assert.throws(() => parseQuizImport(text));

@@ -22,9 +22,23 @@
       ".read": "auth != null",
       ".write": false
     },
+    "questionImages": {
+      "$imageId": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.token.admin === true && !data.exists() && newData.exists()",
+        ".validate": "$imageId.matches(/^[A-Za-z0-9_-]{1,120}$/) && newData.hasChildren(['contentType', 'base64'])",
+        "contentType": {
+          ".validate": "newData.isString() && (newData.val() === 'image/png' || newData.val() === 'image/jpeg' || newData.val() === 'image/webp')"
+        },
+        "base64": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 699052"
+        },
+        "$field": { ".validate": false }
+      }
+    },
     "$bank": {
-      ".read": "auth != null && (auth.token.admin === true || root.child('quizCatalog').child($bank).exists()) && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'mistake' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'quizAliases' && $bank !== 'learning' && $bank !== 'contentDrafts' && $bank !== 'auditLog' && $bank !== 'feedback' && $bank !== 'quizCatalog' && $bank !== 'flashcard'",
-      ".write": "auth != null && auth.token.admin === true && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'mistake' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'quizAliases' && $bank !== 'learning' && $bank !== 'contentDrafts' && $bank !== 'auditLog' && $bank !== 'feedback' && $bank !== 'quizCatalog' && $bank !== 'flashcard'"
+      ".read": "auth != null && (auth.token.admin === true || root.child('quizCatalog').child($bank).exists()) && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'mistake' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'quizAliases' && $bank !== 'learning' && $bank !== 'contentDrafts' && $bank !== 'auditLog' && $bank !== 'feedback' && $bank !== 'quizCatalog' && $bank !== 'flashcard' && $bank !== 'questionImages'",
+      ".write": "auth != null && auth.token.admin === true && $bank !== 'progress' && $bank !== 'mistakes' && $bank !== 'mistake' && $bank !== 'API_KEY' && $bank !== 'config' && $bank !== 'quizAliases' && $bank !== 'learning' && $bank !== 'contentDrafts' && $bank !== 'auditLog' && $bank !== 'feedback' && $bank !== 'quizCatalog' && $bank !== 'flashcard' && $bank !== 'questionImages'"
     },
     "learning": {
       "$uid": {

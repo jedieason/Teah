@@ -1,4 +1,4 @@
-import { normalizeQuestionOptions } from '../../shared/content.js';
+import { isQuestionImage, normalizeQuestionOptions } from '../../shared/content.js';
 
 // Pure helpers shared by the notebook, practice sessions and persistence.
 export function quizLabel(key = '') {
@@ -110,6 +110,7 @@ export function canonicalQuestion(question) {
     return {
         questionId: question.questionId || null, revision: question.revision || 1, taxonomy: question.taxonomy || null,
         question: question.question, options, answer: question.options ? mapAnswer(question.answer) : question.answer,
+        ...(isQuestionImage(question.image) ? { image: { path: question.image.path, alt: question.image.alt } } : {}),
         explanation, origin: question.origin || null,
         originalIndex: Number.isInteger(question.originalIndex) ? question.originalIndex : -1,
         isFillBlank: !options, isMultiSelect: !!options && Array.isArray(question.answer) && question.answer.length > 1,
@@ -136,6 +137,7 @@ export function applyAttempt(previous, snapshot, { correct, eventId, now }) {
 export function preparePractice(m, original) {
     const snapshot = canonicalQuestion(m);
     const q = original ? { ...snapshot, ...original } : snapshot;
+    if (original && !isQuestionImage(original.image)) delete q.image;
     if (q.options) {
         if (Array.isArray(q.answer) && q.answer.length === 1) q.answer = q.answer[0];
         q.options = normalizeQuestionOptions(q.options);

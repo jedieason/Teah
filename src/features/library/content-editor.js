@@ -86,13 +86,14 @@ export function mergeQuestionEdit(allQuestions, updatedQuestion, index) {
     if (original.taxonomy && !updatedQuestion.taxonomy) {
         merged.taxonomy = original.taxonomy;
     }
+    if (!Object.hasOwn(updatedQuestion, 'image') && original.image) merged.image = original.image;
     const nextList = [...allQuestions];
     nextList[index] = merged;
     validateQuiz(nextList);
     return nextList;
 }
 
-export function mountContentEditor({ readBank, writeBanks, readCatalog, onChanged, getUser }) {
+export function mountContentEditor({ readBank, writeBanks, readCatalog, onChanged, getUser, appendQuestionImage }) {
     const $ = id => document.getElementById(id);
     const modal = $('bankContentEditModal');
     if (!modal) return { open: () => {}, close: () => {} };
@@ -104,6 +105,8 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
     const saveBtn = $('bankContentEditSaveBtn');
     const copyBtn = $('bankEditCopyBtn');
     const formatBtn = $('bankEditFormatBtn');
+    const imagePreviewBtn = $('bankEditImagePreviewBtn');
+    const imagePreview = $('bankEditImagePreview');
     const tabBank = $('bankEditScopeBank');
     const tabAll = $('bankEditScopeAll');
     const tabSingle = $('bankEditScopeSingle');
@@ -174,7 +177,15 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
         questionSelect.value = String(currentQuestionIndex);
     }
 
+    function resetImagePreview() {
+        if (!imagePreview) return;
+        imagePreview.hidden = true;
+        imagePreview.replaceChildren();
+    }
+
     function syncTextarea() {
+        resetImagePreview();
+        if (imagePreviewBtn) imagePreviewBtn.hidden = currentMode !== 'single';
         if (!currentBanks.length) {
             currentBanks = [{ title: currentSubject || '新題庫', questions: [] }];
         }
@@ -275,6 +286,7 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
         modal.setAttribute('aria-hidden', 'true');
         showError('');
         showStatus('');
+        resetImagePreview();
         currentBanks = [];
         originalBankKeys = [];
         currentBankIndex = 0;
@@ -291,6 +303,8 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
 
         showError('');
         showStatus('');
+        resetImagePreview();
+        if (imagePreviewBtn) imagePreviewBtn.hidden = true;
         if (textarea) {
             textarea.value = '載入題目中…';
             textarea.disabled = true;
@@ -460,6 +474,19 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
         } catch (e) {
             showError(e.message);
         }
+    });
+
+    textarea?.addEventListener('input', resetImagePreview);
+    imagePreviewBtn?.addEventListener('click', () => {
+        resetImagePreview();
+        try {
+            const edited = validateQuestionPayload(textarea.value, 'single');
+            const image = Object.hasOwn(edited, 'image') ? edited.image : currentBanks[currentBankIndex]?.questions[currentQuestionIndex]?.image;
+            imagePreview.hidden = false;
+            if (image) appendQuestionImage(imagePreview, image);
+            else imagePreview.textContent = '此題沒有圖片。';
+            showError('');
+        } catch (error) { showError(error.message); }
     });
 
     copyBtn?.addEventListener('click', async () => {

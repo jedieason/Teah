@@ -52,7 +52,13 @@ await admin.auth().setCustomUserClaims(adminUid, { ...user.customClaims, admin: 
 
 **順序：先建立完整目錄、部署新版前端、確認管理員，再測試規則。** 不可在仍依賴根讀取的舊前端上直接禁止根讀取。Firebase 的較上層 `.read`／`.write` 一旦允許，不能靠下層規則重新限制，因此不能保留根目錄的全面允許規則。
 
-## 4. AI 回覆仍需後端改造
+## 4. 題目圖片
+
+題目可加上 `"image": { "path": "questionImages/figure_1", "alt": "題圖描述" }`。圖片記錄放在 `/questionImages/figure_1`，欄位為 `contentType` 與 `base64`。接受 PNG、JPEG、WebP，原始檔大小上限為 512 KiB，`base64` 存編碼字串。圖片與題庫可在同一次多路徑更新中新增。
+
+規則允許登入者讀取單張圖片，管理員可新增。換圖時建立新的圖片 ID，再更新題目引用，讓舊題目快照仍可顯示當時的圖片。單題編輯可預覽圖片，將 `image` 設為 `null` 可移除該題圖片引用。
+
+## 5. AI 回覆仍需後端改造
 
 現有 Gemini 整合從 `/API_KEY` 取得模型 API key 並由瀏覽器直接請求。這次先修正原詳解被覆寫及錯誤提示；**沒有把金鑰改成安全的後端代理**。
 
@@ -60,7 +66,7 @@ await admin.auth().setCustomUserClaims(adminUid, { ...user.customClaims, admin: 
 
 本輪產品化按要求保留前端 API，因此規則範例僅允許已登入者讀取 `/API_KEY`，仍禁止根目錄讀取。**登入者依然能取得金鑰，這不是後端金鑰保護。** 完成代理後應將 `/API_KEY` 的 `.read` 改回 `false` 並輪替金鑰。答題、詳解、收藏及錯題複習不依賴 AI。
 
-## 5. 上線驗收
+## 6. 上線驗收
 
 先在 Firebase Emulator 或測試專案逐項測試，再套用正式環境：
 

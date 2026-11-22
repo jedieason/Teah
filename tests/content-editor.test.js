@@ -82,6 +82,14 @@ test('formatQuestionJson produces 2-space indented JSON', () => {
     assert.equal(formatted, JSON.stringify(obj, null, 2));
 });
 
+test('a single-question edit preserves an omitted image and accepts explicit removal', () => {
+    const image = { path: 'questionImages/figure_1', alt: '題圖' };
+    const question = { question: '原題幹', answer: '答案', image };
+    const changed = { question: '改過的題幹', answer: '答案' };
+    assert.deepEqual(mergeQuestionEdit([question], changed, 0)[0].image, image);
+    assert.equal(mergeQuestionEdit([question], { ...changed, image: null }, 0)[0].image, null);
+});
+
 test('mergeQuestionEdit preserves original questionId, taxonomy, and increments revision', () => {
     const originalList = [
         {
