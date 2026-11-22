@@ -42,7 +42,12 @@ const db = {
         }
     },
     mistakes: {
-        'test-user': {}
+        'test-user': {
+            [bankKey]: {
+                q1: { ...sampleQuestions[0], count: 2, lastMistake: 1788681600000 },
+                q2: { ...sampleQuestions[1], count: 1, lastMistake: 1788595200000 }
+            }
+        }
     }
 };
 
@@ -98,6 +103,7 @@ try {
     // Verify question 1 content and that answer option A is highlighted
     const q1Card = page.locator('.bank-browse-card').first();
     assert.equal(await q1Card.isVisible(), true);
+    assert.equal(await q1Card.locator('.bank-browse-question-num').textContent(), '第 1 / 3 題');
     assert.match(await q1Card.locator('.review-question').textContent(), /青黴素/);
     const correctOpt = q1Card.locator('.review-option.is-answer');
     assert.equal(await correctOpt.count(), 1);
@@ -141,6 +147,9 @@ try {
     assert.equal(await allCards.nth(0).isVisible(), true);
     assert.equal(await allCards.nth(1).isVisible(), true);
     assert.equal(await allCards.nth(2).isVisible(), true);
+    assert.equal(await allCards.nth(0).locator('.bank-browse-question-num').textContent(), '第 1 / 3 題');
+    assert.equal(await allCards.nth(1).locator('.bank-browse-question-num').textContent(), '第 2 / 3 題');
+    assert.equal(await allCards.nth(2).locator('.bank-browse-question-num').textContent(), '第 3 / 3 題');
 
     // Test search filter
     await page.locator('#bankBrowseSearch').fill('Vancomycin');
@@ -161,6 +170,17 @@ try {
     // Close view
     await page.locator('#closeBankBrowseBtn').click();
     await browseView.waitFor({ state: 'hidden' });
+
+    // Verify mistake notebook review list order badge
+    await page.locator('#homeMistakes').click();
+    const mistakeView = page.locator('#mistakeView');
+    await mistakeView.waitFor({ state: 'visible' });
+    const mistakeCards = page.locator('#mistakeListContent .review-card');
+    assert.equal(await mistakeCards.count(), 2);
+    assert.equal(await mistakeCards.nth(0).locator('.review-order-badge').textContent(), '第 1 / 2 題');
+    assert.equal(await mistakeCards.nth(1).locator('.review-order-badge').textContent(), '第 2 / 2 題');
+    await page.locator('#closeMistakeViewBtn').click();
+    await mistakeView.waitFor({ state: 'hidden' });
 
     assert.deepEqual(errors, []);
     console.log('Bank browse browser test passed successfully!');

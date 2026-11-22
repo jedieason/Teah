@@ -38,7 +38,7 @@ export function mountBankBrowse({ root, readBank, getBankTitle = key => key, isS
         }
     }
 
-    function createCard(q, displayIndex) {
+    function createCard(q, displayIndex, totalCount) {
         const card = document.createElement('article');
         card.className = 'review-card bank-browse-card';
         card.dataset.index = String(displayIndex);
@@ -48,7 +48,7 @@ export function mountBankBrowse({ root, readBank, getBankTitle = key => key, isS
 
         const numBadge = document.createElement('span');
         numBadge.className = 'bank-browse-question-num';
-        numBadge.textContent = `第 ${displayIndex + 1} 題`;
+        numBadge.textContent = totalCount ? `第 ${displayIndex + 1} / ${totalCount} 題` : `第 ${displayIndex + 1} 題`;
 
         const sourceSpan = document.createElement('span');
         sourceSpan.className = 'review-source';
@@ -186,9 +186,10 @@ export function mountBankBrowse({ root, readBank, getBankTitle = key => key, isS
             return;
         }
 
+        const total = visibleQuestions.length;
         const frag = document.createDocumentFragment();
         visibleQuestions.forEach((q, i) => {
-            const card = createCard(q, i);
+            const card = createCard(q, i, total);
             if (mode === 'single' && i === currentIndex) {
                 card.classList.add('active');
             }

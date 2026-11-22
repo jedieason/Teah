@@ -22,6 +22,7 @@
 .review-card { padding: 24px 28px 16px; border: 1px solid var(--ui-border); border-radius: 14px; background: white; margin-bottom: 16px; overflow-wrap: anywhere; }
 .review-meta { display: flex; gap: 10px; align-items: center; font-size: 12px; line-height: 1.6; margin-bottom: 16px; color: var(--ui-muted); }
 .review-meta input, .notebook-select-all input { accent-color: var(--primary); width: 17px; height: 17px; flex-shrink: 0; margin: 0; cursor: pointer; }
+.review-order-badge { font-size: 12px; font-weight: 600; color: var(--primary, #0b57d0); background: #e8f0fe; padding: 2px 8px; border-radius: 6px; flex-shrink: 0; white-space: nowrap; }
 .review-source { flex: 1; }
 .review-count { flex-shrink: 0; padding: 3px 8px; border-radius: 6px; background: #fff5f0; color: #a94c21; }
 .review-star-btn { appearance: none; background: transparent; border: 0; padding: 2px; margin: 0; cursor: pointer; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; color: #9aa0a6; flex-shrink: 0; line-height: 1; transition: background 0.15s ease, color 0.15s ease; }

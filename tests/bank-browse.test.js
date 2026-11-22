@@ -19,32 +19,48 @@ test('isAnswerMatch evaluates single, array, text and delimiter answers', () => 
 test('bankBrowse opens questions, handles single and list modes, search, and navigation', async () => {
     // Set up mock DOM
     const createEl = (tag, id, cls) => {
+        const classes = new Set((cls || '').split(' ').filter(Boolean));
         const el = {
             tagName: tag.toUpperCase(),
             id,
-            className: cls || '',
+            get className() { return Array.from(classes).join(' '); },
+            set className(val) {
+                classes.clear();
+                for (const c of (val || '').split(' ').filter(Boolean)) classes.add(c);
+            },
             dataset: {},
             style: {},
             classList: {
-                classes: new Set((cls || '').split(' ').filter(Boolean)),
-                add(c) { this.classes.add(c); },
-                remove(c) { this.classes.delete(c); },
+                classes,
+                add(c) { classes.add(c); },
+                remove(c) { classes.delete(c); },
                 toggle(c, force) {
                     if (force !== undefined) {
-                        force ? this.classes.add(c) : this.classes.delete(c);
+                        force ? classes.add(c) : classes.delete(c);
                         return force;
                     }
-                    if (this.classes.has(c)) { this.classes.delete(c); return false; }
-                    this.classes.add(c); return true;
+                    if (classes.has(c)) { classes.delete(c); return false; }
+                    classes.add(c); return true;
                 },
-                contains(c) { return this.classes.has(c); }
+                contains(c) { return classes.has(c); }
             },
             attributes: {},
             setAttribute(k, v) { this.attributes[k] = String(v); },
             getAttribute(k) { return this.attributes[k]; },
             children: [],
-            append(...nodes) { this.children.push(...nodes); },
-            replaceChildren(...nodes) { this.children = [...nodes]; },
+            append(...nodes) {
+                for (const n of nodes) {
+                    if (n?._isFragment) {
+                        this.children.push(...n.children);
+                    } else {
+                        this.children.push(n);
+                    }
+                }
+            },
+            replaceChildren(...nodes) {
+                this.children = [];
+                this.append(...nodes);
+            },
             querySelector(sel) {
                 const search = (node) => {
                     if (sel.startsWith('#') && node.id === sel.slice(1)) return node;
@@ -103,7 +119,7 @@ test('bankBrowse opens questions, handles single and list modes, search, and nav
     globalThis.document = {
         createElement: (tag) => createEl(tag),
         createDocumentFragment: () => {
-            const frag = { children: [], append(...nodes) { this.children.push(...nodes); } };
+            const frag = { _isFragment: true, children: [], append(...nodes) { this.children.push(...nodes); } };
             return frag;
         },
         body: { style: {} }
@@ -164,6 +180,13 @@ test('bankBrowse opens questions, handles single and list modes, search, and nav
         // Switch to list mode
         browse.setMode('list');
         assert.equal(mockRoot.classList.contains('mode-list'), true);
+
+        // Verify card badges show current rank and total count
+        const cards = contentEl.querySelectorAll('.bank-browse-card');
+        assert.equal(cards.length, 3);
+        assert.equal(cards[0].querySelector('.bank-browse-question-num')?.textContent, '第 1 / 3 題');
+        assert.equal(cards[1].querySelector('.bank-browse-question-num')?.textContent, '第 2 / 3 題');
+        assert.equal(cards[2].querySelector('.bank-browse-question-num')?.textContent, '第 3 / 3 題');
 
         // Test reverse order
         await browse.open('藥理區段一｜抗生素', { orderMode: 'reverse' });

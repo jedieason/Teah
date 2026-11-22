@@ -138,7 +138,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         cardsBtn.title = '依所選待複習錯題製作；未勾選時按目前排序取前 30 題。每次最多 30 題。';
         setBottomBarHidden(false);
     }
-    function renderCard(m) {
+    function renderCard(m, index) {
         const card = el('article', 'review-card');
         const meta = el('div', 'review-meta');
         const checkbox = el('input');
@@ -146,7 +146,10 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
         checkbox.checked = selected.has(m.id);
         checkbox.setAttribute('aria-label', `選取：${m.question.slice(0, 60)}`);
         checkbox.onchange = () => { checkbox.checked ? selected.add(m.id) : selected.delete(m.id); updateSelection(); };
-        meta.append(checkbox, el('span', 'review-source', `${m.subject} / ${m.title}`), el('span', 'review-count', `答錯 ${m.count || 1} 次`));
+        const orderBadge = typeof index === 'number'
+            ? el('span', 'review-order-badge', `第 ${index + 1} / ${visible.length} 題`)
+            : null;
+        meta.append(checkbox, ...(orderBadge ? [orderBadge] : []), el('span', 'review-source', `${m.subject} / ${m.title}`), el('span', 'review-count', `答錯 ${m.count || 1} 次`));
         if (typeof isStarred === 'function' && typeof toggleStar === 'function') {
             const starBtn = el('button', 'review-star-btn star-btn');
             starBtn.type = 'button';
@@ -232,7 +235,7 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
             if (hasFilter) empty.append(reset);
             content.append(empty);
         } else {
-            content.append(...visible.slice(0, limit).map(renderCard));
+            content.append(...visible.slice(0, limit).map((m, idx) => renderCard(m, idx)));
             if (visible.length > limit) {
                 const more = el('button', 'load-more secondary-button', `顯示更多（尚有 ${visible.length - limit} 題）`);
                 more.onclick = () => { limit += 30; render(); };
