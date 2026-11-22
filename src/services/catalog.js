@@ -1,9 +1,15 @@
 import { storage } from './outbox.js';
 import { normalizeQuestion } from '../features/learning/model.js';
 import { database, auth, ref, get, update } from './firebase.js';
+import { bankTitle, reservedBankKeys, validBankName } from '../shared/banks.js';
 
-export const reservedKeys = new Set(['progress', 'mistakes', 'mistake', 'API_KEY', 'quizCatalog', 'quizAliases', 'config', 'learning', 'contentDrafts', 'auditLog', 'feedback', 'flashcard', 'questionImages', '__empty']);
-export const validBankName = name => !!name.trim() && !/[.#$\[\]/]/.test(name) && !reservedKeys.has(name);
+export { reservedBankKeys as reservedKeys, validBankName };
+
+function containsBank(catalog, name) {
+    const archived = name.startsWith('_Archive_');
+    const title = name.replace(/^_Archive_/, '');
+    return Object.keys(catalog).some(key => key === name || (key.startsWith('_Archive_') === archived && bankTitle(key, catalog).replace(/^_Archive_/, '') === title));
+}
 
 export async function bankExists(name) {
     if (!name) return false;
@@ -11,11 +17,11 @@ export async function bankExists(name) {
         const snap = await get(ref(database, `quizCatalog/${name}`));
         if (snap.exists()) return true;
         const catalogSnap = await get(ref(database, 'quizCatalog'));
-        if (catalogSnap.exists()) return false;
+        if (catalogSnap.exists()) return containsBank(catalogSnap.val(), name);
     } catch {}
     try {
         const entries = await readCatalog();
-        return Boolean(entries && Object.prototype.hasOwnProperty.call(entries, name));
+        return Boolean(entries && containsBank(entries, name));
     } catch {
         return false;
     }
@@ -37,7 +43,7 @@ export async function readCatalog() {
     }
     try {
         const root = await get(ref(database));
-        return Object.fromEntries(Object.entries(root.val() || {}).filter(([key, value]) => !reservedKeys.has(key) && Array.isArray(value))
+        return Object.fromEntries(Object.entries(root.val() || {}).filter(([key, value]) => !reservedBankKeys.has(key) && Array.isArray(value))
             .map(([key, value]) => [key, { count: value.length }]));
     } catch (error) {
         if (error?.message?.includes('Permission denied') || error?.code === 'PERMISSION_DENIED') {
@@ -48,7 +54,7 @@ export async function readCatalog() {
     }
 }
 
-export async function writeBanks(changes) {
+export async function writeBanks(changes, { archive = false } = {}) {
     const uid = auth.currentUser?.uid;
     changes = Object.fromEntries(Object.entries(changes).map(([key, value]) => [key, value?.map((q, i) => normalizeQuestion({ ...q, questionId: q.questionId || `q_${crypto.randomUUID()}` }, key, i)) || null]));
     const updates = { ...changes };
@@ -57,7 +63,14 @@ export async function writeBanks(changes) {
     const removed = Object.keys(changes).filter(key => changes[key] === null);
     for (const [key, value] of Object.entries(changes)) {
         if (!validBankName(key)) throw new Error('題庫名稱不可包含 . # $ [ ] /，也不可使用系統保留名稱。');
-        updates[`quizCatalog/${key}`] = value === null ? null : { count: value.length, storageKey: storageKey(removed.find(old => old.replace(/^_Archive_/, '') === key.replace(/^_Archive_/, '')) || (removed.length === 1 ? removed[0] : key)) };
+        if (value === null) {
+            updates[`quizCatalog/${key}`] = null;
+            continue;
+        }
+        const source = removed.find(old => old.replace(/^_Archive_/, '') === key.replace(/^_Archive_/, '')) || (removed.length === 1 ? removed[0] : key);
+        const entry = { ...(entries[key] || entries[source]), count: value.length, storageKey: storageKey(source) };
+        if (source !== key && !archive) delete entry.title;
+        updates[`quizCatalog/${key}`] = entry;
     }
     // Initialize the complete catalog before the first legacy bank edit.
     const catalog = await get(ref(database, 'quizCatalog'));
@@ -95,15 +108,23 @@ export async function changeBanks(action, keys, renamed = '') {
         if (action !== 'delete') {
             const newName = action === 'rename' ? renamed : oldName.startsWith('_Archive_') ? oldName.slice(9) : `_Archive_${oldName}`;
             if (!validBankName(newName)) throw new Error('題庫名稱不可包含 . # $ [ ] /，也不可使用系統保留名稱。');
-            if (newName === oldName) continue;
+            if (newName === oldName) {
+                const catalog = await readCatalog();
+                const entry = catalog[oldName];
+                if (entry?.title) {
+                    if (uid !== auth.currentUser?.uid) throw new Error('登入狀態已變更，請重試。');
+                    await update(ref(database, `quizCatalog/${oldName}`), { title: null });
+                }
+                continue;
+            }
             if (await bankExists(newName)) throw new Error('此名稱已存在，請使用其他名稱。');
             const snapshot = await get(ref(database, oldName));
             if (!snapshot.exists()) throw new Error('找不到原題庫，請重新載入。');
-            changes[newName] = snapshot.val();
+            changes[newName] = snapshot.val().map((q, index) => normalizeQuestion(q, oldName, index));
         }
         changes[oldName] = null;
     }
     if (uid !== auth.currentUser?.uid) throw new Error('登入狀態已變更，請重試。');
-    if (Object.keys(changes).length) await writeBanks(changes);
+    if (Object.keys(changes).length) await writeBanks(changes, { archive: action === 'archive' });
     return changes;
 }

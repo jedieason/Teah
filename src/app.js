@@ -17,6 +17,7 @@ import { flattenMistakes, canonicalQuestion, applyAttempt, preparePractice, quiz
 import { createNotebook } from './features/mistakes/notebook.js';
 import { markdown, getOrderedOptionEntries, normalizeQuestionOptions } from './shared/content.js';
 import { appendQuestionImage } from './shared/question-image.js';
+import { bankTitle } from './shared/banks.js';
 import { streamGemini } from './services/gemini-stream.js';
 import { gradeShortAnswer, getScoreTier } from './services/ai-grader.js';
 import { findSubsequentQuizzes, getPastExamComparisonInfo } from './services/exam-dedup.js';
@@ -72,7 +73,7 @@ async function updateRestorePreview(user) {
         if (!p) { hideSection(); return; }
 
         const isMistake = p.sessionKind === 'mistake' || !!p.isMistakePracticeMode || (typeof activeQuizName === 'string' && activeQuizName.startsWith('session_') && !!p.isMistakePracticeMode);
-        const fileName = isMistake ? '錯題複習' : resolveQuizTitle({ selectedJson: p.selectedJson, sessionKind: p.sessionKind, defaultTitle: '最近的中斷點' });
+        const fileName = isMistake ? '錯題複習' : resolveQuizTitle({ selectedJson: getBankTitle(p.selectedJson), sessionKind: p.sessionKind, defaultTitle: '最近的中斷點' });
 
         let total = 0;
         let done = 0;
@@ -130,6 +131,8 @@ let userMistakesCache = {};
 let catalogPaths = [];
 let catalogData = {};
 let catalogRequest = 0;
+const getBankTitle = key => bankTitle(key, catalogData);
+const getSourceTitle = (storageKey, sourcePath) => getBankTitle(catalogPaths.find(path => getQuizStorageName(path) === storageKey) || sourcePath || storageKey);
 
 // 獲取唯一的錯題與收藏存儲鍵名（包含科目與習題名稱）
 function getQuizStorageName(path) {
@@ -316,7 +319,7 @@ async function initQuiz() {
     document.querySelector('.quiz-container').style.display = 'flex';
 
     // Update the quiz title with the current file name
-    const fileName = selectedJson.split('/').pop().replace('.json', '');
+    const fileName = getBankTitle(selectedJson).split('/').pop().replace('.json', '');
     const titleText = isSkipRepeatMode ? `${fileName} · 非考古題` : `${fileName}`;
     document.querySelector('.quiz-title').innerText = `${titleText}`;
     document.title = `${titleText} - 題矣`;
@@ -987,7 +990,7 @@ function showEndScreen() {
     const sources = new Set(allQuestions.map(q => q.sourcePath || selectedJson));
     subtitle.textContent = isMistakePracticeMode
         ? `錯題複習 · ${sources.size} 份題庫`
-        : (selectedJson || '').replace(/^_Archive_/, '').replace(/\.json$/, '');
+        : getBankTitle(selectedJson).replace(/^_Archive_/, '').replace(/\.json$/, '');
     container.appendChild(subtitle);
     const totalQuestions = correct + wrong;
     const accuracy = totalQuestions ? Math.round(correct / totalQuestions * 100) : 0;
@@ -1093,7 +1096,7 @@ function showEndScreen() {
     `;
     downloadBtn.addEventListener('click', () => {
         const record = buildQuizRecord(allQuestions, {
-            selectedJson,
+            selectedJson: getBankTitle(selectedJson),
             isMistakePracticeMode,
             sessionKind
         });
@@ -2258,7 +2261,7 @@ function restoreProgress(quizName = null) {
 
         document.querySelector('.start-screen').style.display = 'none';
         document.querySelector('.quiz-container').style.display = 'flex';
-        const titleText = isMistakePracticeMode ? '錯題複習' : resolveQuizTitle({ selectedJson, sessionKind });
+        const titleText = isMistakePracticeMode ? '錯題複習' : resolveQuizTitle({ selectedJson: getBankTitle(selectedJson), sessionKind });
         document.querySelector('.quiz-title').innerText = `${titleText}`;
         document.title = `${titleText} - 題矣`;
 
@@ -3302,6 +3305,7 @@ function recordAttempt(isCorrect) {
 notebook = createNotebook({
     root: mistakeView, getCache: () => userMistakesCache,
     getCatalog: () => catalogData,
+    getSourceTitle,
     refresh: async () => {
         const uid = auth.currentUser?.uid;
         await flushOutbox();
@@ -3415,7 +3419,7 @@ async function openQuizActionModal(key, progress) {
     currentQuizDedupResult = null;
     const currentToken = ++quizDedupCheckToken;
 
-    const label = quizLabel(key);
+    const label = quizLabel(getBankTitle(key));
     title.textContent = label.title;
     document.getElementById('quizActionSubject').textContent = label.subject;
     const total = progress?.allQuestions?.length || catalogData[key]?.count || 0;
@@ -3487,14 +3491,14 @@ async function openQuizActionModal(key, progress) {
             applyDedupMode(skipCheckbox.checked);
         };
 
-        const subsequent = findSubsequentQuizzes(key, catalogPaths);
+        const subsequent = findSubsequentQuizzes(key, catalogPaths, getBankTitle);
         if (!subsequent || subsequent.length === 0) {
             filterSection.style.display = 'none';
         } else {
             filterSection.style.display = 'block';
             filterInfo.textContent = '比對後續年份中…';
 
-            getPastExamComparisonInfo(key, catalogPaths, readBank)
+            getPastExamComparisonInfo(key, catalogPaths, readBank, getBankTitle)
                 .then(result => {
                     if (currentToken !== quizDedupCheckToken) return;
                     currentQuizDedupResult = result;
@@ -3645,7 +3649,7 @@ document.getElementById('homeStarred').onclick = () => openCollectionPage();
 const unitsGrid = document.getElementById('units-grid');
 let questionSearch;
 const contentEditor = mountContentEditor({
-    readBank, writeBanks, readCatalog, appendQuestionImage,
+    readBank, writeBanks, readCatalog, appendQuestionImage, getBankTitle,
     getUser: () => auth.currentUser?.uid,
     onChanged: async changes => {
         await fetchQuizList();
@@ -3671,7 +3675,7 @@ const bankLibrary = mountBankLibrary({
 const libraryAddBtn = document.getElementById('libraryAdd');
 if (libraryAddBtn) libraryAddBtn.onclick = () => openUploadModal('paste');
 questionSearch = mountQuestionSearch({
-    input: document.getElementById('bankSearch'), host: document.getElementById('questionSearch'), readBank,
+    input: document.getElementById('bankSearch'), host: document.getElementById('questionSearch'), readBank, getBankTitle,
     getUser: () => auth.currentUser?.uid, getScope: () => libraryPage, renderMath: renderLatex,
     filterBanks: query => bankLibrary.filter(query),
     editQuestion: (path, idx) => contentEditor.open(path, idx),
@@ -3730,7 +3734,7 @@ document.getElementById('homeArchive').onclick = () => showLibraryPage('archive'
 document.getElementById('homeLibrary').onclick = () => showLibraryPage('library');
 document.getElementById('homeLibrary').setAttribute('aria-current', 'page');
 const collection = createCollection({
-    host: document.getElementById('collectionPage'), getSourceLabel: source => (catalogPaths.find(p => getQuizStorageName(p) === source) || source || '').replace(/^_Archive_/, ''), activate: () => showLibraryPage('collection'), renderMath: renderLatex,
+    host: document.getElementById('collectionPage'), getSourceLabel: source => getSourceTitle(source).replace(/^_Archive_/, ''), activate: () => showLibraryPage('collection'), renderMath: renderLatex,
     onRemove: q => { if (currentQuestion && sameStar(q, { ...currentQuestion, source: getQuizStorageName(currentQuestion.sourcePath || selectedJson) })) setStarState(false); },
     practice: async entries => {
         const uid = auth.currentUser?.uid;

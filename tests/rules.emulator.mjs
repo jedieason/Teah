@@ -3,7 +3,9 @@ import { ref, set, get, remove, update, runTransaction } from 'firebase/database
 import { readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import { prepareDeck, createSession, submitAnswer, mergeStudy } from '../src/features/flashcard/model.js';
-const env = await initializeTestEnvironment({ projectId: 'demo-teah', database: { host: '127.0.0.1', port: Number(process.env.TEAH_RULES_PORT || 9000), rules: await readFile('firebase/database.rules.example.json', 'utf8') } });
+import { testAgentApi } from './agent-api.emulator.mjs';
+const port = Number(process.env.TEAH_RULES_PORT || 9000);
+const env = await initializeTestEnvironment({ projectId: 'demo-teah', database: { host: '127.0.0.1', port, rules: await readFile('firebase/database.rules.example.json', 'utf8') } });
 try {
     const alice = env.authenticatedContext('alice').database(), bob = env.authenticatedContext('bob').database(), anon = env.unauthenticatedContext().database();
     await env.withSecurityRulesDisabled(async c => { await set(ref(c.database()), { quizCatalog: { bank: { count: 1 } }, bank: [{ question: 'q' }], API_KEY: 'fake' }); });
@@ -97,4 +99,5 @@ try {
     await assertSucceeds(remove(ref(alice, 'flashcard/alice')));
     await assertSucceeds(remove(ref(alice, 'learning/alice')));
     console.log('Rules passed: root/anonymous key denial, account isolation, immutable events, draft review roles, vocabulary schema/transactions/override/recovery and account deletion.');
+    await testAgentApi(env, port);
 } finally { await env.cleanup(); }

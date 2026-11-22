@@ -17,12 +17,12 @@ export function parseQuizYear(key) {
     return { subject, title, yearNum, yearStr, subType };
 }
 
-export function findSubsequentQuizzes(targetKey, allKeys = []) {
-    const target = parseQuizYear(targetKey);
+export function findSubsequentQuizzes(targetKey, allKeys = [], getTitle = key => key) {
+    const target = parseQuizYear(getTitle(targetKey));
     if (!target) return [];
 
     return allKeys.filter(k => {
-        const info = parseQuizYear(k);
+        const info = parseQuizYear(getTitle(k));
         if (!info) return false;
         if (info.subject !== target.subject) return false;
         if (info.yearNum <= target.yearNum) return false;
@@ -38,8 +38,8 @@ export function findSubsequentQuizzes(targetKey, allKeys = []) {
 
         return tSub === iSub;
     }).sort((a, b) => {
-        const ia = parseQuizYear(a);
-        const ib = parseQuizYear(b);
+        const ia = parseQuizYear(getTitle(a));
+        const ib = parseQuizYear(getTitle(b));
         return ia.yearNum - ib.yearNum;
     });
 }
@@ -198,18 +198,18 @@ export function filterNonRepeatedQuestions(currentQuestions, laterQuestionBanks,
     return { nonRepeated, repeated, duplicates };
 }
 
-export async function getPastExamComparisonInfo(targetKey, allCatalogKeys, readBankFn) {
-    const targetInfo = parseQuizYear(targetKey);
+export async function getPastExamComparisonInfo(targetKey, allCatalogKeys, readBankFn, getTitle = key => key) {
+    const targetInfo = parseQuizYear(getTitle(targetKey));
     if (!targetInfo) {
         return { hasLaterExams: false };
     }
 
-    const laterKeys = findSubsequentQuizzes(targetKey, allCatalogKeys);
+    const laterKeys = findSubsequentQuizzes(targetKey, allCatalogKeys, getTitle);
     if (!laterKeys || laterKeys.length === 0) {
         return { hasLaterExams: false, targetInfo };
     }
 
-    const maxLaterInfo = parseQuizYear(laterKeys[laterKeys.length - 1]);
+    const maxLaterInfo = parseQuizYear(getTitle(laterKeys[laterKeys.length - 1]));
     const rangeStr = `${targetInfo.yearStr} - ${maxLaterInfo.yearStr}`;
 
     const currentQuestions = await readBankFn(targetKey);

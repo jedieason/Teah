@@ -77,6 +77,8 @@ Flashcard 的研究依據、排程細節、Firebase 架構與規則套用見 [Fl
 
 詳細行為見 [錯題規格](docs/mistakes.md)，上線前設定見 [Firebase 指引](docs/firebase.md)。
 
+Agent 可透過本機 CLI 或 HTTP API 發佈題庫、按永久 ID 勘誤、批次改名與上傳圖片。PDF 逐題整理流程及端點範例見 [題庫 Agent 操作文件](docs/agent-question-banks.md)。
+
 ## 部署
 
 `npm run build` 只複製前端需要的檔案。`firebase.json` 將 Hosting 指向 `dist/`；不包含資料庫規則部署，避免在尚未完成目錄與權限設定時誤套用。

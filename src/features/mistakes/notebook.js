@@ -1,5 +1,5 @@
 import { createSelectMenu } from '../../shared/select-menu.js';
-import { flattenMistakes, filterMistakes, getArchivedBankKeys, isArchivedMistake } from './model.js';
+import { flattenMistakes, filterMistakes, getArchivedBankKeys, isArchivedMistake, quizLabel } from './model.js';
 import { markdown, sortOptionKeys } from '../../shared/content.js';
 import { appendQuestionImage } from '../../shared/question-image.js';
 
@@ -29,7 +29,7 @@ function isAnswerMatch(key, text, answer) {
     return parts.includes(strKey);
 }
 
-export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert, isStarred, toggleStar, getCatalog }) {
+export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert, isStarred, toggleStar, getCatalog, getSourceTitle }) {
     let filters = { query: '', subject: [], quiz: '', status: 'active', sort: 'recent' };
     let selected = new Set();
     let limit = 30;
@@ -103,7 +103,8 @@ export function createNotebook({ root, getCache, refresh, setStatus, practice, m
     function getActiveMistakes() {
         const catalog = typeof getCatalog === 'function' ? getCatalog() : getCatalog;
         const archived = getArchivedBankKeys(catalog);
-        return flattenMistakes(getCache()).filter(m => !isArchivedMistake(m, archived));
+        return flattenMistakes(getCache()).filter(m => !isArchivedMistake(m, archived))
+            .map(m => getSourceTitle ? { ...m, ...quizLabel(getSourceTitle(m.quizKey, m.sourcePath)) } : m);
     }
 
     function options(node, entries, label, value) {

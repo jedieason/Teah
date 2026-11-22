@@ -93,7 +93,7 @@ export function mergeQuestionEdit(allQuestions, updatedQuestion, index) {
     return nextList;
 }
 
-export function mountContentEditor({ readBank, writeBanks, readCatalog, onChanged, getUser, appendQuestionImage }) {
+export function mountContentEditor({ readBank, writeBanks, readCatalog, onChanged, getUser, appendQuestionImage, getBankTitle = key => key }) {
     const $ = id => document.getElementById(id);
     const modal = $('bankContentEditModal');
     if (!modal) return { open: () => {}, close: () => {} };
@@ -155,7 +155,7 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
         currentBanks.forEach((b, i) => {
             const opt = document.createElement('option');
             opt.value = String(i);
-            const label = parseBankLabel(b.title);
+            const label = parseBankLabel(getBankTitle(b.title));
             opt.textContent = `${label.title || b.title} (${(b.questions || []).length} 題)`;
             unitSelect.append(opt);
         });
@@ -334,7 +334,7 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
             targetBankKey = bankKeysToLoad[0] || null;
         } else {
             targetBankKey = target;
-            const label = parseBankLabel(targetBankKey);
+            const label = parseBankLabel(getBankTitle(targetBankKey));
             currentSubject = label.subject;
             bankKeysToLoad = options?.banks || [targetBankKey];
             if (questionIndex != null && Number.isInteger(questionIndex) && questionIndex >= 0) {
@@ -349,7 +349,7 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
         if (titleEl) {
             titleEl.textContent = initialMode === 'bank' || !targetBankKey
                 ? `編輯題目內容 - ${currentSubject}`
-                : `編輯題目內容 - ${parseBankLabel(targetBankKey).title}`;
+                : `編輯題目內容 - ${parseBankLabel(getBankTitle(targetBankKey)).title}`;
         }
 
         currentMode = initialMode;
@@ -375,7 +375,7 @@ export function mountContentEditor({ readBank, writeBanks, readCatalog, onChange
                         const isArch = targetBankKey.startsWith('_Archive_');
                         const sisterKeys = Object.keys(catalog).filter(k =>
                             k.startsWith('_Archive_') === isArch &&
-                            parseBankLabel(k).subject === currentSubject
+                            parseBankLabel(getBankTitle(k)).subject === currentSubject
                         );
                         if (sisterKeys.length > 1) {
                             bankKeysToLoad = sisterKeys;

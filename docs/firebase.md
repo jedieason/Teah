@@ -58,6 +58,8 @@ await admin.auth().setCustomUserClaims(adminUid, { ...user.customClaims, admin: 
 
 規則允許登入者讀取單張圖片，管理員可新增。換圖時建立新的圖片 ID，再更新題目引用，讓舊題目快照仍可顯示當時的圖片。單題編輯可預覽圖片，將 `image` 設為 `null` 可移除該題圖片引用。
 
+使用伺服器端機器憑證的題庫發佈、修訂及目錄改名流程見 [題庫 Agent 操作文件](agent-question-banks.md)。目錄項目的選用 `title` 僅用於顯示，`key` 及 `storageKey` 仍用來定位資料與個人紀錄。
+
 ## 5. AI 回覆仍需後端改造
 
 現有 Gemini 整合從 `/API_KEY` 取得模型 API key 並由瀏覽器直接請求。這次先修正原詳解被覆寫及錯誤提示；**沒有把金鑰改成安全的後端代理**。

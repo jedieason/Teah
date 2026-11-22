@@ -42,7 +42,7 @@ function highlight(root, query) {
     }
 }
 
-export function mountQuestionSearch({ input, host, readBank, getUser, getScope, renderMath, practice, editQuestion, filterBanks }) {
+export function mountQuestionSearch({ input, host, readBank, getUser, getScope, renderMath, practice, editQuestion, filterBanks, getBankTitle = key => key }) {
     const loader = createSearchLoader({ readBank, plainText });
     let request = 0, timer, composing = false, catalogReady = false;
     let results = [], limit = 20;
@@ -62,7 +62,7 @@ export function mountQuestionSearch({ input, host, readBank, getUser, getScope, 
         for (const { question: q, fields } of results.slice(append ? list.childElementCount : 0, limit)) {
             const card = node('article', null, list, 'question-search-card');
             const header = node('header', null, card, 'question-search-card-header');
-            const label = quizLabel(q.sourcePath.replace(/^_Archive_/, ''));
+            const label = quizLabel(getBankTitle(q.sourcePath));
             node('h4', `${label.subject} · ${label.title} · 第 ${q.originalIndex + 1} 題`, header);
             const actions = node('div', null, header, 'question-search-card-actions');
             if (editQuestion) {

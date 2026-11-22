@@ -1,5 +1,6 @@
 import { normalizeSearchText } from '../search/model.js';
 import { changeBanks } from '../../services/catalog.js';
+import { bankTitle } from '../../shared/banks.js';
 
 const node = (tag, text, parent, cls) => {
     const el = document.createElement(tag);
@@ -27,6 +28,7 @@ export function bankLabel(key) {
 export function mountBankLibrary({ grid, navigation, input, getUser, getProgress, getStorageKey, onFolder, onOpen, onEditContent, onChanged, onManage, refreshSearch }) {
     const $ = id => document.getElementById(id);
     let catalog = {}, archived = false, folder = null, query = '', managing = false;
+    const describeBank = key => bankLabel(bankTitle(key, catalog));
     let selection = new Set(), visibleKeys = [], menu = null, menuTrigger = null;
     let layout = 'grid', sort = 'name', dialogState = null, busy = false, owner;
     try { layout = localStorage.getItem('teah-bank-layout') === 'list' ? 'list' : 'grid'; } catch {}
@@ -64,7 +66,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         const count = selection.size;
         const totalQuestions = [...selection].reduce((sum, key) => sum + (catalog[key]?.count || 0), 0);
         if (!folder && count > 0) {
-            const selectedSubjects = new Set([...selection].map(k => bankLabel(k).subject));
+            const selectedSubjects = new Set([...selection].map(k => describeBank(k).subject));
             $('bankSelectionCount').textContent = `已選取 ${selectedSubjects.size} 個單元（共 ${count} 份 · ${totalQuestions} 題）`;
         } else {
             $('bankSelectionCount').textContent = `已選取 ${count} 份${count ? ` · ${totalQuestions} 題` : ''}`;
@@ -90,7 +92,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         }
         for (const card of grid.querySelectorAll('[data-subject]')) {
             const subject = card.dataset.subject;
-            const unitBanks = visibleKeys.filter(k => bankLabel(k).subject === subject);
+            const unitBanks = visibleKeys.filter(k => describeBank(k).subject === subject);
             const selectedCount = unitBanks.filter(k => selection.has(k)).length;
             const allSelected = unitBanks.length > 0 && selectedCount === unitBanks.length;
             const someSelected = selectedCount > 0 && !allSelected;
@@ -170,7 +172,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         const same = menuTrigger === trigger; closeMenu(); if (same) return;
         menuTrigger = trigger; trigger.setAttribute('aria-expanded', 'true');
         menu = node('div', null, document.body, 'bank-action-menu'); menu.id = 'bankActionMenu';
-        menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', `${bankLabel(key).title}的操作`);
+        menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', `${describeBank(key).title}的操作`);
         trigger.setAttribute('aria-controls', menu.id);
         for (const [label, action] of [
             ['選取', 'select'],
@@ -232,9 +234,9 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         grid.hidden = searching;
         if (bar) bar.hidden = searching || !managing;
         const keys = Object.keys(catalog).filter(key => key.startsWith('_Archive_') === archived);
-        const scoped = keys.filter(key => !folder || bankLabel(key).subject === folder);
+        const scoped = keys.filter(key => !folder || describeBank(key).subject === folder);
         scoped.sort((a, b) => (sort === 'count' ? (catalog[b]?.count || 0) - (catalog[a]?.count || 0) :
-            sort === 'progress' ? progress(b).percent - progress(a).percent : 0) || a.localeCompare(b, 'zh-Hant', { numeric: true }));
+            sort === 'progress' ? progress(b).percent - progress(a).percent : 0) || bankTitle(a, catalog).localeCompare(bankTitle(b, catalog), 'zh-Hant', { numeric: true }));
         visibleKeys = scoped;
         renderNavigation(scoped);
         const folders = !folder;
@@ -242,7 +244,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         grid.replaceChildren();
         if (folders) {
             const groups = new Map();
-            for (const key of scoped) { const subject = bankLabel(key).subject; if (!groups.has(subject)) groups.set(subject, []); groups.get(subject).push(key); }
+            for (const key of scoped) { const subject = describeBank(key).subject; if (!groups.has(subject)) groups.set(subject, []); groups.get(subject).push(key); }
             for (const [subject, banks] of [...groups].sort(([a, banksA], [b, banksB]) => {
                 if ((a === '其他') !== (b === '其他')) return (a === '其他') - (b === '其他');
                 if (sort === 'count') {
@@ -299,7 +301,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
                 more.setAttribute('aria-expanded', 'false');
             }
         } else for (const key of scoped) {
-            const label = bankLabel(key), p = progress(key);
+            const label = describeBank(key), p = progress(key);
             const card = node('article', null, grid, 'unit-card bank-card'); card.dataset.json = key;
             const checkLabel = node('label', null, card, 'bank-check-target');
             const checkbox = node('input', null, checkLabel, 'bank-checkbox'); checkbox.type = 'checkbox';
@@ -342,11 +344,11 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
         const list = $('bankActionList'); list.replaceChildren(); list.hidden = renaming;
         for (const key of keys) {
             const item = node('li', null, list); const info = node('span', null, item);
-            node('span', bankLabel(key).subject, info, 'bank-muted'); node('strong', bankLabel(key).title, info);
+            node('span', describeBank(key).subject, info, 'bank-muted'); node('strong', describeBank(key).title, info);
             node('span', `${catalog[key]?.count || 0} 題`, item, 'bank-muted');
         }
         $('bankRenameFields').hidden = !renaming;
-        const current = bankLabel(keys[0]); renameSubject.value = current.subject === '其他' ? '' : current.subject; renameTitle.value = current.title;
+        const current = describeBank(keys[0]); renameSubject.value = current.subject === '其他' ? '' : current.subject; renameTitle.value = current.title;
         error.hidden = true; confirm.classList.toggle('bank-danger-filled', deleting);
         confirm.textContent = renaming ? '儲存' : `${label}${keys.length > 1 ? `（${keys.length} 份）` : ''}`;
         dialog.style.display = 'flex';
@@ -381,7 +383,9 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
                 if (value === null) delete catalog[key];
                 else {
                     const source = state.action === 'rename' ? state.keys[0] : key.startsWith('_Archive_') ? key.slice(9) : `_Archive_${key}`;
-                    catalog[key] = { count: value.length, storageKey: previous[source]?.storageKey || getStorageKey(source) };
+                    const entry = { ...previous[source], count: value.length, storageKey: previous[source]?.storageKey || getStorageKey(source) };
+                    if (state.action === 'rename') delete entry.title;
+                    catalog[key] = entry;
                 }
             }
             render(); $('libraryManage')?.focus({ preventScroll: true });
@@ -410,7 +414,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
             onEditContent?.([...selection][0]);
         } else if (selection.size > 1) {
             const selectedKeys = [...selection];
-            const subject = bankLabel(selectedKeys[0]).subject;
+            const subject = describeBank(selectedKeys[0]).subject;
             onEditContent?.(subject, null, { isFolder: true, subject, banks: selectedKeys, mode: 'bank' });
         }
     };
@@ -437,7 +441,7 @@ export function mountBankLibrary({ grid, navigation, input, getUser, getProgress
             }
             owner = getUser(); catalog = { ...data }; archived = options.archived; folder = options.folder;
             selection = new Set([...selection].filter(key => catalog[key]));
-            if (folder && !Object.keys(catalog).some(key => key.startsWith('_Archive_') === archived && bankLabel(key).subject === folder)) { folder = null; onFolder(null); }
+            if (folder && !Object.keys(catalog).some(key => key.startsWith('_Archive_') === archived && describeBank(key).subject === folder)) { folder = null; onFolder(null); }
             query = normalizeSearchText(input.value); render();
         },
         filter(value) {
