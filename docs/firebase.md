@@ -60,6 +60,8 @@ await admin.auth().setCustomUserClaims(adminUid, { ...user.customClaims, admin: 
 
 使用伺服器端機器憑證的題庫發佈、修訂及目錄改名流程見 [題庫 Agent 操作文件](agent-question-banks.md)。目錄項目的選用 `title` 僅用於顯示，`key` 及 `storageKey` 仍用來定位資料與個人紀錄。
 
+固定品質的圖片轉檔、API 的 Base64 格式與單張上傳步驟見 [題圖轉檔與 Base64](agent-question-banks.md#題圖轉檔與-base64)。
+
 ## 5. AI 回覆仍需後端改造
 
 現有 Gemini 整合從 `/API_KEY` 取得模型 API key 並由瀏覽器直接請求。這次先修正原詳解被覆寫及錯誤提示；**沒有把金鑰改成安全的後端代理**。
