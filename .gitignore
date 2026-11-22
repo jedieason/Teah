@@ -6,6 +6,7 @@ node_modules/
 QuestionBank
 dist/
 artifacts/
+/_temp/
 *.generated.json
 *firebase-export*.json
 *firebase-adminsdk*.json
