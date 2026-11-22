@@ -36,6 +36,24 @@ export function normalizeQuestionOptions(options) {
     return options;
 }
 
+export function isAnswerMatch(key, text, answer) {
+    if (answer == null) return false;
+    const strKey = String(key).trim().toUpperCase();
+    if (Array.isArray(answer)) {
+        return answer.some(a => {
+            const strA = String(a).trim();
+            if (strA.toUpperCase() === strKey) return true;
+            if (text && strA.toLowerCase() === text.trim().toLowerCase()) return true;
+            return false;
+        });
+    }
+    const strAns = String(answer).trim();
+    if (strAns.toUpperCase() === strKey) return true;
+    if (text && strAns.toLowerCase() === text.trim().toLowerCase()) return true;
+    const parts = strAns.split(/[,/、\s]+/).filter(Boolean).map(s => s.toUpperCase());
+    return parts.includes(strKey);
+}
+
 export function validateQuiz(data) {
     const fail = (message, path) => { throw Object.assign(new Error(message), { path }); };
     if (!Array.isArray(data) || !data.length) fail('題庫必須是非空的題目陣列。', []);

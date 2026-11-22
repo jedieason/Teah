@@ -2,6 +2,7 @@ import { createCollection } from './features/collections/view.js';
 import { mountQuestionSearch } from './features/search/view.js';
 import { mountBankLibrary } from './features/library/view.js';
 import { mountContentEditor } from './features/library/content-editor.js';
+import { mountBankBrowse } from './features/library/bank-browse.js';
 import { mountSidebar } from './shared/sidebar.js';
 import { mountFlashcard } from './features/flashcard/view.js';
 import { mountEditorial } from './features/learning/editorial.js';
@@ -3399,6 +3400,37 @@ async function startMistakePractice(items) {
 let currentQuizDedupResult = null;
 let quizDedupCheckToken = 0;
 
+const bankBrowse = mountBankBrowse({
+    root: document.getElementById('bankBrowseView'),
+    readBank,
+    getBankTitle,
+    appendQuestionImage,
+    isStarred: m => {
+        const source = getQuizStorageName(m.sourcePath || m.quizKey || m.origin || selectedJson || '');
+        return userStarredCache.some(q => sameStar(q, { question: m.question, questionId: m.questionId, source }));
+    },
+    toggleStar: async m => {
+        if (!auth.currentUser) throw new Error('登入後即可收藏題目。');
+        const uid = auth.currentUser.uid;
+        const source = getQuizStorageName(m.sourcePath || m.quizKey || m.origin || selectedJson || '');
+        const entry = { ...canonicalQuestion(m), questionId: m.questionId || null, source };
+        const result = await runTransaction(ref(database, `progress/${uid}/starred`), value => {
+            const list = Array.isArray(value) ? value : [];
+            return list.some(q => sameStar(q, entry)) ? list.filter(q => !sameStar(q, entry)) : [...list, entry];
+        }, { applyLocally: false });
+        const list = Array.isArray(result.snapshot.val()) ? result.snapshot.val() : [];
+        if (auth.currentUser?.uid === uid) userStarredCache = list;
+        const isNowStarred = list.some(q => sameStar(q, entry));
+        if (currentQuestion) {
+            const curSource = getQuizStorageName(currentQuestion.sourcePath || selectedJson);
+            if (sameStar({ ...currentQuestion, source: curSource }, entry)) setStarState(isNowStarred);
+        }
+        return isNowStarred;
+    },
+    renderMath: renderLatex,
+    alert: showCustomAlert
+});
+
 async function openQuizActionModal(key, progress) {
     if (!learningDataReady) {
         await fetchUserProgressAndMistakes(auth.currentUser);
@@ -3525,6 +3557,26 @@ async function openQuizActionModal(key, progress) {
                     filterSection.style.display = 'none';
                 });
         }
+    }
+
+    const browseBtn = document.getElementById('quizActionBrowseBtn');
+    if (browseBtn) {
+        browseBtn.onclick = async () => {
+            const isSkipping = skipCheckbox && skipCheckbox.checked && currentQuizDedupResult && currentQuizDedupResult.nonRepeatedQuestions;
+            const dedupData = currentQuizDedupResult;
+            closeQuizActionModal();
+            try {
+                await bankBrowse.open(key, {
+                    questions: isSkipping ? dedupData.nonRepeatedQuestions : null,
+                    isSkipRepeatMode: isSkipping,
+                    compareRange: isSkipping ? dedupData.rangeStr : null,
+                    orderMode: quizOrderMode
+                });
+            } catch (err) {
+                console.error('Failed to open bank browse:', err);
+                showCustomAlert(err.message || '無法開啟瀏覽模式，請重試。');
+            }
+        };
     }
 
     const editContentBtn = document.getElementById('quizActionEditContentBtn');

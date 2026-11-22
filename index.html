@@ -372,6 +372,47 @@
       <button id="mistakePracticeBtn" class="primary-button">開始複習</button>
     </footer>
   </section>
+
+  <!-- 題庫考前瀏覽畫面 -->
+  <section id="bankBrowseView" class="full-screen-view bank-browse-view notebook-show-answers mode-single" role="dialog" aria-modal="true" aria-labelledby="bankBrowseTitle" style="display: none;">
+    <div id="bankBrowseScrollContainer" class="notebook-scroll bank-browse-scroll">
+      <div class="notebook-top bank-browse-top">
+        <header class="notebook-header bank-browse-header">
+          <div class="notebook-heading bank-browse-heading">
+            <div class="bank-browse-title-group">
+              <span id="bankBrowseSubject" class="bank-browse-subject"></span>
+              <h2 id="bankBrowseTitle">題庫名稱</h2>
+            </div>
+            <span id="bankBrowseCount" class="bank-browse-count">共 0 題</span>
+          </div>
+          <div class="bank-browse-header-actions">
+            <div class="notebook-tabs bank-browse-tabs" role="group" aria-label="檢視模式">
+              <button id="bankBrowseTabSingle" type="button" aria-pressed="true">單題翻閱</button>
+              <button id="bankBrowseTabList" type="button" aria-pressed="false">清單瀏覽</button>
+            </div>
+            <button id="closeBankBrowseBtn" class="quiet-button" type="button" aria-label="關閉瀏覽">關閉</button>
+          </div>
+        </header>
+        <div class="notebook-controls bank-browse-controls">
+          <div class="notebook-toolbar bank-browse-toolbar">
+            <input id="bankBrowseSearch" type="search" placeholder="搜尋題目、選項或關鍵字" aria-label="搜尋題目">
+            <div class="bank-browse-tool-buttons">
+              <button id="bankBrowseToggleExplanation" class="secondary-button bank-browse-tool-btn" type="button">收合詳解</button>
+            </div>
+          </div>
+          <p id="bankBrowseSummary" class="notebook-summary" role="status"></p>
+        </div>
+      </div>
+      <div id="bankBrowseContent" class="bank-browse-content"></div>
+    </div>
+    <footer id="bankBrowseBottomBar" class="notebook-bottom bank-browse-bottom">
+      <button id="bankBrowsePrevBtn" class="secondary-button bank-browse-nav-btn" type="button">上一題</button>
+      <div class="bank-browse-pager">
+        <span id="bankBrowseCurrentPage">第 1 / 1 題</span>
+      </div>
+      <button id="bankBrowseNextBtn" class="primary-button bank-browse-nav-btn" type="button">下一題</button>
+    </footer>
+  </section>
 <!-- Contribute Quiz Modal (Material 3) -->
 <div id="contributeModal" class="md3-modal-overlay" style="display: none;">
   <div class="md3-dialog contribute-dialog">
@@ -777,6 +818,7 @@ NSAID、抗黴菌、抗病毒
       </label>
     </div>
     <div class="quiz-action-options">
+      <button id="quizActionBrowseBtn" class="secondary-button" type="button">瀏覽題目</button>
       <button id="quizActionEditContentBtn" class="secondary-button" type="button">編輯題目</button>
       <button id="quizActionResumeBtn" class="primary-button"><span>繼續測驗</span><span aria-hidden="true">→</span></button>
       <button id="quizActionRestartBtn" class="primary-button"><span>開始測驗</span><span aria-hidden="true">→</span></button>

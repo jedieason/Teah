@@ -81,3 +81,133 @@
     #mistakeClearSelection { font-size: 0; gap: 0; padding: 6px; }
     #mistakeClearSelection::after { content: '取消'; font-size: 12px; }
 }
+
+/* Bank Browse View (考前快速瀏覽題目) */
+#bankBrowseView {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100dvh;
+    background: #fff;
+    color: #1f1f1f;
+    font-family: var(--ui-font);
+    text-align: left;
+}
+.bank-browse-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.bank-browse-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.bank-browse-subject {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ui-muted, #666d74);
+}
+.bank-browse-top {
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid var(--ui-border);
+    flex-shrink: 0;
+}
+.bank-browse-controls {
+    padding-bottom: 16px;
+}
+.bank-browse-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.bank-browse-tool-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.bank-browse-tool-btn {
+    font-size: 13px;
+    padding: 7px 14px;
+    min-height: 36px;
+}
+.bank-browse-content {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 24px 32px 100px;
+    box-sizing: border-box;
+    width: 100%;
+}
+.bank-browse-question-num {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary, #0b57d0);
+    padding: 2px 8px;
+    background: #e8f0fe;
+    border-radius: 6px;
+}
+.browse-answer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #16764f;
+    background: #e6f4ea;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* Single question flip mode */
+.bank-browse-view.mode-single .bank-browse-card:not(.active) {
+    display: none !important;
+}
+.bank-browse-view.mode-single .bank-browse-card.active {
+    display: block;
+}
+.bank-browse-view.mode-list .bank-browse-bottom {
+    display: none !important;
+}
+.bank-browse-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 70px;
+    padding-top: 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    padding-inline: max(32px, calc((100% - 980px) / 2 + 32px));
+    background: white;
+    border-top: 1px solid var(--ui-border);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+    z-index: 100;
+}
+.bank-browse-pager {
+    font-size: 14px;
+    font-weight: 500;
+    color: #444746;
+}
+.bank-browse-nav-btn {
+    min-width: 100px;
+}
+@media (max-width: 680px) {
+    .bank-browse-header, .bank-browse-controls { padding-inline: 16px; }
+    .bank-browse-content { padding: 16px 16px 90px; }
+    .bank-browse-toolbar { flex-direction: column; align-items: stretch; gap: 10px; }
+    .bank-browse-bottom { padding-inline: 16px; }
+    .bank-browse-nav-btn { flex: 1; min-width: 0; }
+}

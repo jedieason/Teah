@@ -29,7 +29,8 @@
     "test:vocabulary:edge": "node tests/flashcard-edge-browser.mjs",
     "test:vocabulary:grading": "node tests/flashcard-equivalence-browser.mjs",
     "test:dedup": "node tests/exam-dedup-browser.mjs",
-    "test:content-editor": "node tests/content-editor-browser.mjs"
+    "test:content-editor": "node tests/content-editor-browser.mjs",
+    "test:bank-browse": "node tests/bank-browse-browser.mjs"
   },
   "engines": {
     "node": ">=20"

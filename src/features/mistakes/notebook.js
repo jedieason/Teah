@@ -1,6 +1,6 @@
 import { createSelectMenu } from '../../shared/select-menu.js';
 import { flattenMistakes, filterMistakes, getArchivedBankKeys, isArchivedMistake, quizLabel } from './model.js';
-import { markdown, sortOptionKeys } from '../../shared/content.js';
+import { markdown, sortOptionKeys, isAnswerMatch } from '../../shared/content.js';
 import { appendQuestionImage } from '../../shared/question-image.js';
 
 const el = (tag, className, text) => {
@@ -10,24 +10,6 @@ const el = (tag, className, text) => {
     return node;
 };
 const date = value => value ? new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' }).format(value) : '日期未記錄';
-
-function isAnswerMatch(key, text, answer) {
-    if (answer == null) return false;
-    const strKey = String(key).trim().toUpperCase();
-    if (Array.isArray(answer)) {
-        return answer.some(a => {
-            const strA = String(a).trim();
-            if (strA.toUpperCase() === strKey) return true;
-            if (text && strA.toLowerCase() === text.trim().toLowerCase()) return true;
-            return false;
-        });
-    }
-    const strAns = String(answer).trim();
-    if (strAns.toUpperCase() === strKey) return true;
-    if (text && strAns.toLowerCase() === text.trim().toLowerCase()) return true;
-    const parts = strAns.split(/[,/、\s]+/).filter(Boolean).map(s => s.toUpperCase());
-    return parts.includes(strKey);
-}
 
 export function createNotebook({ root, getCache, refresh, setStatus, practice, makeCards, renderMath, alert, isStarred, toggleStar, getCatalog, getSourceTitle }) {
     let filters = { query: '', subject: [], quiz: '', status: 'active', sort: 'recent' };
